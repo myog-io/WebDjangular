@@ -1,0 +1,4 @@
+# This file pulls in everything from requirements/base.txt.
+# package for live environment
+
+-r base.txt

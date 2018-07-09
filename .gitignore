@@ -89,6 +89,12 @@ ENV/
 env.bak/
 venv.bak/
 
+# Environments settings
+src/webdjangular/settings/development.py
+src/webdjangular/settings/live.py
+src/webdjangular/settings/staging.py
+
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -113,3 +119,4 @@ modules/.settings
 .bazelrc
 .vscode
 modules/.vscode
+

@@ -1,0 +1,5 @@
+# This file pulls in everything from requirements/base.txt.
+# package for staging environment
+
+-r base.txt
+

@@ -1,0 +1,5 @@
+# This file pulls in everything from requirements/staging.txt and requirements/live.txt
+# package for development environment
+
+-r staging.txt
+-r live.txt

@@ -1,0 +1,21 @@
+# Base will provide the common requirements among all environments (development, live, staging, etc).
+
+# Django
+Django==2.0.6
+
+# Enviroment
+django-environ==0.4.5
+
+# Django REST Framework
+djangorestframework==3.8.2
+
+# Django REST Framework JWT token
+djangorestframework-jwt==1.11.0
+
+# Timezone
+pytz==2018.4
+
+# Windows's Interface to access  CA and CRL certificates.
+wincertstore==0.2
+
+
