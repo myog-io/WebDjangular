@@ -6,10 +6,9 @@ Django settings for webdjangular project.
 import os
 import datetime
 
-
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 DEBUG = False
 
@@ -24,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'apps.users',
+    'webdjangular.apps.users',
 ]
 
 TEMPLATES = [
@@ -53,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'webdjangular.urls'
+ROOT_URLCONF = 'webdjangular.webdjango.urls'
 
 DATABASES = {
     'default': {

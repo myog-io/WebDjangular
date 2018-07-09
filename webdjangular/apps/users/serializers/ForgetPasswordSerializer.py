@@ -25,7 +25,8 @@ class ForgetPasswordSerializer(ModelSerializer):
         :return:
         """
         
-        user = User.objects.filter(email__iexact=attrs.get("email"), is_email_verified=True).first()
+        # TODO: is_email_verified=true
+        user = User.objects.filter(email__iexact=attrs.get("email")).first()
         if user is None:
             msg = _('Sorry, email not found.')
             raise ValidationError(msg)
