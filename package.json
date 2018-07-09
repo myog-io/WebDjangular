@@ -1,0 +1,40 @@
+{
+  "name": "webdjangular",
+  "version": "1.0.0",
+  "description": "Framework WebDjangular 1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "ng test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MyOwnGamesLLC/WebDjangular.git"
+  },
+  "keywords": [
+    "webdjangular",
+    "django",
+    "angular",
+    "wd",
+    "webdjango",
+    "webangular",
+    "cms"
+  ],
+  "author": "My Own Games",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MyOwnGamesLLC/WebDjangular/issues"
+  },
+  "homepage": "https://github.com/MyOwnGamesLLC/WebDjangular#readme",
+  "dependencies": {
+    "@angular/cli": "^6.0.8",
+    "@angular/common": "^6.0.7",
+    "@angular/core": "^6.0.7",
+    "@angular/forms": "^6.0.0",
+    "@angular/router": "^6.0.7",
+    "@nebular/auth": "^2.0.0-rc.9",
+    "@nebular/security": "^2.0.0-rc.9",
+    "@nebular/theme": "^2.0.0-rc.9",
+    "bootstrap": "^4.1.1",
+    "rxjs": "^5.5.11"
+  }
+}
