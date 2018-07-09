@@ -56,3 +56,60 @@ docs/_build/
 
 # PyBuilder
 target/
+
+.DS_STORE
+
+/dist/
+bazel-*
+e2e_test.*
+node_modules
+bower_components
+tools/gulp-tasks/cldr/cldr-data/
+
+
+# Don't check in secret files
+*secret.js
+
+# Ignore npm/yarn debug log
+npm-debug.log
+yarn-error.log
+
+# build-analytics
+.build-analytics
+
+# rollup-test output
+/modules/rollup-test/dist/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+#
+
+# Rope project settings
+.ropeproject
+
+
+# mypy
+.mypy_cache/
+
+# IDE
+*.idea
+*.sublime-project
+pubspec.lock
+.c9
+.settings/
+*.swo
+modules/.settings
+.bazelrc
+.vscode
+modules/.vscode
