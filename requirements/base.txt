@@ -3,6 +3,10 @@
 # Django
 Django==2.0.6
 
+# Djongo - Driver for allowing Django to use MongoDB
+djongo==1.2.29
+
+
 # Enviroment
 django-environ==0.4.5
 

@@ -57,9 +57,7 @@ ROOT_URLCONF = 'webdjangular.urls'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        
-    }
+     }
 }
 
 AUTH_PASSWORD_VALIDATORS = [

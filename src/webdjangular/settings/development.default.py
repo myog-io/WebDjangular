@@ -14,3 +14,10 @@ SECRET_KEY = "__CHANGE_ME__"
 INSTALLED_APPS += [
 
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'your-db-name',
+    }
+}
