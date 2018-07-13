@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'webdjangular.apps.users',
+    'webdjangular.apps.cms'
 ]
 
 TEMPLATES = [

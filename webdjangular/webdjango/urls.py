@@ -9,6 +9,6 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^', include('webdjangular.apps.users.urls')),
+    url(r'^api/', include('webdjangular.apps.users.urls')),
+    url(r'^api/', include('webdjangular.apps.cms.urls')),
 ]
-
