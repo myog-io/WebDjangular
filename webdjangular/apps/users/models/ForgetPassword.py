@@ -1,10 +1,7 @@
 import uuid
 
-from django.db.models import Model
-from django.db.models import ForeignKey
-from django.db.models import UUIDField
-from django.db.models import DateTimeField
-from django.db.models import CASCADE
+from djongo.models import Model, ForeignKey, UUIDField, DateTimeField, CASCADE
+
 
 class ForgetPassword(Model):
     """
