@@ -8,11 +8,11 @@ from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import GenericViewSet
 
-from ..models.User import User
-from ..permissions.UpdateOwnUser import UpdateOwnUser
-from ..serializers.ForgetPasswordSerializer import ForgetPasswordSerializer
-from ..serializers.SetPasswordSerializer import SetPasswordSerializer
-from ..serializers.UserSerializer import UserSerializer
+from webdjangular.apps.users.models import User
+from webdjangular.apps.users.permissions.UpdateOwnUser import UpdateOwnUser
+from webdjangular.apps.users.serializers.ForgetPasswordSerializer import ForgetPasswordSerializer
+from webdjangular.apps.users.serializers.SetPasswordSerializer import SetPasswordSerializer
+from webdjangular.apps.users.serializers.UserSerializer import UserSerializer
 
 
 class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
