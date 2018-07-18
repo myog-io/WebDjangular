@@ -8,6 +8,7 @@ import {
     NbRequestPasswordComponent,
     NbResetPasswordComponent,
 } from '@nebular/auth';
+import {PudimComponent} from "../../themes/pudim/angular/pudim.component";
 
 const routes: Routes = [
     { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
@@ -41,8 +42,12 @@ const routes: Routes = [
             },
         ],
     },
-    { path: '', redirectTo: 'admin', pathMatch: 'full' },
-    { path: '**', redirectTo: 'admin' },
+    { path: 'admin', redirectTo: 'admin', pathMatch: 'full' },
+    {
+        path: '**',
+        component: PudimComponent
+
+    },
 ];
 
 const config: ExtraOptions = {
