@@ -7,7 +7,8 @@ import {FooterComponent, HeaderComponent} from "./components";
 
 import {
     TestTypographyComponent, TestTablesComponent, TestAlertsComponent, TestBadgesComponent, TestBreadcrumbComponent, TestButtonsComponent,
-    TestCardsComponent, TestCollapseComponent, TestFormComponent
+    TestCardsComponent, TestCollapseComponent, TestFormComponent, TestJumbotronComponent, TestListsComponent, TestModalComponent,
+    TestNavsComponent, TestPaginationComponent
 } from "./test";
 
 
@@ -25,7 +26,12 @@ const COMPONENTS = [
     TestButtonsComponent,
     TestCardsComponent,
     TestCollapseComponent,
-    TestFormComponent
+    TestFormComponent,
+    TestJumbotronComponent,
+    TestListsComponent,
+    TestModalComponent,
+    TestNavsComponent,
+    TestPaginationComponent
 
 ];
 
