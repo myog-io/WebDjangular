@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ViewEncapsulation} from "@angular/core";
+import {PostServiceService} from "./blog/services/post-service.service";
+
 
 
 @Component({
@@ -12,10 +14,18 @@ import {ViewEncapsulation} from "@angular/core";
 })
 
 export class PudimComponent implements OnInit{
-    constructor(private router: Router) {
+    constructor(private router: Router,
+                private postService: PostServiceService
+
+                ) {
     }
 
     ngOnInit(){
+
+        this.postService.getPosts();
+
+
+
     }
 
 }

@@ -15,9 +15,11 @@ router.register(r'core_app', AppViewSet)
 router.register(r'core_theme', ThemeViewSet)
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include(router.urls)),
     url(r'^', include('webdjangular.apps.users.urls')),
     url(r'^api/', include('webdjangular.apps.cms.urls')),
+    url(r'^api/', include('webdjangular.apps.blog.urls')),
 ]

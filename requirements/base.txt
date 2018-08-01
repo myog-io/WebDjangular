@@ -16,10 +16,14 @@ djangorestframework==3.8.2
 # Django REST Framework JWT token
 djangorestframework-jwt==1.11.0
 
+# Django REST Framework JSON.API Format
+djangorestframework-jsonapi==2.5.0
+
 # Timezone
 pytz==2018.4
 
 # Windows's Interface to access  CA and CRL certificates.
 wincertstore==0.2
 
-
+# CORS
+django-cors-headers==2.4.0
