@@ -27,9 +27,6 @@
                                 "output": "/assets/img/markers"
                             }
                         ],
-                        "styles": [
-                            "webdjangular/themes/pudim/angular/styles/styles.scss"
-                        ],
                         "scripts": [
                             "node_modules/pace-js/pace.min.js",
                             "node_modules/tinymce/tinymce.min.js",
