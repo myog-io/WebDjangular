@@ -36,19 +36,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
     
-    def get_full_name(self):
+    
+    @property
+    def full_name(self):
         """
         Use to get the user full name.
         :return: string
         """
         return self.first_name + ' ' + self.middle_name + ' ' + self.last_name
-    
-    def get_short_name(self):
+
+    @property
+    def short_name(self):
         """
         Use to get the user's name without middle name.
         :return: string
         """
         return self.first_name + ' ' + self.last_name
+        
     
     def __str__(self):
         """

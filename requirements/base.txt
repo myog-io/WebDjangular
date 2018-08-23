@@ -23,3 +23,5 @@ pytz==2018.4
 wincertstore==0.2
 
 
+#Access-Control-Allow-Origin headers
+django-cors-headers==2.2.0
