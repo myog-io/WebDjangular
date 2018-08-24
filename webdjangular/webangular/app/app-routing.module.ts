@@ -7,7 +7,9 @@ import {
   NbRegisterComponent,
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
-} from '@nebular/auth';
+} from './@core/rewrites/auth/components';
+
+
 
 import { AuthGuard } from './@core/services/auth-guard.service'
 
