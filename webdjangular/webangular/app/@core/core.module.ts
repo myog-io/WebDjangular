@@ -1,8 +1,9 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
+import { NbAuthModule, NbPasswordAuthStrategy, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { of as observableOf } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { DataModule } from './data/data.module';
@@ -32,6 +33,14 @@ export const NB_CORE_PROVIDERS = [
         register: {
           endpoint: '/auth/register',
         },
+        token: {
+          key: 'data.token',
+          getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => {
+            if (typeof res.body['token'] !== 'undefined'){
+              return res.body['token'];
+            }
+          },
+        }
       }),
     ],
     forms: {

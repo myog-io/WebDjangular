@@ -11,8 +11,6 @@ import { NbRegisterComponent } from "../@core/rewrites/auth/components/register/
 import { NbRequestPasswordComponent } from "../@core/rewrites/auth/components/request-password/request-password.component";
 import { NbResetPasswordComponent } from "../@core/rewrites/auth/components/reset-password/reset-password.component";
 
-
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import {
@@ -63,7 +61,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 
-const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, BrowserModule, RouterModule];
+const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
 
 const NB_MODULES = [
   NbCardModule,
