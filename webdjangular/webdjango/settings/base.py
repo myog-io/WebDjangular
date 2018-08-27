@@ -98,10 +98,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
-    #'DEFAULT_PAGINATION_CLASS':'rest_framework_json_api.pagination.JSONAPIPageNumberPagination',
-    #'DEFAULT_FILTER_BACKENDS': (
-    #    'rest_framework_json_api.backends.JSONAPIOrderingFilter',
-    #),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
     'TEST_REQUEST_RENDERER_CLASSES': (
         'rest_framework_json_api.renderers.JSONRenderer',
     ),

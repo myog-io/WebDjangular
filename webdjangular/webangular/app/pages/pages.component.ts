@@ -24,16 +24,4 @@ export class PagesComponent {
   constructor(private datastore: WebAngularDataStore){
 
   }
-
-  ngOnInit(){
-    
-
-  	this.datastore.findAll(User).subscribe(
-  		(result: JsonApiQueryData<User>) => {
-  			console.log(result);
-  		}
-  	)
-
-
-  }
 }
