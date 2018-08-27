@@ -31,7 +31,7 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     permission_classes = (UpdateOwnUser,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('first_name', 'last_name', 'email', 'username')
-    
+
     @action(methods=['post'], detail=False, url_path='forget-password')
     def forget_password(self, request):
         """
