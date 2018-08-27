@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 import { NB_AUTH_OPTIONS } from '@nebular/auth';
 import { getDeepFromObject } from '../../helpers';
 import { NbAuthService } from '@nebular/auth';
-import { NbAuthResult } from '@nebular/auth';
+import { NbAuthResult, NbTokenService  } from '@nebular/auth';
+
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'nb-logout',
@@ -21,6 +23,7 @@ export class NbLogoutComponent implements OnInit {
   strategy: string = '';
 
   constructor(protected service: NbAuthService,
+              protected tokenService: NbTokenService,
               @Inject(NB_AUTH_OPTIONS) protected options = {},
               protected router: Router) {
     this.redirectDelay = this.getConfigValue('forms.logout.redirectDelay');
@@ -32,15 +35,12 @@ export class NbLogoutComponent implements OnInit {
   }
 
   logout(strategy: string): void {
-    this.service.logout(strategy).subscribe((result: NbAuthResult) => {
 
-      const redirect = result.getRedirect();
-      if (redirect) {
-        setTimeout(() => {
-          return this.router.navigateByUrl(redirect);
-        }, this.redirectDelay);
+    this.tokenService.clear().subscribe(
+      (result) => {
+        return this.router.navigateByUrl('/auth/login/');
       }
-    });
+    );
   }
 
   getConfigValue(key: string): any {
