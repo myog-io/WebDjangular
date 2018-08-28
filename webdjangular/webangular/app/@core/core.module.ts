@@ -36,8 +36,8 @@ export const NB_CORE_PROVIDERS = [
         token: {
           key: 'data.token',
           getter: (module: string, res: HttpResponse<Object>, options: NbPasswordAuthStrategyOptions) => {
-            if (typeof res.body['token'] !== 'undefined'){
-              return res.body['token'];
+            if (typeof res.body['data'] !== 'undefined'){
+              return res.body['data']['token'];
             }
           },
         }

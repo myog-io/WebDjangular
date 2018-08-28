@@ -9,13 +9,16 @@ from ..serializers.JSONWebTokenSerializer import JSONWebTokenSerializer
 
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 
+import json
 
 class ObtainJSONWebToken(JSONWebTokenAPIView):
     serializer_class = JSONWebTokenSerializer
     
     
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        data = json.loads(request.body.decode());
+
+        serializer = self.get_serializer(data=data)
         
         if serializer.is_valid():
             user = serializer.object.get('user')
