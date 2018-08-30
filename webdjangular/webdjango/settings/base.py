@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'webdjangular.webdjango',
     'webdjangular.apps.users',
     'webdjangular.apps.cms',
-    'rest_framework_json_api'
+    'rest_framework_json_api',
+    'url_filter',
 ]
 
 TEMPLATES = [
@@ -99,9 +100,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
-    'TEST_REQUEST_RENDERER_CLASSES': (
-        'rest_framework_json_api.renderers.JSONRenderer',
-    ),
+    'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json'
 }
 

@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import { Injectable, Injector } from "@angular/core";
+import { Injectable, Injector, Inject } from "@angular/core";
 
 import { Observable } from "rxjs/Observable";
 import { switchMap } from 'rxjs/operators';
@@ -8,11 +8,12 @@ import { NbAuthService } from '@nebular/auth';
 
 import { environment } from "../../../environments/environment";
 
+
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
 
     constructor(
-        private injector: Injector,
+        private injector: Injector
     ) {
     }
 
@@ -46,8 +47,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
             }
 
             if (token.isValid()) {
-                var JWT = "JWT " + token.getValue();
-                newHeaders['Authorization'] = JWT;
+                newHeaders['Authorization'] = "JWT " + token.getValue();
                 var req = request.clone({
                     url: url,
                     setHeaders: newHeaders,
@@ -67,5 +67,4 @@ export class AppHttpInterceptor implements HttpInterceptor {
     get authService(){
         return this.injector.get(NbAuthService);
     }
-
 }

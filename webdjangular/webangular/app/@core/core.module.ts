@@ -44,7 +44,7 @@ export const NB_CORE_PROVIDERS = [
       }),
     ],
     forms: {
-    },
+    }
   }).providers,
 
   NbSecurityModule.forRoot({

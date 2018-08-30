@@ -16,7 +16,11 @@ class ObtainJSONWebToken(JSONWebTokenAPIView):
     
     
     def post(self, request, *args, **kwargs):
-        data = json.loads(request.body.decode());
+        if request.content_type == 'application/vnd.api+json':
+            data = json.loads(request.body.decode());
+        else:           
+            data = request.data;
+            
 
         serializer = self.get_serializer(data=data)
         

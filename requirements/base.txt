@@ -25,3 +25,6 @@ wincertstore==0.2
 
 #Access-Control-Allow-Origin headers
 django-cors-headers==2.2.0
+
+
+djangorestframework-jsonapi==0.3.1

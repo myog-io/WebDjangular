@@ -54,6 +54,6 @@ export class User extends JsonApiModel {
 
     @Attribute()
     updated: Date;
-    
+
 }
 
