@@ -5,44 +5,36 @@ import { Router } from "@angular/router";
 import { WebAngularDataStore } from '../../@core/data/data-store/WebAngularDataStore.service';
 import { WebAngularSmartTableDataSource } from '../../@core/data/data-store/WebAngularSmartTableDataSource';
 
-import { UserModel } from '../../@core/data/models/User.model';
+import { GroupModel } from '../../@core/data/models/Group.model';
 
 @Component({
-    selector: 'webdjangular-user',
-    styleUrls: ['./user.component.scss'],
-    templateUrl: './user.component.html',
+    selector: 'webdjangular-group',
+    styleUrls: ['./group.component.scss'],
+    templateUrl: './group.component.html',
 })
-export class UserComponent{
+export class GroupComponent{
 
-    source: WebAngularSmartTableDataSource  = new WebAngularSmartTableDataSource(this.datastore, UserModel, {
+    source: WebAngularSmartTableDataSource  = new WebAngularSmartTableDataSource(this.datastore, GroupModel, {
         smartTableSettings: {
             columns: {
                 id: {
                     title: 'ID',
                     type: 'number',
                 },
-                first_name: {
-                    title: 'First Name',
-                    type: 'string',
-                },
-                last_name: {
-                    title: 'Last Name',
-                    type: 'string',
-                },
-                email: {
-                    title: 'Email',
+                name: {
+                    title: 'Name',
                     type: 'string',
                 },
             },
         },
         onEditButtonClick: ($event) => {
-            this.router.navigate(['user','edit', $event.data.id]);
+            this.router.navigate(['group','edit', $event.data.id]);
         },
         onDeleteButtonClick: ($event) => {
             console.log("onCreateButtonClick", $event);
         },
         onCreateButtonClick: () => {
-            this.router.navigate(['user','new']);
+            this.router.navigate(['group','new']);
         }
     });
 

@@ -1,7 +1,9 @@
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.status import HTTP_204_NO_CONTENT
@@ -15,8 +17,7 @@ from webdjangular.apps.users.serializers.SetPasswordSerializer import SetPasswor
 from webdjangular.apps.users.serializers.UserSerializer import UserSerializer
 
 
-class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
-                  UpdateModelMixin, GenericViewSet):
+class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet, DestroyModelMixin):
     """
     Handles:
     Creating an User - Sign Up
@@ -24,13 +25,13 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     Retrieve a specific User
     Update an User
     """
-    
+    resource_name = 'user';
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (UpdateOwnUser,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('=first_name', 'last_name', 'email', 'username')
+    
 
     @action(methods=['post'], detail=False, url_path='forget-password')
     def forget_password(self, request):
@@ -71,3 +72,4 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
         forget_password.delete()
         serializer.save()
         return Response(status=HTTP_204_NO_CONTENT)
+

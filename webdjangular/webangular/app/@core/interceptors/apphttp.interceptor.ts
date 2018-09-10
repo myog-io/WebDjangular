@@ -47,7 +47,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
             }
 
             if (token.isValid()) {
-                newHeaders['Authorization'] = "JWT " + token.getValue();
+                newHeaders['Authorization'] = "Bearer " + token.getValue();
                 var req = request.clone({
                     url: url,
                     setHeaders: newHeaders,

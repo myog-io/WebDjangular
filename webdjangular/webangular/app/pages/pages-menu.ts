@@ -14,6 +14,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Users',
         link: '/user',
       },
+      {
+        title: 'Groups',
+        link: '/group'
+      }
     ]
   },
   {

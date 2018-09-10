@@ -9,16 +9,25 @@ import { UserModel } from '../../../@core/data/models/User.model';
 import { GroupModel } from '../../../@core/data/models/Group.model';
 import { PermissionModel } from '../../../@core/data/models/Permission.model';
 
+import { ModelPaginatorControls } from '../../../@theme/components/model-paginator/model-paginator.controls';
+
 @Component({
-    selector: 'user-edit',
-    styleUrls: ['./user-edit.component.scss'],
-    templateUrl: './user-edit.component.html',
+    selector: 'group-edit',
+    styleUrls: ['./group-edit.component.scss'],
+    templateUrl: './group-edit.component.html',
 })
 
-export class UserEditComponent {
-    public form = new UserModel.formClassRef();
-    public user: UserModel;
-    public allGroups: GroupModel[];
+export class GroupEditComponent {
+    public form = new GroupModel.formClassRef();
+    public group: GroupModel;
+
+    public modelPaginatorConfig = {
+        modelToPaginate: PermissionModel,
+        useDatastore: this.datastore,
+    };
+
+    public modelPaginatorControls: ModelPaginatorControls;
+
     
     constructor(
         private formBuilder: FormBuilder,
@@ -32,21 +41,15 @@ export class UserEditComponent {
 
     ngOnInit():void {
         if (this.activatedRoute.params['value'].id != null){
-            this.datastore.findRecord(UserModel, this.activatedRoute.params['value'].id, {
-                include: 'groups'
+            this.datastore.findRecord(GroupModel, this.activatedRoute.params['value'].id, {
+                include: 'permissions'
             }).subscribe(
-                (user: UserModel) => {
-                    this.user = user;
-                    this.form.populateForm(this.user);
+                (group: GroupModel) => {
+                    this.group = group;
+                    this.form.populateForm(this.group);
                 }
             );
         }
-
-        this.datastore.findAll(GroupModel).subscribe(
-            (groups: JsonApiQueryData<GroupModel>) => {
-                this.allGroups = groups.getModels();
-            }
-        );
     }
 
 
@@ -60,9 +63,9 @@ export class UserEditComponent {
     }
 
     update(){
-        this.form.updateModel(this.user);
+        this.form.updateModel(this.group);
 
-        this.user.save().subscribe(
+        this.group.save().subscribe(
             (result) => {
                 console.log(result);
             }
@@ -70,12 +73,14 @@ export class UserEditComponent {
     }
 
     create(){
-        this.datastore.createRecord(UserModel, this.form.value()).subscribe(
+        this.datastore.createRecord(GroupModel, this.form.value()).subscribe(
             (result) => {
                 console.log(result);
             }
         )
     }
 
-
+    modelPaginatorControlsGetter($event){
+        this.modelPaginatorControls = $event;
+    }
 }

@@ -17,10 +17,15 @@ from webdjangular.apps.users.permissions.UpdateOwnUser import UpdateOwnUser
 from webdjangular.apps.users.serializers.GroupSerializer import GroupSerializer
 
 
-class GroupViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
-    resource_name = 'group';
+class GroupUserView(ListModelMixin, GenericViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('name', )
+
+    def get_queryset(self):
+        queryset = super(GroupUserView, self).get_queryset()
+        if 'user_pk' in self.kwargs:
+            user_pk = self.kwargs['user_pk']
+            queryset = queryset.filter(user__pk=user_pk)
+        return queryset

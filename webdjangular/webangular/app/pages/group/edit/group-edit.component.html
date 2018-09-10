@@ -1,0 +1,44 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<div class="row">
+		<div class="col-md-4">
+			<nb-card>
+				<nb-card-header>Group Information</nb-card-header>
+				<nb-card-body>
+					<div class="row">
+						<div class="col-12">
+							<div class="form-group">
+								<label>Name</label>
+								<input type="text" class="form-control" placeholder="Name" [formControl]="form.get('name')">
+							</div>
+						</div>
+					</div>
+				</nb-card-body>
+			</nb-card>
+		</div><!--col-->
+
+		<div class="col-md-8">
+			<nb-card>
+				<nb-card-header>Permissons</nb-card-header>
+				<nb-card-body>
+					<div class="row">
+						<webdjangular-model-paginator [options]="modelPaginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
+							<div class="row" *ngIf="modelPaginatorControls">
+								<div class="col-4" *ngFor="let permission of modelPaginatorControls.getEntries(); let i=index;">
+									<nb-checkbox status="success" class="col-sm-4">{{ permission.name }}</nb-checkbox>
+								</div>
+							</div>
+						</webdjangular-model-paginator>						
+					</div><!--row-->
+				</nb-card-body>
+			</nb-card>
+		</div><!--col-->
+	</div><!--row-->
+
+
+	<div class="row">
+		<div class="col-12">
+			<button type="submit" class="btn btn-hero-primary btn-block">Save</button>
+		</div><!--col-->
+	</div><!--row-->
+
+</form>

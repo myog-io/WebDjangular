@@ -1,11 +1,19 @@
 import { JsonApiModelConfig, JsonApiModel, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
+import { AbstractModel } from './Abstract.model';
+import { GroupModel } from './Group.model';
 
+import { UserForm } from '../forms/User.form';
+
+import { ExtraOptions } from '../../decorators/ExtraOptions.decorator';
 
 @JsonApiModelConfig({
-    type: 'user/',
+    type: 'user',
 })
-export class User extends JsonApiModel {
+export class UserModel extends AbstractModel {
+
+    public static formClassRef = UserForm;
 
     @Attribute()
     id: string;
@@ -54,6 +62,20 @@ export class User extends JsonApiModel {
 
     @Attribute()
     updated: Date;
+
+    @HasMany()
+    @ExtraOptions({
+        backendResourceName: 'Group',
+    })
+    groups: GroupModel[]
+
+
+    get pk(){
+        return this.id;
+    }
+
+    set pk(value){
+    }
 
 }
 

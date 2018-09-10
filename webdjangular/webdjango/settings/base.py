@@ -14,6 +14,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     'webdjangular.apps.cms',
     'rest_framework_json_api',
     'url_filter',
+    'django_extensions',
 ]
 
 TEMPLATES = [
@@ -129,7 +131,7 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),  # 5 minutes
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=300),  # 5 minutes
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
 

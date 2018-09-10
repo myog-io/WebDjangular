@@ -1,7 +1,9 @@
-import { User } from './User.model';
-import { Group } from './Group.model';
+import { UserModel } from './User.model';
+import { GroupModel } from './Group.model';
+import { PermissionModel } from './Permission.model';
 
 export var modelList = {
-	users: User,
-	groups: Group,
+	User: UserModel,
+	Group: GroupModel,
+	Permission: PermissionModel
 }

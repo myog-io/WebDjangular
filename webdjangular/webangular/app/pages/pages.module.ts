@@ -6,7 +6,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 
 import { UserModule } from './user/user.module';
-
+import { GroupModule } from './group/group.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -18,6 +18,7 @@ const PAGES_COMPONENTS = [
     ThemeModule,
     DashboardModule,
     UserModule,
+    GroupModule
   ],
   declarations: [
     ...PAGES_COMPONENTS,

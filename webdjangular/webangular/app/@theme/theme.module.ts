@@ -11,6 +11,8 @@ import { NbRegisterComponent } from "../@core/rewrites/auth/components/register/
 import { NbRequestPasswordComponent } from "../@core/rewrites/auth/components/request-password/request-password.component";
 import { NbResetPasswordComponent } from "../@core/rewrites/auth/components/reset-password/reset-password.component";
 
+import { ModelPaginatorComponent } from './components/model-paginator/model-paginator.component';
+
 import { RouterModule } from '@angular/router';
 
 import {
@@ -102,7 +104,8 @@ const COMPONENTS = [
   NbLogoutComponent,
   NbRegisterComponent,
   NbRequestPasswordComponent,
-  NbResetPasswordComponent
+  NbResetPasswordComponent,
+  ModelPaginatorComponent
 ];
 
 const ENTRY_COMPONENTS = [

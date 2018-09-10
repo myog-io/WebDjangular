@@ -16,7 +16,11 @@ const routes: Routes = [
 			{
 				path: 'user',
 				loadChildren: './user/user.module#UserModule' ,
-			}
+			},
+			{
+				path: 'group',
+				loadChildren: './group/group.module#GroupModule' ,
+			},
 	  	],
 	},
 ];
