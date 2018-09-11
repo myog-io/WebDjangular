@@ -73,9 +73,10 @@ export class UserEditComponent {
     }
 
     create(){
-        this.datastore.createRecord(UserModel, this.form.value()).subscribe(
+        this.user = this.datastore.createRecord(UserModel, this.form.value);
+        this.user.save().subscribe(
             (result) => {
-                console.log(result);
+                
             }
         )
     }

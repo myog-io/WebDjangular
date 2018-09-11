@@ -75,7 +75,6 @@ export class GroupEditComponent {
         this.group = this.datastore.createRecord(GroupModel, this.form.value);
         this.group.save().subscribe(
             (result) => {
-                console.log("result", result);
             }
         )
     }

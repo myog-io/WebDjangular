@@ -17,7 +17,6 @@ class GroupSerializer(ModelSerializer):
     }
 
     permissions = ResourceRelatedField(
-        #queryset=Permission.objects,
         read_only=True,
         many=True,
         related_link_view_name='permission-getgrouplist',

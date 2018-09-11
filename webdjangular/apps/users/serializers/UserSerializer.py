@@ -19,7 +19,7 @@ class UserSerializer(ModelSerializer):
     }
 
     groups = ResourceRelatedField(
-        queryset=Group.objects,
+        read_only=True,
         many=True,
         related_link_view_name='group-getuserlist',
         related_link_url_kwarg='user_pk',
