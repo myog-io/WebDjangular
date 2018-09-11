@@ -85,5 +85,3 @@ export class UserEditComponent {
         this.modelPaginatorControls = $event;
     }
 }
-
-}
