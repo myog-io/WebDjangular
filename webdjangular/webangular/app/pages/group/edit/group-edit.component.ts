@@ -24,7 +24,7 @@ export class GroupEditComponent {
     public modelPaginatorConfig = {
         modelToPaginate: PermissionModel,
         useDatastore: this.datastore,
-        pageSize: 9
+        pageSize: 12
     };
 
     public modelPaginatorControls: ModelPaginatorControls;
@@ -52,7 +52,6 @@ export class GroupEditComponent {
             );
         }
     }
-
 
     onSubmit(){
         if (this.activatedRoute.params['value'].id != null){

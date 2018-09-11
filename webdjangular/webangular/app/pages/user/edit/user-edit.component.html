@@ -61,21 +61,17 @@
 
 		<div class="col-md-6">
 			<nb-card>
-				<nb-card-header>User Groups</nb-card-header>
+				<nb-card-header>Groups</nb-card-header>
 				<nb-card-body>
-					<ul class="list-group" *ngIf="form.get('groups')">
-						<li class="list-group-item" *ngFor="let group of form.get('groups').controls; let i=index;">
-							<span class="float-left"> {{ group.controls.name.value }} </span>
-							<span class="float-right"> <i class="fas fa-times-circle fa-2x text-danger" (click)="form.get('groups').removeAt(i)"></i></span>
-						</li>
-
-						<li class="list-group-item" *ngFor="let group of form.getAttributeHasManyDifference('groups', allGroups);">
-							<span class="float-left"> {{ group.name }} </span>
-							<span class="float-right"> <i class="fas fa-plus-circle fa-2x text-success" (click)="form.pushToFormArrayAttribute('groups', group);"></i></span>
-						</li>
-
-					</ul>
-
+					<div class="row">
+						<webdjangular-model-paginator [options]="modelPaginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
+							<div class="row" *ngIf="modelPaginatorControls">
+								<div class="col-4" *ngFor="let group of modelPaginatorControls.getEntries(); let i=index;">
+									<nb-checkbox status="success" class="col-sm-4" [value]="form.doesEntityHasRelationship('groups', group)" (change)="form.checkboxRelationListener($event, 'groups', group)" >{{ group.name }}</nb-checkbox>
+								</div>
+							</div>
+						</webdjangular-model-paginator>						
+					</div><!--row-->
 				</nb-card-body>
 			</nb-card>
 		</div><!--col-->

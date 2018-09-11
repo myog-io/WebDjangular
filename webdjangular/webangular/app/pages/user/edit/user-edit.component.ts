@@ -7,7 +7,8 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 import { WebAngularDataStore } from '../../../@core/data/data-store/WebAngularDataStore.service';
 import { UserModel } from '../../../@core/data/models/User.model';
 import { GroupModel } from '../../../@core/data/models/Group.model';
-import { PermissionModel } from '../../../@core/data/models/Permission.model';
+
+import { ModelPaginatorControls } from '../../../@theme/components/model-paginator/model-paginator.controls';
 
 @Component({
     selector: 'user-edit',
@@ -18,8 +19,16 @@ import { PermissionModel } from '../../../@core/data/models/Permission.model';
 export class UserEditComponent {
     public form = new UserModel.formClassRef();
     public user: UserModel;
-    public allGroups: GroupModel[];
     
+     public modelPaginatorConfig = {
+        modelToPaginate: GroupModel,
+        useDatastore: this.datastore,
+        pageSize: 9
+    };
+
+    public modelPaginatorControls: ModelPaginatorControls;
+
+
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
@@ -41,12 +50,6 @@ export class UserEditComponent {
                 }
             );
         }
-
-        this.datastore.findAll(GroupModel).subscribe(
-            (groups: JsonApiQueryData<GroupModel>) => {
-                this.allGroups = groups.getModels();
-            }
-        );
     }
 
 
@@ -77,5 +80,10 @@ export class UserEditComponent {
         )
     }
 
+
+    modelPaginatorControlsGetter($event){
+        this.modelPaginatorControls = $event;
+    }
+}
 
 }
