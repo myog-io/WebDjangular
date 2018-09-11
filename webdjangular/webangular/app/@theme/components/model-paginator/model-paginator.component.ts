@@ -10,8 +10,11 @@ import { ModelPaginatorControls } from './model-paginator.controls';
   templateUrl: './model-paginator.component.html',
 })
 
+
 export class ModelPaginatorComponent {
     @Input() options = {};
+    @Input() alignNumbersTo: string = "justify-content-center";
+
     @Output() controls = new EventEmitter<ModelPaginatorControls>();
 
     protected paginatorControls = new ModelPaginatorControls();

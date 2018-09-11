@@ -14,8 +14,10 @@ def run():
 	#group2.user_set.add(user);
 
 
-	group = Group.objects.get(pk=8);
-	permission = Permission.objects.all();
-	for perm in permission:
-		group.permissions.add(perm);
-	
+	#group = Group.objects.get(pk=8);
+	#permission = Permission.objects.all();
+	#for perm in permission:
+	#	group.permissions.add(perm);
+	#
+	v = Group.objects.all()
+	print(v);

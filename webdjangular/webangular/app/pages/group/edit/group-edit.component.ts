@@ -24,6 +24,7 @@ export class GroupEditComponent {
     public modelPaginatorConfig = {
         modelToPaginate: PermissionModel,
         useDatastore: this.datastore,
+        pageSize: 9
     };
 
     public modelPaginatorControls: ModelPaginatorControls;

@@ -14,6 +14,11 @@ export class ModelPaginatorControls{
 
     initControls(options){
     	this.options = options;
+
+        if (this.options['pageSize'] !== 'undefined'){
+            this.pageSize = this.options['pageSize'];
+        }
+        
     	this.makeQuery();
     }
 
