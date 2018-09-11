@@ -31,6 +31,7 @@ export class GroupModel extends AbstractModel {
     }
 
     set pk(value){
+        
 	}
 }
 

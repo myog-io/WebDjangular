@@ -17,26 +17,15 @@ class GroupSerializer(ModelSerializer):
     }
 
     permissions = ResourceRelatedField(
-        queryset=Permission.objects,
+        #queryset=Permission.objects,
+        read_only=True,
         many=True,
         related_link_view_name='permission-getgrouplist',
         related_link_url_kwarg='group_pk',
-        self_link_view_name='group-relationships'
+        self_link_view_name='group-relationships',
     )
 
 
     class Meta:
         model = Group
         fields = ('id', 'name', 'permissions')
-    
-
-    def validate_name(self, value):
-        """
-        Check if the name is unique case insensitive
-        :param value: the name
-        :return:
-        """
-        group = Group.objects.filter(name__iexact=value).first()
-        if group is not None:
-            raise ValidationError({'name':"Must be unique"})
-        return value

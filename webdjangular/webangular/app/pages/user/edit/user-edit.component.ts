@@ -23,7 +23,7 @@ export class UserEditComponent {
      public modelPaginatorConfig = {
         modelToPaginate: GroupModel,
         useDatastore: this.datastore,
-        pageSize: 9
+        pageSize: 12
     };
 
     public modelPaginatorControls: ModelPaginatorControls;

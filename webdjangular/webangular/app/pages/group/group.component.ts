@@ -31,7 +31,13 @@ export class GroupComponent{
             this.router.navigate(['group','edit', $event.data.id]);
         },
         onDeleteButtonClick: ($event) => {
-            console.log("onCreateButtonClick", $event);
+            console.log($event);
+            
+            this.datastore.deleteRecord(GroupModel, $event.data.pk).subscribe(
+                (r) => {
+                    this.source.remove($event)
+                }
+            );
         },
         onCreateButtonClick: () => {
             this.router.navigate(['group','new']);

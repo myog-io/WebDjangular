@@ -39,7 +39,11 @@ export class UserComponent{
             this.router.navigate(['user','edit', $event.data.id]);
         },
         onDeleteButtonClick: ($event) => {
-            console.log("onCreateButtonClick", $event);
+            this.datastore.deleteRecord(UserModel, $event.data.pk).subscribe(
+                (r) => {
+                    this.source.remove($event)
+                }
+            );
         },
         onCreateButtonClick: () => {
             this.router.navigate(['user','new']);
