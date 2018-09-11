@@ -7,7 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.viewsets import GenericViewSet
 
-from ..serializers.PermissionSerializer import PermissionSerializer
+from webdjangular.apps.users.serializers.PermissionSerializer import PermissionSerializer
 
 
 
