@@ -1,6 +1,10 @@
-<ng-content></ng-content>
-
 <div class="row">
+	<div class="col-12">
+		<ng-content></ng-content>
+	</div><!--col-->
+</div><!--row-->
+
+<div class="row" *ngIf="paginatorControls.getTotalPages() > 0">
 	<div class="col-12 mt-4">
 		<nav>
 			<ul class="pagination {{ alignNumbersTo }}">
