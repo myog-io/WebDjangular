@@ -21,10 +21,6 @@ class CoreRelationshipView(RelationshipView):
         parent_obj = self.get_object()
         related_instance_or_manager = self.get_related_instance()
 
-        print("request.data");
-        print(request.data);
-        print("after request.data");
-
         if isinstance(related_instance_or_manager, Manager) and 'pointer' in request.data:
             related_model_class = related_instance_or_manager.model
             serializer = self.get_serializer(data=request.data['pointer'], model_class=related_model_class, many=True)

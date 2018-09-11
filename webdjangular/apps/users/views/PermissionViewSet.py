@@ -12,6 +12,8 @@ from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import GenericViewSet
 
+from rest_framework_json_api.pagination import JsonApiPageNumberPagination
+
 from ..serializers.PermissionSerializer import PermissionSerializer
 
 
@@ -30,4 +32,5 @@ class PermissionViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     queryset = Permission.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (filters.SearchFilter,)
+    pagination_class = JsonApiPageNumberPagination
 

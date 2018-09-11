@@ -15,7 +15,7 @@ export class GroupForm extends AbstractForm{
 		name: {
 			type: FormControl,
 		},
-		permission: {
+		permissions: {
 			type: FormArray,
 			getFormFrom: PermissionForm,
 		}

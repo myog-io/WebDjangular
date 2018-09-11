@@ -32,7 +32,6 @@ export class AbstractForm extends FormGroup{
 
 					fb.generateForm();
 					fb.populateForm(entity[propName][i]);
-
 					fa.push(fb);
 				}
 			}
@@ -74,6 +73,32 @@ export class AbstractForm extends FormGroup{
 		return diff;
 	}
 
+	public doesEntityHasRelationship(formKey: string = null, toRelateEntity=null){
+		let control = this.get(formKey);
+
+		return control.value.filter(function(alreadyRelatedEntity){
+			return alreadyRelatedEntity.pk == toRelateEntity.pk;
+		}).length > 0;
+	}
+
+
+	public checkboxRelationListener($event, formKey:string = null, toRelateEntity=null){
+		let control = this.get(formKey) as FormArray;
+
+		if ($event.target.checked == false){
+			for(let i=0; i < control.value.length; i++){
+				if (control.value[i].pk == toRelateEntity.pk){
+					control.removeAt(i);
+				}
+			}
+		}
+		else{
+			let fb = new (this.formFields[formKey].getFormFrom)();
+			fb.generateForm();
+			fb.populateForm(toRelateEntity);
+			control.push(fb);
+		}
+	}
 
 	public pushToFormArrayAttribute(formKey: string = null, entityToPush){
 		if (this.formFields[formKey].type == FormArray){

@@ -64,7 +64,6 @@ export class GroupEditComponent {
 
     update(){
         this.form.updateModel(this.group);
-
         this.group.save().subscribe(
             (result) => {
                 console.log(result);

@@ -16,20 +16,20 @@ class GroupSerializer(ModelSerializer):
         'permissions': 'webdjangular.apps.users.serializers.PermissionSerializer.PermissionSerializer'
     }
 
-    #permissions = ResourceRelatedField(
-    #    queryset=Permission.objects,
-    #    many=True,
-    #    related_link_view_name='group-getuserlist',
-    #    related_link_url_kwarg='user_pk',
-    #    self_link_view_name='user-relationships'
-    #)
+    permissions = ResourceRelatedField(
+        queryset=Permission.objects,
+        many=True,
+        related_link_view_name='permission-getgrouplist',
+        related_link_url_kwarg='group_pk',
+        self_link_view_name='group-relationships'
+    )
 
 
     class Meta:
         model = Group
         fields = ('id', 'name', 'permissions')
     
-    
+
     def validate_name(self, value):
         """
         Check if the name is unique case insensitive

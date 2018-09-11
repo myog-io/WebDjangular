@@ -27,7 +27,6 @@ export class ModelPaginatorControls{
 		    		}
 		    	}).subscribe(
 		            (r: JsonApiQueryData<JsonApiModel>) => {
-		            	console.log(r);
 		                this.updatePaginationControls(r.getMeta(), r.getModels());
 		            }
 		        );

@@ -24,7 +24,7 @@
 						<webdjangular-model-paginator [options]="modelPaginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
 							<div class="row" *ngIf="modelPaginatorControls">
 								<div class="col-4" *ngFor="let permission of modelPaginatorControls.getEntries(); let i=index;">
-									<nb-checkbox status="success" class="col-sm-4">{{ permission.name }}</nb-checkbox>
+									<nb-checkbox status="success" class="col-sm-4" [value]="form.doesEntityHasRelationship('permissions', permission)" (change)="form.checkboxRelationListener($event, 'permissions', permission)" >{{ permission.name }}</nb-checkbox>
 								</div>
 							</div>
 						</webdjangular-model-paginator>						
