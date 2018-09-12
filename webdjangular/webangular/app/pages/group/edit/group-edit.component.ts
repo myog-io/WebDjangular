@@ -64,19 +64,19 @@ export class GroupEditComponent {
 
     update(){
         this.form.updateModel(this.group);
-        console.log(this.group);
-        
-        this.group.save().subscribe(
+
+        let sub = this.group.save().subscribe(
             (result) => {
-                console.log(result);
+                sub.unsubscribe();
             }
         )
     }
 
     create(){
         this.group = this.datastore.createRecord(GroupModel, this.form.value);
-        this.group.save().subscribe(
+        let sub = this.group.save().subscribe(
             (result) => {
+                sub.unsubscribe();
             }
         )
     }
