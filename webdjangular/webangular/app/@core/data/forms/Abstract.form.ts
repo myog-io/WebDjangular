@@ -16,6 +16,9 @@ export class AbstractForm extends FormGroup{
 			if (this.formFields[propName].type == FormArray){
 				this.registerControl(propName, new FormArray([], []));
 			}
+			else if (this.formFields[propName].type == FormGroup){
+				this.registerControl(propName, new FormGroup({}));
+			}
 			else{
 				this.registerControl(propName, new FormControl(null, []));
 			}
@@ -36,7 +39,19 @@ export class AbstractForm extends FormGroup{
 				}
 			}
 			else{
-				if(typeof entity[propName] !== 'undefined'){
+				if (this.formFields[propName].type == FormGroup && typeof entity[propName] !== 'undefined'){
+					let fg = this.get(propName) as FormGroup;
+
+					let fb = new (this.formFields[propName].getFormFrom)();
+					fb.generateForm();
+					fb.populateForm(entity[propName]);
+
+					for (let controlName in fb.controls){
+						fg.addControl(controlName, fb.controls[controlName]);
+					}
+					
+				}
+				else if(typeof entity[propName] !== 'undefined'){
 					this.get(propName).setValue(entity[propName])
 				}
 			}

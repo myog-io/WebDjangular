@@ -1,26 +1,18 @@
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { AbstractForm } from './Abstract.form';
-import { ContentTypeForm } from './ContentType.form';
 
-export class PermissionForm extends AbstractForm{
+export class ContentTypeForm extends AbstractForm{
 
 	formFields = {
 		pk: {
         	type: FormControl,
         },
-		id: {
+		app_label: {
         	type: FormControl,
         },
-		name: {
+		model: {
 			type: FormControl,
-		},
-		content_type: {
-			type: FormGroup,
-			getFormFrom: ContentTypeForm
-		},
-		codename: {
-			type: FormControl
 		},
 	}
 

@@ -28,5 +28,7 @@ class PermissionViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
 
     '''
     def get_queryset(self):
-        q = super(PermissionViewSet, self).get_queryset();
-        return list(q);
+        if 'pk' in self.kwargs:
+            return super(PermissionViewSet, self).get_queryset();
+        else:
+            return list(super(PermissionViewSet, self).get_queryset());

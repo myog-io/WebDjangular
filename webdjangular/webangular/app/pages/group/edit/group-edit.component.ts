@@ -51,6 +51,17 @@ export class GroupEditComponent {
                 }
             );
         }
+
+        this.datastore.findAll(PermissionModel,{
+            include: 'content_type',
+        }).subscribe(
+            (result) => {
+                let entities = result.getModels();
+                let form = new PermissionModel.formClassRef();
+                form.generateForm();
+                form.populateForm(entities[0]);
+            }
+        );
     }
 
     onSubmit(){
