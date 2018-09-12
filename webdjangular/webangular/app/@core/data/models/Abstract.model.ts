@@ -22,25 +22,18 @@ export class AbstractModel extends JsonApiModel {
 
 
 	save(params?: any, headers?: Headers): Observable<this>{
-		if (this.pk == null){
-			return new Observable((observe) => {	
-				super.save(params, headers).subscribe(
-					(r) => {
-						this.saveHasMany().subscribe(
-							(r2) => {
-								observe.next(r);
-								observe.complete();
-							}
-						)
-					}
-				);
-			});
-		}
-		else{
-			return this.saveHasMany().pipe(map(res => {
-				return super.save(params, headers);
-			}));
-		}
+		return new Observable((observe) => {	
+			super.save(params, headers).subscribe(
+				(r) => {
+					this.saveHasMany().subscribe(
+						(r2) => {
+							observe.next(r);
+							observe.complete();
+						}
+					)
+				}
+			);
+		});
 	}
 
 
