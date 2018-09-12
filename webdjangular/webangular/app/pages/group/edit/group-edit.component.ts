@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { CanActivate, Router, ActivatedRoute  } from '@angular/router';
+import { Router, ActivatedRoute, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { WebAngularDataStore } from '../../../@core/data/data-store/WebAngularDataStore.service';
-import { UserModel } from '../../../@core/data/models/User.model';
+
 import { GroupModel } from '../../../@core/data/models/Group.model';
 import { PermissionModel } from '../../../@core/data/models/Permission.model';
 
 import { ModelPaginatorControls } from '../../../@theme/components/model-paginator/model-paginator.controls';
+
 
 @Component({
     selector: 'group-edit',
@@ -37,6 +38,7 @@ export class GroupEditComponent {
         private datastore: WebAngularDataStore,
     ){
         this.form.generateForm();
+
     }
 
 
@@ -51,18 +53,7 @@ export class GroupEditComponent {
                 }
             );
         }
-
-        this.datastore.findAll(PermissionModel,{
-            include: 'content_type',
-        }).subscribe(
-            (result) => {
-                let entities = result.getModels();
-                let form = new PermissionModel.formClassRef();
-                form.generateForm();
-                form.populateForm(entities[0]);
-            }
-        );
-    }
+    } 
 
     onSubmit(){
         if (this.activatedRoute.params['value'].id != null){

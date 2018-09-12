@@ -23,6 +23,9 @@ const PAGES_COMPONENTS = [
   declarations: [
     ...PAGES_COMPONENTS,
   ],
+  exports:[
+    PagesRoutingModule
+  ]
 })
 export class PagesModule {
 	

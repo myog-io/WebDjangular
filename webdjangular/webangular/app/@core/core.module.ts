@@ -11,6 +11,7 @@ import { AnalyticsService } from './utils/analytics.service';
 
 import { AuthGuard } from './services/auth-guard.service'
 
+import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
@@ -70,6 +71,7 @@ export const NB_CORE_PROVIDERS = [
 @NgModule({
   imports: [
     CommonModule,
+    NgxPermissionsModule.forRoot(),
   ],
   exports: [
     NbAuthModule,
@@ -77,7 +79,7 @@ export const NB_CORE_PROVIDERS = [
   declarations: [],
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule, private permissionsService: NgxPermissionsService) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
