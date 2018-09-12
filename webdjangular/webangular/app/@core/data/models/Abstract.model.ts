@@ -11,7 +11,6 @@ import "reflect-metadata";
 
 export class AbstractModel extends JsonApiModel {
 	public static formClassRef = null;
-
 	protected  service;
 
 
@@ -23,12 +22,16 @@ export class AbstractModel extends JsonApiModel {
 
 	save(params?: any, headers?: Headers): Observable<this>{
 		return new Observable((observe) => {	
-			super.save(params, headers).subscribe(
+			let sub = super.save(params, headers).subscribe(
 				(r) => {
-					this.saveHasMany().subscribe(
+					let sub2 = this.saveHasMany().subscribe(
 						(r2) => {
 							observe.next(r);
 							observe.complete();
+
+							
+							sub.unsubscribe();
+							sub2.unsubscribe();
 						}
 					)
 				}
