@@ -16,8 +16,8 @@ router.register(r'core_theme', ThemeViewSet)
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r'^', include(router.urls)),
-    url(r'^', include('webdjangular.apps.users.urls')),
+    # path('admin/', admin.site.urls),
+    url(r'^api/', include(router.urls)),
+    url(r'^api/', include('webdjangular.apps.users.urls')),
     url(r'^api/', include('webdjangular.apps.cms.urls')),
 ]

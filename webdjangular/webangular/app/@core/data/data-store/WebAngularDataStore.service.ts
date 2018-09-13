@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JsonApiDatastoreConfig, JsonApiDatastore, DatastoreConfig, JsonApiModel, JsonApiQueryData, ModelType } from 'angular2-jsonapi';
 
-import { environment } from "../../../../environments/environment";
+
 
 import { modelList } from '../models/models.list';
 
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 
 
 const config: DatastoreConfig = {
-  baseUrl: environment.api_endpoint,
+  baseUrl: '/api',
   models: modelList
 }
 

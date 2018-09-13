@@ -20,7 +20,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.authService.getToken().pipe(switchMap(function (token) {
             let suffix = request.url;
-            let url = environment.api_endpoint + '/';
+            let url = '/';
 
             if (suffix.search("http://") == -1 && suffix.search("https://") == -1) {
                 let parts = suffix.split("");
