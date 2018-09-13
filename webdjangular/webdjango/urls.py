@@ -9,7 +9,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 from webdjangular.webdjango.views.CoreViewSet import ThemeViewSet, AuthorViewSet, AppViewSet
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r'core_author', AuthorViewSet)
 router.register(r'core_app', AppViewSet)
 router.register(r'core_theme', ThemeViewSet)

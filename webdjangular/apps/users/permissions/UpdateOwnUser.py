@@ -14,8 +14,8 @@ class UpdateOwnUser(BasePermission):
         :param obj:
         :return: boolean
         """
-        
+
         if request.method in SAFE_METHODS:
             return True
-        
+
         return obj.id == request.user.id

@@ -11,13 +11,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     class Meta:
         db_table = 'users'
-    
+ 
+   
     first_name = models.CharField(max_length=60)
-    middle_name = models.CharField(max_length=60)
+    middle_name = models.CharField(max_length=60, default=None, blank=True, null=True)
     last_name = models.CharField(max_length=60)
-    username = models.CharField(max_length=60, unique=True)
+    username = models.CharField(max_length=60, unique=True, default=None, blank=True, null=False)
     email = models.EmailField(max_length=255, unique=True)
     mobile = models.CharField(max_length=64, null=True, blank=True, default=None)
+    password    = models.CharField(max_length=255, null=True);
     is_tfa_enabled = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
     is_mobile_verified = models.BooleanField(default=False)
@@ -36,19 +38,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
     
-    def get_full_name(self):
+    
+    @property
+    def full_name(self):
         """
         Use to get the user full name.
         :return: string
         """
         return self.first_name + ' ' + self.middle_name + ' ' + self.last_name
-    
-    def get_short_name(self):
+
+    @property
+    def short_name(self):
         """
         Use to get the user's name without middle name.
         :return: string
         """
         return self.first_name + ' ' + self.last_name
+        
     
     def __str__(self):
         """

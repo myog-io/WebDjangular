@@ -16,6 +16,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,7 +30,9 @@ INSTALLED_APPS = [
     'webdjangular.webdjango',
     'webdjangular.apps.users',
     'webdjangular.apps.cms',
-    'webdjangular.apps.blog'
+    'rest_framework_json_api',
+    'url_filter',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {
@@ -108,6 +111,32 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'PAGE_SIZE': 10,
+    'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework_json_api.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework_json_api.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
+    'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json'
+}
+
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
@@ -133,7 +162,7 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),  # 5 minutes
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=300),  # 5 minutes
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
 

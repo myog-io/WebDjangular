@@ -1,18 +1,16 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UserService } from './users.service';
-import { ElectricityService } from './electricity.service';
+import { LayoutService } from './layout.service';
 import { StateService } from './state.service';
-import { SmartTableService } from './smart-table.service';
-import { PlayerService } from './player.service';
+
+import { WebAngularDataStore } from './data-store/WebAngularDataStore.service';
+
 
 const SERVICES = [
-  UserService,
-  ElectricityService,
+  LayoutService,
   StateService,
-  SmartTableService,
-  PlayerService,
+  WebAngularDataStore,
 ];
 
 @NgModule({
