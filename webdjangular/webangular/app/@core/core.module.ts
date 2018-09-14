@@ -27,10 +27,10 @@ export const NB_CORE_PROVIDERS = [
         name: 'email',
         baseEndpoint: '',
         login: {
-          endpoint: '/token/',
+          endpoint: 'api/token/',
         },
         register: {
-          endpoint: '/auth/register',
+          endpoint: 'api/auth/register',
         },
         token: {
           key: 'data.token',

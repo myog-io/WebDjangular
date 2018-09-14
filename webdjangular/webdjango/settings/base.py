@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_json_api',
     'url_filter',
     'django_extensions',
+    'drf_yasg'
 ]
 
 REST_FRAMEWORK = {
