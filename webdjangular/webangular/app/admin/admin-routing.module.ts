@@ -3,32 +3,26 @@ import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 
 const routes: Routes = [
-  {
-    path: "",
-    component: AdminComponent,
-    children: [
-      {
-        path: "dashboard",
-        component: DashboardComponent
-      },
-      {
-        path: "miscellaneous",
-        loadChildren: "./miscellaneous/miscellaneous.module#MiscellaneousModule"
-      },
-      {
-        path: "",
-        redirectTo: "dashboard",
-        pathMatch: "full"
-      },
-      {
-        path: "**",
-        component: NotFoundComponent
-      }
-    ]
-  }
+	{
+		path: '',
+		component: AdminComponent,
+		children: [
+			{
+				path: '',
+				component: DashboardComponent,
+			},
+			{
+				path: 'user',
+				loadChildren: './user/user.module#UserModule',
+			},
+			{
+				path: 'group',
+				loadChildren: './group/group.module#GroupModule' ,
+			},
+	  	],
+	},
 ];
 
 @NgModule({

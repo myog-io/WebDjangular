@@ -16,7 +16,12 @@ import { AuthGuard } from './@core/services/auth-guard.service'
 const routes: Routes = [
   { 
     path: '', 
-    loadChildren: 'app/pages/pages.module#PagesModule' ,
+    loadChildren: 'app/urls/urls.module#UrlsModule' ,
+    canActivate: [AuthGuard],
+  },
+  { 
+    path: 'admin', 
+    loadChildren: 'app/admin/admin.module#AdminModule' ,
     canActivate: [AuthGuard],
   },
   {
@@ -49,8 +54,11 @@ const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  
+  { path: 'admin/', redirectTo: 'admin', pathMatch: 'full' },
+  { path: 'admin/**', redirectTo: 'admin' },
+  { path: '', redirectTo: 'admin', pathMatch: 'full' },
+  { path: '**', redirectTo: 'admin' },
 ];
 
 const config: ExtraOptions = {
