@@ -6,14 +6,9 @@ const routes: Routes = [
 	{
 		path: '',
 		component: UrlsComponent,
-		children: [
-			{
-				path: '',
-				component: UrlsComponent,
-			},
-	  	],
 	},
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

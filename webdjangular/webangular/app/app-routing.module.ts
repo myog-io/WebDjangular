@@ -1,23 +1,23 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { NgModule } from '@angular/core';
+import {ExtraOptions, RouterModule, Routes} from '@angular/router';
+import {NgModule} from '@angular/core';
 import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
+    NbAuthComponent,
+    NbLoginComponent,
+    NbLogoutComponent,
+    NbRegisterComponent,
+    NbRequestPasswordComponent,
+    NbResetPasswordComponent,
 } from './@core/rewrites/auth/components';
 
 
+import {AuthGuard} from './@core/services/auth-guard.service'
 
-import { AuthGuard } from './@core/services/auth-guard.service'
+
 
 const routes: Routes = [
   { 
     path: '', 
     loadChildren: 'app/urls/urls.module#UrlsModule' ,
-    canActivate: [AuthGuard],
   },
   { 
     path: 'admin', 
@@ -54,11 +54,8 @@ const routes: Routes = [
       },
     ],
   },
-  
   { path: 'admin/', redirectTo: 'admin', pathMatch: 'full' },
   { path: 'admin/**', redirectTo: 'admin' },
-  { path: '', redirectTo: 'admin', pathMatch: 'full' },
-  { path: '**', redirectTo: 'admin' },
 ];
 
 const config: ExtraOptions = {
@@ -66,8 +63,8 @@ const config: ExtraOptions = {
 };
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes, config)],
+    exports: [RouterModule],
 })
 export class AppRoutingModule {
 }
