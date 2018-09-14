@@ -10,6 +10,7 @@ import { DataModule } from './data/data.module';
 import { AnalyticsService } from './utils/analytics.service';
 
 import { AuthGuard } from './services/auth-guard.service'
+import {WDAConfig} from "./services/wda-config.service";
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
   getRole() {
@@ -63,6 +64,7 @@ export const NB_CORE_PROVIDERS = [
   {
     provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
   },
+  WDAConfig,
   AnalyticsService,
 ];
 

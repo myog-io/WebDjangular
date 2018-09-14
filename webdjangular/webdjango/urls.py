@@ -40,4 +40,5 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/', include('webdjangular.apps.users.urls')),
     url(r'^api/', include('webdjangular.apps.cms.urls')),
+    url(r'^api/', include('webdjangular.apps.init.urls')),
 ]
