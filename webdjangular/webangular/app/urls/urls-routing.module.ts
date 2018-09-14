@@ -4,7 +4,7 @@ import { UrlsComponent } from './urls.component';
 
 const routes: Routes = [
 	{
-		path: '',
+		path: '**',
 		component: UrlsComponent,
 	},
 ];
@@ -15,5 +15,5 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class UrlsRoutingModule {
-    
+
 }
