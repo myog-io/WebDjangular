@@ -90,7 +90,7 @@ just run the following command
 ```bash
 python manage.py runserver
 ```
-You can now open the your Web browser and go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) this is just the default link for the api server.
+You can now open the your Web browser and go to [http://localhost:8000/](http://localhost:8000/) this is just the default link for the api server. You can also check the API Endpoints [http://localhost:8000/api/swagger/](http://localhost:8000/api/swagger/) or the Api "Documentation" on [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
 
 ## 11 Installing NPM Packages for frontend
 Start another terminal and navegate again to the root folder of the project. 

@@ -10,6 +10,7 @@ class AuthorSerializer(ModelSerializer):
     """
     class Meta:
         model = Author
+        fields = '__all__'
 
 
 class AppSerializer(ModelSerializer):
@@ -18,6 +19,7 @@ class AppSerializer(ModelSerializer):
     """
     class Meta:
         model = App
+        fields = '__all__'
 
 
 class ThemeSerializer(ModelSerializer):
@@ -26,3 +28,4 @@ class ThemeSerializer(ModelSerializer):
     """
     class Meta:
         model = Theme
+        fields = '__all__'

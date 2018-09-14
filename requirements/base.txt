@@ -1,10 +1,10 @@
 # Base will provide the common requirements among all environments (development, live, staging, etc).
 
 # Django
-Django==2.0.6
+Django==2.1.1
 
 # Djongo - Driver for allowing Django to use MongoDB
-djongo==1.2.29
+djongo==1.2.30
 
 
 # Enviroment
@@ -31,3 +31,9 @@ djangorestframework-jsonapi==2.5.0
 django-extensions==2.1.2
 
 django-url-filter==0.3.8
+
+# For the API Documentation Made Eazy
+coreapi==2.3.3
+drf-yasg==1.10.2
+flex==6.13.2
+swagger-spec-validator==2.4.0
