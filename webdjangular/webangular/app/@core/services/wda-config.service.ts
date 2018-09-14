@@ -49,6 +49,8 @@ export class WDAConfig {
     }
 
 
+
+
     public getTheme() {
         return this.theme;
     }
