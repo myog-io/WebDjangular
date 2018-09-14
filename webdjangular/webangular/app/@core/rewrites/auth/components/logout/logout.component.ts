@@ -38,7 +38,7 @@ export class NbLogoutComponent implements OnInit {
 
     this.tokenService.clear().subscribe(
       (result) => {
-        return this.router.navigateByUrl('/auth/login/');
+        return this.router.navigate(['auth','login']);
       }
     );
   }

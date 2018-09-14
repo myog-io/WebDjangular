@@ -7,7 +7,7 @@ import { environment } from "../../../../environments/environment";
 import { modelList } from '../models/models.list';
 
 import { Observable, Subscriber } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs/operators/map';
 
 
 const config: DatastoreConfig = {
@@ -22,6 +22,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
     constructor(http: HttpClient){
         super(http);
     }
+    
 
     saveHasManyRelationship<T extends JsonApiModel>(hasManyFields=[], modelConfig={}, extraOptions = {}, model: JsonApiModel): Observable<any>{
 		return new Observable((observe) => {

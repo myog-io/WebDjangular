@@ -19,5 +19,7 @@ def run():
 	#for perm in permission:
 	#	group.permissions.add(perm);
 	#
-	v = Group.objects.all()
-	print(v);
+
+	user = User.objects.get(pk=6);
+	user.set_password("admin");
+	user.save();
