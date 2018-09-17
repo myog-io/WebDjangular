@@ -4,7 +4,9 @@ import { AdminComponent } from './admin.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
-import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+
+import { UserModule } from './user/user.module';
+import { GroupModule } from './group/group.module';
 
 const ADMIN_COMPONENTS = [
   AdminComponent,
@@ -15,8 +17,17 @@ const ADMIN_COMPONENTS = [
     AdminRoutingModule,
     ThemeModule,
     DashboardModule,
-    MiscellaneousModule
+    UserModule,
+    GroupModule
   ],
-  declarations: [...ADMIN_COMPONENTS]
+  declarations: [
+    ...ADMIN_COMPONENTS,
+  ],
+  exports:[
+    AdminRoutingModule
+  ]
 })
-export class AdminModule {}
+export class AdminModule {
+	
+}
+

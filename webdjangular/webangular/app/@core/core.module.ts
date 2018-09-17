@@ -10,7 +10,7 @@ import { DataModule } from './data/data.module';
 import { AnalyticsService } from './utils/analytics.service';
 
 import { AuthGuard } from './services/auth-guard.service'
-import { RoleProvider } from './services/role-provider.service';
+import {WDAConfig} from "./services/wda-config.service";
 
 
 export const NB_CORE_PROVIDERS = [
@@ -23,10 +23,10 @@ export const NB_CORE_PROVIDERS = [
         name: 'email',
         baseEndpoint: '',
         login: {
-          endpoint: '/token/',
+          endpoint: 'api/token/',
         },
         register: {
-          endpoint: '/auth/register',
+          endpoint: 'api/auth/register',
         },
         token: {
           key: 'data.token',
@@ -53,6 +53,7 @@ export const NB_CORE_PROVIDERS = [
   {
     provide: NbRoleProvider, useClass: RoleProvider,
   },
+  WDAConfig,
   AnalyticsService,
 ];
 

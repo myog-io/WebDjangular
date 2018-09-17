@@ -3,19 +3,27 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Component, OnInit } from '@angular/core';
-import { AnalyticsService } from './@core/utils/analytics.service';
+import {Component, OnInit} from '@angular/core';
+import {AnalyticsService} from './@core/utils/analytics.service';
+import {WDAConfig} from "./@core/services/wda-config.service";
+import {Router} from "@angular/router";
+
 
 @Component({
-  selector: 'ngx-app',
-  template: '<router-outlet></router-outlet>',
+    selector: 'wda-app',
+    template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService) {
-  }
+    constructor(private wdaconfig: WDAConfig, private router: Router, private analytics: AnalyticsService,) {
+        this.router.config.push(
+        {
+            path: '',
+            loadChildren: this.wdaconfig.getThemePath()
+        });
+    }
 
-  ngOnInit(): void {
-    this.analytics.trackPageViews();
-  }
+    ngOnInit(): void {
+        this.analytics.trackPageViews();
+    }
 }

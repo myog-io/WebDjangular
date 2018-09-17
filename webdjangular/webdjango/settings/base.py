@@ -24,12 +24,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'webdjangular.apps.init',
     'webdjangular.webdjango',
     'webdjangular.apps.users',
     'webdjangular.apps.cms',
     'rest_framework_json_api',
     'url_filter',
     'django_extensions',
+    'drf_yasg'
 ]
 
 TEMPLATES = [
