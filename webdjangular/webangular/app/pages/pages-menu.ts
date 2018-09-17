@@ -5,12 +5,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Dashboard',
     icon: 'nb-home',
     link: '/',
-    data: {
-      permission: {  
-        app_label : 'users',
-        action: 'list_user',
-      }
-    }
   },
   {
     title: 'System',

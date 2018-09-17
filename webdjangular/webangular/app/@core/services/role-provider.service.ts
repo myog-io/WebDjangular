@@ -41,7 +41,7 @@ export class RoleProvider implements NbRoleProvider {
     }
 
     getUserPermissions(): Observable<PermissionModel[]>{
-        return this.datastore.findAll(PermissionModel, {include: 'content_type'}, null, 'userpermissions').pipe(map(
+        return this.datastore.findAll(PermissionModel, {include: 'content_type'}, null, '/api/userpermissions').pipe(map(
             (res) => res.getModels()
         ));
     }
