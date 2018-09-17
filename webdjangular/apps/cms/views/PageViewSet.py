@@ -1,12 +1,12 @@
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ModelViewSet
 
 from ..models.Page import Page
 from ..serializers.PageSerializer import PageSerializer
 
 
-class PageViewSet(ViewSet):
+class PageViewSet(ModelViewSet):
     """
     Handles:
     Creating Pages
@@ -15,13 +15,14 @@ class PageViewSet(ViewSet):
     Update Pages
     Deleting Pages
     """
-    
+    resource_name = 'page'
     serializer_class = PageSerializer
     queryset = Page.objects.all()
     authentication_classes = (TokenAuthentication,)
-    permission_classes = ()
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('title', 'content')
+    search_fields = ('title', 'content','slug')
+    permission_classes = ()
+
 
 
 
