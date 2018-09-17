@@ -12,6 +12,7 @@ import { AnalyticsService } from './utils/analytics.service';
 import { AuthGuard } from './services/auth-guard.service'
 import { RoleProvider } from './services/role-provider.service';
 
+
 export const NB_CORE_PROVIDERS = [
   AuthGuard,
   RoleProvider,

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
 import { JsonApiQueryData } from 'angular2-jsonapi';
+import { NbAccessChecker } from '@nebular/security'
 
 import { MENU_ITEMS } from './pages-menu';
 
@@ -14,7 +14,11 @@ import { MENU_ITEMS } from './pages-menu';
   `,
 })
 export class PagesComponent {
+	menu = MENU_ITEMS;
 
-  menu = MENU_ITEMS;
 
+	constructor(
+		private nbAccessChecker: NbAccessChecker 
+	){
+	}
 }

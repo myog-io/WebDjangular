@@ -11,9 +11,7 @@ from rest_framework.viewsets import GenericViewSet
 from webdjangular.apps.users.permissions.UpdateOwnUser import UpdateOwnUser
 from webdjangular.apps.users.serializers.GroupSerializer import GroupSerializer
 
-
-
-
+from webdjangular.webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 class GroupViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     resource_name = 'group';
@@ -22,3 +20,4 @@ class GroupViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateM
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', )
+    permission_classes = (AuthenticatedViewsetPermission,)

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { mergeMap, concatMap, map, flatMap, concatAll} from 'rxjs/operators';
-import { from, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { of as observableOf } from 'rxjs/observable/of';
+
 
 import { NbAuthService, NbAuthJWTToken } from '@nebular/auth';
 import { NbRoleProvider, NbAclService } from '@nebular/security';
@@ -24,26 +25,23 @@ export class RoleProvider implements NbRoleProvider {
         private nbAclService: NbAclService,
         private datastore: WebAngularDataStore,
     ) {
+
+        let sub = this.getUserPermissions().subscribe((permissions) => {
+            this.userPermissions = permissions;
+            this.definePermissionRole().then(permissions => {
+                this.nbAclService.register(this.roleName, null, permissions);                
+                sub.unsubscribe();
+                console.log(permissions)
+            });
+        })
     }
 
     getRole(): Observable<string> {
-        return new Observable(observe => {
-            let sub = this.getUserPermissions().subscribe((permissions) => {
-                this.userPermissions = permissions;
-                this.definePermissionRole().then(permissions => {
-                    this.nbAclService.register(this.roleName, null, permissions);
-                    observe.next(this.roleName);
-                    observe.complete()
-                    sub.unsubscribe();
-                    console.log(permissions)
-                });
-            })
-        })
-
+        return observableOf(this.roleName);
     }
 
     getUserPermissions(): Observable<PermissionModel[]>{
-        return this.datastore.findAll(PermissionModel, {include: 'content_type'}, null, 'user/my_permissions').pipe(map(
+        return this.datastore.findAll(PermissionModel, {include: 'content_type'}, null, 'userpermissions').pipe(map(
             (res) => res.getModels()
         ));
     }

@@ -18,7 +18,7 @@
     <nb-action class="control-item" disabled icon="nb-notifications"></nb-action>
     <nb-action class="control-item" icon="nb-email"></nb-action>
     <nb-action class="control-item">
-      <nb-search type="rotate-layout" (click)="startSearch()" *nbIsGranted="['admin', 'add_logentry']"></nb-search>
+      <nb-search type="rotate-layout" (click)="startSearch()" *ngIf="accessChecker.isGranted('admin','add_logentry') | async"></nb-search>
     </nb-action>
   </nb-actions>
 </div>

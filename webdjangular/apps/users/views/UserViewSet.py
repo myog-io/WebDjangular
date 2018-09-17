@@ -2,13 +2,15 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import IsAuthenticated
+
 
 from webdjangular.apps.users.models import User
 from webdjangular.apps.users.permissions.UpdateOwnUser import UpdateOwnUser
@@ -16,6 +18,8 @@ from webdjangular.apps.users.serializers.ForgetPasswordSerializer import ForgetP
 from webdjangular.apps.users.serializers.SetPasswordSerializer import SetPasswordSerializer
 from webdjangular.apps.users.serializers.UserSerializer import UserSerializer
 from webdjangular.apps.users.serializers.PermissionSerializer import PermissionSerializer
+
+from webdjangular.webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet, DestroyModelMixin):
     """
@@ -30,6 +34,7 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (filters.SearchFilter,)
+    permission_classes = (AuthenticatedViewsetPermission, )
     search_fields = ('=first_name', 'last_name', 'email', 'username')
     
 
@@ -46,7 +51,7 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
         serializer.save()
         return Response(status=HTTP_201_CREATED)
-        
+
     
     @action(methods=['post'], detail=False, url_path='set-password')
     def set_password(self, request):
@@ -73,24 +78,3 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
         forget_password.delete()
         serializer.save()
         return Response(status=HTTP_204_NO_CONTENT)
-
-
-    @action(methods=['get'], detail=False, url_path='my_permissions')
-    def my_permissions(self, request, *args, **kwargs):
-        from django.contrib.auth.models import Permission
-
-        perms = [];
-
-        if request.user.is_staff == True:
-            for permission in Permission.objects.all():
-                if permission not in perms:
-                    perms.append(permission)
-        else:
-            for group in request.user.groups.all():
-                for permission in group.permissions.all():
-                    if permission not in perms:
-                        perms.append(permission)
-
-        serializer = PermissionSerializer(perms, many=True);
-        return Response(serializer.data);
-

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 
+
 from .UserManager import UserManager
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -11,6 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     class Meta:
         db_table = 'users'
+        permissions = (("list_user", "Can list users"),)
  
    
     first_name = models.CharField(max_length=60)
@@ -20,11 +22,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     mobile = models.CharField(max_length=64, null=True, blank=True, default=None)
     password    = models.CharField(max_length=255, null=True);
-    is_tfa_enabled = models.BooleanField(default=False)
-    is_email_verified = models.BooleanField(default=False)
-    is_mobile_verified = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_tfa_enabled = models.BooleanField(default=False, blank=True)
+    is_email_verified = models.BooleanField(default=False, blank=True)
+    is_mobile_verified = models.BooleanField(default=False, blank=True)
+    is_active = models.BooleanField(default=True, blank=True)
+    is_staff = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     
@@ -51,9 +53,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     def short_name(self):
         """
         Use to get the user's name without middle name.
-        :return: string
+        :return: 
         """
-        return self.first_name + ' ' + self.last_name
+        return self.first_name + ' ' + selfstring.last_name
         
     
     def __str__(self):

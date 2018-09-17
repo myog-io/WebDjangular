@@ -12,12 +12,14 @@ from .views.PermissionViewSet import PermissionViewSet
 from .views.PermissionGroupView import PermissionGroupView
 from .views.UserRelationshipView import UserRelationshipView
 from .views.GroupRelationshipView import GroupRelationshipView
+from .views.UserPermissionsViewSet import UserPermissionsViewSet
+
 
 router = DefaultRouter(trailing_slash=False)
 router.register('user', UserViewSet)
 router.register('group', GroupViewSet)
 router.register('permission', PermissionViewSet)
-
+router.register('userpermissions', UserPermissionsViewSet);
 
 urlpatterns = [
     url(r'', include(router.urls)),
