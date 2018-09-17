@@ -28,7 +28,7 @@ export class GroupComponent{
             },
         },
         onEditButtonClick: ($event) => {
-            this.router.navigate(['group','edit', $event.data.id]);
+            this.router.navigate(['admin','group','edit', $event.data.id]);
         },
         onDeleteButtonClick: ($event) => {
             console.log($event);
@@ -40,7 +40,7 @@ export class GroupComponent{
             );
         },
         onCreateButtonClick: () => {
-            this.router.navigate(['group','new']);
+            this.router.navigate(['admin','group','new']);
         }
     });
 

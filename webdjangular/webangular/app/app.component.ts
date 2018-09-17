@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
         this.router.config.push(
         {
             path: '',
-            loadChildren: this.wdaconfig.getThemePath()
+            //loadChildren: this.wdaconfig.getThemePath()
+            loadChildren: '../../themes/pudim/angular/pudim.module#PudimModule'
         });
     }
 
