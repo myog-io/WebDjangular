@@ -29,10 +29,8 @@ export class AdminComponent {
 
 	ngOnInit(){
 		this.roleProvider.parsedPermissionsEmitter.subscribe(
-			(r) => {
-				this.hideMenuItemsRecursively(r, this.menu);
-				console.log("emitter", r);
-				console.log("menu", this.menu);
+			(perms) => {
+				this.hideMenuItemsRecursively(perms, this.menu);
 			}
 		);
 	}

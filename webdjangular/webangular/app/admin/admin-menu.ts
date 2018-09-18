@@ -24,7 +24,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/admin/group',
         data: {
           permission: [
-            {label: 'users', action: 'list_group'}
+            {label: 'auth', action: 'list_group'}
           ]
         }
       }
