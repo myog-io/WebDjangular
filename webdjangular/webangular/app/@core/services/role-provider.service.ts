@@ -17,9 +17,7 @@ export class RoleProvider implements NbRoleProvider {
     parsedPermissionsEmitter = new EventEmitter<any>(null);
 
     private roleName = 'userRole';
-
-
-
+    
     constructor(
         private nbAclService: NbAclService,
         private datastore: WebAngularDataStore,
@@ -58,7 +56,7 @@ export class RoleProvider implements NbRoleProvider {
 
                 parsedPermissions[this.userPermissions[i].content_type.app_label].push(this.userPermissions[i].codename)
             }
-            
+
             resolve(parsedPermissions);
         });
         

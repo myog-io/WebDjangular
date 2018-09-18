@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
+import { NbAccessChecker } from '@nebular/security'
+
 import { WebAngularDataStore } from '../../../@core/data/data-store/WebAngularDataStore.service';
 import { UserModel } from '../../../@core/data/models/User.model';
 import { GroupModel } from '../../../@core/data/models/Group.model';
@@ -34,6 +36,7 @@ export class UserEditComponent {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private datastore: WebAngularDataStore,
+        public accessChecker: NbAccessChecker
     ){
         this.form.generateForm();
     }
