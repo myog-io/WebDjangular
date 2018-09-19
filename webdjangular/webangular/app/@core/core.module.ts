@@ -11,12 +11,14 @@ import { AnalyticsService } from './utils/analytics.service';
 
 import { AuthGuard } from './services/auth-guard.service'
 import { WDAConfig } from "./services/wda-config.service";
+import { PermissionGuard } from './services/permission-guard.service';
 
 import { RoleProvider } from './services/role-provider.service';
 
 export const NB_CORE_PROVIDERS = [
   AuthGuard,
   RoleProvider,
+  PermissionGuard,
   ...DataModule.forRoot().providers,
   ...NbAuthModule.forRoot({
     strategies: [

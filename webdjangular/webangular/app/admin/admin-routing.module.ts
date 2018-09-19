@@ -5,6 +5,8 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageModel } from '../@core/data/models/Page.model';
 
+import { PermissionGuard } from '../@core/services/permission-guard.service';
+
 const routes: Routes = [
 	{
 		path: '',
@@ -25,6 +27,7 @@ const routes: Routes = [
 			{
 				path: 'pages',
 				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				canActivate: [ PermissionGuard ],
 				data: { 
 					model: PageModel,
 					title:"Page",
