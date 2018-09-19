@@ -17,13 +17,6 @@ export class AppComponent implements OnInit {
 
     constructor(private wdaconfig: WDAConfig, private router: Router, private analytics: AnalyticsService,) {
         
-        this.router.config.push(
-        {
-            path: '',
-            //loadChildren: this.wdaconfig.getThemePath()
-            loadChildren: '../../themes/pudim/angular/pudim.module#PudimModule'
-        });
-        
     }
 
     ngOnInit(): void {

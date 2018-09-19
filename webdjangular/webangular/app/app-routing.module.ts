@@ -50,7 +50,12 @@ const routes: Routes = [
         ],
     },
     {path: 'admin/', redirectTo: 'admin', pathMatch: 'full'},
-    {path: 'admin/**', redirectTo: 'admin'}
+    {path: 'admin/**', redirectTo: 'admin'},
+    {
+        path: '',
+        //loadChildren: this.wdaconfig.getThemePath()
+        loadChildren: '../../themes/pudim/angular/pudim.module#PudimModule'
+    }
 ];
 
 const config: ExtraOptions = {

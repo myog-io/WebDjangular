@@ -50,7 +50,7 @@ export function wda_init(wdaconfig: WDAConfig) {
             useClass: AppHttpInterceptor,
             multi: true
         },
-        {provide: APP_INITIALIZER, useFactory:wda_init, deps:[WDAConfig], multi:true }
+        //{provide: APP_INITIALIZER, useFactory:wda_init, deps:[WDAConfig], multi:true }
     ],
 })
 export class AppModule {
