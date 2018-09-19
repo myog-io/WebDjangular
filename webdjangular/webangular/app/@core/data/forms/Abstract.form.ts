@@ -2,10 +2,13 @@ import { JsonApiModel } from 'angular2-jsonapi';
 
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
+import { ScaffoldFieldConfig } from '../../interfaces/scaffold-field-config.interface';
 
 export class AbstractForm extends FormGroup{
 
 	public formFields = {};
+	public scaffoldFields: ScaffoldFieldConfig[] = [];
+
 
 	public constructor(){
 		super({});
@@ -21,7 +24,7 @@ export class AbstractForm extends FormGroup{
 			}
 			else{
 				let validators = [];
-				
+
 				if (typeof this.formFields[propName]['validators'] !== 'undefined'){
 					validators = this.formFields[propName]['validators'];
 				}
