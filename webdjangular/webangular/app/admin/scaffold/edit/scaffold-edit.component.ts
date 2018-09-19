@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { WebAngularDataStore } from '../../../@core/data/data-store/WebAngularDataStore.service';
 import { WebAngularSmartTableDataSource } from '../../../@core/data/data-store/WebAngularSmartTableDataSource';
+
+import { AbstractForm } from '../../../@core/data/forms/Abstract.form';
+import { AbstractModel } from '../../../@core/data/models/Abstract.model';
 
 @Component({
     selector: 'wda-scaffold-edit',
@@ -10,11 +14,11 @@ import { WebAngularSmartTableDataSource } from '../../../@core/data/data-store/W
 })
 
 export class ScaffoldEditComponent implements OnInit {
-    entry: any = null;
+    entry: AbstractModel = null;
     source: WebAngularSmartTableDataSource;
     currentModel: any;
     basePath: any;
-    form: any;
+    form: AbstractForm;
     title: string = ";D";
     beforeTitle: string = "Editing";
     
@@ -46,7 +50,7 @@ export class ScaffoldEditComponent implements OnInit {
             this.datastore.findRecord(this.currentModel, this.route.params['value'].id, {
                 include: 'groups'
             }).subscribe(
-                (data) => {
+                (data: AbstractModel) => {
                     this.entry = data;
                     this.form.populateForm(this.entry);
                 }
