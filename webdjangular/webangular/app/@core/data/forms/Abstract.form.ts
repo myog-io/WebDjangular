@@ -8,7 +8,7 @@ export class AbstractForm extends FormGroup{
 
 	public formFields = {};
 	public scaffoldFields: ScaffoldFieldConfig[] = [];
-
+	public listingTableSettings = {};
 
 	public constructor(){
 		super({});

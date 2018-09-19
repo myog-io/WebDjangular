@@ -4,7 +4,7 @@ import { AbstractForm } from './Abstract.form';
 import { ScaffoldFieldConfig } from '../../interfaces/scaffold-field-config.interface';
 
 export class PageForm extends AbstractForm {
-    private slugPattern = "^[a-z0-9_-]{8,15}$";
+
     public listingTableSettings = {
         columns: {
             id: {
@@ -28,7 +28,7 @@ export class PageForm extends AbstractForm {
         },
         slug: {
             type: FormControl,
-            validators: [Validators.required, Validators.pattern(this.slugPattern)]
+            validators: [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")]
         },
         title: {
             type: FormControl,
