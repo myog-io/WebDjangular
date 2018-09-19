@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { JsonApiDatastoreConfig, JsonApiDatastore, DatastoreConfig, JsonApiModel, JsonApiQueryData, ModelType } from 'angular2-jsonapi';
+import { HttpClient } from '@angular/common/http';
+import { JsonApiDatastoreConfig, JsonApiDatastore, DatastoreConfig, JsonApiModel } from 'angular2-jsonapi';
 
 
 
 import { modelList } from '../models/models.list';
 
-import { Observable, Subscriber } from 'rxjs';
-import { map } from 'rxjs/operators/map';
+import { Observable } from 'rxjs';
 
 
 const config: DatastoreConfig = {
@@ -27,7 +26,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
     saveHasManyRelationship<T extends JsonApiModel>(hasManyFields=[], modelConfig={}, extraOptions = {}, model: JsonApiModel): Observable<any>{
 		return new Observable((observe) => {
 			for(let i=0; i < hasManyFields.length; i++){
-    			let url = modelConfig['type'] + '/' + String(model.pk) + '/relationships/' + String(hasManyFields[i].relationship)
+    			let url = modelConfig['type'] + '/' + String(model.pk) + '/relationships/' + String(hasManyFields[i].relationship) + '/'
     			let pointer = [];
     			let typeToSend = modelConfig['type'];
 

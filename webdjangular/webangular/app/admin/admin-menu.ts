@@ -7,6 +7,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/admin',
   },
   {
+    title: 'Pages',
+    icon: 'fas fa-file-alt',
+    link: '/admin/pages',
+  },
+  {
     title: 'System',
     icon: 'fas fa-cog',
     children: [

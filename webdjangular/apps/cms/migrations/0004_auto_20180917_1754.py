@@ -3,6 +3,11 @@
 from django.db import migrations, models
 
 
+def create_firstpage(apps, schema_editor):
+	from webdjangular.apps.cms.models.Page import Page
+
+	Page.objects.create(title="Home", slug="home", content="<h1>Hello World! My First Page</h1>")
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -15,4 +20,8 @@ class Migration(migrations.Migration):
             name='slug',
             field=models.SlugField(blank=True, default=None, max_length=255, null=True),
         ),
+    ]
+
+    operations = [
+    	migrations.RunPython(create_firstpage),
     ]

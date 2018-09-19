@@ -2,8 +2,8 @@ from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
 
-from ..models.Page import Page
-from ..serializers.PageSerializer import PageSerializer
+from webdjangular.apps.cms.models.Page import Page
+from webdjangular.apps.cms.serializers.PageSerializer import PageSerializer
 
 
 class PageViewSet(ModelViewSet):

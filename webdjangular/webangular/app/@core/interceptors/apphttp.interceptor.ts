@@ -21,7 +21,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         return this.authService.getToken().pipe(switchMap(function (token) {
             let suffix = request.url;
             let url = '/';
-
+            
             if (suffix.search("http://") == -1 && suffix.search("https://") == -1) {
                 let parts = suffix.split("");
                 if (parts[0] == "/") {
@@ -35,7 +35,18 @@ export class AppHttpInterceptor implements HttpInterceptor {
             else{
                 url = request.url;
             }
-
+            // Forcing Trailing Slash
+            let parts = url.split("?")
+            if(parts[0]){
+                if(parts[0][parts[0].length -1] != "/"){
+                    if(parts[1]){
+                        url = parts[0] + "/?" + parts[1];
+                    }else{
+                        url = parts[0] + "/";    
+                    }
+                }
+            }
+            
             let newHeaders = {};
 
             if (request.headers.get('Accept') == null){

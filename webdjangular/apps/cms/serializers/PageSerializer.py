@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from ..models import Page
+from webdjangular.apps.cms.models.Page import Page
 
 
 class PageSerializer(ModelSerializer):
@@ -10,4 +10,4 @@ class PageSerializer(ModelSerializer):
     
     class Meta:
         model = Page
-        fields = ('title', ' slug', ' content')
+        fields = ('title', 'slug', 'content')

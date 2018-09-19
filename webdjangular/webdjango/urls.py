@@ -26,7 +26,7 @@ schema_view = get_schema_view(
    permission_classes=(AllowAny,),
 )
 
-router = DefaultRouter(trailing_slash=False)
+router = DefaultRouter()
 router.register(r'core_author', AuthorViewSet)
 router.register(r'core_app', AppViewSet)
 router.register(r'core_theme', ThemeViewSet)

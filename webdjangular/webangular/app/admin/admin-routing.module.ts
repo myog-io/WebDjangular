@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PageModel } from '../@core/data/models/Page.model';
 
 const routes: Routes = [
 	{
@@ -21,6 +22,11 @@ const routes: Routes = [
 				path: 'group',
 				loadChildren: './group/group.module#GroupModule' ,
 			},
+			{
+				path: 'pages',
+				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				data: {model:PageModel, title:"Page",path: 'pages'}
+			}
 	  	],
 	},
 ];

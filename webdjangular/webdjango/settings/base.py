@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DEBUG = False
 
 ALLOWED_HOSTS = []
-
+APPEND_SLASH = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',

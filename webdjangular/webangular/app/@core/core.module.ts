@@ -25,6 +25,10 @@ export const NB_CORE_PROVIDERS = [
         baseEndpoint: '',
         login: {
           endpoint: 'api/token/',
+          redirect: {
+            success: 'admin/',
+            failure: null,
+          },
         },
         register: {
           endpoint: 'api/auth/register',
