@@ -27,7 +27,6 @@ const routes: Routes = [
 			{
 				path: 'pages',
 				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
-				canActivate: [ PermissionGuard ],
 				data: { 
 					model: PageModel,
 					title:"Page",
