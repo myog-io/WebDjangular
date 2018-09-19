@@ -28,12 +28,15 @@ export class PageForm extends AbstractForm {
         },
         slug: {
             type: FormControl,
+            validators: [Validators.required, Validators.pattern(this.slugPattern)]
         },
         title: {
             type: FormControl,
+            validators: [Validators.required]
         },
         content: {
             type: FormControl,
+            validators: [Validators.required]
         },
         created: {
             type: FormControl,
@@ -49,20 +52,17 @@ export class PageForm extends AbstractForm {
             label: 'Page Title',
             name: 'title',
             placeholder: 'Enter Page Title',
-            validation: [Validators.required]
         },
         {
             type: 'input',
             label: 'Page Url',
             name: 'slug',
             placeholder: 'Enter Page Url (slug)',
-            validation: [Validators.required, Validators.pattern(this.slugPattern)]
         },
         {
             type: 'ckeditor',
             label: 'Page Content',
             name: 'content',
-            validation: [Validators.required]
         },
         {
             label: 'Submit',

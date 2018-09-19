@@ -20,7 +20,13 @@ export class AbstractForm extends FormGroup{
 				this.registerControl(propName, new FormGroup({}));
 			}
 			else{
-				this.registerControl(propName, new FormControl(null, []));
+				let validators = [];
+				
+				if (typeof this.formFields[propName]['validators'] !== 'undefined'){
+					validators = this.formFields[propName]['validators'];
+				}
+
+				this.registerControl(propName, new FormControl(null, validators));
 			}
 		}
 	}
