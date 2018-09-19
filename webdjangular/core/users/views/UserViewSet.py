@@ -12,12 +12,12 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.permissions import IsAuthenticated
 
 
-from webdjangular.apps.users.models import User
-from webdjangular.apps.users.permissions.UpdateOwnUser import UpdateOwnUser
-from webdjangular.apps.users.serializers.ForgetPasswordSerializer import ForgetPasswordSerializer
-from webdjangular.apps.users.serializers.SetPasswordSerializer import SetPasswordSerializer
-from webdjangular.apps.users.serializers.UserSerializer import UserSerializer
-from webdjangular.apps.users.serializers.PermissionSerializer import PermissionSerializer
+from webdjangular.core.users.models import User
+from webdjangular.core.users.permissions.UpdateOwnUser import UpdateOwnUser
+from webdjangular.core.users.serializers.ForgetPasswordSerializer import ForgetPasswordSerializer
+from webdjangular.core.users.serializers.SetPasswordSerializer import SetPasswordSerializer
+from webdjangular.core.users.serializers.UserSerializer import UserSerializer
+from webdjangular.core.users.serializers.PermissionSerializer import PermissionSerializer
 
 from webdjangular.webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 

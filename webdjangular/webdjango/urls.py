@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^api/swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^api/docs/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'^api/', include(router.urls)),
-    url(r'^api/', include('webdjangular.apps.users.urls')),
-    url(r'^api/', include('webdjangular.apps.cms.urls')),
-    url(r'^api/', include('webdjangular.apps.init.urls')),
+    url(r'^api/', include('webdjangular.core.users.urls')),
+    url(r'^api/', include('webdjangular.core.cms.urls')),
+    url(r'^api/', include('webdjangular.core.init.urls')),
 ]

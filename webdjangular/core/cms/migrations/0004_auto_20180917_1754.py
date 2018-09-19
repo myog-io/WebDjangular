@@ -4,7 +4,7 @@ from django.db import migrations, models
 
 
 def create_firstpage(apps, schema_editor):
-	from webdjangular.apps.cms.models.Page import Page
+	from webdjangular.core.cms.models.Page import Page
 
 	Page.objects.create(title="Home", slug="home", content="<h1>Hello World! My First Page</h1>")
 

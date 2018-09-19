@@ -1,4 +1,4 @@
-from webdjangular.apps.users.models import User
+from webdjangular.core.users.models import User
 from django.contrib.auth.models import Group, Permission
 
 def run():

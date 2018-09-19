@@ -15,7 +15,7 @@ class UserSerializer(ModelSerializer):
     The serializer for User Objects
     """
     included_serializers = {
-        'groups': 'webdjangular.apps.users.serializers.GroupSerializer.GroupSerializer'
+        'groups': 'webdjangular.core.users.serializers.GroupSerializer.GroupSerializer'
     }
 
     groups = ResourceRelatedField(

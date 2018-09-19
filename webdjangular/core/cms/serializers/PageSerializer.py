@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from webdjangular.apps.cms.models.Page import Page
+from webdjangular.core.cms.models.Page import Page
 
 
 class PageSerializer(ModelSerializer):
