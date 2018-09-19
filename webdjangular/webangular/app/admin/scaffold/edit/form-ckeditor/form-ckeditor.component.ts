@@ -1,7 +1,9 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+
 import { ScaffoldField } from '../../../../@core/interfaces/scaffold-field.interface';
 import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field-config.interface';
+
+import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
 
 import './form-ckeditor.loader';
 import 'ckeditor';
@@ -18,5 +20,5 @@ import 'ckeditor';
 })
 export class ScaffoldCkedtiorInputComponent implements ScaffoldField {
   config: ScaffoldFieldConfig;
-  group: FormGroup;
+  group: AbstractForm;
 }

@@ -1,7 +1,9 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+
 import { ScaffoldField } from '../../../../@core/interfaces/scaffold-field.interface';
 import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field-config.interface';
+
+import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
 
 @Component({
   selector: 'wda-form-input',
@@ -19,5 +21,5 @@ import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field
 })
 export class ScaffoldFormInputComponent implements ScaffoldField {
   config: ScaffoldFieldConfig;
-  group: FormGroup;
+  group: AbstractForm;
 }

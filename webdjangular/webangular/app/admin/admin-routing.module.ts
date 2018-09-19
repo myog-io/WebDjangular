@@ -20,7 +20,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'group',
-				loadChildren: './group/group.module#GroupModule' ,
+				loadChildren: './group/group.module#GroupModule',
 			},
 			{
 				path: 'pages',
