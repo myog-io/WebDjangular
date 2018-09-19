@@ -8,6 +8,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { UserModule } from './user/user.module';
 import { GroupModule } from './group/group.module';
 
+
 const ADMIN_COMPONENTS = [
   AdminComponent,
 ];
@@ -22,6 +23,7 @@ const ADMIN_COMPONENTS = [
   ],
   declarations: [
     ...ADMIN_COMPONENTS,
+
   ],
   exports:[
     AdminRoutingModule

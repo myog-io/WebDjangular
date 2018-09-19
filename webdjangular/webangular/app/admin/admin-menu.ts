@@ -18,10 +18,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Users',
         link: '/admin/user',
+        data: {
+          permission: [
+            {label: 'users', action: 'list_user'},
+          ]
+        }
       },
       {
         title: 'Groups',
-        link: '/admin/group'
+        link: '/admin/group',
+        data: {
+          permission: [
+            {label: 'auth', action: 'list_group'}
+          ]
+        }
       }
     ]
   },
