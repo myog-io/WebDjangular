@@ -25,7 +25,11 @@ const routes: Routes = [
 			{
 				path: 'pages',
 				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
-				data: {model:PageModel, title:"Page",path: 'pages'}
+				data: { 
+					model: PageModel,
+					title:"Page",
+					path: 'pages'
+				}
 			}
 	  	],
 	},
