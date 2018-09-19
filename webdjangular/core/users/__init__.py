@@ -11,7 +11,7 @@ def create_permissions(app_config, verbosity=2, interactive=True, using=DEFAULT_
         of this function, we cannot use the get_app_config outside and
         use the argument "sender" on the receiver.
     '''
-    UserConfig = apps.get_app_config('users');
+    UserConfig = apps.get_app_config('users')
 
     if app_config == UserConfig:
         from django.contrib.auth.models import Permission
@@ -30,7 +30,7 @@ def create_permissions(app_config, verbosity=2, interactive=True, using=DEFAULT_
         
         for perm in permsToCreate:
             if perm['content_type'] is not None:
-                check = Permission.objects.filter(codename=perm['codename']);
+                check = Permission.objects.filter(codename=perm['codename'])
                 
                 if check.count() == 0:
-                    Permission.objects.create(**perm);
+                    Permission.objects.create(**perm)

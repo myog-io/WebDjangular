@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 @Component({
-  selector: 'ngx-urls',
+  selector: 'wda-urls',
   template: `
-    <ngx-sample-layout>
-      <router-outlet></router-outlet>
-    </ngx-sample-layout>
+    <router-outlet></router-outlet>
   `,
 })
 export class UrlsComponent {

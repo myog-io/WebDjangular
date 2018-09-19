@@ -13,3 +13,7 @@ WebDjangular is a OpenSource Project, with the sole goal of building fast, scala
     - [Angular](https://angular.io/)
     - [Nebular & ngx-admin](https://github.com/akveo/ngx-admin)
 
+
+## Links
+
+- [Project Board - Trello](https://trello.com/b/XwAfBqmT/webdjangular)

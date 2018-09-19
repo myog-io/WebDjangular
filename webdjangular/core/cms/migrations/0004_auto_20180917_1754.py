@@ -20,8 +20,6 @@ class Migration(migrations.Migration):
             name='slug',
             field=models.SlugField(blank=True, default=None, max_length=255, null=True),
         ),
+        migrations.RunPython(create_firstpage)
     ]
 
-    operations = [
-    	migrations.RunPython(create_firstpage),
-    ]

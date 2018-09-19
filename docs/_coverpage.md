@@ -1,6 +1,6 @@
 ![logo](_media/icon.svg)
 
-# WebDjangular <small>1.0.0 (beta)</small>
+# WebDjangular <small>0.0.2 (work in progress)</small>
 
 > The new way to do Development.
 

@@ -11,6 +11,7 @@
 ## Links
 
 - [Documentation](http://webdjangular.com/)
+- [Project Board - Trello](https://trello.com/b/XwAfBqmT/webdjangular)
 
 ## Features
 
