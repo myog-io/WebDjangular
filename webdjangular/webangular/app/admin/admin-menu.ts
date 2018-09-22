@@ -20,7 +20,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/admin/core_themes',
         data: {
           permission: [
-            { label: 'core_themes', action: 'list_core_theme' },
+            { label: 'webdjango', action: 'list_core_theme' },
           ]
         }
       },
@@ -29,7 +29,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/admin/core_plugins',
         data: {
           permission: [
-            { label: 'core_plugin', action: 'list_core_plugin' },
+            { label: 'webdjango', // Name of the plugin on WebDjango side 
+             action: 'list_core_plugin' },
           ]
         }
       },

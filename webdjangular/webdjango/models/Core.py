@@ -44,7 +44,7 @@ class CoreConfig(models.Model):
         try:
             if not website:
                 website = Website.getCurrentWebsite()
-            return CoreConfig.objects.find(slug=slug, website=website).value
+            return CoreConfig.objects.filter(slug=slug, website=website).first().value
         except ObjectDoesNotExist:
             return None
 

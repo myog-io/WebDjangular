@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core'
-import {HttpClient} from '@angular/common/http';
-import {Theme} from "../interfaces/theme";
+import { HttpClient } from '@angular/common/http';
+import { Theme } from "../interfaces/theme";
 import 'rxjs/add/operator/map';
+import { UrlSegment } from '@angular/router';
 
 
 @Injectable({
@@ -21,19 +22,17 @@ export class WDAConfig {
 
     public WDAInit(): Promise<any> {
         return new Promise((resolve, reject) => {
-             let data = this.http.get('/api/init/').subscribe(
-             (data: any) => {
-                 this.populateWDAConfig(data.data);
-                 resolve(data.data);
-             },
-             (error: any) => {
-                 /* TODO: error on WDA Init */
-                 reject(error);
-              })
+            let data = this.http.get('/api/core_init/').subscribe(
+                (data: any) => {
+                    this.populateWDAConfig(data.data);
+                    console.log(data)
+                    resolve(data.data);
+                },
+                (error: any) => {
+                    /* TODO: error on WDA Init */
+                    reject(error);
+                })
         });
-
-
-
     }
 
     private populateWDAConfig(data: any) {
@@ -48,15 +47,12 @@ export class WDAConfig {
         }
     }
 
-
-
-
     public getTheme() {
         return this.theme;
     }
 
-    public getThemePath(){
-        return "../../themes/"+ this.theme.name + "/angular/" + this.theme.name  + ".module#"+ this.theme.module;
+    public getThemePath() {
+        return "../../themes/" + this.theme.name + "/angular/" + this.theme.name + ".module#" + this.theme.module;
     }
 
     public setTheme(data: any) {
@@ -89,6 +85,30 @@ export class WDAConfig {
         /* TODO: dispatch a event onLocaleChange */
     }
 
-
+    /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
+    public getHome(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let data = this.http.get('/api/core_init/get_home/').subscribe(
+                (data: any) => {
+                    resolve(data.data);
+                },
+                (error: any) => {
+                    /* TODO: error on WDA Init */
+                    reject(error);
+                })
+        });
+    }
+    public getPages(path: UrlSegment[]): Promise<any> {
+        return new Promise((resolve, reject) => {
+            let data = this.http.post('/api/core_init/get_content/',{path:path}).subscribe(
+                (data: any) => {
+                    resolve(data.data);
+                },
+                (error: any) => {
+                    /* TODO: error on WDA Init */
+                    reject(error);
+                })
+        });
+    }
 
 }

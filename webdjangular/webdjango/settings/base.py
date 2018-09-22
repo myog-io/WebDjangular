@@ -33,11 +33,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    
     'webdjangular.webdjango',
     'webdjangular.core.users',
     'webdjangular.core.cms',
-    'webdjangular.core.init',
     'rest_framework_json_api',
     'url_filter',
     'django_extensions',
@@ -68,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'webdjangular.webdjango.utils.CurrentWebsiteMiddleware.CurrentWebsiteMiddleware'
 ]
 
 ROOT_URLCONF = 'webdjangular.webdjango.urls'
