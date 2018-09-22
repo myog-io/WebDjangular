@@ -10,6 +10,15 @@ SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and developm
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 'data' is my media folder
+
+MEDIA_URL = '/media/'
+
+THEME_DIR = os.path.join(BASE_DIR, 'themes')
+
+PLUGIN_DIR = os.path.join(BASE_DIR, 'plugins')
+
+
 DEBUG = False
 
 ALLOWED_HOSTS = []

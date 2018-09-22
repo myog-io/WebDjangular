@@ -50,12 +50,12 @@ export class AdminComponent {
 							if (typeof permissions[permLabelIndex] !== 'undefined'){
 								//we do a OR for the permission (it must have at least 1)
 								if (permissions[permLabelIndex].indexOf(permActionName) == -1){
-									menuList[i].hidden = true;
+									//menuList[i].hidden = true;
 									break;
 								}
 							}
 							else{
-								menuList[i].hidden = true;
+								//menuList[i].hidden = true;
 							}
 						}
 					}

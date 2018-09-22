@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(auto_now=True)),
             ],
             options={
-                'db_table': 'core_authors',
+                'db_table': 'core_author',
             },
         ),
         migrations.CreateModel(
@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='themes', to='webdjango.Author')),
             ],
             options={
-                'db_table': 'core_themes',
+                'db_table': 'core_theme',
             },
         ),
         migrations.AddField(

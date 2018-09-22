@@ -6,6 +6,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageModel } from '../@core/data/models/Page.model';
 
 import { PermissionGuard } from '../@core/services/permission-guard.service';
+import { ThemeModel } from '../@core/data/models/Theme.model';
+import { PluginModel } from '../@core/data/models/Plugin.model';
 
 const routes: Routes = [
 	{
@@ -31,6 +33,24 @@ const routes: Routes = [
 					model: PageModel,
 					title:"Page",
 					path: 'pages'
+				}
+			},
+			{
+				path: 'core_themes',
+				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				data: { 
+					model: ThemeModel,
+					title:"Theme",
+					path: 'core_themes'
+				}
+			},
+			{
+				path: 'core_plugins',
+				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				data: { 
+					model: PluginModel,
+					title:"Plugin",
+					path: 'core_plugins'
 				}
 			}
 	  	],

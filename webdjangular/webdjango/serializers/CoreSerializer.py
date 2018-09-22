@@ -1,8 +1,25 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework.serializers import ValidationError
 
-from webdjangular.webdjango.models.Core import Author, Theme, App
+from webdjangular.webdjango.models.Core import Author, Theme, Plugin, CoreConfig, Website
 
+
+class WebsiteSerializer(ModelSerializer):
+    """
+    The serializer for Websites
+    """
+    class Meta:
+        model = Website
+        fields = '__all__'
+
+
+class CoreConfigSerializer(ModelSerializer):
+    """
+    The serializer for CoreConfigs
+    """
+    class Meta:
+        model = CoreConfig
+        fields = '__all__'
 
 class AuthorSerializer(ModelSerializer):
     """
@@ -13,18 +30,18 @@ class AuthorSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class AppSerializer(ModelSerializer):
+class PluginSerializer(ModelSerializer):
     """
-    The serializer for Themes
+    The serializer for Plugins
     """
     class Meta:
-        model = App
+        model = Plugin
         fields = '__all__'
 
 
 class ThemeSerializer(ModelSerializer):
     """
-    The serializer for Apps
+    The serializer for Themes
     """
     class Meta:
         model = Theme

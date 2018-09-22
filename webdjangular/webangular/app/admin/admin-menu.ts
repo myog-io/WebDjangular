@@ -16,11 +16,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fas fa-cog',
     children: [
       {
+        title: 'Themes',
+        link: '/admin/core_themes',
+        data: {
+          permission: [
+            { label: 'core_themes', action: 'list_core_theme' },
+          ]
+        }
+      },
+      {
+        title: 'Plugins',
+        link: '/admin/core_plugins',
+        data: {
+          permission: [
+            { label: 'core_plugin', action: 'list_core_plugin' },
+          ]
+        }
+      },
+      {
         title: 'Users',
         link: '/admin/user',
         data: {
           permission: [
-            {label: 'users', action: 'list_user'},
+            { label: 'users', action: 'list_user' },
           ]
         }
       },
@@ -29,7 +47,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/admin/group',
         data: {
           permission: [
-            {label: 'auth', action: 'list_group'}
+            { label: 'auth', action: 'list_group' }
           ]
         }
       }
