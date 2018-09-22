@@ -22,11 +22,7 @@ export class UrlsComponent {
     {
         this.domain = document.location.hostname;
         this.url = document.location.protocol + '//' + this.domain;
-        console.log("URL",this.activatedRoute.url['value']);
-        console.log("params",this.activatedRoute.params['value']);
-        
         activatedRoute.url.subscribe((segments: UrlSegment[]) => {
-            console.log("SEGMENTS????",segments)
             if (segments.length <= 0) {
                 this.HomePage();
             } else {
@@ -42,7 +38,6 @@ export class UrlsComponent {
         )
     }
     private LoadPages(segments: UrlSegment[]) {
-        console.log("NOW LOAD OTHER FUCKING PAGE", segments);
         this.wdaConfig.getPages(segments).then(data => {
             console.log(data)
         }

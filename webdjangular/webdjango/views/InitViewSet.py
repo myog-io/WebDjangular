@@ -41,8 +41,9 @@ class InitViewSet(viewsets.GenericViewSet):
         """
         Return Content for Other Pages based on slug
         """
+        print("HERE?????")
         # First let's get the page based on the data sent
-
+        print(request.data)
         serializer = PageSerializer(
             Page.objects.get(
                 slug='/'.join(request.data.path)  # Gluing Path Toguether
@@ -58,6 +59,7 @@ class InitViewSet(viewsets.GenericViewSet):
 
         # If we dont find the page we return 404
         response = {
+            "data": "NOT WORKING",
             "message": "Not Found"
         }
         return Response(response, status=404)

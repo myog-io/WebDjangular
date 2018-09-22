@@ -100,7 +100,7 @@ export class WDAConfig {
     }
     public getPages(path: UrlSegment[]): Promise<any> {
         return new Promise((resolve, reject) => {
-            let data = this.http.post('/api/core_init/get_content/',{path:path}).subscribe(
+            let data = this.http.post('/api/core_init/get_content/',{data:{path:path }}).subscribe(
                 (data: any) => {
                     resolve(data.data);
                 },

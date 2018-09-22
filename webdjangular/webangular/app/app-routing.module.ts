@@ -50,15 +50,16 @@ const routes: Routes = [
         ],
     },
     {path: 'admin/', redirectTo: 'admin', pathMatch: 'full'},
-    {path: 'admin/**', redirectTo: 'admin'},
-    {
-        path: '**',
-        loadChildren: 'app/urls/urls.module#UrlsModule',
-    }
+    {path: 'admin/**', redirectTo: 'admin', pathMatch: 'full'},
+    { 
+        path: '', 
+        loadChildren: 'app/urls/urls.module#UrlsModule' ,
+    },
 ];
 
 const config: ExtraOptions = {
     useHash: false,
+
 };
 
 @NgModule({
