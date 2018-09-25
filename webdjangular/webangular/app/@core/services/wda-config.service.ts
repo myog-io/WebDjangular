@@ -3,21 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Theme } from "../interfaces/theme";
 import 'rxjs/add/operator/map';
 import { UrlSegment } from '@angular/router';
-
+import { WebAngularDataStore } from '../data/data-store/WebAngularDataStore.service';
+import { PageModel } from '../data/models/Page.model';
+import { JsonApiQueryData } from 'angular2-jsonapi';
 
 @Injectable({
     providedIn: 'root',
 })
 export class WDAConfig {
-
+    
     private locale_list: object;
     private locale_active: string;
     private plugins: object;
     private theme: Theme;
 
 
-    constructor(private http: HttpClient) {
-
+    constructor(private http: HttpClient,
+        private datastore: WebAngularDataStore,) {
+            
     }
 
     public WDAInit(): Promise<any> {
@@ -25,7 +28,6 @@ export class WDAConfig {
             let data = this.http.get('/api/core_init/').subscribe(
                 (data: any) => {
                     this.populateWDAConfig(data.data);
-                    console.log(data)
                     resolve(data.data);
                 },
                 (error: any) => {
@@ -88,26 +90,28 @@ export class WDAConfig {
     /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
     public getHome(): Promise<any> {
         return new Promise((resolve, reject) => {
-            let data = this.http.get('/api/core_init/get_home/').subscribe(
-                (data: any) => {
-                    resolve(data.data);
+            this.datastore.findRecord(PageModel,null,null,null,'/api/page/get_home/').subscribe(
+                (page: PageModel) => {
+                    resolve(page);
                 },
                 (error: any) => {
-                    /* TODO: error on WDA Init */
                     reject(error);
-                })
+                }
+            )
         });
     }
-    public getPages(path: UrlSegment[]): Promise<any> {
+    
+    public getPage(path: UrlSegment[]): Promise<any> {
         return new Promise((resolve, reject) => {
-            let data = this.http.post('/api/core_init/get_content/',{data:{path:path }}).subscribe(
-                (data: any) => {
-                    resolve(data.data);
+            this.datastore.findAll(PageModel,{slug: path.join('|')} ).subscribe(
+                (response: JsonApiQueryData<PageModel>) => {
+                    let models = response.getModels();
+                    resolve(models[0]);
                 },
                 (error: any) => {
-                    /* TODO: error on WDA Init */
                     reject(error);
-                })
+                }
+            )
         });
     }
 

@@ -104,7 +104,12 @@ class Plugin(DirtyFieldsMixin, models.Model):
         """
         plugins_config = DynamicLoader.getPluginsConfig()
         for config in plugins_config:
-            plugin, created = Plugin.objects.get_or_create(config.plugin)
+            ## Creating Author
+            if config['author'] :
+                author, created = Author.objects.get_or_create(config['author'])
+            config['plugin']['author'] = author
+
+            plugin, created = Plugin.objects.get_or_create(config['plugin'])
             if not created:
                 # Item Created Before, let's check for the version difference
                 if LooseVersion(config.plugin.version) > LooseVersion(plugin.current_version):
@@ -161,6 +166,13 @@ class Theme(DirtyFieldsMixin, models.Model):
                     config['theme']['parent_theme'] = None
             else:
                 config['theme']['parent_theme'] = None
+
+
+            ## Creating Author
+            if config['author'] :
+                author, created = Author.objects.get_or_create(config['author'])
+            config['theme']['author'] = author
+
             theme, created = Theme.objects.get_or_create(config['theme'])
             if not created:
                 # Item Created Before, let's check for the version difference

@@ -31,12 +31,9 @@ export class WebAngularSmartTableDataSource extends LocalDataSource  {
 
 	getElements(): Promise<any> {
 
-		let findOptions = {
-			page: this.buildPageOptions(),
-			filter: this.buildFilterOptions(),
-		};
-
-
+		let findOptions: any = this.buildFilterOptions();
+		findOptions.page = this.buildPageOptions();
+		
 		return this.datastore.findAll(this.model, findOptions).pipe(map(res => {
 			this.meta = res.getMeta();
 			this.data = res.getModels();
@@ -64,7 +61,11 @@ export class WebAngularSmartTableDataSource extends LocalDataSource  {
 		let filters = {};
 
 		for (let i=0; i < this.filterConf.filters.length; i++){
-			filters[this.filterConf.filters[i].field + '__contains'] = this.filterConf.filters[i].search;
+			//filters[this.filterConf.filters[i].field + '__contains'] = this.filterConf.filters[i].search;
+			if( this.filterConf.filters[i].search ){
+				filters[this.filterConf.filters[i].field] = this.filterConf.filters[i].search;
+			}
+			
 		}
 		
 		return filters;

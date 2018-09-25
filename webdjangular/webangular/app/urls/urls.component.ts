@@ -34,13 +34,11 @@ export class UrlsComponent {
     private HomePage() {
         this.wdaConfig.getHome().then(data => {
             console.log(data)
-        }
-        )
+        })
     }
     private LoadPages(segments: UrlSegment[]) {
-        this.wdaConfig.getPages(segments).then(data => {
+        this.wdaConfig.getPage(segments).then(data => {
             console.log(data)
-        }
-        )
+        })
     }
 }

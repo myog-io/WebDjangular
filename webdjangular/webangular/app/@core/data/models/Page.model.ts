@@ -40,6 +40,7 @@ export class PageModel extends AbstractModel {
 
     set pk(value){
         
-	}
+    }
+   
 }
 

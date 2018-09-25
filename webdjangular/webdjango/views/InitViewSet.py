@@ -17,52 +17,9 @@ class InitViewSet(viewsets.GenericViewSet):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
     permission_classes = (permissions.AllowAny,)
+    
 
-    @action(methods=['GET'], detail=False, url_path='get_home')
-    def get_home(self, request, format=None):
-        """
-        Return the Home Page
-        """
-        serializer = PageSerializer(
-            Page.objects.get(
-                pk=CoreConfig.read(slug=CONFIG_HOME_PAGE,
-                                   website=request.website)
-            )
-        )
-        # TODO: Get the Plugin Name Related to the Page
-        response = {
-            "data": serializer.data,
-            "plugin": "PLUGIN_NAME",
-        }
-        return Response(response)
-
-    @action(methods=['POST'], detail=False, url_path='get_content')
-    def get_content(self, request, format=None):
-        """
-        Return Content for Other Pages based on slug
-        """
-        print("HERE?????")
-        # First let's get the page based on the data sent
-        print(request.data)
-        serializer = PageSerializer(
-            Page.objects.get(
-                slug='/'.join(request.data.path)  # Gluing Path Toguether
-            ).first()
-        )
-        if serializer:
-            # TODO: Get the Plugin Name Related to the Page
-            response = {
-                "data": serializer.data,
-                "plugin": "PLUGIN_NAME",
-            }
-            return Response(response)
-
-        # If we dont find the page we return 404
-        response = {
-            "data": "NOT WORKING",
-            "message": "Not Found"
-        }
-        return Response(response, status=404)
+    
 
     def list(self, request, format=None):
         """

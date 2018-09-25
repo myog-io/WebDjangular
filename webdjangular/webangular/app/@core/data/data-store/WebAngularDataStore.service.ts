@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { JsonApiDatastoreConfig, JsonApiDatastore, DatastoreConfig, JsonApiModel } from 'angular2-jsonapi';
-
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { JsonApiDatastoreConfig, JsonApiDatastore, DatastoreConfig, JsonApiModel, ModelType } from 'angular2-jsonapi';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 
 import { modelList } from '../models/models.list';
 
@@ -21,7 +23,42 @@ export class WebAngularDataStore extends JsonApiDatastore {
     constructor(http: HttpClient){
         super(http);
     }
-    
+	
+	get<T extends JsonApiModel>(
+		modelType: ModelType<T>,
+		params?: any,
+		headers?: Headers,
+		customUrl?: string,
+		id?:any,
+	): Observable<any> {
+		const url: string = this.buildUrl(modelType, params, id, customUrl)
+		return this.http.get(url,{headers: this.buildHeaders(headers)})
+		.map((res:any) => {
+			console.log(res)
+			this.extractQueryData(res, modelType, true)
+		} )
+		.catch((res:any) => this.handleError(res));
+
+	}
+
+	post<T extends JsonApiModel>(
+		modelType: ModelType<T>,
+		params?: any,
+		headers?: Headers,
+		customUrl?: string,
+		attributesMetadata?: any,
+		id?:any,
+	): Observable<T> {
+		const requestHeaders: HttpHeaders = this.buildHeaders(headers);
+		const url: string = this.buildUrl(modelType, params, id, customUrl);
+		const body: any = {
+		  data: params
+		};
+	
+		return this.http.post(url, body, { headers: requestHeaders, observe: 'response' })
+		.map((res:any) => this.extractQueryData(res, modelType, true))
+		.catch((res:any) => this.handleError(res));
+	  }
 
     saveHasManyRelationship<T extends JsonApiModel>(hasManyFields=[], modelConfig={}, extraOptions = {}, model: JsonApiModel): Observable<any>{
 		return new Observable((observe) => {

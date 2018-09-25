@@ -1,25 +1,35 @@
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action, permission_classes
-from rest_framework.mixins import CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
-from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED
-from rest_framework.status import HTTP_204_NO_CONTENT
-from rest_framework.status import HTTP_400_BAD_REQUEST
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, \
+    ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT, \
+    HTTP_400_BAD_REQUEST
+from rest_framework.viewsets import GenericViewSet
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.filterset import FilterSet
 
 from webdjangular.core.users.models import User
 from webdjangular.core.users.permissions.UpdateOwnUser import UpdateOwnUser
 from webdjangular.core.users.serializers.ForgetPasswordSerializer import ForgetPasswordSerializer
+from webdjangular.core.users.serializers.PermissionSerializer import PermissionSerializer
 from webdjangular.core.users.serializers.SetPasswordSerializer import SetPasswordSerializer
 from webdjangular.core.users.serializers.UserSerializer import UserSerializer
-from webdjangular.core.users.serializers.PermissionSerializer import PermissionSerializer
-
 from webdjangular.webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
+
+class UserFilter(FilterSet):
+    class Meta:
+        model = User
+        fields = {
+            'id': ['in'],
+            'first_name': ['contains','exact'],
+            'last_name': ['contains','exact'],
+        }
+
 
 class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet, DestroyModelMixin):
     """
@@ -29,13 +39,14 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
     Retrieve a specific User
     Update an User
     """
-    resource_name = 'user';
+    resource_name = 'user'
     serializer_class = UserSerializer
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
     permission_classes = (AuthenticatedViewsetPermission, )
-    search_fields = ('=first_name', 'last_name', 'email', 'username')
+    search_fields = ('id','first_name', 'last_name', 'email', 'username') # Search field is for the Search Filter ?search=
+    filter_class = UserFilter
     
 
     @action(methods=['post'], detail=False, url_path='forget-password')

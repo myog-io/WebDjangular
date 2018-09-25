@@ -10,6 +10,18 @@ from webdjangular.webdjango.serializers.CoreSerializer import PluginSerializer, 
     WebsiteSerializer
 
 from webdjangular.webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
+from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.filterset import FilterSet
+
+class WebsiteFilter(FilterSet):
+    class Meta:
+        model = Website
+        fields = {
+            'id': ['in'],
+            'domain': ['contains','exact'],
+            'code': ['contains','exact'],
+        }
+
 
 class WebsiteViewSet(ModelViewSet):
     """
@@ -19,9 +31,19 @@ class WebsiteViewSet(ModelViewSet):
     queryset = Website.objects.all()
     serializer_class = WebsiteSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter,)
+    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('domain', 'code')
+    filter_class = WebsiteFilter
     permission_classes = (AuthenticatedViewsetPermission,)
+
+class CoreConfigFilter(FilterSet):
+    class Meta:
+        model = CoreConfig
+        fields = {
+            'id': ['in'],
+            'website': ['exact'],
+            'slug': ['contains','exact'],
+        }
 
 class CoreConfigViewSet(ModelViewSet):
     """
@@ -31,10 +53,20 @@ class CoreConfigViewSet(ModelViewSet):
     queryset = CoreConfig.objects.all()
     serializer_class = CoreConfigSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter,)
+    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('website', 'slug')
+    filter_class = CoreConfigFilter
     permission_classes = (AuthenticatedViewsetPermission,)
     
+class AuthorFilter(FilterSet):
+    class Meta:
+        model = Author
+        fields = {
+            'id': ['in'],
+            'name': ['contains','exact'],
+            'email': ['contains','exact'],
+            'website': ['contains','exact'],
+        }
 
 class AuthorViewSet(ModelViewSet):
     """
@@ -44,11 +76,21 @@ class AuthorViewSet(ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter,)
+    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'email', 'website')
     permission_classes = (AuthenticatedViewsetPermission,)
-   
+    filter_class = AuthorFilter
 
+    
+class PluginFilter(FilterSet):
+    class Meta:
+        model = Plugin
+        fields = {
+            'id': ['in'],
+            'name': ['contains','exact'],
+            'slug': ['contains','exact'],
+        }
+            
 class PluginViewSet(ModelViewSet):
     """
     ViewSet to view all Apps.
@@ -57,9 +99,10 @@ class PluginViewSet(ModelViewSet):
     queryset = Plugin.objects.all()
     serializer_class = PluginSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter,)
+    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'slug')
     permission_classes = (AuthenticatedViewsetPermission,)
+    filter_class =PluginFilter
     """
     List a queryset.
     """
@@ -67,6 +110,16 @@ class PluginViewSet(ModelViewSet):
         ## Adding the Script to update all the Themes, before listing it!
         Plugin.update_list()
         return super(PluginViewSet, self).list(request, args, **kwargs)
+
+class ThemeFilter(FilterSet):
+    class Meta:
+        model = Theme
+        fields = {
+            'id': ['in'],
+            'name': ['contains','exact'],
+            'slug': ['contains','exact'],
+        }
+            
 
 class ThemeViewSet(ModelViewSet):
     """
@@ -76,9 +129,10 @@ class ThemeViewSet(ModelViewSet):
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter,)
+    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'slug')
     permission_classes = (AuthenticatedViewsetPermission,)
+    filter_class = ThemeFilter
 
     """
     List a queryset.
