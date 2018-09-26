@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { UrlsRoutingModule } from './urls-routing.module';
 import { UrlsComponent } from './urls.component';
+import { DynamicComponentLoaderModule } from '../dynamic-component-loader/dynamic-component-loader.module';
+import { themeManifest } from '../../../themes/pudim/theme-component-manifest';
+
 
 const COMPONENTS = [
   UrlsComponent,
@@ -9,6 +12,7 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     UrlsRoutingModule,
+    DynamicComponentLoaderModule.forRoot(themeManifest),
   ],
   declarations: [
     ...COMPONENTS,

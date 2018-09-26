@@ -60,7 +60,7 @@ export class PageForm extends AbstractForm {
             placeholder: 'Enter Page Url (slug)',
         },
         {
-            type: 'ckeditor',
+            type: 'codeEditor',
             label: 'Page Content',
             name: 'content',
         },

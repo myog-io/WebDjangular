@@ -1,24 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { UrlSegment, ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 
 import { WDAConfig } from '../@core/services/wda-config.service';
+import { DynamicComponentLoader } from '../dynamic-component-loader/dynamic-component-loader.service';
 
 
 @Component({
     selector: 'wda-urls',
     template: `
-    <router-outlet></router-outlet>
+    <div #componentOutlet></div>
   `,
 })
 export class UrlsComponent {
     private url = null;
     private domain = null;
     private paramSubscription;
+
+    @ViewChild('componentOutlet', {read: ViewContainerRef}) componentOutlet: ViewContainerRef;
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private wdaConfig: WDAConfig)
+        private wdaConfig: WDAConfig,
+        private componentLoader: DynamicComponentLoader)
     {
         this.domain = document.location.hostname;
         this.url = document.location.protocol + '//' + this.domain;
@@ -34,6 +39,15 @@ export class UrlsComponent {
     private HomePage() {
         this.wdaConfig.getHome().then(data => {
             console.log(data)
+            this.componentLoader
+            .getComponentFactory<any>('page')
+            .subscribe(factory => {
+                const ref = this.componentOutlet.createComponent(factory);
+                ref.instance.data = data;
+                ref.changeDetectorRef.detectChanges();
+            }, error => {
+                console.warn(error);
+            })
         })
     }
     private LoadPages(segments: UrlSegment[]) {

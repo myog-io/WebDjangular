@@ -23,8 +23,6 @@ import {JsonApiModule} from 'angular2-jsonapi';
 import {AppHttpInterceptor} from './@core/interceptors/apphttp.interceptor';
 import {WDAConfig} from "./@core/services/wda-config.service";
 
-
-
 export function wda_init(wdaconfig: WDAConfig) {
     return () => wdaconfig.WDAInit();
 }
@@ -40,6 +38,7 @@ export function wda_init(wdaconfig: WDAConfig) {
         NgbModule.forRoot(),
         ThemeModule.forRoot(),
         CoreModule.forRoot(),
+        
     ],
     bootstrap: [AppComponent],
     providers: [

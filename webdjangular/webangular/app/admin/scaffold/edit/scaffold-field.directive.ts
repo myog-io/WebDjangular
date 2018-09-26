@@ -6,13 +6,15 @@ import { ScaffoldFieldConfig } from '../../../@core/interfaces/scaffold-field-co
 import { ScaffoldFormButtonComponent } from './form-button/form-button.component';
 import { ScaffoldFormInputComponent } from './form-input/form-input.component';
 import { ScaffoldFormSelectComponent } from './form-select/form-select.component';
-import { ScaffoldCkedtiorInputComponent } from './form-ckeditor/form-ckeditor.component';
+import { ScaffoldCkeditorInputComponent } from './form-ckeditor/form-ckeditor.component';
+import { ScaffoldFormCodeComponent } from './form-code/form-code.component';
 
 const components: {[type: string]: Type<ScaffoldField>} = {
   button: ScaffoldFormButtonComponent,
   input: ScaffoldFormInputComponent,
   select: ScaffoldFormSelectComponent,
-  ckeditor: ScaffoldCkedtiorInputComponent,
+  ckeditor: ScaffoldCkeditorInputComponent,
+  codeEditor: ScaffoldFormCodeComponent,
 };
 
 @Directive({

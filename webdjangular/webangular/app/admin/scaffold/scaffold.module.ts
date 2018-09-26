@@ -11,14 +11,17 @@ import { ScaffoldFormSelectComponent } from './edit/form-select/form-select.comp
 import { ScaffoldFieldDirective } from './edit/scaffold-field.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ScaffoldCkedtiorInputComponent } from './edit/form-ckeditor/form-ckeditor.component';
+import { ScaffoldCkeditorInputComponent } from './edit/form-ckeditor/form-ckeditor.component';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
 
 const ENTRY_COMPONENTS = [
   ScaffoldFormButtonComponent,
   ScaffoldFormInputComponent,
   ScaffoldFormSelectComponent,
-  ScaffoldCkedtiorInputComponent
+  ScaffoldCkeditorInputComponent,
+  ScaffoldFormCodeComponent
 ]
 
 const COMPONENTS = [
@@ -34,7 +37,8 @@ const COMPONENTS = [
     Ng2SmartTableModule,
     ReactiveFormsModule,
     CommonModule,
-    CKEditorModule
+    CKEditorModule,
+    MonacoEditorModule.forRoot()
 
   ],
   declarations: [

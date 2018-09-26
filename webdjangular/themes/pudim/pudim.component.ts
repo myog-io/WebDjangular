@@ -12,10 +12,14 @@ import {ViewEncapsulation} from "@angular/core";
 })
 
 export class PudimComponent implements OnInit{
+    public data: any;
     constructor(private router: Router) {
+    
     }
 
     ngOnInit(){
+
+        console.log("INSIDE PUDIM",this.data);
     }
 
 }
