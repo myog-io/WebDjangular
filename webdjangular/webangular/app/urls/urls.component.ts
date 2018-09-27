@@ -35,24 +35,27 @@ export class UrlsComponent {
             }
         });
     }
-
+    private loadComponent(component_id:string,data:any) {
+        this.componentLoader
+        .getComponentFactory<any>(component_id)
+        .subscribe(factory => {
+            const ref = this.componentOutlet.createComponent(factory);
+            ref.instance.data = data;
+            ref.changeDetectorRef.detectChanges();
+        }, error => {
+            console.warn(error);
+        })
+    }
     private HomePage() {
         this.wdaConfig.getHome().then(data => {
-            console.log(data)
-            this.componentLoader
-            .getComponentFactory<any>('page')
-            .subscribe(factory => {
-                const ref = this.componentOutlet.createComponent(factory);
-                ref.instance.data = data;
-                ref.changeDetectorRef.detectChanges();
-            }, error => {
-                console.warn(error);
-            })
+            this.loadComponent('page',data);
+            // TODO: LOAD ERROR 500 or 400
         })
     }
     private LoadPages(segments: UrlSegment[]) {
         this.wdaConfig.getPage(segments).then(data => {
-            console.log(data)
+            this.loadComponent('page',data);
+            // TODO: LOAD ERROR 500 or 400
         })
     }
 }

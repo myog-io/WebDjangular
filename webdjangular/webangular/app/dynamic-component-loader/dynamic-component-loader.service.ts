@@ -1,9 +1,10 @@
-import { ComponentFactory, Inject, Injectable, Injector, NgModuleFactoryLoader } from '@angular/core';
+import { ComponentFactory, Inject, Injectable, Injector, NgModuleFactoryLoader, Compiler, Component, NgModule, ModuleWithComponentFactories } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise as ObservableFromPromise } from 'rxjs/observable/fromPromise';
 import { _throw as ObservableThrow } from 'rxjs/observable/throw';
 
 import { DYNAMIC_COMPONENT, DYNAMIC_COMPONENT_MANIFESTS, DynamicComponentManifest } from './dynamic-component-manifest';
+import { CommonModule } from '@angular/common';
 
 @Injectable()
 export class DynamicComponentLoader {
@@ -12,6 +13,7 @@ export class DynamicComponentLoader {
         @Inject(DYNAMIC_COMPONENT_MANIFESTS) private manifests: DynamicComponentManifest[],
         private loader: NgModuleFactoryLoader,
         private injector: Injector,
+        private compiler: Compiler,
     ) { }
 
     /** Retrieve a ComponentFactory, based on the specified componentId (defined in the DynamicComponentManifest array). */
@@ -36,5 +38,17 @@ export class DynamicComponentLoader {
             });
 
         return ObservableFromPromise(p);
+    }
+
+    createComponentFactorySync(metadata: Component, componentClass?: any, cmpiler?: Compiler): ComponentFactory<any> {
+        const compiler = cmpiler || this.compiler;
+        const cmpClass = componentClass || class RuntimeComponent { name: string = 'Denys' };
+        const decoratedCmp = Component(metadata)(cmpClass);
+
+        @NgModule({ imports: [CommonModule], declarations: [decoratedCmp] })
+        class RuntimeComponentModule { }
+
+        let module: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(RuntimeComponentModule);
+        return module.componentFactories.find(f => f.componentType === decoratedCmp);
     }
 }

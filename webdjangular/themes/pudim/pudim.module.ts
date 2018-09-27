@@ -48,6 +48,7 @@ const COMPONENTS = [
     declarations: [
         ...COMPONENTS,
     ],
+    bootstrap: [TestFormComponent]
 })
 export class PudimModule {
 }

@@ -7,6 +7,7 @@ import { themeManifest } from '../../../themes/pudim/theme-component-manifest';
 
 const COMPONENTS = [
   UrlsComponent,
+  
 ];
 
 @NgModule({
