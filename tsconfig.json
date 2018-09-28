@@ -1,24 +1,37 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "target": "es5",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "lib": [
-            "es2017",
-            "dom"
-        ],
-        "plugins": [
-            {
-                "name": "tslint-language-service"
-            }
-        ]
+  "compileOnSave": false,
+  "compilerOptions": {
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@webdjangular/core/users": [
+        "libs/core/users/src/index.ts"
+      ],
+      "@webdjangular/core/cms": [
+        "libs/core/cms/src/index.ts"
+      ],
+      "@webdjangular/themes/cleanog": [
+        "libs/themes/cleanog/src/index.ts"
+      ],
+      "@webdjangular/plugins/contact-form": [
+        "libs/plugins/contact-form/src/index.ts"
+      ]
     }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

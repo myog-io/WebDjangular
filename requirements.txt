@@ -1,1 +1,1 @@
--r requirements/base.txt
+-r webdjango/requirements/base.txt
