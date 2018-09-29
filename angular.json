@@ -354,6 +354,34 @@
           }
         }
       }
+    },
+    "core-shared": {
+      "root": "libs/core/shared",
+      "sourceRoot": "libs/core/shared/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/shared/src/test.ts",
+            "tsConfig": "libs/core/shared/tsconfig.spec.json",
+            "karmaConfig": "libs/core/shared/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/shared/tsconfig.lib.json",
+              "libs/core/shared/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

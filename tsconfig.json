@@ -27,6 +27,9 @@
       ],
       "@webdjangular/plugins/contact-form": [
         "libs/plugins/contact-form/src/index.ts"
+      ],
+      "@webdjangular/core/shared": [
+        "libs/core/shared/src/index.ts"
       ]
     }
   },
