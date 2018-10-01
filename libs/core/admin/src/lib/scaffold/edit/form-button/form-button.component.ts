@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { ScaffoldField } from '../../../../@core/interfaces/scaffold-field.interface';
-import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field-config.interface';
+import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 
-import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
 
 @Component({
   selector: 'wda-form-button',
   styleUrls: ['form-button.component.scss'],
   template: `
-    <div 
+    <div
       class="dynamic-field form-button"
       [formGroup]="group">
       <button type="submit" class="btn btn-hero-primary" [disabled]="config.disabled">{{ config.label }}</button>

@@ -1,13 +1,12 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ScaffoldField } from '../../../@core/interfaces/scaffold-field.interface';
-import { ScaffoldFieldConfig } from '../../../@core/interfaces/scaffold-field-config.interface';
 import { ScaffoldFormButtonComponent } from './form-button/form-button.component';
 import { ScaffoldFormInputComponent } from './form-input/form-input.component';
 import { ScaffoldFormSelectComponent } from './form-select/form-select.component';
 import { ScaffoldCkeditorInputComponent } from './form-ckeditor/form-ckeditor.component';
 import { ScaffoldFormCodeComponent } from './form-code/form-code.component';
+import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 
 const components: {[type: string]: Type<ScaffoldField>} = {
   button: ScaffoldFormButtonComponent,
@@ -18,7 +17,7 @@ const components: {[type: string]: Type<ScaffoldField>} = {
 };
 
 @Directive({
-  selector: '[scaffoldDynamicField]'
+  selector: '[webdjangularScaffoldDynamicField]'
 })
 export class ScaffoldFieldDirective implements ScaffoldField, OnChanges, OnInit {
   @Input()

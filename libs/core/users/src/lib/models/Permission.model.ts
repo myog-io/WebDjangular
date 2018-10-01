@@ -1,8 +1,6 @@
 import {
   JsonApiModelConfig,
-  JsonApiModel,
   Attribute,
-  HasMany,
   BelongsTo
 } from 'angular2-jsonapi';
 

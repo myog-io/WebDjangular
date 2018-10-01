@@ -8,6 +8,9 @@ import { PageModel } from '@webdjangular/core/cms-models';
 import { PermissionGuard } from '@webdjangular/core/services';
 import { ThemeModel } from '@webdjangular/core/data-models';
 import { PluginModel } from '@webdjangular/core/data-models';
+import { ScaffoldModule } from './scaffold/scaffold.module';
+import { GroupModule } from './group/group.module';
+import { UserModule } from './user/user.module';
 
 const routes: Routes = [
 	{
@@ -20,15 +23,15 @@ const routes: Routes = [
 			},
 			{
 				path: 'user',
-				loadChildren: './user/user.module#UserModule',
+				loadChildren: () => UserModule,
 			},
 			{
 				path: 'group',
-				loadChildren: './group/group.module#GroupModule',
+				loadChildren: () => GroupModule,
 			},
 			{
 				path: 'pages',
-				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				loadChildren: () => ScaffoldModule,
 				data: {
 					model: PageModel,
 					title:"Page",
@@ -37,7 +40,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'core_themes',
-				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				loadChildren: () => ScaffoldModule,
 				data: {
 					model: ThemeModel,
 					title:"Theme",
@@ -46,7 +49,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'core_plugins',
-				loadChildren: './scaffold/scaffold.module#ScaffoldModule',
+				loadChildren: () => ScaffoldModule,
 				data: {
 					model: PluginModel,
 					title:"Plugin",

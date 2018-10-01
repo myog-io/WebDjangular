@@ -14,9 +14,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 'data' is my media folder
 
 MEDIA_URL = '/media/'
 
-THEME_DIR = os.path.join(BASE_DIR, 'themes')
+THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 
-PLUGIN_DIR = os.path.join(BASE_DIR, 'plugins')
+PLUGIN_DIR = os.path.join(BASE_DIR, 'libs/plugins')
 
 
 DEBUG = False

@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { WebAngularSmartTableDataSource } from "../../@core/data/data-store/WebAngularSmartTableDataSource";
-import { import { WebAngularDataStore } from '@webdjangular/core/services'; } from "../../@core/data/data-store/import { WebAngularDataStore } from '@webdjangular/core/services';.service";
+import { WebAngularDataStore } from '@webdjangular/core/services';
+import { WebAngularSmartTableDataSource } from "@webdjangular/core/data";
 
 
 @Component({
@@ -16,7 +16,7 @@ export class ScaffoldComponent implements OnInit{
     basePath: any;
     form: any;
     title: string = ";D";
-    
+
     constructor(
         private route: ActivatedRoute,
         private datastore: WebAngularDataStore,
@@ -30,13 +30,13 @@ export class ScaffoldComponent implements OnInit{
         this.basePath = this.route.data['value'].path;
         this.form = new this.currentModel.formClassRef();
         this.startTableInformation()
-    
+
     }
 
     startTableInformation(): void {
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
-       
+
         this.source = new WebAngularSmartTableDataSource(this.datastore, this.currentModel, {
             smartTableSettings: this.form.listingTableSettings,
             onEditButtonClick: ($event) => {
@@ -54,7 +54,7 @@ export class ScaffoldComponent implements OnInit{
                 this.router.navigate(['admin',this.basePath,'new']);
             }
         });
-        
+
     }
 
 }

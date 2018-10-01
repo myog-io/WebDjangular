@@ -1,12 +1,8 @@
-import { Component, ViewContainerRef } from '@angular/core';
-
-import { ScaffoldField } from '../../../../@core/interfaces/scaffold-field.interface';
-import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field-config.interface';
-
-import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
-
+import { Component } from '@angular/core';
 import './form-ckeditor.loader';
 import 'ckeditor';
+import { ScaffoldFieldConfig, ScaffoldField } from '@webdjangular/core/interfaces';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 
 @Component({
   selector: 'wda-form-ckeditor',

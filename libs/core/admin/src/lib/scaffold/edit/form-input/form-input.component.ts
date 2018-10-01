@@ -1,9 +1,7 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
+import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 
-import { ScaffoldField } from '../../../../@core/interfaces/scaffold-field.interface';
-import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field-config.interface';
-
-import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
 
 @Component({
   selector: 'wda-form-input',
@@ -11,9 +9,9 @@ import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
   template: `
   <div class="form-group" [formGroup]="group">
     <label>{{ config.label }}</label>
-    <input 
-    [type]="config.inputType ? config.inputType : text" 
-    class="form-control" 
+    <input
+    [type]="config.inputType ? config.inputType : text"
+    class="form-control"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name">
   </div><!--form-group-->

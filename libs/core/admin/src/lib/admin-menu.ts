@@ -4,12 +4,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'nb-home',
-    link: '/admin',
+    link: '/',
   },
   {
     title: 'Pages',
     icon: 'fas fa-file-alt',
-    link: '/admin/pages',
+    link: '/pages',
   },
   {
     title: 'System',
@@ -17,7 +17,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Themes',
-        link: '/admin/core_themes',
+        link: '/core_themes',
         data: {
           permission: [
             { label: 'webdjango', action: 'list_core_theme' },
@@ -26,17 +26,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Plugins',
-        link: '/admin/core_plugins',
+        link: '/core_plugins',
         data: {
           permission: [
-            { label: 'webdjango', // Name of the plugin on WebDjango side 
+            { label: 'webdjango', // Name of the plugin on WebDjango side
              action: 'list_core_plugin' },
           ]
         }
       },
       {
         title: 'Users',
-        link: '/admin/user',
+        link: '/user',
         data: {
           permission: [
             { label: 'users', action: 'list_user' },
@@ -45,7 +45,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Groups',
-        link: '/admin/group',
+        link: '/group',
         data: {
           permission: [
             { label: 'auth', action: 'list_group' }

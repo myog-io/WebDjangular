@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
+import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 
-import { ScaffoldField } from '../../../../@core/interfaces/scaffold-field.interface';
-import { ScaffoldFieldConfig } from '../../../../@core/interfaces/scaffold-field-config.interface';
 
-import { AbstractForm } from '../../../../@core/data/forms/Abstract.form';
 
 @Component({
   selector: 'wda-form-code',

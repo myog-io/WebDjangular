@@ -23,7 +23,7 @@ export const NB_CORE_PROVIDERS = [
         login: {
           endpoint: 'api/token/',
           redirect: {
-            success: 'admin/',
+            success: '/',
             failure: null,
           },
         },

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { import { WebAngularDataStore } from '@webdjangular/core/services'; } from '../../../@core/data/data-store/import { WebAngularDataStore } from '@webdjangular/core/services';.service';
-import { WebAngularSmartTableDataSource } from '../../../@core/data/data-store/WebAngularSmartTableDataSource';
+import { WebAngularDataStore } from '@webdjangular/core/services';
 
-import { AbstractForm } from '../../../@core/data/forms/Abstract.form';
-import { AbstractModel } from '../../../@core/data/models/Abstract.model';
+import { WebAngularSmartTableDataSource } from '@webdjangular/core/data';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 
 @Component({
     selector: 'wda-scaffold-edit',
@@ -21,14 +21,14 @@ export class ScaffoldEditComponent implements OnInit {
     form: AbstractForm;
     title: string = ";D";
     beforeTitle: string = "Editing";
-    
+
 
     constructor(
         private route: ActivatedRoute,
         private datastore: WebAngularDataStore,
         private router: Router,
        ) {
-        
+
     }
     ngOnInit(): void {
         this.route.url.subscribe(segments => {
@@ -85,5 +85,5 @@ export class ScaffoldEditComponent implements OnInit {
         )
     }
 
-    
+
 }
