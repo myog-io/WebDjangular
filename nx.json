@@ -34,6 +34,27 @@
     },
     "core-shared": {
       "tags": []
+    },
+    "core-services": {
+      "tags": []
+    },
+    "core-decorator": {
+      "tags": []
+    },
+    "core-interceptors": {
+      "tags": []
+    },
+    "core-interfaces": {
+      "tags": []
+    },
+    "core-auth": {
+      "tags": []
+    },
+    "core-data": {
+      "tags": []
+    },
+    "core-admin": {
+      "tags": []
     }
   }
 }

@@ -382,6 +382,202 @@
           }
         }
       }
+    },
+    "core-services": {
+      "root": "libs/core/services",
+      "sourceRoot": "libs/core/services/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/services/src/test.ts",
+            "tsConfig": "libs/core/services/tsconfig.spec.json",
+            "karmaConfig": "libs/core/services/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/services/tsconfig.lib.json",
+              "libs/core/services/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-decorator": {
+      "root": "libs/core/decorator",
+      "sourceRoot": "libs/core/decorator/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/decorator/src/test.ts",
+            "tsConfig": "libs/core/decorator/tsconfig.spec.json",
+            "karmaConfig": "libs/core/decorator/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/decorator/tsconfig.lib.json",
+              "libs/core/decorator/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-interceptors": {
+      "root": "libs/core/interceptors",
+      "sourceRoot": "libs/core/interceptors/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/interceptors/src/test.ts",
+            "tsConfig": "libs/core/interceptors/tsconfig.spec.json",
+            "karmaConfig": "libs/core/interceptors/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/interceptors/tsconfig.lib.json",
+              "libs/core/interceptors/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-interfaces": {
+      "root": "libs/core/interfaces",
+      "sourceRoot": "libs/core/interfaces/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/interfaces/src/test.ts",
+            "tsConfig": "libs/core/interfaces/tsconfig.spec.json",
+            "karmaConfig": "libs/core/interfaces/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/interfaces/tsconfig.lib.json",
+              "libs/core/interfaces/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-auth": {
+      "root": "libs/core/auth",
+      "sourceRoot": "libs/core/auth/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/auth/src/test.ts",
+            "tsConfig": "libs/core/auth/tsconfig.spec.json",
+            "karmaConfig": "libs/core/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/auth/tsconfig.lib.json",
+              "libs/core/auth/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-data": {
+      "root": "libs/core/data",
+      "sourceRoot": "libs/core/data/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/data/src/test.ts",
+            "tsConfig": "libs/core/data/tsconfig.spec.json",
+            "karmaConfig": "libs/core/data/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/data/tsconfig.lib.json",
+              "libs/core/data/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-admin": {
+      "root": "libs/core/admin",
+      "sourceRoot": "libs/core/admin/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/admin/src/test.ts",
+            "tsConfig": "libs/core/admin/tsconfig.spec.json",
+            "karmaConfig": "libs/core/admin/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/admin/tsconfig.lib.json",
+              "libs/core/admin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

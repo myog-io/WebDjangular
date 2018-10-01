@@ -30,6 +30,27 @@
       ],
       "@webdjangular/core/shared": [
         "libs/core/shared/src/index.ts"
+      ],
+      "@webdjangular/core/services": [
+        "libs/core/services/src/index.ts"
+      ],
+      "@webdjangular/core/decorator": [
+        "libs/core/decorator/src/index.ts"
+      ],
+      "@webdjangular/core/interceptors": [
+        "libs/core/interceptors/src/index.ts"
+      ],
+      "@webdjangular/core/interfaces": [
+        "libs/core/interfaces/src/index.ts"
+      ],
+      "@webdjangular/core/auth": [
+        "libs/core/auth/src/index.ts"
+      ],
+      "@webdjangular/core/data": [
+        "libs/core/data/src/index.ts"
+      ],
+      "@webdjangular/core/admin": [
+        "libs/core/admin/src/index.ts"
       ]
     }
   },
