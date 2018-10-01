@@ -18,21 +18,29 @@ import { AuthorModel } from './Author.model';
 export class PluginModel extends AbstractModel {
   public static formClassRef = PluginForm;
 
-  @Attribute() id: string;
+  @Attribute()
+  id: string;
 
-  @Attribute() slug: string;
+  @Attribute()
+  slug: string;
 
-  @Attribute() name: string;
+  @Attribute()
+  name: string;
 
-  @Attribute() current_version: string;
+  @Attribute()
+  current_version: string;
 
-  @Attribute() version: string;
+  @Attribute()
+  version: string;
 
-  @Attribute() active: boolean;
+  @Attribute()
+  active: boolean;
 
-  @Attribute() created: Date;
+  @Attribute()
+  created: Date;
 
-  @Attribute() updated: Date;
+  @Attribute()
+  updated: Date;
 
   @BelongsTo()
   @ExtraOptions({

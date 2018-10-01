@@ -36,7 +36,7 @@ export class UserComponent{
             },
         },
         onEditButtonClick: ($event) => {
-            this.router.navigate(['admin','user','edit', $event.data.id]);
+            this.router.navigate(['user','edit', $event.data.id]);
         },
         onDeleteButtonClick: ($event) => {
             this.datastore.deleteRecord(UserModel, $event.data.pk).subscribe(
@@ -46,7 +46,7 @@ export class UserComponent{
             );
         },
         onCreateButtonClick: () => {
-            this.router.navigate(['admin','user','new']);
+            this.router.navigate(['user','new']);
         }
     });
 

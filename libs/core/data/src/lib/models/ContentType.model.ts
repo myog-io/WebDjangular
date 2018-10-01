@@ -16,11 +16,14 @@ import { ContentTypeForm } from '../forms/ContentType.form';
 export class ContentTypeModel extends AbstractModel {
   public static formClassRef = ContentTypeForm;
 
-  @Attribute() id: string;
+  @Attribute()
+  id: string;
 
-  @Attribute() app_label: string;
+  @Attribute()
+  app_label: string;
 
-  @Attribute() model: string;
+  @Attribute()
+  model: string;
 
   get pk() {
     return this.id;

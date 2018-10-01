@@ -24,7 +24,7 @@ export function wda_init(wdaconfig: WDAConfig) {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    CoreServicesModule.forRoot(),
+    //CoreServicesModule.forRoot(), // Not Sure if we should do here or note
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
     CoreAdminModule.forRoot()

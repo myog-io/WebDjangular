@@ -40,7 +40,7 @@ export class ScaffoldComponent implements OnInit{
         this.source = new WebAngularSmartTableDataSource(this.datastore, this.currentModel, {
             smartTableSettings: this.form.listingTableSettings,
             onEditButtonClick: ($event) => {
-                this.router.navigate(['admin',this.basePath,'edit', $event.data.id]);
+                this.router.navigate([this.basePath,'edit', $event.data.id]);
             },
             onDeleteButtonClick: ($event) => {
                 // TODO ALERTTTTT
@@ -51,7 +51,7 @@ export class ScaffoldComponent implements OnInit{
                 );
             },
             onCreateButtonClick: () => {
-                this.router.navigate(['admin',this.basePath,'new']);
+                this.router.navigate([this.basePath,'new']);
             }
         });
 

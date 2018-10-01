@@ -13,23 +13,32 @@ import { AuthorModel } from './Author.model';
 export class ThemeModel extends AbstractModel {
   public static formClassRef = ThemeForm;
 
-  @Attribute() id: string;
+  @Attribute()
+  id: string;
 
-  @Attribute() slug: string;
+  @Attribute()
+  slug: string;
 
-  @Attribute() name: string;
+  @Attribute()
+  name: string;
 
-  @Attribute() angular_module: string;
+  @Attribute()
+  angular_module: string;
 
-  @Attribute() version: string;
+  @Attribute()
+  version: string;
 
-  @Attribute() current_version: string;
+  @Attribute()
+  current_version: string;
 
-  @Attribute() active: boolean;
+  @Attribute()
+  active: boolean;
 
-  @Attribute() created: Date;
+  @Attribute()
+  created: Date;
 
-  @Attribute() updated: Date;
+  @Attribute()
+  updated: Date;
 
   @BelongsTo()
   @ExtraOptions({

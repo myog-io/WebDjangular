@@ -21,12 +21,13 @@ export class AppHttpInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return this.authService.getToken().pipe(
       switchMap(function(token) {
-        let suffix = request.url;
+
+        const suffix = request.url;
         let url = '/';
 
-        if (suffix.search('http://') == -1 && suffix.search('https://') == -1) {
+        if (suffix.search('http://') === -1 && suffix.search('https://') === -1) {
           let parts = suffix.split('');
-          if (parts[0] == '/') {
+          if (parts[0] === '/') {
             parts.shift();
           }
 

@@ -1,4 +1,4 @@
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { ContentTypeForm } from '@webdjangular/core/data-forms';

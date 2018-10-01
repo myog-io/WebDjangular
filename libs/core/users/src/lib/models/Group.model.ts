@@ -19,9 +19,11 @@ import { ExtraOptions } from '@webdjangular/core/decorator';
 export class GroupModel extends AbstractModel {
   public static formClassRef = GroupForm;
 
-  @Attribute() id: string;
+  @Attribute()
+  id: string;
 
-  @Attribute() name: string;
+  @Attribute()
+  name: string;
 
   @HasMany()
   @ExtraOptions({

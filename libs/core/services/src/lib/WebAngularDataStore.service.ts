@@ -12,10 +12,20 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs';
+import { UserModel, GroupModel, PermissionModel } from '@webdjangular/core/users-models';
+import { PageModel } from '@webdjangular/core/cms-models';
+import { ContentTypeModel } from '@webdjangular/core/data-models';
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
-  //models: modelList
+  //TODO: Load all This Dynamic
+  models: {
+    User: UserModel,
+    Group: GroupModel,
+    Page: PageModel,
+    Permission: PermissionModel,
+    ContentType: ContentTypeModel
+  }
 };
 
 @Injectable()

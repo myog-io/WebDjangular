@@ -16,17 +16,23 @@ import { AuthorForm } from '../forms/Author.form';
 export class AuthorModel extends AbstractModel {
   public static formClassRef = AuthorForm;
 
-  @Attribute() id: string;
+  @Attribute()
+  id: string;
 
-  @Attribute() name: string;
+  @Attribute()
+  name: string;
 
-  @Attribute() email: string;
+  @Attribute()
+  email: string;
 
-  @Attribute() website: string;
+  @Attribute()
+  website: string;
 
-  @Attribute() created: Date;
+  @Attribute()
+  created: Date;
 
-  @Attribute() updated: Date;
+  @Attribute()
+  updated: Date;
 
   permissions: PermissionModel[];
 
