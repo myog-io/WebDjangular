@@ -4,16 +4,14 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { import { WebAngularDataStore } from '@webdjangular/core/services'; } from '../../../@core/data/data-store/import { WebAngularDataStore } from '@webdjangular/core/services';.service';
+import { WebAngularDataStore } from '@webdjangular/core/services';
+import { GroupModel, PermissionModel } from '@webdjangular/core/users-models';
 
-import { GroupModel } from '../../../@core/data/models/Group.model';
-import { PermissionModel } from '../../../@core/data/models/Permission.model';
-
-import { ModelPaginatorControls } from '../../../@theme/components/model-paginator/model-paginator.controls';
+import { ModelPaginatorControls } from '@webdjangular/core/admin-theme';
 
 
 @Component({
-    selector: 'group-edit',
+    selector: 'webdjangular-group-edit',
     styleUrls: ['./group-edit.component.scss'],
     templateUrl: './group-edit.component.html',
 })

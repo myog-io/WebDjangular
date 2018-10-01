@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 
 import { WebAngularDataStore } from './WebAngularDataStore.service'
-import { PermissionModel } from '@webdjangular/core/users';
+import { PermissionModel } from '@webdjangular/core/users-models';
 
 @Injectable()
 export class RoleProvider implements NbRoleProvider {

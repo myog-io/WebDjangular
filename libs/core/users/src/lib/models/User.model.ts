@@ -13,7 +13,7 @@ import {
   FormArray
 } from '@angular/forms';
 
-import { AbstractModel } from '@webdjangular/core/data';
+import { AbstractModel } from '@webdjangular/core/data-models';
 import { GroupModel } from './Group.model';
 
 import { UserForm } from '../forms/User.form';

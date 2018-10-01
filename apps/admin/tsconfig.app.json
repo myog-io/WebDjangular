@@ -9,6 +9,7 @@
     "**/*.spec.ts"
   ],
   "include": [
-    "**/*.ts"
+    "**/*.ts",
+    "../../../libs/core/admin/src/index.ts"
   ]
 }

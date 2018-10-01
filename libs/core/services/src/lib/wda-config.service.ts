@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Theme } from "@webdjangular/core/interfaces";
 import 'rxjs/add/operator/map';
 import { UrlSegment } from '@angular/router';
-import { WebAngularDataStore } from '@webdjangular/core/services'
-import { PageModel } from '@webdjangular/core/cms';
+import { WebAngularDataStore } from './WebAngularDataStore.service';
+import { PageModel } from '@webdjangular/core/cms-models';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 @Injectable({

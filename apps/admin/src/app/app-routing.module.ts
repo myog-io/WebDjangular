@@ -10,13 +10,14 @@ import {
 } from '@webdjangular/core/auth';
 
 
-import { AuthGuard } from '@webdjangular/core/services'
+import { AuthGuard } from '@webdjangular/core/services';
+import { AdminModule } from '@webdjangular/core/admin';
 
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: '@webdjangular/core/admin/admin.module#AdminModule',
+    component: AdminModule,
     canActivate: [AuthGuard],
   }
 ];

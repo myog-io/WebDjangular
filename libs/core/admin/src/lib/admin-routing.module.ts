@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PageModel } from '@webdjangular/core/cms';
+import { PageModel } from '@webdjangular/core/cms-models';
 
 import { PermissionGuard } from '@webdjangular/core/services';
-import { ThemeModel } from '@webdjangular/core/data';
-import { PluginModel } from '@webdjangular/core/data';
+import { ThemeModel } from '@webdjangular/core/data-models';
+import { PluginModel } from '@webdjangular/core/data-models';
 
 const routes: Routes = [
 	{

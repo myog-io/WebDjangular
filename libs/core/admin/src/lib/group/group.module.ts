@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-import { ThemeModule } from '../../@theme/theme.module';
+import { ThemeModule } from '@webdjangular/core/admin-theme';
 
 import { GroupComponent } from './group.component';
 import { GroupEditComponent } from './edit/group-edit.component';

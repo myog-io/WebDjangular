@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import { WebAngularDataStore } from './WebAngularDataStore.service';
 import { LayoutService } from './layout.service';
 import { StateService } from './state.service';
 

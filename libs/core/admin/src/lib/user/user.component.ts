@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router } from "@angular/router";
 
-import { import { WebAngularDataStore } from '@webdjangular/core/services'; } from '../../@core/data/data-store/import { WebAngularDataStore } from '@webdjangular/core/services';.service';
-import { WebAngularSmartTableDataSource } from '../../@core/data/data-store/WebAngularSmartTableDataSource';
+import { WebAngularDataStore } from '@webdjangular/core/services';
+import { WebAngularSmartTableDataSource } from '@webdjangular/core/data';
 
-import { UserModel } from '../../@core/data/models/User.model';
+import { UserModel } from '@webdjangular/core/users-models';
 
 @Component({
     selector: 'webdjangular-user',

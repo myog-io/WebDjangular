@@ -6,7 +6,7 @@ import {
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
-import { PermissionModel } from '@webdjangular/core/users';
+import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { AuthorForm } from '../forms/Author.form';
 

@@ -6,7 +6,7 @@ import {
   BelongsTo
 } from 'angular2-jsonapi';
 
-import { AbstractModel } from '../../../../data/src/lib/models/Abstract.model';
+import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from './Permission.model';
 
 import { GroupForm } from '../forms/Group.form';

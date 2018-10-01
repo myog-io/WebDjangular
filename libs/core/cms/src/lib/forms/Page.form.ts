@@ -1,6 +1,6 @@
 import { FormControl, Validators } from '@angular/forms';
 
-import { AbstractForm } from '@webdjangular/core/data';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 
 export class PageForm extends AbstractForm {

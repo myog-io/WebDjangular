@@ -6,11 +6,11 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { NbAccessChecker } from '@nebular/security'
 
-import { import { WebAngularDataStore } from '@webdjangular/core/services'; } from '../../../@core/data/data-store/import { WebAngularDataStore } from '@webdjangular/core/services';.service';
-import { UserModel } from '../../../@core/data/models/User.model';
-import { GroupModel } from '../../../@core/data/models/Group.model';
+import { WebAngularDataStore } from '@webdjangular/core/services';
+import { UserModel } from '@webdjangular/core/users-models';
+import { GroupModel } from '@webdjangular/core/users-models';
 
-import { ModelPaginatorControls } from '../../../@theme/components/model-paginator/model-paginator.controls';
+import { ModelPaginatorControls } from '@webdjangular/core/admin-theme';
 
 @Component({
     selector: 'user-edit',
@@ -21,7 +21,7 @@ import { ModelPaginatorControls } from '../../../@theme/components/model-paginat
 export class UserEditComponent {
     public form = new UserModel.formClassRef();
     public user: UserModel;
-    
+
      public modelPaginatorConfig = {
         modelToPaginate: GroupModel,
         useDatastore: this.datastore,

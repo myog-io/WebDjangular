@@ -1,6 +1,6 @@
 import { FormControl, FormArray } from '@angular/forms';
 
-import { AbstractForm } from '@webdjangular/core/data';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 import { GroupForm } from './Group.form';
 
 export class UserForm extends AbstractForm {

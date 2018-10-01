@@ -1,7 +1,7 @@
 import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data';
-import { PermissionModel } from '@webdjangular/core/users';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { PageForm } from '../forms/Page.form';
 

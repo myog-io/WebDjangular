@@ -11,14 +11,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
-
-import { modelList } from '@webdjangular/core/data';
-
 import { Observable } from 'rxjs';
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
-  models: modelList
+  //models: modelList
 };
 
 @Injectable()

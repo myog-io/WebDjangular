@@ -1,7 +1,7 @@
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
-import { AbstractForm } from '@webdjangular/core/data';
-import { ContentTypeForm } from '@webdjangular/core/data';
+import { AbstractForm } from '@webdjangular/core/data-forms';
+import { ContentTypeForm } from '@webdjangular/core/data-forms';
 
 export class PermissionForm extends AbstractForm {
   formFields = {

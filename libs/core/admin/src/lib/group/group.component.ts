@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Router } from "@angular/router";
 
-import { import { WebAngularDataStore } from '@webdjangular/core/services'; } from '../../@core/data/data-store/import { WebAngularDataStore } from '@webdjangular/core/services';.service';
-import { WebAngularSmartTableDataSource } from '../../@core/data/data-store/WebAngularSmartTableDataSource';
+import { WebAngularDataStore } from '@webdjangular/core/services';
+import { WebAngularSmartTableDataSource } from '@webdjangular/core/data';
 
-import { GroupModel } from '../../@core/data/models/Group.model';
+import { GroupModel } from '@webdjangular/core/users-models';
 
 @Component({
     selector: 'webdjangular-group',
@@ -32,7 +32,7 @@ export class GroupComponent{
         },
         onDeleteButtonClick: ($event) => {
             console.log($event);
-            
+
             this.datastore.deleteRecord(GroupModel, $event.data.pk).subscribe(
                 (r) => {
                     this.source.remove($event)

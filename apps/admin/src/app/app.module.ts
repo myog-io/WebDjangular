@@ -13,7 +13,9 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {ThemeModule, CoreAdminModule} from '@webdjangular/core/admin';
+import {CoreAdminModule} from '@webdjangular/core/admin';
+import {ThemeModule} from '@webdjangular/core/admin-theme';
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {JsonApiModule} from 'angular2-jsonapi';
