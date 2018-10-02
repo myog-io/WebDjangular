@@ -724,6 +724,74 @@
           }
         }
       }
+    },
+    "themes-clean": {
+      "root": "libs/themes/clean",
+      "sourceRoot": "libs/themes/clean/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/themes/clean/tsconfig.lib.json",
+            "project": "libs/themes/clean/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "libs/themes/clean/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/themes/clean/src/test.ts",
+            "tsConfig": "libs/themes/clean/tsconfig.spec.json",
+            "karmaConfig": "libs/themes/clean/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/themes/clean/tsconfig.lib.json",
+              "libs/themes/clean/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-dynamic-component-loader": {
+      "root": "libs/core/dynamic-component-loader",
+      "sourceRoot": "libs/core/dynamic-component-loader/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/dynamic-component-loader/src/test.ts",
+            "tsConfig": "libs/core/dynamic-component-loader/tsconfig.spec.json",
+            "karmaConfig": "libs/core/dynamic-component-loader/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/dynamic-component-loader/tsconfig.lib.json",
+              "libs/core/dynamic-component-loader/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

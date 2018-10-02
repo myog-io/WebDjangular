@@ -58,6 +58,12 @@
     },
     "core-dynamic-page-loader": {
       "tags": []
+    },
+    "themes-clean": {
+      "tags": []
+    },
+    "core-dynamic-component-loader": {
+      "tags": []
     }
   }
 }

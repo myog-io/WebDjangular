@@ -1,0 +1,14 @@
+ {
+    "theme":{
+        "slug": "clean",
+        "name": "Clean Theme MyOG 2018",
+        "angular_module": "ThemesCleanModule",
+        "version": "0.0.1",
+        "parent_theme": false
+    },
+    "author":{
+        "name": "MyOG",
+        "email": "team@myog.io",
+        "website": "http://myog.io"
+    }
+}

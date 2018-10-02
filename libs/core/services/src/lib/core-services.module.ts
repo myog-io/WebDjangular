@@ -12,7 +12,6 @@ import { WDAConfig } from './wda-config.service';
 import { throwIfAlreadyLoaded } from '@webdjangular/core/shared';
 import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { HttpResponse } from 'selenium-webdriver/http';
-import { DynamicComponentLoader } from './dynamic-component-loader.service';
 
 
 const SERVICES = [
@@ -23,7 +22,6 @@ const SERVICES = [
   RoleProvider,
   PermissionGuard,
   AuthGuard,
-  DynamicComponentLoader,
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {

@@ -11,6 +11,6 @@
   "include": [
     "**/*.ts",
     "../../libs/core/dynamic-page-loader/src/index.ts",
-    "../../../libs/themes/cleanog/src/index.ts"
+    "../../libs/themes/clean/src/index.ts"
   ]
 }

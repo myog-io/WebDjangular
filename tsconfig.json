@@ -34,12 +34,6 @@
       "@webdjangular/core/cms-forms": [
         "libs/core/cms/src/lib/forms/index.ts"
       ],
-      "@webdjangular/themes": [
-        "libs/themes/*"
-      ],
-      "@webdjangular/plugins": [
-        "libs/plugins/*"
-      ],
       "@webdjangular/themes/cleanog": [
         "libs/themes/cleanog/src/index.ts"
       ],
@@ -81,6 +75,12 @@
       ],
       "@webdjangular/core/dynamic-page-loader": [
         "libs/core/dynamic-page-loader/src/index.ts"
+      ],
+      "@webdjangular/themes/clean": [
+        "libs/themes/clean/src/index.ts"
+      ],
+      "@webdjangular/core/dynamic-component-loader": [
+        "libs/core/dynamic-component-loader/src/index.ts"
       ]
     }
   },
