@@ -1,179 +1,805 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "version": 1,
-    "newProjectRoot": "projects",
-    "projects": {
-        "ngx-admin-demo": {
-            "root": "",
-            "sourceRoot": "src",
-            "projectType": "application",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "preserveSymlinks": true,
-                        "outputPath": "dist",
-                        "index": "webdjangular/webangular/index.html",
-                        "main": "webdjangular/webangular/main.ts",
-                        "tsConfig": "webdjangular/webangular/tsconfig.app.json",
-                        "polyfills": "webdjangular/webangular/polyfills.ts",
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico",
-                            "src/favicon.png",
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/leaflet/dist/images",
-                                "output": "/assets/img/markers"
-                            }
-                        ],
-                        "styles": [
-                          "node_modules/bootstrap/dist/css/bootstrap.css",
-                          "node_modules/typeface-exo/index.css",
-                          "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-                          "node_modules/ionicons/scss/ionicons.scss",
-                          "node_modules/@fortawesome/fontawesome-free/css/all.css",
-                          "node_modules/socicon/css/socicon.css",
-                          "node_modules/nebular-icons/scss/nebular-icons.scss",
-                          "node_modules/angular-tree-component/dist/angular-tree-component.css",
-                          "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-                          "node_modules/leaflet/dist/leaflet.css",
-                          "webdjangular/webangular/app/@theme/styles/styles.scss"
-                        ],
-                        "scripts": [
-                            "node_modules/pace-js/pace.min.js",
-                            "node_modules/tinymce/tinymce.min.js",
-                            "node_modules/tinymce/themes/modern/theme.min.js",
-                            "node_modules/tinymce/plugins/link/plugin.min.js",
-                            "node_modules/tinymce/plugins/paste/plugin.min.js",
-                            "node_modules/tinymce/plugins/table/plugin.min.js",
-                            "node_modules/echarts/dist/echarts.min.js",
-                            "node_modules/echarts/dist/extension/bmap.min.js",
-                            "node_modules/chart.js/dist/Chart.min.js"
-                        ]
-                    },
-                    "configurations": {
-                        "production": {
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "ngx-admin-demo:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "ngx-admin-demo:build:production"
-                        }
-                    }
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "ngx-admin-demo:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "webdjangular/webangular/test.ts",
-                        "karmaConfig": "./karma.conf.js",
-                        "polyfills": "webdjangular/webangular/polyfills.ts",
-                        "tsConfig": "webdjangular/webangular/tsconfig.spec.json",
-                        "scripts": [
-                            "node_modules/pace-js/pace.min.js",
-                            "node_modules/tinymce/tinymce.min.js",
-                            "node_modules/tinymce/themes/modern/theme.min.js",
-                            "node_modules/tinymce/plugins/link/plugin.min.js",
-                            "node_modules/tinymce/plugins/paste/plugin.min.js",
-                            "node_modules/tinymce/plugins/table/plugin.min.js",
-                            "node_modules/echarts/dist/echarts.min.js",
-                            "node_modules/echarts/dist/extension/bmap.min.js",
-                            "node_modules/chart.js/dist/Chart.min.js"
-                        ],
-                        "styles": [
-                            "node_modules/bootstrap/dist/css/bootstrap.css",
-                            "node_modules/typeface-exo/index.css",
-                            "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-                            "node_modules/ionicons/scss/ionicons.scss",
-                            "node_modules/font-awesome/scss/font-awesome.scss",
-                            "node_modules/socicon/css/socicon.css",
-                            "node_modules/nebular-icons/scss/nebular-icons.scss",
-                            "node_modules/pace-js/templates/pace-theme-flash.tmpl.css"
-                        ],
-                        "assets": [
-                            "src/assets",
-                            "src/favicon.ico",
-                            "src/favicon.png",
-                            {
-                                "glob": "**/*",
-                                "input": "node_modules/leaflet/dist/images",
-                                "output": "/assets/img/markers"
-                            }
-                        ]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "webdjangular/webangular/tsconfig.app.json",
-                            "webdjangular/webangular/tsconfig.spec.json"
-                        ],
-                        "typeCheck": true,
-                        "exclude": []
-                    }
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "client": {
+      "root": "apps/client/",
+      "sourceRoot": "apps/client/src",
+      "projectType": "application",
+      "prefix": "wda",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/client",
+            "index": "apps/client/src/index.html",
+            "main": "apps/client/src/main.ts",
+            "polyfills": "apps/client/src/polyfills.ts",
+            "tsConfig": "apps/client/tsconfig.app.json",
+            "assets": [
+              "apps/client/src/assets",
+              "apps/client/src/favicon.ico",
+              "apps/client/src/favicon.png",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets/img/markers"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "/assets/monaco"
+              }
+            ],
+            "styles": [
+              "apps/client/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/typeface-exo/index.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/ionicons/scss/ionicons.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/angular-tree-component/dist/angular-tree-component.css",
+              "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/leaflet/dist/leaflet.css"
+            ],
+            "scripts": [
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.min.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/echarts/dist/extension/bmap.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/client/src/environments/environment.ts",
+                  "with": "apps/client/src/environments/environment.prod.ts"
                 }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
+          }
         },
-        "ngx-admin-demo-e2e": {
-            "root": "",
-            "sourceRoot": "",
-            "projectType": "application",
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "ngx-admin-demo:serve"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "e2e/tsconfig.e2e.json"
-                        ],
-                        "exclude": []
-                    }
-                }
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "client:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "client:build:production"
             }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "client:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/client/src/test.ts",
+            "polyfills": "apps/client/src/polyfills.ts",
+            "tsConfig": "apps/client/tsconfig.spec.json",
+            "karmaConfig": "apps/client/karma.conf.js",
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/typeface-exo/index.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/ionicons/scss/ionicons.scss",
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/pace-js/templates/pace-theme-flash.tmpl.css"
+            ],
+            "scripts": [
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.min.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/echarts/dist/extension/bmap.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ],
+            "assets": [
+              "apps/client/src/assets",
+              "apps/client/src/favicon.ico",
+              "apps/client/src/favicon.png",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets/img/markers"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "/assets/monaco"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/client/tsconfig.app.json",
+              "apps/client/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
         }
+      }
     },
-    "defaultProject": "ngx-admin-demo",
-    "schematics": {
-        "@schematics/angular:component": {
-            "prefix": "ngx",
-            "styleext": "scss"
+    "client-e2e": {
+      "root": "apps/client-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/client-e2e/protractor.conf.js",
+            "devServerTarget": "client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "client:serve:production"
+            }
+          }
         },
-        "@schematics/angular:directive": {
-            "prefix": "ngx"
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/client-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
         }
+      }
+    },
+    "admin": {
+      "root": "apps/admin/",
+      "sourceRoot": "apps/admin/src",
+      "projectType": "application",
+      "prefix": "wda",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/admin",
+            "index": "apps/admin/src/index.html",
+            "main": "apps/admin/src/main.ts",
+            "polyfills": "apps/admin/src/polyfills.ts",
+            "tsConfig": "apps/admin/tsconfig.app.json",
+            "assets": [
+              "apps/admin/src/assets",
+              "apps/admin/src/favicon.ico",
+              "apps/admin/src/favicon.png",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets/img/markers"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "/assets/monaco"
+              }
+            ],
+            "styles": [
+              "apps/admin/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/typeface-exo/index.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/ionicons/scss/ionicons.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/angular-tree-component/dist/angular-tree-component.css",
+              "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/leaflet/dist/leaflet.css",
+              "libs/core/admin/src/lib/@theme/styles/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.min.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/echarts/dist/extension/bmap.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/admin/src/environments/environment.ts",
+                  "with": "apps/admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "admin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "admin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/admin/src/test.ts",
+            "polyfills": "apps/admin/src/polyfills.ts",
+            "tsConfig": "apps/admin/tsconfig.spec.json",
+            "karmaConfig": "apps/admin/karma.conf.js",
+            "styles": [
+              "apps/admin/src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/typeface-exo/index.css",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/ionicons/scss/ionicons.scss",
+              "node_modules/font-awesome/scss/font-awesome.scss",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              "node_modules/pace-js/templates/pace-theme-flash.tmpl.css"
+            ],
+            "scripts": [
+              "node_modules/pace-js/pace.min.js",
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.min.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "node_modules/echarts/dist/extension/bmap.min.js",
+              "node_modules/chart.js/dist/Chart.min.js"
+            ],
+            "assets": [
+              "apps/admin/src/assets",
+              "apps/admin/src/favicon.ico",
+              "apps/admin/src/favicon.png",
+              {
+                "glob": "**/*",
+                "input": "node_modules/leaflet/dist/images",
+                "output": "/assets/img/markers"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-monaco-editor/assets/monaco",
+                "output": "/assets/monaco"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/admin/tsconfig.app.json",
+              "apps/admin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "admin-e2e": {
+      "root": "apps/admin-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/admin-e2e/protractor.conf.js",
+            "devServerTarget": "admin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "admin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/admin-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-users": {
+      "root": "libs/core/users",
+      "sourceRoot": "libs/core/users/src",
+      "projectType": "library",
+      "prefix": "wda",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/users/src/test.ts",
+            "tsConfig": "libs/core/users/tsconfig.spec.json",
+            "karmaConfig": "libs/core/users/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/users/tsconfig.lib.json",
+              "libs/core/users/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-cms": {
+      "root": "libs/core/cms",
+      "sourceRoot": "libs/core/cms/src",
+      "projectType": "library",
+      "prefix": "wda",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/cms/src/test.ts",
+            "tsConfig": "libs/core/cms/tsconfig.spec.json",
+            "karmaConfig": "libs/core/cms/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/cms/tsconfig.lib.json",
+              "libs/core/cms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "themes-cleanog": {
+      "root": "libs/themes/cleanog",
+      "sourceRoot": "libs/themes/cleanog/src",
+      "projectType": "library",
+      "prefix": "wda",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/themes/cleanog/src/test.ts",
+            "tsConfig": "libs/themes/cleanog/tsconfig.spec.json",
+            "karmaConfig": "libs/themes/cleanog/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/themes/cleanog/tsconfig.lib.json",
+              "libs/themes/cleanog/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "plugins-contact-form": {
+      "root": "libs/plugins/contact-form",
+      "sourceRoot": "libs/plugins/contact-form/src",
+      "projectType": "library",
+      "prefix": "wda",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/plugins/contact-form/src/test.ts",
+            "tsConfig": "libs/plugins/contact-form/tsconfig.spec.json",
+            "karmaConfig": "libs/plugins/contact-form/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/plugins/contact-form/tsconfig.lib.json",
+              "libs/plugins/contact-form/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-shared": {
+      "root": "libs/core/shared",
+      "sourceRoot": "libs/core/shared/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/shared/src/test.ts",
+            "tsConfig": "libs/core/shared/tsconfig.spec.json",
+            "karmaConfig": "libs/core/shared/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/shared/tsconfig.lib.json",
+              "libs/core/shared/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-services": {
+      "root": "libs/core/services",
+      "sourceRoot": "libs/core/services/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/services/src/test.ts",
+            "tsConfig": "libs/core/services/tsconfig.spec.json",
+            "karmaConfig": "libs/core/services/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/services/tsconfig.lib.json",
+              "libs/core/services/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-decorator": {
+      "root": "libs/core/decorator",
+      "sourceRoot": "libs/core/decorator/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/decorator/src/test.ts",
+            "tsConfig": "libs/core/decorator/tsconfig.spec.json",
+            "karmaConfig": "libs/core/decorator/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/decorator/tsconfig.lib.json",
+              "libs/core/decorator/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-interceptors": {
+      "root": "libs/core/interceptors",
+      "sourceRoot": "libs/core/interceptors/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/interceptors/src/test.ts",
+            "tsConfig": "libs/core/interceptors/tsconfig.spec.json",
+            "karmaConfig": "libs/core/interceptors/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/interceptors/tsconfig.lib.json",
+              "libs/core/interceptors/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-interfaces": {
+      "root": "libs/core/interfaces",
+      "sourceRoot": "libs/core/interfaces/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/interfaces/src/test.ts",
+            "tsConfig": "libs/core/interfaces/tsconfig.spec.json",
+            "karmaConfig": "libs/core/interfaces/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/interfaces/tsconfig.lib.json",
+              "libs/core/interfaces/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-auth": {
+      "root": "libs/core/auth",
+      "sourceRoot": "libs/core/auth/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/auth/src/test.ts",
+            "tsConfig": "libs/core/auth/tsconfig.spec.json",
+            "karmaConfig": "libs/core/auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/auth/tsconfig.lib.json",
+              "libs/core/auth/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-data": {
+      "root": "libs/core/data",
+      "sourceRoot": "libs/core/data/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/data/src/test.ts",
+            "tsConfig": "libs/core/data/tsconfig.spec.json",
+            "karmaConfig": "libs/core/data/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/data/tsconfig.lib.json",
+              "libs/core/data/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-admin": {
+      "root": "libs/core/admin",
+      "sourceRoot": "libs/core/admin/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/admin/src/test.ts",
+            "tsConfig": "libs/core/admin/tsconfig.spec.json",
+            "karmaConfig": "libs/core/admin/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/admin/tsconfig.lib.json",
+              "libs/core/admin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-dynamic-page-loader": {
+      "root": "libs/core/dynamic-page-loader",
+      "sourceRoot": "libs/core/dynamic-page-loader/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/dynamic-page-loader/src/test.ts",
+            "tsConfig": "libs/core/dynamic-page-loader/tsconfig.spec.json",
+            "karmaConfig": "libs/core/dynamic-page-loader/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/dynamic-page-loader/tsconfig.lib.json",
+              "libs/core/dynamic-page-loader/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "themes-clean": {
+      "root": "libs/themes/clean",
+      "sourceRoot": "libs/themes/clean/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "libs/themes/clean/tsconfig.lib.json",
+            "project": "libs/themes/clean/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "libs/themes/clean/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/themes/clean/src/test.ts",
+            "tsConfig": "libs/themes/clean/tsconfig.spec.json",
+            "karmaConfig": "libs/themes/clean/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/themes/clean/tsconfig.lib.json",
+              "libs/themes/clean/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-dynamic-component-loader": {
+      "root": "libs/core/dynamic-component-loader",
+      "sourceRoot": "libs/core/dynamic-component-loader/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/dynamic-component-loader/src/test.ts",
+            "tsConfig": "libs/core/dynamic-component-loader/tsconfig.spec.json",
+            "karmaConfig": "libs/core/dynamic-component-loader/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/dynamic-component-loader/tsconfig.lib.json",
+              "libs/core/dynamic-component-loader/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics"
+  },
+  "defaultProject": "client"
 }

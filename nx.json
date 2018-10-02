@@ -1,0 +1,69 @@
+{
+  "npmScope": "webdjangular",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "client": {
+      "tags": []
+    },
+    "client-e2e": {
+      "tags": []
+    },
+    "admin": {
+      "tags": []
+    },
+    "admin-e2e": {
+      "tags": []
+    },
+    "core-users": {
+      "tags": []
+    },
+    "core-cms": {
+      "tags": []
+    },
+    "themes-cleanog": {
+      "tags": []
+    },
+    "plugins-contact-form": {
+      "tags": []
+    },
+    "core-shared": {
+      "tags": []
+    },
+    "core-services": {
+      "tags": []
+    },
+    "core-decorator": {
+      "tags": []
+    },
+    "core-interceptors": {
+      "tags": []
+    },
+    "core-interfaces": {
+      "tags": []
+    },
+    "core-auth": {
+      "tags": []
+    },
+    "core-data": {
+      "tags": []
+    },
+    "core-admin": {
+      "tags": []
+    },
+    "core-dynamic-page-loader": {
+      "tags": []
+    },
+    "themes-clean": {
+      "tags": []
+    },
+    "core-dynamic-component-loader": {
+      "tags": []
+    }
+  }
+}

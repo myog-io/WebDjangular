@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/client",
+    "types": []
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts"
+  ],
+  "include": [
+    "**/*.ts",
+    "../../libs/core/dynamic-page-loader/src/index.ts",
+    "../../libs/themes/clean/src/index.ts"
+  ]
+}
