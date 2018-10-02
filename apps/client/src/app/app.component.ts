@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { WDAConfig, AnalyticsService } from '@webdjangular/core/services';
+
 
 @Component({
   selector: 'wda-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: '<router-outlet></router-outlet>',
 })
-export class AppComponent {
-  title = 'client';
+export class AppComponent implements OnInit {
+  title = "Client";
+  constructor(private wdaconfig: WDAConfig, private analytics: AnalyticsService, ) {
+
+  }
+
+  ngOnInit(): void {
+    this.analytics.trackPageViews();
+  }
 }

@@ -5,6 +5,7 @@ from webdjango.utils.DynamicLoader import DynamicLoader
 from distutils.version import LooseVersion
 from dirtyfields import DirtyFieldsMixin
 
+
 class Website(models.Model):
     """
     Configuration for Future MultiSite
@@ -66,7 +67,7 @@ class CoreConfig(models.Model):
 
 class Author(models.Model):
     """
-    Core Author, this model is used to show the Author information on the APP and Themes Acitivation Pages 
+    Core Author, this model is used to show the Author information on the APP and Themes Acitivation Pages
     """
     name = models.CharField(max_length=200)
     email = models.EmailField()
@@ -91,7 +92,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
     name = models.CharField(max_length=100)
     author = models.ForeignKey(
         Author, on_delete=models.CASCADE, related_name='plugins')
-    current_version = models.CharField(max_length=50,null=True)
+    current_version = models.CharField(max_length=50, null=True)
     version = models.CharField(max_length=50)
     active = models.BooleanField(default=0)
     created = models.DateTimeField(auto_now_add=True)
@@ -104,9 +105,10 @@ class Plugin(DirtyFieldsMixin, models.Model):
         """
         plugins_config = DynamicLoader.getPluginsConfig()
         for config in plugins_config:
-            ## Creating Author
-            if config['author'] :
-                author, created = Author.objects.get_or_create(config['author'])
+            # Creating Author
+            if config['author']:
+                author, created = Author.objects.get_or_create(
+                    config['author'])
             config['plugin']['author'] = author
 
             plugin, created = Plugin.objects.get_or_create(config['plugin'])
@@ -157,20 +159,20 @@ class Theme(DirtyFieldsMixin, models.Model):
         active_theme = Theme.get_active()
         themes_config = DynamicLoader.getThemesConfig()
         for config in themes_config:
-            ## Checking if Theme has a Parent Theme  
+            # Checking if Theme has a Parent Theme
             if config['theme']['parent_theme']:
                 parent_theme = Theme.objects.get(slug=config['theme'])
                 if parent_theme:
                     config['theme']['parent_theme'] = parent_theme
-                else: 
+                else:
                     config['theme']['parent_theme'] = None
             else:
                 config['theme']['parent_theme'] = None
 
-
-            ## Creating Author
-            if config['author'] :
-                author, created = Author.objects.get_or_create(config['author'])
+            # Creating Author
+            if config['author']:
+                author, created = Author.objects.get_or_create(
+                    config['author'])
             config['theme']['author'] = author
 
             theme, created = Theme.objects.get_or_create(config['theme'])

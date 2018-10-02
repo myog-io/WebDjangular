@@ -1,3 +1,4 @@
+export { DynamicComponentLoader } from './lib/dynamic-component-loader.service';
 export { WebAngularDataStore } from './lib/WebAngularDataStore.service';
 export { LayoutService } from './lib/layout.service';
 export { StateService } from './lib/state.service';

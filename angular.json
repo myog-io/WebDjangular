@@ -44,7 +44,7 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/angular-tree-component/dist/angular-tree-component.css",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
@@ -689,6 +689,34 @@
             "tsConfig": [
               "libs/core/admin/tsconfig.lib.json",
               "libs/core/admin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-dynamic-page-loader": {
+      "root": "libs/core/dynamic-page-loader",
+      "sourceRoot": "libs/core/dynamic-page-loader/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/dynamic-page-loader/src/test.ts",
+            "tsConfig": "libs/core/dynamic-page-loader/tsconfig.spec.json",
+            "karmaConfig": "libs/core/dynamic-page-loader/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/dynamic-page-loader/tsconfig.lib.json",
+              "libs/core/dynamic-page-loader/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

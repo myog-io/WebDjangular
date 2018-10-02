@@ -55,6 +55,9 @@
     },
     "core-admin": {
       "tags": []
+    },
+    "core-dynamic-page-loader": {
+      "tags": []
     }
   }
 }

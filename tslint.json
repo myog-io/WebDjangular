@@ -93,6 +93,9 @@
     "nx-enforce-module-boundaries": [
       true,
       {
+        "lazyLoad": [
+          "themes-cleanog"
+        ],
         "allow": [],
         "depConstraints": [
           { "sourceTag": "*", "onlyDependOnLibsWithTags": ["*"] }

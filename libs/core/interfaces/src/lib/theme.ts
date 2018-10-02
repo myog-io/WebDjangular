@@ -8,7 +8,7 @@ export class Theme {
   constructor(private data: any) {
     this.name = data.name;
     this.slug = data.slug;
-    this.angular_module = data.module;
+    this.angular_module = data.angular_module;
     this.version = data.version;
     this.parent_theme = data.parent_theme;
   }
