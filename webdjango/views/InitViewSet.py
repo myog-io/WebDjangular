@@ -1,11 +1,9 @@
-from rest_framework import authentication, permissions, viewsets
-from rest_framework.decorators import action
+from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 
-from libs.core.cms.models.Page import Page
-from libs.core.cms.serializers.PageSerializer import PageSerializer
-from webdjango.configs import CONFIG_HOME_PAGE
-from webdjango.models.Core import CoreConfig, Plugin, Theme, Website
+from libs.core.cms.api.models.Page import Page
+from libs.core.cms.api.serializers.PageSerializer import PageSerializer
+from webdjango.models.Core import Plugin, Theme
 from webdjango.serializers.CoreSerializer import PluginSerializer, ThemeSerializer
 
 

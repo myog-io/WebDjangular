@@ -6,10 +6,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from libs.core.cms.models.Page import Page
-from libs.core.cms.serializers.PageSerializer import PageSerializer
+from libs.core.cms.api.models.Page import Page
+from libs.core.cms.api.serializers.PageSerializer import PageSerializer
 from webdjango.configs import CONFIG_HOME_PAGE
-from webdjango.models.Core import CoreConfig, Website
+from webdjango.models.Core import CoreConfig
 
 
 class PageFilter(FilterSet):

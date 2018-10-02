@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from libs.core.cms.models.Page import Page
+from libs.core.cms.api.models.Page import Page
 
 
 class PageSerializer(ModelSerializer):
