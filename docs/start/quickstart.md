@@ -100,12 +100,21 @@ npm install
 ```
 This can take a while, sit back and grab a cup of coffe☕ or whatever🍺.
 
-## 12 Run Angular Development Server
-On the same previus terminal, run another command
+## 12 Run Angular Development Server for Admin and Client Side
+On the same previus terminal, run this command to run the client side of the app
 ```bash
 npm start
 ```
 You can no go to your web browser and go to [http://localhost:4200/](http://localhost:4200/) this is the default link for development angular server
+
+
+In Another terminal on the root folder of the project you wiwll rann
+```bash
+npm run start:admin
+```
+This will run the Admin Application of Webdjangular, we have choosen to keep it spearted because they are very differnt in design
+acessing [http://localhost:4201/](http://localhost:4201/) you will be able to login with the previus masteradmin created, now you will be able to create new pages and users to your new CSS 😘
+
 
 Yayyyyy, now you have your backend and frontend running on your development enviroment, roll up your sleeves and start coding 🤓 
 
