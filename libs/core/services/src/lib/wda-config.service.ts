@@ -54,9 +54,10 @@ export class WDAConfig {
   }
 
   public getThemePath() {
-    console.log(this.theme);
-    //return "@webdjangular/themes/cleanog#ThemesCleanogModule"
-    return "@webdjangular/themes/"+ this.theme.slug + "#" + this.theme.angular_module;
+    //return '@webdjangular/themes/clean#ThemesCleanModule'
+    //console.log(this.theme);
+    //return "../../../../../libs/themes/clean/src/index.ts#ThemesCleanModule"
+    return '@webdjangular/themes/' + this.theme.slug + '#' + this.theme.angular_module;
     //return "../../../themes/" + this.theme.slug + "/" + this.theme.slug + ".module#" + this.theme.angular_module;
   }
 

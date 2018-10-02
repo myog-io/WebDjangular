@@ -5,24 +5,17 @@ import { RouterModule } from '@angular/router';
 import { ThemesCleanComponent } from './themes-clean.component';
 import { ThemesCleanFooterComponent } from './components/';
 import { ThemesCleanHeaderComponent } from './components/';
-import { CoreDynamicLazyLoadModule } from '@webdjangular/core/dynamic-component-loader';
 
 const COMPONENTS = [
   ThemesCleanComponent,
   ThemesCleanFooterComponent,
-  ThemesCleanHeaderComponent
+  ThemesCleanHeaderComponent,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    CoreDynamicLazyLoadModule.forChild({component:ThemesCleanComponent}),
-    RouterModule.forChild([
-      {
-        path: '',
-        component: ThemesCleanComponent
-      }
-    ])
+    RouterModule.forChild([])
   ],
   exports: [
     ...COMPONENTS,

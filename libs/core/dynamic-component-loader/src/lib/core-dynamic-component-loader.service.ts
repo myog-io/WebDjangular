@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { InjectionToken } from '@angular/core';
 import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
+import { PluginsContactFormModule } from '@webdjangular/plugins/contact-form';
 
 export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');
 
@@ -41,19 +42,17 @@ export class CoreDynamicComponentLoader {
     // TODO:: Imporvement, try to find a list on the HTML before Generating and Therefore Loading the components
 
 
-    if (!this.runtimeModule) {
-      const declarations = [];//PLUGIN_COMPONENTS
-      declarations.push(decoratedCmp);
+    const declarations = [];//PLUGIN_COMPONENTS
+    declarations.push(decoratedCmp);
 
-      this.runtimeModule = NgModule({
-        imports: [
-          CommonModule,
-          RouterModule
-        ], declarations: declarations
-      })(class WDARuntimeModule { });
+    this.runtimeModule = NgModule({
+      imports: [
+        CommonModule,
+        RouterModule,
+        PluginsContactFormModule, // Importing all the Modules weant the Components From
+      ], declarations: declarations
+    })(class WDARuntimeModule { });
 
-    }
-    console.log(this.runtimeModule)
 
     const moduleFactory: ModuleWithComponentFactories<any> = compiler.compileModuleAndAllComponentsSync(this.runtimeModule);
     return moduleFactory.componentFactories.find((f) => {

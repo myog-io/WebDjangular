@@ -94,7 +94,8 @@
       true,
       {
         "lazyLoad": [
-          "themes-cleanog"
+          "themes-cleanog",
+          "themes-clean",
         ],
         "allow": [],
         "depConstraints": [
