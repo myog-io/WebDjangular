@@ -103,15 +103,25 @@ class Plugin(DirtyFieldsMixin, models.Model):
         """
         Function to get all the new installed modules based on the configuration files of each plugin
         """
+        from webdjango.serializers.CoreSerializer import PluginSerializer, AuthorSerializer
         plugins_config = DynamicLoader.getPluginsConfig()
         for config in plugins_config:
             # Creating Author
             if config['author']:
                 author, created = Author.objects.get_or_create(
                     config['author'])
-            config['plugin']['author'] = author
+            config['plugin']['author'] = author.id
 
-            plugin, created = Plugin.objects.get_or_create(config['plugin'])
+
+            plugin = Plugin.objects.filter(slug=config['plugin']['slug']).first()
+            created = False
+            if not plugin:
+                serializer = PluginSerializer(data=config['plugin'])
+                serializer.is_valid(raise_exception=True)
+                plugin = serializer.save()
+                plugin.save()
+                created = True
+
             if not created:
                 # Item Created Before, let's check for the version difference
                 if LooseVersion(config.plugin.version) > LooseVersion(plugin.current_version):
@@ -156,12 +166,13 @@ class Theme(DirtyFieldsMixin, models.Model):
         """
         Function to get all the new installed modules based on the configuration files of each theme
         """
+        from webdjango.serializers.CoreSerializer import ThemeSerializer, AuthorSerializer
         active_theme = Theme.get_active()
         themes_config = DynamicLoader.getThemesConfig()
         for config in themes_config:
             # Checking if Theme has a Parent Theme
             if config['theme']['parent_theme']:
-                parent_theme = Theme.objects.get(slug=config['theme'])
+                parent_theme = Theme.objects.filter(slug=config['theme']['parent_theme']).first()
                 if parent_theme:
                     config['theme']['parent_theme'] = parent_theme
                 else:
@@ -173,9 +184,16 @@ class Theme(DirtyFieldsMixin, models.Model):
             if config['author']:
                 author, created = Author.objects.get_or_create(
                     config['author'])
-            config['theme']['author'] = author
+            config['theme']['author'] = author.id
 
-            theme, created = Theme.objects.get_or_create(config['theme'])
+            # Creating Theme
+            theme = Theme.objects.filter(slug=config['theme']['slug']).first()
+            created = False
+            if not theme:
+                serializer = ThemeSerializer(data=config['theme'])
+                serializer.is_valid(raise_exception=True)
+                theme = serializer.save()
+                created = True
             if not created:
                 # Item Created Before, let's check for the version difference
                 if theme.current_version and config['theme']['version']:
