@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
+import { CoreDynamicPageLoaderComponent } from "@webdjangular/core/dynamic-page-loader";
 
 @Component({
   selector: 'theme-providerfy',
@@ -6,6 +7,6 @@ import {Component} from "@angular/core";
   templateUrl: './providerfy.component.html'
 })
 
-export class ThemeProviderfyComponent {
+export class ThemeProviderfyComponent extends CoreDynamicPageLoaderComponent {
 
 }
