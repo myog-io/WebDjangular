@@ -1,0 +1,17 @@
+@import "../../../styles/_variables.scss";
+
+.footer-signature{
+  background: $footer-signature-bg;
+  color: $footer-signature-c;
+
+  a {
+    color: $footer-signature-link;
+    font-weight: $fw-semibold;
+  }
+  a:hover {
+    color: $footer-signature-link-hover;
+    text-decoration: none;
+  }
+
+}
+

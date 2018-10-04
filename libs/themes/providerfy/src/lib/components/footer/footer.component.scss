@@ -1,0 +1,29 @@
+//@import "~webdjangular/themes/providerfy/angular/styles/_variables.scss";
+@import "../../styles/_variables.scss";
+
+
+footer {
+  background: $footer-bg;
+  color: $footer-text-c;
+
+
+  .footer-title{
+    color: $footer-header-c;
+    text-transform: uppercase;
+    font-weight: $fw-semibold;
+  }
+
+  a {
+    color: $footer-link-c;
+  }
+
+  a:hover {
+    color: $footer-link-hover-c;
+    text-decoration: none;
+
+  }
+
+}
+
+
+

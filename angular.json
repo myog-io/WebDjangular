@@ -792,6 +792,90 @@
           }
         }
       }
+    },
+    "provider": {
+      "root": "libs/provider",
+      "sourceRoot": "libs/provider/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/provider/src/test.ts",
+            "tsConfig": "libs/provider/tsconfig.spec.json",
+            "karmaConfig": "libs/provider/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/provider/tsconfig.lib.json",
+              "libs/provider/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "plugins-provider": {
+      "root": "libs/plugins/provider",
+      "sourceRoot": "libs/plugins/provider/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/plugins/provider/src/test.ts",
+            "tsConfig": "libs/plugins/provider/tsconfig.spec.json",
+            "karmaConfig": "libs/plugins/provider/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/plugins/provider/tsconfig.lib.json",
+              "libs/plugins/provider/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "theme-providerfy": {
+      "root": "libs/themes/providerfy",
+      "sourceRoot": "libs/themes/providerfy/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/themes/providerfy/src/test.ts",
+            "tsConfig": "libs/themes/providerfy/tsconfig.spec.json",
+            "karmaConfig": "libs/themes/providerfy/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/themes/providerfy/tsconfig.lib.json",
+              "libs/themes/providerfy/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

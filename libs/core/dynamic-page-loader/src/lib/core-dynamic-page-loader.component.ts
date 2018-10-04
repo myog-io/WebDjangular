@@ -5,11 +5,10 @@ import { WDAConfig } from '@webdjangular/core/services';
 import { CoreDynamicComponentLoader } from '@webdjangular/core/dynamic-component-loader';
 import { ThemesCleanModule } from '@webdjangular/themes/clean';
 
-
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
   template: `
-    <div #bodyContainer></div>
+      <div #bodyContainer></div>
   `,
 })
 export class CoreDynamicPageLoaderComponent implements AfterViewInit {

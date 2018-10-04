@@ -28,9 +28,14 @@ export function wda_init(wdaconfig: WDAConfig) {
     CoreServicesModule.forRoot(),
     RouterModule.forRoot(
       [
+        /*
         {
           path: '',
           loadChildren: () => CoreDynamicPageLoaderModule
+        }*/
+        {
+          path:'',
+          loadChildren: "@webdjangular/themes/providerfy#ThemeProviderfyModule"
         }
       ],
       { initialNavigation: 'enabled' }

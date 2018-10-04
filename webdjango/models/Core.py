@@ -168,7 +168,7 @@ class Theme(DirtyFieldsMixin, models.Model):
         """
         from webdjango.serializers.CoreSerializer import ThemeSerializer, AuthorSerializer
         active_theme = Theme.get_active()
-        themes_config = DynamicLoader.getThemesConfig()
+        themes_config = DynamicLoader.get_themes_config()
         for config in themes_config:
             # Checking if Theme has a Parent Theme
             if config['theme']['parent_theme']:

@@ -1,0 +1,185 @@
+.contact-wrapper {
+
+    .card.contact {
+        .card-header {
+            background: unset;
+            border: 0;
+        }
+        font-family: "Open Sans", Helvetica, sans-serif;
+        .card-title {
+            color: #000;
+            font-size: 23px;
+            font-weight: 600;
+        }
+        .card-text {
+            color: #8ea5b0;
+            font-size: 18px;
+            line-height: 22px;
+            font-weight: 400;
+        }
+
+    }
+
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 45px;
+}
+
+input, textarea {
+    width:100%;
+    font-family: "Boston", Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    color:#7c868e;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #d4d4d4;
+    background:transparent;
+}
+
+input:focus {
+    outline: none;
+}
+
+label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 0px;
+    bottom: 0px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label, input:valid ~ label,
+textarea:focus ~ label, textarea:valid ~ label{
+    bottom: -25px;
+    font-size: 14px;
+    color: #00b9bd;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+    position: relative;
+    display: block;
+}
+
+.bar:before, .bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #00b9bd;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+    left: 50%;
+}
+
+.bar:after {
+    right: 50%;
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+    position: absolute;
+    height: 60%;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+    -webkit-animation: inputHighlighter 0.3s ease;
+    -moz-animation: inputHighlighter 0.3s ease;
+    animation: inputHighlighter 0.3s ease;
+}
+
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+    from {
+        background: #00b9bd;
+    }
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@-moz-keyframes inputHighlighter {
+    from {
+        background: #00b9bd;
+    }
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@keyframes inputHighlighter {
+    from {
+        background: #00b9bd;
+    }
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -64,6 +64,15 @@
     },
     "core-dynamic-component-loader": {
       "tags": []
+    },
+    "provider": {
+      "tags": []
+    },
+    "plugins-provider": {
+      "tags": []
+    },
+    "theme-providerfy": {
+      "tags": []
     }
   }
 }

@@ -1,0 +1,187 @@
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-black-webfont.woff2') format('woff2'),
+         url('boston-black-webfont.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-blackit-webfont.woff2') format('woff2'),
+         url('boston-blackit-webfont.woff') format('woff');
+    font-weight: 800;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-bold-webfont.woff2') format('woff2'),
+         url('boston-bold-webfont.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-boldit-webfont.woff2') format('woff2'),
+         url('boston-boldit-webfont.woff') format('woff');
+    font-weight: 700;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-extralight-webfont.woff2') format('woff2'),
+         url('boston-extralight-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-extralightit-webfont.woff2') format('woff2'),
+         url('boston-extralightit-webfont.woff') format('woff');
+    font-weight: 200;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-heavy-webfont.woff2') format('woff2'),
+         url('boston-heavy-webfont.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-heavyit-webfont.woff2') format('woff2'),
+         url('boston-heavyit-webfont.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-light-webfont.woff2') format('woff2'),
+         url('boston-light-webfont.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-lightit-webfont.woff2') format('woff2'),
+         url('boston-lightit-webfont.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-regular-webfont.woff2') format('woff2'),
+         url('boston-regular-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-regularit-webfont.woff2') format('woff2'),
+         url('boston-regularit-webfont.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+
+}
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-semibold-webfont.woff2') format('woff2'),
+         url('boston-semibold-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-semiboldit-webfont.woff2') format('woff2'),
+         url('boston-semiboldit-webfont.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-thin-webfont.woff2') format('woff2'),
+         url('boston-thin-webfont.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'Boston';
+    src: url('boston-thinit-webfont.woff2') format('woff2'),
+         url('boston-thinit-webfont.woff') format('woff');
+    font-weight: 100;
+    font-style: italic;
+
+}

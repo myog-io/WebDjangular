@@ -1,0 +1,58 @@
+
+@import '../assets/fonts/Boston/stylesheet.css';
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import '../../../../node_modules/font-awesome/css/font-awesome.css';
+
+
+@import 'variables';
+@import '../../../../node_modules/bootstrap/scss/bootstrap';
+
+@mixin border-radius($radius: 5px) {   // the 5px is the default
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+
+
+body{
+  font-size: $primary-fs;
+  font-weight: $primary-fw;
+  font-family: $primary-ff;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.bg-g100 {
+  background: $gray-100;
+}
+.bg-g200 {
+  background: $gray-200;
+}
+.bg-g300 {
+  background: $gray-300;
+}
+.bg-g400 {
+  background: $gray-400;
+}
+.bg-g500 {
+  background: $gray-500;
+}
+.bg-g600 {
+  background: $gray-600;
+}
+.bg-g700 {
+  background: $gray-700;
+}
+.bg-g800 {
+  background: $gray-800;
+}
+.bg-g900 {
+  background: $gray-900;
+}
+
+.btn-primary{
+  border-radius: $btn-primary-rounded;
+}
