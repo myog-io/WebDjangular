@@ -7,6 +7,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/',
   },
   {
+    title: 'Medias',
+    icon: 'fas fa-file-image',
+    link: '/media',
+  },
+  {
     title: 'Pages',
     icon: 'fas fa-file-alt',
     link: '/pages',

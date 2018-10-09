@@ -1,7 +1,10 @@
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.dispatch import receiver, Signal
+
 
 from webdjango.models.Core import Plugin, Theme
+
+config_register = Signal()
 
 
 @receiver(post_save, sender=Plugin)

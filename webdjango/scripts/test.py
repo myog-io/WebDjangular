@@ -1,4 +1,4 @@
-from libs.core.users.models import User
+from libs.core.users.api.models import User
 from django.contrib.auth.models import Group, Permission
 
 def run():

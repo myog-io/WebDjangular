@@ -73,6 +73,12 @@
     },
     "theme-providerfy": {
       "tags": []
+    },
+    "core-media": {
+      "tags": []
+    },
+    "core-chunk-file-upload": {
+      "tags": []
     }
   }
 }

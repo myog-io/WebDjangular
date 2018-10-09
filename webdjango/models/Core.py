@@ -41,11 +41,17 @@ class CoreConfig(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def read(slug, website):
+    def read(slug, website=None):
         try:
             if not website:
                 website = Website.getCurrentWebsite()
-            return CoreConfig.objects.filter(slug=slug, website=website).first().value
+                config = CoreConfig.objects.filter(
+                    slug=slug, website=website).first()
+            if config:
+                return config.value
+            else:
+                return None
+
         except ObjectDoesNotExist:
             return None
 
@@ -56,6 +62,14 @@ class CoreConfig(models.Model):
         p, created = CoreConfig.objects.get_or_create(
             slug=slug, value=value, website=website)
         return created
+
+    @staticmethod
+    def register_all_config():
+        from webdjango.signals.CoreSignals import config_register
+        configs = config_register.send_robust(sender=self.__class__)
+        for config in configs:
+            print("REGISTER CONFIGS")
+            print(configs)
 
     class Meta:
         db_table = 'core_config'
@@ -104,7 +118,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
         Function to get all the new installed modules based on the configuration files of each plugin
         """
         from webdjango.serializers.CoreSerializer import PluginSerializer, AuthorSerializer
-        plugins_config = DynamicLoader.getPluginsConfig()
+        plugins_config = DynamicLoader.get_plugins_config()
         for config in plugins_config:
             # Creating Author
             if config['author']:
@@ -112,8 +126,8 @@ class Plugin(DirtyFieldsMixin, models.Model):
                     config['author'])
             config['plugin']['author'] = author.id
 
-
-            plugin = Plugin.objects.filter(slug=config['plugin']['slug']).first()
+            plugin = Plugin.objects.filter(
+                slug=config['plugin']['slug']).first()
             created = False
             if not plugin:
                 serializer = PluginSerializer(data=config['plugin'])
@@ -172,7 +186,8 @@ class Theme(DirtyFieldsMixin, models.Model):
         for config in themes_config:
             # Checking if Theme has a Parent Theme
             if config['theme']['parent_theme']:
-                parent_theme = Theme.objects.filter(slug=config['theme']['parent_theme']).first()
+                parent_theme = Theme.objects.filter(
+                    slug=config['theme']['parent_theme']).first()
                 if parent_theme:
                     config['theme']['parent_theme'] = parent_theme
                 else:
