@@ -57,7 +57,16 @@ class CoreConfigViewSet(ModelViewSet):
     search_fields = ('website', 'slug')
     filter_class = CoreConfigFilter
     permission_classes = (AuthenticatedViewsetPermission,)
-    
+
+    """
+    List a queryset.
+    """
+    def list(self, request, *args, **kwargs):
+        ## Adding the Script to update all the Themes, before listing it!
+        Config.register_all_config()
+        return super(CoreConfigViewSet, self).list(request, args, **kwargs)
+
+
 class AuthorFilter(FilterSet):
     class Meta:
         model = Author
@@ -81,7 +90,7 @@ class AuthorViewSet(ModelViewSet):
     permission_classes = (AuthenticatedViewsetPermission,)
     filter_class = AuthorFilter
 
-    
+
 class PluginFilter(FilterSet):
     class Meta:
         model = Plugin
@@ -90,7 +99,7 @@ class PluginFilter(FilterSet):
             'name': ['contains','exact'],
             'slug': ['contains','exact'],
         }
-            
+
 class PluginViewSet(ModelViewSet):
     """
     ViewSet to view all Apps.
@@ -119,7 +128,7 @@ class ThemeFilter(FilterSet):
             'name': ['contains','exact'],
             'slug': ['contains','exact'],
         }
-            
+
 
 class ThemeViewSet(ModelViewSet):
     """

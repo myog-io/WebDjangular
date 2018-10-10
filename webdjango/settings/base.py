@@ -5,14 +5,16 @@ Django settings for webdjangular project.
 
 import os
 import datetime
+import sys
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.join("libs","core")))
 
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 'data' is my media folder
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files') # 'data' is my media folder
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/files/'
 
 THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 
@@ -34,8 +36,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'webdjango',
-    'libs.core.users',
-    'libs.core.cms',
+    'libs.core.users.api',
+    'libs.core.cms.api',
+    'libs.core.media.api',
     'rest_framework_json_api',
     'django_extensions',
     'drf_yasg'

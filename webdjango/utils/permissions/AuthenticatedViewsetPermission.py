@@ -27,7 +27,7 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
 
 			if view.action in self.permissionsMap:
 				action = self.permissionsMap[view.action];
-			
+
 			permissionRef = str("{app_label}.{action}_{model_name}").format(app_label=app_label, model_name=modelName, action=action);
 
 			if permissionRef in userPermissions:

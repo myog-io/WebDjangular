@@ -90,6 +90,12 @@
       ],
       "@webdjangular/themes/providerfy": [
         "libs/themes/providerfy/src/index.ts"
+      ],
+      "@webdjangular/core/media": [
+        "libs/core/media/src/index.ts"
+      ],
+      "@webdjangular/core/chunk-file-upload": [
+        "libs/core/chunk-file-upload/src/index.ts"
       ]
     }
   },

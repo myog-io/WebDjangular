@@ -13,3 +13,8 @@ class Page(Model):
 
     def __str__(self):
         return self.title
+
+
+    class Meta:
+        db_table = 'pages'
+        permissions = (("list_pages", "Can list pages"),)
