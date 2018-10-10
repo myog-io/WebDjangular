@@ -1,4 +1,13 @@
-import { Component, ViewChild, ViewContainerRef, AfterViewInit, Compiler, ComponentRef, Injector } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ViewContainerRef,
+  AfterViewInit,
+  Compiler,
+  ComponentRef,
+  Injector,
+  ViewEncapsulation
+} from '@angular/core';
 import { UrlSegment, ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { WDAConfig } from '@webdjangular/core/services';
@@ -44,7 +53,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private getPageContent(data:any){
     const metadata = {
       selector: 'wda-body',
-      template: data.content
+      template: data.content,
     }
     const factory = this.componentLoader.createComponentFactorySync(metadata, null,this.compiler)
     data.bodyFactory = factory;

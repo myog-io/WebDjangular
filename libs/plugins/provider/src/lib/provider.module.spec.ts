@@ -1,14 +1,14 @@
 import { async, TestBed } from '@angular/core/testing';
-import { PluginsProviderModule } from './plugins-provider.module';
+import { PluginProviderModule } from './provider.module';
 
-describe('PluginsProviderModule', () => {
+describe('PluginProviderModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PluginsProviderModule]
+      imports: [ProviderModule]
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(PluginsProviderModule).toBeDefined();
+    expect(ProviderModule).toBeDefined();
   });
 });

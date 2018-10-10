@@ -1,21 +1,15 @@
-
 @import '../assets/fonts/Boston/stylesheet.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
-@import '../../../../node_modules/font-awesome/css/font-awesome.css';
-
-
 @import 'variables';
-@import '../../../../node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
-@mixin border-radius($radius: 5px) {   // the 5px is the default
-    -webkit-border-radius: $radius;
-    -moz-border-radius: $radius;
-    border-radius: $radius;
+@mixin border-radius($radius: 5px) { // the 5px is the default
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
 }
 
-
-
-body{
+body {
   font-size: $primary-fs;
   font-weight: $primary-fw;
   font-family: $primary-ff;
@@ -28,31 +22,277 @@ a:hover {
 .bg-g100 {
   background: $gray-100;
 }
+
 .bg-g200 {
   background: $gray-200;
 }
+
 .bg-g300 {
   background: $gray-300;
 }
+
 .bg-g400 {
   background: $gray-400;
 }
+
 .bg-g500 {
   background: $gray-500;
 }
+
 .bg-g600 {
   background: $gray-600;
 }
+
 .bg-g700 {
   background: $gray-700;
 }
+
 .bg-g800 {
   background: $gray-800;
 }
+
 .bg-g900 {
   background: $gray-900;
 }
 
-.btn-primary{
+.btn-primary {
   border-radius: $btn-primary-rounded;
 }
+
+h1 {
+  font-size: $h1-fs;
+  font-family: $secondary-ff;
+  font-weight: $fw-bold;
+}
+
+h2 {
+  font-size: $h2-fs;
+  font-family: $secondary-ff;
+  font-weight: $fw-bold;
+}
+
+h3 {
+  font-size: $h3-fs;
+  font-family: $secondary-ff;
+  font-weight: $fw-bold;
+}
+
+h4 {
+  font-size: $h4-fs;
+  font-family: $secondary-ff;
+  font-weight: $fw-bold;
+}
+
+h5 {
+  font-size: $h5-fs;
+  font-family: $secondary-ff;
+  font-weight: $fw-bold;
+}
+
+h6 {
+  font-size: $h6-fs;
+  font-family: $secondary-ff;
+  font-weight: $fw-bold;
+}
+
+p.subtitle {
+  font-size: $fs-subtitle;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-1 {
+  opacity: 1;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 45px;
+}
+
+input, textarea {
+  width: 100%;
+  font-family: $input-ff;
+  font-size: $input-fs;
+  font-weight: $input-fw;
+  color: $input-cc;
+  display: block;
+  border: none;
+  border-bottom: 1px solid $input-cc;
+  background: transparent;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  color: $input-cc;
+  font-size: $input-fs;
+  font-weight: $input-fw;
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  bottom: 0;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+
+input:focus, textarea:focus {
+  border-color: transparent;
+}
+
+input:focus ~ label, input:valid ~ label,
+textarea:focus ~ label, textarea:valid ~ label {
+  bottom: -$input-fs*2;
+  font-size: $input-fs*0.95;
+  color: $primary;
+  border-color: transparent;
+}
+
+/* BOTTOM BARS ================================= */
+.bar {
+  position: relative;
+  display: block;
+}
+
+.bar:before, .bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: $primary;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+  left: 50%;
+}
+
+.bar:after {
+  right: 50%;
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width: 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position: absolute;
+  height: 60%;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation: inputHighlighter 0.3s ease;
+  -moz-animation: inputHighlighter 0.3s ease;
+  animation: inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #00b9bd;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #00b9bd;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+@keyframes inputHighlighter {
+  from {
+    background: #00b9bd;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+#requestForPortability {
+  background: #f7f7f7;
+
+}
+
+#contact {
+  .offices-wrapper {
+    ul {
+      list-style: none;
+      padding: 0;
+      h6 {
+        margin-bottom: 0;
+      }
+      li {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.contact-wrapper {
+  .card.contact {
+    border-radius: $card-border-radius;
+    border-color: transparent;
+    .card-header {
+      background: unset;
+      border: 0;
+    }
+    font-family: "Open Sans", Helvetica, sans-serif;
+    .card-title {
+      color: #000;
+      font-size: 23px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .card-text {
+      color: #8ea5b0;
+      font-size: 18px;
+      line-height: 22px;
+      font-weight: 400;
+    }
+
+    a[href^="tel"] {
+      color: $primary;
+      font-size: $h3-fs;
+      font-weight: $fw-black;
+    }
+  }
+  .card.contact.bg-primary {
+    a {
+      font-size: 18px;
+    }
+
+  }
+}
+
+
+
+
+
+
+

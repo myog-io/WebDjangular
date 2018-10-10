@@ -35,7 +35,6 @@
             ],
             "styles": [
               "apps/client/src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/typeface-exo/index.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/ionicons/scss/ionicons.scss",
@@ -103,7 +102,6 @@
             "tsConfig": "apps/client/tsconfig.spec.json",
             "karmaConfig": "apps/client/karma.conf.js",
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/typeface-exo/index.css",
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/ionicons/scss/ionicons.scss",
@@ -821,7 +819,7 @@
         }
       }
     },
-    "plugins-provider": {
+    "plugin-provider": {
       "root": "libs/plugins/provider",
       "sourceRoot": "libs/plugins/provider/src",
       "projectType": "library",
