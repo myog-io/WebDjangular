@@ -1,4 +1,4 @@
-from webdjango.models.CoreConfigInterface import CoreConfigInterface
+from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput
 
 CONFIG_STORAGE_CLASS = 'media_storage_class'
 CONFIG_STORAGE_KEY = 'media_storage_account_key'
@@ -7,11 +7,16 @@ CONFIG_STORAGE_CONTAINER_NAME = 'media_storage_container'
 CONFIG_STORAGE_EXTERNAL_URL = 'media_storage_external_url'
 
 STORAGE_AZURE = 'AzureBlobStorage'
+MEDIA_CONFIG_GROUP_SLUG = 'media_config'
+MEDIA_CONFIG_GROUP = CoreConfigGroup(
+    id=MEDIA_CONFIG_GROUP_SLUG,
+    order=10
+)
 
 MEDIA_CONFIGS = [
-    CoreConfigInterface(
+    CoreConfigInput(
         id=CONFIG_STORAGE_CLASS,
-        field_type=CoreConfigInterface.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
         input_type="text",
         order=0,
         disabled=False,
@@ -23,11 +28,11 @@ MEDIA_CONFIGS = [
         placeholder="SELECT STORAGE CLASS",
         validation=None,
         wrapperClass=None,
-        group='media_config',
+        group=MEDIA_CONFIG_GROUP_SLUG,
     ),
-    CoreConfigInterface(
+    CoreConfigInput(
         id=CONFIG_STORAGE_KEY,
-        field_type=CoreConfigInterface.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
         input_type="password",
         order=0,
         disabled=False,
@@ -36,11 +41,11 @@ MEDIA_CONFIGS = [
         placeholder="Storage Config Key",
         validation=None,
         wrapperClass=None,
-        group='media_config',
+        group=MEDIA_CONFIG_GROUP_SLUG,
     ),
-    CoreConfigInterface(
+    CoreConfigInput(
         id=CONFIG_STORAGE_NAME,
-        field_type=CoreConfigInterface.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
         input_type="text",
         order=0,
         disabled=False,
@@ -49,11 +54,11 @@ MEDIA_CONFIGS = [
         placeholder="Storage Config Name",
         validation=None,
         wrapperClass=None,
-        group='media_config',
+        group=MEDIA_CONFIG_GROUP_SLUG,
     ),
-    CoreConfigInterface(
+    CoreConfigInput(
         id=CONFIG_STORAGE_CONTAINER_NAME,
-        field_type=CoreConfigInterface.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
         input_type="text",
         order=0,
         disabled=False,
@@ -62,11 +67,11 @@ MEDIA_CONFIGS = [
         placeholder="Storage Container Name",
         validation=None,
         wrapperClass=None,
-        group='media_config',
+        group=MEDIA_CONFIG_GROUP_SLUG,
     ),
-    CoreConfigInterface(
+    CoreConfigInput(
         id=CONFIG_STORAGE_EXTERNAL_URL,
-        field_type=CoreConfigInterface.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
         input_type="url",
         order=0,
         disabled=False,
@@ -75,6 +80,6 @@ MEDIA_CONFIGS = [
         placeholder="Storage External URL",
         validation=None,
         wrapperClass=None,
-        group='media_config',
+        group=MEDIA_CONFIG_GROUP_SLUG,
     ),
 ]

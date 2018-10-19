@@ -15,9 +15,6 @@ class InitViewSet(viewsets.GenericViewSet):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
     permission_classes = (permissions.AllowAny,)
-    
-
-    
 
     def list(self, request, format=None):
         """
@@ -35,14 +32,14 @@ class InitViewSet(viewsets.GenericViewSet):
 
         # TODO: retrieve locale(s)
         """
-        if there is more than 1 locale, get the locale based on localization 
+        if there is more than 1 locale, get the locale based on localization
         """
 
         # TODO: load cache if exists
 
         # TODO: define current User Object
         """
-        Current User Object is whether a guest, admin or any other role 
+        Current User Object is whether a guest, admin or any other role
         in order to manage the user's requests according to its permissions.
         """
 

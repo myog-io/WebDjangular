@@ -11,6 +11,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from webdjango.views.CoreViewSet import ThemeViewSet, AuthorViewSet, PluginViewSet, CoreConfigViewSet, WebsiteViewSet
+from webdjango.views.CoreConfigViewSet import CoreConfigGroupViewSet, CoreConfigInputViewSet
 from webdjango.views.InitViewSet import InitViewSet
 from rest_framework.permissions import AllowAny
 from drf_yasg.views import get_schema_view
@@ -37,6 +38,8 @@ router.register(r'core_theme', ThemeViewSet)
 router.register(r'core_config', CoreConfigViewSet)
 router.register(r'core_website', WebsiteViewSet)
 router.register(r'core_init', InitViewSet)
+#router.register(r'core_config_input', CoreConfigInputViewSet.as_view(), name='core_config_input')
+#router.register(r'core_config_group', CoreConfigGroupViewSet.as_view(), name='core_config_input')
 
 
 urlpatterns = [
@@ -48,4 +51,7 @@ urlpatterns = [
     url(r'^api/', include('libs.core.users.api.urls')),
     url(r'^api/', include('libs.core.cms.api.urls')),
     url(r'^api/', include('libs.core.media.api.urls')),
+    url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
+    url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
+
 ] + static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)

@@ -27,6 +27,7 @@ class Media(Model, DirtyFieldsMixin):
     Media Table
     """
     class Meta:
+        ordering = ['-id']
         db_table = 'medias'
         permissions = (
             ("list_medias", "Can list medias"),

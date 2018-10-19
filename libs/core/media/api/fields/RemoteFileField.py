@@ -22,8 +22,7 @@ class RemoteFileField(models.FileField):
             attr_class = models.fields.files.FieldFile
 
         self.attr_class = attr_class
-        print("CONFIG STORAGE")
-        print(CoreConfig.read(CONFIG_STORAGE_CLASS))
+        # TODO: Chekc if The COFIG STORAGE CLASS IS WORKING
 
         if not storage and CoreConfig.read(CONFIG_STORAGE_CLASS):
             # Storage is not set, let's try to get the information

@@ -21,6 +21,7 @@ class Website(models.Model):
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_website'
         permissions = (("list_core_website", "Can list core_website"),)
 
@@ -66,12 +67,16 @@ class CoreConfig(models.Model):
     @staticmethod
     def register_all_config():
         from webdjango.signals.CoreSignals import config_register
-        configs = config_register.send_robust(sender=self.__class__)
+        configs = config_register.send_robust(sender=CoreConfig)
+        print("Getting Configs")
         for config in configs:
             print("REGISTER CONFIGS")
-            print(configs)
+            print(config)
+
+        return configs
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_config'
         permissions = (("list_core_config", "Can list core_config"),)
 
@@ -90,6 +95,7 @@ class Author(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_author'
         permissions = (("list_core_author", "Can list core_author"),)
 
@@ -145,6 +151,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
                 print("DO Nothing for now")
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_plugin'
         permissions = (("list_core_plugin", "Can list core_plugin"),)
 
@@ -223,5 +230,6 @@ class Theme(DirtyFieldsMixin, models.Model):
                     active_theme = theme
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_theme'
         permissions = (("list_core_theme", "Can list core_theme"),)

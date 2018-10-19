@@ -5,6 +5,7 @@ from django.dispatch import receiver, Signal
 from webdjango.models.Core import Plugin, Theme
 
 config_register = Signal()
+config_group_register = Signal()
 
 
 @receiver(post_save, sender=Plugin)
