@@ -33,7 +33,7 @@ class CoreConfig(models.Model):
     Core Config Holds Some Information for the Beggening of the application
     """
     slug = models.SlugField(max_length=200, validators=[
-                            validate_slug], unique=True)
+        validate_slug], unique=True)
     value = models.TextField(max_length=500, null=True)
     website = models.ForeignKey(
         Website, on_delete=models.CASCADE, null=False, related_name="Configs", default=1)
@@ -47,8 +47,8 @@ class CoreConfig(models.Model):
                 website = Website.getCurrentWebsite()
                 config = CoreConfig.objects.filter(
                     slug=slug, website=website).first()
-            if config:
-                return config.value
+                if config:
+                    return config.value
             else:
                 return None
 
@@ -102,7 +102,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
     Core Plugin, this model is used to check the installed Plugin and check the actives one
     """
     slug = models.SlugField(max_length=100, validators=[
-                            validate_slug], unique=True)
+        validate_slug], unique=True)
     name = models.CharField(max_length=100)
     author = models.ForeignKey(
         Author, on_delete=models.CASCADE, related_name='plugins')
@@ -157,7 +157,7 @@ class Theme(DirtyFieldsMixin, models.Model):
     Core Themes, this model is used to check the installed Themes and check the activated one
     """
     slug = models.SlugField(max_length=100, validators=[
-                            validate_slug], unique=True)
+        validate_slug], unique=True)
     name = models.CharField(max_length=100)
     angular_module = models.CharField(max_length=100, null=False)
     author = models.ForeignKey(
