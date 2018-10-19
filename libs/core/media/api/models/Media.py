@@ -34,7 +34,7 @@ class Media(Model, DirtyFieldsMixin):
             ("view_media", "Can view media"),
             ("download_medi", "Can Download Media"))
 
-    alt = djangoModels.CharField(null=True)
+    alt = djangoModels.CharField(null=True, max_length=255)
     file = RemoteFileField(
         null=True, blank=True, upload_to=media_path, attr_class=ChunkableFieldFile)
     content_type = djangoModels.CharField(
