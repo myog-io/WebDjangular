@@ -156,3 +156,5 @@ env.bak/
 venv.bak/
 
 *.pyc
+
+files/
