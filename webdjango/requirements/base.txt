@@ -25,12 +25,8 @@ pytz==2018.4
 # Windows's Interface to access  CA and CRL certificates.
 wincertstore==0.2
 
-# CORS
+# Access-Control-Allow-Origin headers
 django-cors-headers==2.4.0
-
-#Access-Control-Allow-Origin headers
-django-cors-headers==2.2.0
-
 
 djangorestframework-jsonapi==2.5.0
 django-extensions==2.1.2
