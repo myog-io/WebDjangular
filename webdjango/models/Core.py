@@ -64,16 +64,6 @@ class CoreConfig(models.Model):
             slug=slug, value=value, website=website)
         return created
 
-    @staticmethod
-    def register_all_config():
-        from webdjango.signals.CoreSignals import config_register
-        configs = config_register.send_robust(sender=CoreConfig)
-        print("Getting Configs")
-        for config in configs:
-            print("REGISTER CONFIGS")
-            print(config)
-
-        return configs
 
     class Meta:
         ordering = ['-id']

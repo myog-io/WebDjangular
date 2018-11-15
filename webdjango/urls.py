@@ -38,8 +38,8 @@ router.register(r'core_theme', ThemeViewSet)
 router.register(r'core_config', CoreConfigViewSet)
 router.register(r'core_website', WebsiteViewSet)
 router.register(r'core_init', InitViewSet)
-#router.register(r'core_config_input', CoreConfigInputViewSet.as_view(), name='core_config_input')
-#router.register(r'core_config_group', CoreConfigGroupViewSet.as_view(), name='core_config_input')
+router.register(r'core_config_input', CoreConfigInputViewSet, base_name='core_config_input')
+router.register(r'core_config_group', CoreConfigGroupViewSet, base_name='core_config_group')
 
 
 urlpatterns = [
@@ -51,7 +51,7 @@ urlpatterns = [
     url(r'^api/', include('libs.core.users.api.urls')),
     url(r'^api/', include('libs.core.cms.api.urls')),
     url(r'^api/', include('libs.core.media.api.urls')),
-    url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
-    url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
+    #url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
+    #url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
 
 ] + static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)

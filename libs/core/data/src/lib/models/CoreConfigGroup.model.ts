@@ -22,6 +22,9 @@ export class CoreConfigGroupModel extends AbstractModel {
   @Attribute()
   order: number;
 
+  @Attribute()
+  title: string;
+
   @HasMany()
   @ExtraOptions({
     backendResourceName: 'CoreConfigInput'

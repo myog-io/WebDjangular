@@ -61,6 +61,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Configs',
+        data: {
+          core_configs: true,
+        },
         children:
           [
             {

@@ -59,22 +59,7 @@ class CoreConfigViewSet(ModelViewSet):
     filter_class = CoreConfigFilter
     permission_classes = (AuthenticatedViewsetPermission,)
 
-    """
-    List a queryset.
-    """
 
-    def list(self, request, *args, **kwargs):
-        # Adding the Script to update all the Themes, before listing it!
-        CoreConfig.register_all_config()
-        return super(CoreConfigViewSet, self).list(request, args, **kwargs)
-
-    @action(detail=False)
-    def list_groups(self, request):
-        groups = []
-        configs = CoreConfig.register_all_config()
-        print(configs)
-
-        return Response(groups)
 
 
 class AuthorFilter(FilterSet):
@@ -160,7 +145,6 @@ class ThemeViewSet(ModelViewSet):
     """
     List a queryset.
     """
-
     def list(self, request, *args, **kwargs):
         # Adding the Script to update all the Themes, before listing it!
         Theme.update_list()

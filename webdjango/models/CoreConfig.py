@@ -1,38 +1,45 @@
 from django.db import models
 from djongo.models.json import JSONField
 from webdjango.signals.CoreSignals import config_group_register, config_register
+from json.encoder import JSONEncoder
 # TODO: Implement Permissions based on Groups
 
 
-class CoreConfigGroup(models.Model):
-    id = models.SlugField(null=False)
+class AbstractCoreConfigModel(models.Model):
+    id = models.SlugField(null=False, primary_key=True)
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.id
+
+
+class CoreConfigGroup(AbstractCoreConfigModel):
+    '''
+    This is the Agroupment inside the Admin Panel that will devide the Groups of Each Core Configuration
+    If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
+    '''
     order = models.IntegerField(default=0)
+    title = models.CharField(default=None)
 
     @staticmethod
     def get(pk=None):
         groups = CoreConfigGroup.all()
-        # LOOP TO FILTER GROUP
-        groups = filter(lambda obj: obj.id == pk, groups)
-        groups = sorted(groups, key='order')
-        return list(groups)
+        for group in groups:
+            if group.id == pk:
+                return group
+        return None
 
     @staticmethod
     def all():
         registers = config_group_register.send_robust(sender=CoreConfigGroup)
         groups = []
-        for register in registers:
-            groups += filter(lambda obj: type(obj) == CoreConfigGroup , list(register) )
-
+        flat_list = [item for sublist in registers for item in sublist]
+        groups += filter(lambda obj: type(obj) == CoreConfigGroup, flat_list)
         groups = sorted(groups, key=lambda obj: obj.order)
 
         return groups
-
-    def inputs(self):
-        inputs = CoreConfigGroup.all()
-        inputs = filter(lambda obj: obj.group == self, inputs)
-        inputs = sorted(inputs, key='order')
-        return list(inputs)
-
 
     class Meta:
         abstract = True
@@ -43,7 +50,11 @@ class CoreConfigGroup(models.Model):
         return self.id
 
 
-class CoreConfigInput(models.Model):
+class CoreConfigInput(AbstractCoreConfigModel):
+    '''
+    This is responsable for the Fields and how they will be interpreted in the frontend application
+    If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
+    '''
     FIELD_TYPE_BUTTON = 'button'
     FIELD_TYPE_INPUT = 'input'
     FIELD_TYPE_SELECT = 'select'
@@ -57,7 +68,6 @@ class CoreConfigInput(models.Model):
         (FIELD_TYPE_CKEDITOR, 'CkEditor'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
     }
-    id = models.SlugField(null=False)
     field_type = models.CharField(default=None, choices=CONFIG_FIELD_TYPES)
     input_type = models.CharField(default=None)
     order = models.IntegerField(default=0)
@@ -71,8 +81,15 @@ class CoreConfigInput(models.Model):
 
     @staticmethod
     def all():
-        groups = config_group_register.send_robust(sender=CoreConfigInput)
-        return groups
+        registers = config_register.send_robust(sender=CoreConfigInput)
+        inputs = []
+        flat_list = [item for sublist in registers for item in sublist]
+        for register in flat_list:
+            if type(register) == list:
+                inputs += filter(lambda obj:
+                                 type(obj) == CoreConfigInput, register)
+        inputs = sorted(inputs, key=lambda obj: obj.order)
+        return inputs
 
     class Meta:
         abstract = True

@@ -1,5 +1,4 @@
-from rest_framework.serializers import ModelSerializer
-from rest_framework.serializers import ValidationError
+from rest_framework.serializers import ModelSerializer, ValidationError
 
 from webdjango.models.Core import Author, Theme, Plugin, CoreConfig, Website
 

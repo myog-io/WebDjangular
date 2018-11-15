@@ -10,6 +10,7 @@ STORAGE_AZURE = 'AzureBlobStorage'
 MEDIA_CONFIG_GROUP_SLUG = 'media_config'
 MEDIA_CONFIG_GROUP = CoreConfigGroup(
     id=MEDIA_CONFIG_GROUP_SLUG,
+    title="File Storage",
     order=10
 )
 

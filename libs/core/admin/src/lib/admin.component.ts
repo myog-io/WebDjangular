@@ -39,22 +39,41 @@ export class AdminComponent implements OnInit {
   }
   getDynamicMenu(){
     this.datastore.query(CoreConfigGroupModel,null,null).subscribe((data:any) => {
-      console.log(data)
+      //TODO: Do this Dynamically, for now we belive that the Config will always be at last
+      const i = this.menu.length -1;
+      const i2 = this.menu[i].children.length -1;
+      for (const m in data) {
+        if (data.hasOwnProperty(m)) {
+          const element = data[m];
+          this.menu[i].children[i2].children.push({
+            title: element.title,
+            link: `/core_config_group/${element.id}`,
+            hidden: false,
+            data: {
+              permission: [
+                { label: 'webdjango', action: 'list_core_config' }
+              ]
+            }
+          })
+        }
+      }
     })
   }
 
   hideMenuItemsRecursively(permissions = {}, menuList = []) {
     for (let i = 0; i < menuList.length; i++) {
       if (typeof menuList[i]['children'] !== 'undefined') {
+
         this.hideMenuItemsRecursively(permissions, menuList[i]['children'])
       }
       else {
         if (typeof menuList[i]['data'] !== 'undefined') {
+          // Let's Check for the Permissions
           if (typeof menuList[i].data['permission'] !== 'undefined') {
             for (let j = 0; j < menuList[i].data['permission'].length; j++) {
               const permLabelIndex = menuList[i].data['permission'][j]['label'];
               const permActionName = menuList[i].data['permission'][j]['action'];
-
+              //list_core_website
               if (typeof permissions[permLabelIndex] !== 'undefined') {
                 //we do a OR for the permission (it must have at least 1)
                 if (permissions[permLabelIndex].indexOf(permActionName) === -1) {
