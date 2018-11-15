@@ -1,0 +1,14 @@
+ {
+    "theme":{
+        "slug": "providerfy",
+        "name": "Providerfy Theme MyOG 2018",
+        "angular_module": "ThemeProviderfyModule",
+        "version": "0.0.1",
+        "parent_theme": false
+    },
+    "author":{
+        "name": "MyOG",
+        "email": "team@myog.io",
+        "website": "http://myog.io"
+    }
+}

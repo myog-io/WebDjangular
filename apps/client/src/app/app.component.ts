@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { WDAConfig, AnalyticsService } from '@webdjangular/core/services';
 
 
@@ -8,7 +9,8 @@ import { WDAConfig, AnalyticsService } from '@webdjangular/core/services';
 })
 export class AppComponent implements OnInit {
   title = "Client";
-  constructor(private wdaconfig: WDAConfig, private analytics: AnalyticsService, ) {
+  constructor(private wdaconfig: WDAConfig, private analytics: AnalyticsService,
+              private router: Router) {
 
   }
 

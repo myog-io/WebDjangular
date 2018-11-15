@@ -6,7 +6,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { InjectionToken } from '@angular/core';
 import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
+
+// TODO: HARDCODE
 import { PluginsContactFormModule } from '@webdjangular/plugins/contact-form';
+import { PluginProviderModule} from "@webdjangular/plugins/provider"
+
+const HARDCODEMODULES = [
+  PluginsContactFormModule,
+  PluginProviderModule
+];
+
+//import { ThemeProviderfyModule } from "@webdjangular/themes/providerfy";
+
 
 export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');
 
@@ -49,7 +60,8 @@ export class CoreDynamicComponentLoader {
       imports: [
         CommonModule,
         RouterModule,
-        PluginsContactFormModule, // Importing all the Modules weant the Components From
+        ...HARDCODEMODULES // Importing all the Modules weant the Components From
+        //ThemeProviderfyModule,
       ], declarations: declarations
     })(class WDARuntimeModule { });
 

@@ -12,7 +12,7 @@ CONFIG_FILE_NAME = "wda_config.json"
 class DynamicLoader():
 
     @staticmethod
-    def getConfig(directory):
+    def get_config(directory):
         configData = []
         for themeFolder in os.listdir(directory):
             themeConfigFile = os.path.join(
@@ -29,9 +29,9 @@ class DynamicLoader():
         return configData
 
     @staticmethod
-    def getPluginsConfig():
-        return DynamicLoader.getConfig(settings.PLUGIN_DIR)
+    def get_plugins_config():
+        return DynamicLoader.get_config(settings.PLUGIN_DIR)
 
     @staticmethod
-    def getThemesConfig():
-        return DynamicLoader.getConfig(settings.THEME_DIR)
+    def get_themes_config():
+        return DynamicLoader.get_config(settings.THEME_DIR)

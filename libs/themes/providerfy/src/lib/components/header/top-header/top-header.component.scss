@@ -1,0 +1,24 @@
+@import "../../../styles/variables.scss";
+
+.top-header {
+  background-color: $primary;
+}
+
+.top-header a {
+  float: left;
+  color: $white;
+  text-align: center;
+  font-weight: $fw-semibold;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.top-header a:hover {
+  background-color: $white;
+  color: $black;
+}
+
+.top-header a.active {
+  background-color: $white;
+  color: $black;
+}

@@ -7,6 +7,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/',
   },
   {
+    title: 'Medias',
+    icon: 'fas fa-file-image',
+    link: '/media',
+  },
+  {
     title: 'Pages',
     icon: 'fas fa-file-alt',
     link: '/pages',
@@ -29,8 +34,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/core_plugins',
         data: {
           permission: [
-            { label: 'webdjango', // Name of the plugin on WebDjango side
-             action: 'list_core_plugin' },
+            {
+              label: 'webdjango', // Name of the plugin on WebDjango side
+              action: 'list_core_plugin'
+            },
           ]
         }
       },
@@ -51,6 +58,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
             { label: 'auth', action: 'list_group' }
           ]
         }
+      },
+      {
+        title: 'Configs',
+        children:
+          [
+            {
+              title: 'Websites',
+              link: '/core_websites',
+              data: {
+                permission: [
+                  { label: 'webdjango', action: 'list_core_website' }
+                ]
+              }
+            }
+          ]
       }
     ]
   },

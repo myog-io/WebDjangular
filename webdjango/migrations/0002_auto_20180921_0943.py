@@ -8,7 +8,7 @@ import re
 
 def start_config_data(apps, scheme_editor):
     from webdjango.models.Core import CoreConfig, Website
-    from libs.core.cms.models.Page import Page
+    from libs.core.cms.api.models.Page import Page
     from webdjango.configs import CONFIG_HOME_PAGE
 
     website, created = Website.objects.get_or_create(

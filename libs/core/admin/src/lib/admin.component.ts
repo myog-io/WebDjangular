@@ -3,7 +3,9 @@ import { NbAccessChecker } from '@nebular/security'
 
 import { MENU_ITEMS } from './admin-menu';
 
-import { RoleProvider } from '@webdjangular/core/services';
+import { RoleProvider, WebAngularDataStore } from '@webdjangular/core/services';
+import { CoreConfigModel } from 'libs/core/data/src/lib/models/CoreConfig.model';
+import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class AdminComponent implements OnInit {
   constructor(
     public accessChecker: NbAccessChecker,
     public roleProvider: RoleProvider,
+    private datastore: WebAngularDataStore,
   ) {
 
   }
@@ -32,6 +35,12 @@ export class AdminComponent implements OnInit {
         this.hideMenuItemsRecursively(perms, this.menu);
       }
     );
+    this.getDynamicMenu()
+  }
+  getDynamicMenu(){
+    this.datastore.query(CoreConfigGroupModel,null,null).subscribe((data:any) => {
+      console.log(data)
+    })
   }
 
   hideMenuItemsRecursively(permissions = {}, menuList = []) {

@@ -1,0 +1,27 @@
+@import "../../../styles/variables.scss";
+
+.navbar-nav {
+
+
+
+  .nav-link {
+    font-size: $header-menu-fs;
+    font-family: $header-menu-ff;
+    font-weight: $header-menu-fw;
+    color: $header-menu-c;
+    text-transform: uppercase;
+  }
+
+  .nav-item.featured {
+    background: $header-menu-featured-bg;
+    border-radius: $header-menu-featured-rounded;
+    .nav-link {
+      color:$header-menu-featured-c;
+    }
+
+  }
+
+}
+
+
+

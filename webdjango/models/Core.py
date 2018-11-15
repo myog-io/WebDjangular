@@ -21,6 +21,7 @@ class Website(models.Model):
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_website'
         permissions = (("list_core_website", "Can list core_website"),)
 
@@ -33,7 +34,7 @@ class CoreConfig(models.Model):
     Core Config Holds Some Information for the Beggening of the application
     """
     slug = models.SlugField(max_length=200, validators=[
-                            validate_slug], unique=True)
+        validate_slug], unique=True)
     value = models.TextField(max_length=500, null=True)
     website = models.ForeignKey(
         Website, on_delete=models.CASCADE, null=False, related_name="Configs", default=1)
@@ -41,11 +42,17 @@ class CoreConfig(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def read(slug, website):
+    def read(slug, website=None):
         try:
             if not website:
                 website = Website.getCurrentWebsite()
-            return CoreConfig.objects.filter(slug=slug, website=website).first().value
+                config = CoreConfig.objects.filter(
+                    slug=slug, website=website).first()
+                if config:
+                    return config.value
+            else:
+                return None
+
         except ObjectDoesNotExist:
             return None
 
@@ -57,7 +64,19 @@ class CoreConfig(models.Model):
             slug=slug, value=value, website=website)
         return created
 
+    @staticmethod
+    def register_all_config():
+        from webdjango.signals.CoreSignals import config_register
+        configs = config_register.send_robust(sender=CoreConfig)
+        print("Getting Configs")
+        for config in configs:
+            print("REGISTER CONFIGS")
+            print(config)
+
+        return configs
+
     class Meta:
+        ordering = ['-id']
         db_table = 'core_config'
         permissions = (("list_core_config", "Can list core_config"),)
 
@@ -76,6 +95,7 @@ class Author(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_author'
         permissions = (("list_core_author", "Can list core_author"),)
 
@@ -88,7 +108,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
     Core Plugin, this model is used to check the installed Plugin and check the actives one
     """
     slug = models.SlugField(max_length=100, validators=[
-                            validate_slug], unique=True)
+        validate_slug], unique=True)
     name = models.CharField(max_length=100)
     author = models.ForeignKey(
         Author, on_delete=models.CASCADE, related_name='plugins')
@@ -103,15 +123,25 @@ class Plugin(DirtyFieldsMixin, models.Model):
         """
         Function to get all the new installed modules based on the configuration files of each plugin
         """
-        plugins_config = DynamicLoader.getPluginsConfig()
+        from webdjango.serializers.CoreSerializer import PluginSerializer, AuthorSerializer
+        plugins_config = DynamicLoader.get_plugins_config()
         for config in plugins_config:
             # Creating Author
             if config['author']:
                 author, created = Author.objects.get_or_create(
                     config['author'])
-            config['plugin']['author'] = author
+            config['plugin']['author'] = author.id
 
-            plugin, created = Plugin.objects.get_or_create(config['plugin'])
+            plugin = Plugin.objects.filter(
+                slug=config['plugin']['slug']).first()
+            created = False
+            if not plugin:
+                serializer = PluginSerializer(data=config['plugin'])
+                serializer.is_valid(raise_exception=True)
+                plugin = serializer.save()
+                plugin.save()
+                created = True
+
             if not created:
                 # Item Created Before, let's check for the version difference
                 if LooseVersion(config.plugin.version) > LooseVersion(plugin.current_version):
@@ -121,6 +151,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
                 print("DO Nothing for now")
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_plugin'
         permissions = (("list_core_plugin", "Can list core_plugin"),)
 
@@ -133,7 +164,7 @@ class Theme(DirtyFieldsMixin, models.Model):
     Core Themes, this model is used to check the installed Themes and check the activated one
     """
     slug = models.SlugField(max_length=100, validators=[
-                            validate_slug], unique=True)
+        validate_slug], unique=True)
     name = models.CharField(max_length=100)
     angular_module = models.CharField(max_length=100, null=False)
     author = models.ForeignKey(
@@ -156,12 +187,14 @@ class Theme(DirtyFieldsMixin, models.Model):
         """
         Function to get all the new installed modules based on the configuration files of each theme
         """
+        from webdjango.serializers.CoreSerializer import ThemeSerializer, AuthorSerializer
         active_theme = Theme.get_active()
-        themes_config = DynamicLoader.getThemesConfig()
+        themes_config = DynamicLoader.get_themes_config()
         for config in themes_config:
             # Checking if Theme has a Parent Theme
             if config['theme']['parent_theme']:
-                parent_theme = Theme.objects.get(slug=config['theme'])
+                parent_theme = Theme.objects.filter(
+                    slug=config['theme']['parent_theme']).first()
                 if parent_theme:
                     config['theme']['parent_theme'] = parent_theme
                 else:
@@ -173,9 +206,16 @@ class Theme(DirtyFieldsMixin, models.Model):
             if config['author']:
                 author, created = Author.objects.get_or_create(
                     config['author'])
-            config['theme']['author'] = author
+            config['theme']['author'] = author.id
 
-            theme, created = Theme.objects.get_or_create(config['theme'])
+            # Creating Theme
+            theme = Theme.objects.filter(slug=config['theme']['slug']).first()
+            created = False
+            if not theme:
+                serializer = ThemeSerializer(data=config['theme'])
+                serializer.is_valid(raise_exception=True)
+                theme = serializer.save()
+                created = True
             if not created:
                 # Item Created Before, let's check for the version difference
                 if theme.current_version and config['theme']['version']:
@@ -190,5 +230,6 @@ class Theme(DirtyFieldsMixin, models.Model):
                     active_theme = theme
 
     class Meta:
+        ordering = ['-id']
         db_table = 'core_theme'
         permissions = (("list_core_theme", "Can list core_theme"),)

@@ -1,0 +1,24 @@
+
+//HARDCODE
+@import "../../../../../themes/providerfy/styles/variables";
+
+:host {
+    display: contents;
+}
+
+h3 {
+    font-size: $plan-title-fs;
+    font-weight: $plan-title-fw;
+    font-family: $plan-title-ff;
+    color: $plan-title-c;
+    text-transform: uppercase;
+}
+
+h6 {
+    font-size: $plan-headline-fs;
+    font-weight: $plan-headline-fw;
+    font-family: $plan-headline-ff;
+    color: $plan-headline-c;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}

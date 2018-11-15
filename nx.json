@@ -64,6 +64,21 @@
     },
     "core-dynamic-component-loader": {
       "tags": []
+    },
+    "provider": {
+      "tags": []
+    },
+    "plugins-provider": {
+      "tags": []
+    },
+    "theme-providerfy": {
+      "tags": []
+    },
+    "core-media": {
+      "tags": []
+    },
+    "core-chunk-file-upload": {
+      "tags": []
     }
   }
 }

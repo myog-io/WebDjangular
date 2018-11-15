@@ -5,14 +5,16 @@ Django settings for webdjangular project.
 
 import os
 import datetime
+import sys
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.join("libs","core")))
 
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # 'data' is my media folder
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files') # 'data' is my media folder
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/files/'
 
 THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 
@@ -33,9 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'webdjango',
-    'libs.core.users',
-    'libs.core.cms',
+    'libs.core.users.api',
+    'libs.core.cms.api',
+    'libs.core.media.api',
     'rest_framework_json_api',
     'django_extensions',
     'drf_yasg'
@@ -114,7 +118,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
     'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json',
-    # 'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
 
