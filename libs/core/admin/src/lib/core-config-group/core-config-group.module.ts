@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../@theme/theme.module';
 import { CoreConfigGroupComponent } from './core-config-group.component';
-import { ScaffoldModule } from '../scaffold/scaffold.module';
 import { CoreConfigRoutingModule } from './core-config-group-routing.module';
+import { ScaffoldFieldModule } from '../scaffold/scaffold-field.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [
     CoreConfigGroupComponent,
@@ -13,9 +14,9 @@ const COMPONENTS = [
   imports: [
     ThemeModule,
     CommonModule,
-    CoreConfigRoutingModule
-    //ScaffoldModule,
-
+    CoreConfigRoutingModule,
+    ScaffoldFieldModule,
+    ReactiveFormsModule
   ],
   declarations: [
     ...COMPONENTS,

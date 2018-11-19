@@ -1,6 +1,7 @@
 from django.db import models
 from djongo.models.json import JSONField
 from webdjango.signals.CoreSignals import config_group_register, config_register
+from webdjango.models.Core import CoreConfig
 from json.encoder import JSONEncoder
 # TODO: Implement Permissions based on Groups
 
@@ -23,6 +24,10 @@ class CoreConfigGroup(AbstractCoreConfigModel):
     order = models.IntegerField(default=0)
     title = models.CharField(default=None)
 
+    @property
+    def value(self):
+        return CoreConfig.read(self.id)
+
     @staticmethod
     def get(pk=None):
         groups = CoreConfigGroup.all()
@@ -38,7 +43,6 @@ class CoreConfigGroup(AbstractCoreConfigModel):
         flat_list = [item for sublist in registers for item in sublist]
         groups += filter(lambda obj: type(obj) == CoreConfigGroup, flat_list)
         groups = sorted(groups, key=lambda obj: obj.order)
-
         return groups
 
     class Meta:
@@ -78,6 +82,16 @@ class CoreConfigInput(AbstractCoreConfigModel):
     validation = JSONField(default=None)
     wrapperClass = models.CharField(default=None)
     group = models.SlugField(null=False)
+
+    @property
+    def value(self):
+        return CoreConfig.read(self.config_path)
+
+    @property
+    def config_path(self):
+        if self.group:
+            return '{}.{}'.format(self.group, self.id)
+        return self.id
 
     @staticmethod
     def all():

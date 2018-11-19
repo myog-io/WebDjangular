@@ -1,12 +1,14 @@
 import {
   JsonApiModelConfig,
   Attribute,
+  BelongsTo,
 
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
-
+import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { CoreConfigModel } from './CoreConfig.model';
 
 @JsonApiModelConfig({
   type: 'core_config_input'
@@ -41,12 +43,16 @@ export class CoreConfigInputModel extends AbstractModel {
   validation: any;
 
   @Attribute()
-  wrapperClass: string
+  wrapperClass: string;
 
   @Attribute()
-  group: string
+  group: string;
 
+  @Attribute()
+  value: string;
 
+  @BelongsTo()
+  core_config: CoreConfigModel
 
   permissions: PermissionModel[];
 
@@ -55,4 +61,19 @@ export class CoreConfigInputModel extends AbstractModel {
   }
 
   set pk(value) {}
+
+  get fieldConfig() : ScaffoldFieldConfig {
+    return {
+      disabled: this.disabled,
+      label: this.label,
+      name: this.id,
+      options: this.select_options,
+      placeholder: this.placeholder,
+      type: this.field_type,
+      validation: this.validation,
+      value: this.value,
+      wrapperClass: this.wrapperClass,
+      inputType: this.input_type,
+    };
+  }
 }

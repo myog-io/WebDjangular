@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput
+from webdjango.models.Core import CoreConfig
 from webdjango.serializers.CoreConfigSerializer import CoreConfigGroupSerializer, CoreConfigInputSerializer
 from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
@@ -32,6 +33,11 @@ class CoreConfigGroupViewSet(viewsets.GenericViewSet):
     def get_queryset(self):
         return CoreConfigGroup.all()
 
+    def get_object(self):
+        obj = CoreConfigGroup.get(self.kwargs['pk'])
+
+        return obj
+
     """
     List a queryset.
     """
@@ -45,6 +51,26 @@ class CoreConfigGroupViewSet(viewsets.GenericViewSet):
         serializer = self.serializer_class(group, many=False)
         return Response(serializer.data)
 
+    """
+    This Update it's actually to update The Core Config Values of a Group
+    """
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        CoreConfig.write(serializer.data['id'],request.data['value'])
+
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
 
 class CoreConfigInputViewSet(viewsets.GenericViewSet):
     """
@@ -76,4 +102,6 @@ class CoreConfigInputViewSet(viewsets.GenericViewSet):
             inputs = list(filter(lambda obj: obj.group == group, inputs))
         serializer = self.serializer_class(inputs, many=True)
         return Response(serializer.data)
+
+
 

@@ -1,10 +1,19 @@
 <nb-card>
-	<nb-card-header>
-    {{group?.title}}
-	</nb-card-header>
-</nb-card>
-<nb-card>
+  <nb-card-header>{{group?.title}}</nb-card-header>
   <nb-card-body>
-    CREATE SCAFFOLD FORMS
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row" *ngFor="let input of inputs">
+        <div [class]="input.wrapperClass ? input.wrapperClass : 'col-12'">
+          <ng-container webdjangularScaffoldDynamicField [config]="input.fieldConfig" [group]="form"></ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="dynamic-field form-button" [formGroup]="form">
+            <button type="submit" class="btn btn-hero-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </nb-card-body>
 </nb-card>

@@ -6,6 +6,7 @@ import { MENU_ITEMS } from './admin-menu';
 import { RoleProvider, WebAngularDataStore } from '@webdjangular/core/services';
 import { CoreConfigModel } from 'libs/core/data/src/lib/models/CoreConfig.model';
 import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
+import { JsonApiQueryData } from 'angular2-jsonapi';
 
 
 @Component({
@@ -38,13 +39,14 @@ export class AdminComponent implements OnInit {
     this.getDynamicMenu()
   }
   getDynamicMenu(){
-    this.datastore.query(CoreConfigGroupModel,null,null).subscribe((data:any) => {
+    this.datastore.findAll(CoreConfigGroupModel).subscribe((data:JsonApiQueryData<CoreConfigGroupModel>) => {
       //TODO: Do this Dynamically, for now we belive that the Config will always be at last
       const i = this.menu.length -1;
       const i2 = this.menu[i].children.length -1;
-      for (const m in data) {
-        if (data.hasOwnProperty(m)) {
-          const element = data[m];
+      const models = data.getModels();
+      for (const m in models) {
+        if (models.hasOwnProperty(m)) {
+          const element = models[m];
           this.menu[i].children[i2].children.push({
             title: element.title,
             link: `/core_config_group/${element.id}`,

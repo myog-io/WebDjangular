@@ -1,11 +1,11 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { ScaffoldFormButtonComponent } from './form-button/form-button.component';
-import { ScaffoldFormInputComponent } from './form-input/form-input.component';
-import { ScaffoldFormSelectComponent } from './form-select/form-select.component';
-import { ScaffoldCkeditorInputComponent } from './form-ckeditor/form-ckeditor.component';
-import { ScaffoldFormCodeComponent } from './form-code/form-code.component';
+import { ScaffoldFormButtonComponent } from './edit/form-button/form-button.component';
+import { ScaffoldFormInputComponent } from './edit/form-input/form-input.component';
+import { ScaffoldFormSelectComponent } from './edit/form-select/form-select.component';
+import { ScaffoldCkeditorInputComponent } from './edit/form-ckeditor/form-ckeditor.component';
+import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component';
 import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 
 const components: {[type: string]: Type<ScaffoldField>} = {

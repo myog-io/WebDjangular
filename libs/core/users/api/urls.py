@@ -25,14 +25,6 @@ urlpatterns = [
     url(r'', include(router.urls)),
     url(r'^token/', obtain_jwt_token),
     url(r'^token-refresh', refresh_jwt_token),
-    
-    #Relationship views between User -> Group
-    url(regex=r'^user/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$', view=UserRelationshipView.as_view(), name='user-relationships'),
-    url(regex=r'^group/(?P<user_pk>[^/.]+)/getuserlist$', view=GroupUserView.as_view({'get':'list'}), name='group-getuserlist'),
-
-    #Relationship views between Group -> Permission
-    url(regex=r'^group/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$', view=GroupRelationshipView.as_view(), name='group-relationships'),
-    url(regex=r'^permission/(?P<group_pk>[^/.]+)/getgrouplist$', view=PermissionGroupView.as_view({'get':'list'}), name='permission-getgrouplist'),
 ]
 
 

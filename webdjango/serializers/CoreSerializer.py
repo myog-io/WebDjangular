@@ -20,6 +20,7 @@ class CoreConfigSerializer(ModelSerializer):
         model = CoreConfig
         fields = '__all__'
 
+
 class AuthorSerializer(ModelSerializer):
     """
     The serializer for Authors

@@ -1,10 +1,10 @@
+
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, } from "@angular/router";
 import { WebAngularDataStore } from "@webdjangular/core/services";
 import { CoreConfigGroupModel } from "libs/core/data/src/lib/models/CoreConfigGroup.model";
 import { CoreConfigInputModel } from "libs/core/data/src/lib/models/CoreConfigInput.model";
-import { JsonApiQueryData } from "angular2-jsonapi";
-
+import { AbstractForm } from "@webdjangular/core/data-forms";
 
 @Component({
   selector: 'wda-core-config-group',
@@ -12,36 +12,100 @@ import { JsonApiQueryData } from "angular2-jsonapi";
   templateUrl: './core-config-group.component.html',
 })
 export class CoreConfigGroupComponent implements OnInit, OnDestroy {
+  /**
+   * Id  of core config group component
+   */
   id: string;
+  /**
+   * Sub  of core config group component
+   */
   private sub: any;
+  /**
+   * Group  of core config group component
+   */
   public group: CoreConfigGroupModel;
+  /**
+   * Inputs  of core config group component
+   */
   public inputs: CoreConfigInputModel[];
+  /**
+   * Form  of core config group component
+   */
+  public form: AbstractForm;
+
+  /**
+   * Creates an instance of core config group component.
+   * @param route
+   * @param datastore
+   */
   constructor(
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
   ) {
   }
+
+  /**
+   * on init
+   */
   ngOnInit() {
+    this.form = new AbstractForm();
+
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
-      if(this.id){
-        this.loadForm();
-      }else{
+      if (this.id) {
+        this.loadConfigGroup();
+      } else {
         // Redirect to Dashboard
       }
     });
   }
+
+  /**
+   * on destroy
+   */
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-  loadForm() {
-    this.datastore.findRecord(CoreConfigGroupModel,this.id).subscribe((data:CoreConfigGroupModel) => {
-      this.group = data;
-    })
-    this.datastore.findAll(CoreConfigInputModel,{group:this.id}).subscribe((data:JsonApiQueryData) => {
 
-      this.inputs = data.getModels();
-      console.log(this.inputs);
+  /**
+   * Loads config group
+   */
+  loadConfigGroup() {
+    this.datastore.findRecord(CoreConfigGroupModel, this.id).subscribe((data: CoreConfigGroupModel) => {
+      this.group = data;
+      this.loadConfigInput()
     })
+
+  }
+
+  /**
+   * Loads config input
+   */
+  loadConfigInput() {
+    this.datastore.findAll(CoreConfigInputModel, { group: this.id }).subscribe((data: any) => {
+      this.inputs = data.getModels();
+      this.group.inputs = this.inputs;
+      this.form.formFields = this.group.formFields;
+      this.group.updateValues();
+      this.form.generateForm();
+      this.form.populateForm(this.group.value);
+    })
+  }
+
+  /**
+   * Submit Form Values
+   */
+  onSubmit() {
+    const data = this.form.value;
+    // Doing this a little bit more manually beucase the way we treat the CoreConfig, it's not a direct relationship
+    for (let i = 0; i < this.group.inputs.length; i++) {
+      this.group.inputs[i]['value'] = data[this.group.inputs[i].id];
+    }
+    this.group.updateValues();
+    const sub = this.group.save().subscribe(
+      (result) => {
+        sub.unsubscribe();
+      }
+    )
   }
 }

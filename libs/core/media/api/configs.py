@@ -17,16 +17,15 @@ MEDIA_CONFIG_GROUP = CoreConfigGroup(
 MEDIA_CONFIGS = [
     CoreConfigInput(
         id=CONFIG_STORAGE_CLASS,
-        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
         input_type="text",
         order=0,
         disabled=False,
         label="Storage Class",
-        select_options={
-            None: 'File Storage Class',
-            STORAGE_AZURE: 'Azure Blob Storage'
-        },
-        placeholder="SELECT STORAGE CLASS",
+        select_options=[
+            {'value':STORAGE_AZURE, 'label':'Azure Blob Storage'}
+        ],
+        placeholder="File Storage Class",
         validation=None,
         wrapperClass=None,
         group=MEDIA_CONFIG_GROUP_SLUG,

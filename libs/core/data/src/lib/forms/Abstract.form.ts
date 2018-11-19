@@ -5,14 +5,32 @@ import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 
 export class AbstractForm extends FormGroup {
+
+  /**
+   * Form fields of abstract form
+   */
   public formFields = {};
+
+  /**
+   * Scaffold fields of abstract form
+   */
   public scaffoldFields: ScaffoldFieldConfig[] = [];
+
+  /**
+   * Listing table settings of abstract form
+   */
   public listingTableSettings = {};
 
+  /**
+   * Creates an instance of abstract form.
+   */
   public constructor() {
     super({});
   }
 
+  /**
+   * Generates form
+   */
   public generateForm() {
     for (let propName in this.formFields) {
       if (this.formFields[propName].type == FormArray) {
@@ -31,6 +49,10 @@ export class AbstractForm extends FormGroup {
     }
   }
 
+  /**
+   * Populates form
+   * @param [entity]
+   */
   public populateForm(entity: JsonApiModel = null) {
     for (let propName in this.formFields) {
       if (
@@ -71,6 +93,10 @@ export class AbstractForm extends FormGroup {
     }
   }
 
+  /**
+   * Updates model
+   * @param entity JsonApiModel
+   */
   public updateModel(entity: JsonApiModel) {
     let values = this.value;
 
@@ -79,14 +105,21 @@ export class AbstractForm extends FormGroup {
     }
   }
 
-  public getAttributeHasManyDifference(formKey: string = null, fullArray = []) {
+
+  /**
+   * Forms key
+   * @param [formKey]
+   * @param [fullArray]
+   * @returns attribute has many difference
+   */
+  public getAttributeHasManyDifference(formKey: string = null, fullArray = []): String[] {
     let diff = [];
     let control = this.get(formKey);
     let hasNot = true;
 
-    fullArray.map(function(item) {
+    fullArray.map(function (item) {
       hasNot = true;
-      control.value.map(function(item2) {
+      control.value.map(function (item2) {
         if (item2.pk == item.pk) {
           hasNot = false;
         }
@@ -100,6 +133,12 @@ export class AbstractForm extends FormGroup {
     return diff;
   }
 
+  /**
+   * Does entity has relationship
+   * @param [formKey]
+   * @param [toRelateEntity]
+   * @returns
+   */
   public doesEntityHasRelationship(
     formKey: string = null,
     toRelateEntity = null
@@ -107,12 +146,18 @@ export class AbstractForm extends FormGroup {
     let control = this.get(formKey);
 
     return (
-      control.value.filter(function(alreadyRelatedEntity) {
+      control.value.filter(function (alreadyRelatedEntity) {
         return alreadyRelatedEntity.pk == toRelateEntity.pk;
       }).length > 0
     );
   }
 
+  /**
+   * Checkboxs relation listener
+   * @param $event
+   * @param [formKey]
+   * @param [toRelateEntity]
+   */
   public checkboxRelationListener(
     $event,
     formKey: string = null,
@@ -134,6 +179,11 @@ export class AbstractForm extends FormGroup {
     }
   }
 
+  /**
+   * Pushs to form array attribute
+   * @param [formKey]
+   * @param entityToPush
+   */
   public pushToFormArrayAttribute(formKey: string = null, entityToPush) {
     if (this.formFields[formKey].type == FormArray) {
       let fa = this.get(formKey) as FormArray;

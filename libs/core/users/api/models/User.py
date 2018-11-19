@@ -22,7 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=60, unique=True, default=None, blank=True, null=False)
     email = models.EmailField(max_length=255, unique=True)
     mobile = models.CharField(max_length=64, null=True, blank=True, default=None)
-    password    = models.CharField(max_length=255, null=True);
+    password = models.CharField(max_length=255, null=True)
     is_tfa_enabled = models.BooleanField(default=False, blank=True)
     is_email_verified = models.BooleanField(default=False, blank=True)
     is_mobile_verified = models.BooleanField(default=False, blank=True)
@@ -51,12 +51,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name + ' ' + self.middle_name + ' ' + self.last_name
 
     @property
-    def short_name(self):
+    def name(self):
         """
         Use to get the user's name without middle name.
-        :return:
+        :return: string
         """
-        return self.first_name + ' ' + selfstring.last_name
+        return self.first_name + ' ' + self.last_name
 
 
     def __str__(self):

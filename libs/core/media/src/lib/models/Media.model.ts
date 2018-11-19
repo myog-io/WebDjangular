@@ -10,11 +10,17 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { MediaForm } from '../forms/Media.form';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 @JsonApiModelConfig({
   type: 'media'
 })
 export class MediaModel extends AbstractModel {
+  constructor(_datastore, data?: any) {
+    super(_datastore, data);
+  }
+
+
   public static formClassRef = MediaForm;
 
   @Attribute() id: string;
@@ -31,10 +37,10 @@ export class MediaModel extends AbstractModel {
   get pk() {
     return this.id;
   }
-  get safeFileUrl() {
+  get safeFileUrl(): SafeUrl {
     // For some reason the file is comming wiwth the domain from the API, and we dont want it!
-    return this.file.replace("http://localhost:4201","")
-    //return this.sanitization.bypassSecurityTrustStyle(this.file);
+    return this.file.replace("http://localhost:4201", "")
+    return this._sanitizer.bypassSecurityTrustUrl(this.file);
   }
-  set pk(value) {}
+  set pk(value) { }
 }
