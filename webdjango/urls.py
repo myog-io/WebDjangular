@@ -55,4 +55,4 @@ urlpatterns = [
     #url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
 
 
-] + static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

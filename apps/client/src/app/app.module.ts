@@ -16,7 +16,6 @@ export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
 }
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -34,7 +33,7 @@ export function wda_init(wdaconfig: WDAConfig) {
           loadChildren: () => CoreDynamicPageLoaderModule
         }*/
         {
-          path:'',
+          path: '',
           loadChildren: "@webdjangular/themes/providerfy#ThemeProviderfyModule"
         }
       ],
