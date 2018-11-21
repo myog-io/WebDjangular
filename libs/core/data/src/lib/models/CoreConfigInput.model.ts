@@ -43,13 +43,16 @@ export class CoreConfigInputModel extends AbstractModel {
   validation: any;
 
   @Attribute()
-  wrapperClass: string;
+  wrapper_class: string;
 
   @Attribute()
   group: string;
 
   @Attribute()
   value: string;
+
+  @Attribute()
+  ng_if: any;
 
   @BelongsTo()
   core_config: CoreConfigModel
@@ -72,8 +75,9 @@ export class CoreConfigInputModel extends AbstractModel {
       type: this.field_type,
       validation: this.validation,
       value: this.value,
-      wrapperClass: this.wrapperClass,
+      wrapper_class: this.wrapper_class,
       inputType: this.input_type,
+      ng_if: this.ng_if,
     };
   }
 }

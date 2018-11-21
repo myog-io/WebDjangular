@@ -19,7 +19,7 @@ const components: {[type: string]: Type<ScaffoldField>} = {
 @Directive({
   selector: '[webdjangularScaffoldDynamicField]'
 })
-export class ScaffoldFieldDirective implements ScaffoldField, OnChanges, OnInit {
+export class ScaffoldFieldDirective extends ScaffoldField implements OnChanges, OnInit {
   @Input()
   config: ScaffoldFieldConfig;
 
@@ -31,7 +31,9 @@ export class ScaffoldFieldDirective implements ScaffoldField, OnChanges, OnInit 
   constructor(
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnChanges() {
     if (this.component) {

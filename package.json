@@ -41,7 +41,7 @@
   "dependencies": {
     "@agm/core": "1.0.0-beta.2",
     "@angular/animations": "7.0.4",
-    "@angular/cdk": "^7.0.4",
+    "@angular/cdk": "^7.1.0",
     "@angular/common": "7.0.4",
     "@angular/compiler": "7.0.4",
     "@angular/core": "7.0.4",
@@ -98,7 +98,7 @@
     "@angular/language-service": "^7.0.4",
     "@ngrx/store-devtools": "6.1.0",
     "@nrwl/schematics": "7.0.2",
-    "@types/jasmine": "^2.8.11",
+    "@types/jasmine": "^2.8.12",
     "@types/jasminewd2": "^2.0.6",
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",

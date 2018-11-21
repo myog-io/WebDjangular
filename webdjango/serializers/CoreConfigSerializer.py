@@ -15,9 +15,11 @@ class CoreConfigInputSerializer(serializers.Serializer):
     select_options = serializers.JSONField(read_only=True)
     placeholder = serializers.CharField(read_only=True)
     validation = serializers.JSONField(read_only=True)
-    wrapperClass = serializers.CharField(read_only=True)
+    wrapper_class = serializers.CharField(read_only=True)
     group = serializers.SlugField(read_only=True)
     value = serializers.CharField(read_only=True)
+    ng_if = serializers.JSONField(read_only=True)
+
 
 class CoreConfigGroupSerializer(serializers.Serializer):
     """

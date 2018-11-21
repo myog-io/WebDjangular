@@ -80,8 +80,9 @@ class CoreConfigInput(AbstractCoreConfigModel):
     select_options = JSONField(default=None)
     placeholder = models.CharField(default=None)
     validation = JSONField(default=None)
-    wrapperClass = models.CharField(default=None)
+    wrapper_class = models.CharField(default=None)
     group = models.SlugField(null=False)
+    ng_if = JSONField(default=None)
 
     @property
     def value(self):

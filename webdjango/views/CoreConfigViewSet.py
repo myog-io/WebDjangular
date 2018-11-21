@@ -99,7 +99,7 @@ class CoreConfigInputViewSet(viewsets.GenericViewSet):
         inputs = CoreConfigInput.all()
         if request.GET.get('group'):
             group = request.GET.get('group')
-            inputs = list(filter(lambda obj: obj.group == group, inputs))
+            inputs = list(filter(lambda obj: obj.group == str(group), inputs))
         serializer = self.serializer_class(inputs, many=True)
         return Response(serializer.data)
 

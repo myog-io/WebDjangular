@@ -122,6 +122,7 @@ REST_FRAMEWORK = {
 
 }
 
+EMAIL_BACKEND  = 'webdjango.email.WebDjangoEmailBackend'
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':

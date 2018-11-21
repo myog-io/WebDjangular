@@ -38,6 +38,7 @@ export class CoreConfigGroupModel extends AbstractModel {
   permissions: PermissionModel[];
 
   updateValues():any {
+    this.value = {}
     let vals = {}
     for (let i = 0; i < this.inputs.length; i++) {
       const input: CoreConfigInputModel = this.inputs[i];

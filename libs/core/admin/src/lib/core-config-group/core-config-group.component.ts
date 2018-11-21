@@ -34,6 +34,10 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   public form: AbstractForm;
 
   /**
+   * Loading state
+   */
+  public loading: boolean = false;
+  /**
    * Creates an instance of core config group component.
    * @param route
    * @param datastore
@@ -96,6 +100,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    * Submit Form Values
    */
   onSubmit() {
+    this.loading = true;
     const data = this.form.value;
     // Doing this a little bit more manually beucase the way we treat the CoreConfig, it's not a direct relationship
     for (let i = 0; i < this.group.inputs.length; i++) {
@@ -104,7 +109,11 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
     this.group.updateValues();
     const sub = this.group.save().subscribe(
       (result) => {
+        this.loading = false;
         sub.unsubscribe();
+      },
+      (error: any) =>{
+        this.loading = false;
       }
     )
   }

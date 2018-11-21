@@ -17,3 +17,4 @@ def installPluginTheme(sender, instance, created, *args, **kwargs):
             obj = sender.objects.get(pk=instance.pk)
             obj.current_version = obj.version
             obj.save()
+

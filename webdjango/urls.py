@@ -2,6 +2,7 @@
 WebDjangular URL Configuration
 """
 import webdjango.signals.CoreSignals
+import webdjango.signals.EmailConfigRegisterSignals
 
 from django.conf.urls import include
 from django.conf import settings

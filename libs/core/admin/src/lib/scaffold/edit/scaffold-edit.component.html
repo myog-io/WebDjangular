@@ -2,9 +2,11 @@
   <nb-card>
     <nb-card-header>{{beforeTitle}} {{title}}</nb-card-header>
     <nb-card-body>
-      <div class="row" *ngFor="let field of form.scaffoldFields">
-        <div [class]="field.wrapperClass ? field.wrapperClass : 'col-12'">
-          <ng-container webdjangularScaffoldDynamicField [config]="field" [group]="form"></ng-container>
+      <div class="container">
+        <div class="row">
+          <div *ngFor="let field of form.scaffoldFields" [class]="field.wrapper_class ? field.wrapper_class : 'col-12'">
+            <ng-container webdjangularScaffoldDynamicField [config]="field" [group]="form"></ng-container>
+          </div>
         </div>
       </div>
     </nb-card-body>

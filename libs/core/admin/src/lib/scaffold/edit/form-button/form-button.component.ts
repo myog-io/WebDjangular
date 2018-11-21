@@ -7,14 +7,15 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
   selector: 'wda-form-button',
   styleUrls: ['form-button.component.scss'],
   template: `
+
     <div
       class="dynamic-field form-button"
-      [formGroup]="group">
+      [formGroup]="group"  *ngIf="ng_if()">
       <button type="submit" class="btn btn-hero-primary" [disabled]="config.disabled">{{ config.label }}</button>
     </div>
   `
 })
-export class ScaffoldFormButtonComponent implements ScaffoldField {
+export class ScaffoldFormButtonComponent extends ScaffoldField {
   config: ScaffoldFieldConfig;
   group: AbstractForm;
 }

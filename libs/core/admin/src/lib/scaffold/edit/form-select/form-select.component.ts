@@ -8,7 +8,7 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
   selector: 'wda-form-select',
   styleUrls: ['form-select.component.scss'],
   template: `
-    <div class="form-group form-select" [formGroup]="group">
+    <div class="form-group form-select" [formGroup]="group" *ngIf="ng_if()">
       <label>{{ config.label }}</label>
       <select class="form-control" [formControlName]="config.name">
         <option value="">{{ config.placeholder }}</option>
@@ -19,7 +19,7 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
     </div><!--form-group-->
   `
 })
-export class ScaffoldFormSelectComponent implements ScaffoldField {
+export class ScaffoldFormSelectComponent extends ScaffoldField {
   config: ScaffoldFieldConfig;
   group: AbstractForm;
 
