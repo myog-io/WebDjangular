@@ -290,6 +290,207 @@ input:focus ~ .highlight {
   }
 }
 
+.backdrop-choosecity {
+  opacity: 1 !important;
+  background-image: url("../assets/images/modal_choose_city_bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right center;
+}
+
+.modal.choosecity {
+  .modal-content {
+    background: transparent;
+    border: unset;
+  }
+}
+
+.modal.tv-channel {
+  .modal-dialog {
+    max-width: 900px;
+    .modal-content{
+      height: 500px;
+    }
+  }
+}
+
+$icon-size: 30px;
+
+.icon-download{
+  background:url("../assets/images/icon_download.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size;
+  height: $icon-size; //29px;
+  display:block;
+  float:left;
+}
+
+.icon-upload{
+  background:url("../assets/images/icon_upload.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //31px;
+  height: $icon-size; //27px;
+  display:block;
+  float:left;
+}
+
+.icon-tools{
+  background:url("../assets/images/icon_tools.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //29px;
+  height: $icon-size; //29px;
+  display:block;
+  float:left;
+}
+
+.icon-percentage{
+  background:url("../assets/images/icon_percentage.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+
+.icon-barcode{
+  background:url("../assets/images/icon_barcode.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-change{
+  background:url("../assets/images/icon_change.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-chat{
+  background:url("../assets/images/icon_chat.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-dashboard{
+  background:url("../assets/images/icon_dashboard.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-email{
+  background:url("../assets/images/icon_email.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-extra-point{
+  background:url("../assets/images/icon_extra_point.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-fiber{
+  background:url("../assets/images/icon_fiber.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-form{
+  background:url("../assets/images/icon_form.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-gear{
+  background:url("../assets/images/icon_gear.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-key{
+  background:url("../assets/images/icon_key.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-offices{
+  background:url("../assets/images/icon_offices.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-telephone{
+  background:url("../assets/images/icon_telephone.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-radio{
+  background:url("../assets/images/icon_radio.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-plans {
+  background:url("../assets/images/icon_plans.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
+.icon-support {
+  background:url("../assets/images/icon_support.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: $icon-size; //24px;
+  height: $icon-size;
+  display:block;
+  float:left;
+}
 
 
 

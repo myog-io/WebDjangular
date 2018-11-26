@@ -1,21 +1,89 @@
+<!--
 <div class="top-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="topnav">
-                    <a class="p-2 active"> Para você</a>
-                    <a class="p-2">Para empresa</a>
-                    <a class="p-2">Sou assinante</a>
-                </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="topnav">
+          <a class="p-2 active"> Para você</a>
+          <a class="p-2">Para empresa</a>
+
+          <div class="nav-item dropdown pr-1">
+            <div ngbDropdown class="d-inline-block">
+              <a class="nav-link" ngbDropdownToggle> Sou assinante </a>
+              <div class="shadow-lg" ngbDropdownMenu>
+                <a class="dropdown-item">Segunda Via de Boleto</a>
+                <a class="dropdown-item">Medidor de Velocidade</a>
+                <a class="dropdown-item">Configurar Roteador</a>
+                <a class="dropdown-item">Webmail</a>
+                <a class="dropdown-item">Alterar Senha Webmail</a>
+                <a class="dropdown-item">Suporte</a>
+                <a class="dropdown-item">Mudar Meu Plano</a>
+              </div>
             </div>
-            <div class="col-md-6">
-                <div class="location pull-right">
-                    <a class="p-2">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        <span class="pl-1">Aparecida de São Manuel </span> <i class="fa fa-chevron-down"></i>
-                    </a>
-                </div>
-            </div>
+          </div>
+
+
         </div>
+      </div>
+      <div class="col-md-6">
+        <div class="location pull-right">
+          <a class="p-2">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <span class="pl-1">Aparecida de São Manuel </span> <i class="fa fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+-->
+
+<div class="top-header bg-primary">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <ul class="topnav">
+          <li class="active">
+            <a>Para você</a>
+          </li>
+          <li>
+            <a>Para empresa</a>
+          </li>
+          <li class="dropdown">
+            <div ngbDropdown class="d-inline-block">
+              <a ngbDropdownToggle> Sou assinante </a>
+              <div class="shadow-lg" ngbDropdownMenu>
+                <a class="dropdown-item"> <span class="icon icon-barcode"></span> Segunda Via de Boleto</a>
+                <a class="dropdown-item"> <span class="icon icon-dashboard"></span> Medidor de Velocidade</a>
+                <a class="dropdown-item"> <span class="icon icon-gear"></span> Configurar Roteador</a>
+                <a class="dropdown-item"> <span class="icon icon-email"></span> Webmail</a>
+                <a class="dropdown-item"> <span class="icon icon-key"></span> Alterar Senha Webmail</a>
+                <a class="dropdown-item"> <span class="icon icon-support"></span> Suporte</a>
+                <a class="dropdown-item"> <span class="icon icon-change"></span> Mudar Meu Plano</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col col-md-6">
+        <div class="location float-right">
+          <a class="p-2">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <span class="pl-1">Aparecida de São Manuel </span> <i class="fa fa-chevron-down"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<!--
+
+
+
+  </div>
+-->

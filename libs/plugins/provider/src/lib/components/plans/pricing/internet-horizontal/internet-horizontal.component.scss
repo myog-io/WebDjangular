@@ -1,128 +1,131 @@
 // HARDCODE
-@import "../../../../../../../themes/providerfy/styles/variables";
+@import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
 
 :host {
-    display: contents;
+  display: contents;
 }
 
 .card {
 
-    border-radius: $plan-card-round;
+  border-radius: $plan-card-round;
 
-    .left-side {
-        width: 45%;
-        background: $pricing-plan-internet-horizontal-left-side-bg;
+  .left-side {
+    width: 45%;
+    background: $pricing-plan-internet-horizontal-left-side-bg;
 
-        border-top-left-radius: $plan-card-round;
-        border-bottom-left-radius: $plan-card-round;
+    border-top-left-radius: $plan-card-round;
+    border-bottom-left-radius: $plan-card-round;
 
-        .plan-amount {
-            font-size: $pricing-plan-amount-fs;
-            font-weight: $pricing-plan-amount-fw;
-            font-family: $pricing-plan-amount-ff;
-            color: $pricing-plan-amount-c;
+    .plan-amount {
+      font-size: $pricing-plan-amount-fs;
+      font-weight: $pricing-plan-amount-fw;
+      font-family: $pricing-plan-amount-ff;
+      color: $pricing-plan-amount-c;
 
-            background: $primary;
-            line-height: $pricing-plan-amount-fs / 2;
+      background: $primary;
+      line-height: $pricing-plan-amount-fs * 0.6;
 
-            border-top-left-radius: $plan-card-round;
+      border-top-left-radius: $plan-card-round;
 
-            .plan-amount-unit {
-                font-size: $pricing-plan-amount-unit-fs;
-                font-weight: $pricing-plan-amount-unit-fw;
-                font-family: $pricing-plan-amount-unit-ff;
-                color: $pricing-plan-amount-unit-c;
-            }
-
-        }
-
-        .plan-price {
-
-            .currency-unit {
-                font-size: $pricing-plan-currency-unit-fs;
-                font-weight: $pricing-plan-currency-unit-fw;
-                font-family: $pricing-plan-currency-unit-ff;
-                color: $pricing-plan-currency-unit-c;
-                vertical-align: top;
-                line-height: $pricing-plan-price-fs * 1.2;
-            }
-
-            .price {
-                font-size: $pricing-plan-price-fs;
-                font-weight: $pricing-plan-price-fw;
-                font-family: $pricing-plan-price-ff;
-                color: $pricing-plan-price-c;
-            }
-        }
-
-        .btn-subscribe {
-            font-size: $btn-subscribe-fs;
-            font-weight: $btn-subscribe-fw;
-            font-family: $btn-subscribe-ff;
-            color: $btn-subscribe-c;
-            text-transform: uppercase;
-
-            height: $btn-subscribe-fs * 2;
-            line-height: $btn-subscribe-fs * 2;
-
-            padding-top: 0;
-            padding-bottom: 0;
-            padding-left: $spacer;
-            padding-right: $spacer;
-
-        }
-
-        a.more-info {
-            font-size: $pricing-plan-more-info-fs;
-            font-weight: $pricing-plan-more-info-fw;
-            font-family: $pricing-plan-more-info-ff;
-            color: $pricing-plan-more-info-c;
-            text-decoration: underline;
-            text-transform: uppercase;
-        }
-        a.more-info:hover {
-            color: darken($pricing-plan-more-info-c, 15%);
-        }
+      .plan-amount-unit {
+        font-size: $pricing-plan-amount-unit-fs;
+        font-weight: $pricing-plan-amount-unit-fw;
+        font-family: $pricing-plan-amount-unit-ff;
+        color: $pricing-plan-amount-unit-c;
+      }
 
     }
-    .right-side {
-        width: 55%;
-        background: $pricing-plan-internet-horizontal-right-side-bg;
 
-        border-top-right-radius: $plan-card-round;
-        border-bottom-right-radius: $plan-card-round;
+    .plan-price {
 
-        ul {
+      .currency-unit {
+        font-size: $pricing-plan-currency-unit-fs;
+        font-weight: $pricing-plan-currency-unit-fw;
+        font-family: $pricing-plan-currency-unit-ff;
+        color: $pricing-plan-currency-unit-c;
+        vertical-align: top;
+        line-height: $pricing-plan-price-fs * 1.2;
+      }
 
-            list-style: none;
+      .price {
+        font-size: $pricing-plan-price-fs;
+        font-weight: $pricing-plan-price-fw;
+        font-family: $pricing-plan-price-ff;
+        color: $pricing-plan-price-c;
+      }
+    }
 
-            li {
-                font-size: $pricing-plan-features-fs;
-                font-weight: $pricing-plan-features-fw;
-                font-family: $pricing-plan-features-ff;
-                color: $pricing-plan-features-c;
-                line-height: $pricing-plan-features-lh;
+    .btn-subscribe {
+      font-size: $btn-subscribe-fs;
+      font-weight: $btn-subscribe-fw;
+      font-family: $btn-subscribe-ff;
+      color: $btn-subscribe-c;
+      text-transform: uppercase;
 
-                height: $pricing-plan-features-lh * 2;
+      height: $btn-subscribe-fs * 2;
+      line-height: $btn-subscribe-fs * 2;
 
-                display: inline-block;
-
-                .icon {
-                    color: $primary;
-                    float: left;
-                    display: block;
-                }
-
-                p {
-                    height: inherit;
-                    margin-bottom: 0;
-                    display: table-cell;
-                    vertical-align: middle;
-                }
-
-            }
-        }
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: $spacer;
+      padding-right: $spacer;
 
     }
+
+    a.more-info {
+      font-size: $pricing-plan-more-info-fs;
+      font-weight: $pricing-plan-more-info-fw;
+      font-family: $pricing-plan-more-info-ff;
+      color: $pricing-plan-more-info-c;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+    a.more-info:hover {
+      color: darken($pricing-plan-more-info-c, 15%);
+    }
+
+  }
+  .right-side {
+    width: 53%;
+    background: $pricing-plan-internet-horizontal-right-side-bg;
+
+    border-top-right-radius: $plan-card-round;
+    border-bottom-right-radius: $plan-card-round;
+
+    ul {
+
+      list-style: none;
+
+      li {
+        font-size: $pricing-plan-features-fs;
+        font-weight: $pricing-plan-features-fw;
+        font-family: $pricing-plan-features-ff;
+        color: $pricing-plan-features-c;
+        line-height: $pricing-plan-features-lh;
+
+        height: $pricing-plan-features-lh * 2;
+
+        display: inline-block;
+
+        .icon {
+
+          //color: $primary;
+          //float: left;
+          //display: block;
+          margin-right: 5px;
+          margin-top: 4px;
+        }
+
+        p {
+          height: inherit;
+          margin-bottom: 0;
+          display: table-cell;
+          vertical-align: middle;
+        }
+
+      }
+    }
+
+  }
 
 }

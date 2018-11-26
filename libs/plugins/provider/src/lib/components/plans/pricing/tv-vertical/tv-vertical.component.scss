@@ -1,5 +1,6 @@
 // HARDCODE
-@import "../../../../../../../themes/providerfy/styles/variables";
+
+@import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
 
 :host {
     display: contents;
@@ -19,7 +20,7 @@
          border-top-right-radius: $plan-card-round;
 
         .plan-title {
-            font-size: $pricing-plan-amount-fs;
+            font-size: 39px;
             font-weight: $pricing-plan-amount-fw;
             font-family: $pricing-plan-amount-ff;
             color: $pricing-plan-amount-c;
@@ -30,9 +31,43 @@
             border-top-left-radius: $plan-card-round;
             border-top-right-radius: $plan-card-round;
 
-
+            text-transform: uppercase;
             margin-bottom: 0;
         }
+
+        .plan-channels{
+          background:#02cdd1;
+          color:#fff;
+          font-size:16px;
+          font-weight: 400;
+          padding:5px 45px;
+          text-align: left;
+          .amount{
+            font-family: $pricing-plan-amount-ff;
+            font-size:30px;
+            font-weight: 500;
+            vertical-align: sub;
+
+          }
+        }
+
+        .plan-channels-hd{
+          background:#3fe1e4;
+          color:#fff;
+          font-size:16px;
+          font-weight: 700;
+          padding:5px 45px;
+           text-align: left;
+
+          .amount{
+            font-family: $pricing-plan-amount-ff;
+            font-size:30px;
+            font-weight: 700;
+            vertical-align: sub;
+
+          }
+        }
+
     }
 
     .card-body {
