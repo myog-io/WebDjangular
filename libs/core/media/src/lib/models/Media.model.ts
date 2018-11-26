@@ -40,7 +40,7 @@ export class MediaModel extends AbstractModel {
   get safeFileUrl(): SafeUrl {
     // For some reason the file is comming wiwth the domain from the API, and we dont want it!
     return this.file.replace("http://localhost:4201", "")
-    return this._sanitizer.bypassSecurityTrustUrl(this.file);
+    //return this._sanitizer.bypassSecurityTrustUrl(this.file);
   }
   set pk(value) { }
 }
