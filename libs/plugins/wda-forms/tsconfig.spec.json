@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc/libs/plugins/contact-form",
+    "outDir": "../../../dist/out-tsc/libs/plugins/wda-forms",
     "types": [
       "jasmine",
       "node"

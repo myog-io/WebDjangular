@@ -443,26 +443,26 @@
         }
       }
     },
-    "plugins-contact-form": {
-      "root": "libs/plugins/contact-form",
-      "sourceRoot": "libs/plugins/contact-form/src",
+    "plugin-wda-forms": {
+      "root": "libs/plugins/wda-forms",
+      "sourceRoot": "libs/plugins/wda-forms/src",
       "projectType": "library",
-      "prefix": "wda",
+      "prefix": "webdjangular",
       "architect": {
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "libs/plugins/contact-form/src/test.ts",
-            "tsConfig": "libs/plugins/contact-form/tsconfig.spec.json",
-            "karmaConfig": "libs/plugins/contact-form/karma.conf.js"
+            "main": "libs/plugins/wda-forms/src/test.ts",
+            "tsConfig": "libs/plugins/wda-forms/tsconfig.spec.json",
+            "karmaConfig": "libs/plugins/wda-forms/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/plugins/contact-form/tsconfig.lib.json",
-              "libs/plugins/contact-form/tsconfig.spec.json"
+              "libs/plugins/wda-forms/tsconfig.lib.json",
+              "libs/plugins/wda-forms/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

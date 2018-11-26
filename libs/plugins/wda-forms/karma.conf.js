@@ -10,7 +10,7 @@ module.exports = function(config) {
     ...baseConfig,
     coverageIstanbulReporter: {
       ...baseConfig.coverageIstanbulReporter,
-      dir: join(__dirname, '../../../coverage/libs/plugins/contact-form')
+      dir: join(__dirname, '../../../coverage/libs/plugins/wda-forms')
     }
   });
 };
