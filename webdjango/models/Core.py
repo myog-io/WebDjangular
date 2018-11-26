@@ -4,7 +4,7 @@ from djongo import models
 from webdjango.utils.DynamicLoader import DynamicLoader
 from distutils.version import LooseVersion
 from dirtyfields import DirtyFieldsMixin
-
+from djongo.models.json import JSONField
 
 class Website(models.Model):
     """
@@ -35,7 +35,7 @@ class CoreConfig(models.Model):
     """
     slug = models.SlugField(max_length=200, validators=[
         validate_slug], unique=True)
-    value = models.TextField(max_length=500, null=True)
+    value = JSONField(max_length=500, null=True)
     website = models.ForeignKey(
         Website, on_delete=models.CASCADE, null=False, related_name="Configs", default=1)
     created = models.DateTimeField(auto_now_add=True)
@@ -44,11 +44,16 @@ class CoreConfig(models.Model):
     @staticmethod
     def read(slug, website=None):
         try:
+            #TODO: Make This Recursive?!
+            slug_path = slug.split('.')
+
             if not website:
                 website = Website.getCurrentWebsite()
                 config = CoreConfig.objects.filter(
-                    slug=slug, website=website).first()
+                    slug=slug_path[0], website=website).first()
                 if config:
+                    if len(slug_path) > 1:
+                        return config.value[slug_path[1]]
                     return config.value
             else:
                 return None
@@ -58,22 +63,35 @@ class CoreConfig(models.Model):
 
     @staticmethod
     def write(slug, value, website=None):
+        #TODO: Make This Recursive?!
+        slug_path = slug.split('.')
         if not website:
             website = Website.getCurrentWebsite()
-        p, created = CoreConfig.objects.get_or_create(
-            slug=slug, value=value, website=website)
-        return created
 
-    @staticmethod
-    def register_all_config():
-        from webdjango.signals.CoreSignals import config_register
-        configs = config_register.send_robust(sender=CoreConfig)
-        print("Getting Configs")
-        for config in configs:
-            print("REGISTER CONFIGS")
-            print(config)
+        config = CoreConfig.objects.filter(
+                    slug=slug_path[0], website=website).first()
+        if config:
+            config.slug = slug
+            if len(slug_path) > 1:
+                val_list = config.value
+                val_list[slug_path[1]] = value
+                value = val_list
 
-        return configs
+            config.value = value
+            config.website = website
+            config.save()
+        else:
+            # If the Value Should be inside a Json Object
+            if len(slug_path) > 1:
+                val_list = []
+                val_list[slug_path[1]] = value
+                value = val_list
+
+            config = CoreConfig.objects.create(
+                slug=slug_path[0], value=value, website=website)
+
+        return config
+
 
     class Meta:
         ordering = ['-id']

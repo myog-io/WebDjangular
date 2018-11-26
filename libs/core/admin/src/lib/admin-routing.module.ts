@@ -13,6 +13,7 @@ import { GroupModule } from './group/group.module';
 import { UserModule } from './user/user.module';
 import { CoreMediaModule } from '@webdjangular/core/media';
 import { CoreWebsiteModel } from 'libs/core/data/src/lib/models/CoreWebsite.model';
+import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
           title: "Plugin",
           path: 'core_websites'
         }
+      },
+      {
+        path: 'core_config_group/:id',
+        loadChildren: () => CoreConfigGroupModule
       }
     ],
   },

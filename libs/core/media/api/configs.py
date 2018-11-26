@@ -6,28 +6,29 @@ CONFIG_STORAGE_NAME = 'media_storage_account_name'
 CONFIG_STORAGE_CONTAINER_NAME = 'media_storage_container'
 CONFIG_STORAGE_EXTERNAL_URL = 'media_storage_external_url'
 
-STORAGE_AZURE = 'AzureBlobStorage'
+STORAGE_OPTIONS = [
+    {'value':'AzureBlobStorage', 'label':'Azure Blob Storage'}
+]
+
 MEDIA_CONFIG_GROUP_SLUG = 'media_config'
 MEDIA_CONFIG_GROUP = CoreConfigGroup(
     id=MEDIA_CONFIG_GROUP_SLUG,
+    title="File Storage",
     order=10
 )
 
 MEDIA_CONFIGS = [
     CoreConfigInput(
         id=CONFIG_STORAGE_CLASS,
-        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
         input_type="text",
         order=0,
         disabled=False,
         label="Storage Class",
-        select_options={
-            None: 'File Storage Class',
-            STORAGE_AZURE: 'Azure Blob Storage'
-        },
-        placeholder="SELECT STORAGE CLASS",
+        select_options=STORAGE_OPTIONS,
+        placeholder="File Storage Class",
         validation=None,
-        wrapperClass=None,
+        wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
     ),
     CoreConfigInput(
@@ -40,7 +41,7 @@ MEDIA_CONFIGS = [
         select_options=None,
         placeholder="Storage Config Key",
         validation=None,
-        wrapperClass=None,
+        wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
     ),
     CoreConfigInput(
@@ -53,7 +54,7 @@ MEDIA_CONFIGS = [
         select_options=None,
         placeholder="Storage Config Name",
         validation=None,
-        wrapperClass=None,
+        wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
     ),
     CoreConfigInput(
@@ -66,7 +67,7 @@ MEDIA_CONFIGS = [
         select_options=None,
         placeholder="Storage Container Name",
         validation=None,
-        wrapperClass=None,
+        wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
     ),
     CoreConfigInput(
@@ -79,7 +80,7 @@ MEDIA_CONFIGS = [
         select_options=None,
         placeholder="Storage External URL",
         validation=None,
-        wrapperClass=None,
+        wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
     ),
 ]

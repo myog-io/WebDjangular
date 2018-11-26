@@ -72,13 +72,13 @@
 
     <nb-card size="medium" *ngFor="let media of modelPaginatorControls.getEntries(); let i=index;" class="col-md-3">
       <nb-card-body>
-        <div class="picture" style.background-image="url('{{media?.safeFileUrl}}')"></div>
+        <div class="picture" [style.background]="media?.file | safe: 'style'"></div>
         <div class="details">
           <div class="title">
             {{media?.alt}}
           </div>
           <div class="description">
-            {{media?.safeFileUrl}}
+            {{media?.file}}
           </div>
         </div>
       </nb-card-body>

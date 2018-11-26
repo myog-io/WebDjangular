@@ -9,6 +9,7 @@ export interface ScaffoldFieldConfig {
   type: string;
   validation?: ValidatorFn[];
   value?: any;
-  wrapperClass?: string;
+  wrapper_class?: string;
   inputType?: string;
+  ng_if?: any;
 }

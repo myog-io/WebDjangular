@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'libs.core.users.api',
     'libs.core.cms.api',
     'libs.core.media.api',
+    'libs.plugins.provider.api',
     'rest_framework_json_api',
     'django_extensions',
     'drf_yasg'
@@ -119,8 +120,10 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json',
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+
 }
 
+EMAIL_BACKEND  = 'webdjango.email.WebDjangoEmailBackend'
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':

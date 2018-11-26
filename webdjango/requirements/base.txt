@@ -3,6 +3,11 @@
 # Django
 Django==2.0.6
 
+#there is no version for that, it seems to be a package with other libs
+#pip show djongo[json] returns nothing
+djongo[json]
+
+
 # Djongo - Driver for allowing Django to use MongoDB
 djongo==1.2.30
 django-jsoneditor==0.0.13

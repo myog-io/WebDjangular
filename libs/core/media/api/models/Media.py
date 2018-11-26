@@ -6,6 +6,8 @@ from django.db import models as djangoModels
 from djongo.models import Model
 from libs.core.media.api.fields.ChunkableFieldFile import ChunkableFieldFile
 from libs.core.media.api.fields.RemoteFileField import RemoteFileField
+from webdjango.models.Core import CoreConfig
+from libs.core.media.api.configs import MEDIA_CONFIG_GROUP_SLUG, CONFIG_STORAGE_CLASS
 
 import uuid
 
@@ -14,10 +16,11 @@ import uuid
 
 
 def media_path(instance, filename):
-
     import datetime
     now = datetime.datetime.now()
-
+    media_config = CoreConfig.read(MEDIA_CONFIG_GROUP_SLUG)
+    if media_config and media_config[CONFIG_STORAGE_CLASS]:
+        return '{0}-{1}-{2}{3}'.format(now.year,now.month,uuid.uuid4(),filename)
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return '{0}/{1}/{2}{3}'.format(now.year,now.month,uuid.uuid4(),filename)
 

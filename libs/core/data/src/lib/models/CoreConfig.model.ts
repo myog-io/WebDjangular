@@ -19,13 +19,10 @@ export class CoreConfigModel extends AbstractModel {
   public static formClassRef = CoreConfigForm;
 
   @Attribute()
-  id: string;
-
-  @Attribute()
   slug: string;
 
   @Attribute()
-  valeu: any;
+  value: any;
 
   @Attribute()
   created: Date;
@@ -42,7 +39,7 @@ export class CoreConfigModel extends AbstractModel {
   permissions: PermissionModel[];
 
   get pk() {
-    return this.id;
+    return this.slug;
   }
 
   set pk(value) {}

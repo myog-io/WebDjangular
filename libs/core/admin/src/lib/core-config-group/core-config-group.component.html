@@ -1,0 +1,21 @@
+<nb-card>
+  <nb-card-header>{{group?.title}}</nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <div class="row">
+          <div *ngFor="let input of inputs" [class]="input.wrapper_class ? input.wrapper_class : 'col-12'">
+            <ng-container webdjangularScaffoldDynamicField [config]="input.fieldConfig" [group]="form"></ng-container>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="dynamic-field form-button" [formGroup]="form">
+              <button type="submit" class="btn btn-success" [disabled]="loading"><i class="fa fa-spinner fa-spin" *ngIf="loading"></i> Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

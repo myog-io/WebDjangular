@@ -12,19 +12,7 @@ export class AbstractModel extends JsonApiModel {
     this.service = _datastore;
   }
 
-  save(params?: any, headers?: Headers): Observable<this> {
-    return new Observable(observe => {
-      let sub = super.save(params, headers).subscribe(r => {
-        let sub2 = this.saveHasMany().subscribe(r2 => {
-          observe.next(r);
-          observe.complete();
 
-          sub.unsubscribe();
-          sub2.unsubscribe();
-        });
-      });
-    });
-  }
 
   saveHasMany() {
     let hasManyFields = Reflect.getMetadata('HasMany', this);
