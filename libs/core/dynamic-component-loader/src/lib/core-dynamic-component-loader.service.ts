@@ -8,11 +8,12 @@ import { InjectionToken } from '@angular/core';
 import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
 
 // TODO: HARDCODE
-import { PluginsContactFormModule } from '@webdjangular/plugins/contact-form';
+
 import { PluginProviderModule} from "@webdjangular/plugins/provider"
+import {WDAFormsModule} from "@webdjangular/plugins/wda-forms";
 
 const HARDCODEMODULES = [
-  PluginsContactFormModule,
+  WDAFormsModule,
   PluginProviderModule
 ];
 

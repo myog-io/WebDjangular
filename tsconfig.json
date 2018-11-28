@@ -37,8 +37,8 @@
       "@webdjangular/themes/cleanog": [
         "libs/themes/cleanog/src/index.ts"
       ],
-      "@webdjangular/plugins/contact-form": [
-        "libs/plugins/contact-form/src/index.ts"
+      "@webdjangular/plugins/wda-forms": [
+        "libs/plugins/wda-forms/src/index.ts"
       ],
       "@webdjangular/core/shared": [
         "libs/core/shared/src/index.ts"

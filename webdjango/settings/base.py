@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'libs.core.users.api',
     'libs.core.cms.api',
     'libs.core.media.api',
+    'libs.plugins.provider.api',
     'rest_framework_json_api',
     'django_extensions',
     'drf_yasg'

@@ -19,7 +19,7 @@ export class ScaffoldField {
         switch (operator) {
           case 'eq':
             return input_val === ch.value;
-            break;
+            //break;
           case 'neq':
             return input_val !== ch.value;
           default:

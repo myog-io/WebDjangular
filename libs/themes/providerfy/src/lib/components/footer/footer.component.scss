@@ -13,6 +13,15 @@ footer {
     font-weight: $fw-semibold;
   }
 
+  .footer-logo {
+    background: url("../../assets/images/logo_footer.png");
+    width: 191px;
+    height: 78px;
+    display: block;
+    margin-top:-20px;
+    margin-bottom:10px;
+  }
+
   a {
     color: $footer-link-c;
   }
@@ -20,7 +29,6 @@ footer {
   a:hover {
     color: $footer-link-hover-c;
     text-decoration: none;
-
   }
 
 }

@@ -1,0 +1,20 @@
+
+:host{
+  background-image:url("../../../assets/images/modal_crackle_bg.png");
+  background-position: right top;
+  background-size:cover;
+  background-repeat: no-repeat;
+
+  height: inherit;
+}
+
+
+.tv-channel-logo{
+  background-image:url("../../../assets/images/modal_crackle_logo.png");
+  width:240px;
+  height: 68px;
+  margin-bottom:5px;
+}
+p{
+  max-width:310px;
+}

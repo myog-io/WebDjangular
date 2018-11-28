@@ -1,0 +1,46 @@
+
+:host{
+  padding-bottom:30px;
+}
+
+.modal-header{
+  border:unset;
+}
+
+h3{
+  font-size:28px;
+  font-weight: 700;
+  font-family: "Boston", Helvetica, sans-serif;
+  color:#000;
+  text-align:center;
+  margin-bottom:50px;
+}
+
+p{
+  color:#999999;
+  font-family: "Open Sans", Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  margin:auto;
+  max-width:365px;
+  margin-bottom:50px;
+}
+
+.btn{
+  border:unset;
+  border-radius:30px;
+  margin:0 10px;
+  padding:10px 20px;
+  font-family: "Boston", Helvetica, sans-serif;
+  font-size:18px;
+  font-weight: 700;
+
+  &.btn-success{
+    background: #00b9bd;
+  }
+
+  &.btn-danger{
+    background:#fb003b;
+  }
+
+}
