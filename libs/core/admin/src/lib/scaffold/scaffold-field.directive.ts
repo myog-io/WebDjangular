@@ -18,7 +18,7 @@ const components: {[type: string]: Type<ScaffoldField>} = {
   select: ScaffoldFormSelectComponent,
   ckeditor: ScaffoldCkeditorInputComponent,
   codeEditor: ScaffoldFormCodeComponent,
-  formBuilder: ScaffoldFormFormbuilderComponent
+  formBuilder: ScaffoldFormFormbuilderComponent,
   relationship: ScaffoldFormRelationshipComponent,
 };
 

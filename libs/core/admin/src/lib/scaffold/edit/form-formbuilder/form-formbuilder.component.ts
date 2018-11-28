@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {ScaffoldField, ScaffoldFieldConfig} from '@webdjangular/core/interfaces';
 import {AbstractForm} from '@webdjangular/core/data-forms';
 
@@ -8,16 +8,15 @@ import {AbstractForm} from '@webdjangular/core/data-forms';
   styleUrls: [],
   template: `
     <div class="form-group" [formGroup]="group" *ngIf="ng_if()">
-      <form-builder [form]="value" (change)="onFormChanges($event)">
+      <form-builder [form]="value" (change)="onFormBuilderChanges($event)">
       </form-builder>
-
     </div>
   `
 })
 export class ScaffoldFormFormbuilderComponent extends ScaffoldField implements OnInit {
   config: ScaffoldFieldConfig;
   group: AbstractForm;
-
+  relationshipUpdated: EventEmitter<any>;
   value: object;
 
   ngOnInit() {
@@ -30,9 +29,11 @@ export class ScaffoldFormFormbuilderComponent extends ScaffoldField implements O
       });
   }
 
-  onFormChanges(event) {
+  onFormBuilderChanges(event) {
     const data: string = JSON.stringify(event.form);
-    console.log(data);
+    this.relationshipUpdated.emit({'name':this.config.name,'entity': data });
+
+
   }
 
 }

@@ -63,11 +63,6 @@ export class FormForm extends AbstractForm {
       type: 'formBuilder',
       label: 'Form Content',
       name: 'content',
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ]
 
