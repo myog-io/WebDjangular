@@ -10,7 +10,7 @@ from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.PageSerializer import PageSerializer
 from webdjango.configs import CONFIG_HOME_PAGE
 from webdjango.models.Core import CoreConfig
-
+from rest_framework_json_api.views import RelationshipView
 
 class PageFilter(FilterSet):
     class Meta:
@@ -32,7 +32,6 @@ class PageViewSet(ModelViewSet):
     Update Pages
     Deleting Pages
     """
-    resource_name = 'page'
     serializer_class = PageSerializer
     queryset = Page.objects.all()
     authentication_classes = (TokenAuthentication,)
@@ -54,3 +53,8 @@ class PageViewSet(ModelViewSet):
         )
 
         return Response(serializer.data)
+
+
+
+class PageRelationshipView(RelationshipView):
+    queryset = Page.objects

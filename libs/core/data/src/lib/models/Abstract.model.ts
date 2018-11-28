@@ -5,6 +5,7 @@ import 'reflect-metadata';
 
 export class AbstractModel extends JsonApiModel {
   public static formClassRef = null;
+  public static include = null;
   protected service;
 
   constructor(_datastore, data?: any) {
@@ -37,5 +38,9 @@ export class AbstractModel extends JsonApiModel {
 
   set pk(value) {
     console.log('Property pk() is not set in the model', this);
+  }
+
+  public toString = (): string => {
+    return `(ID: ${this.id})`;
   }
 }

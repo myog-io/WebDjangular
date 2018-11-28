@@ -6,7 +6,7 @@ import {
 } from 'angular2-jsonapi';
 
 import { UserModel, GroupModel, PermissionModel } from '@webdjangular/core/users-models';
-import { PageModel } from '@webdjangular/core/cms-models';
+import { PageModel, BlockModel } from '@webdjangular/core/cms-models';
 import { ContentTypeModel } from '@webdjangular/core/data-models';
 import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 import { CoreConfigInputModel } from 'libs/core/data/src/lib/models/CoreConfigInput.model';
@@ -19,6 +19,7 @@ const config: DatastoreConfig = {
     User: UserModel,
     Group: GroupModel,
     Page: PageModel,
+    Block: BlockModel,
     Permission: PermissionModel,
     ContentType: ContentTypeModel,
     CoreConfigGroup: CoreConfigGroupModel,

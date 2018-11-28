@@ -50,11 +50,6 @@ export class CoreConfigForm extends AbstractForm {
       label: 'Value',
       name: 'value',
       placeholder: 'Enter Value'
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ];
 }

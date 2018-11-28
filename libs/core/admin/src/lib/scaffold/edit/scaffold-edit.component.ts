@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { WebAngularDataStore } from '@webdjangular/core/services';
 
-import { WebAngularSmartTableDataSource } from '@webdjangular/core/data';
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 
@@ -12,16 +11,43 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
   styleUrls: ['./scaffold-edit.component.scss'],
   templateUrl: './scaffold-edit.component.html',
 })
-
 export class ScaffoldEditComponent implements OnInit {
+  /**
+   * Current Entry: Abstract Model
+   */
   entry: AbstractModel = null;
-  source: WebAngularSmartTableDataSource;
-  currentModel: any;
-  basePath: any;
+  /**
+   * Current model of scaffold edit component
+   */
+  current_model: any;
+  /**
+   * Base path of scaffold edit componenst
+   */
+  base_path: any;
+  /**
+   * Form  of scaffold edit component
+   */
   form: AbstractForm;
+  /**
+   * Title  of scaffold edit component
+   */
   title: string = ";D";
-  beforeTitle: string = "Editing";
+  /**
+   * Before title of scaffold edit component
+   */
+  before_title: string = "Editing";
+  /**
+   * Check if we are sending or not a entry, to disable/enable button
+   */
+  loading: boolean = false;
 
+  inlcude_args: any = {}
+  /**
+   * Creates an instance of scaffold edit component.
+   * @param route
+   * @param datastore
+   * @param router
+   */
   constructor(
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
@@ -29,59 +55,75 @@ export class ScaffoldEditComponent implements OnInit {
   ) {
 
   }
+
+  /**
+   * on init
+   */
   ngOnInit(): void {
     this.route.url.subscribe(segments => {
       if (segments[0].path === "new") {
-        this.beforeTitle = "Creating new"
+        this.before_title = "Creating new"
       }
     })
     this.route.data.subscribe(data => {
-      this.currentModel = data.model;
+      this.current_model = data.model;
       this.title = data.title;
-      this.basePath = data.path;
-      this.form = new this.currentModel.formClassRef();
+      this.base_path = data.path;
+      this.form = new this.current_model.formClassRef();
+      if( this.current_model.include ){
+        this.inlcude_args = {include:this.current_model.include};
+      }
       this.form.generateForm();
       this.getEntry();
     })
   }
 
+  /**
+   * Gets model Entry, Finding the Record
+   */
   getEntry() {
     if (this.route.params['value'].id != null) {
-      this.datastore.findRecord(this.currentModel, this.route.params['value'].id, {
-        include: 'groups'
-      }).subscribe(
+      this.datastore.findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args).subscribe(
         (data: AbstractModel) => {
           this.entry = data;
+          console.log(this.entry)
           this.form.populateForm(this.entry);
         }
       );
+    }else{
+      this.entry = this.datastore.createRecord(this.current_model, this.form.value);
     }
   }
+
+  /**
+   * Determines if it's a create or update
+   */
   onSubmit() {
-    if (this.entry) {
-      this.update();
-    }
-    else {
-      this.create();
-    }
+    this.update();
   }
 
+  /**
+   * Updates Record based on the current_model
+   */
   update() {
-    this.form.updateModel(this.entry);
-    let sub = this.entry.save().subscribe(
+    this.loading = true;
+
+    //this.form.updateModel(this.entry);
+
+    console.log("UPDTING RELATIONSHIPO",this.entry);
+    let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
+        this.loading = false;
+
         sub.unsubscribe();
+      },
+      (error) => {
+        this.loading = false;
       }
     )
   }
 
-  create() {
-    this.entry = this.datastore.createRecord(this.currentModel, this.form.value);
-    let sub = this.entry.save().subscribe(
-      (result) => {
-        sub.unsubscribe();
-      }
-    )
+  relationshipUpdated(data){
+    this.entry[data.name] = data.entity;
   }
-
 }

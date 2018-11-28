@@ -3,18 +3,17 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { PageForm } from '../forms/Page.form';
-import { BlockModel } from './Block.model';
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import { BlockForm } from '../forms/Block.form';
 
 
 @JsonApiModelConfig({
-  type: 'Page',
-  modelEndpointUrl: 'page',
+  type: 'Block',
+  modelEndpointUrl: 'block',
 })
-export class PageModel extends AbstractModel {
-  public static formClassRef = PageForm;
-  public static include = 'header,footer';
+export class BlockModel extends AbstractModel {
+
+  public static formClassRef = BlockForm;
+
 
   @Attribute()
   id: string;
@@ -27,18 +26,6 @@ export class PageModel extends AbstractModel {
 
   @Attribute()
   content: string;
-
-  @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'Block'
-  })
-  header: BlockModel;
-
-  @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'Block'
-  })
-  footer: BlockModel;
 
   @Attribute()
   created: Date;
@@ -54,6 +41,9 @@ export class PageModel extends AbstractModel {
 
   set pk(value) {
 
+  }
+  public toString = (): string => {
+    return `${this.title} (#${this.id})`;
   }
 
 }

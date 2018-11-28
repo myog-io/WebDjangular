@@ -1,11 +1,19 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <nb-card>
-    <nb-card-header>{{beforeTitle}} {{title}}</nb-card-header>
+    <nb-card-header>{{before_title}} {{title}}</nb-card-header>
     <nb-card-body>
       <div class="container">
         <div class="row">
           <div *ngFor="let field of form.scaffoldFields" [class]="field.wrapper_class ? field.wrapper_class : 'col-12'">
-            <ng-container webdjangularScaffoldDynamicField [config]="field" [group]="form"></ng-container>
+            <ng-container webdjangularScaffoldDynamicField [config]="field" [group]="form" (relationshipUpdated)="relationshipUpdated($event)"></ng-container>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button nbButton status="primary" size="medium" (click)="onSubmit()" [nbSpinner]="loading" nbSpinnerStatus="success"
+              [disabled]="loading" nbSpinnerSize="medium" nbSpinnerMessage="">
+              Save
+            </button>
           </div>
         </div>
       </div>

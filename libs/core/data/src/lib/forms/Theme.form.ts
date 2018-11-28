@@ -75,11 +75,6 @@ export class ThemeForm extends AbstractForm {
       label: 'Active',
       name: 'active',
       placeholder: 'Enter Page Url (slug)'
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ];
 }

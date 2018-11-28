@@ -7,7 +7,7 @@ CONFIG_STORAGE_CONTAINER_NAME = 'media_storage_container'
 CONFIG_STORAGE_EXTERNAL_URL = 'media_storage_external_url'
 
 STORAGE_OPTIONS = [
-    {'value':'AzureBlobStorage', 'label':'Azure Blob Storage'}
+    {'value': 'AzureBlobStorage', 'label': 'Azure Blob Storage'}
 ]
 
 MEDIA_CONFIG_GROUP_SLUG = 'media_config'
@@ -30,6 +30,7 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
+
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_KEY,
@@ -43,6 +44,13 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
+        ng_if=[
+            {
+                'input': CONFIG_STORAGE_CLASS,
+                'operator': 'neq',
+                'value': '',
+            }
+        ]
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_NAME,
@@ -56,6 +64,13 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
+        ng_if=[
+            {
+                'input': CONFIG_STORAGE_CLASS,
+                'operator': 'neq',
+                'value': '',
+            }
+        ]
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_CONTAINER_NAME,
@@ -69,6 +84,13 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
+        ng_if=[
+            {
+                'input': CONFIG_STORAGE_CLASS,
+                'operator': 'neq',
+                'value': '',
+            }
+        ]
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_EXTERNAL_URL,
@@ -82,5 +104,12 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
+        ng_if=[
+            {
+                'input': CONFIG_STORAGE_CLASS,
+                'operator': 'neq',
+                'value': '',
+            }
+        ]
     ),
 ]

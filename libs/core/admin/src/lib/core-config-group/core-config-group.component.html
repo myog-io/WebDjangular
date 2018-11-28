@@ -10,9 +10,10 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <div class="dynamic-field form-button" [formGroup]="form">
-              <button type="submit" class="btn btn-success" [disabled]="loading"><i class="fa fa-spinner fa-spin" *ngIf="loading"></i> Save</button>
-            </div>
+            <button nbButton status="primary" size="medium" (click)="onSubmit()" [nbSpinner]="loading" nbSpinnerStatus="success"
+              [disabled]="loading" nbSpinnerSize="medium" nbSpinnerMessage="">
+              Save
+            </button>
           </div>
         </div>
       </div>

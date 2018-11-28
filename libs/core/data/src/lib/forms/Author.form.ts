@@ -64,11 +64,6 @@ export class AuthorForm extends AbstractForm {
       label: 'Email',
       name: 'email',
       placeholder: 'Email'
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ];
 }

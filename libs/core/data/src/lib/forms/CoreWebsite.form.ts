@@ -50,11 +50,6 @@ export class CoreWebsiteForm extends AbstractForm {
       label: 'Code',
       name: 'code',
       placeholder: 'Enter Code'
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ];
 }
