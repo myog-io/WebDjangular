@@ -1,9 +1,11 @@
 import { FormGroup } from '@angular/forms';
 import { ScaffoldFieldConfig } from './scaffold-field-config.interface';
+import { EventEmitter } from '@angular/core';
 
 export class ScaffoldField {
   config: ScaffoldFieldConfig;
   group: FormGroup;
+  relationshipUpdated: EventEmitter<any>;
 
   /**
    * ng_if

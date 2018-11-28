@@ -9,8 +9,12 @@ import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component'
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ScaffoldFormRelationshipComponent } from './edit/form-relationship/form-relationship.component';
+import { NbDialogModule, NbWindowModule, NbSpinnerModule, NbButtonModule, NbListModule } from '@nebular/theme';
 
 const ENTRY_COMPONENTS = [
+  ScaffoldFormRelationshipComponent,
   ScaffoldFormButtonComponent,
   ScaffoldFormInputComponent,
   ScaffoldFormSelectComponent,
@@ -24,7 +28,13 @@ const ENTRY_COMPONENTS = [
     CommonModule,
     CKEditorModule,
     MonacoEditorModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule,
+    NbDialogModule.forChild(),
+    NbWindowModule.forChild(),
+    NbButtonModule,
+    NbSpinnerModule,
+    NbListModule
   ],
   exports: [ScaffoldFieldDirective],
   entryComponents: [

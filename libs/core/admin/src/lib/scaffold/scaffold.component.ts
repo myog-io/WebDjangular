@@ -12,8 +12,8 @@ import { WebAngularSmartTableDataSource } from "@webdjangular/core/data";
 })
 export class ScaffoldComponent implements OnInit{
     source: WebAngularSmartTableDataSource;
-    currentModel: any;
-    basePath: any;
+    current_model: any;
+    base_path: any;
     form: any;
     title: string = ";D";
 
@@ -25,10 +25,10 @@ export class ScaffoldComponent implements OnInit{
 
     }
     ngOnInit(): void {
-        this.currentModel = this.route.data['value'].model;
+        this.current_model = this.route.data['value'].model;
         this.title = this.route.data['value'].title;
-        this.basePath = this.route.data['value'].path;
-        this.form = new this.currentModel.formClassRef();
+        this.base_path = this.route.data['value'].path;
+        this.form = new this.current_model.formClassRef();
         this.startTableInformation()
 
     }
@@ -37,21 +37,21 @@ export class ScaffoldComponent implements OnInit{
         //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
         //Add 'implements OnInit' to the class.
 
-        this.source = new WebAngularSmartTableDataSource(this.datastore, this.currentModel, {
+        this.source = new WebAngularSmartTableDataSource(this.datastore, this.current_model, {
             smartTableSettings: this.form.listingTableSettings,
             onEditButtonClick: ($event) => {
-                this.router.navigate([this.basePath,'edit', $event.data.id]);
+                this.router.navigate([this.base_path,'edit', $event.data.id]);
             },
             onDeleteButtonClick: ($event) => {
                 // TODO ALERTTTTT
-                this.datastore.deleteRecord(this.currentModel, $event.data.pk).subscribe(
+                this.datastore.deleteRecord(this.current_model, $event.data.pk).subscribe(
                     (r) => {
                         this.source.remove($event)
                     }
                 );
             },
             onCreateButtonClick: () => {
-                this.router.navigate([this.basePath,'new']);
+                this.router.navigate([this.base_path,'new']);
             }
         });
 

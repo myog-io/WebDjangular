@@ -48,11 +48,6 @@ export class MediaForm extends AbstractForm {
       label: 'Alt',
       name: 'alt',
       placeholder: 'Image Alt Description'
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ];
 }

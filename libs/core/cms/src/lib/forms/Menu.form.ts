@@ -1,12 +1,9 @@
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
-import { BlockModel } from '../models/Block.model';
-import { BlockForm } from './Block.form';
-//import { BlockModel } from '../models';
 
-export class PageForm extends AbstractForm {
+export class MenuForm extends AbstractForm {
 
   public listingTableSettings = {
     columns: {
@@ -19,7 +16,7 @@ export class PageForm extends AbstractForm {
         type: 'string',
       },
       slug: {
-        title: 'Url Path',
+        title: 'Unique Slug',
         type: 'string',
       },
     },
@@ -41,14 +38,6 @@ export class PageForm extends AbstractForm {
       type: FormControl,
       validators: [Validators.required]
     },
-    header: {
-      type: FormGroup,
-      getFormFrom: BlockForm,
-    },
-    footer: {
-      type: FormGroup,
-      getFormFrom: BlockForm,
-    },
     created: {
       type: FormControl,
     },
@@ -60,34 +49,21 @@ export class PageForm extends AbstractForm {
   scaffoldFields: ScaffoldFieldConfig[] = [
     {
       type: 'input',
-      label: 'Page Title',
+      label: 'Block Title',
       name: 'title',
-      placeholder: 'Enter Page Title',
+      placeholder: 'Enter Block Title',
     },
     {
       type: 'input',
-      label: 'Page Url',
+      label: 'Unique Code',
       name: 'slug',
-      placeholder: 'Enter Page Url (slug)',
+      placeholder: 'Enter Block Code (slug)',
     },
     {
       type: 'codeEditor',
-      label: 'Page Content',
+      label: 'Block Content',
       name: 'content',
-    },
-    {
-      type: 'relationship',
-      label: 'Header',
-      name: 'header',
-      wrapper_class: 'col-6',
-      options_model: BlockModel,
-    },
-    {
-      type: 'relationship',
-      label: 'Footer',
-      name: 'footer',
-      wrapper_class: 'col-6',
-      options_model: BlockModel,
     }
   ]
+
 }

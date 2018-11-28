@@ -3,18 +3,17 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { PageForm } from '../forms/Page.form';
-import { BlockModel } from './Block.model';
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import { MenuForm } from '../forms/Menu.form';
 
 
 @JsonApiModelConfig({
-  type: 'Page',
-  modelEndpointUrl: 'page',
+  type: 'Menu',
+  modelEndpointUrl: 'menu',
 })
-export class PageModel extends AbstractModel {
-  public static formClassRef = PageForm;
-  public static include = 'header,footer';
+export class MenuModel extends AbstractModel {
+
+  public static formClassRef = MenuForm;
+
 
   @Attribute()
   id: string;
@@ -27,18 +26,6 @@ export class PageModel extends AbstractModel {
 
   @Attribute()
   content: string;
-
-  @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'Block'
-  })
-  header: BlockModel;
-
-  @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'Block'
-  })
-  footer: BlockModel;
 
   @Attribute()
   created: Date;

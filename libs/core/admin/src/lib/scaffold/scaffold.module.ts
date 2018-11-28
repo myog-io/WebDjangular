@@ -5,8 +5,6 @@ import { ScaffoldComponent } from './scaffold.component';
 import { ScaffoldEditComponent } from './edit/scaffold-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CKEditorModule } from 'ng2-ckeditor';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ThemeModule } from '../@theme/theme.module';
 import { ScaffoldFieldModule } from './scaffold-field.module';
 

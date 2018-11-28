@@ -1,0 +1,10 @@
+@import '~@nebular/theme/styles/prebuilt/corporate';
+
+@include nb-install-component() {
+  button {
+    cursor: pointer;
+  }
+  nb-list-item {
+    cursor: pointer;
+  }
+}

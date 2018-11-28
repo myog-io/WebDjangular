@@ -1,17 +1,15 @@
-from djongo import models
+from djongo.models import Model
 from django.db import models as djangoModels
-from libs.core.cms.api.models.Block import Block
 
-class Page(models.Model):
+
+class Block(Model):
     """
-    CMS Pages Model
+    CMS Blocks Model
     """
     title = djangoModels.CharField(max_length=255)
     slug = djangoModels.SlugField(
         max_length=255, null=True, default=None, blank=True)
     content = djangoModels.TextField()
-    header = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
-    footer = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)
     created = djangoModels.DateTimeField(auto_now_add=True)
     updated = djangoModels.DateTimeField(auto_now=True)
 
@@ -19,6 +17,6 @@ class Page(models.Model):
         return self.title
 
     class Meta:
-        db_table = 'cms_page'
+        db_table = 'cms_block'
         ordering = ['-id']
-        permissions = (("list_pages", "Can list pages"),)
+        permissions = (("list_blocks", "Can list blocks"),)

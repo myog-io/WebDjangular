@@ -31,7 +31,9 @@ import {
   NbPopoverModule,
   NbContextMenuModule,
   NbProgressBarModule,
-  NbAlertModule
+  NbAlertModule,
+  NbButtonModule,
+  NbSpinnerModule
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -75,6 +77,8 @@ const NB_MODULES = [
   NbActionsModule,
   NbSearchModule,
   NbSidebarModule,
+  NbButtonModule,
+  NbSpinnerModule,
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,

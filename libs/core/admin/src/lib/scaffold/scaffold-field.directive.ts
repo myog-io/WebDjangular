@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { ScaffoldFormButtonComponent } from './edit/form-button/form-button.component';
@@ -7,6 +7,9 @@ import { ScaffoldFormSelectComponent } from './edit/form-select/form-select.comp
 import { ScaffoldCkeditorInputComponent } from './edit/form-ckeditor/form-ckeditor.component';
 import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component';
 import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { ScaffoldFormRelationshipComponent } from './edit/form-relationship/form-relationship.component';
+import { AbstractModel } from '@webdjangular/core/data-models';
+
 
 const components: {[type: string]: Type<ScaffoldField>} = {
   button: ScaffoldFormButtonComponent,
@@ -14,6 +17,7 @@ const components: {[type: string]: Type<ScaffoldField>} = {
   select: ScaffoldFormSelectComponent,
   ckeditor: ScaffoldCkeditorInputComponent,
   codeEditor: ScaffoldFormCodeComponent,
+  relationship: ScaffoldFormRelationshipComponent,
 };
 
 @Directive({
@@ -25,6 +29,8 @@ export class ScaffoldFieldDirective extends ScaffoldField implements OnChanges, 
 
   @Input()
   group: FormGroup;
+
+  @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
 
   component: ComponentRef<ScaffoldField>;
 
@@ -39,6 +45,7 @@ export class ScaffoldFieldDirective extends ScaffoldField implements OnChanges, 
     if (this.component) {
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
+      this.component.instance.relationshipUpdated = this.relationshipUpdated;
     }
   }
 
@@ -54,5 +61,6 @@ export class ScaffoldFieldDirective extends ScaffoldField implements OnChanges, 
     this.component = this.container.createComponent(component);
     this.component.instance.config = this.config;
     this.component.instance.group = this.group;
+    this.component.instance.relationshipUpdated = this.relationshipUpdated;
   }
 }

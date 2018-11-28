@@ -36,7 +36,13 @@ export class AbstractForm extends FormGroup {
       if (this.formFields[propName].type == FormArray) {
         this.registerControl(propName, new FormArray([], []));
       } else if (this.formFields[propName].type == FormGroup) {
-        this.registerControl(propName, new FormGroup({}));
+        if (typeof this.formFields[propName].getFormFrom !== 'undefined') {
+          const fb = new this.formFields[propName].getFormFrom();
+          fb.generateForm();
+          this.registerControl(propName, fb);
+        } else {
+          this.registerControl(propName, new FormGroup({}));
+        }
       } else {
         let validators = [];
 
@@ -70,6 +76,7 @@ export class AbstractForm extends FormGroup {
 
           fb.generateForm();
           fb.populateForm(entity[propName][i]);
+          fb.entity = entity;
           fa.push(fb);
         }
       } else {
@@ -77,15 +84,10 @@ export class AbstractForm extends FormGroup {
           this.formFields[propName].type == FormGroup &&
           typeof entity[propName] !== 'undefined'
         ) {
-          let fg = this.get(propName) as FormGroup;
+          let fg = this.get(propName) as AbstractForm;
 
-          let fb = new this.formFields[propName].getFormFrom();
-          fb.generateForm();
-          fb.populateForm(entity[propName]);
+          fg.populateForm(entity[propName]);
 
-          for (let controlName in fb.controls) {
-            fg.addControl(controlName, fb.controls[controlName]);
-          }
         } else if (typeof entity[propName] !== 'undefined') {
           this.get(propName).setValue(entity[propName]);
         }
@@ -192,5 +194,12 @@ export class AbstractForm extends FormGroup {
       f.populateForm(entityToPush);
       fa.push(f);
     }
+  }
+
+  /**
+   * Transforming the Group to String for the Scaffold Naming
+   */
+  public toString = (): string => {
+    return `#${this.value.pk}`;
   }
 }
