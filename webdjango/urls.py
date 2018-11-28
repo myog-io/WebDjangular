@@ -52,6 +52,8 @@ urlpatterns = [
     url(r'^api/', include('libs.core.users.api.urls')),
     url(r'^api/', include('libs.core.cms.api.urls')),
     url(r'^api/', include('libs.core.media.api.urls')),
+
+    url(r'^api/', include('libs.core.forms.api.urls')),
     #url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
     #url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
 

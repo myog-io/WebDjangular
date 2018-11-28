@@ -1,7 +1,7 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc/libs/plugins/wda-forms",
+    "outDir": "../../../dist/out-tsc/libs/core/forms",
     "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",

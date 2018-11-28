@@ -7,6 +7,7 @@ import { ScaffoldFormSelectComponent } from './edit/form-select/form-select.comp
 import { ScaffoldCkeditorInputComponent } from './edit/form-ckeditor/form-ckeditor.component';
 import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component';
 import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import {ScaffoldFormFormbuilderComponent} from "./edit/form-formbuilder/form-formbuilder.component";
 
 const components: {[type: string]: Type<ScaffoldField>} = {
   button: ScaffoldFormButtonComponent,
@@ -14,6 +15,7 @@ const components: {[type: string]: Type<ScaffoldField>} = {
   select: ScaffoldFormSelectComponent,
   ckeditor: ScaffoldCkeditorInputComponent,
   codeEditor: ScaffoldFormCodeComponent,
+  formBuilder: ScaffoldFormFormbuilderComponent
 };
 
 @Directive({

@@ -9,20 +9,24 @@ import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component'
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ReactiveFormsModule } from '@angular/forms';
+import {ScaffoldFormFormbuilderComponent} from "./edit/form-formbuilder/form-formbuilder.component";
+import { FormioModule } from 'angular-formio';
 
 const ENTRY_COMPONENTS = [
   ScaffoldFormButtonComponent,
   ScaffoldFormInputComponent,
   ScaffoldFormSelectComponent,
   ScaffoldCkeditorInputComponent,
-  ScaffoldFormCodeComponent
-]
+  ScaffoldFormCodeComponent,
+  ScaffoldFormFormbuilderComponent
+];
 
 @NgModule({
   declarations: [ScaffoldFieldDirective, ... ENTRY_COMPONENTS],
   imports: [
     CommonModule,
     CKEditorModule,
+    FormioModule,
     MonacoEditorModule.forRoot(),
     ReactiveFormsModule
   ],

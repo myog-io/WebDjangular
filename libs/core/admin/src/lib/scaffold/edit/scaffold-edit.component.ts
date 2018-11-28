@@ -22,7 +22,6 @@ export class ScaffoldEditComponent implements OnInit {
   title: string = ";D";
   beforeTitle: string = "Editing";
 
-
   constructor(
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
