@@ -443,26 +443,26 @@
         }
       }
     },
-    "plugin-wda-forms": {
-      "root": "libs/plugins/wda-forms",
-      "sourceRoot": "libs/plugins/wda-forms/src",
+    "core-forms": {
+      "root": "libs/core/forms",
+      "sourceRoot": "libs/core/forms/src",
       "projectType": "library",
       "prefix": "webdjangular",
       "architect": {
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "libs/plugins/wda-forms/src/test.ts",
-            "tsConfig": "libs/plugins/wda-forms/tsconfig.spec.json",
-            "karmaConfig": "libs/plugins/wda-forms/karma.conf.js"
+            "main": "libs/core/forms/src/test.ts",
+            "tsConfig": "libs/core/forms/tsconfig.spec.json",
+            "karmaConfig": "libs/core/forms/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/plugins/wda-forms/tsconfig.lib.json",
-              "libs/plugins/wda-forms/tsconfig.spec.json"
+              "libs/core/forms/tsconfig.lib.json",
+              "libs/core/forms/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

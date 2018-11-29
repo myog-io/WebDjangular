@@ -32,6 +32,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ]
   },
   {
+    title: 'Forms',
+    icon: 'fab fa-wpforms',
+    link: '/forms',
+  },
+  {
     title: 'System',
     icon: 'fas fa-cog',
     children: [

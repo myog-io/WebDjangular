@@ -113,3 +113,4 @@ MEDIA_CONFIGS = [
         ]
     ),
 ]
+

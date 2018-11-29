@@ -9,6 +9,7 @@ import { ScaffoldFormCodeComponent } from './edit/form-code/form-code.component'
 import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 import { ScaffoldFormRelationshipComponent } from './edit/form-relationship/form-relationship.component';
 import { AbstractModel } from '@webdjangular/core/data-models';
+import {ScaffoldFormFormbuilderComponent} from "./edit/form-formbuilder/form-formbuilder.component";
 
 
 const components: {[type: string]: Type<ScaffoldField>} = {
@@ -17,6 +18,7 @@ const components: {[type: string]: Type<ScaffoldField>} = {
   select: ScaffoldFormSelectComponent,
   ckeditor: ScaffoldCkeditorInputComponent,
   codeEditor: ScaffoldFormCodeComponent,
+  formBuilder: ScaffoldFormFormbuilderComponent,
   relationship: ScaffoldFormRelationshipComponent,
 };
 

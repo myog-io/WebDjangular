@@ -1,14 +1,14 @@
 import { async, TestBed } from '@angular/core/testing';
-import { WDAFormsModule } from './wda-forms.module';
+import { FormsModule } from './forms.module';
 
-describe('WDAFormModule', () => {
+describe('FormModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [WDAFormsModule]
+      imports: [FormsModule]
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(WDAFormsModule).toBeDefined();
+    expect(FormsModule).toBeDefined();
   });
 });

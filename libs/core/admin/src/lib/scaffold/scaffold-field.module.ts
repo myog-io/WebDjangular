@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ScaffoldFormRelationshipComponent } from './edit/form-relationship/form-relationship.component';
 import { NbDialogModule, NbWindowModule, NbSpinnerModule, NbButtonModule, NbListModule } from '@nebular/theme';
+import {ScaffoldFormFormbuilderComponent} from "./edit/form-formbuilder/form-formbuilder.component";
+import { FormioModule } from 'angular-formio';
 
 const ENTRY_COMPONENTS = [
   ScaffoldFormRelationshipComponent,
@@ -19,14 +21,16 @@ const ENTRY_COMPONENTS = [
   ScaffoldFormInputComponent,
   ScaffoldFormSelectComponent,
   ScaffoldCkeditorInputComponent,
-  ScaffoldFormCodeComponent
-]
+  ScaffoldFormCodeComponent,
+  ScaffoldFormFormbuilderComponent
+];
 
 @NgModule({
   declarations: [ScaffoldFieldDirective, ... ENTRY_COMPONENTS],
   imports: [
     CommonModule,
     CKEditorModule,
+    FormioModule,
     MonacoEditorModule.forRoot(),
     ReactiveFormsModule,
     NgSelectModule,

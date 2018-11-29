@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageModel } from '@webdjangular/core/cms-models';
+import { FormModel } from '@webdjangular/core/forms-models'
+
 
 import { PermissionGuard } from '@webdjangular/core/services';
 import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
@@ -44,6 +46,15 @@ const routes: Routes = [
           model: PageModel,
           title: "Page",
           path: 'pages'
+        }
+      },
+      {
+        path: 'forms',
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: FormModel,
+          title: "Form",
+          path: 'forms'
         }
       },
       {
