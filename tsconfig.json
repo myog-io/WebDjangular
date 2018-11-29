@@ -82,11 +82,14 @@
       "@webdjangular/core/dynamic-component-loader": [
         "libs/core/dynamic-component-loader/src/index.ts"
       ],
-      "@webdjangular/provider": [
-        "libs/provider/src/index.ts"
-      ],
       "@webdjangular/plugins/provider": [
         "libs/plugins/provider/src/index.ts"
+      ],
+      "@webdjangular/plugins/provider-admin": [
+        "libs/plugins/provider/src/lib/admin/index.ts"
+      ],
+      "@webdjangular/plugins/provider-data": [
+        "libs/plugins/provider/src/lib/data/index.ts"
       ],
       "@webdjangular/themes/providerfy": [
         "libs/themes/providerfy/src/index.ts"

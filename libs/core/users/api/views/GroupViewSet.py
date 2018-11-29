@@ -14,7 +14,6 @@ from libs.core.users.api.serializers.GroupSerializer import GroupSerializer
 from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 class GroupViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
-    resource_name = 'group';
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)

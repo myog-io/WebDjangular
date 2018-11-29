@@ -86,7 +86,6 @@ export class ScaffoldEditComponent implements OnInit {
       this.datastore.findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args).subscribe(
         (data: AbstractModel) => {
           this.entry = data;
-          console.log(this.entry)
           this.form.populateForm(this.entry);
         }
       );
@@ -107,10 +106,7 @@ export class ScaffoldEditComponent implements OnInit {
    */
   update() {
     this.loading = true;
-
-    //this.form.updateModel(this.entry);
-
-    console.log("UPDTING RELATIONSHIPO",this.entry);
+    this.form.updateModel(this.entry);
     let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
         this.loading = false;

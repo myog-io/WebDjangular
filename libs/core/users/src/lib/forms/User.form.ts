@@ -58,7 +58,7 @@ export class UserForm extends AbstractForm {
     },
     groups: {
       type: FormArray,
-      getFormFrom: GroupForm
+      from: GroupForm
     }
   };
 }

@@ -7,7 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from libs.plugins.provider.api.models.City import City
 from libs.plugins.provider.api.serializers.CitySerializer import CitySerializer
-
+from drf_yasg.inspectors import base
 
 class CityFilter(FilterSet):
     class Meta:
@@ -15,10 +15,11 @@ class CityFilter(FilterSet):
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],
+            'short_name': ['contains', 'exact']
         }
 
 
-class PageViewSet(ModelViewSet):
+class CityViewSet(ModelViewSet):
     """
     Handles:
     Creating Pages
@@ -27,11 +28,10 @@ class PageViewSet(ModelViewSet):
     Update Pages
     Deleting Pages
     """
-    resource_name = 'city'
     serializer_class = CitySerializer
     queryset = City.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,)
     filter_class = CityFilter
     search_fields = ('name')
     permission_classes = ()

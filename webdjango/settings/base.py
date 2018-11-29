@@ -70,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'webdjango.utils.CurrentWebsiteMiddleware.CurrentWebsiteMiddleware'
 ]
 
@@ -77,7 +78,7 @@ ROOT_URLCONF = 'webdjango.urls'
 
 DATABASES = {
     'default': {
-     }
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -140,7 +141,6 @@ JWT_AUTH = {
 
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'rest_framework_jwt.utils.jwt_response_payload_handler',
-
     'JWT_SECRET_KEY': '6wAp;?ffG9yh86ic,3HvfN2Ah5s3DH~s<(V)mi7#)7zai2cpfcS7Qt\m:jjGi_sW',
     'JWT_GET_USER_SECRET_KEY': None,
     'JWT_PUBLIC_KEY': None,
@@ -152,7 +152,6 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=300),  # 5 minutes
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
-
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 

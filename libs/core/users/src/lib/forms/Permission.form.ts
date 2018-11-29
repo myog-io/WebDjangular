@@ -16,7 +16,7 @@ export class PermissionForm extends AbstractForm {
     },
     content_type: {
       type: FormGroup,
-      getFormFrom: ContentTypeForm
+      formClass: ContentTypeForm
     },
     codename: {
       type: FormControl

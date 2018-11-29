@@ -1,8 +1,10 @@
 from djongo import models
 from django.db import models as djangoModels
+from webdjango.models.AbstractModels import SeoModel, TranslationModel
+
 from libs.core.cms.api.models.Block import Block
 
-class Page(models.Model):
+class Page(SeoModel, TranslationModel):
     """
     CMS Pages Model
     """
@@ -12,9 +14,7 @@ class Page(models.Model):
     content = djangoModels.TextField()
     header = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
     footer = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)
-    created = djangoModels.DateTimeField(auto_now_add=True)
-    updated = djangoModels.DateTimeField(auto_now=True)
-
+    i18n_fields = ['title','slug','content']
     def __str__(self):
         return self.title
 

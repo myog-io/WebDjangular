@@ -43,11 +43,11 @@ export class PageForm extends AbstractForm {
     },
     header: {
       type: FormGroup,
-      getFormFrom: BlockForm,
+      formClass: BlockForm,
     },
     footer: {
       type: FormGroup,
-      getFormFrom: BlockForm,
+      formClass: BlockForm,
     },
     created: {
       type: FormControl,

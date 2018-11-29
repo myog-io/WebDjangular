@@ -17,6 +17,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages',
   },
   {
+    title: 'Provider',
+    icon: 'fas fa-globe',
+    children: [
+      {
+        title: 'Cities',
+        link: '/cities',
+        data: {
+          permission: [
+            { label: 'provider', action: 'list_cities' }
+          ]
+        }
+      }
+    ]
+  },
+  {
     title: 'System',
     icon: 'fas fa-cog',
     children: [
@@ -59,6 +74,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
           ]
         }
       },
+
       {
         title: 'Configs',
         data: {

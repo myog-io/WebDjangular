@@ -36,8 +36,8 @@ export class AbstractForm extends FormGroup {
       if (this.formFields[propName].type == FormArray) {
         this.registerControl(propName, new FormArray([], []));
       } else if (this.formFields[propName].type == FormGroup) {
-        if (typeof this.formFields[propName].getFormFrom !== 'undefined') {
-          const fb = new this.formFields[propName].getFormFrom();
+        if (typeof this.formFields[propName].formClass !== 'undefined') {
+          const fb = new this.formFields[propName].formClass();
           fb.generateForm();
           this.registerControl(propName, fb);
         } else {
@@ -68,11 +68,11 @@ export class AbstractForm extends FormGroup {
         for (
           let i = 0;
           i < entity[propName].length &&
-          typeof this.formFields[propName].getFormFrom !== 'undefined';
+          typeof this.formFields[propName].formClass !== 'undefined';
           i++
         ) {
           let fa = this.get(propName) as FormArray;
-          let fb = new this.formFields[propName].getFormFrom();
+          let fb = new this.formFields[propName].form();
 
           fb.generateForm();
           fb.populateForm(entity[propName][i]);
@@ -103,7 +103,12 @@ export class AbstractForm extends FormGroup {
     let values = this.value;
 
     for (let propName in values) {
-      entity[propName] = values[propName];
+      if(this.formFields[propName].type == FormGroup){
+        // If Form Group we have to save it different
+        // Check if the Property is actually a blongsto ou has many, and update accordnly
+      }else{
+        entity[propName] = values[propName];
+      }
     }
   }
 
@@ -174,7 +179,7 @@ export class AbstractForm extends FormGroup {
         }
       }
     } else {
-      let fb = new this.formFields[formKey].getFormFrom();
+      let fb = new this.formFields[formKey].form();
       fb.generateForm();
       fb.populateForm(toRelateEntity);
       control.push(fb);

@@ -6,14 +6,15 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageModel } from '@webdjangular/core/cms-models';
 
 import { PermissionGuard } from '@webdjangular/core/services';
-import { ThemeModel } from '@webdjangular/core/data-models';
+import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
 import { PluginModel } from '@webdjangular/core/data-models';
 import { ScaffoldModule } from './scaffold/scaffold.module';
 import { GroupModule } from './group/group.module';
 import { UserModule } from './user/user.module';
 import { CoreMediaModule } from '@webdjangular/core/media';
-import { CoreWebsiteModel } from 'libs/core/data/src/lib/models/CoreWebsite.model';
+
 import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
+import { CityModel } from '@webdjangular/plugins/provider-data';
 
 const routes: Routes = [
   {
@@ -68,8 +69,17 @@ const routes: Routes = [
         loadChildren: () => ScaffoldModule,
         data: {
           model: CoreWebsiteModel,
-          title: "Plugin",
+          title: 'Websites',
           path: 'core_websites'
+        }
+      },
+      {
+        path: 'cities',
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: CityModel,
+          title: 'Cities',
+          path: 'cities'
         }
       },
       {
