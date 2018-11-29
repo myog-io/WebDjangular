@@ -7,7 +7,9 @@ import {FormForm} from '../forms/Form.form';
 
 
 @JsonApiModelConfig({
-  type: 'form',
+  type: 'Form',
+  modelEndpointUrl: 'form',
+
 })
 export class FormModel extends AbstractModel {
 

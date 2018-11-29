@@ -19,6 +19,7 @@ def default_i18n():
 
 
 class TranslationModel(models.Model):
+
     i18n_fields = []
     language = models.CharField(
         max_length=5, blank=False, default=default_i18n,
@@ -60,12 +61,13 @@ class TranslationModel(models.Model):
         '''
         # 1st we check the current language of the request
         lang = self.get_current_i18n(*args, **kwargs)
-
-        # Getting the Original Value of the entiity
-        original = type(self).objects.get(pk=self.pk)
+        original = None
+        if self.pk:
+            # Getting the Original Value of the entiity
+            original = type(self).objects.get(pk=self.pk)
         # If there is a language on the model, and the language of the request is not the same as the model we
         # will save the data that came in the fields inside the Translation Json
-        if original.language:
+        if original and hasattr(original,'language'):
             if original.language != lang:
                 i18nobj = {}
                 i18nobj['language'] = lang
@@ -97,6 +99,7 @@ class TranslationModel(models.Model):
 
 
 class DateModel(models.Model):
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

@@ -1,4 +1,4 @@
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, Validators, FormGroup} from '@angular/forms';
 
 import {AbstractForm} from '@webdjangular/core/data-forms';
 import {ScaffoldFieldConfig} from '@webdjangular/core/interfaces';
@@ -35,7 +35,7 @@ export class FormForm extends AbstractForm {
       validators: [Validators.required]
     },
     content: {
-      type: FormControl,
+      type: FormGroup,
       validators: [Validators.required]
     },
     created: {

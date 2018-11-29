@@ -27,7 +27,6 @@ class FormViewSet(ModelViewSet):
     Update Forms
     Deleting Forms
     """
-    resource_name = 'form'
     serializer_class = FormSerializer
     queryset = Form.objects.all()
     authentication_classes = (TokenAuthentication,)

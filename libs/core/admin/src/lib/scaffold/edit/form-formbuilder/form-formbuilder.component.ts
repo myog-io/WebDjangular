@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, OnDestroy} from '@angular/core';
 import {ScaffoldField, ScaffoldFieldConfig} from '@webdjangular/core/interfaces';
 import {AbstractForm} from '@webdjangular/core/data-forms';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,25 +14,33 @@ import {AbstractForm} from '@webdjangular/core/data-forms';
     </div>
   `
 })
-export class ScaffoldFormFormbuilderComponent extends ScaffoldField implements OnInit {
+export class ScaffoldFormFormbuilderComponent extends ScaffoldField implements OnInit, OnDestroy {
   config: ScaffoldFieldConfig;
   group: AbstractForm;
   relationshipUpdated: EventEmitter<any>;
   value: object = {};
-
+  valueSub: Subscription;
   ngOnInit() {
-    this.group.get(this.config.name).valueChanges.subscribe(
+    this.valueSub = this.group.get(this.config.name).valueChanges.subscribe(
       (data: any) => {
-        this.value = JSON.parse(data);
+        this.value = data;
+        this.valueSub.unsubscribe();
+        this.valueSub = null;
       },
       (error: any) => {
 
       });
   }
 
+  ngOnDestroy() {
+    if(this.valueSub) {
+      this.valueSub.unsubscribe()
+    }
+    this.valueSub = null
+  }
   onFormBuilderChanges(event) {
-    const data: string = JSON.stringify(event.form);
-    this.relationshipUpdated.emit({'name':this.config.name,'entity': data });
+
+    this.relationshipUpdated.emit({'name':this.config.name,'entity': {data:event.form } });
   }
 
 }

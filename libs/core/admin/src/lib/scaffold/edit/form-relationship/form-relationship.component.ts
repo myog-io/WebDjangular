@@ -65,10 +65,11 @@ export class ScaffoldFormRelationshipComponent extends ScaffoldField implements 
    * on init
    */
   ngOnInit() {
+    this.title = "Select";
+    this.loading = false;
     const group = this.group.get(this.config.name) as AbstractForm;
     this.group_subscription = group.valueChanges.subscribe(value => {
       this.title = group.toString();
-      this.loading = false;
     });
   }
 
@@ -101,13 +102,15 @@ export class ScaffoldFormRelationshipComponent extends ScaffoldField implements 
       // TODO: PAGINATION
       this.datastore.findAll(this.config.options_model).subscribe(
         (data) => {
-          this.loading = false;
+
           const models = data.getModels();
           this.config.options = [];
           for (let i = 0; i < models.length; i++) {
             const entry = models[i];
             this.config.options.push(entry)
           }
+          this.loading = false;
+
         },
         (error) => {
           this.loading = false;
