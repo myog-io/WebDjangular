@@ -1,0 +1,56 @@
+- Update package list:
+    apt-get update 
+
+- Install required packages:
+    apt-get install -y python3 python3-pip python3-dev gunicorn supervisor curl nginx make g++ gcc git mongodb locate
+
+- Enable GZIP compression in nginx
+    vim /etc/nginx/nginx.conf
+    add under http{} (remove any gzip option there is inside already):
+        #GZIP options
+        gzip on;
+        gzip_disable "msie6";
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_min_length 256;
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon;
+
+
+- Create vhosts root dir in the desired location
+
+- For each domain we create an user and, the sub-domains of that domain belongs to the same user 
+
+- Create inside this log dir the log files (access.log, error.log)
+
+- Create inside the home dir the domains directory
+
+- Create inside the domain directory the public_html and logs dir
+
+- Come back to the /data/vhosts dir, and run (change the owner of all that directories to the user we just created):
+    - chown -R <user>.<user> ./<user>
+
+- Create the vhost for this domain under /etc/nginx/sites-available
+
+- Enable this vhost by going to /etc/nginx/sites-enabled and run
+    ln -s ../sites-available/<domain> ./
+
+- Create the mongoDB directory (if you want to change default) and, update on /etc/mongodb.conf
+    - If you updated the directory, remember to set the owner.group of this directory to mongodb.mongodb
+
+
+- We are running Django + Nginx as a proxy, therefore we need to configure the supervisor to initialize the DjangoApplication in the background, put those contents under the config file
+    vim /etc/supervisor/supervisord.conf
+
+        [supervisord]
+        nodaemon=true
+
+        [program:gunicorn_sandbox_lpnet]
+        command=/bin/bash -c "gunicorn --chdir /data/vhosts/lpnetwebsite/sandbox.lpnet.com.br/public_html --bind :8000 webdjangular.wsgi:application"
+        directory=/data/vhosts/lpnetwebsite/sandbox.lpnet.com.br/public_html
+        autostart=true
+        autorestart=true
+
+
