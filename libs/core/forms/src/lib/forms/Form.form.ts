@@ -51,13 +51,13 @@ export class FormForm extends AbstractForm {
       type: 'input',
       label: 'Form Title',
       name: 'title',
-      placeholder: 'Enter Page Title',
+      placeholder: 'Enter Form Title',
     },
     {
       type: 'input',
       label: 'Form slug',
       name: 'slug',
-      placeholder: 'Enter Page Url (slug)',
+      placeholder: 'Enter the Form slug',
     },
     {
       type: 'formBuilder',

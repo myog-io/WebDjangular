@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import {WebAngularDataStore} from '@webdjangular/core/services';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { AbstractForm } from '@webdjangular/core/data-forms';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {AbstractForm} from '@webdjangular/core/data-forms';
 
 @Component({
   selector: 'wda-scaffold-edit',
@@ -41,7 +41,8 @@ export class ScaffoldEditComponent implements OnInit {
    */
   loading: boolean = false;
 
-  inlcude_args: any = {}
+  inlcude_args: any = {};
+
   /**
    * Creates an instance of scaffold edit component.
    * @param route
@@ -64,14 +65,14 @@ export class ScaffoldEditComponent implements OnInit {
       if (segments[0].path === "new") {
         this.before_title = "Creating new"
       }
-    })
+    });
     this.route.data.subscribe(data => {
       this.current_model = data.model;
       this.title = data.title;
       this.base_path = data.path;
       this.form = new this.current_model.formClassRef();
-      if( this.current_model.include ){
-        this.inlcude_args = {include:this.current_model.include};
+      if (this.current_model.include) {
+        this.inlcude_args = {include: this.current_model.include};
       }
       this.form.generateForm();
       this.getEntry();
@@ -90,7 +91,7 @@ export class ScaffoldEditComponent implements OnInit {
           this.form.populateForm(this.entry);
         }
       );
-    }else{
+    } else {
       this.entry = this.datastore.createRecord(this.current_model, this.form.value);
     }
   }
@@ -107,23 +108,20 @@ export class ScaffoldEditComponent implements OnInit {
    */
   update() {
     this.loading = true;
-
     //this.form.updateModel(this.entry);
-
-    console.log("UPDTING RELATIONSHIPO",this.entry);
     let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
         this.loading = false;
-
         sub.unsubscribe();
       },
       (error) => {
+        console.log(error);
         this.loading = false;
       }
     )
   }
 
-  relationshipUpdated(data){
+  relationshipUpdated(data) {
     this.entry[data.name] = data.entity;
   }
 }

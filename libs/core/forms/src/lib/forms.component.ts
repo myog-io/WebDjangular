@@ -4,7 +4,6 @@ import {WebAngularDataStore} from "@webdjangular/core/services";
 import {FormModel} from "./models/Form.model"
 import {JsonApiQueryData} from "angular2-jsonapi";
 import {PageModel} from "@webdjangular/core/cms-models";
-import { JsonApiQueryData } from 'angular2-jsonapi';
 
 
 @Component({
@@ -39,6 +38,7 @@ export class FormsComponent implements OnInit {
       this.datastore.findAll(FormModel, {slug: this.slug}).subscribe(
         (response: JsonApiQueryData<FormModel>) => {
           let forms = response.getModels();
+          console.log(forms);
           resolve(forms[0]);
         },
         (error: any) => {
