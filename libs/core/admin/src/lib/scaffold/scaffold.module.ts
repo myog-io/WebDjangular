@@ -6,8 +6,9 @@ import { ScaffoldEditComponent } from './edit/scaffold-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../@theme/theme.module';
+import { FormioModule } from "angular-formio";
 import { ScaffoldFieldModule } from './scaffold-field.module';
-
+import { FormioService } from "angular-formio";
 
 const COMPONENTS = [
     ScaffoldComponent,
@@ -21,12 +22,16 @@ const COMPONENTS = [
     Ng2SmartTableModule,
     ReactiveFormsModule,
     CommonModule,
+    FormioModule,
     ScaffoldFieldModule,
   ],
   declarations: [
     ...COMPONENTS
   ],
   entryComponents: [
+  ],
+  providers: [
+
   ]
 })
 export class ScaffoldModule {

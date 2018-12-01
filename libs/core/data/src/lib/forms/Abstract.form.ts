@@ -1,8 +1,9 @@
-import { JsonApiModel } from 'angular2-jsonapi';
+import {JsonApiModel} from 'angular2-jsonapi';
 
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import {FormGroup, Validators, FormControl, FormArray} from '@angular/forms';
 
-import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import {ScaffoldFieldConfig} from '@webdjangular/core/interfaces';
+import {FormioForm} from "angular-formio";
 
 export class AbstractForm extends FormGroup {
 
@@ -15,6 +16,12 @@ export class AbstractForm extends FormGroup {
    * Scaffold fields of abstract form
    */
   public scaffoldFields: ScaffoldFieldConfig[] = [];
+
+
+  /**
+   * Scaffold Form of FormioForm
+   */
+  public scaffoldForm: FormioForm = {};
 
   /**
    * Listing table settings of abstract form
@@ -103,10 +110,10 @@ export class AbstractForm extends FormGroup {
     let values = this.value;
 
     for (let propName in values) {
-      if(this.formFields[propName].type == FormGroup){
+      if (this.formFields[propName].type == FormGroup) {
         // If Form Group we have to save it different
-        // Check if the Property is actually a blongsto ou has many, and update accordnly
-      }else{
+        // Check if the Property is actually a belongs to ou has many, and update accordnly
+      } else {
         entity[propName] = values[propName];
       }
     }
