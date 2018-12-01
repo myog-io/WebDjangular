@@ -1,15 +1,11 @@
 import {FormControl, Validators, FormGroup} from '@angular/forms';
 
 import {AbstractForm} from '@webdjangular/core/data-forms';
-import {ScaffoldFieldConfig} from '@webdjangular/core/interfaces';
+import {ScaffoldFieldConfig, FormioForm} from '@webdjangular/core/interfaces';
 import {BlockModel} from '../models/Block.model';
 import {BlockForm} from './Block.form';
 //import { BlockModel } from '../models';
 
-import {
-  FormioForm,
-  ComponentOptions as FormioComponentOptions, ValidateOptions, AccessSetting
-} from 'angular-formio/formio.common'
 
 export class PageForm extends AbstractForm {
 
@@ -108,9 +104,9 @@ export class PageForm extends AbstractForm {
         label: 'Page title',
         required: true,
         multiple: false,
-        "validate": {
-          "required": true,
-          "minLength": 3
+        validate: {
+          required: true,
+          minLength: 3
         },
       },
       {
@@ -121,9 +117,9 @@ export class PageForm extends AbstractForm {
         required: true,
         unique: true,
         multiple: false,
-        "validate": {
-          "required": true,
-          "minLength": 3
+        validate: {
+          required: true,
+          minLength: 3
         },
       }
     ]

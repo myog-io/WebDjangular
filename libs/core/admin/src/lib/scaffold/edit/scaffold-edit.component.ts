@@ -1,12 +1,12 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {WebAngularDataStore} from '@webdjangular/core/services';
+import { WebAngularDataStore } from '@webdjangular/core/services';
 
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {AbstractForm} from '@webdjangular/core/data-forms';
-import { FormioService } from "angular-formio";
-import {FormioResourceConfig} from "angular-formio/resource";
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { AbstractForm } from '@webdjangular/core/data-forms';
+import { FormioService, FormioComponent, ValidateOptions, FormioLoader } from "angular-formio";
+import { FormioComponentOptions, FormioValidateOptions } from 'libs/core/interfaces/src/lib/formio.interface';
 
 @Component({
   selector: 'wda-scaffold-edit',
@@ -38,10 +38,6 @@ export class ScaffoldEditComponent implements OnInit {
    * Before title of scaffold edit component
    */
   before_title: string = "Editing";
-  /**
-   * Check if we are sending or not a entry, to disable/enable button
-   */
-  loading: boolean = false;
 
   inlcude_args: any = {};
 
@@ -51,7 +47,6 @@ export class ScaffoldEditComponent implements OnInit {
 
   options: any = {};
 
-  formioService: FormioService;
 
 
   /**
@@ -64,19 +59,22 @@ export class ScaffoldEditComponent implements OnInit {
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
     private router: Router,
+    private loader: FormioLoader,
+    private formioService: FormioService
     //private formioService: FormioService
+
   ) {
     this.refreshForm = new EventEmitter();
 
 
-    let that = this;
     this.options = {
-      "hooks": {
-        "beforeSubmit": function(submission, callback){
-          that.onSubmit(submission, callback)
+      hooks: {
+        beforeSubmit: (submission, callback) =>{
+          this.update(submission, callback)
         }
       }
     };
+
 
   }
 
@@ -95,28 +93,29 @@ export class ScaffoldEditComponent implements OnInit {
       this.base_path = data.path;
       this.form = new this.current_model.formClassRef();
       if (this.current_model.include) {
-        this.inlcude_args = {include: this.current_model.include};
+        this.inlcude_args = { include: this.current_model.include };
       }
-      this.form.generateForm();
+      //this.form.generateForm();
       this.getEntry();
     });
 
+    const button: FormioComponentOptions<any, FormioValidateOptions> = {
+      input: true,
+      label: "Submit",
+      tableView: false,
+      key: "submit",
+      size: "md",
+      leftIcon: "",
+      rightIcon: "",
+      block: false,
+      action: "submit",
+      disableOnInvalid: true,
+      theme: "primary",
+      type: "button"
+    }
 
-    this.form.scaffoldForm.components.push({
-      "input": true,
-      "label": "Submit",
-      "tableView": false,
-      "key": "submit",
-      "size": "md",
-      "leftIcon": "",
-      "rightIcon": "",
-      "block": false,
-      "action": "submit",
-      "disableOnInvalid": true,
-      "theme": "primary",
-      "type": "button",
-      "autofocus":false
-    });
+    this.form.scaffoldForm.components.push(button);
+    this.loader.loading = false;
   }
 
   /**
@@ -131,13 +130,13 @@ export class ScaffoldEditComponent implements OnInit {
         }
       );
     } else {
-      this.entry = this.datastore.createRecord(this.current_model, this.form.value);
+      //this.entry = this.datastore.createRecord(this.current_model, this.form.value);
     }
   }
 
   populateForm() {
     this.form.scaffoldForm.components.forEach((key: any, val: any) => {
-      if(this.entry[key.key]){
+      if (this.entry[key.key]) {
         this.submission[key.key] = this.entry[key.key];
       }
     });
@@ -149,24 +148,10 @@ export class ScaffoldEditComponent implements OnInit {
   }
 
 
-  /**
-   * Determines if it's a create or update
-   */
-  onSubmit(submission: any, callback) {
-    //this.submission = submission;
-    console.log(submission, callback);
-      // Do something asynchronously.
-      setTimeout(function() {
-        // Callback with a possibly manipulated submission.
-        callback(null, submission);
-      }, 3000);
-    //this.update(submission);
-  }
-
   updateModel(data) {
     let entry: any;
-    for( let key: any in data ) {
-      if(this.entry[key]){
+    for (let key in data) {
+      if (this.entry[key]) {
         this.entry[key] = data[key];
       }
     }
@@ -176,18 +161,25 @@ export class ScaffoldEditComponent implements OnInit {
   /**
    * Updates Record based on the current_model
    */
-  update(submission) {
-    //this.loading = true;
-    //this.form.updateModel(this.entry);
+  update(submission,callback) {
+
     this.updateModel(submission.data);
     let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
-        //this.loading = false;
         sub.unsubscribe();
+        if(callback && typeof callback == "function"){
+          submission.state = 'submitted';
+          submission.saved = true;
+          submission.submitted = true;
+          callback(null,submission);
+          this.router.navigate(['../../'], {relativeTo: this.route});
+        }
+
       },
       (error) => {
-        //console.log(error);
-        //this.loading = false;
+        if(callback && typeof callback == "function"){
+          callback(null,submission);
+        }
       }
     );
   }

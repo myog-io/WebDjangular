@@ -4,9 +4,7 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
 import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 
 export class BlockForm extends AbstractForm {
-  public toString = (): string => {
-    return `${this.value.title} (#${this.value.pk})`;
-  }
+
 	public listingTableSettings = {
 		columns: {
 			id: {

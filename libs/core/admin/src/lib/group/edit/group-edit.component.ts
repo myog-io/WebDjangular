@@ -35,7 +35,7 @@ export class GroupEditComponent {
         private activatedRoute: ActivatedRoute,
         private datastore: WebAngularDataStore,
     ){
-        this.form.generateForm();
+        //this.form.generateForm();
 
     }
 
@@ -47,7 +47,7 @@ export class GroupEditComponent {
             }).subscribe(
                 (group: GroupModel) => {
                     this.group = group;
-                    this.form.populateForm(this.group);
+                    //this.form.populateForm(this.group);
                 }
             );
         }
@@ -63,7 +63,7 @@ export class GroupEditComponent {
     }
 
     update(){
-        this.form.updateModel(this.group);
+        //this.form.updateModel(this.group);
 
         let sub = this.group.save().subscribe(
             (result) => {
@@ -73,7 +73,7 @@ export class GroupEditComponent {
     }
 
     create(){
-        this.group = this.datastore.createRecord(GroupModel, this.form.value);
+        //this.group = this.datastore.createRecord(GroupModel, this.form.value);
         let sub = this.group.save().subscribe(
             (result) => {
                 sub.unsubscribe();

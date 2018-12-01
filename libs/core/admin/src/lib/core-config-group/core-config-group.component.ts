@@ -91,8 +91,8 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
       this.group.inputs = this.inputs;
       this.form.formFields = this.group.formFields;
       this.group.updateValues();
-      this.form.generateForm();
-      this.form.populateForm(this.group.value);
+      //this.form.generateForm();
+      //this.form.populateForm(this.group.value);
     })
   }
 
@@ -101,6 +101,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    */
   onSubmit() {
     this.loading = true;
+    /*
     const data = this.form.value;
     // Doing this a little bit more manually beucase the way we treat the CoreConfig, it's not a direct relationship
     for (let i = 0; i < this.group.inputs.length; i++) {
@@ -116,5 +117,6 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
         this.loading = false;
       }
     )
+    */
   }
 }
