@@ -1,9 +1,34 @@
-from rest_framework.serializers import ModelSerializer
+from libs.plugins.provider.api.models.City import City, Streets, NumberRange
+from rest_framework_json_api import serializers
+from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelField
+class NumberRangeSerializer(EmbeddedSerializer):
+    start = serializers.IntegerField()
+    end = serializers.IntegerField()
+    class Meta:
+        model = NumberRange
+        fields = '__all__'
 
-from libs.plugins.provider.api.models.City import City
 
 
-class CitySerializer(ModelSerializer):
+class StreetSerializer(EmbeddedSerializer):
+    name = serializers.CharField()
+    short_name = serializers.CharField()
+    numbers = ArrayModelField(
+        serializer = NumberRangeSerializer
+    )
+    class Meta:
+        model = Streets
+        fields = '__all__'
+
+
+
+class CitySerializer(serializers.ModelSerializer):
+    postal_codes = ArrayModelField(
+        serializer = NumberRangeSerializer
+    )
+    streets = ArrayModelField(
+        serializer = StreetSerializer
+    )
     class Meta:
         model = City
         fields = '__all__'

@@ -9,14 +9,21 @@ class NumberRange(models.Model):
     start = models.IntegerField()
     end = models.IntegerField()
 
+
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return "start:{} - end{}".format(self.start,self.end)
+
 class NumberRangeForm(forms.ModelForm):
     class Meta:
         model = NumberRange
         fields = (
             'start', 'end'
         )
+
+
 
 class Streets(models.Model):
     '''
@@ -31,6 +38,9 @@ class Streets(models.Model):
     )
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.name
 
 class StreetsForm(forms.ModelForm):
     class Meta:
