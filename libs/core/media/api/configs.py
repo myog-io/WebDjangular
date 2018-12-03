@@ -44,13 +44,9 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
-        ng_if=[
-            {
-                'input': CONFIG_STORAGE_CLASS,
-                'operator': 'neq',
-                'value': '',
-            }
-        ]
+        conditional={
+            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+        }
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_NAME,
@@ -64,13 +60,10 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
-        ng_if=[
-            {
-                'input': CONFIG_STORAGE_CLASS,
-                'operator': 'neq',
-                'value': '',
-            }
-        ]
+        conditional={
+            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+        }
+
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_CONTAINER_NAME,
@@ -84,13 +77,9 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
-        ng_if=[
-            {
-                'input': CONFIG_STORAGE_CLASS,
-                'operator': 'neq',
-                'value': '',
-            }
-        ]
+        conditional={
+            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+        }
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_EXTERNAL_URL,
@@ -104,13 +93,9 @@ MEDIA_CONFIGS = [
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
-        ng_if=[
-            {
-                'input': CONFIG_STORAGE_CLASS,
-                'operator': 'neq',
-                'value': '',
-            }
-        ]
+        conditional={
+            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+        }
     ),
 ]
 

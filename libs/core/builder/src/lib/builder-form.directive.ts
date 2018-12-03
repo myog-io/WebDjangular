@@ -19,6 +19,7 @@ import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/formbuilder/formbuilder.component';
 import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
 import { BuilderFormFieldConfig, BuilderFormField } from './interfaces/form-config.interface';
+import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 
 
 
@@ -30,14 +31,14 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   ckeditor: BuilderFormCkeditorComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
-  relationship: BuilderFormRelationshipComponent
+  relationship: BuilderFormRelationshipComponent,
+  formArray: BuilderFormArrayComponent,
 };
 
 @Directive({
   selector: '[wdaBuilderFormFields]'
 })
-export class ScaffoldFieldDirective extends BuilderFormField
-  implements OnChanges, OnInit {
+export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnInit {
   @Input() config: BuilderFormFieldConfig;
 
   @Input() group: FormGroup;
@@ -50,7 +51,6 @@ export class ScaffoldFieldDirective extends BuilderFormField
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
   ) {
-    super();
   }
 
   ngOnChanges() {

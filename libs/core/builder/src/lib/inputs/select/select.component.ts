@@ -7,7 +7,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   selector: 'wda-form-select',
   styleUrls: ['select.component.scss'],
   template: `
-    <div class="form-group form-select" [formGroup]="group" *ngIf="ng_if()">
+    <div class="form-group form-select" [formGroup]="group" >
       <label>{{ config.label }}</label>
       <ng-select class="form-control" (change)="onChange" [formControlName]="config.name" [multiple]="config.multiple" [loading]="loading">
         <ng-option value="">{{ config.placeholder }}</ng-option>
@@ -18,8 +18,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
     </div><!--form-group-->
   `
 })
-export class BuilderFormSelectComponent extends BuilderFormField
-  implements OnInit {
+export class BuilderFormSelectComponent implements BuilderFormField, OnInit{
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   loading: boolean = false;
@@ -29,7 +28,6 @@ export class BuilderFormSelectComponent extends BuilderFormField
    * @param datastore
    */
   constructor(private datastore: WebAngularDataStore) {
-    super();
   }
 
   /**

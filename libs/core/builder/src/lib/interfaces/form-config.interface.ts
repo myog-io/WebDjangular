@@ -1,6 +1,16 @@
 import { FormGroup } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
+import { JsonLogic } from '../builder-jsonlogic';
+import { Observable } from 'rxjs';
+
+export interface BuilderFormConfig{
+  submit_label?: string;
+  submit_size?: string;
+  submit_status?: string;
+  loading?: boolean;
+  fields: BuilderFormFieldConfig[];
+}
 
 export interface BuilderFormFieldConfig {
   disabled?: boolean;
@@ -16,34 +26,13 @@ export interface BuilderFormFieldConfig {
   value?: any;
   wrapper_class?: string;
   inputType?: string;
-  ng_if?: any;
+  conditional?: any;
+  display?: boolean;
 }
 
-export class BuilderFormField {
+export interface BuilderFormField {
   config: BuilderFormFieldConfig;
   group: FormGroup;
-  relationshipUpdated: EventEmitter<any>;
+  relationshipUpdated?: EventEmitter<any>;
 
-  /**
-   * ng_if
-   */
-  public ng_if() {
-    if( this.config.ng_if ){
-      for (let i = 0; i < this.config.ng_if.length; i++) {
-        const ch = this.config.ng_if[i];
-        const input_val = this.group.get(ch.input).value;
-        const operator = ch.operator ? ch.operator : 'eq';
-        switch (operator) {
-          case 'eq':
-            return input_val === ch.value;
-            //break;
-          case 'neq':
-            return input_val !== ch.value;
-          default:
-            break;
-        }
-      }
-    }
-    return true;
-  }
 }

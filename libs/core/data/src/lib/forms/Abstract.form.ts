@@ -72,7 +72,7 @@ export class AbstractForm extends FormGroup {
           i++
         ) {
           let fa = this.get(propName) as FormArray;
-          let fb = new this.formFields[propName].form();
+          let fb = new this.formFields[propName].formClass();
 
           fb.generateForm();
           fb.populateForm(entity[propName][i]);
@@ -89,7 +89,7 @@ export class AbstractForm extends FormGroup {
           fg.populateForm(entity[propName]);
 
         } else if (typeof entity[propName] !== 'undefined') {
-          this.get(propName).setValue(entity[propName]);
+          this.get(propName).setValue(entity[propName],{emitEvent:true});
         }
       }
     }

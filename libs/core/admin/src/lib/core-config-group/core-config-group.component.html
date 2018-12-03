@@ -1,22 +1,6 @@
 <nb-card>
   <nb-card-header>{{group?.title}}</nb-card-header>
   <nb-card-body>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="container">
-        <div class="row">
-          <div *ngFor="let input of inputs" [class]="input.wrapper_class ? input.wrapper_class : 'col-12'">
-            <ng-container wdaBuilderFormFields [config]="input.fieldConfig" [group]="form"></ng-container>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <button nbButton status="primary" size="medium" (click)="onSubmit()" [nbSpinner]="loading" nbSpinnerStatus="success"
-              [disabled]="loading" nbSpinnerSize="medium" nbSpinnerMessage="">
-              Save
-            </button>
-          </div>
-        </div>
-      </div>
-    </form>
+    <wda-form [fields]="fields" (onSubmit)="onSubmit()" submit_label="Save Config" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
   </nb-card-body>
 </nb-card>

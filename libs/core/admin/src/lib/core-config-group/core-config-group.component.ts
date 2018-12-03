@@ -5,6 +5,7 @@ import { WebAngularDataStore } from "@webdjangular/core/services";
 import { CoreConfigGroupModel } from "libs/core/data/src/lib/models/CoreConfigGroup.model";
 import { CoreConfigInputModel } from "libs/core/data/src/lib/models/CoreConfigInput.model";
 import { AbstractForm } from "@webdjangular/core/data-forms";
+import { BuilderFormFieldConfig } from "@webdjangular/core/builder";
 
 @Component({
   selector: 'wda-core-config-group',
@@ -27,7 +28,8 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   /**
    * Inputs  of core config group component
    */
-  public inputs: CoreConfigInputModel[];
+  public inputs: CoreConfigInputModel[] = [];
+  public fields: BuilderFormFieldConfig[] = [];
   /**
    * Form  of core config group component
    */
@@ -53,7 +55,6 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.form = new AbstractForm();
-
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id) {
@@ -68,6 +69,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    * on destroy
    */
   ngOnDestroy() {
+    console.log("DESTROYING??");
     this.sub.unsubscribe();
   }
 
@@ -86,9 +88,13 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    * Loads config input
    */
   loadConfigInput() {
+    this.inputs = [];
+    this.fields = [];
+
     this.datastore.findAll(CoreConfigInputModel, { group: this.id }).subscribe((data: any) => {
       this.inputs = data.getModels();
       this.group.inputs = this.inputs;
+      this.fields = this.group.formFieldsConfigs;
       this.form.formFields = this.group.formFields;
       this.group.updateValues();
       this.form.generateForm();

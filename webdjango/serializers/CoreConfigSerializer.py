@@ -18,7 +18,7 @@ class CoreConfigInputSerializer(serializers.Serializer):
     wrapper_class = serializers.CharField(read_only=True)
     group = serializers.SlugField(read_only=True)
     value = serializers.CharField(read_only=True)
-    ng_if = serializers.JSONField(read_only=True)
+    conditional = serializers.JSONField(read_only=True)
 
 
 class CoreConfigGroupSerializer(serializers.Serializer):

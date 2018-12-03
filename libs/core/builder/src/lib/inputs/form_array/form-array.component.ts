@@ -1,20 +1,30 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
 
 @Component({
-  selector: 'wda-form-code',
-  styleUrls: ['code.component.scss'],
+  selector: 'wda-form-array',
+  styleUrls: ['form-array.component.scss'],
   template: `
   <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
-    <ngx-monaco-editor [options]="editorOptions" [formControlName]="config.name" ></ngx-monaco-editor>
+    <div class="row">
+
+    </div>
   </div><!--form-group-->
 `
 })
-export class BuilderFormCodeComponent implements BuilderFormField {
+export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
-  editorOptions = { theme: 'vs-dark', language: 'html' };
+
+  ngOnInit(){
+
+  }
+
+  ngOnDestroy(){
+
+  }
+
+
 }

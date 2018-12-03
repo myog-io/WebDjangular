@@ -9,12 +9,12 @@ import { BuilderFormFieldConfig, BuilderFormField } from '../../interfaces/form-
 
     <div
       class="dynamic-field form-button"
-      [formGroup]="group"  *ngIf="ng_if()">
+      [formGroup]="group"  >
       <button type="submit" class="btn btn-hero-primary" [disabled]="config.disabled">{{ config.label }}</button>
     </div>
   `
 })
-export class BuilderFormButtonComponent extends BuilderFormField {
+export class BuilderFormButtonComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
 }

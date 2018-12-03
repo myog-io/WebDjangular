@@ -7,13 +7,12 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   selector: 'wda-form-formbuilder',
   styleUrls: [],
   template: `
-    <div class="form-group" [formGroup]="group" *ngIf="ng_if()">
+    <div class="form-group" [formGroup]="group" >
 
     </div>
   `
 })
-export class BuilderFormBuilderComponent extends BuilderFormField
-  implements OnInit, OnDestroy {
+export class BuilderFormBuilderComponent implements BuilderFormField, OnInit, OnDestroy {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   relationshipUpdated: EventEmitter<any>;

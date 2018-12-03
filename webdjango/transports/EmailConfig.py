@@ -82,13 +82,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_SMTP,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+            }
         ),
         CoreConfigInput(
             id=CONFIG_PWD,
@@ -102,13 +98,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_SMTP,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+            }
         ),
         CoreConfigInput(
             id=CONFIG_HOST,
@@ -122,13 +114,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_SMTP,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+            }
         ),
         CoreConfigInput(
             id=CONFIG_PORT,
@@ -142,13 +130,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-3",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_SMTP,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+            }
         ),
         CoreConfigInput(
             id=CONFIG_SECURITY,
@@ -162,13 +146,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-3",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_SMTP,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+            }
         ),
         CoreConfigInput(
             id=CONFIG_API_KEY,
@@ -182,13 +162,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_MAILGUN,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_MAILGUN]
+            }
         ),
         CoreConfigInput(
             id=CONFIG_DOMAIN,
@@ -202,13 +178,9 @@ class EmailCoreConfig():
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
-            ng_if=[
-                {
-                    'input':CONFIG_EMAIL_TYPE,
-                    'operator': 'eq',
-                    'value':CONFIG_EMAIL_OPTION_MAILGUN,
-                }
-            ]
+            conditional={
+                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_MAILGUN]
+            }
         ),
 
     ]

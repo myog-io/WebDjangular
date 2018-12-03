@@ -1,4 +1,4 @@
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
@@ -37,11 +37,11 @@ export class CityForm extends AbstractForm {
       validators: [Validators.required]
     },
     streets: {
-      type: FormGroup,
+      type: FormArray,
       formClass: StreetForm,
     },
     zips: {
-      type: FormGroup,
+      type: FormArray,
       formClass: RangeForm,
     },
     created: {
@@ -65,5 +65,10 @@ export class CityForm extends AbstractForm {
       name: 'short_name',
       placeholder: 'Entery City Short Name (NY)',
     },
+    {
+      type: 'formArray',
+      label: 'Streets',
+      name: 'streets'
+    }
   ]
 }
