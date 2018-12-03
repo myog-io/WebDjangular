@@ -28,6 +28,7 @@ export interface BuilderFormFieldConfig {
   inputType?: string;
   conditional?: any;
   display?: boolean;
+  fields?: BuilderFormFieldConfig[]; // Children of this Form
 }
 
 export interface BuilderFormField {

@@ -9,10 +9,6 @@ export class CityForm extends AbstractForm {
 
   public listingTableSettings = {
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
       name: {
         title: 'Name',
         type: 'string',
@@ -68,7 +64,8 @@ export class CityForm extends AbstractForm {
     {
       type: 'formArray',
       label: 'Streets',
-      name: 'streets'
+      name: 'streets',
+      fields: new StreetForm().scaffoldFields,
     }
   ]
 }

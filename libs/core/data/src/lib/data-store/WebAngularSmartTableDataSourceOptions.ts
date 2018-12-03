@@ -9,7 +9,7 @@ export class WebAngularSmartTableDataSourceOptions {
   protected static readonly TOTAL_KEY = 'x-total-count';
   protected static readonly DATA_KEY = '';
   protected static readonly MODEL = null;
-  protected static readonly SMART_TABLE_SETTINGS = {
+  public static readonly SMART_TABLE_SETTINGS = {
     editable: false,
     mode: 'external',
     pager: {

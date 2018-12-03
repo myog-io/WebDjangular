@@ -48,6 +48,7 @@ export class StreetForm extends AbstractForm {
       inputType: 'input',
       label: 'Short Name',
       name: 'short_name',
+      wrapper_class: 'col-12',
       placeholder: 'Street Short Name',
     },
 
