@@ -45,7 +45,7 @@ export class UserEditComponent {
     private datastore: WebAngularDataStore,
     public accessChecker: NbAccessChecker
   ) {
-    //this.form.generateForm();
+    this.form.generateForm();
   }
 
 
@@ -59,7 +59,7 @@ export class UserEditComponent {
       }).subscribe(
         (user: UserModel) => {
           this.user = user;
-          //this.form.populateForm(this.user);
+          this.form.populateForm(this.user);
         }
       );
     }
@@ -82,7 +82,7 @@ export class UserEditComponent {
    * Updates user
    */
   update() {
-    //this.form.updateModel(this.user);
+    this.form.updateModel(this.user);
     let sub = this.user.save().subscribe(
       (result) => {
         sub.unsubscribe();
@@ -94,7 +94,7 @@ export class UserEditComponent {
    * Creates user
    */
   create() {
-    //this.user = this.datastore.createRecord(UserModel, this.form.value);
+    this.user = this.datastore.createRecord(UserModel, this.form.value);
     let sub = this.user.save().subscribe(
       (result) => {
         sub.unsubscribe();

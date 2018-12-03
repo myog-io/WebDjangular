@@ -1,7 +1,7 @@
 import { FormControl, Validators } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 export class BlockForm extends AbstractForm {
 
@@ -46,7 +46,7 @@ export class BlockForm extends AbstractForm {
 		},
 	}
 
-	scaffoldFields: ScaffoldFieldConfig[] = [
+	scaffoldFields: BuilderFormFieldConfig[] = [
 		{
 			type: 'input',
 			label: 'Block Title',

@@ -7,8 +7,8 @@ import {
 
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
-import { ScaffoldField, ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
 import { CoreConfigModel } from './CoreConfig.model';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 @JsonApiModelConfig({
   type: 'core_config_input'
@@ -65,7 +65,7 @@ export class CoreConfigInputModel extends AbstractModel {
 
   set pk(value) {}
 
-  get fieldConfig() : ScaffoldFieldConfig {
+  get fieldConfig() : BuilderFormFieldConfig {
     return {
       disabled: this.disabled,
       label: this.label,

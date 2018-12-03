@@ -6,7 +6,8 @@ import { ScaffoldEditComponent } from './edit/scaffold-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ThemeModule } from '../@theme/theme.module';
-import { FormioModule, FormioAppConfig, FormioLoader, FormioService } from "angular-formio";
+import { BuilderFormModule } from '@webdjangular/core/builder';
+
 
 const COMPONENTS = [
     ScaffoldComponent,
@@ -20,23 +21,12 @@ const COMPONENTS = [
     Ng2SmartTableModule,
     ReactiveFormsModule,
     CommonModule,
-    FormioModule,
+    BuilderFormModule,
   ],
   declarations: [
     ...COMPONENTS
   ],
   entryComponents: [
-  ],
-  providers: [
-    {provide: FormioService, useValue:{
-      url:'http://localhost:4201'
-    }},
-    FormioLoader,
-    {provide: FormioAppConfig, useValue:
-    {
-      appUrl: 'http://localhost:4201',
-      apiUrl: 'http://localhost:4201/api'
-    }},
   ]
 })
 export class ScaffoldModule {

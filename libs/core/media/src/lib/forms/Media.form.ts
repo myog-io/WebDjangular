@@ -1,6 +1,6 @@
 import { FormControl, Validators } from '@angular/forms';
 
-import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 
 export class MediaForm extends AbstractForm {
@@ -36,7 +36,7 @@ export class MediaForm extends AbstractForm {
     }
   };
 
-  scaffoldFields: ScaffoldFieldConfig[] = [
+  scaffoldFields: BuilderFormFieldConfig[] = [
     {
       type: 'input',
       label: 'File',

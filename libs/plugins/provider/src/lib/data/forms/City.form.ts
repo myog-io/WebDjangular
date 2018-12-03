@@ -1,7 +1,7 @@
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { StreetForm } from './Street.form';
 import { RangeForm } from './Range.form';
 
@@ -52,7 +52,7 @@ export class CityForm extends AbstractForm {
     },
   }
 
-  scaffoldFields: ScaffoldFieldConfig[] = [
+  scaffoldFields: BuilderFormFieldConfig[] = [
     {
       type: 'input',
       label: 'Name',

@@ -102,6 +102,9 @@
       ],
       "@webdjangular/core/chunk-file-upload": [
         "libs/core/chunk-file-upload/src/index.ts"
+      ],
+      "@webdjangular/core/builder": [
+        "libs/core/builder/src/index.ts"
       ]
     }
   },

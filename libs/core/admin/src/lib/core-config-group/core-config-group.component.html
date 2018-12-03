@@ -5,7 +5,7 @@
       <div class="container">
         <div class="row">
           <div *ngFor="let input of inputs" [class]="input.wrapper_class ? input.wrapper_class : 'col-12'">
-            <ng-container webdjangularScaffoldDynamicField [config]="input.fieldConfig" [group]="form"></ng-container>
+            <ng-container wdaBuilderFormFields [config]="input.fieldConfig" [group]="form"></ng-container>
           </div>
         </div>
         <div class="row">

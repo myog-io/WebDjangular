@@ -79,6 +79,11 @@
     },
     "core-chunk-file-upload": {
       "tags": []
+    },
+    "core-builder": {
+      "tags": [
+        "builder htmlbuilder form"
+      ]
     }
   }
 }

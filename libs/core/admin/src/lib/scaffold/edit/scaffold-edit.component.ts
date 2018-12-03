@@ -1,12 +1,10 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import {WebAngularDataStore} from '@webdjangular/core/services';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { AbstractForm } from '@webdjangular/core/data-forms';
-import { FormioService, FormioComponent, ValidateOptions, FormioLoader } from "angular-formio";
-import { FormioComponentOptions, FormioValidateOptions } from 'libs/core/interfaces/src/lib/formio.interface';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {AbstractForm} from '@webdjangular/core/data-forms';
 
 @Component({
   selector: 'wda-scaffold-edit',
@@ -38,16 +36,12 @@ export class ScaffoldEditComponent implements OnInit {
    * Before title of scaffold edit component
    */
   before_title: string = "Editing";
+  /**
+   * Check if we are sending or not a entry, to disable/enable button
+   */
+  loading: boolean = false;
 
   inlcude_args: any = {};
-
-  submission: any = {};
-
-  refreshForm: EventEmitter<any>;
-
-  options: any = {};
-
-
 
   /**
    * Creates an instance of scaffold edit component.
@@ -59,22 +53,7 @@ export class ScaffoldEditComponent implements OnInit {
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
     private router: Router,
-    private loader: FormioLoader,
-    private formioService: FormioService
-    //private formioService: FormioService
-
   ) {
-    this.refreshForm = new EventEmitter();
-
-
-    this.options = {
-      hooks: {
-        beforeSubmit: (submission, callback) =>{
-          this.update(submission, callback)
-        }
-      }
-    };
-
 
   }
 
@@ -93,29 +72,11 @@ export class ScaffoldEditComponent implements OnInit {
       this.base_path = data.path;
       this.form = new this.current_model.formClassRef();
       if (this.current_model.include) {
-        this.inlcude_args = { include: this.current_model.include };
+        this.inlcude_args = {include: this.current_model.include};
       }
-      //this.form.generateForm();
+      this.form.generateForm();
       this.getEntry();
-    });
-
-    const button: FormioComponentOptions<any, FormioValidateOptions> = {
-      input: true,
-      label: "Submit",
-      tableView: false,
-      key: "submit",
-      size: "md",
-      leftIcon: "",
-      rightIcon: "",
-      block: false,
-      action: "submit",
-      disableOnInvalid: true,
-      theme: "primary",
-      type: "button"
-    }
-
-    this.form.scaffoldForm.components.push(button);
-    this.loader.loading = false;
+    })
   }
 
   /**
@@ -124,64 +85,39 @@ export class ScaffoldEditComponent implements OnInit {
   getEntry() {
     if (this.route.params['value'].id != null) {
       this.datastore.findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args).subscribe(
-        (entry: AbstractModel) => {
-          this.entry = entry;
-          this.populateForm();
+        (data: AbstractModel) => {
+          this.entry = data;
+          this.form.populateForm(this.entry);
         }
       );
     } else {
-      //this.entry = this.datastore.createRecord(this.current_model, this.form.value);
+      this.entry = this.datastore.createRecord(this.current_model, this.form.value);
     }
   }
 
-  populateForm() {
-    this.form.scaffoldForm.components.forEach((key: any, val: any) => {
-      if (this.entry[key.key]) {
-        this.submission[key.key] = this.entry[key.key];
-      }
-    });
-    this.refreshForm.emit({
-      submission: {
-        data: this.submission
-      }
-    });
+  /**
+   * Determines if it's a create or update
+   */
+  onSubmit() {
+    this.update();
   }
-
-
-  updateModel(data) {
-    let entry: any;
-    for (let key in data) {
-      if (this.entry[key]) {
-        this.entry[key] = data[key];
-      }
-    }
-  }
-
 
   /**
    * Updates Record based on the current_model
    */
-  update(submission,callback) {
-
-    this.updateModel(submission.data);
+  update() {
+    this.loading = true;
+    this.form.updateModel(this.entry);
     let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
+        this.loading = false;
         sub.unsubscribe();
-        if(callback && typeof callback == "function"){
-          submission.state = 'submitted';
-          submission.saved = true;
-          submission.submitted = true;
-          callback(null,submission);
-          this.router.navigate(['../../'], {relativeTo: this.route});
-        }
-
       },
       (error) => {
-        if(callback && typeof callback == "function"){
-          callback(null,submission);
-        }
+        console.log(error);
+        this.loading = false;
       }
-    );
+    )
   }
 
   relationshipUpdated(data) {

@@ -1,11 +1,10 @@
-import {FormControl, Validators, FormGroup} from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
-import {AbstractForm} from '@webdjangular/core/data-forms';
-import {ScaffoldFieldConfig, FormioForm} from '@webdjangular/core/interfaces';
-import {BlockModel} from '../models/Block.model';
-import {BlockForm} from './Block.form';
+import { AbstractForm } from '@webdjangular/core/data-forms';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import { BlockModel } from '../models/Block.model';
+import { BlockForm } from './Block.form';
 //import { BlockModel } from '../models';
-
 
 export class PageForm extends AbstractForm {
 
@@ -56,9 +55,9 @@ export class PageForm extends AbstractForm {
     updated: {
       type: FormControl,
     },
-  };
+  }
 
-  scaffoldFields: ScaffoldFieldConfig[] = [
+  scaffoldFields: BuilderFormFieldConfig[] = [
     {
       type: 'input',
       label: 'Page Title',
@@ -90,39 +89,5 @@ export class PageForm extends AbstractForm {
       wrapper_class: 'col-6',
       options_model: BlockModel,
     }
-  ];
-
-  scaffoldForm: FormioForm = {
-    title: 'Page',
-    display: 'form',
-    type: 'type',
-    components: [
-      {
-        key: 'title',
-        type: 'textfield',
-        input: true,
-        label: 'Page title',
-        required: true,
-        multiple: false,
-        validate: {
-          required: true,
-          minLength: 3
-        },
-      },
-      {
-        key: 'slug',
-        type: 'textfield',
-        input: true,
-        label: 'Page URL',
-        required: true,
-        unique: true,
-        multiple: false,
-        validate: {
-          required: true,
-          minLength: 3
-        },
-      }
-    ]
-  };
-
+  ]
 }

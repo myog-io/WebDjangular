@@ -1,7 +1,7 @@
 import { FormControl, Validators } from '@angular/forms';
 
 import { AbstractForm } from './Abstract.form';
-import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 export class AuthorForm extends AbstractForm {
   public listingTableSettings = {
@@ -52,7 +52,7 @@ export class AuthorForm extends AbstractForm {
     }
   };
 
-  scaffoldFields: ScaffoldFieldConfig[] = [
+  scaffoldFields: BuilderFormFieldConfig[] = [
     {
       type: 'input',
       label: 'Name',

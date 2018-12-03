@@ -1,9 +1,26 @@
 import { FormGroup } from '@angular/forms';
-import { ScaffoldFieldConfig } from './scaffold-field-config.interface';
 import { EventEmitter } from '@angular/core';
+import { ValidatorFn } from '@angular/forms';
 
-export class ScaffoldField {
-  config: ScaffoldFieldConfig;
+export interface BuilderFormFieldConfig {
+  disabled?: boolean;
+  label?: string;
+  name: string;
+  form_group_name?: string;
+  options?: any[];
+  options_model?: any, // From AbstractModel
+  multiple?: boolean;
+  placeholder?: string;
+  type: string;
+  validation?: ValidatorFn[];
+  value?: any;
+  wrapper_class?: string;
+  inputType?: string;
+  ng_if?: any;
+}
+
+export class BuilderFormField {
+  config: BuilderFormFieldConfig;
   group: FormGroup;
   relationshipUpdated: EventEmitter<any>;
 
