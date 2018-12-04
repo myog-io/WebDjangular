@@ -1,6 +1,6 @@
 from djongo import models
 from django import forms
-from webdjango.models.AbstractModels import DateModel
+from webdjango.models.AbstractModels import DateTimeModel
 
 class NumberRange(models.Model):
     '''
@@ -50,7 +50,7 @@ class StreetsForm(forms.ModelForm):
         )
 
 
-class City(DateModel):
+class City(DateTimeModel):
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=255, null=True, default=None)
     code = models.SlugField(null=True, default=None)

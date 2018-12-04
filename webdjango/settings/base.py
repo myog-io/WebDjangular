@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'libs.plugins.provider.api',
     'rest_framework_json_api',
     'django_extensions',
-    'drf_yasg'
+    'drf_yasg',
+
+    'libs.plugins.store.api'
 ]
 
 TEMPLATES = [

@@ -98,10 +98,17 @@ class TranslationModel(models.Model):
         abstract = True
 
 
-class DateModel(models.Model):
+class DateTimeModel(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class ActiveModel(models.Model):
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         abstract = True

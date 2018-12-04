@@ -14,7 +14,8 @@ class Page(SeoModel, TranslationModel):
     content = djangoModels.TextField()
     header = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
     footer = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)
-    i18n_fields = ['title','slug','content']
+    i18n_fields = ['title', 'slug', 'content']
+
     def __str__(self):
         return self.title
 

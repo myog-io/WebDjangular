@@ -1,10 +1,10 @@
 from django.db import models as djangoModels
 from djongo import models
 from djongo.models.json import JSONField
-from webdjango.models.AbstractModels import DateModel
+from webdjango.models.AbstractModels import DateTimeModel
 
 
-class Form(DateModel):
+class Form(DateTimeModel):
     """
     Form Model
     """
