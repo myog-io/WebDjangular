@@ -10,21 +10,23 @@ import { Subscription } from 'rxjs';
   selector: 'wda-form',
   styleUrls: ['builder-form.component.scss'],
   template: `
-  <div class="row">
-    <ng-container class="column" *ngFor="let field of fields">
-      <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
-        <ng-container wdaBuilderFormFields [config]="field" [group]="group" (relationshipUpdated)="relationshipUpdated($event)"></ng-container>
-      </div>
-    </ng-container>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <button nbButton [status]="submit_status" [size]="submit_size" (click)="onSubmit()" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
-        [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="">
-        {{ submit_label }}
-      </button>
+  <form [formGroup]="group" (submit)="submitForm($event)">
+    <div class="row">
+      <ng-container class="column" *ngFor="let field of fields">
+        <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
+          <ng-container wdaBuilderFormFields [config]="field" [group]="group" (relationshipUpdated)="relationship($event)"></ng-container>
+        </div>
+      </ng-container>
     </div>
-  </div>
+    <div class="row">
+      <div class="col-12">
+        <button nbButton [status]="submit_status" [size]="submit_size" (click)="submitForm($submit)" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
+          [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="">
+          {{ submit_label }}
+        </button>
+      </div>
+   </div>
+  </form>
 `
 })
 export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestroy {
@@ -42,13 +44,19 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   ) {
 
   }
-
+  /**
+   * On Init of Class
+   */
   ngOnInit() {
     this.conditionalFields(this.group.value);
     this.subscription = this.group.valueChanges.subscribe((data) => {
       this.conditionalFields(data);
     })
   }
+  /**
+   * This will check the condition for the field to hide or show based on the jsonlogic conditional of each field
+   * @param data Form Data
+   */
   private conditionalFields(data: any) {
     // TODO Improve
     for (let i = 0; i < this.fields.length; i++) {
@@ -62,6 +70,21 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
       this.fields[i].disabled = !this.fields[i].display;
     }
   }
+  /**
+   * Form Submitting
+   */
+  public submitForm($event) {
+    this.onSubmit.emit($event);
+  }
+  /**
+   * If Relationship of Model is Updated
+   */
+  public relationship($event) {
+    this.onSubmit.emit($event);
+  }
+  /**
+   * Destroying the component
+   */
   ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe()

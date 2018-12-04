@@ -1,10 +1,10 @@
 import { FormGroup } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
-import { JsonLogic } from '../builder-jsonlogic';
-import { Observable } from 'rxjs';
+import { SmartTableSettingsMode } from '@webdjangular/core/data';
 
-export interface BuilderFormConfig{
+
+export interface BuilderFormConfig {
   submit_label?: string;
   submit_size?: string;
   submit_status?: string;
@@ -29,6 +29,7 @@ export interface BuilderFormFieldConfig {
   conditional?: any;
   display?: boolean;
   fields?: BuilderFormFieldConfig[]; // Children of this Form
+  smart_table_mode?: SmartTableSettingsMode;
 }
 
 export interface BuilderFormField {

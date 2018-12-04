@@ -1,7 +1,7 @@
 # Base will provide the common requirements among all environments (development, live, staging, etc).
 
 # Django
-Django==2.0.6
+Django==2.1.4
 
 #there is no version for that, it seems to be a package with other libs
 #pip show djongo[json] returns nothing

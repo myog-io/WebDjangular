@@ -27,8 +27,6 @@ class TranslationModel(models.Model):
     )
     # as per https://docs.mongodb.com/manual/tutorial/specify-language-for-text-index/
     translation = JSONField(null=True,default=None)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
 
     def get_current_i18n(self, *args, **kwargs):
         lang = default_i18n()
