@@ -3,7 +3,7 @@ from decimal import Decimal
 from uuid import uuid4
 from djongo import models
 from django.utils.timezone import now
-from django.contrib.postgres.fields import JSONField
+from djongo.models.json import JSONField
 from django_prices.models import MoneyField, TaxedMoneyField
 from django import forms
 from django.conf import settings

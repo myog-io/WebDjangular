@@ -1,16 +1,14 @@
-from enum import Enum
 from decimal import Decimal
+from enum import Enum
 
-from djongo import models
-from django.utils.timezone import now
-from django.contrib.postgres.fields import JSONField
-from django_prices.models import MoneyField, TaxedMoneyField
-from django import forms
 from django.conf import settings
-from webdjango.models.AbstractModels import DateTimeModel
+from django_prices.models import MoneyField, TaxedMoneyField
+from djongo import models
+from djongo.models.json import JSONField
 
 from libs.core.users.api.models.User import User
 from libs.plugins.store.api.models.Address import Address
+from webdjango.models.AbstractModels import DateTimeModel
 
 
 class OrderStatus:

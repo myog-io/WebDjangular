@@ -2,7 +2,7 @@ from decimal import Decimal
 from enum import Enum
 
 from django.conf import settings
-from django.contrib.postgres.fields import JSONField
+from djongo.models.json import JSONField
 from djongo import models
 
 from libs.plugins.store.api.models.Address import Address
@@ -10,6 +10,7 @@ from libs.plugins.store.api.models.Cart import Cart
 from libs.plugins.store.api.models.Order import Order
 
 from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
+
 
 class TransactionError(Enum):
     DECLINED = 'declined'

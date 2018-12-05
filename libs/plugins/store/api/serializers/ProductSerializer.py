@@ -9,7 +9,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
     name = serializers.CharField()
     slug = serializers.SlugField()
     description = serializers.CharField()
-    parent = serializers.RelatedField()
+    # parent = serializers.RelatedField()
 
 
 class ProductDimensionsSerializer(EmbeddedSerializer):
@@ -24,7 +24,9 @@ class ProductDimensionsSerializer(EmbeddedSerializer):
 
 class ProductShippingSerializer(EmbeddedSerializer):
     weight = serializers.CharField()
-    dimensions = EmbeddedSerializer(serializer=ProductDimensionsSerializer, blank=True)
+
+    # TODO: EmbeddedSerializer
+    # dimensions = EmbeddedSerializer(serializer=ProductDimensionsSerializer, blank=True)
 
     class Meta:
         model = ProductShipping
@@ -57,7 +59,8 @@ class ProductSerializer(serializers.ModelSerializer):
     # TODO: ArrayReferenceSerializer
     # categories = ArrayReferenceSerializer(to=ProductCategory)
 
-    pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
+    # TODO: EmbeddedSerializer
+    # pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
 
     details = serializers.JSONField()
 
@@ -67,7 +70,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductVariantSerializer(ProductSerializer):
-    product = serializers.RelatedField()
+    # product = serializers.RelatedField()
     variants = serializers.JSONField()
 
     class Meta:
@@ -83,7 +86,8 @@ class ProductCollectionSerializer(serializers.ModelSerializer):
 
     available_on = serializers.DateTimeField()
 
-    pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
+    # TODO: EmbeddedSerializer
+    # pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
 
     class Meta:
         model = ProductCollection

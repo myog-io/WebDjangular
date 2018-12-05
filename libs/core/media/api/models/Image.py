@@ -1,16 +1,4 @@
-from enum import Enum
-from decimal import Decimal
-
 from djongo import models
-from django.utils.timezone import now
-from django.contrib.postgres.fields import JSONField
-from django_prices.models import MoneyField, TaxedMoneyField
-from django import forms
-from django.conf import settings
-from webdjango.models.AbstractModels import DateTimeModel
-
-from libs.core.users.api.models.User import User
-from libs.plugins.store.api.models.Address import Address
 
 
 class ImageSizes:
