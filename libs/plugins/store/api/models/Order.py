@@ -1,12 +1,12 @@
 from decimal import Decimal
 from enum import Enum
 
-from django.conf import settings
 from django_prices.models import MoneyField, TaxedMoneyField
 from djongo import models
 from djongo.models.json import JSONField
 
 from libs.core.users.api.models.User import User
+from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Address import Address
 from webdjango.models.AbstractModels import DateTimeModel
 
@@ -109,12 +109,12 @@ class OrderLine(models.Model):
     quantity = models.IntegerField(default=1)
     quantity_fulfilled = models.IntegerField(default=0)
 
-    unit_price_gross = MoneyField(currency=settings.DEFAULT_CURRENCY,
-                                  max_digits=settings.DEFAULT_MAX_DIGITS,
-                                  decimal_places=settings.DEFAULT_DECIMAL_PLACES)
-    unit_price_net = MoneyField(currency=settings.DEFAULT_CURRENCY,
-                                max_digits=settings.DEFAULT_MAX_DIGITS,
-                                decimal_places=settings.DEFAULT_DECIMAL_PLACES)
+    unit_price_gross = MoneyField(currency=defaults.DEFAULT_CURRENCY,
+                                  max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                  decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
+    unit_price_net = MoneyField(currency=defaults.DEFAULT_CURRENCY,
+                                max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
     unit_price = TaxedMoneyField(net_field='unit_price_net', gross_field='unit_price_gross')
     tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.0'))
 
@@ -132,7 +132,7 @@ class OrderEvent(DateTimeModel, models.Model):
 
 
 class Order(models.Model):
-    order_num = models.CharField(max_length=36, blank=False, Null=False, editable=False)
+    order_num = models.CharField(max_length=36, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     user_email = models.EmailField(blank=True, default='')

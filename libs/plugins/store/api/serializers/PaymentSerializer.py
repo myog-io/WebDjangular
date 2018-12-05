@@ -1,18 +1,20 @@
+from decimal import Decimal
 
 from rest_framework_json_api import serializers
 
+from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Payment import Transaction, Payment
-from libs.plugins.store.api.serializers.AddressSerializer import AddressSerializer
-from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelField
+from webdjango.serializers.MongoSerializer import EmbeddedSerializer
 
 
 class TransactionSerializer(EmbeddedSerializer):
-
     token = serializers.CharField()
     type = serializers.CharField()
     status = serializers.CharField()
     currency = serializers.CharField()
-    amount = serializers.DecimalField()
+    amount = serializers.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                      decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+                                      default=Decimal('0.0'))
     error = serializers.CharField()
     gateway_response = serializers.JSONField()
 
@@ -28,8 +30,12 @@ class PaymentSerializer(serializers.ModelSerializer):
     extra_data = serializers.JSONField()
     token = serializers.CharField()
     currency = serializers.CharField()
-    total = serializers.DecimalField()
-    captured_amount = serializers.DecimalField()
+    total = serializers.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                     decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+                                     default=Decimal('0.0'))
+    captured_amount = serializers.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+                                               default=Decimal('0.0'))
     # cart = serializers.RelatedField()
     # order = serializers.RelatedField()
     cc_last_digits = serializers.CharField()
@@ -40,5 +46,3 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
-
-

@@ -1,14 +1,13 @@
 from decimal import Decimal
 from enum import Enum
 
-from django.conf import settings
-from djongo.models.json import JSONField
 from djongo import models
+from djongo.models.json import JSONField
 
+from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Address import Address
 from libs.plugins.store.api.models.Cart import Cart
 from libs.plugins.store.api.models.Order import Order
-
 from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
 
 
@@ -85,8 +84,8 @@ class Transaction(models.Model):
     status = models.CharField(max_length=10, choices=TransactionStatus.CHOICES)
     currency = models.CharField(max_length=10)
 
-    amount = models.DecimalField(max_digits=settings.DEFAULT_MAX_DIGITS,
-                                 decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+    amount = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                 decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                  default=Decimal('0.0'))
 
     error = models.CharField(choices=[(transaction_error, transaction_error.value)
@@ -111,12 +110,12 @@ class Payment(ActiveModel, DateTimeModel, models.Model):
 
     currency = models.CharField(max_length=10)
 
-    total = models.DecimalField(max_digits=settings.DEFAULT_MAX_DIGITS,
-                                decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+    total = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                 default=Decimal('0.0'))
 
-    captured_amount = models.DecimalField(max_digits=settings.DEFAULT_MAX_DIGITS,
-                                          decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+    captured_amount = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                          decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                           default=Decimal('0.0'))
 
     cart = models.ForeignKey(Cart, null=True, related_name='payments', on_delete=models.SET_NULL)

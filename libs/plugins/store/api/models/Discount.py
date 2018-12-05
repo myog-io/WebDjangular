@@ -1,20 +1,16 @@
-from decimal import Decimal
-from datetime import date
-
-from django.conf import settings
-from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField
 from djongo import models
 
-from libs.core.utils.api.weight import zero_weight, WeightUnits
+from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
+
 
 class DiscountValueType:
     FIXED = 'fixed'
     PERCENTAGE = 'percentage'
 
     CHOICES = [
-        (FIXED, settings.DEFAULT_CURRENCY),
+        (FIXED, defaults.DEFAULT_CURRENCY),
         (PERCENTAGE, '%')
     ]
 
@@ -52,12 +48,12 @@ class Voucher(ActiveModel, DateTimeModel, models.Model):
     discount_value_type = models.CharField(max_length=10,
                                            choices=DiscountValueType.CHOICES,
                                            default=DiscountValueType.FIXED)
-    discount_value = models.DecimalField(max_digits=settings.DEFAULT_MAX_DIGITS,
-                                         decimal_places=settings.DEFAULT_DECIMAL_PLACES)
+    discount_value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                         decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
 
-    min_amount_spent = MoneyField(currency=settings.DEFAULT_CURRENCY,
-                                  max_digits=settings.DEFAULT_MAX_DIGITS,
-                                  decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+    min_amount_spent = MoneyField(currency=defaults.DEFAULT_CURRENCY,
+                                  max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                  decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                   null=True, blank=True)
 
     products = models.ManyToManyField('product.Product', blank=True)
@@ -70,8 +66,8 @@ class Sale(ActiveModel, DateTimeModel, models.Model):
     type = models.CharField(max_length=10,
                             choices=DiscountValueType.CHOICES,
                             default=DiscountValueType.FIXED)
-    value = models.DecimalField(max_digits=settings.DEFAULT_MAX_DIGITS,
-                                decimal_places=settings.DEFAULT_DECIMAL_PLACES,
+    value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                 default=0)
 
     products = models.ManyToManyField('product.Product', blank=True)

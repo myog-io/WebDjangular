@@ -18,8 +18,8 @@ class CartItemSerializer(EmbeddedSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
 
-    billing_address = EmbeddedSerializer(serializer=AddressSerializer, blank=True)
-    shipping_address = EmbeddedSerializer(serializer=AddressSerializer, blank=True)
+    # billing_address = EmbeddedSerializer(serializer=AddressSerializer, blank=True)
+    # shipping_address = EmbeddedSerializer(serializer=AddressSerializer, blank=True)
 
     items = ArrayModelField(serializer=CartItemSerializer)
 

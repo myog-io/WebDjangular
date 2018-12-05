@@ -1,7 +1,7 @@
-from django.conf import settings
+from libs.plugins.store.api import defaults
 from prices import Money
 
-ZERO_MONEY = Money(0, settings.DEFAULT_CURRENCY)
+ZERO_MONEY = Money(0, defaults.DEFAULT_CURRENCY)
 
 
 
