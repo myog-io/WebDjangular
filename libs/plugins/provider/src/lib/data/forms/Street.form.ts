@@ -54,8 +54,8 @@ export class StreetForm extends AbstractForm {
     },
     {
       type: 'formArray',
-      label: 'Postal Codes',
-      name: 'postal_codes',
+      label: 'Number Range',
+      name: 'numbers',
       fields: new RangeForm().scaffoldFields,
     }
 
