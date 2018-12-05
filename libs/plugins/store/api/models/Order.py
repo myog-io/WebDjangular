@@ -1,13 +1,15 @@
 from decimal import Decimal
 from enum import Enum
 
+from django.core.validators import MinValueValidator
+from django.utils.timezone import now
 from django_prices.models import MoneyField, TaxedMoneyField
 from djongo import models
 from djongo.models.json import JSONField
 
-from libs.core.users.api.models.User import User
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Address import Address
+from libs.plugins.store.api.models.Payment import ChargeStatus
 from webdjango.models.AbstractModels import DateTimeModel
 
 
@@ -101,6 +103,32 @@ EMAIL_CHOICES = {
 }
 
 
+class FulfillmentLine(models.Model):
+    """ TODO:
+    I don't know, order_line does not have ID, maybe a list of product ids/sku
+    Since one Fulfillment line can have multiples order lines and vice versa. I can not embedded one inside the other
+    """
+    # order_line / product_ids = ArrayReferenceSerializer(to=ProductCategory)
+
+    quantity = models.IntegerField(validators=[MinValueValidator(1)])
+
+    class Meta:
+        abstract = True
+
+
+class Fulfillment(models.Model):
+    fulfillment_num = models.PositiveIntegerField(editable=False)
+    status = models.CharField(max_length=32, default=OrderFulfillmentStatus.FULFILLED,
+                              choices=OrderFulfillmentStatus.CHOICES)
+    tracking_number = models.CharField(max_length=255, default='', blank=True)
+    shipping_date = models.DateTimeField(default=now, editable=False)
+
+    fulfillment_lines = models.ArrayModelField(model_container=FulfillmentLine)
+
+    class Meta:
+        abstract = True
+
+
 class OrderLine(models.Model):
     product_name = models.CharField(max_length=256)
     product_sku = models.CharField(max_length=32)
@@ -118,7 +146,6 @@ class OrderLine(models.Model):
     unit_price = TaxedMoneyField(net_field='unit_price_net', gross_field='unit_price_gross')
     tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.0'))
 
-
     class Meta:
         abstract = True
 
@@ -131,6 +158,41 @@ class OrderEvent(DateTimeModel, models.Model):
         abstract = True
 
 
+class OrderQueryset(models.QuerySet):
+    def confirmed(self):
+        """
+        Return all orders confirmed, which are non-draft orders.
+        """
+        return self.exclude(status=OrderStatus.DRAFT)
+
+    def drafts(self):
+        """
+        Return all draft orders.
+        """
+        return self.filter(status=OrderStatus.DRAFT)
+
+        # def ready_to_fulfill(self):
+        # TODO: I don't know if Sum() and F() methods works with mongodb
+        """
+        Return orders that are ready to fulfill which are fully paid but unfulfilled or partially fulfilled.
+        """
+        # statuses = {OrderStatus.UNFULFILLED, OrderStatus.PARTIALLY_FULFILLED}
+        # qs = self.filter(status__in=statuses, payments__is_active=True)
+        # qs = qs.annotate(amount_paid=Sum('payments__captured_amount'))
+        # return qs.filter(total_gross__lte=F('amount_paid'))
+
+    def ready_to_capture(self):
+        """
+        Return orders with payments in progress.
+        Orders ready to capture are those which are not draft or canceled and
+        have a preauthorized payment.
+        """
+        qs = self.filter(payments__is_active=True, payments__charge_status__in=[ChargeStatus.NOT_CHARGED,
+                                                                                ChargeStatus.CHARGED])
+        qs = qs.exclude(status={OrderStatus.DRAFT, OrderStatus.CANCELED})
+        return qs.distinct()
+
+
 class Order(models.Model):
     order_num = models.CharField(max_length=36, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
@@ -141,3 +203,5 @@ class Order(models.Model):
 
     billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
     shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)
+
+    # TODO: idk... maybe a better way to store those fields instead of "flat"

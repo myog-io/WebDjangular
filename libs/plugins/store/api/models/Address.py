@@ -2,6 +2,16 @@ from djongo import models
 from django_countries.fields import CountryField
 
 
+class AddressType:
+    BILLING = 'billing'
+    SHIPPING = 'shipping'
+
+    CHOICES = [
+        (BILLING, 'Billing'),
+        (SHIPPING, 'Shipping')
+    ]
+
+
 class Address(models.Model):
     first_name = models.CharField(max_length=256, blank=True)
     last_name = models.CharField(max_length=256, blank=True)

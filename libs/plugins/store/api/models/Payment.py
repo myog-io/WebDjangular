@@ -6,8 +6,6 @@ from djongo.models.json import JSONField
 
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Address import Address
-from libs.plugins.store.api.models.Cart import Cart
-from libs.plugins.store.api.models.Order import Order
 from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
 
 

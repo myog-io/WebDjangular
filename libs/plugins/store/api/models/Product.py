@@ -67,7 +67,7 @@ class Product(ActiveModel, DateTimeModel, models.Model):
     slug = models.SlugField(max_length=256)
     description = models.TextField(blank=True)
 
-    available_on = models.DateTimeField(blank=True, null=True)
+    # available_on = models.DateTimeField(blank=True, null=True)
 
     track_inventory = models.BooleanField(default=True)
     quantity = models.IntegerField(default=Decimal(1))
@@ -79,9 +79,9 @@ class Product(ActiveModel, DateTimeModel, models.Model):
 
     # categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
 
-    pricing = models.EmbeddedModelField(model_container=ProductPricing)
+    # pricing = models.EmbeddedModelField(model_container=ProductPricing)
 
-    details = JSONField()
+    # details = JSONField()
 
     i18n_fields = ['name', 'slug', 'description']
 

@@ -49,11 +49,11 @@ class ProductSerializer(serializers.ModelSerializer):
     slug = serializers.SlugField()
     description = serializers.CharField()
 
-    available_on = serializers.DateTimeField()
+    # available_on = serializers.DateTimeField(allow_null=True)
 
     track_inventory = serializers.BooleanField()
     quantity = serializers.IntegerField()
-    quantity_allocated = serializers.IntegerField()
+    quantity_allocated = serializers.IntegerField(allow_null=True)
     cost = serializers.CharField()
 
     # TODO: ArrayReferenceSerializer
@@ -62,7 +62,7 @@ class ProductSerializer(serializers.ModelSerializer):
     # TODO: EmbeddedSerializer
     # pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
 
-    details = serializers.JSONField()
+    # details = serializers.JSONField(allow_null=True)
 
     class Meta:
         model = Product
