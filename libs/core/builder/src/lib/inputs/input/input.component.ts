@@ -6,7 +6,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   selector: 'wda-form-input',
   styleUrls: ['input.component.scss'],
   template: `
-  <div class="form-group" [formGroup]="group" *ngIf="ng_if()">
+  <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <input
     [type]="config.inputType ? config.inputType : text"
@@ -16,7 +16,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   </div><!--form-group-->
 `
 })
-export class BuilderFormInputComponent extends BuilderFormField {
+export class BuilderFormInputComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
 }

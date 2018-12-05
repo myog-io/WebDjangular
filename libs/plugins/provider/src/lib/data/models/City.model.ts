@@ -41,7 +41,7 @@ export class CityModel extends AbstractModel {
   code: string;
 
   @Attribute()
-  zips: RangeInterface[];
+  postal_codes: RangeInterface[];
 
   @Attribute()
   streets: StreetInterface[];

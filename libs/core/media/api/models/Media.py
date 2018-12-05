@@ -34,8 +34,7 @@ class Media(Model, DirtyFieldsMixin):
         db_table = 'medias'
         permissions = (
             ("list_medias", "Can list medias"),
-            ("view_media", "Can view media"),
-            ("download_medi", "Can Download Media"))
+            ("download_media", "Can Download Media"))
 
     alt = djangoModels.CharField(null=True, max_length=255)
     file = RemoteFileField(

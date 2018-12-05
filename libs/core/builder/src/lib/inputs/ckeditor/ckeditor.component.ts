@@ -8,13 +8,13 @@ import { BuilderFormFieldConfig, BuilderFormField } from '../../interfaces/form-
   selector: 'wda-form-ckeditor',
   styleUrls: ['ckeditor.component.scss'],
   template: `
-  <div class="form-group" [formGroup]="group" *ngIf="ng_if()">
+  <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <ckeditor [config]="{ extraPlugins: 'divarea', height: '320' }" [formControlName]="config.name"></ckeditor>
   </div><!--form-group-->
 `
 })
-export class BuilderFormCkeditorComponent extends BuilderFormField {
+export class BuilderFormCkeditorComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
 }

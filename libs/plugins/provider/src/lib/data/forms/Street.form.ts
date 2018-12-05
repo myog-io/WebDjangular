@@ -1,21 +1,22 @@
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { RangeForm } from './Range.form';
+import { SmartTableSettings, SmartTableColumnType } from '@webdjangular/core/data';
 
 export class StreetForm extends AbstractForm {
 
-  public listingTableSettings = {
+  public listingTableSettings:SmartTableSettings = {
     columns: {
       name: {
         title: 'Name',
-        type: 'string',
+        type: SmartTableColumnType.text,
       },
       short_name: {
         title: 'Short Name',
-        type: 'string',
-      },
+        type: SmartTableColumnType.text,
+      }
     },
   };
 
@@ -29,7 +30,7 @@ export class StreetForm extends AbstractForm {
       validators: [Validators.required]
     },
     numbers: {
-      type: FormGroup,
+      type: FormArray,
       formClass: RangeForm,
     }
 
@@ -48,8 +49,15 @@ export class StreetForm extends AbstractForm {
       inputType: 'input',
       label: 'Short Name',
       name: 'short_name',
+      wrapper_class: 'col-12',
       placeholder: 'Street Short Name',
     },
+    {
+      type: 'formArray',
+      label: 'Postal Codes',
+      name: 'postal_codes',
+      fields: new RangeForm().scaffoldFields,
+    }
 
   ]
 }

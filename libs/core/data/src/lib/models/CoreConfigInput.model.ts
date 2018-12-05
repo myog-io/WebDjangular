@@ -52,7 +52,7 @@ export class CoreConfigInputModel extends AbstractModel {
   value: string;
 
   @Attribute()
-  ng_if: any;
+  conditional: any;
 
   @BelongsTo()
   core_config: CoreConfigModel
@@ -77,7 +77,8 @@ export class CoreConfigInputModel extends AbstractModel {
       value: this.value,
       wrapper_class: this.wrapper_class,
       inputType: this.input_type,
-      ng_if: this.ng_if,
+      display: true,
+      conditional: this.conditional,
     };
   }
 }

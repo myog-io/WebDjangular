@@ -17,7 +17,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   selector: 'wda-form-relationship',
   styleUrls: ['relationship.component.scss'],
   template: `
-    <div class="form-group form-select" [formGroup]="group" *ngIf="ng_if()">
+    <div class="form-group form-select" [formGroup]="group" >
       <label>{{ config.label }}</label><br/>
       <button (click)="openWindow()" nbButton status="success" size="large" [nbSpinner]="loading" nbSpinnerStatus="info"
               [disabled]="loading" nbSpinnerSize="medium" nbSpinnerMessage="Loading...">
@@ -34,8 +34,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
 
   `
 })
-export class BuilderFormRelationshipComponent extends BuilderFormField
-  implements OnInit, OnDestroy {
+export class BuilderFormRelationshipComponent implements BuilderFormField, OnInit, OnDestroy {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   relationshipUpdated: EventEmitter<any>;
@@ -54,7 +53,7 @@ export class BuilderFormRelationshipComponent extends BuilderFormField
     private datastore: WebAngularDataStore,
     private windowService: NbWindowService
   ) {
-    super();
+
   }
   openWindow() {
     this.loadOptions();

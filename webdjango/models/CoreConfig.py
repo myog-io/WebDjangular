@@ -82,7 +82,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
     validation = JSONField(default=None)
     wrapper_class = models.CharField(default=None)
     group = models.SlugField(null=False)
-    ng_if = JSONField(default=None)
+    conditional = JSONField(default=None)
 
     @property
     def value(self):

@@ -7,13 +7,13 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   selector: 'wda-form-code',
   styleUrls: ['code.component.scss'],
   template: `
-  <div class="form-group" [formGroup]="group" *ngIf="ng_if()">
+  <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <ngx-monaco-editor [options]="editorOptions" [formControlName]="config.name" ></ngx-monaco-editor>
   </div><!--form-group-->
 `
 })
-export class BuilderFormCodeComponent extends BuilderFormField {
+export class BuilderFormCodeComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   editorOptions = { theme: 'vs-dark', language: 'html' };

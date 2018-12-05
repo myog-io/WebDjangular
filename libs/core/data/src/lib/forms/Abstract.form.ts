@@ -34,6 +34,7 @@ export class AbstractForm extends FormGroup {
   public generateForm() {
     for (let propName in this.formFields) {
       if (this.formFields[propName].type == FormArray) {
+
         this.registerControl(propName, new FormArray([], []));
       } else if (this.formFields[propName].type == FormGroup) {
         if (typeof this.formFields[propName].formClass !== 'undefined') {
@@ -59,37 +60,19 @@ export class AbstractForm extends FormGroup {
    * Populates form
    * @param [entity]
    */
-  public populateForm(entity: JsonApiModel = null) {
+  public populateForm(entity: JsonApiModel|any = null) {
     for (let propName in this.formFields) {
-      if (
-        this.formFields[propName].type == FormArray &&
-        typeof entity[propName] !== 'undefined'
-      ) {
-        for (
-          let i = 0;
-          i < entity[propName].length &&
-          typeof this.formFields[propName].formClass !== 'undefined';
-          i++
-        ) {
-          let fa = this.get(propName) as FormArray;
-          let fb = new this.formFields[propName].form();
-
-          fb.generateForm();
-          fb.populateForm(entity[propName][i]);
-          fb.entity = entity;
-          fa.push(fb);
+      // From Array
+      if (this.formFields[propName].type == FormArray && typeof entity[propName] !== 'undefined') {
+        for (let i = 0; i < entity[propName].length; i++) {
+          this.pushToFormArrayAttribute(propName, entity[propName][i]);
         }
       } else {
-        if (
-          this.formFields[propName].type == FormGroup &&
-          typeof entity[propName] !== 'undefined'
-        ) {
+        if (this.formFields[propName].type == FormGroup && typeof entity[propName] !== 'undefined') {
           let fg = this.get(propName) as AbstractForm;
-
           fg.populateForm(entity[propName]);
-
         } else if (typeof entity[propName] !== 'undefined') {
-          this.get(propName).setValue(entity[propName]);
+          this.get(propName).setValue(entity[propName], { emitEvent: true });
         }
       }
     }
@@ -103,11 +86,17 @@ export class AbstractForm extends FormGroup {
     let values = this.value;
 
     for (let propName in values) {
-      if(this.formFields[propName].type == FormGroup){
-        // If Form Group we have to save it different
-        // Check if the Property is actually a blongsto ou has many, and update accordnly
-      }else{
-        entity[propName] = values[propName];
+      switch (this.formFields[propName].type) {
+        case FormGroup:
+          // TODO: Not an Entityd need to be done
+          break;
+        case FormArray:
+          // TODO: If this is an entity this will change
+          entity[propName] = this.get(propName).value;
+          break
+        default:
+          entity[propName] = values[propName];
+          break;
       }
     }
   }
@@ -146,10 +135,7 @@ export class AbstractForm extends FormGroup {
    * @param [toRelateEntity]
    * @returns
    */
-  public doesEntityHasRelationship(
-    formKey: string = null,
-    toRelateEntity = null
-  ) {
+  public doesEntityHasRelationship(formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey);
 
     return (
@@ -165,11 +151,7 @@ export class AbstractForm extends FormGroup {
    * @param [formKey]
    * @param [toRelateEntity]
    */
-  public checkboxRelationListener(
-    $event,
-    formKey: string = null,
-    toRelateEntity = null
-  ) {
+  public checkboxRelationListener($event, formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey) as FormArray;
 
     if ($event.target.checked == false) {
@@ -194,13 +176,24 @@ export class AbstractForm extends FormGroup {
   public pushToFormArrayAttribute(formKey: string = null, entityToPush) {
     if (this.formFields[formKey].type == FormArray) {
       let fa = this.get(formKey) as FormArray;
-      let f = new entityToPush.constructor.formClassRef();
+      let f: AbstractForm;
+      if (this.formFields[formKey].formClass) {
+        f = new this.formFields[formKey].formClass();
+      } else {
+        f = new entityToPush.constructor.formClassRef();
+      }
       f.generateForm();
       f.populateForm(entityToPush);
       fa.push(f);
     }
   }
 
+  public formArrayRemoveAt(formKey:string = null, index= 1){
+    if (this.formFields[formKey].type == FormArray) {
+      let fa = this.get(formKey) as FormArray;
+      fa.removeAt(index);
+    }
+  }
   /**
    * Transforming the Group to String for the Scaffold Naming
    */
