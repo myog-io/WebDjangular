@@ -7,6 +7,7 @@ from libs.plugins.store.api.views.DiscountViewSet import VoucherViewSet, SaleVie
 from libs.plugins.store.api.views.OrderViewSet import OrderViewSet
 from libs.plugins.store.api.views.PaymentViewSet import PaymentViewSet
 from libs.plugins.store.api.views.ProductViewSet import ProductViewSet
+from libs.plugins.store.api.views.ShippingViewSet import ShippingMethodViewSet
 
 router = DefaultRouter()
 router.register('product', ProductViewSet, base_name='product')
@@ -15,6 +16,7 @@ router.register('payment', PaymentViewSet, base_name='payment')
 router.register('voucher', VoucherViewSet, base_name='voucher')
 router.register('sale', SaleViewSet, base_name='sale')
 router.register('cart', CartViewSet, base_name='cart')
+router.register('shipping-method', ShippingMethodViewSet, base_name='shipping-method')
 
 urlpatterns = [
     url(r'store/', include(router.urls)),

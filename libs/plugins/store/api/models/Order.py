@@ -134,8 +134,10 @@ class OrderEvent(DateTimeModel, models.Model):
 class Order(models.Model):
     order_num = models.CharField(max_length=36, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     user_email = models.EmailField(blank=True, default='')
+
+    # shipping_method =
 
     billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
     shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)

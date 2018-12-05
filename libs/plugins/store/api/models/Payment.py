@@ -118,9 +118,9 @@ class Payment(ActiveModel, DateTimeModel, models.Model):
                                           decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                           default=Decimal('0.0'))
 
-    cart = models.ForeignKey(Cart, null=True, related_name='payments', on_delete=models.SET_NULL)
+    # cart = models.ForeignKey(Cart, null=True, related_name='payments', on_delete=models.SET_NULL)
 
-    order = models.ForeignKey(Order, null=True, related_name='payments', on_delete=models.PROTECT)
+    # order = models.ForeignKey(Order, null=True, related_name='payments', on_delete=models.PROTECT)
 
     cc_last_digits = models.CharField(max_length=4, blank=True, default='')
     cc_brand = models.CharField(max_length=40, blank=True, default='')

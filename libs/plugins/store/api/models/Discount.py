@@ -56,9 +56,9 @@ class Voucher(ActiveModel, DateTimeModel, models.Model):
                                   decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                   null=True, blank=True)
 
-    products = models.ManyToManyField('product.Product', blank=True)
-    collections = models.ManyToManyField('product.Collection', blank=True)
-    categories = models.ManyToManyField('product.Category', blank=True)
+    # products = models.ManyToManyField('product.Product', blank=True)
+    # collections = models.ManyToManyField('product.Collection', blank=True)
+    # categories = models.ManyToManyField('product.Category', blank=True)
 
 
 class Sale(ActiveModel, DateTimeModel, models.Model):
@@ -70,9 +70,9 @@ class Sale(ActiveModel, DateTimeModel, models.Model):
                                 decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                 default=0)
 
-    products = models.ManyToManyField('product.Product', blank=True)
-    categories = models.ManyToManyField('product.Category', blank=True)
-    collections = models.ManyToManyField('product.Collection', blank=True)
+    # products = models.ManyToManyField('product.Product', blank=True)
+    # categories = models.ManyToManyField('product.Category', blank=True)
+    # collections = models.ManyToManyField('product.Collection', blank=True)
 
     start = models.DateTimeField(null=False)
     end = models.DateTimeField(null=False)

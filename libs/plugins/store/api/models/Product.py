@@ -16,7 +16,7 @@ class ProductCategory(DateTimeModel, models.Model):
     name = models.CharField(max_length=128)
     slug = models.SlugField(max_length=128)
     description = models.TextField(blank=True)
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
+    # parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
 
     i18n_fields = ['name', 'slug', 'description']
 
@@ -77,7 +77,7 @@ class Product(ActiveModel, DateTimeModel, models.Model):
                       decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                       blank=True, null=True)
 
-    categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
+    # categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
 
     pricing = models.EmbeddedModelField(model_container=ProductPricing)
 
@@ -90,12 +90,12 @@ class Product(ActiveModel, DateTimeModel, models.Model):
 class ProductVariant(models.Model):
     # extend the Product model and can override every field
 
-    product = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
+    # ForeignKeyproduct = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     variants = JSONField()
 
 
 class ProductCollection(ActiveModel, DateTimeModel, models.Model):
-    products = models.ManyToManyField(Product, blank=True, related_name='collections')
+    # products = models.ManyToManyField(Product, blank=True, related_name='collections')
 
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)

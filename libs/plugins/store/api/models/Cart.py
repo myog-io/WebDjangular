@@ -20,7 +20,7 @@ class CartItem(models.Model):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     email = models.EmailField(blank=True, default='')
 
     token = models.UUIDField(primary_key=True, default=uuid4, editable=False)
