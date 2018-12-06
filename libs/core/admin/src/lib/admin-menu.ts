@@ -9,15 +9,25 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/',
   },
   {
-    title: 'Medias',
-    icon: 'fas fa-file-image',
-    link: '/media',
+    title: 'CMS',
+    icon: 'fas fa-pencil-ruler',
+    children: [
+      {
+        title: 'Pages',
+        link: '/pages',
+      },
+      {
+        title: 'Medias',
+        link: '/media',
+      },
+      {
+        title: 'Forms',
+        link: '/forms',
+      },
+      /* MENU BUILDER is the NExt */
+    ]
   },
-  {
-    title: 'Pages',
-    icon: 'fas fa-file-alt',
-    link: '/pages',
-  },
+
   {
     title: 'Store',
     icon: 'fas fa-shopping-cart',
@@ -25,10 +35,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Products',
         link: '/store/products'
-        //data: {
-        //  permission: [
-        //    { label: 'store', action: 'list_products' }
-        //  ]
       },
       {
         title: 'Orders',
@@ -67,11 +73,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         }
       }
     ]
-  },
-  {
-    title: 'Forms',
-    icon: 'fab fa-wpforms',
-    link: '/forms',
   },
   {
     title: 'System',

@@ -16,12 +16,12 @@ import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
 import { BuilderFormCkeditorComponent } from './inputs/ckeditor/ckeditor.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
-import { BuilderFormBuilderComponent } from './inputs/formbuilder/formbuilder.component';
+import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
 import { BuilderFormFieldConfig, BuilderFormField } from './interfaces/form-config.interface';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
-
-
+import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
+import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
 
 
 const components: { [type: string]: Type<BuilderFormField> } = {
@@ -33,6 +33,8 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   formBuilder: BuilderFormBuilderComponent,
   relationship: BuilderFormRelationshipComponent,
   formArray: BuilderFormArrayComponent,
+  formGroup: BuilderFormGroupComponent,
+  switch: BuilderFormSwitcherComponent,
 };
 
 @Directive({

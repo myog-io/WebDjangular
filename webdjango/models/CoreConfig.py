@@ -47,8 +47,7 @@ class CoreConfigGroup(AbstractCoreConfigModel):
 
     class Meta:
         abstract = True
-        permissions = (("list_core_config_group",
-                        "Can list Core Config Group Interface"),)
+
 
     def __str__(self):
         return self.id
@@ -108,8 +107,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
 
     class Meta:
         abstract = True
-        permissions = (("list_core_config_input",
-                        "Can list Core Config Input Interface"),)
+
 
     def __str__(self):
         return self.id

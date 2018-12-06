@@ -12,6 +12,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
     # parent = serializers.RelatedField()
 
 
+
 class ProductDimensionsSerializer(EmbeddedSerializer):
     width = serializers.CharField()
     height = serializers.CharField()
@@ -43,24 +44,12 @@ class ProductPricingSerializer(EmbeddedSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    sku = serializers.CharField()
-    type = serializers.CharField()
-    name = serializers.CharField()
-    slug = serializers.SlugField()
-    description = serializers.CharField()
-
-    # available_on = serializers.DateTimeField(allow_null=True)
-
-    track_inventory = serializers.BooleanField()
-    quantity = serializers.IntegerField()
-    quantity_allocated = serializers.IntegerField(allow_null=True)
-    cost = serializers.CharField()
 
     # TODO: ArrayReferenceSerializer
     # categories = ArrayReferenceSerializer(to=ProductCategory)
 
     # TODO: EmbeddedSerializer
-    # pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
+    pricing = ProductPricingSerializer()
 
     # details = serializers.JSONField(allow_null=True)
 

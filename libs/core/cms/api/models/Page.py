@@ -22,4 +22,3 @@ class Page(SeoModel, TranslationModel, DateTimeModel):
     class Meta:
         db_table = 'cms_page'
         ordering = ['-id']
-        permissions = (("list_pages", "Can list pages"),)

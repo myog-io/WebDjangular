@@ -79,12 +79,13 @@ class Product(ActiveModel, DateTimeModel, models.Model):
 
     # categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
 
-    # pricing = models.EmbeddedModelField(model_container=ProductPricing)
+    pricing = models.EmbeddedModelField(model_container=ProductPricing)
 
     # details = JSONField()
 
     i18n_fields = ['name', 'slug', 'description']
-
+    class Meta:
+        ordering = ['-id']
 
 #  class ProductVariant(Product):
 class ProductVariant(models.Model):
@@ -92,7 +93,8 @@ class ProductVariant(models.Model):
 
     # ForeignKeyproduct = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
     variants = JSONField()
-
+    class Meta:
+        ordering = ['-id']
 
 class ProductCollection(ActiveModel, DateTimeModel, models.Model):
     # products = models.ManyToManyField(Product, blank=True, related_name='collections')
@@ -107,3 +109,5 @@ class ProductCollection(ActiveModel, DateTimeModel, models.Model):
     pricing = models.EmbeddedModelField(model_container=ProductPricing)
 
     i18n_fields = ['name', 'slug', 'description']
+    class Meta:
+        ordering = ['-id']

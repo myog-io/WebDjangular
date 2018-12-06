@@ -13,8 +13,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['-id']
         db_table = 'users'
-        permissions = (("list_user", "Can list users"),)
-
 
     first_name = models.CharField(max_length=60)
     middle_name = models.CharField(max_length=60, default=None, blank=True, null=True)

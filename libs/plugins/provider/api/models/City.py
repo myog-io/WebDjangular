@@ -72,4 +72,3 @@ class City(DateTimeModel):
     class Meta:
         db_table = 'provider_city'
         ordering = ['-id']
-        permissions = (("list_cities", "Can list cities"),)

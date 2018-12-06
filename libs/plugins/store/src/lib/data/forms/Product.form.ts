@@ -4,6 +4,7 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
+import { ProductPriceForm } from './ProductPrice.form';
 
 export class ProductForm extends AbstractForm {
 
@@ -39,6 +40,11 @@ export class ProductForm extends AbstractForm {
     name: {
       type: FormControl,
       validators: [Validators.required]
+    },
+    pricing: {
+      type: FormGroup,
+      validators: [Validators.required],
+      formClass: ProductPriceForm,
     },
     slug: {
       type: FormControl,
@@ -95,6 +101,12 @@ export class ProductForm extends AbstractForm {
       placeholder: '',
     },
     {
+      type: 'formGroup',
+      label: 'Price',
+      name: 'pricing',
+      wrapper_class: 'col-6',
+    },
+    {
       type: 'input',
       label: 'Slug',
       name: 'slug',
@@ -102,37 +114,39 @@ export class ProductForm extends AbstractForm {
       placeholder: '',
     },
     {
-      type: 'textarea',
+      type: 'ckeditor',
       label: 'Description',
       name: 'description',
       wrapper_class: 'col-12',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'switch',
       label: 'Track inventory',
       name: 'track_inventory',
-      wrapper_class: 'col-6',
+      wrapper_class: 'col-2',
+      value: false,
       placeholder: '',
     },
     {
       type: 'input',
       label: 'Quantity',
       name: 'quantity',
+      inputType: 'number',
       wrapper_class: 'col-6',
       placeholder: '',
-    },
-    {
-      type: 'input',
-      label: 'Quantity allocated',
-      name: 'quantity_allocated',
-      wrapper_class: 'col-6',
-      placeholder: '',
+      conditional: {
+        '==':[
+          {var:'track_inventory'},
+          true
+        ]
+      }
     },
     {
       type: 'input',
       label: 'Cost',
       name: 'cost',
+      inputType: 'number',
       wrapper_class: 'col-6',
       placeholder: '',
     },

@@ -8,7 +8,6 @@ class NumberRangeSerializer(EmbeddedSerializer):
     end = serializers.IntegerField()
     class Meta:
         model = NumberRange
-        fields = '__all__'
 
 
 
@@ -20,7 +19,6 @@ class StreetSerializer(EmbeddedSerializer):
     )
     class Meta:
         model = Streets
-        fields = '__all__'
 
 
 

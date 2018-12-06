@@ -28,6 +28,11 @@ export interface BuilderFormFieldConfig {
   inputType?: string;
   conditional?: any;
   display?: boolean;
+  switch_vertical?: boolean;
+  switch_first_label?: string;
+  switch_second_label?: string;
+  switch_first_value?: any;
+  switch_second_value?: any;
   fields?: BuilderFormFieldConfig[]; // Children of this Form
   smart_table_mode?: SmartTableSettingsMode;
 }

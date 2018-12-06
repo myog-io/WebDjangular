@@ -49,3 +49,5 @@ class ShippingMethod(models.Model):
                                             default=zero_weight, blank=True, null=True)
     maximum_order_weight = MeasurementField(measurement=Weight, unit_choices=WeightUnits.CHOICES,
                                             blank=True, null=True)
+    class Meta:
+        ordering = ['-id']

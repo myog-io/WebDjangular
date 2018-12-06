@@ -205,3 +205,5 @@ class Order(models.Model):
     # shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)
 
     # TODO: idk... maybe a better way to store those fields instead of "flat"
+    class Meta:
+        ordering = ['-id']

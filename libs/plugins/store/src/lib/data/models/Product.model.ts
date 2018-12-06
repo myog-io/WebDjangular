@@ -8,6 +8,13 @@ import { ExtraOptions } from '@webdjangular/core/decorator';
 import { ProductForm } from '../forms/Product.form';
 import {FormControl, Validators} from "@angular/forms";
 
+
+export interface ProductPrice {
+  list: string;
+  sale?: string;
+
+}
+
 @JsonApiModelConfig({
   type: 'Product',
   modelEndpointUrl: 'store/product',
@@ -27,6 +34,9 @@ export class ProductModel extends AbstractModel {
 
   @Attribute()
   name: string;
+
+  @Attribute()
+  pricing: ProductPrice;
 
   @Attribute()
   slug: string;

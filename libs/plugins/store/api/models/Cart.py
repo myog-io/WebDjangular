@@ -44,3 +44,6 @@ class Cart(models.Model):
     voucher_code = models.CharField(max_length=12, blank=True, null=True)
 
     items = models.ArrayModelField(model_container=CartItem)
+
+    class Meta:
+        ordering = ['-id']
