@@ -7,7 +7,14 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { FormArray } from '@angular/forms';
 import { NbWindowRef, NbWindowService } from '@nebular/theme';
 import { WebAngularDataStore } from '@webdjangular/core/services';
+import { compileNgModuleFactory__POST_R3__ } from '@angular/core/src/application_ref';
 
+enum state {
+  start = 'start',
+  updating = 'updating',
+  creating = 'creating',
+  removing = 'removing',
+}
 /**
  * This class will Implement a Smart Table with Add and Fielter Button
  */
@@ -24,7 +31,7 @@ import { WebAngularDataStore } from '@webdjangular/core/services';
       ></ng2-smart-table>
     <br/>
     <ng-template #InseptionForm let-data >
-      <wda-form [fields]="form.scaffoldFields" (onSubmit)="onSubmit()" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
+      <wda-form [fields]="form.scaffoldFields" (onSubmit)="submitModal($event)" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
     </ng-template>
 `
 })
@@ -67,6 +74,11 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   onChangeSub: Subscription;
   windowRef: NbWindowRef;
 
+  state: state = state.start;
+  interval;
+  private element: any = null;
+
+
   @ViewChild('InseptionForm') formTemplate: TemplateRef<any>;
   /**
    * Creates an instance of scaffold form select component.
@@ -82,6 +94,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    * On Initialization of the Component
    */
   ngOnInit() {
+
     this.updateSettings();
     this.subscription = this.group.valueChanges.subscribe((val) => {
       if (this.group.get(this.config.name)) {
@@ -90,15 +103,13 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
         this.subscription = this.group.get(this.config.name).valueChanges.subscribe((value) => {
           this.source.load(value);
         })
-        if (this.smart_table_settings.mode == SmartTableSettingsMode.inline) {
-          // If not Inline we will track changes Differently (i think)
-          this.onChange();
-        }
       }
     });
+    this.onChange();
   }
   private openWindow(title: string = "Edit") {
     //this.loadOptions();
+
     this.windowRef = this.windowService.open(this.formTemplate, {
       closeOnBackdropClick: true,
       closeOnEsc: true,
@@ -130,7 +141,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    * @param val form value
    */
   private includeRow(val: any) {
-    this.group.pushToFormArrayAttribute(this.config.name, val);
+    this.group.pushToFormArrayAttribute(this.config.name, val[0]);
     this.setGroupValue(val);
   }
   /**
@@ -153,6 +164,8 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    * @param val
    */
   private setGroupValue(val: any) {
+    // First Creation is Triggergin an Error
+    // "Must supply a value for form control at index: 0
     this.group.get(this.config.name).setValue(val);
   }
   /**
@@ -174,7 +187,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   private updateSettings() {
     if (this.config.smart_table_mode) {
       this.smart_table_settings.mode = this.config.smart_table_mode;
-      this.getFormConfig();
     }
     if (this.group.formFields && this.group.formFields[this.config.name]) {
       if (this.group.formFields[this.config.name].formClass) {
@@ -212,41 +224,84 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    */
   ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe()
+      this.subscription.unsubscribe();
       this.subscription = null;
     }
     if (this.onChangeSub) {
-      this.onChangeSub.unsubscribe()
+      this.onChangeSub.unsubscribe();
       this.onChangeSub = null;
     }
+
   }
   /**
    * On Delete Entry from the table
    */
   onDelete($event) {
-
-    console.log("Delete", $event, this.source);
+    this.state = state.removing;
+    this.source.remove($event.data);
   }
   /**
    * On Create new Entry on the Table
    * @param $event
    */
   onCreate($event) {
+    this.getFormConfig();
+    this.state = state.creating;
     this.openWindow(`New`);
     this.form.reset();
-    console.log("Create", $event, this.source);
   }
   /**
    * On Edit Entry
    * @param $event
    */
   onEdit($event) {
+    this.getFormConfig();
+    this.state = state.updating;
+    this.form.reset();
     this.openWindow(`Edit`);
-    if($event.data){
+    this.element = $event.data; // Reference to find on the table latter
+    this.loading = true;
+    setTimeout(() =>{
+      this.loading = false;
       this.form.populateForm($event.data);
+    },350);
+
+
+  }
+  /**
+   * submitModal
+   */
+  submitModal($event) {
+    this.loading = true;
+    if ($event.data) {
+      switch (this.state) {
+        case state.updating:
+
+          this.source.update(this.element, $event.data).then((val:any)=>{
+            this.closeWindow();
+          });
+          this.element = null;
+          break;
+        case state.creating:
+          this.source.prepend($event.data).then((val:any) => {
+            this.closeWindow();
+          });
+          break;
+        default:
+          break;
+      }
     }
-    console.log("Edit", $event);
-    //$event.confirm.resolve();
+
+
+  }
+  private closeWindow(){
+
+    setTimeout(() =>{
+      this.loading = false;
+      this.windowRef.close();
+      this.state = state.start;
+      this.form.reset();
+    },350);
   }
 
 }

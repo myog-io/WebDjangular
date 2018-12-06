@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
     </div>
     <div class="row">
       <div class="col-12">
-        <button nbButton [status]="submit_status" [size]="submit_size" (click)="submitForm($submit)" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
+        <button nbButton [status]="submit_status" [size]="submit_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
           [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="">
           {{ submit_label }}
         </button>
@@ -74,6 +74,7 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
    * Form Submitting
    */
   public submitForm($event) {
+    $event.data = this.group.value;
     this.onSubmit.emit($event);
   }
   /**
@@ -85,13 +86,11 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   /**
    * Destroying the component
    */
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (this.subscription) {
       this.subscription.unsubscribe()
       this.subscription = null;
     }
   }
-
-
 
 }
