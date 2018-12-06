@@ -37,7 +37,7 @@ class ShippingMethod(models.Model):
     price = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                        max_digits=defaults.DEFAULT_MAX_DIGITS,
                        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, default=0)
-    shipping_zone = models.EmbeddedModelField(model_container=ShippingZone)
+    # shipping_zone = models.EmbeddedModelField(model_container=ShippingZone)
     minimum_order_price = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                                      max_digits=defaults.DEFAULT_MAX_DIGITS,
                                      decimal_places=defaults.DEFAULT_DECIMAL_PLACES, default=0, blank=True,

@@ -201,7 +201,7 @@ class Order(models.Model):
 
     # shipping_method =
 
-    billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
-    shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)
+    # billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
+    # shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)
 
     # TODO: idk... maybe a better way to store those fields instead of "flat"

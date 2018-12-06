@@ -1,10 +1,10 @@
 from djongo import models
 from django.db import models as djangoModels
-from webdjango.models.AbstractModels import SeoModel, TranslationModel, DateModel
+from webdjango.models.AbstractModels import SeoModel, TranslationModel, DateTimeModel
 
 from libs.core.cms.api.models.Block import Block
 
-class Page(SeoModel, TranslationModel, DateModel):
+class Page(SeoModel, TranslationModel, DateTimeModel):
     """
     CMS Pages Model
     """
