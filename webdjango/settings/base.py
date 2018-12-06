@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_filters',
     'webdjango',
     'libs.core.users.api',
+    'libs.core.utils.api',
     'libs.core.cms.api',
     'libs.core.media.api',
     'libs.core.forms.api',

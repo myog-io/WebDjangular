@@ -8,7 +8,7 @@ from djongo import models
 from djongo.models.json import JSONField
 
 from libs.plugins.store.api import defaults
-from libs.plugins.store.api.models.Address import Address
+from libs.core.utils.api.models.Address import Address
 from libs.plugins.store.api.models.Payment import ChargeStatus
 from webdjango.models.AbstractModels import DateTimeModel
 

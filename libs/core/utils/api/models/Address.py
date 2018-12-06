@@ -25,5 +25,4 @@ class Address(models.Model):
     country_area = models.CharField(max_length=128, blank=True)
     phone = models.CharField(max_length=64, blank=True)
 
-    class Meta:
-        abstract = True
+

@@ -81,7 +81,7 @@ class Product(ActiveModel, DateTimeModel, models.Model):
 
     # categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
 
-    # pricing = models.EmbeddedModelField(model_container=ProductPricing)
+    pricing = models.EmbeddedModelField(model_container=ProductPricing)
 
     # details = JSONField()
 

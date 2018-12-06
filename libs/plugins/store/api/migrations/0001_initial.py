@@ -8,7 +8,7 @@ import djongo.models.fields
 import djongo.models.json
 import libs.core.utils.api.money
 import libs.core.utils.api.weight
-import libs.plugins.store.api.models.Address
+import libs.core.utils.api.models.Address
 import libs.plugins.store.api.models.Cart
 import libs.plugins.store.api.models.Payment
 import libs.plugins.store.api.models.Product
@@ -18,7 +18,6 @@ import uuid
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -31,13 +30,20 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(blank=True, default='', max_length=254)),
                 ('token', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('quantity', models.PositiveIntegerField(default=0)),
-                ('billing_address', djongo.models.fields.EmbeddedModelField(blank=True, model_container=libs.plugins.store.api.models.Address.Address, null=True)),
-                ('shipping_address', djongo.models.fields.EmbeddedModelField(blank=True, model_container=libs.plugins.store.api.models.Address.Address, null=True)),
+                ('billing_address', djongo.models.fields.EmbeddedModelField(blank=True,
+                                                                            model_container=libs.core.utils.api.models.Address.Address,
+                                                                            null=True)),
+                ('shipping_address', djongo.models.fields.EmbeddedModelField(blank=True,
+                                                                             model_container=libs.core.utils.api.models.Address.Address,
+                                                                             null=True)),
                 ('note', models.TextField(blank=True, default='')),
-                ('discount_amount', django_prices.models.MoneyField(currency='USD', decimal_places=2, default=libs.core.utils.api.money.zero_money, max_digits=12)),
+                ('discount_amount', django_prices.models.MoneyField(currency='USD', decimal_places=2,
+                                                                    default=libs.core.utils.api.money.zero_money,
+                                                                    max_digits=12)),
                 ('discount_name', models.CharField(blank=True, max_length=255, null=True)),
                 ('voucher_code', models.CharField(blank=True, max_length=12, null=True)),
-                ('items', djongo.models.fields.ArrayModelField(model_container=libs.plugins.store.api.models.Cart.CartItem)),
+                ('items',
+                 djongo.models.fields.ArrayModelField(model_container=libs.plugins.store.api.models.Cart.CartItem)),
             ],
         ),
         migrations.CreateModel(
@@ -45,10 +51,17 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('order_num', models.CharField(editable=False, max_length=36)),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('unfulfilled', 'Unfulfilled'), ('partially fulfilled', 'Partially fulfilled'), ('fulfilled', 'Fulfilled'), ('canceled', 'Canceled')], default='draft', max_length=32)),
+                ('status', models.CharField(choices=[('draft', 'Draft'), ('unfulfilled', 'Unfulfilled'),
+                                                     ('partially fulfilled', 'Partially fulfilled'),
+                                                     ('fulfilled', 'Fulfilled'), ('canceled', 'Canceled')],
+                                            default='draft', max_length=32)),
                 ('user_email', models.EmailField(blank=True, default='', max_length=254)),
-                ('billing_address', djongo.models.fields.EmbeddedModelField(blank=True, model_container=libs.plugins.store.api.models.Address.Address, null=True)),
-                ('shipping_address', djongo.models.fields.EmbeddedModelField(blank=True, model_container=libs.plugins.store.api.models.Address.Address, null=True)),
+                ('billing_address', djongo.models.fields.EmbeddedModelField(blank=True,
+                                                                            model_container=libs.core.utils.api.models.Address.Address,
+                                                                            null=True)),
+                ('shipping_address', djongo.models.fields.EmbeddedModelField(blank=True,
+                                                                             model_container=libs.core.utils.api.models.Address.Address,
+                                                                             null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -59,8 +72,12 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('gateway', models.CharField(max_length=255)),
-                ('charge_status', models.CharField(choices=[('charged', 'Charged'), ('not-charged', 'Not-charged'), ('refunded', 'Refunded')], default='not-charged', max_length=15)),
-                ('billing_address', djongo.models.fields.EmbeddedModelField(blank=True, model_container=libs.plugins.store.api.models.Address.Address, null=True)),
+                ('charge_status', models.CharField(
+                    choices=[('charged', 'Charged'), ('not-charged', 'Not-charged'), ('refunded', 'Refunded')],
+                    default='not-charged', max_length=15)),
+                ('billing_address', djongo.models.fields.EmbeddedModelField(blank=True,
+                                                                            model_container=libs.core.utils.api.models.Address.Address,
+                                                                            null=True)),
                 ('customer_ip_address', models.GenericIPAddressField(blank=True, null=True)),
                 ('extra_data', djongo.models.json.JSONField()),
                 ('token', models.CharField(blank=True, default='', max_length=128)),
@@ -92,8 +109,10 @@ class Migration(migrations.Migration):
                 ('track_inventory', models.BooleanField(default=True)),
                 ('quantity', models.IntegerField(default=Decimal('1'))),
                 ('quantity_allocated', models.IntegerField(default=Decimal('0'))),
-                ('cost', django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, max_digits=12, null=True)),
-                ('pricing', djongo.models.fields.EmbeddedModelField(model_container=libs.plugins.store.api.models.Product.ProductPricing, null=True)),
+                ('cost', django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, max_digits=12,
+                                                         null=True)),
+                ('pricing', djongo.models.fields.EmbeddedModelField(
+                    model_container=libs.plugins.store.api.models.Product.ProductPricing, null=True)),
                 ('details', djongo.models.json.JSONField()),
             ],
             options={
@@ -126,7 +145,8 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(max_length=256)),
                 ('description', models.TextField(blank=True)),
                 ('available_on', models.DateField(blank=True, null=True)),
-                ('pricing', djongo.models.fields.EmbeddedModelField(model_container=libs.plugins.store.api.models.Product.ProductPricing, null=True)),
+                ('pricing', djongo.models.fields.EmbeddedModelField(
+                    model_container=libs.plugins.store.api.models.Product.ProductPricing, null=True)),
             ],
             options={
                 'abstract': False,
@@ -147,7 +167,8 @@ class Migration(migrations.Migration):
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('name', models.CharField(max_length=255)),
-                ('type', models.CharField(choices=[('fixed', 'USD'), ('percentage', '%')], default='fixed', max_length=10)),
+                ('type',
+                 models.CharField(choices=[('fixed', 'USD'), ('percentage', '%')], default='fixed', max_length=10)),
                 ('value', models.DecimalField(decimal_places=2, default=0, max_digits=12)),
                 ('start', models.DateTimeField()),
                 ('end', models.DateTimeField()),
@@ -161,13 +182,24 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('type', models.CharField(choices=[('price', 'Price based shipping'), ('weight', 'Weight based shipping')], max_length=30)),
+                ('type',
+                 models.CharField(choices=[('price', 'Price based shipping'), ('weight', 'Weight based shipping')],
+                                  max_length=30)),
                 ('price', django_prices.models.MoneyField(currency='USD', decimal_places=2, default=0, max_digits=12)),
-                ('shipping_zone', djongo.models.fields.EmbeddedModelField(model_container=libs.plugins.store.api.models.Shipping.ShippingZone, null=True)),
-                ('minimum_order_price', django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, default=0, max_digits=12, null=True)),
-                ('maximum_order_price', django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, max_digits=12, null=True)),
-                ('minimum_order_weight', django_measurement.models.MeasurementField(blank=True, default=libs.core.utils.api.weight.zero_weight, measurement=measurement.measures.mass.Mass, null=True)),
-                ('maximum_order_weight', django_measurement.models.MeasurementField(blank=True, measurement=measurement.measures.mass.Mass, null=True)),
+                ('shipping_zone', djongo.models.fields.EmbeddedModelField(
+                    model_container=libs.plugins.store.api.models.Shipping.ShippingZone, null=True)),
+                ('minimum_order_price',
+                 django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, default=0, max_digits=12,
+                                                 null=True)),
+                ('maximum_order_price',
+                 django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, max_digits=12,
+                                                 null=True)),
+                ('minimum_order_weight',
+                 django_measurement.models.MeasurementField(blank=True, default=libs.core.utils.api.weight.zero_weight,
+                                                            measurement=measurement.measures.mass.Mass, null=True)),
+                ('maximum_order_weight',
+                 django_measurement.models.MeasurementField(blank=True, measurement=measurement.measures.mass.Mass,
+                                                            null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -175,11 +207,30 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('token', models.CharField(blank=True, default='', max_length=128)),
-                ('type', models.CharField(choices=[('auth', 'Authorization'), ('charge', 'Charge'), ('refund', 'Refund'), ('capture', 'Capture'), ('void', 'Void')], max_length=10)),
-                ('status', models.CharField(choices=[('success', 'success'), ('error', 'error'), ('pending', 'pending')], max_length=10)),
+                ('type', models.CharField(
+                    choices=[('auth', 'Authorization'), ('charge', 'Charge'), ('refund', 'Refund'),
+                             ('capture', 'Capture'), ('void', 'Void')], max_length=10)),
+                ('status',
+                 models.CharField(choices=[('success', 'success'), ('error', 'error'), ('pending', 'pending')],
+                                  max_length=10)),
                 ('currency', models.CharField(max_length=10)),
                 ('amount', models.DecimalField(decimal_places=2, default=Decimal('0.0'), max_digits=12)),
-                ('error', models.CharField(choices=[(libs.plugins.store.api.models.Payment.TransactionError('declined'), 'declined'), (libs.plugins.store.api.models.Payment.TransactionError('expired'), 'expired'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_number'), 'incorrect_number'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_zip'), 'incorrect_zip'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_address'), 'incorrect_address'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_cvv'), 'incorrect_cvv'), (libs.plugins.store.api.models.Payment.TransactionError('invalid_number'), 'invalid_number'), (libs.plugins.store.api.models.Payment.TransactionError('invalid_cvv'), 'invalid_cvv'), (libs.plugins.store.api.models.Payment.TransactionError('invalid_expiry_date'), 'invalid_expiry_date'), (libs.plugins.store.api.models.Payment.TransactionError('processing_error'), 'processing_error')], max_length=256, null=True)),
+                ('error', models.CharField(
+                    choices=[(libs.plugins.store.api.models.Payment.TransactionError('declined'), 'declined'),
+                             (libs.plugins.store.api.models.Payment.TransactionError('expired'), 'expired'), (
+                             libs.plugins.store.api.models.Payment.TransactionError('incorrect_number'),
+                             'incorrect_number'),
+                             (libs.plugins.store.api.models.Payment.TransactionError('incorrect_zip'), 'incorrect_zip'),
+                             (libs.plugins.store.api.models.Payment.TransactionError('incorrect_address'),
+                              'incorrect_address'),
+                             (libs.plugins.store.api.models.Payment.TransactionError('incorrect_cvv'), 'incorrect_cvv'),
+                             (libs.plugins.store.api.models.Payment.TransactionError('invalid_number'),
+                              'invalid_number'),
+                             (libs.plugins.store.api.models.Payment.TransactionError('invalid_cvv'), 'invalid_cvv'), (
+                             libs.plugins.store.api.models.Payment.TransactionError('invalid_expiry_date'),
+                             'invalid_expiry_date'), (
+                             libs.plugins.store.api.models.Payment.TransactionError('processing_error'),
+                             'processing_error')], max_length=256, null=True)),
                 ('gateway_response', djongo.models.json.JSONField()),
             ],
         ),
@@ -190,7 +241,10 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
-                ('type', models.CharField(choices=[('value', 'All products'), ('product', 'Specific products'), ('collection', 'Specific collections of products'), ('category', 'Specific categories of products'), ('shipping', 'Shipping')], default='value', max_length=20)),
+                ('type', models.CharField(choices=[('value', 'All products'), ('product', 'Specific products'),
+                                                   ('collection', 'Specific collections of products'),
+                                                   ('category', 'Specific categories of products'),
+                                                   ('shipping', 'Shipping')], default='value', max_length=20)),
                 ('name', models.CharField(blank=True, max_length=255, null=True)),
                 ('code', models.CharField(db_index=True, max_length=12, unique=True)),
                 ('usage_limit', models.PositiveIntegerField(blank=True, null=True)),
@@ -198,9 +252,12 @@ class Migration(migrations.Migration):
                 ('start', models.DateTimeField()),
                 ('end', models.DateTimeField()),
                 ('apply_once_per_order', models.BooleanField(default=False)),
-                ('discount_value_type', models.CharField(choices=[('fixed', 'USD'), ('percentage', '%')], default='fixed', max_length=10)),
+                ('discount_value_type',
+                 models.CharField(choices=[('fixed', 'USD'), ('percentage', '%')], default='fixed', max_length=10)),
                 ('discount_value', models.DecimalField(decimal_places=2, max_digits=12)),
-                ('min_amount_spent', django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, max_digits=12, null=True)),
+                ('min_amount_spent',
+                 django_prices.models.MoneyField(blank=True, currency='USD', decimal_places=2, max_digits=12,
+                                                 null=True)),
             ],
             options={
                 'abstract': False,
