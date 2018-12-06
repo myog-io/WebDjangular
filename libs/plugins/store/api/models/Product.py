@@ -9,16 +9,18 @@ from measurement.measures import Weight
 
 from libs.core.utils.api.weight import zero_weight, WeightUnits
 from libs.plugins.store.api import defaults
-from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
+from webdjango.models.AbstractModels import ActiveModel, DateTimeModel, TranslationModel, PermalinkModel
 
 
-class ProductCategory(DateTimeModel, models.Model):
+class ProductCategory(PermalinkModel, TranslationModel, DateTimeModel, models.Model):
     name = models.CharField(max_length=128)
-    slug = models.SlugField(max_length=128)
     description = models.TextField(blank=True)
     # parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
 
     i18n_fields = ['name', 'slug', 'description']
+
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return self.name

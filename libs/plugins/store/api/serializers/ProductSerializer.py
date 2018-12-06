@@ -1,5 +1,5 @@
 from libs.plugins.store.api.models.Product import ProductPricing, ProductDimensions, ProductShipping, Product, \
-    ProductVariant, ProductCollection
+    ProductVariant, ProductCollection, ProductCategory
 
 from rest_framework_json_api import serializers
 from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelField
@@ -9,7 +9,10 @@ class ProductCategorySerializer(serializers.ModelSerializer):
     name = serializers.CharField()
     slug = serializers.SlugField()
     description = serializers.CharField()
-    # parent = serializers.RelatedField()
+
+    class Meta:
+        model = ProductCategory
+        fields = '__all__'
 
 
 class ProductDimensionsSerializer(EmbeddedSerializer):
@@ -27,6 +30,7 @@ class ProductShippingSerializer(EmbeddedSerializer):
 
     # TODO: EmbeddedSerializer
     # dimensions = EmbeddedSerializer(serializer=ProductDimensionsSerializer, blank=True)
+
 
     class Meta:
         model = ProductShipping
@@ -57,12 +61,15 @@ class ProductSerializer(serializers.ModelSerializer):
     cost = serializers.CharField()
 
     # TODO: ArrayReferenceSerializer
-    # categories = ArrayReferenceSerializer(to=ProductCategory)
+    # TODO:
+    # categories = (to=ProductCategory)
 
     # TODO: EmbeddedSerializer
     # pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
+    pricing = ProductPricingSerializer()
 
     # details = serializers.JSONField(allow_null=True)
+
 
     class Meta:
         model = Product

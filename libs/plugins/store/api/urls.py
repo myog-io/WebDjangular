@@ -6,11 +6,12 @@ from libs.plugins.store.api.views.CartViewSet import CartViewSet
 from libs.plugins.store.api.views.DiscountViewSet import VoucherViewSet, SaleViewSet
 from libs.plugins.store.api.views.OrderViewSet import OrderViewSet
 from libs.plugins.store.api.views.PaymentViewSet import PaymentViewSet
-from libs.plugins.store.api.views.ProductViewSet import ProductViewSet
+from libs.plugins.store.api.views.ProductViewSet import ProductViewSet, ProductCategoryViewSet
 from libs.plugins.store.api.views.ShippingViewSet import ShippingMethodViewSet
 
 router = DefaultRouter()
 router.register('product', ProductViewSet, base_name='product')
+router.register('category', ProductCategoryViewSet, base_name='category')
 router.register('order', OrderViewSet, base_name='order')
 router.register('payment', PaymentViewSet, base_name='payment')
 router.register('voucher', VoucherViewSet, base_name='voucher')
