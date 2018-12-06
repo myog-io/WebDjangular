@@ -22,6 +22,7 @@ import {OrderModel} from "../../../../plugins/store/src/lib/data/models/Order.mo
 import {VoucherModel} from "../../../../plugins/store/src/lib/data/models/Voucher.model";
 import {SaleModel} from "../../../../plugins/store/src/lib/data/models/Sale.model";
 import {ShippingMethodModel} from "../../../../plugins/store/src/lib/data/models/ShippingMethod.model";
+import {CategoryModel} from "../../../../plugins/store/src/lib/data/models/Category.model";
 
 
 const routes: Routes = [
@@ -109,6 +110,15 @@ const routes: Routes = [
               model: ProductModel,
               title: 'Products',
               path: 'store/products'
+            }
+          },
+          {
+            path: 'categories',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: CategoryModel,
+              title: 'Categories',
+              path: 'store/categories'
             }
           },
           {

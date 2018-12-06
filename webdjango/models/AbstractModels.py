@@ -96,6 +96,14 @@ class TranslationModel(models.Model):
         abstract = True
 
 
+class PermalinkModel(models.Model):
+
+    slug = models.SlugField(max_length=256)
+
+    class Meta:
+        abstract = True
+
+
 class DateTimeModel(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)

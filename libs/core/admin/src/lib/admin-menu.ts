@@ -37,6 +37,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/store/products'
       },
       {
+        title: 'Categories',
+        link: '/store/categories'
+        //data: {
+        //  permission: [
+        //    { label: 'store', action: 'list_products' }
+        //  ]
+      },
+      {
         title: 'Orders',
         link: '/store/orders',
       },

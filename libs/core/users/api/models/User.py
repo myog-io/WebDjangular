@@ -29,6 +29,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    # default_shipping_address =
+    # default_billing_address =
+
     objects = UserManager()
 
     USERNAME_FIELD = 'username'

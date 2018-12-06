@@ -7,7 +7,7 @@ from djongo.models.json import JSONField
 from libs.core.users.api.models.User import User
 from libs.core.utils.api.money import zero_money
 from libs.plugins.store.api import defaults
-from libs.plugins.store.api.models.Address import Address
+from libs.core.utils.api.models.Address import Address
 
 
 class CartItem(models.Model):

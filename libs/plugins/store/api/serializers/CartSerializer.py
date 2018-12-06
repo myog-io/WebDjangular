@@ -2,7 +2,7 @@
 from rest_framework_json_api import serializers
 
 from libs.plugins.store.api.models.Cart import Cart, CartItem
-from libs.plugins.store.api.serializers.AddressSerializer import AddressSerializer
+from libs.core.utils.api.serializers.AddressSerializer import AddressSerializer
 from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelField
 
 

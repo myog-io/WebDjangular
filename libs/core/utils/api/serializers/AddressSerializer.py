@@ -1,6 +1,6 @@
 from rest_framework_json_api import serializers
 
-from libs.plugins.store.api.models.Address import Address
+from libs.core.utils.api.models.Address import Address
 from webdjango.serializers.MongoSerializer import EmbeddedSerializer
 
 
