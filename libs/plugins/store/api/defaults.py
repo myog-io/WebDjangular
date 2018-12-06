@@ -16,4 +16,3 @@ DEFAULT_MAX_DIGITS = 12
 
 
 
-

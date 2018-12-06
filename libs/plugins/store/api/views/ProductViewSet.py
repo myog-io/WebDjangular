@@ -62,3 +62,4 @@ class ProductViewSet(ModelViewSet):
     filter_class = ProductFilter
     search_fields = ('name',)
     permission_classes = ()
+

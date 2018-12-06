@@ -12,6 +12,18 @@ from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, DateTimeModel, TranslationModel, PermalinkModel
 
 
+class ProductClasses:
+    SIMPLE = 'simple'
+    VARIANT = 'variant'
+    BUNDLE = 'bundle'
+
+    CHOICES = [
+        (SIMPLE, 'simple'),
+        (VARIANT, 'variant'),
+        (BUNDLE, 'bundle')
+    ]
+
+
 class ProductCategory(PermalinkModel, TranslationModel, DateTimeModel, models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
@@ -55,21 +67,19 @@ class ProductPricing(models.Model):
                       max_digits=defaults.DEFAULT_MAX_DIGITS,
                       decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                       blank=True)
-
     # TODO: tier prices
 
     class Meta:
         abstract = True
 
 
-class Product(ActiveModel, DateTimeModel, models.Model):
+class BaseProduct(ActiveModel, DateTimeModel, PermalinkModel, TranslationModel, ):
     sku = models.CharField(max_length=32, unique=True)
-    type = models.CharField(max_length=128)
     name = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256)
     description = models.TextField(blank=True)
 
-    # available_on = models.DateTimeField(blank=True, null=True)
+    available_on = models.DateTimeField(blank=True, null=True)
 
     track_inventory = models.BooleanField(default=True)
     quantity = models.IntegerField(default=Decimal(1))
@@ -79,33 +89,29 @@ class Product(ActiveModel, DateTimeModel, models.Model):
                       decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                       blank=True, null=True)
 
-    # categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
+
 
     pricing = models.EmbeddedModelField(model_container=ProductPricing)
 
-    # details = JSONField()
+    attributes = JSONField()
+
+
 
     i18n_fields = ['name', 'slug', 'description']
 
-
-#  class ProductVariant(Product):
-class ProductVariant(models.Model):
-    # extend the Product model and can override every field
-
-    # ForeignKeyproduct = models.ForeignKey(Product, related_name='variants', on_delete=models.CASCADE)
-    variants = JSONField()
+    class Meta:
+        abstract = True
 
 
-class ProductCollection(ActiveModel, DateTimeModel, models.Model):
-    # products = models.ManyToManyField(Product, blank=True, related_name='collections')
+class Product(BaseProduct):
+    product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
+    type = models.CharField(max_length=128)
 
-    sku = models.CharField(max_length=32, unique=True)
-    name = models.CharField(max_length=256)
-    slug = models.SlugField(max_length=256)
-    description = models.TextField(blank=True)
+    #  product class VARIANT
+    variants = models.ArrayModelField(model_container=BaseProduct)
+    variant_attributes = JSONField()
 
-    available_on = models.DateField(blank=True, null=True)
+    #  product class BUNDLE
+    bundle_products = models.ArrayReferenceField(to='Product', on_delete=None)
 
-    pricing = models.EmbeddedModelField(model_container=ProductPricing)
-
-    i18n_fields = ['name', 'slug', 'description']
+    categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE)
