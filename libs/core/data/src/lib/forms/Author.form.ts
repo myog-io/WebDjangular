@@ -54,13 +54,13 @@ export class AuthorForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Name',
       name: 'name',
       placeholder: 'Enter Theme Name'
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Email',
       name: 'email',
       placeholder: 'Email'

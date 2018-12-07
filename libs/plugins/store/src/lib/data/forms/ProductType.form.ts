@@ -5,43 +5,45 @@ import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
 
-export class ProductPriceForm extends AbstractForm {
+export class ProductTypeForm extends AbstractForm {
   public listingTableSettings: SmartTableSettings = {
     columns: {
-      list: {
-        title: 'List Price',
+      name: {
+        title: 'Name',
         type: SmartTableColumnType.text,
       },
-      sale: {
-        title: 'Sale Price',
+      created: {
+        title: 'Created',
+        type: SmartTableColumnType.text,
+      },
+      updated: {
+        title: 'Created',
         type: SmartTableColumnType.text,
       }
     },
   };
   public formFields = {
-    list: {
+    name: {
       type: FormControl,
       validators: [Validators.required]
     },
-    sale: {
+    attributes: {
       type: FormControl,
       validators: []
     },
   }
   public scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'text',
-      label: 'List Price',
-      name: 'list',
-      inputType: 'number',
+      type: 'name',
+      label: 'Name',
+      name: 'name',
       wrapper_class: 'col-6',
       placeholder: '',
     },
     {
       type: 'text',
-      label: 'Sale Price',
-      name: 'sale',
-      inputType: 'number',
+      label: 'Attirbutes',
+      name: 'attributes',
       wrapper_class: 'col-6',
       placeholder: '',
     },

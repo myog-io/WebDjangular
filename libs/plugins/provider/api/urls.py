@@ -9,6 +9,6 @@ router.register('city', CityViewSet, base_name='city')
 
 
 urlpatterns = [
-    url(r'', include(router.urls)),
+    url(r'provider/', include(router.urls)),
 ]
 

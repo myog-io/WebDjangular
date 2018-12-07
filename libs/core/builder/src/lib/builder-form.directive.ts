@@ -26,7 +26,7 @@ import { BuilderFormGroupComponent } from './inputs/form_group/form_group.compon
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
-  input: BuilderFormInputComponent,
+  text: BuilderFormInputComponent,
   select: BuilderFormSelectComponent,
   ckeditor: BuilderFormCkeditorComponent,
   codeEditor: BuilderFormCodeComponent,

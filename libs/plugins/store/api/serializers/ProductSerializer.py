@@ -1,8 +1,17 @@
+from libs.plugins.store.api.models.Product import BaseProduct, Product, \
+    ProductCategory, ProductDimensions, ProductPricing, ProductShipping, \
+    ProductType
 from rest_framework_json_api import serializers
+from rest_framework_json_api.relations import ResourceRelatedField
+from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
+    ArrayReferenceFieldSerializer, EmbeddedSerializer, DocumentSerializer, EmbeddedModelFieldSerializer
+from libs.plugins.store.api import defaults
 
-from libs.plugins.store.api.models.Product import ProductPricing, ProductDimensions, ProductShipping, Product, \
-    ProductCategory
-from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelField
+class ProductTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductType
+        fields = '__all__'
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
@@ -37,12 +46,19 @@ class ProductShippingSerializer(EmbeddedSerializer):
 
 
 class ProductPricingSerializer(EmbeddedSerializer):
-    list = serializers.CharField()
-    sale = serializers.CharField()
+    list = serializers.DecimalField(
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+    )
+    sale = serializers.DecimalField(
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+    )
 
     class Meta:
         model = ProductPricing
         fields = '__all__'
+
 
 
 class BaseProductSerializer(EmbeddedSerializer):
@@ -57,26 +73,41 @@ class BaseProductSerializer(EmbeddedSerializer):
     track_inventory = serializers.BooleanField()
     quantity = serializers.IntegerField()
     quantity_allocated = serializers.IntegerField(allow_null=True)
-    cost = serializers.CharField()
+    cost = serializers.DecimalField(
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+    )
+
+    class Meta:
+        model = BaseProduct
+        fields = '__all__'
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductSerializer(DocumentSerializer):
     #  product class VARIANT
-    # variants = ArrayModelField(serializer=BaseProductSerializer)
-    # variant_attributes = serializers.JSONField()
+    variants = ArrayModelFieldSerializer(serializer=BaseProductSerializer, required=False)
+    variant_attributes = serializers.JSONField(required=False)
 
     #  product class BUNDLE
-    # bundle_products = ArrayReferenceField(to='Product', on_delete=None)
+    bundle_products = ArrayReferenceFieldSerializer(serializer='self', required=False)
 
     # TODO: ArrayReferenceSerializer
     # TODO:
-    # categories = (to=ProductCategory)
+    categories = ArrayReferenceFieldSerializer(serializer=ProductCategorySerializer, required=False)
 
-    # TODO: EmbeddedSerializer
-    # pricing = EmbeddedSerializer(serializer=ProductPricingSerializer)
-    # pricing = ProductPricingSerializer()
+    attributes = serializers.JSONField(required=False)
+    pricing = EmbeddedModelFieldSerializer(
+        required=False,
+        serializer=ProductPricingSerializer
+    )
 
-    # details = serializers.JSONField(allow_null=True)
+    type = ResourceRelatedField(
+        many=False,
+        queryset=ProductType.objects,
+        required=False,
+        related_link_url_kwarg='pk',
+        self_link_view_name='product-relationships'
+    )
 
     class Meta:
         model = Product

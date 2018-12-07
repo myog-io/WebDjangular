@@ -40,13 +40,13 @@ export class CoreWebsiteForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Domain',
       name: 'domain',
       placeholder: 'Enter The Website Domain'
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Code',
       name: 'code',
       placeholder: 'Enter Code'

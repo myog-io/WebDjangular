@@ -38,13 +38,13 @@ export class MediaForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'File',
       name: 'file',
       placeholder: 'Upload File'
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Alt',
       name: 'alt',
       placeholder: 'Image Alt Description'

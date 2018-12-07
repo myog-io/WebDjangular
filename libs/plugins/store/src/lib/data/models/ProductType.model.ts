@@ -5,27 +5,19 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 
 
 import { ExtraOptions } from '@webdjangular/core/decorator';
-import { CityForm } from '../forms/City.form';
+import { ProductForm } from '../forms/Product.form';
+import {FormControl, Validators} from "@angular/forms";
+import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
+import { ProductTypeForm } from '../forms/ProductType.form';
 
-
-export interface RangeInterface {
-  start: number;
-  end: number;
-}
-
-export interface StreetInterface {
-  name: string;
-  short_name?: string;
-  numbers: RangeInterface[];
-}
 
 
 @JsonApiModelConfig({
-  type: 'City',
-  modelEndpointUrl: 'provider/city',
+  type: 'Product',
+  modelEndpointUrl: 'store/product-type',
 })
-export class CityModel extends AbstractModel {
-  public static formClassRef = CityForm;
+export class ProductTypeModel extends AbstractModel {
+  public static formClassRef = ProductTypeForm;
   public static include = null;
 
   @Attribute()
@@ -35,17 +27,7 @@ export class CityModel extends AbstractModel {
   name: string;
 
   @Attribute()
-  short_name: string;
-
-  @Attribute()
-  code: string;
-
-  @Attribute()
-  postal_codes: RangeInterface[];
-
-  @Attribute()
-  streets: StreetInterface[];
-
+  attributes: any;
 
   @Attribute()
   created: Date;
@@ -53,7 +35,7 @@ export class CityModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   get pk() {
     return this.id;
@@ -62,6 +44,8 @@ export class CityModel extends AbstractModel {
   set pk(value) {
 
   }
+  public toString = (): string => {
+    return `${this.name} (ID: ${this.id})`;
+  }
 
 }
-

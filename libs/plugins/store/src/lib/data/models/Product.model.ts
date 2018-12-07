@@ -7,13 +7,10 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { ProductForm } from '../forms/Product.form';
 import {FormControl, Validators} from "@angular/forms";
+import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
+import { ProductTypeModel } from './ProductType.model';
 
 
-export interface ProductPrice {
-  list: string;
-  sale?: string;
-
-}
 
 @JsonApiModelConfig({
   type: 'Product',
@@ -29,11 +26,18 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   sku: string;
 
-  @Attribute()
-  type: string;
+  @BelongsTo()
+  @ExtraOptions({
+    backendResourceName: 'Type'
+  })
+  type: ProductTypeModel;
+
 
   @Attribute()
   name: string;
+
+  @Attribute()
+  product_class: ProductClasses;
 
   @Attribute()
   pricing: ProductPrice;

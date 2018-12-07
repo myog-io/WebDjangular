@@ -3,7 +3,7 @@ from rest_framework_json_api import serializers
 
 from libs.plugins.store.api.models.Cart import Cart, CartItem
 from libs.core.utils.api.serializers.AddressSerializer import AddressSerializer
-from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelField
+from webdjango.serializers.MongoSerializer import EmbeddedSerializer, ArrayModelFieldSerializer
 
 
 class CartItemSerializer(EmbeddedSerializer):
@@ -18,10 +18,10 @@ class CartItemSerializer(EmbeddedSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
 
-    # billing_address = EmbeddedSerializer(serializer=AddressSerializer, blank=True)
-    # shipping_address = EmbeddedSerializer(serializer=AddressSerializer, blank=True)
+    billing_address = AddressSerializer()
+    shipping_address = AddressSerializer()
 
-    items = ArrayModelField(serializer=CartItemSerializer)
+    items = ArrayModelFieldSerializer(serializer=CartItemSerializer)
 
     class Meta:
         model = Cart

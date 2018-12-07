@@ -42,21 +42,21 @@ export class CategoryForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Name',
       name: 'name',
       wrapper_class: 'col-12',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Slug',
       name: 'slug',
       wrapper_class: 'col-12',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Description',
       name: 'description',
       wrapper_class: 'col-12',

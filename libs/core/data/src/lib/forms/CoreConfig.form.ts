@@ -40,13 +40,13 @@ export class CoreConfigForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Slug(code)',
       name: 'slug',
       placeholder: 'Enter Theme Slug'
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Value',
       name: 'value',
       placeholder: 'Enter Value'

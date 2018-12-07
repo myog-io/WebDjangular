@@ -59,13 +59,13 @@ export class PageForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Page Title',
       name: 'title',
       placeholder: 'Enter Page Title',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Page Url',
       name: 'slug',
       placeholder: 'Enter Page Url (slug)',

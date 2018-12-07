@@ -60,28 +60,28 @@ export class SaleForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Type',
       name: 'type',
       wrapper_class: 'col-6',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Name',
       name: 'name',
       wrapper_class: 'col-6',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Start Date/Time',
       name: 'start',
       wrapper_class: 'col-6',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'End Date/Time',
       name: 'end',
       wrapper_class: 'col-6',

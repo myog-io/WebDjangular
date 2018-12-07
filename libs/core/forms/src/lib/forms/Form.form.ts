@@ -48,13 +48,13 @@ export class FormForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Form Title',
       name: 'title',
       placeholder: 'Enter Form Title',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Form slug',
       name: 'slug',
       placeholder: 'Enter the Form slug',

@@ -5,6 +5,9 @@ import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
 import { ProductPriceForm } from './ProductPrice.form';
+import { ProductClasses } from '../interfaces/Product.interface';
+import { ProductTypeForm } from './ProductType.form';
+import { ProductTypeModel } from '../models/ProductType.model';
 
 export class ProductForm extends AbstractForm {
 
@@ -21,6 +24,10 @@ export class ProductForm extends AbstractForm {
       type: {
         title: 'Type',
         type: SmartTableColumnType.text,
+      },
+      product_class: {
+        title: 'Class',
+        type: SmartTableColumnType.text,
       }
     },
   };
@@ -29,13 +36,18 @@ export class ProductForm extends AbstractForm {
     pk: {
       type: FormControl,
     },
+    product_class: {
+      type: FormControl,
+      validators: [Validators.required]
+    },
     sku: {
       type: FormControl,
       validators: [Validators.required] // TODO: validate the uniqueness
     },
     type: {
-      type: FormControl,
-      validators: [Validators.required]
+      type: FormGroup,
+      validators: [Validators.required],
+      formClass: ProductTypeForm
     },
     name: {
       type: FormControl,
@@ -46,6 +58,7 @@ export class ProductForm extends AbstractForm {
       validators: [Validators.required],
       formClass: ProductPriceForm,
     },
+
     slug: {
       type: FormControl,
       validators: [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")] // TODO: validate the uniqueness
@@ -80,21 +93,35 @@ export class ProductForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'select',
+      label: 'Product Class',
+      name: 'product_class',
+      wrapper_class: 'col-6',
+      value: ProductClasses.simple,
+      options: [
+        {label:"Simple Product", value: ProductClasses.simple},
+        {label:"Bundle Product", value: ProductClasses.bundle},
+        {label:"Variant Product", value: ProductClasses.variant},
+      ]
+    },
+    {
+      type: 'text',
       label: 'SKU',
       name: 'sku',
       wrapper_class: 'col-6',
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'select',
       label: 'Type',
       name: 'type',
       wrapper_class: 'col-6',
-      placeholder: '',
+      placeholder: 'Select Product Type',
+      value: null,
+      options_model: ProductTypeModel
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Name',
       name: 'name',
       wrapper_class: 'col-6',
@@ -107,7 +134,7 @@ export class ProductForm extends AbstractForm {
       wrapper_class: 'col-6',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Slug',
       name: 'slug',
       wrapper_class: 'col-6',
@@ -129,7 +156,7 @@ export class ProductForm extends AbstractForm {
       placeholder: '',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Quantity',
       name: 'quantity',
       inputType: 'number',
@@ -143,7 +170,7 @@ export class ProductForm extends AbstractForm {
       }
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Cost',
       name: 'cost',
       inputType: 'number',

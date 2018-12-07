@@ -31,14 +31,14 @@ export class RangeForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       inputType: 'number',
       label: 'Start',
       name: 'start',
       placeholder: 'Start of the Range',
     },
     {
-      type: 'input',
+      type: 'text',
       inputType: 'number',
       label: 'End',
       name: 'end',

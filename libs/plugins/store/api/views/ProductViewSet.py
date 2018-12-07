@@ -1,10 +1,37 @@
 from django_filters.filterset import FilterSet
+from ..models.Product import Product, ProductCategory, ProductType
+from ..serializers.ProductSerializer import ProductCategorySerializer, ProductSerializer, ProductTypeSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import RelationshipView
 
-from libs.plugins.store.api.models.Product import Product, ProductCategory
-from libs.plugins.store.api.serializers.ProductSerializer import ProductSerializer, ProductCategorySerializer
+class ProductTypeFilter(FilterSet):
+    class Meta:
+        model = ProductType
+        fields = {
+            'id': ['in'],
+            'name': ['contains', 'exact'],
+        }
+
+
+class ProductTypeViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Types
+    Retrieve a list of Product Types
+    Retrieve a specific Product Type
+    Update Product Type
+    Deleting Product Type
+    """
+    serializer_class = ProductTypeSerializer
+    queryset = ProductType.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter,)
+    filter_class = ProductTypeFilter
+    search_fields = ('name',)
+    permission_classes = ()
+
 
 
 class ProductCategoryFilter(FilterSet):
@@ -63,3 +90,6 @@ class ProductViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
+
+class ProductRelationshipView(RelationshipView):
+    queryset = Product.objects

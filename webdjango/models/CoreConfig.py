@@ -59,14 +59,14 @@ class CoreConfigInput(AbstractCoreConfigModel):
     If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
     '''
     FIELD_TYPE_BUTTON = 'button'
-    FIELD_TYPE_INPUT = 'input'
+    FIELD_TYPE_TEXT = 'text'
     FIELD_TYPE_SELECT = 'select'
     FIELD_TYPE_CKEDITOR = 'ckeditor'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
 
     CONFIG_FIELD_TYPES = {
         (FIELD_TYPE_BUTTON, 'Button'),
-        (FIELD_TYPE_INPUT, 'TextField'),
+        (FIELD_TYPE_TEXT, 'Texxt'),
         (FIELD_TYPE_SELECT, 'Select'),
         (FIELD_TYPE_CKEDITOR, 'CkEditor'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),

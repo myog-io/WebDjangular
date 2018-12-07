@@ -28,6 +28,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit{
    * @param datastore
    */
   constructor(private datastore: WebAngularDataStore) {
+    console.log("BUILDING ???");
   }
 
   /**
@@ -46,6 +47,9 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit{
           });
         }
       });
+    }
+    if (this.config.value){
+      this.group.get(this.config.name).setValue(this.config.value);
     }
   }
 }
