@@ -10,6 +10,8 @@ import { CoreAdminModule } from "@webdjangular/core/admin";
 import { WDAConfig, CoreServicesModule } from "@webdjangular/core/services";
 import { AppHttpInterceptor } from "@webdjangular/core/interceptors";
 import { ThemeModule } from "@webdjangular/core/admin-theme";
+import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
+
 
 
 export function wda_init(wdaconfig: WDAConfig) {
@@ -27,7 +29,14 @@ export function wda_init(wdaconfig: WDAConfig) {
     //CoreServicesModule.forRoot(), // Not Sure if we should do here or note
     NgbModule.forRoot(),
     ThemeModule.forRoot(),
-    CoreAdminModule.forRoot()
+    CoreAdminModule.forRoot(),
+    NbToastrModule.forRoot({
+      destroyByClick: true,
+      duration: 3000,
+      preventDuplicates: false,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+
+    }),
   ],
   bootstrap: [AppComponent],
   providers: [

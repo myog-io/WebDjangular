@@ -1,0 +1,9 @@
+@import '~@nebular/theme/styles/prebuilt/corporate';
+
+@include nb-install-component() {
+  button {
+    cursor: pointer;
+    margin: 0 0.25rem;
+  }
+
+}

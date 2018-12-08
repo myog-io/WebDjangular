@@ -5,6 +5,8 @@ import {WebAngularDataStore} from '@webdjangular/core/services';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {AbstractForm} from '@webdjangular/core/data-forms';
+import { NbToastrService } from '@nebular/theme';
+
 
 @Component({
   selector: 'wda-scaffold-edit',
@@ -42,7 +44,7 @@ export class ScaffoldEditComponent implements OnInit {
   loading: boolean = false;
 
   inlcude_args: any = {};
-
+  saveAndContinue = true;
   /**
    * Creates an instance of scaffold edit component.
    * @param route
@@ -53,6 +55,7 @@ export class ScaffoldEditComponent implements OnInit {
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
     private router: Router,
+    private toaster: NbToastrService
   ) {
 
   }
@@ -98,24 +101,29 @@ export class ScaffoldEditComponent implements OnInit {
   /**
    * Determines if it's a create or update
    */
-  onSubmit() {
-    this.update();
+  onSubmit($event:any) {
+    this.update($event.redirect);
   }
 
   /**
    * Updates Record based on the current_model
    */
-  update() {
+  update(redirect:boolean) {
     this.loading = true;
     this.form.updateModel(this.entry);
     let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
+        this.toaster.success(`Changes have been saved`,`Success!`);
         this.loading = false;
         sub.unsubscribe();
+        if(redirect){
+          this.router.navigate([`/${this.base_path}`]);
+        }
+
       },
       (error) => {
-        console.log(error);
         this.loading = false;
+        this.toaster.danger(`Changes have been saved`,`Error!`);
       }
     )
   }

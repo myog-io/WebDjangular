@@ -90,8 +90,6 @@ export class AbstractForm extends FormGroup {
       switch (this.formFields[propName].type) {
         case FormGroup:
           // TODO: Not an Entityd need to be done
-          console.log(typeof entity[propName] );
-
           entity[propName] = this.get(propName).value;
           break;
         case FormArray:

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig, BuilderFormConfig } from './interfaces/form-config.interface';
 import { FormGroup } from '@angular/forms';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   selector: 'wda-form',
   styleUrls: ['builder-form.component.scss'],
   template: `
-  <form [formGroup]="group" (submit)="submitForm($event)">
+  <form [formGroup]="group">
     <div class="row">
       <ng-container class="column" *ngFor="let field of fields">
         <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
@@ -20,8 +20,14 @@ import { Subscription } from 'rxjs';
     </div>
     <div class="row" *ngIf="submit">
       <div class="col-12">
+        <ng-container *ngIf="save_continue">
+          <button nbButton [status]="submit_continue_status" [size]="submit_continue_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status"
+            [disabled]="loading" [nbSpinnerSize]="submit_continue_size" nbSpinnerMessage="" (click)="submitForm($event,false)">
+            {{ submit_continue_label }}
+          </button>
+        </ng-container>
         <button nbButton [status]="submit_status" [size]="submit_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
-          [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="">
+          [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="" (click)="submitForm($event,true)">
           {{ submit_label }}
         </button>
       </div>
@@ -34,9 +40,14 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() submit_label = "Save";
   @Input() submit_size = "medium";
   @Input() submit_status = "primary"
+  @Input() submit_continue_label = "Save & Continue";
+  @Input() submit_continue_size = "small";
+  @Input() submit_continue_status = "info";
   @Input() loading = false;
   @Input() group: FormGroup;
-  @Input() submit: boolean = true;
+  @Input() submit = true;
+  @Input() save_continue = false;
+
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
   private jsonLogic: JsonLogic = new JsonLogic();
@@ -53,6 +64,7 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     this.subscription = this.group.valueChanges.subscribe((data) => {
       this.conditionalFields(data);
     })
+
   }
   /**
    * This will check the condition for the field to hide or show based on the jsonlogic conditional of each field
@@ -74,7 +86,8 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   /**
    * Form Submitting
    */
-  public submitForm($event) {
+  public submitForm($event:any = {}, redirect:boolean) {
+    $event.redirect = redirect;
     $event.data = this.group.value;
     this.onSubmit.emit($event);
   }
@@ -91,6 +104,14 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     if (this.subscription) {
       this.subscription.unsubscribe()
       this.subscription = null;
+    }
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if(event.ctrlKey && event.code == "KeyS"){
+      event.preventDefault()
+      this.submitForm(event, false)
     }
   }
 

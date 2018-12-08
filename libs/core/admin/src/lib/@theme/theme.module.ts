@@ -33,7 +33,7 @@ import {
   NbProgressBarModule,
   NbAlertModule,
   NbButtonModule,
-  NbSpinnerModule
+  NbSpinnerModule,
 } from '@nebular/theme';
 
 import { NbSecurityModule } from '@nebular/security';
@@ -86,6 +86,7 @@ const NB_MODULES = [
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
   NbAlertModule,
+
 ];
 
 const COMPONENTS = [

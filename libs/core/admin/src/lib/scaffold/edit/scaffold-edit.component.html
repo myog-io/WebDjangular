@@ -2,7 +2,7 @@
   <nb-card>
     <nb-card-header>{{before_title}} {{title}}</nb-card-header>
     <nb-card-body>
-      <wda-form [fields]="form.scaffoldFields" (onSubmit)="onSubmit()" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
+      <wda-form [fields]="form.scaffoldFields" (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading" [save_continue]="saveAndContinue"></wda-form>
 
     </nb-card-body>
   </nb-card>
