@@ -46,4 +46,4 @@ class Cart(models.Model):
     items = models.ArrayModelField(model_container=CartItem)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-pk']
