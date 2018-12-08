@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
         </div>
       </ng-container>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="submit">
       <div class="col-12">
         <button nbButton [status]="submit_status" [size]="submit_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
           [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="">
@@ -36,6 +36,7 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() submit_status = "primary"
   @Input() loading = false;
   @Input() group: FormGroup;
+  @Input() submit: boolean = true;
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
   private jsonLogic: JsonLogic = new JsonLogic();

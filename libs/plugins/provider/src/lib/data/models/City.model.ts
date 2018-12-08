@@ -22,7 +22,7 @@ export interface StreetInterface {
 
 @JsonApiModelConfig({
   type: 'City',
-  modelEndpointUrl: 'city',
+  modelEndpointUrl: 'provider/city',
 })
 export class CityModel extends AbstractModel {
   public static formClassRef = CityForm;

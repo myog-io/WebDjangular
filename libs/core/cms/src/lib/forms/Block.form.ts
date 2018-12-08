@@ -48,13 +48,13 @@ export class BlockForm extends AbstractForm {
 
 	scaffoldFields: BuilderFormFieldConfig[] = [
 		{
-			type: 'input',
+			type: 'text',
 			label: 'Block Title',
 			name: 'title',
 			placeholder: 'Enter Block Title',
 		},
 		{
-			type: 'input',
+			type: 'text',
 			label: 'Unique Code',
 			name: 'slug',
 			placeholder: 'Enter Block Code (slug)',

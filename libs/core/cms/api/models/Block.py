@@ -19,4 +19,3 @@ class Block(Model):
     class Meta:
         db_table = 'cms_block'
         ordering = ['-id']
-        permissions = (("list_blocks", "Can list blocks"),)

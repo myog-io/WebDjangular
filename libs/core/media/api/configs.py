@@ -34,7 +34,7 @@ MEDIA_CONFIGS = [
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_KEY,
-        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_TEXT,
         input_type="password",
         order=0,
         disabled=False,
@@ -50,7 +50,7 @@ MEDIA_CONFIGS = [
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_NAME,
-        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_TEXT,
         input_type="text",
         order=0,
         disabled=False,
@@ -67,7 +67,7 @@ MEDIA_CONFIGS = [
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_CONTAINER_NAME,
-        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_TEXT,
         input_type="text",
         order=0,
         disabled=False,
@@ -83,7 +83,7 @@ MEDIA_CONFIGS = [
     ),
     CoreConfigInput(
         id=CONFIG_STORAGE_EXTERNAL_URL,
-        field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+        field_type=CoreConfigInput.FIELD_TYPE_TEXT,
         input_type="url",
         order=0,
         disabled=False,

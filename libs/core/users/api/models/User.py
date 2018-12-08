@@ -13,8 +13,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         ordering = ['-id']
         db_table = 'users'
-        permissions = (("list_user", "Can list users"),)
-
 
     first_name = models.CharField(max_length=60)
     middle_name = models.CharField(max_length=60, default=None, blank=True, null=True)
@@ -30,6 +28,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    # default_shipping_address =
+    # default_billing_address =
 
     objects = UserManager()
 

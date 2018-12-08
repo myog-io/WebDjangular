@@ -32,6 +32,7 @@ export class AbstractForm extends FormGroup {
    * Generates form
    */
   public generateForm() {
+
     for (let propName in this.formFields) {
       if (this.formFields[propName].type == FormArray) {
 
@@ -89,6 +90,9 @@ export class AbstractForm extends FormGroup {
       switch (this.formFields[propName].type) {
         case FormGroup:
           // TODO: Not an Entityd need to be done
+          console.log(typeof entity[propName] );
+
+          entity[propName] = this.get(propName).value;
           break;
         case FormArray:
           // TODO: If this is an entity this will change

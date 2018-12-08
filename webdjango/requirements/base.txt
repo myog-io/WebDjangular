@@ -48,3 +48,15 @@ flex==6.13.2
 swagger-spec-validator==2.4.0
 
 # For the CDNS
+
+
+
+# Country choices for use with forms, flag icons static files, and a country field for models.
+django-countries==5.3.2
+
+
+# prices fields
+django-prices==1.0.4
+
+# Easily use, manipulate, and store unit-aware measurement objects
+django-measurement==3.1.1

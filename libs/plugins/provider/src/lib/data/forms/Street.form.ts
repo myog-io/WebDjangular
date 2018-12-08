@@ -38,15 +38,15 @@ export class StreetForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
-      inputType: 'input',
+      type: 'text',
+      inputType: 'text',
       label: 'Name',
       name: 'name',
       placeholder: 'Stret Name',
     },
     {
-      type: 'input',
-      inputType: 'input',
+      type: 'text',
+      inputType: 'text',
       label: 'Short Name',
       name: 'short_name',
       wrapper_class: 'col-12',

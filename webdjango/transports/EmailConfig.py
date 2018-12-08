@@ -46,7 +46,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_TEST_EMAIL,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="email",
             order=0,
             disabled=False,
@@ -59,7 +59,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_SENDER,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="email",
             order=0,
             disabled=False,
@@ -72,7 +72,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_USERNAME,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="text",
             order=0,
             disabled=False,
@@ -88,7 +88,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_PWD,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="password",
             order=0,
             disabled=False,
@@ -104,7 +104,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_HOST,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="text",
             order=0,
             disabled=False,
@@ -120,7 +120,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_PORT,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="number",
             order=0,
             disabled=False,
@@ -152,7 +152,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_API_KEY,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="text",
             order=0,
             disabled=False,
@@ -168,7 +168,7 @@ class EmailCoreConfig():
         ),
         CoreConfigInput(
             id=CONFIG_DOMAIN,
-            field_type=CoreConfigInput.FIELD_TYPE_INPUT,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="text",
             order=0,
             disabled=False,

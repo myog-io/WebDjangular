@@ -23,7 +23,6 @@ class Website(models.Model):
     class Meta:
         ordering = ['-id']
         db_table = 'core_website'
-        permissions = (("list_core_website", "Can list core_website"),)
 
     def __str__(self):
         return self.domain
@@ -96,7 +95,6 @@ class CoreConfig(models.Model):
     class Meta:
         ordering = ['-id']
         db_table = 'core_config'
-        permissions = (("list_core_config", "Can list core_config"),)
 
     def __str__(self):
         return self.slug
@@ -115,7 +113,6 @@ class Author(models.Model):
     class Meta:
         ordering = ['-id']
         db_table = 'core_author'
-        permissions = (("list_core_author", "Can list core_author"),)
 
     def __str__(self):
         return self.name
@@ -171,7 +168,6 @@ class Plugin(DirtyFieldsMixin, models.Model):
     class Meta:
         ordering = ['-id']
         db_table = 'core_plugin'
-        permissions = (("list_core_plugin", "Can list core_plugin"),)
 
     def __str__(self):
         return self.name
@@ -250,4 +246,3 @@ class Theme(DirtyFieldsMixin, models.Model):
     class Meta:
         ordering = ['-id']
         db_table = 'core_theme'
-        permissions = (("list_core_theme", "Can list core_theme"),)

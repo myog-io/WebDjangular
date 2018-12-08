@@ -55,8 +55,15 @@ urlpatterns = [
     url(r'^api/', include('libs.core.media.api.urls')),
 
     url(r'^api/', include('libs.core.forms.api.urls')),
+
+    # UTILS views
+    url(r'^api/', include('libs.core.utils.api.urls')),
+
     # TODO: Add dynamic routes based on active plugins
     url(r'^api/', include('libs.plugins.provider.api.urls')),
+    url(r'^api/', include('libs.plugins.store.api.urls')),
+
+
     #url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
     #url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
 

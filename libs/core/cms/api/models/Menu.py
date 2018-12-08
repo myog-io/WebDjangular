@@ -51,4 +51,3 @@ class Menu(models.Model):
     class Meta:
         db_table = 'cms_menu'
         ordering = ['-id']
-        permissions = (("list_menus", "Can list menus"),)

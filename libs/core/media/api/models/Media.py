@@ -32,9 +32,7 @@ class Media(Model, DirtyFieldsMixin):
     class Meta:
         ordering = ['-id']
         db_table = 'medias'
-        permissions = (
-            ("list_medias", "Can list medias"),
-            ("download_media", "Can Download Media"))
+        permissions = (("download_media", "Can Download Media"),)
 
     alt = djangoModels.CharField(null=True, max_length=255)
     file = RemoteFileField(

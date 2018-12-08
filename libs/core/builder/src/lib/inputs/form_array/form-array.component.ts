@@ -22,6 +22,7 @@ enum state {
   selector: 'wda-form-array',
   styleUrls: ['form-array.component.scss'],
   template: `
+    <label>{{ config.label }}</label>
     <ng2-smart-table
       [settings]="smart_table_settings"
       [source]="source"

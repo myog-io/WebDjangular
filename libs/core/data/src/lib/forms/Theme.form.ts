@@ -65,13 +65,13 @@ export class ThemeForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Name',
       name: 'name',
       placeholder: 'Enter Theme Name'
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Active',
       name: 'active',
       placeholder: 'Enter Page Url (slug)'

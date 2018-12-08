@@ -51,14 +51,14 @@ export class CityForm extends AbstractForm {
 
   scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'Name',
       name: 'name',
       wrapper_class: 'col-6',
       placeholder: 'Enter City Name',
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Short Name',
       name: 'short_name',
       wrapper_class: 'col-6',

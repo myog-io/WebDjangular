@@ -1,4 +1,6 @@
-import { NbMenuItem } from '@nebular/theme';
+import {NbMenuItem} from '@nebular/theme';
+import {ScaffoldModule} from "@webdjangular/core/admin";
+import {ProductModel} from "../../../../plugins/store/src/lib/data/models/Product.model";
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -7,14 +9,63 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/',
   },
   {
-    title: 'Medias',
-    icon: 'fas fa-file-image',
-    link: '/media',
+    title: 'CMS',
+    icon: 'fas fa-pencil-ruler',
+    children: [
+      {
+        title: 'Pages',
+        link: '/pages',
+      },
+      {
+        title: 'Medias',
+        link: '/media',
+      },
+      {
+        title: 'Forms',
+        link: '/forms',
+      },
+      /* MENU BUILDER is the NExt */
+    ]
   },
+
   {
-    title: 'Pages',
-    icon: 'fas fa-file-alt',
-    link: '/pages',
+    title: 'Store',
+    icon: 'fas fa-shopping-cart',
+    children: [
+      {
+        title: 'Products',
+        link: '/store/products'
+      },
+      {
+        title: 'Categories',
+        link: '/store/categories'
+        //data: {
+        //  permission: [
+        //    { label: 'store', action: 'list_products' }
+        //  ]
+      },
+      {
+        title: 'Orders',
+        link: '/store/orders',
+      },
+      {
+        title: 'Discounts',
+        children: [
+          {
+            title: 'Vouchers',
+            link: '/store/vouchers',
+          },
+          {
+            title: 'Sales',
+            link: '/store/sales',
+          },
+        ]
+      },
+      {
+        title: 'Shipping methods',
+        link: '/store/shipping-methods',
+      },
+    ]
   },
   {
     title: 'Provider',
@@ -25,16 +76,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/cities',
         data: {
           permission: [
-            { label: 'provider', action: 'list_cities' }
+            {label: 'provider', action: 'list_cities'}
           ]
         }
       }
     ]
-  },
-  {
-    title: 'Forms',
-    icon: 'fab fa-wpforms',
-    link: '/forms',
   },
   {
     title: 'System',
@@ -45,7 +91,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/core_themes',
         data: {
           permission: [
-            { label: 'webdjango', action: 'list_core_theme' },
+            {label: 'webdjango', action: 'list_core_theme'},
           ]
         }
       },
@@ -66,7 +112,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/user',
         data: {
           permission: [
-            { label: 'users', action: 'list_user' },
+            {label: 'users', action: 'list_user'},
           ]
         }
       },
@@ -75,7 +121,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/group',
         data: {
           permission: [
-            { label: 'auth', action: 'list_group' }
+            {label: 'auth', action: 'list_group'}
           ]
         }
       },
@@ -92,7 +138,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
               link: '/core_websites',
               data: {
                 permission: [
-                  { label: 'webdjango', action: 'list_core_website' }
+                  {label: 'webdjango', action: 'list_core_website'}
                 ]
               }
             }

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgSwitch } from '@angular/common';
 import { ScaffoldFieldDirective } from './builder-form.directive';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
@@ -19,10 +19,12 @@ import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
 import { BuilderFormCkeditorComponent } from './inputs/ckeditor/ckeditor.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
-import { BuilderFormBuilderComponent } from './inputs/formbuilder/formbuilder.component';
+import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BuilderFormComponent } from './builder-form.component';
+import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
+import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormRelationshipComponent,
@@ -33,6 +35,8 @@ const ENTRY_COMPONENTS = [
   BuilderFormCodeComponent,
   BuilderFormBuilderComponent,
   BuilderFormArrayComponent,
+  BuilderFormSwitcherComponent,
+  BuilderFormGroupComponent
 ];
 
 @NgModule({
@@ -49,6 +53,7 @@ const ENTRY_COMPONENTS = [
     NbButtonModule,
     NbSpinnerModule,
     NbListModule,
+
   ],
   exports: [ScaffoldFieldDirective, BuilderFormComponent],
   entryComponents: [...ENTRY_COMPONENTS]
