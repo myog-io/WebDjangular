@@ -8,8 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 export class PluginProviderPlansComponent implements OnInit {
 
   @Input() title: string = '';
+  @Input() titleColor: string = '';
   @Input() headline: string = '';
-
+  @Input() background: string = '';
 
   constructor() {
   }

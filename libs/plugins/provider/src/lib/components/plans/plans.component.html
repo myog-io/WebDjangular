@@ -1,7 +1,7 @@
-<div class="col-md-12">
+<div class="col-md-12" [style.background]="background">
 
-  <h3 class="pt-5  mb-0 text-center"> {{ title }} </h3>
-  <h6 class="headline mt-0 text-center"> {{ headline }}</h6>
+  <h3 class="pt-5  mb-0 text-center text-uppercase" [style.color]="titleColor" [innerHTML]="title"></h3>
+  <h6 class="headline mt-0 text-center text-uppercase text-primary"> {{ headline }}</h6>
 
   <div class="plans-container pt-3 pb-5">
     <div class="container">

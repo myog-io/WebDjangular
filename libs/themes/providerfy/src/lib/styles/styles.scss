@@ -308,7 +308,7 @@ input:focus ~ .highlight {
 .modal.tv-channel {
   .modal-dialog {
     max-width: 900px;
-    .modal-content{
+    .modal-content {
       height: 500px;
     }
   }
@@ -316,184 +316,351 @@ input:focus ~ .highlight {
 
 $icon-size: 30px;
 
-.icon-download{
-  background:url("../assets/images/icon_download.png");
+.icon-download {
+  background: url("../assets/images/icon_download.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size;
   height: $icon-size; //29px;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
 
-.icon-upload{
-  background:url("../assets/images/icon_upload.png");
+.icon-upload {
+  background: url("../assets/images/icon_upload.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //31px;
   height: $icon-size; //27px;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
 
-.icon-tools{
-  background:url("../assets/images/icon_tools.png");
+.icon-tools {
+  background: url("../assets/images/icon_tools.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //29px;
   height: $icon-size; //29px;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
 
-.icon-percentage{
-  background:url("../assets/images/icon_percentage.png");
+.icon-percentage {
+  background: url("../assets/images/icon_percentage.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
 
-.icon-barcode{
-  background:url("../assets/images/icon_barcode.png");
+.icon-barcode {
+  background: url("../assets/images/icon_barcode.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-change{
-  background:url("../assets/images/icon_change.png");
+
+.icon-change {
+  background: url("../assets/images/icon_change.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-chat{
-  background:url("../assets/images/icon_chat.png");
+
+.icon-chat {
+  background: url("../assets/images/icon_chat.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-dashboard{
-  background:url("../assets/images/icon_dashboard.png");
+
+.icon-dashboard {
+  background: url("../assets/images/icon_dashboard.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-email{
-  background:url("../assets/images/icon_email.png");
+
+.icon-email {
+  background: url("../assets/images/icon_email.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-extra-point{
-  background:url("../assets/images/icon_extra_point.png");
+
+.icon-extra-point {
+  background: url("../assets/images/icon_extra_point.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-fiber{
-  background:url("../assets/images/icon_fiber.png");
+
+.icon-fiber {
+  background: url("../assets/images/icon_fiber.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-form{
-  background:url("../assets/images/icon_form.png");
+
+.icon-form {
+  background: url("../assets/images/icon_form.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-gear{
-  background:url("../assets/images/icon_gear.png");
+
+.icon-gear {
+  background: url("../assets/images/icon_gear.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-key{
-  background:url("../assets/images/icon_key.png");
+
+.icon-key {
+  background: url("../assets/images/icon_key.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-offices{
-  background:url("../assets/images/icon_offices.png");
+
+.icon-offices {
+  background: url("../assets/images/icon_offices.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-telephone{
-  background:url("../assets/images/icon_telephone.png");
+
+.icon-telephone {
+  background: url("../assets/images/icon_telephone.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
-.icon-radio{
-  background:url("../assets/images/icon_radio.png");
+
+.icon-radio {
+  background: url("../assets/images/icon_radio.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
+
 .icon-plans {
-  background:url("../assets/images/icon_plans.png");
+  background: url("../assets/images/icon_plans.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
+
 .icon-support {
-  background:url("../assets/images/icon_support.png");
+  background: url("../assets/images/icon_support.png");
   background-position: center center;
   background-repeat: no-repeat;
   width: $icon-size; //24px;
   height: $icon-size;
-  display:block;
-  float:left;
+  display: block;
+  float: left;
 }
 
+#banner-experiment {
+  .img-wrapper {
+    margin-left: -65%;
+  }
 
+  h2 {
+    font-family: $secondary-ff;
+    font-size: 44px;
+    line-height: 39px;
+    font-weight: $fw-regular;
+    font-style: italic;
 
+    b {
+      font-weight: $fw-black;
 
+    }
+  }
 
+  h5 {
+    font-family: $secondary-ff;
+    font-size: 21px;
+    font-weight: $fw-semibold;
+    color: #616c74;
+    .plus {
+      font-size: 32px;
+      line-height: 21px;
+      vertical-align: top;
+    }
+  }
+}
 
+#banner-telefone {
+  width: 100%;
+  max-width: 1366px;
+  height: 500px;
+  display: block;
+  margin: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#portabilidade {
+  color: #99d7d7;
+
+  p {
+    font-size: 17px;
+    line-height: 28px;
+    max-width: 445px;
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+  }
+}
+
+#economia-e-controle {
+  p {
+    font-size: 17px;
+    line-height: 28px;
+    color: #8a939a;
+    max-width: 390px;
+  }
+  span.bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    font-size: 13px;
+    color: #9ea3a1;
+  }
+}
+
+#quem-esta-ligando {
+  p {
+    font-size: 17px;
+    line-height: 28px;
+    color: #8a939a;
+    max-width: 415px;
+  }
+}
+
+#banner-cobertura {
+  background: url('/files/2018/12/55e567b0-fe0d-4f3d-bcba-c576ee4bfda8banner-cidades_bg.png') no-repeat center center;
+  max-width: 1366px;
+  width: 100%;
+  height: 500px;
+  margin: auto;
+
+  h1 {
+    font-size: 40px;
+    line-height: 40px;
+    width: 100%;
+    text-align: center;
+  }
+  h6 {
+    width: 100%;
+    text-align: center;
+  }
+
+  form {
+
+    background: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    padding-bottom: 5px;
+    border-radius: 15px;
+
+    input {
+      border-radius: 50px;
+      font-family: $primary-ff;
+      font-size: 16px;
+      height: 45px;
+      padding: 0 20px;
+      color: #6f787f;
+    }
+
+    button[type='submit'] {
+      padding-left: 50px;
+      padding-right: 50px;
+      border-width: 2px;
+      border-radius: 50px;
+
+    }
+
+    span {
+      display: flex;
+      a {
+        display: inline-block;
+        width: 100%;
+        color: #fff;
+        padding-top: 8px;
+        padding-left: 30px;
+      }
+    }
+  }
+
+}
+
+#cidades-atendidas {
+  h3 {
+    color: #000 !important;
+  }
+
+  ul {
+    -webkit-column-count: 4; /* Chrome, Safari, Opera */
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+    list-style: none;
+
+    li {
+      font-size:17px;
+      color:#616c74;
+
+    }
+  }
+
+}
