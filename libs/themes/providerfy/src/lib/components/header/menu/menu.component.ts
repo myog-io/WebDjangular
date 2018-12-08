@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ThemeProviderfyComponent} from "../../../providerfy.component";
 import {NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {ThemeProviderfyModalWecallyouComponent} from "../../modal/wecallyou/wecallyou.component";
@@ -16,7 +16,8 @@ import {ThemeProviderfyModalSexyhotComponent} from "../../modal/sexyhot/sexyhot.
 import {ThemeProviderfyModalTelecineComponent} from "../../modal/telecine/telecine.component";
 import {ThemeProviderfyModalVenusComponent} from "../../modal/venus/venus.component";
 import {ThemeProviderfyModalChannelsComponent} from "../../modal/channels/channels.component";
-
+import {CookieService} from 'ngx-cookie-service';
+import {ClientUserService} from "@webdjangular/core/services";
 
 
 @Component({
@@ -24,11 +25,25 @@ import {ThemeProviderfyModalChannelsComponent} from "../../modal/channels/channe
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class  ThemeProviderfyHeaderMenuComponent implements OnInit {
+export class ThemeProviderfyHeaderMenuComponent implements OnInit {
   closeResult: string;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private cookieService: CookieService,
+              private clientUserService: ClientUserService) {
 
+    console.log('menu: ', this.clientUserService.clientUser.data);
+    if (!this.clientUserService.clientUser.data.hasOwnProperty('city')) {
+      this.modalService.open(ThemeProviderfyModalChoosecityComponent, {
+        centered: true,
+        backdropClass: 'backdrop-choosecity',
+        windowClass: 'choosecity',
+        keyboard: false, // ESC can NOT close the model
+        beforeDismiss: () => {
+          return false;
+        }
+      });
+    }
+  }
 
   openModalWeCallYou() {
     this.modalService.open(ThemeProviderfyModalWecallyouComponent);
@@ -36,21 +51,8 @@ export class  ThemeProviderfyHeaderMenuComponent implements OnInit {
 
 
   ngOnInit() {
-    /*
-    this.modalService.open(ThemeProviderfyModalChoosecityComponent, {
-      centered: true,
-      backdropClass: 'backdrop-choosecity',
-      windowClass: 'choosecity',
-      keyboard: false, // ESC can NOT close the model
-      beforeDismiss: () => {
-        return false;
-      }
-    });
-    */
-
-    const ModalTVOptions : NgbModalOptions = {
-      windowClass:'tv-channel',
-
+    const ModalTVOptions: NgbModalOptions = {
+      windowClass: 'tv-channel',
     };
 
     //this.modalService.open(ThemeProviderfyModalWecallyouComponent);
@@ -68,14 +70,6 @@ export class  ThemeProviderfyHeaderMenuComponent implements OnInit {
     /////this.modalService.open(ThemeProviderfyModalSexyhotComponent, ModalTVOptions);
     /////this.modalService.open(ThemeProviderfyModalTelecineComponent, ModalTVOptions);
     /////this.modalService.open(ThemeProviderfyModalVenusComponent, ModalTVOptions);
-
-
-
-
-
-
-
-
   }
 }
 

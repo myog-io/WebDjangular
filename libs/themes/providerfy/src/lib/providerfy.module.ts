@@ -27,7 +27,8 @@ import {ThemeProviderfyModalSexyhotComponent} from "./components/modal/sexyhot/s
 import {ThemeProviderfyModalTelecineComponent} from "./components/modal/telecine/telecine.component";
 import {ThemeProviderfyModalVenusComponent} from "./components/modal/venus/venus.component";
 import {ThemeProviderfyModalChannelsComponent} from "./components/modal/channels/channels.component";
-import {FormsModule} from "@webdjangular/core/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
 
 
 const COMPONENTS = [
@@ -71,8 +72,9 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
-    NgbModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
     CoreDynamicComponentLoaderModule.forRoot(),
     RouterModule.forChild([
 

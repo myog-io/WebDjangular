@@ -13,12 +13,13 @@ import {
   FormArray
 } from '@angular/forms';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { GroupModel } from './Group.model';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {GroupModel} from './Group.model';
 
-import { UserForm } from '../forms/User.form';
+import {UserForm} from '../forms/User.form';
 
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {StyleAtTime} from "@angular/animations/browser/src/dsl/animation_timeline_builder";
 
 @JsonApiModelConfig({
   type: 'user'
@@ -66,13 +67,13 @@ export class UserModel extends AbstractModel {
   is_mobile_verified: boolean;
 
   @Attribute()
-  is_staff: boolean;
-
-  @Attribute()
   created: Date;
 
   @Attribute()
   updated: Date;
+
+  @Attribute()
+  data: any = {};
 
   @HasMany()
   @ExtraOptions({
@@ -84,5 +85,14 @@ export class UserModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) {
+
+  }
+
+
+  get is_guest(): boolean {
+    return this.id === null;
+  }
+
+
 }

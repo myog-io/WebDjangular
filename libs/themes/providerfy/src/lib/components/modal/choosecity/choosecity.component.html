@@ -1,16 +1,16 @@
 <div class="modal-body">
   <div class="modal-logo"></div>
-  <form>
 
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>SEJA BEM VINDO!</h2>
 
     <div class="form-group">
-      <select class="form-control">
-        <option>Onde você está?</option>
-        <option>Lençõis Paulista</option>
-        <option>Bauru</option>
+      <select class="form-control" [formControlName]="'city'">
+        <option value="">Onde você está?</option>
+        <option *ngFor="let city of cities" [value]="city.id" >{{ city.name }}</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Continuar</button>
+    <button type="submit" [disabled]="form.invalid"
+            class="btn btn-outline-primary text-white">Continuar</button>
   </form>
 </div>

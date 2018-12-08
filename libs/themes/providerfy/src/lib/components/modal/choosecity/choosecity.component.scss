@@ -35,10 +35,13 @@ button[type=submit]{
   font-family: "Boston", Helvetica, sans-serif;
   letter-spacing: 2px;
   font-weight:700;
-  background:transparent;
   border-width: 2px;
-  border-color:#01e6eb;
   padding:10px 20px;
   text-transform: uppercase;
+  border-radius: 25px;
+
+  &:disabled{
+    opacity: 0.5;
+  }
 
 }

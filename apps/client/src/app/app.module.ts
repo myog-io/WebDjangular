@@ -11,6 +11,8 @@ import { CoreDynamicPageLoaderModule } from '@webdjangular/core/dynamic-page-loa
 import { CoreServicesModule, WDAConfig } from '@webdjangular/core/services';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppHttpInterceptor } from '@webdjangular/core/interceptors';
+import { CookieService } from "ngx-cookie-service";
+import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
@@ -20,6 +22,8 @@ export function wda_init(wdaconfig: WDAConfig) {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     JsonApiModule,
@@ -43,6 +47,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   bootstrap: [AppComponent],
   providers: [
     WDAConfig,
+    CookieService,
     { provide: APP_BASE_HREF, useValue: '/' },
     {
       provide: HTTP_INTERCEPTORS,
