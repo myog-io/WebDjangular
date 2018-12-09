@@ -40,7 +40,6 @@ export class ClientUserService {
     if (!userCookie.id) {
       this.clientUser = new UserModel(datastore, {attributes:userCookie});
       this.clientUser.data = userCookie.data;
-      console.log( this.clientUser);
     } else {
       this.datastore.findRecord(UserModel, userCookie.id, {}).subscribe(
         (user: UserModel) => {
@@ -52,8 +51,6 @@ export class ClientUserService {
         }
       );
     }
-
-    console.log('ClientUserService: ', this.clientUser.data);
   }
 
   public updateCookie() {

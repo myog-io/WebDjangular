@@ -11,7 +11,7 @@ import { WDAConfig, CoreServicesModule } from "@webdjangular/core/services";
 import { AppHttpInterceptor } from "@webdjangular/core/interceptors";
 import { ThemeModule } from "@webdjangular/core/admin-theme";
 import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
-
+import { CookieService } from "ngx-cookie-service";
 
 
 export function wda_init(wdaconfig: WDAConfig) {
@@ -40,6 +40,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   ],
   bootstrap: [AppComponent],
   providers: [
+    CookieService,
     WDAConfig,
     { provide: APP_BASE_HREF, useValue: "/" },
     {
