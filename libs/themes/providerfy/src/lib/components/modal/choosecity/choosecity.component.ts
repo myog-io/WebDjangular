@@ -46,7 +46,7 @@ export class ThemeProviderfyModalChoosecityComponent {
   }
 
   onSubmit() {
-    this.activeModal.close();
+    //this.activeModal.close();
 
     const cityModel = this.cities.find(city=>city.id===this.form.get('city').value);
     this.clientUserService.clientUser.data['city'] = {
@@ -54,6 +54,8 @@ export class ThemeProviderfyModalChoosecityComponent {
       name: cityModel.name
     };
     this.clientUserService.updateCookie();
+    // TODO: remake it with a better way
+    window.location.reload();
   }
 
 }

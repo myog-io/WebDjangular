@@ -9,7 +9,7 @@ djongo[json]
 
 
 # Djongo - Driver for allowing Django to use MongoDB
-djongo==1.2.30
+djongo==1.2.31
 django-jsoneditor==0.0.13
 
 # Enviroment

@@ -5,8 +5,7 @@ from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.PageSerializer import PageSerializer
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import ArrayReferenceFieldSerializer, DocumentSerializer
-
+from webdjango.serializers.MongoSerializer import DocumentSerializer
 
 class PageRedirectSerializer(DocumentSerializer):
     #default_page  = PageSerializer(many=False)
@@ -25,21 +24,19 @@ class PageRedirectSerializer(DocumentSerializer):
         related_link_url_kwarg='pk',
         self_link_view_name='page-redirect-relationships'
     )
-
+    cities = ResourceRelatedField(
+        many=True,
+        queryset=City.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='page-redirect-relationships'
+    )
     included_serializers = {
         'default_page': 'libs.core.cms.api.serializers.PageSerializer.PageSerializer',
         'redirect_page': 'libs.core.cms.api.serializers.PageSerializer.PageSerializer',
         'cities' : 'libs.plugins.provider.api.serializers.CitySerializer.CitySerializer',
     }
-    cities = ResourceRelatedField(
-        many=True,
-        queryset=City.objects,
-        related_link_url_kwarg='pk',
-        self_link_view_name='page-redirect-relationships',
-        required=False,
-    )
-    #Not Sure How to use it yet
-    #cities = ArrayReferenceFieldSerializer(serializer=CitySerializer)
+
+
     class Meta:
-        model =  PageRedirect
+        model = PageRedirect
         fields = '__all__'

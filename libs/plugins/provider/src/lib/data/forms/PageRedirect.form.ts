@@ -10,24 +10,28 @@ import { CityModel } from '../models/City.model';
 
 export class PageRedirectForm extends AbstractForm {
   public preparePageRow(cell:any,row:any){
-    console.log(cell,row);
-    return "HAHA";
+
+    return cell.toString();
   }
   public prepareCityRow(cell:any,row:any){
-    console.log(cell,row);
-    return "SSSS";
+    let str = "";
+    for (let i = 0; i < cell.length; i++) {
+      const element = cell[i];
+      str += `${element.toString()}<br>`;
+    }
+    return str;
   }
 
   public listingTableSettings: SmartTableSettings = {
     columns: {
       default_page: {
         title: 'Redirect From',
-        type: 'html',
+        type: 'text',
         valuePrepareFunction: this.preparePageRow
       },
       redirect_page: {
         title: 'Redirect To',
-        type: 'html',
+        type: 'text',
         valuePrepareFunction: this.preparePageRow
       },
       cities: {

@@ -31,19 +31,10 @@ export class ThemeProviderfyHeaderMenuComponent implements OnInit {
   constructor(private modalService: NgbModal, private cookieService: CookieService,
               private clientUserService: ClientUserService) {
 
-    console.log('menu: ', this.clientUserService.clientUser.data);
-    if (!this.clientUserService.clientUser.data.hasOwnProperty('city')) {
-      this.modalService.open(ThemeProviderfyModalChoosecityComponent, {
-        centered: true,
-        backdropClass: 'backdrop-choosecity',
-        windowClass: 'choosecity',
-        keyboard: false, // ESC can NOT close the model
-        beforeDismiss: () => {
-          return false;
-        }
-      });
-    }
+
   }
+
+
 
   openModalWeCallYou() {
     this.modalService.open(ThemeProviderfyModalWecallyouComponent);

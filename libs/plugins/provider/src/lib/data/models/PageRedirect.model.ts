@@ -15,7 +15,7 @@ import { PageRedirectForm } from '../forms/PageRedirect.form';
 })
 export class PageRedirectModel extends AbstractModel {
   public static formClassRef = PageRedirectForm;
-  public static include = null;
+  public static include = 'default_page,redirect_page,cities';
 
   @Attribute()
   id: string;
@@ -34,7 +34,7 @@ export class PageRedirectModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    backendResourceName: 'Block'
+    backendResourceName: 'City'
   })
   cities: CityModel;
 

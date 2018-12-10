@@ -63,7 +63,7 @@ export class AbstractForm extends FormGroup {
    * Populates form
    * @param [entity]
    */
-  public populateForm(entity: JsonApiModel|any = null) {
+  public populateForm(entity: JsonApiModel | any = null) {
 
     for (let propName in this.formFields) {
       // From Array
@@ -81,17 +81,17 @@ export class AbstractForm extends FormGroup {
       }
     }
   }
-  private createEntity(model:any,data:any){
-    if('id' in data && !('pk' in data) && data.id ){
+  private createEntity(model: any, data: any) {
+    if ('id' in data && !('pk' in data) && data.id) {
       data.pk = data.id;
-    }else if('pk' in data && !('id' in data) && data.pk ){
+    } else if ('pk' in data && !('id' in data) && data.pk) {
       data.id = data.pk;
-    }else{
+    } else {
       // It's an Abstract Model, does not have ID;
       return data;
     }
     data.attributes = data;
-    return new model(this.datastore,data);
+    return new model(this.datastore, data);
   }
   /**
    * Updates model
@@ -99,27 +99,24 @@ export class AbstractForm extends FormGroup {
    */
   public updateModel(entity: JsonApiModel) {
     let values = this.value;
-    console.log(entity);
     for (let propName in values) {
       switch (this.formFields[propName].type) {
         case FormGroup:
-          if(this.formFields[propName].model){
-            entity[propName] = this.createEntity(this.formFields[propName].model,this.get(propName).value)
-          }else{
+          if (this.formFields[propName].model) {
+            entity[propName] = this.createEntity(this.formFields[propName].model, this.get(propName).value)
+          } else {
             entity[propName] = this.get(propName).value;
           }
           break;
         case FormArray:
-          if(this.formFields[propName].model){
+          if (this.formFields[propName].model) {
             const vals = this.get(propName).value;
-            console.log(vals);
             let entities = [];
             for (let i = 0; i < vals.length; i++) {
-              entities.push(this.createEntity(this.formFields[propName].model,vals[i]))
+              entities.push(this.createEntity(this.formFields[propName].model, vals[i]))
             }
-            console.log(entities)
             entity[propName] = entities;
-          }else{
+          } else {
             entity[propName] = this.get(propName).value;
           }
           break
@@ -218,7 +215,7 @@ export class AbstractForm extends FormGroup {
     }
   }
 
-  public formArrayRemoveAt(formKey:string = null, index= 1){
+  public formArrayRemoveAt(formKey: string = null, index = 1) {
     if (this.formFields[formKey].type == FormArray) {
       let fa = this.get(formKey) as FormArray;
       fa.removeAt(index);

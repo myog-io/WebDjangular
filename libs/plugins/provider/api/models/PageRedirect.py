@@ -11,7 +11,7 @@ class PageRedirect(DateTimeModel):
     redirect_page = models.ForeignKey(
         Page, on_delete=models.CASCADE, related_name='provider_redirect')
     cities = models.ArrayReferenceField(
-        to=City, on_delete=models.SET_NULL, related_name='redirect', blank=True, null=True)
+        City, related_name='redirect', blank=True, null=True)
 
     class Meta:
         db_table = 'provider_redirect'

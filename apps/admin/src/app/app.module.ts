@@ -14,7 +14,6 @@ import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
 import { CookieService } from "ngx-cookie-service";
 
 
-
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
 }
@@ -41,6 +40,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   ],
   bootstrap: [AppComponent],
   providers: [
+    CookieService,
     WDAConfig,
     CookieService,
     { provide: APP_BASE_HREF, useValue: "/" },

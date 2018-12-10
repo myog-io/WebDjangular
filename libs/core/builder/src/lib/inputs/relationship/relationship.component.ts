@@ -71,7 +71,6 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
     this.loading = false;
     const group = this.group.get(this.config.name) as AbstractForm;
     this.group_subscription = group.valueChanges.subscribe(value => {
-      console.log(group,value)
       this.title = group.toString();
     });
   }

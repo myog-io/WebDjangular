@@ -31,7 +31,7 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
   getElements(): Promise<any> {
     let findOptions: any = this.buildFilterOptions();
     findOptions.page = this.buildPageOptions();
-
+    findOptions.include = this.model.include
     return this.datastore
       .findAll(this.model, findOptions)
       .pipe(
