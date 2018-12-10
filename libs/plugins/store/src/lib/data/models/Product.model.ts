@@ -6,7 +6,6 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { ProductForm } from '../forms/Product.form';
-import {FormControl, Validators} from "@angular/forms";
 import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
 import { ProductTypeModel } from './ProductType.model';
 

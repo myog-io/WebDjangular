@@ -1,28 +1,29 @@
-import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import {AdminComponent} from './admin.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
-import {PageModel} from '@webdjangular/core/cms-models';
-import {FormModel} from '@webdjangular/core/forms-models'
+import { AdminComponent } from './admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PageModel } from '@webdjangular/core/cms-models';
+import { FormModel } from '@webdjangular/core/forms-models'
 
 
-import {PermissionGuard} from '@webdjangular/core/services';
-import {ThemeModel, CoreWebsiteModel} from '@webdjangular/core/data-models';
-import {PluginModel} from '@webdjangular/core/data-models';
-import {ScaffoldModule} from './scaffold/scaffold.module';
-import {GroupModule} from './group/group.module';
-import {UserModule} from './user/user.module';
-import {CoreMediaModule} from '@webdjangular/core/media';
+import { PermissionGuard } from '@webdjangular/core/services';
+import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
+import { PluginModel } from '@webdjangular/core/data-models';
+import { ScaffoldModule } from './scaffold/scaffold.module';
+import { GroupModule } from './group/group.module';
+import { UserModule } from './user/user.module';
+import { CoreMediaModule } from '@webdjangular/core/media';
 
-import {CoreConfigGroupModule} from './core-config-group/core-config-group.module';
-import {CityModel} from '@webdjangular/plugins/provider-data';
-import {ProductModel} from "../../../../plugins/store/src/lib/data/models/Product.model";
-import {OrderModel} from "../../../../plugins/store/src/lib/data/models/Order.model";
-import {VoucherModel} from "../../../../plugins/store/src/lib/data/models/Voucher.model";
-import {SaleModel} from "../../../../plugins/store/src/lib/data/models/Sale.model";
-import {ShippingMethodModel} from "../../../../plugins/store/src/lib/data/models/ShippingMethod.model";
-import {CategoryModel} from "../../../../plugins/store/src/lib/data/models/Category.model";
+import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
+import { CityModel } from '@webdjangular/plugins/provider-data';
+import { ProductModel } from "../../../../plugins/store/src/lib/data/models/Product.model";
+import { OrderModel } from "../../../../plugins/store/src/lib/data/models/Order.model";
+import { VoucherModel } from "../../../../plugins/store/src/lib/data/models/Voucher.model";
+import { SaleModel } from "../../../../plugins/store/src/lib/data/models/Sale.model";
+import { ShippingMethodModel } from "../../../../plugins/store/src/lib/data/models/ShippingMethod.model";
+import { CategoryModel } from "../../../../plugins/store/src/lib/data/models/Category.model";
+import { PageRedirectModel } from 'libs/plugins/provider/src/lib/data/models/PageRedirect.model';
 
 
 const routes: Routes = [
@@ -92,14 +93,29 @@ const routes: Routes = [
         }
       },
       {
-        path: 'cities',
-        loadChildren: () => ScaffoldModule,
-        data: {
-          model: CityModel,
-          title: 'Cities',
-          path: 'cities'
-        }
+        path: 'provider',
+        children: [
+          {
+            path: 'cities',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: CityModel,
+              title: 'Cities',
+              path: 'provider/cities'
+            }
+          },
+          {
+            path: 'page-redirect',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: PageRedirectModel,
+              title: 'Redirects',
+              path: 'provider/page-redirect'
+            }
+          },
+        ]
       },
+
       {
         path: 'store',
         children: [

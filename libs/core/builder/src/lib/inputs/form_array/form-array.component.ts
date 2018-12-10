@@ -2,12 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/c
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
 import { Subscription } from 'rxjs';
-import { WebAngularSmartTableDataSourceOptions, SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
+import { SmartTableSettings } from '@webdjangular/core/data';
 import { LocalDataSource } from 'ng2-smart-table';
-import { FormArray } from '@angular/forms';
 import { NbWindowRef, NbWindowService } from '@nebular/theme';
 import { WebAngularDataStore } from '@webdjangular/core/services';
-import { compileNgModuleFactory__POST_R3__ } from '@angular/core/src/application_ref';
 
 enum state {
   start = 'start',
@@ -39,7 +37,7 @@ enum state {
 export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {
   public smart_table_settings: SmartTableSettings = {
     editable: true,
-    mode: SmartTableSettingsMode.inline,
+    mode: 'inline',
     columns: {
 
     },
@@ -173,12 +171,12 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    * When the smart_table_settings.mode is `external` we have to get the form config information
    */
   private getFormConfig() {
-    if (this.group.formFields[this.config.name].formClass) {
-      this.form = new this.group.formFields[this.config.name].formClass();
+    if (this.group.formFields[this.config.name].model) {
+      this.form = new this.group.formFields[this.config.name].model.formClassRef();
       this.form.generateForm();
     } else {
       throw new Error(
-        `Form Array require formClass inside formFields[${this.config.name}]`
+        `Form Array require 'model' with a formClassRef inside formFields[${this.config.name}]`
       );
     }
   }
@@ -190,8 +188,8 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       this.smart_table_settings.mode = this.config.smart_table_mode;
     }
     if (this.group.formFields && this.group.formFields[this.config.name]) {
-      if (this.group.formFields[this.config.name].formClass) {
-        const fg: AbstractForm = new this.group.formFields[this.config.name].formClass();
+      if (this.group.formFields[this.config.name].model) {
+        const fg: AbstractForm = new this.group.formFields[this.config.name].model.formClassRef();
 
         this.smart_table_settings = Object.assign(
           {},
@@ -200,7 +198,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
         );
       } else {
         throw new Error(
-          `Form Array require formClass inside formFields[${this.config.name}]`
+          `Form Array require a 'model' with formClassRef inside formFields[${this.config.name}]`
         );
       }
     } else if (this.config.fields) {
@@ -209,7 +207,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
           const element = this.config.fields[key];
           this.smart_table_settings.columns[element.name] = {
             title: element.label,
-            type: SmartTableColumnType.text, // TODO: Imporve Match Type
+            type: 'text', // TODO: Imporve Match Type
           }
         }
       }

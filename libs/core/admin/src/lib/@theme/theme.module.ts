@@ -11,7 +11,6 @@ import { NbAuthComponent,
  NbRequestPasswordComponent,
  NbResetPasswordComponent } from '@webdjangular/core/auth';
 
-import { ModelPaginatorComponent } from './components/model-paginator/model-paginator.component';
 
 import { RouterModule } from '@angular/router';
 
@@ -86,7 +85,6 @@ const NB_MODULES = [
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
   NbAlertModule,
-
 ];
 
 const COMPONENTS = [
@@ -109,7 +107,6 @@ const COMPONENTS = [
   NbRegisterComponent,
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
-  ModelPaginatorComponent
 ];
 
 const ENTRY_COMPONENTS = [

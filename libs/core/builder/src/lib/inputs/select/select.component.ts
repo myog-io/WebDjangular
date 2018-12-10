@@ -10,27 +10,26 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
     <div class="form-group form-select" [formGroup]="group" >
       <label>{{ config.label }}</label>
       <ng-select class="form-control" (change)="onChange" [formControlName]="config.name" [multiple]="config.multiple" [loading]="loading">
-        <ng-option value="">{{ config.placeholder }}</ng-option>
-        <ng-option *ngFor="let option of config.options" value="{{option.value}}">
+        <ng-option value="null">{{ config.placeholder }}</ng-option>
+        <ng-option *ngFor="let option of options" value="{{option.value}}">
           {{option.label}}
         </ng-option>
       </ng-select>
     </div><!--form-group-->
   `
 })
-export class BuilderFormSelectComponent implements BuilderFormField, OnInit{
+export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   loading: boolean = false;
-
+  options = []
   /**
    * Creates an instance of scaffold form select component.
    * @param datastore
    */
   constructor(private datastore: WebAngularDataStore) {
-    console.log("BUILDING ???");
-  }
 
+  }
   /**
    * on init
    */
@@ -41,14 +40,17 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit{
         this.config.options = [];
         for (let i = 0; i < models.length; i++) {
           const entry = models[i];
-          this.config.options.push({
+
+          this.options.push({
             value: entry.id,
             label: entry.toString()
           });
         }
       });
+    }else{
+      this.options = this.config.options;
     }
-    if (this.config.value){
+    if (this.config.value) {
       this.group.get(this.config.name).setValue(this.config.value);
     }
   }

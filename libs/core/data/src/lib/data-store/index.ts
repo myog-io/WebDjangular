@@ -8,12 +8,8 @@ export {
 export {
   SmartTableSettings,
   SmartTableSettingsAttr,
-  SmartTableSettingsMode,
   SmartTableColumnSettings,
-  SmartTableColumnSort,
-  SmartTableColumnType,
   SmartTableEditor,
-  SmartTableEditorType,
   SmartTableEditorConfig,
   SmartTableEditorConfigCompleter,
   SmartTableActions

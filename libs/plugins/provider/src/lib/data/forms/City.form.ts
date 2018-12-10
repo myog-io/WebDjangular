@@ -4,19 +4,25 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { StreetForm } from './Street.form';
 import { RangeForm } from './Range.form';
-import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
+import { SmartTableSettings } from '@webdjangular/core/data';
+import { StreetModel } from '../models/Street.model';
+import { RangeModel } from '../models/Range.model';
 
 export class CityForm extends AbstractForm {
 
   public listingTableSettings: SmartTableSettings = {
     columns: {
+      id: {
+        title: '#',
+        type: 'text',
+      },
       name: {
         title: 'Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       short_name: {
         title: 'Short Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
     },
   };
@@ -35,11 +41,11 @@ export class CityForm extends AbstractForm {
     },
     streets: {
       type: FormArray,
-      formClass: StreetForm,
+      model: StreetModel,
     },
     postal_codes: {
       type: FormArray,
-      formClass: RangeForm,
+      model: RangeModel,
     },
     created: {
       type: FormControl,
@@ -68,15 +74,15 @@ export class CityForm extends AbstractForm {
       type: 'formArray',
       label: 'Streets',
       name: 'streets',
-      fields: new StreetForm().scaffoldFields,
-      smart_table_mode: SmartTableSettingsMode.external,
+      //fields: StreetForm.scaffoldFields,
+      smart_table_mode: 'external',
 
     },
     {
       type: 'formArray',
       label: 'Postal Codes',
       name: 'postal_codes',
-      fields: new RangeForm().scaffoldFields,
+      //fields: new RangeForm().scaffoldFields,
     }
   ]
 }

@@ -6,7 +6,7 @@ import { UrlSegment } from '@angular/router';
 import { WebAngularDataStore } from './WebAngularDataStore.service';
 import { PageModel } from '@webdjangular/core/cms-models';
 import { JsonApiQueryData } from 'angular2-jsonapi';
-import {ClientUserService} from "./client-user.service";
+import { ClientUserService } from './client-user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,8 @@ export class WDAConfig {
 
 
   constructor(private http: HttpClient,
-              private datastore: WebAngularDataStore,
-              private clientUser:ClientUserService ) {
+    private datastore: WebAngularDataStore,
+    private clientUser: ClientUserService) {
 
   }
 

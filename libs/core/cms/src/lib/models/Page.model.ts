@@ -55,6 +55,9 @@ export class PageModel extends AbstractModel {
   set pk(value) {
 
   }
+  public toString = (): string => {
+    return `${this.title} (ID: ${this.id})`;
+  }
 
 }
 

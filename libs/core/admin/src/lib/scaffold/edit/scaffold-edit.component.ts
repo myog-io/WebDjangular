@@ -102,7 +102,7 @@ export class ScaffoldEditComponent implements OnInit {
    * Determines if it's a create or update
    */
   onSubmit($event:any) {
-    this.update($event.redirect);
+    this.update($event.redirect?$event.redirect:false);
   }
 
   /**
@@ -123,7 +123,15 @@ export class ScaffoldEditComponent implements OnInit {
       },
       (error) => {
         this.loading = false;
-        this.toaster.danger(`Changes have been saved`,`Error!`);
+        if(error.errors && error.errors.length > 0){
+          for (let i = 0; i < error.errors.length; i++) {
+            // TODO: Check pointer to see if is for an specific field and set an error inside the field
+            const element = error.errors[i];
+            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`,`Error!`,{duration:5000});
+          }
+        } else {
+          this.toaster.danger(`Error saving the Changes`,`Error!`);
+        }
       }
     )
   }

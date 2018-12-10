@@ -42,6 +42,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   providers: [
     CookieService,
     WDAConfig,
+    CookieService,
     { provide: APP_BASE_HREF, useValue: "/" },
     {
       provide: HTTP_INTERCEPTORS,

@@ -22,6 +22,7 @@ import { BuilderFormFieldConfig, BuilderFormField } from './interfaces/form-conf
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
+import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
 
 
 const components: { [type: string]: Type<BuilderFormField> } = {
@@ -35,6 +36,7 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   formArray: BuilderFormArrayComponent,
   formGroup: BuilderFormGroupComponent,
   switch: BuilderFormSwitcherComponent,
+  checkbox: BuilderFormCheckboxOptionsComponent,
 };
 
 @Directive({

@@ -95,7 +95,7 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
    * If Relationship of Model is Updated
    */
   public relationship($event) {
-    this.onSubmit.emit($event);
+    this.relationshipUpdated.emit($event);
   }
   /**
    * Destroying the component

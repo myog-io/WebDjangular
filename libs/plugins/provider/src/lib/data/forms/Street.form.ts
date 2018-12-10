@@ -3,7 +3,8 @@ import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { RangeForm } from './Range.form';
-import { SmartTableSettings, SmartTableColumnType } from '@webdjangular/core/data';
+import { SmartTableSettings } from '@webdjangular/core/data';
+import { RangeModel } from '../models/Range.model';
 
 export class StreetForm extends AbstractForm {
 
@@ -11,11 +12,11 @@ export class StreetForm extends AbstractForm {
     columns: {
       name: {
         title: 'Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       short_name: {
         title: 'Short Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       }
     },
   };
@@ -31,7 +32,7 @@ export class StreetForm extends AbstractForm {
     },
     numbers: {
       type: FormArray,
-      formClass: RangeForm,
+      model: RangeModel,
     }
 
   }
@@ -56,7 +57,7 @@ export class StreetForm extends AbstractForm {
       type: 'formArray',
       label: 'Number Range',
       name: 'numbers',
-      fields: new RangeForm().scaffoldFields,
+      //fields: new RangeForm().scaffoldFields,
     }
 
   ]

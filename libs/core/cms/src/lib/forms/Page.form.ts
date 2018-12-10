@@ -43,11 +43,11 @@ export class PageForm extends AbstractForm {
     },
     header: {
       type: FormGroup,
-      formClass: BlockForm,
+      model: BlockModel,
     },
     footer: {
       type: FormGroup,
-      formClass: BlockForm,
+      model: BlockModel,
     },
     created: {
       type: FormControl,
@@ -90,4 +90,7 @@ export class PageForm extends AbstractForm {
       options_model: BlockModel,
     }
   ]
+  public toString = (): string => {
+    return `${this.value.title} (ID: ${this.value.pk})`;
+  }
 }

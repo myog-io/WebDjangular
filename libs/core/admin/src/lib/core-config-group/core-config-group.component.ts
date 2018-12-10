@@ -54,7 +54,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    * on init
    */
   ngOnInit() {
-    this.form = new AbstractForm();
+    this.form = new AbstractForm(this.datastore);
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
       if (this.id) {

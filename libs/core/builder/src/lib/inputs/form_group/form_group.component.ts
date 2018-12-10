@@ -40,7 +40,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
       this.fields = this.form.scaffoldFields;
     } else {
       throw new Error(
-        `Form Array require formClass inside formFields[${this.config.name}]`
+        `Form Array require a 'model' with formClassRef inside formFields[${this.config.name}]`
       );
     }
   }

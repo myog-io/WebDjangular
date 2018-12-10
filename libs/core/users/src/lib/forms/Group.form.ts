@@ -1,7 +1,7 @@
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormControl, FormArray } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { PermissionForm } from './Permission.form';
+import { PermissionModel } from '../models/Permission.model';
 
 export class GroupForm extends AbstractForm {
   formFields = {
@@ -16,7 +16,7 @@ export class GroupForm extends AbstractForm {
     },
     permissions: {
       type: FormArray,
-      from: PermissionForm
+      model: PermissionModel
     }
   };
 }

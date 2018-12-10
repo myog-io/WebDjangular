@@ -3,6 +3,8 @@ import { JsonApiModel } from 'angular2-jsonapi';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import { AbstractModel } from '../models';
+import { WebAngularDataStore } from '@webdjangular/core/services';
 
 export class AbstractForm extends FormGroup {
 
@@ -24,7 +26,7 @@ export class AbstractForm extends FormGroup {
   /**
    * Creates an instance of abstract form.
    */
-  public constructor() {
+  public constructor(private datastore: WebAngularDataStore) {
     super({});
   }
 
@@ -38,8 +40,8 @@ export class AbstractForm extends FormGroup {
 
         this.registerControl(propName, new FormArray([], []));
       } else if (this.formFields[propName].type == FormGroup) {
-        if (typeof this.formFields[propName].formClass !== 'undefined') {
-          const fb = new this.formFields[propName].formClass();
+        if (typeof this.formFields[propName].model !== 'undefined') {
+          const fb = new this.formFields[propName].model.formClassRef();
           fb.generateForm();
           this.registerControl(propName, fb);
         } else {
@@ -61,7 +63,8 @@ export class AbstractForm extends FormGroup {
    * Populates form
    * @param [entity]
    */
-  public populateForm(entity: JsonApiModel|any = null) {
+  public populateForm(entity: JsonApiModel | any = null) {
+
     for (let propName in this.formFields) {
       // From Array
       if (this.formFields[propName].type == FormArray && typeof entity[propName] !== 'undefined') {
@@ -78,23 +81,44 @@ export class AbstractForm extends FormGroup {
       }
     }
   }
-
+  private createEntity(model: any, data: any) {
+    if ('id' in data && !('pk' in data) && data.id) {
+      data.pk = data.id;
+    } else if ('pk' in data && !('id' in data) && data.pk) {
+      data.id = data.pk;
+    } else {
+      // It's an Abstract Model, does not have ID;
+      return data;
+    }
+    data.attributes = data;
+    return new model(this.datastore, data);
+  }
   /**
    * Updates model
    * @param entity JsonApiModel
    */
   public updateModel(entity: JsonApiModel) {
     let values = this.value;
-
     for (let propName in values) {
       switch (this.formFields[propName].type) {
         case FormGroup:
-          // TODO: Not an Entityd need to be done
-          entity[propName] = this.get(propName).value;
+          if (this.formFields[propName].model) {
+            entity[propName] = this.createEntity(this.formFields[propName].model, this.get(propName).value)
+          } else {
+            entity[propName] = this.get(propName).value;
+          }
           break;
         case FormArray:
-          // TODO: If this is an entity this will change
-          entity[propName] = this.get(propName).value;
+          if (this.formFields[propName].model) {
+            const vals = this.get(propName).value;
+            let entities = [];
+            for (let i = 0; i < vals.length; i++) {
+              entities.push(this.createEntity(this.formFields[propName].model, vals[i]))
+            }
+            entity[propName] = entities;
+          } else {
+            entity[propName] = this.get(propName).value;
+          }
           break
         default:
           entity[propName] = values[propName];
@@ -163,7 +187,7 @@ export class AbstractForm extends FormGroup {
         }
       }
     } else {
-      let fb = new this.formFields[formKey].form();
+      let fb = new this.formFields[formKey].model.formClassRef();
       fb.generateForm();
       fb.populateForm(toRelateEntity);
       control.push(fb);
@@ -179,8 +203,8 @@ export class AbstractForm extends FormGroup {
     if (this.formFields[formKey].type == FormArray) {
       let fa = this.get(formKey) as FormArray;
       let f: AbstractForm;
-      if (this.formFields[formKey].formClass) {
-        f = new this.formFields[formKey].formClass();
+      if (this.formFields[formKey].model) {
+        f = new this.formFields[formKey].model.formClassRef();
       } else {
         f = new entityToPush.constructor.formClassRef();
       }
@@ -191,7 +215,7 @@ export class AbstractForm extends FormGroup {
     }
   }
 
-  public formArrayRemoveAt(formKey:string = null, index= 1){
+  public formArrayRemoveAt(formKey: string = null, index = 1) {
     if (this.formFields[formKey].type == FormArray) {
       let fa = this.get(formKey) as FormArray;
       fa.removeAt(index);

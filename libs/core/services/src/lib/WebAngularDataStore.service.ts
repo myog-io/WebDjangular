@@ -11,6 +11,9 @@ import { ContentTypeModel } from '@webdjangular/core/data-models';
 import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 import { CoreConfigInputModel } from 'libs/core/data/src/lib/models/CoreConfigInput.model';
 import { CoreConfigModel } from 'libs/core/data/src/lib/models/CoreConfig.model';
+import { CityModel } from '@webdjangular/plugins/provider-data';
+import { ProductModel } from 'libs/plugins/store/src/lib/data/models/Product.model';
+import { ProductTypeModel } from 'libs/plugins/store/src/lib/data/models/ProductType.model';
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
@@ -24,7 +27,10 @@ const config: DatastoreConfig = {
     ContentType: ContentTypeModel,
     CoreConfigGroup: CoreConfigGroupModel,
     CoreConfigInput: CoreConfigInputModel,
-    CoreConfig: CoreConfigModel
+    CoreConfig: CoreConfigModel,
+    City: CityModel,
+    Product: ProductModel,
+    ProductType: ProductTypeModel,
   }
 };
 

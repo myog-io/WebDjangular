@@ -11,7 +11,7 @@ import { CoreDynamicPageLoaderModule } from '@webdjangular/core/dynamic-page-loa
 import { CoreServicesModule, WDAConfig } from '@webdjangular/core/services';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppHttpInterceptor } from '@webdjangular/core/interceptors';
-import { CookieService } from "ngx-cookie-service";
+import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
 export function wda_init(wdaconfig: WDAConfig) {

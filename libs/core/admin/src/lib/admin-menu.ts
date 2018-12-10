@@ -73,10 +73,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Cities',
-        link: '/cities',
+        link: '/provider/cities',
         data: {
           permission: [
-            {label: 'provider', action: 'list_cities'}
+            {label: 'provider', action: 'view_city'}
+          ]
+        }
+      },
+      {
+        title: 'Page Redirect',
+        link: '/provider/page-redirect',
+        data: {
+          permission: [
+            {label: 'provider', action: 'view_pageredirect'}
           ]
         }
       }

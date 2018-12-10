@@ -12,68 +12,44 @@ export interface SmartTableEditorConfig {
   list?: any[];
   completer?: SmartTableEditorConfigCompleter; // List of options
 }
-export enum SmartTableEditorType {
-  text = 'text',
-  textarea = 'textarea',
-  completer = 'completer',
-  list = 'list',
-  checkbox = 'checkbox'
-}
 export interface SmartTableEditor {
-  type?: SmartTableEditorType; // 'text' | 'textarea' | 'completer' | 'list' | 'checkbox'
+  type?: 'text' | 'textarea' | 'completer' | 'list' | 'checkbox';
   config?: SmartTableEditorConfig;
   component?: DefaultEditor;
-}
-export enum SmartTableColumnType {
-  text = 'text',
-  html = 'html',
-  custom = 'custom'
-}
-export enum SmartTableColumnSort {
-  asc = 'asc',
-  desc = 'desc',
 }
 export interface SmartTableColumnSettings {
   title: string;
   class?: string;
   width?: string;
   editable?: boolean;
-  type: SmartTableColumnType;
+  type: 'text' | 'html' | 'custom';
   renderComponent?: any;
   onComponentInitFunction?: Function;
   editor?: SmartTableEditor;
   filter?: Object;
   valuePrepareFunction?: Function;
   sort?: boolean; // Enable/Disabled
-  sortDirection?: SmartTableColumnSort;
+  sortDirection?: 'asc' | 'desc';
   compareFunction?: Function;
   filterFunction?: Function;
-}
-export enum SmartTableSettingsMode {
-  external = 'external',
-  inline = 'inline',
 }
 export interface SmartTableSettingsAttr {
   id?: string;
   class?: string;
-}
-export enum SmartTableActionsPosition {
-  left = 'left',
-  right = 'right',
 }
 export interface SmartTableActions {
   columnTitle?: string;
   add?: boolean;
   edit?: boolean;
   delete?: boolean;
-  position?: SmartTableActionsPosition;
+  position?: 'left' | 'right';
 }
 export interface SmartTableSettings {
   editable?: boolean;
   columns?: {
     [key: string]:SmartTableColumnSettings
   };
-  mode?: SmartTableSettingsMode,
+  mode?: 'external' | 'inline',
   hideHeader?: boolean,
   hideSubHeader?: boolean,
   noDataMessage?: string,
