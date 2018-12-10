@@ -10,7 +10,8 @@ import {
   NbWindowModule,
   NbSpinnerModule,
   NbButtonModule,
-  NbListModule
+  NbListModule,
+  NbCheckboxModule
 } from '@nebular/theme';
 
 import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
@@ -25,6 +26,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BuilderFormComponent } from './builder-form.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
+import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+import { ModelPaginatorComponent } from './model-paginator/model-paginator.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormRelationshipComponent,
@@ -36,7 +39,9 @@ const ENTRY_COMPONENTS = [
   BuilderFormBuilderComponent,
   BuilderFormArrayComponent,
   BuilderFormSwitcherComponent,
-  BuilderFormGroupComponent
+  BuilderFormGroupComponent,
+  BuilderFormCheckboxOptionsComponent,
+  ModelPaginatorComponent
 ];
 
 @NgModule({
@@ -53,9 +58,10 @@ const ENTRY_COMPONENTS = [
     NbButtonModule,
     NbSpinnerModule,
     NbListModule,
+    NbCheckboxModule,
 
   ],
-  exports: [ScaffoldFieldDirective, BuilderFormComponent],
+  exports: [ScaffoldFieldDirective, BuilderFormComponent, ModelPaginatorComponent],
   entryComponents: [...ENTRY_COMPONENTS]
 })
 export class BuilderFormModule { }

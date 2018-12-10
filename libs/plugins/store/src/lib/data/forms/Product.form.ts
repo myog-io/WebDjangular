@@ -3,11 +3,10 @@ import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
-import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
-import { ProductPriceForm } from './ProductPrice.form';
+import { SmartTableSettings} from '@webdjangular/core/data';
 import { ProductClasses } from '../interfaces/Product.interface';
-import { ProductTypeForm } from './ProductType.form';
 import { ProductTypeModel } from '../models/ProductType.model';
+import { ProductPriceModel } from '../models/ProductPrice.model';
 
 export class ProductForm extends AbstractForm {
 
@@ -15,19 +14,19 @@ export class ProductForm extends AbstractForm {
     columns: {
       name: {
         title: 'Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       sku: {
         title: 'SKU',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       type: {
         title: 'Type',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       product_class: {
         title: 'Class',
-        type: SmartTableColumnType.text,
+        type: 'text',
       }
     },
   };
@@ -47,7 +46,7 @@ export class ProductForm extends AbstractForm {
     type: {
       type: FormGroup,
       validators: [Validators.required],
-      formClass: ProductTypeForm
+      model: ProductTypeModel
     },
     name: {
       type: FormControl,
@@ -56,9 +55,8 @@ export class ProductForm extends AbstractForm {
     pricing: {
       type: FormGroup,
       validators: [Validators.required],
-      formClass: ProductPriceForm,
+      model: ProductPriceModel,
     },
-
     slug: {
       type: FormControl,
       validators: [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")] // TODO: validate the uniqueness

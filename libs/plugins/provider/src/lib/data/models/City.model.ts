@@ -1,23 +1,9 @@
 import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
-
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
-
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import { CityForm } from '../forms/City.form';
-
-
-export interface RangeInterface {
-  start: number;
-  end: number;
-}
-
-export interface StreetInterface {
-  name: string;
-  short_name?: string;
-  numbers: RangeInterface[];
-}
+import { RangeInterface } from './Range.model';
+import { StreetInterface } from './Street.model';
 
 
 @JsonApiModelConfig({
@@ -62,6 +48,8 @@ export class CityModel extends AbstractModel {
   set pk(value) {
 
   }
-
+  public toString = (): string => {
+    return `${this.name} (ID: ${this.id})`;
+  }
 }
 

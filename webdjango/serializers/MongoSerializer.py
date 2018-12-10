@@ -21,8 +21,8 @@ from collections import Mapping, OrderedDict
 
 class ArrayModelFieldSerializer(serializers.ListField):
 
-    def __init__(self, *args, **kwargs):
-        self.serializer = kwargs.pop('serializer', True)
+    def __init__(self,serializer, *args, **kwargs):
+        self.serializer = serializer
         if self.serializer:
             self.child = self.serializer()
         super(ArrayModelFieldSerializer, self).__init__(*args, **kwargs)
@@ -58,8 +58,8 @@ class ArrayReferenceFieldSerializer(serializers.ListField):
     A List Serializers of Arrays
     """
     child = serializers.IntegerField()
-    def __init__(self, *args, **kwargs):
-        self.serializer = kwargs.pop('serializer', True)
+    def __init__(self,serializer, *args, **kwargs):
+        self.serializer = serializer
 
         super(ArrayReferenceFieldSerializer, self).__init__(*args, **kwargs)
 
@@ -78,9 +78,9 @@ class ArrayReferenceFieldSerializer(serializers.ListField):
 
 class EmbeddedModelFieldSerializer(serializers.JSONField):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self,serializer, *args, **kwargs):
         self.binary = kwargs.pop('binary', False)
-        self.serializer = kwargs.pop('serializer', True)
+        self.serializer = serializer
         super(EmbeddedModelFieldSerializer, self).__init__(*args, **kwargs)
 
     def to_internal_value(self, data):
@@ -135,6 +135,28 @@ class DocumentSerializer(serializers.ModelSerializer):
     """
     A Document Serializer For Nested Documents
     """
+    def update_validated_data(self,validated_data,info):
+        for field_name, field in info.fields.items():
+            # Loop For Embbedded Model Field
+            if type(field) is EmbeddedModelField:
+                if(field_name in validated_data):
+                    validated_data[field_name] = field.to_python(validated_data[field_name])
+
+            # Loop for Array Model Field
+            if type(field) is ArrayModelField:
+                if(field_name in validated_data):
+                    validated_data[field_name] = field.to_python(validated_data[field_name])
+                else:
+                    validated_data[field_name] = []
+
+            if type(field) is ArrayReferenceField:
+                if(field_name in validated_data):
+                    validated_data[field_name] = field.to_python(validated_data[field_name])
+                else:
+                    validated_data[field_name] = []
+
+        return validated_data
+
     def create(self, validated_data):
         """
         Create an instance using queryset.create()
@@ -149,31 +171,14 @@ class DocumentSerializer(serializers.ModelSerializer):
         many_to_many = {}
         for field_name, relation_info in info.relations.items():
             # If is Embbed Model Field we will treat on the next loop
-            if (field_name in validated_data) and type(info.fields[field_name]) is not EmbeddedModelField:
-                if relation_info.to_many:
+            if (field_name in validated_data):
+                if relation_info.to_many and type(info.fields[field_name]) is not EmbeddedModelField:
                     many_to_many[field_name] = validated_data.pop(field_name)
 
-        for field_name, field in info.fields.items():
-            ## Loop For Embbedded Model Field
-            if type(field) is EmbeddedModelField:
-                if(field_name in validated_data):
-                    validated_data[field_name] = field.to_python(validated_data[field_name])
-
-            ## Loop for Array Model Field
-            if type(field) is ArrayModelField:
-                if(field_name in validated_data):
-                    print("GENERATE LIST??",validated_data[field_name])
-                else:
-                    validated_data[field_name] = []
-
-            if type(field) is ArrayReferenceField:
-                if(field_name in validated_data):
-                    print("Generate Reference List", validated_data[field_name])
-                else:
-                    validated_data[field_name] = []
-
+        validated_data = self.update_validated_data(validated_data,info)
 
         try:
+            print(validated_data)
             instance = ModelClass.objects.create(**validated_data)
         except TypeError:
             tb = traceback.format_exc()
@@ -201,3 +206,21 @@ class DocumentSerializer(serializers.ModelSerializer):
 
         return instance
 
+
+    def update(self, instance, validated_data):
+
+        info = model_meta.get_field_info(instance)
+        validated_data = self.update_validated_data(validated_data,info)
+        # Simply set each attribute on the instance, and then save it.
+        # Note that unlike `.create()` we don't need to treat many-to-many
+        # relationships as being a special case. During updates we already
+        # have an instance pk for the relationships to be associated with.
+        for attr, value in validated_data.items():
+            if attr in info.relations and info.relations[attr].to_many:
+                field = getattr(instance, attr)
+                field.set(value)
+            else:
+                setattr(instance, attr, value)
+        instance.save()
+
+        return instance

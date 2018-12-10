@@ -3,7 +3,7 @@ import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
-import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
+import { SmartTableSettings } from '@webdjangular/core/data';
 
 export class CategoryForm extends AbstractForm {
 
@@ -13,11 +13,11 @@ export class CategoryForm extends AbstractForm {
     columns: {
       name: {
         title: 'Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       description: {
         title: 'Description',
-        type: SmartTableColumnType.text,
+        type: 'text',
       }
     },
   };

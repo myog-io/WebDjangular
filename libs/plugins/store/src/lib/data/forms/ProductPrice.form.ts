@@ -3,18 +3,18 @@ import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
-import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
+import { SmartTableSettings} from '@webdjangular/core/data';
 
 export class ProductPriceForm extends AbstractForm {
   public listingTableSettings: SmartTableSettings = {
     columns: {
       list: {
         title: 'List Price',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       sale: {
         title: 'Sale Price',
-        type: SmartTableColumnType.text,
+        type: 'text',
       }
     },
   };

@@ -5,9 +5,8 @@ from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
 
-from libs.plugins.provider.api.models.City import City
-from libs.plugins.provider.api.serializers.CitySerializer import CitySerializer
-from drf_yasg.inspectors import base
+from ..models.City import City
+from ..serializers.CitySerializer import CitySerializer
 
 class CityFilter(FilterSet):
     class Meta:
@@ -22,11 +21,11 @@ class CityFilter(FilterSet):
 class CityViewSet(ModelViewSet):
     """
     Handles:
-    Creating Pages
-    Retrieve a list of Pages
-    Retrieve a specific Page
-    Update Pages
-    Deleting Pages
+    Creating Cities
+    Retrieve a list of Cities
+    Retrieve a specific City
+    Update City
+    Deleting Cities
     """
     serializer_class = CitySerializer
     queryset = City.objects.all()

@@ -19,7 +19,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   template: `
     <div class="form-group form-select" [formGroup]="group" >
       <label>{{ config.label }}</label><br/>
-      <button (click)="openWindow()" nbButton status="success" size="large" [nbSpinner]="loading" nbSpinnerStatus="info"
+      <button (click)="openWindow()" nbButton type="button" status="success" size="large" [nbSpinner]="loading" nbSpinnerStatus="info"
               [disabled]="loading" nbSpinnerSize="medium" nbSpinnerMessage="Loading...">
         {{title}}
       </button>
@@ -67,10 +67,11 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
    * on init
    */
   ngOnInit() {
-    this.title = 'Select';
+    this.title = 'Select One';
     this.loading = false;
     const group = this.group.get(this.config.name) as AbstractForm;
     this.group_subscription = group.valueChanges.subscribe(value => {
+      console.log(group,value)
       this.title = group.toString();
     });
   }

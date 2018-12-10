@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core'
-import {HttpClient} from "@angular/common/http";
-import {WebAngularDataStore} from "@webdjangular/core/services";
-import {UserModel} from "@webdjangular/core/users-forms";
-import {CookieService} from "ngx-cookie-service";
-import {AttributeMetadata} from "angular2-jsonapi/dist/constants/symbols";
+import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http';
+import { UserModel } from '@webdjangular/core/users-forms';
+import { CookieService } from 'ngx-cookie-service';
+import { WebAngularDataStore } from './WebAngularDataStore.service';
+
 
 export interface CookieClientUser {
   id?: string;
@@ -22,8 +22,8 @@ export class ClientUserService {
 
 
   constructor(private http: HttpClient,
-              private datastore: WebAngularDataStore,
-              private cookieService: CookieService) {
+    private datastore: WebAngularDataStore,
+    private cookieService: CookieService) {
 
     const userExists: boolean = cookieService.check('clientUser');
     let userCookie: CookieClientUser;
@@ -38,22 +38,19 @@ export class ClientUserService {
     }
 
     if (!userCookie.id) {
-      this.clientUser = new UserModel(datastore, {attributes:userCookie});
+      this.clientUser = new UserModel(datastore, { attributes: userCookie });
       this.clientUser.data = userCookie.data;
-      console.log( this.clientUser);
     } else {
       this.datastore.findRecord(UserModel, userCookie.id, {}).subscribe(
         (user: UserModel) => {
           this.clientUser = user;
           this.clientUser.data = userCookie.data;
         }, (error: any) => {
-          this.clientUser = new UserModel(datastore, {attributes:userCookie});
+          this.clientUser = new UserModel(datastore, { attributes: userCookie });
           this.clientUser.data = userCookie.data;
         }
       );
     }
-
-    console.log('ClientUserService: ', this.clientUser.data);
   }
 
   public updateCookie() {

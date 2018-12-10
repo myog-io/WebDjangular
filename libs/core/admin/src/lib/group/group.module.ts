@@ -6,6 +6,7 @@ import { ThemeModule } from '@webdjangular/core/admin-theme';
 import { GroupComponent } from './group.component';
 import { GroupEditComponent } from './edit/group-edit.component';
 import { GroupRoutingModule } from './group-routing.module';
+import { BuilderFormModule } from '@webdjangular/core/builder';
 
 
 
@@ -19,6 +20,7 @@ const COMPONENTS = [
   	ThemeModule,
     GroupRoutingModule,
     Ng2SmartTableModule,
+    BuilderFormModule
   ],
   declarations: [
     ...COMPONENTS,

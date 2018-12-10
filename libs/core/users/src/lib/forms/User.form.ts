@@ -1,7 +1,7 @@
 import { FormControl, FormArray } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { GroupForm } from './Group.form';
+import { GroupModel } from '../models/Group.model';
 
 export class UserForm extends AbstractForm {
   formFields = {
@@ -58,7 +58,7 @@ export class UserForm extends AbstractForm {
     },
     groups: {
       type: FormArray,
-      from: GroupForm
+      model: GroupModel
     }
   };
 }

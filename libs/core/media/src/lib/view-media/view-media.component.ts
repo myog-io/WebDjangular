@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { MediaModel } from '../models/Media.model';
 import { FileUploader, FileItem } from '@webdjangular/core/chunk-file-upload';
 import { ViewMediaService } from './view-media.service';
+import { ModelPaginatorControls } from 'libs/core/builder/src/lib/model-paginator/model-paginator.controls';
 
-import { ModelPaginatorControls } from '@webdjangular/core/admin-theme';
+
 
 @Component({
   selector: 'webdjangular-view-media',

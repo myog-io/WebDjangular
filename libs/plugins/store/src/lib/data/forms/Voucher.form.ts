@@ -3,7 +3,7 @@ import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
-import { SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType } from '@webdjangular/core/data';
+import { SmartTableSettings} from '@webdjangular/core/data';
 
 export class VoucherForm extends AbstractForm {
 
@@ -11,27 +11,27 @@ export class VoucherForm extends AbstractForm {
     columns: {
       type: {
         title: 'Type',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       name: {
         title: 'Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       code: {
         title: 'Code',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       is_active: {
         title: 'Active',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       start: {
         title: 'Start Date/Time:',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       end: {
         title: 'End Date/Time',
-        type: SmartTableColumnType.text,
+        type: 'text',
       }
     },
   };

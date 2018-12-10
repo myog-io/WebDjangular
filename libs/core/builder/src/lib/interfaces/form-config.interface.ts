@@ -1,8 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
-import { SmartTableSettingsMode } from '@webdjangular/core/data';
-
 
 export interface BuilderFormConfig {
   submit_label?: string;
@@ -34,7 +32,7 @@ export interface BuilderFormFieldConfig {
   switch_first_value?: any;
   switch_second_value?: any;
   fields?: BuilderFormFieldConfig[]; // Children of this Form
-  smart_table_mode?: SmartTableSettingsMode;
+  smart_table_mode?: 'external' | 'inline';
 }
 
 export interface BuilderFormField {

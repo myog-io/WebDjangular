@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { CanActivate, Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-
-import { JsonApiQueryData } from 'angular2-jsonapi';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { NbAccessChecker } from '@nebular/security'
 
 import { WebAngularDataStore } from '@webdjangular/core/services';
 import { UserModel } from '@webdjangular/core/users-models';
 import { GroupModel } from '@webdjangular/core/users-models';
+import { ModelPaginatorControls } from 'libs/core/builder/src/lib/model-paginator/model-paginator.controls';
 
-import { ModelPaginatorControls } from '@webdjangular/core/admin-theme';
+
+
 
 @Component({
   selector: 'user-edit',
@@ -18,7 +17,7 @@ import { ModelPaginatorControls } from '@webdjangular/core/admin-theme';
   templateUrl: './user-edit.component.html',
 })
 export class UserEditComponent {
-  public form = new UserModel.formClassRef();
+  public form = new UserModel.formClassRef(this.datastore);
   public user: UserModel;
 
   public modelPaginatorConfig = {

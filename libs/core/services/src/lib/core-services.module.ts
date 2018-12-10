@@ -11,7 +11,7 @@ import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { WDAConfig } from './wda-config.service';
 import { throwIfAlreadyLoaded } from '@webdjangular/core/shared';
 import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordAuthStrategyOptions } from '@nebular/auth';
-import {ClientUserService} from "./client-user.service";
+import { ClientUserService } from './client-user.service';
 
 
 const SERVICES = [

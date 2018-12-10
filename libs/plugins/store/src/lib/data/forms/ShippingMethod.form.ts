@@ -3,7 +3,7 @@ import {FormControl, Validators, FormGroup, FormArray} from '@angular/forms';
 import {AbstractForm} from '@webdjangular/core/data-forms';
 import {BuilderFormFieldConfig} from '@webdjangular/core/builder';
 
-import {SmartTableSettings, SmartTableSettingsMode, SmartTableColumnType} from '@webdjangular/core/data';
+import {SmartTableSettings} from '@webdjangular/core/data';
 
 export class ShippingMethodForm extends AbstractForm {
 
@@ -11,32 +11,32 @@ export class ShippingMethodForm extends AbstractForm {
     columns: {
       type: {
         title: 'Type',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       name: {
         title: 'Name',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       price: {
         title: 'Price',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       minimum_order_price: {
         title: 'Minimum order price',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       maximum_order_price: {
         title: 'Maximum order price',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
 
       minimum_order_weight: {
         title: 'Minimum order weight',
-        type: SmartTableColumnType.text,
+        type: 'text',
       },
       maximum_order_weight: {
         title: 'Maximum order weight',
-        type: SmartTableColumnType.text,
+        type: 'text',
       }
     },
   };
