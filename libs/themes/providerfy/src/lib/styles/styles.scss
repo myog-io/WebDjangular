@@ -59,6 +59,10 @@ a:hover {
   border-radius: $btn-primary-rounded;
 }
 
+.text-black {
+  color:#000;
+}
+
 h1 {
   font-size: $h1-fs;
   font-family: $secondary-ff;
@@ -237,6 +241,15 @@ input:focus ~ .highlight {
 #requestForPortability {
   background: #f7f7f7;
 
+}
+
+#banner-home{
+  background-position: center center;
+  background-repeat: no-repeat;
+  max-width: 1366px;
+  width: 100%;
+  height: 500px;
+  margin: auto;
 }
 
 #banner-contact {
