@@ -32,8 +32,6 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
       this.clientUserService.clientUser.data['plan_type'] = this.plan_type_default;
       this.clientUserService.updateCookie();
     }
-    console.log(this.plan_type);
-
   }
 
   ngOnInit() {

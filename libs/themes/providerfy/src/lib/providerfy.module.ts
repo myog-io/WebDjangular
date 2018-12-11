@@ -1,20 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule } from "@angular/router";
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {RouterModule} from "@angular/router";
+import {CommonModule} from '@angular/common';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import { ThemeProviderfyComponent } from "./providerfy.component";
-import { ThemeProviderfyHeaderComponent } from "./components/header/header.component";
-import { ThemeProviderfyTopHeaderComponent } from "./components/header/top-header/top-header.component";
-import { ThemeProviderfyHeaderMenuComponent } from "./components/header/menu/menu.component";
-import { ThemeProviderfyFooterComponent } from "./components/footer/footer.component";
-import { ThemeProviderfyBottomFooterComponent } from "./components/footer/bottom-footer/bottom-footer.component";
-import { ThemeProviderfySignatureFooterComponent } from "./components/footer/signature-footer/signature-footer.component";
-import { CoreDynamicPageLoaderModule } from '@webdjangular/core/dynamic-page-loader';
-import { CoreDynamicComponentLoaderModule } from '@webdjangular/core/dynamic-component-loader';
-import { ThemeProviderfyModalWecallyouComponent } from './components/modal/wecallyou/wecallyou.component';
-import { ThemeProviderfyModalChoosecityComponent } from "./components/modal/choosecity/choosecity.component";
+import {ThemeProviderfyComponent} from "./providerfy.component";
+import {ThemeProviderfyHeaderComponent} from "./components/header/header.component";
+import {ThemeProviderfyTopHeaderComponent} from "./components/header/top-header/top-header.component";
+import {ThemeProviderfyHeaderMenuComponent} from "./components/header/menu/menu.component";
+import {ThemeProviderfyFooterComponent} from "./components/footer/footer.component";
+import {ThemeProviderfyBottomFooterComponent} from "./components/footer/bottom-footer/bottom-footer.component";
+import {ThemeProviderfySignatureFooterComponent} from "./components/footer/signature-footer/signature-footer.component";
+import {CoreDynamicPageLoaderModule} from '@webdjangular/core/dynamic-page-loader';
+import {CoreDynamicComponentLoaderModule} from '@webdjangular/core/dynamic-component-loader';
+import {ThemeProviderfyModalWecallyouComponent} from './components/modal/wecallyou/wecallyou.component';
+import {ThemeProviderfyModalChoosecityComponent} from "./components/modal/choosecity/choosecity.component";
 import {ThemeProviderfyModalAdultContentComponent} from "./components/modal/adult-content/adult-content.component";
 import {ThemeProviderfyModalCombateComponent} from "./components/modal/combate/combate.component";
 import {ThemeProviderfyModalCrackleComponent} from "./components/modal/crackle/crackle.component";
@@ -28,7 +28,8 @@ import {ThemeProviderfyModalTelecineComponent} from "./components/modal/telecine
 import {ThemeProviderfyModalVenusComponent} from "./components/modal/venus/venus.component";
 import {ThemeProviderfyModalChannelsComponent} from "./components/modal/channels/channels.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-
+import {ThemeProviderfyError404Component} from "./components/errors/404/404.component";
+import {ThemeProviderfyError500Component} from "./components/errors/500/500.component";
 
 
 const COMPONENTS = [
@@ -56,8 +57,8 @@ const COMPONENTS = [
   ThemeProviderfyModalTelecineComponent,
   ThemeProviderfyModalVenusComponent,
 
-
-
+  ThemeProviderfyError404Component,
+  ThemeProviderfyError500Component,
   /*
   ProviderPlansComponent,
   ProviderPricingInternetHorizontalComponent,
@@ -68,7 +69,6 @@ const COMPONENTS = [
 ];
 
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -77,7 +77,15 @@ const COMPONENTS = [
     NgbModule,
     CoreDynamicComponentLoaderModule.forRoot(),
     RouterModule.forChild([
-
+      // TODO: remove the redirect to the page (remove these errors from routes as well) and make the error showing inside the page that gave the error.
+      {
+        path: 'not-found',
+        component: ThemeProviderfyError404Component,
+      },
+      {
+        path: 'internal-server-error',
+        component: ThemeProviderfyError500Component,
+      },
       {path: '**', pathMatch: 'full', component: ThemeProviderfyComponent}
 
     ])
