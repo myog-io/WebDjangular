@@ -59,6 +59,10 @@ a:hover {
   border-radius: $btn-primary-rounded;
 }
 
+.text-black {
+  color: #000;
+}
+
 h1 {
   font-size: $h1-fs;
   font-family: $secondary-ff;
@@ -239,6 +243,15 @@ input:focus ~ .highlight {
 
 }
 
+#banner-home {
+  background-position: center center;
+  background-repeat: no-repeat;
+  max-width: 1366px;
+  width: 100%;
+  height: 500px;
+  margin: auto;
+}
+
 #banner-contact {
   background-position: center center;
   background-repeat: no-repeat;
@@ -269,10 +282,9 @@ input:focus ~ .highlight {
     border-color: transparent;
     padding: 20px 10px 0px 20px;
 
-    &:not(.bg-primary){
+    &:not(.bg-primary) {
       box-shadow: 0 0 22px rgba(0, 0, 0, 0.2);
     }
-
 
     .card-header {
       background: unset;
@@ -299,8 +311,8 @@ input:focus ~ .highlight {
     }
   }
   .card.contact.bg-primary {
-    .card-header{
-      height:80px;
+    .card-header {
+      height: 80px;
     }
     a {
       font-size: 18px;
@@ -324,8 +336,7 @@ input:focus ~ .highlight {
   }
 }
 
-
-.icon-contact-24h{
+.icon-contact-24h {
   background: url("../assets/images/icon_contact_24h.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -334,7 +345,8 @@ input:focus ~ .highlight {
   display: block;
   float: right;
 }
-.icon-contact-calc{
+
+.icon-contact-calc {
   background: url("../assets/images/icon_contact_calc.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -343,7 +355,8 @@ input:focus ~ .highlight {
   display: block;
   float: left;
 }
-.icon-contact-chat{
+
+.icon-contact-chat {
   background: url("../assets/images/icon_contact_chat.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -352,7 +365,8 @@ input:focus ~ .highlight {
   display: block;
   float: left;
 }
-.icon-contact-commercial{
+
+.icon-contact-commercial {
   background: url("../assets/images/icon_contact_commercial.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -361,7 +375,8 @@ input:focus ~ .highlight {
   display: block;
   float: left;
 }
-.icon-contact-group{
+
+.icon-contact-group {
   background: url("../assets/images/icon_contact_group.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -370,7 +385,8 @@ input:focus ~ .highlight {
   display: block;
   float: left;
 }
-.icon-contact-sac{
+
+.icon-contact-sac {
   background: url("../assets/images/icon_contact_sac.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -379,7 +395,8 @@ input:focus ~ .highlight {
   display: block;
   float: left;
 }
-.icon-contact-technical-support{
+
+.icon-contact-technical-support {
   background: url("../assets/images/icon_contact_technical_support.png");
   background-position: center center;
   background-repeat: no-repeat;
@@ -388,7 +405,6 @@ input:focus ~ .highlight {
   display: block;
   float: left;
 }
-
 
 .modal.tv-channel {
   .modal-dialog {
@@ -748,4 +764,22 @@ $icon-size: 30px;
     }
   }
 
+}
+
+.maxw1366 {
+  max-width: 1366px;
+}
+
+.tv_channelbox {
+  max-width: 460px;
+  height: 455px;
+  padding-left: 30px;
+  h4 {
+    margin-top: 85%;
+    margin-bottom: 0;
+  }
+  p {
+    font-size: 16px;
+    line-height: 20px;
+  }
 }

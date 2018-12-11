@@ -52,7 +52,6 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
   }
 
   onChangePlanType(value: string) {
-    console.log(value);
     // TODO: change plans based on the plan type (personal/business)
     this.plan_type = value;
     this.clientUserService.clientUser.data['plan_type'] = value;

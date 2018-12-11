@@ -96,8 +96,10 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null, null, null, '/api/page/get_home/').subscribe(
-        (page: PageModel) => {
+      this.datastore.findAll(PageModel, { slug: 'home' }).subscribe(
+        (response: JsonApiQueryData<PageModel>) => {
+          let models = response.getModels();
+          let page: PageModel = models[0];
           resolve(page);
         },
         (error: any) => {
