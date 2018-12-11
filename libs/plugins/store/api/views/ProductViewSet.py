@@ -40,7 +40,7 @@ class ProductTypeViewSet(ModelViewSet):
 
 class ProductCategoryFilter(FilterSet):
     class Meta:
-        model = Product
+        model = ProductCategory
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],

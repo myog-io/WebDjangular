@@ -41,6 +41,15 @@ class PageViewSet(ModelViewSet):
     search_fields = ('title', 'content', 'slug')
     permission_classes = ()
 
+
+
+
+    @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug')
+    def get_page(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
     @action(methods=['GET'], detail=False, url_path='get_home')
     def get_home(self, request, format=None):
         """

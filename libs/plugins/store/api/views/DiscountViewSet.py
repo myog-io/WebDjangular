@@ -38,11 +38,9 @@ class VoucherViewSet(ModelViewSet):
 
 class SaleFilter(FilterSet):
     class Meta:
-        model = Voucher
+        model = Sale
         fields = {
             'id': ['in'],
-            'name': ['contains', 'exact'],
-            'code': ['contains', 'exact'],
         }
 
 
