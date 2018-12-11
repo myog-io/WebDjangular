@@ -19,5 +19,6 @@ class MenuViewSet(ModelViewSet):
     serializer_class = MenuSerializer
     queryset = Menu.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     permission_classes = ()

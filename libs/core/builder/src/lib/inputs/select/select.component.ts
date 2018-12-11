@@ -10,7 +10,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
     <div class="form-group form-select" [formGroup]="group" >
       <label>{{ config.label }}</label>
       <ng-select class="form-control" (change)="onChange" [formControlName]="config.name" [multiple]="config.multiple" [loading]="loading">
-        <ng-option value="null">{{ config.placeholder }}</ng-option>
+        <ng-option value="">{{ config.placeholder }}</ng-option>
         <ng-option *ngFor="let option of options" value="{{option.value}}">
           {{option.label}}
         </ng-option>

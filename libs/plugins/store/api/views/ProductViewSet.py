@@ -1,10 +1,13 @@
-from django_filters.filterset import FilterSet
 from ..models.Product import Product, ProductCategory, ProductType
-from ..serializers.ProductSerializer import ProductCategorySerializer, ProductSerializer, ProductTypeSerializer
+from ..serializers.ProductSerializer import ProductCategorySerializer, \
+    ProductSerializer, ProductTypeSerializer
+from django_filters.filterset import FilterSet
+from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_json_api.views import RelationshipView
+
 
 class ProductTypeFilter(FilterSet):
     class Meta:
@@ -27,7 +30,8 @@ class ProductTypeViewSet(ModelViewSet):
     serializer_class = ProductTypeSerializer
     queryset = ProductType.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = ProductTypeFilter
     search_fields = ('name',)
     permission_classes = ()
@@ -56,7 +60,8 @@ class ProductCategoryViewSet(ModelViewSet):
     serializer_class = ProductCategorySerializer
     queryset = ProductCategory.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = ProductCategoryFilter
     search_fields = ('name',)
     permission_classes = ()
@@ -85,7 +90,8 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = ProductFilter
     search_fields = ('name',)
     permission_classes = ()

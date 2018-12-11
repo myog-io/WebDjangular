@@ -30,7 +30,8 @@ class CityViewSet(ModelViewSet):
     serializer_class = CitySerializer
     queryset = City.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = CityFilter
     search_fields = ('name')
     permission_classes = ()
