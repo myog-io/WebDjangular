@@ -14,6 +14,9 @@ import { AppHttpInterceptor } from '@webdjangular/core/interceptors';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
 
+
+
+
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
 }
@@ -39,7 +42,7 @@ export function wda_init(wdaconfig: WDAConfig) {
         {
           path: '',
           loadChildren: "@webdjangular/themes/providerfy#ThemeProviderfyModule"
-        }
+        },
       ],
       { initialNavigation: 'enabled' }
     )

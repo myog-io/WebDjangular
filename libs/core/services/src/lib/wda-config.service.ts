@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http';
-import { Theme } from "@webdjangular/core/interfaces";
+import {Injectable} from '@angular/core'
+import {HttpClient} from '@angular/common/http';
+import {Theme} from "@webdjangular/core/interfaces";
 import 'rxjs/add/operator/map';
-import { UrlSegment } from '@angular/router';
-import { WebAngularDataStore } from './WebAngularDataStore.service';
-import { PageModel } from '@webdjangular/core/cms-models';
-import { JsonApiQueryData } from 'angular2-jsonapi';
-import { ClientUserService } from './client-user.service';
+import {UrlSegment} from '@angular/router';
+import {WebAngularDataStore} from './WebAngularDataStore.service';
+import {PageModel} from '@webdjangular/core/cms-models';
+import {JsonApiQueryData} from 'angular2-jsonapi';
+import {ClientUserService} from './client-user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,9 @@ export class WDAConfig {
 
 
   constructor(private http: HttpClient,
-    private datastore: WebAngularDataStore,
-    private clientUser: ClientUserService) {
+              private datastore: WebAngularDataStore,
+              private clientUser: ClientUserService,
+  ) {
 
   }
 
@@ -96,7 +97,7 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, { slug: 'home' }).subscribe(
+      this.datastore.findAll(PageModel, {slug: 'home'}).subscribe(
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           let page: PageModel = models[0];
@@ -111,7 +112,7 @@ export class WDAConfig {
 
   public getPage(path: UrlSegment[]): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, { slug: path.join('|') }).subscribe(
+      this.datastore.findAll(PageModel, {slug: path.join('|')}).subscribe(
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           resolve(models[0]);
@@ -122,5 +123,21 @@ export class WDAConfig {
       )
     });
   }
+
+  public getErrorPage(errorCode): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.datastore.findAll(PageModel, {slug: errorCode}).subscribe(
+        (response: JsonApiQueryData<PageModel>) => {
+          let models = response.getModels();
+          let page: PageModel = models[0];
+          resolve(page);
+        },
+        (error: any) => {
+          reject(error);
+        }
+      )
+    });
+  }
+
 
 }

@@ -12,7 +12,6 @@ import {
 import { AuthGuard } from '@webdjangular/core/services';
 import { AdminModule } from '@webdjangular/core/admin';
 
-
 const routes: Routes = [
   {
     path: '',
