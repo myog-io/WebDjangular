@@ -57,6 +57,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     const metadata = {
       selector: 'wda-body',
       template: data.content,
+      encapsulation: ViewEncapsulation.None
     }
     const factory = this.componentLoader.createComponentFactorySync(metadata, null, this.compiler)
     data.bodyFactory = factory;
@@ -84,7 +85,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   }
 
   private HomePage() {
-    this.wdaConfig.getHome().then((data:any) => {
+    this.wdaConfig.getHome().then((data: any) => {
       if (data) {
         this.loadPagesContent(data);
       } else {
@@ -94,19 +95,19 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         })
       }
     },
-    (error)=>{
-      if(error.errors.length > 0){
-        if (error.errors[0].status[0] === '4') {
-          this.loadPagesContent({
-            content: '<wda-error-404></wda-error-404>'
-          })
+      (error) => {
+        if (error.errors.length > 0) {
+          if (error.errors[0].status[0] === '4') {
+            this.loadPagesContent({
+              content: '<wda-error-404></wda-error-404>'
+            })
+          }
+          return;
         }
-        return;
-      }
-      this.loadPagesContent({
-        content: '<wda-error-500></wda-error-500>'
+        this.loadPagesContent({
+          content: '<wda-error-500></wda-error-500>'
+        })
       })
-    })
   }
 
   private LoadPages(segments: UrlSegment[]) {
@@ -121,7 +122,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         })
       }
     }, (error) => {
-      if(error.errors.length > 0){
+      if (error.errors.length > 0) {
         if (error.errors[0].status[0] === '4') {
           this.loadPagesContent({
             content: '<wda-error-404></wda-error-404>'
