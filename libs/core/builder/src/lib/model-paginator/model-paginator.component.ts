@@ -28,7 +28,6 @@ export class ModelPaginatorComponent implements OnChanges, OnInit {
   }
 
   private startPaginator(){
-    console.log("STARTING",this.options);
     this.paginatorControls.initControls(this.options);
     this.controls.emit(this.paginatorControls);
   }

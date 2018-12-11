@@ -33,7 +33,7 @@ export class ThemeProviderfyModalChoosecityComponent {
 
   public getCities(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(CityModel, {}).subscribe(
+      this.datastore.findAll(CityModel, {ordering:'name'}).subscribe(
         (response: JsonApiQueryData<CityModel>) => {
           let cities = response.getModels();
           resolve(cities);

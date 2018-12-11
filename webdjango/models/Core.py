@@ -45,15 +45,15 @@ class CoreConfig(models.Model):
         try:
             #TODO: Make This Recursive?!
             slug_path = slug.split('.')
-
             if not website:
                 website = Website.getCurrentWebsite()
-                config = CoreConfig.objects.filter(
-                    slug=slug_path[0], website=website).first()
-                if config:
-                    if len(slug_path) > 1:
-                        return config.value[slug_path[1]]
-                    return config.value
+
+            config = CoreConfig.objects.filter(
+                slug=slug_path[0], website=website).first()
+            if config:
+                if len(slug_path) > 1:
+                    return config.value[slug_path[1]]
+                return config.value
             else:
                 return None
 

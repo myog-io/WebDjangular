@@ -6,6 +6,7 @@ import { ChunkFileUploadModule } from '@webdjangular/core/chunk-file-upload';
 import { ViewMediaService } from './view-media/view-media.service';
 import { ThemeModule } from '@webdjangular/core/admin-theme';
 import { CoreSharedSafePipe } from '@webdjangular/core/shared';
+import { BuilderFormModule } from '@webdjangular/core/builder';
 @NgModule({
   imports: [
     ThemeModule,
@@ -14,7 +15,8 @@ import { CoreSharedSafePipe } from '@webdjangular/core/shared';
     RouterModule.forChild([
       { path: '', pathMatch: 'full', component: ViewMediaComponent }
     ]),
-    CoreSharedSafePipe
+    CoreSharedSafePipe,
+    BuilderFormModule,
   ],
   providers: [
     ViewMediaService

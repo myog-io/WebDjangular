@@ -45,6 +45,7 @@ class PageViewSet(ModelViewSet):
         """
         Return the Home Page
         """
+
         serializer = PageSerializer(
             Page.objects.get(
                 pk=CoreConfig.read(slug=CONFIG_HOME_PAGE,

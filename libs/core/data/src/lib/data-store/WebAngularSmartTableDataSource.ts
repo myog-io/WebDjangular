@@ -32,6 +32,10 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     let findOptions: any = this.buildFilterOptions();
     findOptions.page = this.buildPageOptions();
     findOptions.include = this.model.include
+    if(this.sortConf.length > 0){
+      findOptions.ordering = this.buildSortOptions()
+    }
+    console.log(findOptions)
     return this.datastore
       .findAll(this.model, findOptions)
       .pipe(
@@ -44,7 +48,6 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
       )
       .toPromise();
   }
-
   protected buildPageOptions() {
     let options = {};
 
@@ -58,10 +61,19 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
 
     return options;
   }
-
+  protected buildSortOptions(): string {
+    let sorting = [];
+    this.sortConf.forEach((fieldConf) => {
+      if (fieldConf.direction.toUpperCase() == "DESC") {
+        sorting.push("-" + fieldConf.field);
+      } else {
+        sorting.push(fieldConf.field)
+      }
+    });
+    return sorting.join(',');
+  }
   buildFilterOptions() {
     let filters = {};
-
     for (let i = 0; i < this.filterConf.filters.length; i++) {
       //filters[this.filterConf.filters[i].field + '__contains'] = this.filterConf.filters[i].search;
       if (this.filterConf.filters[i].search) {

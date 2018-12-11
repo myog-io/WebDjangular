@@ -21,7 +21,6 @@ export class ModelPaginatorControls {
   }
 
   makeQuery() {
-    console.log("MAKING QUERR??")
     if (typeof this.options['useDatastore'] !== 'undefined') {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
         this.options['useDatastore'].findAll(this.options['modelToPaginate'], {
