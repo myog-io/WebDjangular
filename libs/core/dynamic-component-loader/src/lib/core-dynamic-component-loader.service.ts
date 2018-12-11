@@ -9,8 +9,8 @@ import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
 
 // TODO: HARDCODE
 
-import { PluginProviderModule} from "@webdjangular/plugins/provider"
-import {FormsModule} from "@webdjangular/core/forms";
+import { PluginProviderModule } from "@webdjangular/plugins/provider"
+import { FormsModule } from "@webdjangular/core/forms";
 
 const HARDCODEMODULES = [
   FormsModule,

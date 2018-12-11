@@ -44,11 +44,18 @@ class PageViewSet(ModelViewSet):
 
 
 
-    @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug')
+    @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug', lookup_url_kwarg='slug')
     def get_page(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        self.kwargs['slug'] = self.kwargs['pk']
+        self.lookup_field = 'slug'
+        self.lookup_url_kwarg = 'slug'
+        return super(PageViewSet, self).retrieve(request, *args, **kwargs)
 
     @action(methods=['GET'], detail=False, url_path='get_home')
     def get_home(self, request, format=None):

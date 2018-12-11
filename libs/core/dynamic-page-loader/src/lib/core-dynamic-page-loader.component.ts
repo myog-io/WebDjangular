@@ -8,15 +8,11 @@ import {
   Injector,
   ViewEncapsulation
 } from '@angular/core';
-import {UrlSegment, ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {DOCUMENT} from '@angular/platform-browser';
-import {WDAConfig} from '@webdjangular/core/services';
-import {CoreDynamicComponentLoader} from '@webdjangular/core/dynamic-component-loader';
-import {ThemesCleanModule} from '@webdjangular/themes/clean';
-
-
-import {ThemeProviderfyError404Component} from "../../../../themes/providerfy/src/lib/components/errors/404/404.component";
-import {ThemeProviderfyError500Component} from "../../../../themes/providerfy/src/lib/components/errors/500/500.component";
+import { UrlSegment, ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { DOCUMENT } from '@angular/platform-browser';
+import { WDAConfig } from '@webdjangular/core/services';
+import { CoreDynamicComponentLoader } from '@webdjangular/core/dynamic-component-loader';
+import { ThemesCleanModule } from '@webdjangular/themes/clean';
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
@@ -30,17 +26,16 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private paramSubscription;
   private links = []
   private bodyRef: ComponentRef<{}>;
-  @ViewChild('bodyContainer', {read: ViewContainerRef}) bodyContainer: ViewContainerRef;
+  @ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
 
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private wdaConfig: WDAConfig,
-              private componentLoader: CoreDynamicComponentLoader,
-              private compiler: Compiler,
-              private injector: Injector) {
+    private activatedRoute: ActivatedRoute,
+    private wdaConfig: WDAConfig,
+    private componentLoader: CoreDynamicComponentLoader,
+    private compiler: Compiler,
+    private injector: Injector) {
     this.links.push(
-      {path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent},
-
+      { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
     );
 
 
@@ -89,15 +84,28 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   }
 
   private HomePage() {
-    this.wdaConfig.getHome().then(data => {
+    this.wdaConfig.getHome().then((data:any) => {
       if (data) {
         this.loadPagesContent(data);
       } else {
         // PAGE NOT FOUND
-        this.wdaConfig.getErrorPage('404').then(data => {
-          this.loadPagesContent(data);
+        this.loadPagesContent({
+          content: '<wda-error-404></wda-error-404>'
         })
       }
+    },
+    (error)=>{
+      if(error.errors.length > 0){
+        if (error.errors[0].status[0] === '4') {
+          this.loadPagesContent({
+            content: '<wda-error-404></wda-error-404>'
+          })
+        }
+        return;
+      }
+      this.loadPagesContent({
+        content: '<wda-error-500></wda-error-500>'
+      })
     })
   }
 
@@ -106,22 +114,28 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       if (data) {
         this.loadPagesContent(data);
       } else {
-        // 404 - PAGE NOT FOUND
         // TODO: load the 404 component dynamically based on theme, instead of redirecting
-        this.router.navigateByUrl('not-found');
-        //this.wdaConfig.getErrorPage('404').then(data => {
-        //  this.loadPagesContent(data);
-        //})
-
+        // this.router.navigateByUrl('not-found');
+        this.loadPagesContent({
+          content: '<wda-error-404></wda-error-404>'
+        })
       }
-      //this.addLinkToRoute(segments,data)
-    }, error => {
+    }, (error) => {
+      if(error.errors.length > 0){
+        if (error.errors[0].status[0] === '4') {
+          this.loadPagesContent({
+            content: '<wda-error-404></wda-error-404>'
+          })
+        }
+        return;
+      }
+      this.loadPagesContent({
+        content: '<wda-error-500></wda-error-500>'
+      })
+
       // TODO: maybe others errors? Right now everything is 500 - Internal Server Error
       // TODO: load the component dynamically based on theme, instead of redirecting
-      this.router.navigateByUrl('internal-server-error');
-      //this.wdaConfig.getErrorPage('500').then(data => {
-      //  this.loadPagesContent(data);
-      //})
+      //this.router.navigateByUrl('internal-server-error');
     })
   }
 

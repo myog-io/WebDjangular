@@ -97,10 +97,8 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, {slug: 'home'}).subscribe(
-        (response: JsonApiQueryData<PageModel>) => {
-          let models = response.getModels();
-          let page: PageModel = models[0];
+      this.datastore.findRecord(PageModel, null,null,null, `api/page/get_home/`).subscribe(
+        (page: PageModel) => {
           resolve(page);
         },
         (error: any) => {
@@ -110,12 +108,11 @@ export class WDAConfig {
     });
   }
 
-  public getPage(path: UrlSegment[]): Promise<any> {
+  public getPage(path: UrlSegment[]): Promise<PageModel|any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, {slug: path.join('|')}).subscribe(
-        (response: JsonApiQueryData<PageModel>) => {
-          let models = response.getModels();
-          resolve(models[0]);
+      this.datastore.findRecord(PageModel, null,null,null,`api/page/${path.join('|')}/get_page`).subscribe(
+        (page: PageModel) => {
+          resolve(page);
         },
         (error: any) => {
           reject(error);
