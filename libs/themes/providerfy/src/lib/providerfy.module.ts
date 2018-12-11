@@ -28,6 +28,7 @@ import {ThemeProviderfyModalTelecineComponent} from "./components/modal/telecine
 import {ThemeProviderfyModalVenusComponent} from "./components/modal/venus/venus.component";
 import {ThemeProviderfyModalChannelsComponent} from "./components/modal/channels/channels.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -76,6 +77,7 @@ const COMPONENTS = [
     ReactiveFormsModule,
     NgbModule,
     CoreDynamicComponentLoaderModule.forRoot(),
+    NgSelectModule,
     RouterModule.forChild([
 
       {path: '**', pathMatch: 'full', component: ThemeProviderfyComponent}
