@@ -35,7 +35,8 @@ class PageViewSet(ModelViewSet):
     serializer_class = PageSerializer
     queryset = Page.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = PageFilter
     search_fields = ('title', 'content', 'slug')
     permission_classes = ()

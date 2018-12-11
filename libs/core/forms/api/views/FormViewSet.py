@@ -30,7 +30,8 @@ class FormViewSet(ModelViewSet):
     serializer_class = FormSerializer
     queryset = Form.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = FormFilter
     search_fields = ('title', 'slug')
     permission_classes = ()

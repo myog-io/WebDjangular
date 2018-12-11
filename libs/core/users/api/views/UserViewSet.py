@@ -43,7 +43,8 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
     serializer_class = UserSerializer
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     permission_classes = (AuthenticatedViewsetPermission, )
     search_fields = ('id','first_name', 'last_name', 'email', 'username') # Search field is for the Search Filter ?search=
     filter_class = UserFilter

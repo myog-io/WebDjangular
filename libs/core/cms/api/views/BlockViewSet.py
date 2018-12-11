@@ -31,6 +31,7 @@ class BlockViewSet(ModelViewSet):
     serializer_class = BlockSerializer
     queryset = Block.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = BlockFilter
     permission_classes = ()

@@ -1,10 +1,10 @@
 from django_filters.filterset import FilterSet
+from django_filters.rest_framework.backends import DjangoFilterBackend
+from ..models.Payment import Payment
+from ..serializers.PaymentSerializer import PaymentSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
-
-from libs.plugins.store.api.models.Payment import Payment
-from libs.plugins.store.api.serializers.PaymentSerializer import PaymentSerializer
 
 
 class PaymentFilter(FilterSet):
@@ -31,7 +31,8 @@ class PaymentViewSet(ModelViewSet):
     serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = PaymentFilter
     search_fields = ('name',)
     permission_classes = ()

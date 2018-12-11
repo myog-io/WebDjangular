@@ -1,10 +1,10 @@
 from django_filters.filterset import FilterSet
+from django_filters.rest_framework.backends import DjangoFilterBackend
+from ..models.Order import Order
+from ..serializers.OrderSerializer import OrderSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
-
-from libs.plugins.store.api.models.Order import Order
-from libs.plugins.store.api.serializers.OrderSerializer import OrderSerializer
 
 
 class OrderFilter(FilterSet):
@@ -29,7 +29,8 @@ class OrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = OrderFilter
     search_fields = ('order_num',)
     permission_classes = ()
