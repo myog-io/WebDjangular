@@ -65,7 +65,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
           relationships[key] = {
             data: relationshipData
           };
-        } else if (data[key] instanceof Array) {
+        } else if (data[key] instanceof Array && data[key].length <= 0) {
           relationships = relationships || {};
           // Cleaning to Many Relationship
           relationships[key] = {

@@ -24,6 +24,9 @@ export class ProductTypeForm extends AbstractForm {
     },
   };
   public formFields = {
+    id: {
+      type: FormControl
+    },
     name: {
       type: FormControl,
       validators: [Validators.required]

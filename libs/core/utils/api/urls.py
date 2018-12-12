@@ -8,7 +8,7 @@ router = DefaultRouter()
 router.register('address', AddressViewSet, base_name='address')
 
 urlpatterns = [
-    url(r'/', include(router.urls)),
+    url(r'', include(router.urls)),
 ]
 
 router = DefaultRouter()

@@ -16,7 +16,7 @@ export class ProductAttributeForm extends AbstractForm {
         type: 'text',
       },
       code: {
-        title: 'Created',
+        title: 'Code',
         type: 'text',
       }
     },
@@ -73,6 +73,9 @@ export class ProductAttributeForm extends AbstractForm {
       value: ProductAttributeTypeValues.text,
       options: [
         {label:"Text", value: ProductAttributeTypeValues.text },
+        {label:"Select", value: ProductAttributeTypeValues.select },
+        {label:"Text Area", value: ProductAttributeTypeValues.ckeditor },
+        {label:"Text Html",value: ProductAttributeTypeValues.codeEditor },
       ]
     },
   ]

@@ -8,14 +8,11 @@ import {ProductAttributeTypeValues} from "../interfaces/Product.interface";
 
 @JsonApiModelConfig({
   type: 'ProductAttribute',
-  modelEndpointUrl: 'store/product-type',
+  modelEndpointUrl: 'store/product-attribute',
 })
 export class ProductAttributeModel extends AbstractModel {
   public static formClassRef = ProductAttributeForm;
   public static include = null;
-
-  @Attribute()
-  id: string;
 
   @Attribute()
   code: string;
@@ -27,18 +24,12 @@ export class ProductAttributeModel extends AbstractModel {
   required: boolean;
 
   @Attribute()
-  type: ProductAttributeTypeValues;
-
-  @Attribute()
-  created: Date;
-
-  @Attribute()
-  updated: Date;
+  type: ProductAttributeTypeValues[];
 
   permissions: PermissionModel[];
 
   get pk() {
-    return this.id;
+    return null;
   }
 
   set pk(value) {

@@ -64,7 +64,7 @@ export class AbstractForm extends FormGroup {
    * @param [entity]
    */
   public populateForm(entity: JsonApiModel | any = null) {
-
+    if (!entity) return false;
     for (let propName in this.formFields) {
       // From Array
       if (this.formFields[propName].type == FormArray && typeof entity[propName] !== 'undefined') {
@@ -117,6 +117,7 @@ export class AbstractForm extends FormGroup {
               entities.push(this.createEntity(this.formFields[propName].model, vals[i]))
             }
             entity[propName] = entities;
+
           } else {
             entity[propName] = this.get(propName).value;
           }
@@ -126,6 +127,7 @@ export class AbstractForm extends FormGroup {
           break;
       }
     }
+
   }
 
 
