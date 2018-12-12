@@ -27,7 +27,7 @@ export class ProductTypeModel extends AbstractModel {
   name: string;
 
   @Attribute()
-  attributes: any;
+  attribute: any;
 
   @Attribute()
   created: Date;

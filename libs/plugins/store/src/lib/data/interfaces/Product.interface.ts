@@ -9,3 +9,11 @@ export enum ProductClasses {
   variant = 'variant',
   bundle = 'bundle',
 }
+
+export enum ProductAttributeTypeValues {
+  button = 'button',
+  text = 'text',
+  select = 'select',
+  ckeditor = 'ckeditor',
+  codeEditor = 'codeEditor'
+}

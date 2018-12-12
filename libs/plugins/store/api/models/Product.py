@@ -14,8 +14,6 @@ from webdjango.models.AbstractModels import ActiveModel, DateTimeModel, \
 from webdjango.models.CoreConfig import CoreConfigInput
 
 
-
-
 class ProductClasses:
     SIMPLE = 'simple'
     VARIANT = 'variant'
@@ -41,11 +39,13 @@ class ProductCategory(PermalinkModel, TranslationModel, DateTimeModel):
     def __str__(self):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
-class ProductAttributes(models.Model):
-    slug = models.SlugField()
+
+class ProductAttribute(models.Model):
+    code = models.SlugField()
     name = models.CharField()
     required = models.BooleanField(default=False)
-    type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES, default=CoreConfigInput.FIELD_TYPE_TEXT)
+    type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
+                            default=CoreConfigInput.FIELD_TYPE_TEXT)
 
     class Meta:
         abstract = True
@@ -56,13 +56,13 @@ class ProductAttributes(models.Model):
 
 class ProductType(DateTimeModel):
     name = models.CharField(max_length=128)
-    attributes = models.EmbeddedModelField(model_container=ProductAttributes)
+    attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
+
     ## TODO: If ProductType is Update we need to update all the Product Childrens, Or Make a Lazy Load of this Update
 
     ## TODO: Work on some way to Translate The Product Attributes, Maybe create a Product Attribute Translation Table?
     class Meta:
         ordering = ['-id']
-
 
 
 class ProductDimensions(models.Model):
@@ -90,6 +90,7 @@ class ProductShipping(models.Model):
     def __str__(self):
         return '%s object (%s)' % (self.__class__.__name__, self.dimensions)
 
+
 class ProductPricing(models.Model):
     list = MongoDecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
@@ -99,6 +100,7 @@ class ProductPricing(models.Model):
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES
     )
+
     # TODO: tier prices
 
     class Meta:
@@ -108,10 +110,9 @@ class ProductPricing(models.Model):
         return '%s object (List:%s,Sale:%s)' % (self.__class__.__name__, self.list, self.sale)
 
 
-class BaseProduct(ActiveModel, DateTimeModel, PermalinkModel, TranslationModel, ):
+class BaseProduct(ActiveModel, DateTimeModel, TranslationModel, ):
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)
-    slug = models.SlugField(max_length=256)
     description = models.TextField(blank=True)
 
     available_on = models.DateTimeField(blank=True, null=True)
@@ -124,22 +125,22 @@ class BaseProduct(ActiveModel, DateTimeModel, PermalinkModel, TranslationModel, 
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES
     )
 
-
-
     pricing = models.EmbeddedModelField(model_container=ProductPricing)
     # TODO: The Validation of this Field should be realted to the Product Type
     attributes = JSONField(default=None, blank=True, null=True)
 
-
-
     i18n_fields = ['name', 'slug', 'description']
-
 
     class Meta:
         abstract = True
 
 
-class Product(BaseProduct):
+class ProductAddon(BaseProduct):
+    class Meta:
+        ordering = ['-id']
+
+
+class Product(PermalinkModel, BaseProduct):
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -148,16 +149,21 @@ class Product(BaseProduct):
     variant_attributes = JSONField(default=None, blank=True, null=True)
 
     #  product class BUNDLE
-    bundle_products = models.ArrayReferenceField(to='Product', on_delete=None, related_name='bundles', blank=True, null=True)
+    bundle_products = models.ArrayReferenceField(to='Product', on_delete=None, related_name='bundles', blank=True,
+                                                 null=True)
 
-    categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE, related_name='products', default=None, blank=True, null=True)
+    categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE, related_name='products',
+                                            default=None, blank=True, null=True)
+
+    addons = models.ArrayReferenceField(to=ProductAddon, on_delete=None, related_name='products', default=None,
+                                        blank=True, null=True)
+
     class Meta:
         ordering = ['-id']
 
-
     @property
     def quantity_available(self):
-        #TODO: Quanty based on Childrens
+        # TODO: quantity available based on Children
         return max(self.quantity - self.quantity_allocated, 0)
 
     def check_quantity(self, quantity):

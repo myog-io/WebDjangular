@@ -1,13 +1,30 @@
 from libs.plugins.store.api.models.Product import BaseProduct, Product, \
     ProductCategory, ProductDimensions, ProductPricing, ProductShipping, \
-    ProductType
+    ProductType, ProductAddon, ProductAttribute
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
     EmbeddedSerializer, DocumentSerializer, EmbeddedModelFieldSerializer
 from libs.plugins.store.api import defaults
 
+
+class ProductAttributeSerializer(EmbeddedSerializer):
+    slug = serializers.CharField()
+    name = serializers.CharField()
+    required = serializers.BooleanField()
+    type = serializers.CharField()
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return '%s object (%s)' % (self.__class__.__name__, self.name)
+
+
+
+
 class ProductTypeSerializer(serializers.ModelSerializer):
+    attributes = ArrayModelFieldSerializer(serializer=ProductAttributeSerializer, required=False)
 
     class Meta:
         model = ProductType
@@ -83,6 +100,12 @@ class BaseProductSerializer(EmbeddedSerializer):
         fields = '__all__'
 
 
+class ProductAddonSerializer(DocumentSerializer):
+
+    class Meta:
+        model = ProductAddon
+        fields = '__all__'
+
 class ProductSerializer(DocumentSerializer):
     #  product class VARIANT
     variants = ArrayModelFieldSerializer(serializer=BaseProductSerializer, required=False)
@@ -101,6 +124,13 @@ class ProductSerializer(DocumentSerializer):
     categories = ResourceRelatedField(
         many=True,
         queryset=ProductCategory.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='product-relationships'
+    )
+
+    addons = ResourceRelatedField(
+        many=True,
+        queryset=ProductAddon.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='product-relationships'
     )

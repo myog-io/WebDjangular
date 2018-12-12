@@ -66,7 +66,7 @@ export class ScaffoldEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.url.subscribe(segments => {
       if (segments[0].path === "new") {
-        this.before_title = "Creating new"
+        this.before_title = "Creating a new"
       }
     });
     this.route.data.subscribe(data => {

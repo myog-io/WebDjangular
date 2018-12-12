@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(max_length=128)),
-                ('attributes', djongo.models.fields.EmbeddedModelField(model_container=libs.plugins.store.api.models.Product.ProductAttributes, null=True)),
+                ('attributes', djongo.models.fields.EmbeddedModelField(model_container=libs.plugins.store.api.models.Product.ProductAttribute, null=True)),
             ],
             options={
                 'ordering': ['-id'],

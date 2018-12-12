@@ -1,9 +1,10 @@
-import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
+import {FormControl, Validators, FormGroup, FormArray} from '@angular/forms';
 
-import { AbstractForm } from '@webdjangular/core/data-forms';
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import {AbstractForm} from '@webdjangular/core/data-forms';
+import {BuilderFormFieldConfig} from '@webdjangular/core/builder';
 
-import { SmartTableSettings} from '@webdjangular/core/data';
+import {SmartTableSettings} from '@webdjangular/core/data';
+import {ProductAttributeModel} from "../models/ProductAttribute.model";
 
 export class ProductTypeForm extends AbstractForm {
   public listingTableSettings: SmartTableSettings = {
@@ -28,24 +29,25 @@ export class ProductTypeForm extends AbstractForm {
       validators: [Validators.required]
     },
     attributes: {
-      type: FormControl,
-      validators: []
+      type: FormArray,
+      model: ProductAttributeModel,
     },
   }
+
   public scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'name',
+      type: 'text',
       label: 'Name',
       name: 'name',
-      wrapper_class: 'col-6',
+      wrapper_class: 'col-12',
       placeholder: '',
     },
     {
-      type: 'text',
-      label: 'Attirbutes',
+      type: 'formArray',
+      label: 'Attributes',
       name: 'attributes',
-      wrapper_class: 'col-6',
-      placeholder: '',
+      smart_table_mode: 'external',
+
     },
   ]
 }

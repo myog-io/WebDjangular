@@ -33,16 +33,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fas fa-shopping-cart',
     children: [
       {
-        title: 'Products',
-        link: '/store/products'
-      },
-      {
-        title: 'Categories',
-        link: '/store/categories'
-        //data: {
-        //  permission: [
-        //    { label: 'store', action: 'list_products' }
-        //  ]
+        title: "Catalog",
+        children: [
+          {
+            title: 'Products',
+            link: '/store/catalog/products'
+          },
+          {
+            title: 'Categories',
+            link: '/store/catalog/categories'
+          },
+          {
+            title: 'Product types',
+            link: '/store/catalog/product-types'
+          },
+        ]
       },
       {
         title: 'Orders',
@@ -52,7 +57,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Discounts',
         children: [
           {
-            title: 'Vouchers',
+            title: 'Rules & Vouchers',
             link: '/store/vouchers',
           },
           {

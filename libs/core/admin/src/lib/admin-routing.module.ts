@@ -24,6 +24,7 @@ import { SaleModel } from "../../../../plugins/store/src/lib/data/models/Sale.mo
 import { ShippingMethodModel } from "../../../../plugins/store/src/lib/data/models/ShippingMethod.model";
 import { CategoryModel } from "../../../../plugins/store/src/lib/data/models/Category.model";
 import { PageRedirectModel } from 'libs/plugins/provider/src/lib/data/models/PageRedirect.model';
+import {ProductTypeModel} from "../../../../plugins/store/src/lib/data/models/ProductType.model";
 
 
 const routes: Routes = [
@@ -120,22 +121,36 @@ const routes: Routes = [
         path: 'store',
         children: [
           {
-            path: 'products',
-            loadChildren: () => ScaffoldModule,
-            data: {
-              model: ProductModel,
-              title: 'Products',
-              path: 'store/products'
-            }
-          },
-          {
-            path: 'categories',
-            loadChildren: () => ScaffoldModule,
-            data: {
-              model: CategoryModel,
-              title: 'Categories',
-              path: 'store/categories'
-            }
+            path: 'catalog',
+            children: [
+              {
+                path: 'products',
+                loadChildren: () => ScaffoldModule,
+                data: {
+                  model: ProductModel,
+                  title: 'Products',
+                  path: 'store/catalog/products'
+                }
+              },
+              {
+                path: 'categories',
+                loadChildren: () => ScaffoldModule,
+                data: {
+                  model: CategoryModel,
+                  title: 'Categories',
+                  path: 'store/catalog/categories'
+                }
+              },
+              {
+                path: 'product-types',
+                loadChildren: () => ScaffoldModule,
+                data: {
+                  model: ProductTypeModel,
+                  title: 'Product Type',
+                  path: 'store/catalog/product-types'
+                }
+              },
+            ]
           },
           {
             path: 'orders',
