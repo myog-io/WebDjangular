@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>{{before_title}} <b>Product</b></nb-card-header>
+    <nb-card-body *ngIf="!id; else productForm">
+      SEM ID
+
+    </nb-card-body>
+
+  </nb-card>
+</form>
+<ng-template #productForm>
+  COM ID
+</ng-template>
