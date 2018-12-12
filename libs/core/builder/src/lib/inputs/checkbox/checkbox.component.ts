@@ -43,7 +43,6 @@ export class BuilderFormCheckboxOptionsComponent implements BuilderFormField, On
   }
 
   ngOnInit(): void {
-    console.log("config.options_model",this.config.options_model);
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     if (this.config.options_model){
@@ -57,7 +56,6 @@ export class BuilderFormCheckboxOptionsComponent implements BuilderFormField, On
    * @param $event
    */
   modelPaginatorControlsGetter($event) {
-    console.log($event);
     this.paginatorControls = $event;
   }
 }

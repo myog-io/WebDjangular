@@ -1,32 +1,25 @@
 import {
   JsonApiModelConfig,
-  JsonApiModel,
   Attribute,
   HasMany,
-  BelongsTo
 } from 'angular2-jsonapi';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-  FormArray
-} from '@angular/forms';
 
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {GroupModel} from './Group.model';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { GroupModel } from './Group.model';
 
-import {UserForm} from '../forms/User.form';
+import { UserForm } from '../forms/User.form';
 
-import {ExtraOptions} from '@webdjangular/core/decorator';
-import {StyleAtTime} from "@angular/animations/browser/src/dsl/animation_timeline_builder";
+import { ExtraOptions } from '@webdjangular/core/decorator';
+import { PermissionModel } from './Permission.model';
+
 
 @JsonApiModelConfig({
-  type: 'user'
+  type: 'User',
+  modelEndpointUrl: 'user',
 })
 export class UserModel extends AbstractModel {
   public static formClassRef = UserForm;
-
+  public static include = 'groups'
   @Attribute()
   id: string;
 
@@ -79,7 +72,13 @@ export class UserModel extends AbstractModel {
   @ExtraOptions({
     backendResourceName: 'Group'
   })
-  groups: GroupModel[];
+  groups: GroupModel;
+
+  @HasMany()
+  @ExtraOptions({
+    backendResourceName: 'Permissions'
+  })
+  user_permissions: PermissionModel;
 
   get pk() {
     return this.id;
@@ -89,6 +88,13 @@ export class UserModel extends AbstractModel {
 
   }
 
+  get name(): string {
+    return `${this.first_name} ${this.last_name}`
+  }
+
+  get full_name(): string {
+    return `${this.first_name} ${this.middle_name} ${this.last_name}`
+  }
 
   get is_guest(): boolean {
     return this.id === null;

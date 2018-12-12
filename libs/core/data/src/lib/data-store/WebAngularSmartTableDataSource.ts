@@ -35,7 +35,6 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     if(this.sortConf.length > 0){
       findOptions.ordering = this.buildSortOptions()
     }
-    console.log(findOptions)
     return this.datastore
       .findAll(this.model, findOptions)
       .pipe(

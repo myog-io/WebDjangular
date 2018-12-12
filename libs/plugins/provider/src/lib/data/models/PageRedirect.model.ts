@@ -1,4 +1,4 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import { JsonApiModelConfig, Attribute, HasMany, BelongsTo, JsonApiMetaModel } from 'angular2-jsonapi';
 
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
@@ -12,6 +12,7 @@ import { PageRedirectForm } from '../forms/PageRedirect.form';
 @JsonApiModelConfig({
   type: 'PageRedirect',
   modelEndpointUrl: 'provider/page-redirect',
+  meta: JsonApiMetaModel
 })
 export class PageRedirectModel extends AbstractModel {
   public static formClassRef = PageRedirectForm;

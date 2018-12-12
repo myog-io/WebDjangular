@@ -1,9 +1,7 @@
 import {
   JsonApiModelConfig,
-  JsonApiModel,
   Attribute,
   HasMany,
-  BelongsTo
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from '@webdjangular/core/data-models';
@@ -14,11 +12,13 @@ import { GroupForm } from '../forms/Group.form';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 
 @JsonApiModelConfig({
-  type: 'group'
+  type: 'Group',
+  modelEndpointUrl: 'group',
+
 })
 export class GroupModel extends AbstractModel {
   public static formClassRef = GroupForm;
-
+  public static include = 'permissions';
   @Attribute()
   id: string;
 
@@ -29,11 +29,15 @@ export class GroupModel extends AbstractModel {
   @ExtraOptions({
     backendResourceName: 'Permission'
   })
-  permissions: PermissionModel[];
+  permissions: PermissionModel;
 
   get pk() {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
+
+  public toString = (): string => {
+    return `${this.name} (ID: ${this.id})`;
+  }
 }
