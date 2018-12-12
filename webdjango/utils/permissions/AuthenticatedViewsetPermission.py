@@ -3,7 +3,7 @@ from rest_framework import permissions
 
 class AuthenticatedViewsetPermission(permissions.BasePermission):
     permissionsMap = {
-        'list': 'list',
+        'view': 'view',
         'create': 'add',
         'delete': 'delete',
         'update': 'change'

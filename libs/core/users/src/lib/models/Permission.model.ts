@@ -8,7 +8,9 @@ import { AbstractModel, ContentTypeModel } from '@webdjangular/core/data-models'
 import { PermissionForm } from '../forms/Permission.form';
 
 @JsonApiModelConfig({
-  type: 'permission'
+  type: 'Permission',
+  modelEndpointUrl: 'permission',
+
 })
 export class PermissionModel extends AbstractModel {
   public static formClassRef = PermissionForm;
@@ -30,4 +32,8 @@ export class PermissionModel extends AbstractModel {
   }
 
   set pk(value) {}
+
+  public toString = (): string => {
+    return `${this.name} (${this.codename})`;
+  }
 }

@@ -1,16 +1,18 @@
+from ..signals import post_get_page, pre_get_page
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
+from libs.core.cms.api.models.Page import Page
+from libs.core.cms.api.serializers.PageSerializer import PageSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-
-from libs.core.cms.api.models.Page import Page
-from libs.core.cms.api.serializers.PageSerializer import PageSerializer
-from webdjango.configs import CONFIG_HOME_PAGE
-from webdjango.models.Core import CoreConfig
 from rest_framework_json_api.views import RelationshipView
+from webdjango.models.Core import CoreConfig
+
+from webdjango.configs import CONFIG_HOME_PAGE
+
 
 class PageFilter(FilterSet):
     class Meta:
@@ -41,28 +43,55 @@ class PageViewSet(ModelViewSet):
     search_fields = ('title', 'content', 'slug')
     permission_classes = ()
 
+    def send_pre_get_page(self, request, *args):
+        new_kwargs = pre_get_page.send(sender=Page.__class__, request=request, *args, **self.kwargs)
+        if new_kwargs:
+            for func, data in new_kwargs:
+                if data:
+                    self.kwargs.update(data)
 
+    def send_post_get_page(self, instance, request, *args):
+        new_data = post_get_page.send(sender=Page.__class__, instance=instance, request=request, *args, **self.kwargs)
+        if new_data:
+            for func, new_instance in new_data:
+                # TODO: improve as we are only accepting one return
+                if new_instance:
+                    return new_instance
+        return instance
 
-
-    @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug')
+    @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug', lookup_url_kwarg='slug')
     def get_page(self, request, *args, **kwargs):
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        self.kwargs['slug'] = self.kwargs['pk']
+
+        self.send_pre_get_page(request, *args)
+
+        self.lookup_field = 'slug'
+        self.lookup_url_kwarg = 'slug'
         instance = self.get_object()
+
+        self.send_post_get_page(instance=instance, request=request, *args)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
     @action(methods=['GET'], detail=False, url_path='get_home')
-    def get_home(self, request, format=None):
+    def get_home(self, request, format=None, *args, **kwargs):
         """
         Return the Home Page
         """
-
-        serializer = PageSerializer(
-            Page.objects.get(
-                pk=CoreConfig.read(slug=CONFIG_HOME_PAGE,
+        self.kwargs['pk'] = CoreConfig.read(slug=CONFIG_HOME_PAGE,
                                    website=request.website)
-            )
-        )
 
+        self.send_pre_get_page(request, *args)
+
+        instance = self.get_object()
+        self.send_post_get_page(instance=instance, request=request, *args)
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
 

@@ -39,7 +39,6 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
     Retrieve a specific User
     Update an User
     """
-    resource_name = 'user'
     serializer_class = UserSerializer
     queryset = User.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)

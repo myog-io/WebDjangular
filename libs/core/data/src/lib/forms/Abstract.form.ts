@@ -82,9 +82,9 @@ export class AbstractForm extends FormGroup {
     }
   }
   private createEntity(model: any, data: any) {
-    if ('id' in data && !('pk' in data) && data.id) {
+    if ('id' in data && data.id) {
       data.pk = data.id;
-    } else if ('pk' in data && !('id' in data) && data.pk) {
+    } else if ('pk' in data && data.pk) {
       data.id = data.pk;
     } else {
       // It's an Abstract Model, does not have ID;
@@ -111,6 +111,7 @@ export class AbstractForm extends FormGroup {
         case FormArray:
           if (this.formFields[propName].model) {
             const vals = this.get(propName).value;
+            entity[propName] = [];
             let entities = [];
             for (let i = 0; i < vals.length; i++) {
               entities.push(this.createEntity(this.formFields[propName].model, vals[i]))

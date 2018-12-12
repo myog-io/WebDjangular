@@ -11,8 +11,6 @@ import { PermissionGuard } from '@webdjangular/core/services';
 import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
 import { PluginModel } from '@webdjangular/core/data-models';
 import { ScaffoldModule } from './scaffold/scaffold.module';
-import { GroupModule } from './group/group.module';
-import { UserModule } from './user/user.module';
 import { CoreMediaModule } from '@webdjangular/core/media';
 
 import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
@@ -24,6 +22,7 @@ import { SaleModel } from "../../../../plugins/store/src/lib/data/models/Sale.mo
 import { ShippingMethodModel } from "../../../../plugins/store/src/lib/data/models/ShippingMethod.model";
 import { CategoryModel } from "../../../../plugins/store/src/lib/data/models/Category.model";
 import { PageRedirectModel } from 'libs/plugins/provider/src/lib/data/models/PageRedirect.model';
+import { UserModel, GroupModel } from '@webdjangular/core/users-models';
 import {ProductTypeModel} from "../../../../plugins/store/src/lib/data/models/ProductType.model";
 
 
@@ -38,11 +37,21 @@ const routes: Routes = [
       },
       {
         path: 'user',
-        loadChildren: () => UserModule,
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: UserModel,
+          title: "Users",
+          path: 'user'
+        }
       },
       {
         path: 'group',
-        loadChildren: () => GroupModule,
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: GroupModel,
+          title: "Groups",
+          path: 'group'
+        }
       },
       {
         path: 'media',

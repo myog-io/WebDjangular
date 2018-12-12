@@ -208,7 +208,10 @@ class DocumentSerializer(serializers.ModelSerializer):
                 field = getattr(instance, attr)
                 field.set(value)
             elif attr in info.relations and type(info.relations[attr].model_field) is ArrayReferenceField:
+                # TODO: Maybe work on a Incremental Method?
                 field = getattr(instance, attr)
+                # According to the JSONAPI.ORG https://jsonapi.org/format/#crud-updating-resource-relationships
+                field.clear()
                 field.add(*value)
             else:
                 setattr(instance, attr, value)
