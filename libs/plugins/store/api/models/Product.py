@@ -142,7 +142,7 @@ class ProductAddon(BaseProduct):
 
 class Product(PermalinkModel, BaseProduct):
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
-    type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, blank=True, null=True)
+    product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, blank=True, null=True)
 
     #  product class VARIANT
     variants = models.ArrayModelField(model_container=BaseProduct, default=None, blank=True, null=True)

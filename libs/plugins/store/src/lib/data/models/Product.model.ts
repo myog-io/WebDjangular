@@ -17,7 +17,7 @@ import { ProductTypeModel } from './ProductType.model';
 })
 export class ProductModel extends AbstractModel {
   public static formClassRef = ProductForm;
-  public static include = null;
+  public static include = 'product_type';
 
   @Attribute()
   id: string;
@@ -27,9 +27,9 @@ export class ProductModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    backendResourceName: 'Type'
+    backendResourceName: 'ProductType'
   })
-  type: ProductTypeModel;
+  product_type: ProductTypeModel;
 
 
   @Attribute()

@@ -5,8 +5,8 @@ import { ScaffoldComponent } from './scaffold.component';
 import { ScaffoldEditComponent } from './edit/scaffold-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ThemeModule } from '../@theme/theme.module';
-import { BuilderFormModule } from '@webdjangular/core/builder';
+import { ThemeModule } from '@webdjangular/core/admin-theme';
+import { BuilderFormModule } from '../builder-form.module';
 
 
 const COMPONENTS = [

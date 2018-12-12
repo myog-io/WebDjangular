@@ -1,12 +1,7 @@
 import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
 
 import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
 
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { OrderForm } from '../forms/Order.form';
-import {FormControl, Validators} from "@angular/forms";
 import { ProductPriceForm } from '../forms/ProductPrice.form';
 
 @JsonApiModelConfig({
@@ -24,7 +19,7 @@ export class ProductPriceModel extends AbstractModel {
   sale: string;
 
   get pk() {
-    return this.list;
+    return null;
   }
 
   set pk(value) {

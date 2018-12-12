@@ -43,7 +43,7 @@ export class ProductForm extends AbstractForm {
       type: FormControl,
       validators: [Validators.required] // TODO: validate the uniqueness
     },
-    type: {
+    product_type: {
       type: FormGroup,
       validators: [Validators.required],
       model: ProductTypeModel
@@ -112,10 +112,10 @@ export class ProductForm extends AbstractForm {
     {
       type: 'select',
       label: 'Type',
-      name: 'type',
+      name: 'product_type',
       wrapper_class: 'col-6',
       placeholder: 'Select Product Type',
-      value: null,
+      //value: null,
       options_model: ProductTypeModel
     },
     {

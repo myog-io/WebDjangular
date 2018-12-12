@@ -2,18 +2,12 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
-
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { ProductForm } from '../forms/Product.form';
-import {FormControl, Validators} from "@angular/forms";
-import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
 import { ProductTypeForm } from '../forms/ProductType.form';
 
 
 
 @JsonApiModelConfig({
-  type: 'Product',
+  type: 'ProductType',
   modelEndpointUrl: 'store/product-type',
 })
 export class ProductTypeModel extends AbstractModel {
@@ -27,7 +21,7 @@ export class ProductTypeModel extends AbstractModel {
   name: string;
 
   @Attribute()
-  attribute: any;
+  attributes: any;
 
   @Attribute()
   created: Date;

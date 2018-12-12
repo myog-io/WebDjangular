@@ -6,24 +6,21 @@ from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
     EmbeddedSerializer, DocumentSerializer, EmbeddedModelFieldSerializer
 from libs.plugins.store.api import defaults
-
+from webdjango.models.CoreConfig import CoreConfigInput
 
 class ProductAttributeSerializer(EmbeddedSerializer):
-    slug = serializers.CharField()
+    code = serializers.SlugField(required=True)
     name = serializers.CharField()
-    required = serializers.BooleanField()
+    required = serializers.BooleanField(required=False)
     type = serializers.CharField()
 
     class Meta:
-        abstract = True
+        model = ProductAttribute
 
     def __str__(self):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
-
-
-
-class ProductTypeSerializer(serializers.ModelSerializer):
+class ProductTypeSerializer(DocumentSerializer):
     attributes = ArrayModelFieldSerializer(serializer=ProductAttributeSerializer, required=False)
 
     class Meta:
@@ -107,6 +104,11 @@ class ProductAddonSerializer(DocumentSerializer):
         fields = '__all__'
 
 class ProductSerializer(DocumentSerializer):
+    included_serializers = {
+        'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',
+
+    }
+
     #  product class VARIANT
     variants = ArrayModelFieldSerializer(serializer=BaseProductSerializer, required=False)
     variant_attributes = serializers.JSONField(required=False)
@@ -141,7 +143,7 @@ class ProductSerializer(DocumentSerializer):
         serializer=ProductPricingSerializer
     )
 
-    type = ResourceRelatedField(
+    product_type = ResourceRelatedField(
         many=False,
         queryset=ProductType.objects,
         required=False,
