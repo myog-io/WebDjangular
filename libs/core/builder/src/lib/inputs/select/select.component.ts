@@ -61,6 +61,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
     }
     if (this.config.value) {
       this.group.get(this.config.name).setValue(this.config.value);
+      this.onChange(this.config.value);
     }
     let sub: Subscription;
     sub = this.group.get(this.config.name).valueChanges.subscribe((value) => {

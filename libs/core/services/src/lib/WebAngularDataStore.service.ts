@@ -19,6 +19,7 @@ import { ProductTypeModel } from 'libs/plugins/store/src/lib/data/models/Product
 import { Observable } from 'rxjs';
 
 
+
 const config: DatastoreConfig = {
   baseUrl: '/api',
   //TODO: Load all This Dynamic
@@ -37,12 +38,12 @@ const config: DatastoreConfig = {
     ProductType: ProductTypeModel,
   }
 };
-
 @Injectable()
 @JsonApiDatastoreConfig(config)
 export class WebAngularDataStore extends JsonApiDatastore {
   protected getRelationships(data: any): any {
     let relationships: any;
+    console.log(data)
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         if (data[key] instanceof AbstractModel) {

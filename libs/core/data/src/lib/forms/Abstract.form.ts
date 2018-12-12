@@ -111,8 +111,8 @@ export class AbstractForm extends FormGroup {
         case FormArray:
           if (this.formFields[propName].model) {
             const vals = this.get(propName).value;
-            entity[propName] = [];
             let entities = [];
+
             for (let i = 0; i < vals.length; i++) {
               entities.push(this.createEntity(this.formFields[propName].model, vals[i]))
             }

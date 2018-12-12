@@ -55,6 +55,7 @@ class ProductAttribute(models.Model):
 
 
 class ProductType(DateTimeModel):
+    product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     name = models.CharField(max_length=128)
     attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
 
