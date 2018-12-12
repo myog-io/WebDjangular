@@ -1,6 +1,4 @@
 import {NbMenuItem} from '@nebular/theme';
-import {ScaffoldModule} from "@webdjangular/core/admin";
-import {ProductModel} from "../../../../plugins/store/src/lib/data/models/Product.model";
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
