@@ -91,6 +91,33 @@ export const MENU_ITEMS: NbMenuItem[] = [
             {label: 'provider', action: 'view_pageredirect'}
           ]
         }
+      },
+      {
+        title: 'Condos',
+        link: '/provider/condo',
+        data: {
+          permission: [
+            {label: 'provider', action: 'view_condo'}
+          ]
+        }
+      },
+      {
+        title: 'Channels',
+        link: '/provider/channel',
+        data: {
+          permission: [
+            {label: 'provider', action: 'view_channel'}
+          ]
+        }
+      },
+      {
+        title: 'Resellers',
+        link: '/provider/reseller',
+        data: {
+          permission: [
+            {label: 'provider', action: 'view_reseller'}
+          ]
+        }
       }
     ]
   },

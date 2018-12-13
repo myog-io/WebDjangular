@@ -1,7 +1,7 @@
 from ..models.User import User
 from django.contrib.auth.models import Group
 from django.db import models
-from rest_framework.serializers import ModelSerializer, ValidationError
+from rest_framework.serializers import ValidationError
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.MongoSerializer import DocumentSerializer
 

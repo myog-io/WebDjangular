@@ -32,12 +32,10 @@ export class AbstractModel extends JsonApiModel {
   }
 
   get pk() {
-    console.log('Property pk() is not set in the model', this);
-    return null;
+    return this.id;
   }
 
   set pk(value) {
-    console.log('Property pk() is not set in the model', this);
   }
 
   public toString = (): string => {

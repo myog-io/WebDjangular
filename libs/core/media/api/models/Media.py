@@ -25,7 +25,7 @@ def media_path(instance, filename):
     return '{0}/{1}/{2}{3}'.format(now.year,now.month,uuid.uuid4(),filename)
 
 
-class Media(BaseModel, DirtyFieldsMixin):
+class Media(BaseModel):
     """
     Media Table
     """
