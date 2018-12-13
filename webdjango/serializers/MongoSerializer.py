@@ -129,8 +129,6 @@ class DocumentSerializer(serializers.ModelSerializer):
                 if(field_name in validated_data):
                     validated_data[field_name] = field.to_python(
                         validated_data[field_name])
-                else:
-                    validated_data[field_name] = []
 
             # Loop Array ReferenceField
             if type(field) is ArrayReferenceField:
@@ -138,8 +136,6 @@ class DocumentSerializer(serializers.ModelSerializer):
                     info.relations[field_name].to_many = True
                     validated_data[field_name] = field.to_python(
                         validated_data[field_name])
-                else:
-                    validated_data[field_name] = []
         return validated_data
 
     def create(self, validated_data):

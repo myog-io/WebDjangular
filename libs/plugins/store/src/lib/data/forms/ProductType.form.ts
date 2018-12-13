@@ -1,10 +1,11 @@
-import {FormControl, Validators, FormGroup, FormArray} from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 
-import {AbstractForm} from '@webdjangular/core/data-forms';
-import {BuilderFormFieldConfig} from '@webdjangular/core/builder';
+import { AbstractForm } from '@webdjangular/core/data-forms';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
-import {SmartTableSettings} from '@webdjangular/core/data';
-import {ProductAttributeModel} from "../models/ProductAttribute.model";
+import { SmartTableSettings } from '@webdjangular/core/data';
+import { ProductAttributeModel } from "../models/ProductAttribute.model";
+import { ProductClasses } from '../interfaces/Product.interface';
 
 export class ProductTypeForm extends AbstractForm {
   public listingTableSettings: SmartTableSettings = {
@@ -31,6 +32,10 @@ export class ProductTypeForm extends AbstractForm {
       type: FormControl,
       validators: [Validators.required]
     },
+    product_class: {
+      type: FormControl,
+      validators: [Validators.required]
+    },
     attributes: {
       type: FormArray,
       model: ProductAttributeModel,
@@ -42,8 +47,20 @@ export class ProductTypeForm extends AbstractForm {
       type: 'text',
       label: 'Name',
       name: 'name',
-      wrapper_class: 'col-12',
+      wrapper_class: 'col-6',
       placeholder: '',
+    },
+    {
+      type: 'select',
+      label: 'Product Class',
+      name: 'product_class',
+      wrapper_class: 'col-6',
+      value: ProductClasses.simple,
+      options: [
+        { label: "Simple Product", value: ProductClasses.simple },
+        { label: "Bundle Product", value: ProductClasses.bundle },
+        { label: "Variant Product", value: ProductClasses.variant },
+      ]
     },
     {
       type: 'formArray',
