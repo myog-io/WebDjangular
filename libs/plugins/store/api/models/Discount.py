@@ -31,7 +31,7 @@ class VoucherType:
     ]
 
 
-class Voucher(ActiveModel, BaseModel, models.Model):
+class Voucher(ActiveModel, BaseModel):
     type = models.CharField(max_length=20, choices=VoucherType.CHOICES, default=VoucherType.VALUE)
     name = models.CharField(max_length=255, null=True, blank=True)
     code = models.CharField(max_length=12, unique=True, db_index=True)
@@ -61,7 +61,7 @@ class Voucher(ActiveModel, BaseModel, models.Model):
     # categories = models.ManyToManyField('product.Category', blank=True)
 
 
-class Sale(ActiveModel, BaseModel, models.Model):
+class Sale(ActiveModel, BaseModel):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10,
                             choices=DiscountValueType.CHOICES,

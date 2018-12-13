@@ -2,7 +2,8 @@ from djongo import models
 from django import forms
 from webdjango.models.AbstractModels import BaseModel
 
-class NumberRange(models.Model):
+
+class NumberRange(BaseModel):
     '''
     Number Rengy Model is a entry from city, will have the range of ceps or range of street house numbers
     '''
@@ -24,8 +25,7 @@ class NumberRangeForm(forms.ModelForm):
         )
 
 
-
-class Streets(models.Model):
+class Streets(BaseModel):
     '''
     This Streets will be use to check if the Address Typed by the user on the frontend is in our database
     If it's in our database we will check the numbers range to check if in his number if they have Fiber/Cable Internet
@@ -41,6 +41,7 @@ class Streets(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class StreetsForm(forms.ModelForm):
     class Meta:

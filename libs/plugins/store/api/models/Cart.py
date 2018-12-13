@@ -8,9 +8,10 @@ from libs.core.users.api.models.User import User
 from libs.core.utils.api.money import zero_money
 from libs.plugins.store.api import defaults
 from libs.core.utils.api.models.Address import Address
+from webdjango.models.AbstractModels import BaseModel
 
 
-class CartItem(models.Model):
+class CartItem(BaseModel):
     # product =
     quantity = models.PositiveIntegerField(default=1)
     data = JSONField(blank=True, default=dict)
@@ -19,11 +20,11 @@ class CartItem(models.Model):
         abstract = True
 
 
-class Cart(models.Model):
+class Cart(BaseModel):
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     email = models.EmailField(blank=True, default='')
 
-    token = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+    token = models.UUIDField(default=uuid4, editable=False)
     quantity = models.PositiveIntegerField(default=0)
 
     billing_address = models.EmbeddedModelField(model_container=Address, blank=True)

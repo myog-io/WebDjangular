@@ -10,7 +10,8 @@ from libs.plugins.store.api import defaults
 from measurement.measures import Weight
 from webdjango.fields.MongoFields import MongoDecimalField
 from webdjango.models.AbstractModels import ActiveModel, BaseModel, \
-    PermalinkModel, TranslationModel
+    PermalinkModel
+from webdjango.models.TranslationModel import TranslationModel
 from webdjango.models.CoreConfig import CoreConfigInput
 
 
@@ -40,7 +41,7 @@ class ProductCategory(PermalinkModel, TranslationModel, BaseModel):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
 
-class ProductAttribute(models.Model):
+class ProductAttribute(BaseModel):
     code = models.SlugField()
     name = models.CharField()
     required = models.BooleanField(default=False)
@@ -67,7 +68,7 @@ class ProductType(BaseModel):
         ordering = ['-created']
 
 
-class ProductDimensions(models.Model):
+class ProductDimensions(BaseModel):
     # TODO: change to MeasuramentField
     width = models.CharField(max_length=32)
     height = models.CharField(max_length=32)
@@ -80,7 +81,7 @@ class ProductDimensions(models.Model):
         return '%s object (w:%s,h:%s,d:%s)' % (self.__class__.__name__, self.width, self.height, self.depth)
 
 
-class ProductShipping(models.Model):
+class ProductShipping(BaseModel):
     weight = MeasurementField(measurement=Weight,
                               unit_choices=WeightUnits.CHOICES,
                               default=zero_weight)
@@ -93,7 +94,7 @@ class ProductShipping(models.Model):
         return '%s object (%s)' % (self.__class__.__name__, self.dimensions)
 
 
-class ProductPricing(models.Model):
+class ProductPricing(BaseModel):
     list = MongoDecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES
@@ -112,7 +113,7 @@ class ProductPricing(models.Model):
         return '%s object (List:%s,Sale:%s)' % (self.__class__.__name__, self.list, self.sale)
 
 
-class BaseProduct(ActiveModel, BaseModel, TranslationModel, ):
+class BaseProduct(ActiveModel, TranslationModel, BaseModel):
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True)

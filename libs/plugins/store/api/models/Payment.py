@@ -92,7 +92,7 @@ class Transaction(models.Model):
     gateway_response = JSONField()
 
 
-class Payment(ActiveModel, BaseModel, models.Model):
+class Payment(ActiveModel, BaseModel):
     gateway = models.CharField(max_length=255)
 
     charge_status = models.CharField(max_length=15,

@@ -103,7 +103,7 @@ EMAIL_CHOICES = {
 }
 
 
-class FulfillmentLine(models.Model):
+class FulfillmentLine(BaseModel):
     """ TODO:
     I don't know, order_line does not have ID, maybe a list of product ids/sku
     Since one Fulfillment line can have multiples order lines and vice versa. I can not embedded one inside the other
@@ -116,7 +116,7 @@ class FulfillmentLine(models.Model):
         abstract = True
 
 
-class Fulfillment(models.Model):
+class Fulfillment(BaseModel):
     fulfillment_num = models.PositiveIntegerField(editable=False)
     status = models.CharField(max_length=32, default=OrderFulfillmentStatus.FULFILLED,
                               choices=OrderFulfillmentStatus.CHOICES)
@@ -129,7 +129,7 @@ class Fulfillment(models.Model):
         abstract = True
 
 
-class OrderLine(models.Model):
+class OrderLine(BaseModel):
     product_name = models.CharField(max_length=256)
     product_sku = models.CharField(max_length=32)
     is_shipping_required = models.BooleanField()
@@ -150,7 +150,7 @@ class OrderLine(models.Model):
         abstract = True
 
 
-class OrderEvent(BaseModel, models.Model):
+class OrderEvent(BaseModel):
     type = models.CharField(max_length=255, choices=OrderEventTypes.CHOICES)
     data = JSONField(blank=True, )  # TODO  make it an embedded model
 
@@ -193,7 +193,7 @@ class OrderQueryset(models.QuerySet):
         return qs.distinct()
 
 
-class Order(models.Model):
+class Order(BaseModel):
     order_num = models.CharField(max_length=36, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')

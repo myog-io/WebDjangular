@@ -1,12 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import validate_slug
 from djongo import models
+
+from webdjango.models.AbstractModels import BaseModel
 from webdjango.utils.DynamicLoader import DynamicLoader
 from distutils.version import LooseVersion
 from dirtyfields import DirtyFieldsMixin
 from djongo.models.json import JSONField
 
-class Website(models.Model):
+
+class Website(BaseModel):
     """
     Configuration for Future MultiSite
     """
@@ -28,7 +31,7 @@ class Website(models.Model):
         return self.domain
 
 
-class CoreConfig(models.Model):
+class CoreConfig(BaseModel):
     """
     Core Config Holds Some Information for the Beggening of the application
     """
@@ -100,7 +103,7 @@ class CoreConfig(models.Model):
         return self.slug
 
 
-class Author(models.Model):
+class Author(BaseModel):
     """
     Core Author, this model is used to show the Author information on the APP and Themes Acitivation Pages
     """
@@ -118,7 +121,7 @@ class Author(models.Model):
         return self.name
 
 
-class Plugin(DirtyFieldsMixin, models.Model):
+class Plugin(DirtyFieldsMixin, BaseModel):
     """
     Core Plugin, this model is used to check the installed Plugin and check the actives one
     """
@@ -173,7 +176,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
         return self.name
 
 
-class Theme(DirtyFieldsMixin, models.Model):
+class Theme(DirtyFieldsMixin, BaseModel):
     """
     Core Themes, this model is used to check the installed Themes and check the activated one
     """

@@ -19,7 +19,7 @@ class ShippingMethodType:
     ]
 
 
-class ShippingZone(models.Model):
+class ShippingZone(BaseModel):
     name = models.CharField(max_length=100)
     countries = CountryField(multiple=True, default=[], blank=True)
     default = models.BooleanField(default=False)
@@ -31,7 +31,7 @@ class ShippingZone(models.Model):
         return self.name
 
 
-class ShippingMethod(models.Model):
+class ShippingMethod(BaseModel):
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=30, choices=ShippingMethodType.CHOICES)
     price = MoneyField(currency=defaults.DEFAULT_CURRENCY,

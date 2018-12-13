@@ -1,7 +1,9 @@
 from djongo import models
-from webdjango.models.AbstractModels import SeoModel, TranslationModel, BaseModel
+from webdjango.models.AbstractModels import SeoModel, BaseModel
+
 
 from libs.core.cms.api.models.Block import Block
+from webdjango.models.TranslationModel import TranslationModel
 
 
 class Page(SeoModel, TranslationModel, BaseModel):
