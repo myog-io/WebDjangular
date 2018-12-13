@@ -59,7 +59,7 @@ export class ProductForm extends AbstractForm {
     },
     slug: {
       type: FormControl,
-      validators: [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")] // TODO: validate the uniqueness
+      validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')]
     },
     description: {
       type: FormControl,

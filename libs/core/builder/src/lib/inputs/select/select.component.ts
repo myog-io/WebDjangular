@@ -9,13 +9,17 @@ import { Subscription } from 'rxjs';
   selector: 'wda-form-select',
   styleUrls: ['select.component.scss'],
   template: `
-    <div class="form-group form-select" [formGroup]="config.options_model ? group.get(config.name) : group " >
+    <div class="form-group form-select" [formGroup]="config.options_model ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
       <ng-select class="form-control" (change)="onChange($event)" [formControlName]="config.options_model ? 'id' : config.name" [multiple]="config.multiple" [loading]="loading" [placeholder]="placeholder">
         <ng-option *ngFor="let option of options" value="{{option.value}}">
           {{option.label}}
         </ng-option>
       </ng-select>
+      <wda-form-validators
+        [config]="config.options_model ? group.get(config.name) : group"
+        [input]="config.options_model ? group.get('id') : group.get(config.name)">
+      </wda-form-validators>
     </div><!--form-group-->
   `
 })

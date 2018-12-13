@@ -12,10 +12,13 @@ import { BuilderFormFieldConfig } from "../../interfaces/form-config.interface";
       {{config.label}} is required.
     </div>
     <div *ngIf="input.errors.minlength">
-      {{config.label}} must be at least 4 characters long.
+      {{config.label}} must be at least X characters long.
     </div>
     <div *ngIf="input.errors.forbiddenName">
       {{config.label}} cannot be {{input.value}}.
+    </div>
+    <div *ngIf="input.errors.pattern">
+      {{config.label}} invalid.
     </div>
 
   </div>

@@ -10,6 +10,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <ngx-monaco-editor [options]="editorOptions" [formControlName]="config.name" ></ngx-monaco-editor>
+    <wda-form-validators [config]="config" [input]="group.get(this.config.name)"></wda-form-validators>
   </div><!--form-group-->
 `
 })

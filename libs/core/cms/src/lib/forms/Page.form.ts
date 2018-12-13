@@ -31,7 +31,7 @@ export class PageForm extends AbstractForm {
     },
     slug: {
       type: FormControl,
-      validators: [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")]
+      validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')]
     },
     title: {
       type: FormControl,
