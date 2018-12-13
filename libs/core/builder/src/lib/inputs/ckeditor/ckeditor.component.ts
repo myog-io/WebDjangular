@@ -11,6 +11,7 @@ import { BuilderFormFieldConfig, BuilderFormField } from '../../interfaces/form-
   <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <ckeditor [config]="{ extraPlugins: 'divarea', height: '320' }" [formControlName]="config.name"></ckeditor>
+    <wda-form-validators [config]="config" [input]="group.get(this.config.name)"></wda-form-validators>
   </div><!--form-group-->
 `
 })

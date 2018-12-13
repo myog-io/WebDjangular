@@ -32,7 +32,7 @@ export class CategoryForm extends AbstractForm {
     },
     slug: {
       type: FormControl,
-      validators: [Validators.required]
+      validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')]
     },
     description: {
       type: FormControl,

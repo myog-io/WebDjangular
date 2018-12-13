@@ -27,9 +27,9 @@ export class BlockForm extends AbstractForm {
 			type: FormControl,
 		},
 		slug: {
-			type: FormControl,
-			validators: [Validators.required, Validators.pattern("^[a-z0-9_-]{8,15}$")]
-		},
+      type: FormControl,
+      validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')]
+    },
 		title: {
 			type: FormControl,
 			validators: [Validators.required]
