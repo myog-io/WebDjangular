@@ -1,12 +1,12 @@
-from rest_framework_json_api import serializers
-
-from libs.core.cms.api.models.Page import Page
-from rest_framework_json_api.relations import ResourceRelatedField
 from libs.core.cms.api.models.Block import Block
+from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.BlockSerializer import BlockSerializer
+from rest_framework_json_api import serializers
+from rest_framework_json_api.relations import ResourceRelatedField
+from webdjango.serializers.MongoSerializer import DocumentSerializer
 
 
-class PageSerializer(serializers.ModelSerializer):
+class PageSerializer(DocumentSerializer):
     """
     The serializer for Pages Objects
     """
@@ -31,6 +31,5 @@ class PageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Page
-        fields = ('title', 'slug', 'content', 'header',
-                  'footer', 'created', 'updated')
+        fields = '__all__'
         read_only = ('create', 'updated', 'header', 'footer')

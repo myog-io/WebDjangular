@@ -53,7 +53,7 @@ export class AdminComponent implements OnInit {
             hidden: false,
             data: {
               permission: [
-                { label: 'webdjango', action: 'list_core_config' }
+                { label: 'webdjango', action: 'view_coreconfig' }
               ]
             }
           })

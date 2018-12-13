@@ -115,7 +115,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     """
     A Document Serializer For Nested Documents
     """
-
+    _id = serializers.CharField(read_only=True, required=False)
     def update_validated_data(self, validated_data, info):
         for field_name, field in info.fields.items():
             # Loop For Embbedded Model Field

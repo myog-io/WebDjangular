@@ -103,7 +103,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/core_themes',
         data: {
           permission: [
-            {label: 'webdjango', action: 'list_core_theme'},
+            {label: 'webdjango', action: 'view_theme'},
           ]
         }
       },
@@ -114,7 +114,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
           permission: [
             {
               label: 'webdjango', // Name of the plugin on WebDjango side
-              action: 'list_core_plugin'
+              action: 'view_plugin'
             },
           ]
         }
@@ -124,7 +124,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/user',
         data: {
           permission: [
-            {label: 'users', action: 'list_user'},
+            {label: 'users', action: 'view_user'},
           ]
         }
       },
@@ -133,7 +133,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/group',
         data: {
           permission: [
-            {label: 'auth', action: 'list_group'}
+            {label: 'auth', action: 'view_group'}
           ]
         }
       },
@@ -150,7 +150,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
               link: '/core_websites',
               data: {
                 permission: [
-                  {label: 'webdjango', action: 'list_core_website'}
+                  {label: 'webdjango', action: 'view_website'}
                 ]
               }
             }
