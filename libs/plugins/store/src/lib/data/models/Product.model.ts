@@ -18,7 +18,7 @@ import {FormControl, Validators} from "@angular/forms";
   type: 'Product',
   modelEndpointUrl: 'store/product',
 })
-export class ProductModel extends AbstractModel implements SEOModel{
+export class ProductModel extends AbstractModel{
   public static formClassRef = ProductForm;
   public static include = 'product_type';
 
@@ -79,4 +79,3 @@ export class ProductModel extends AbstractModel implements SEOModel{
   }
 
 }
-applyMixins(ProductModel, [SEOModel]);

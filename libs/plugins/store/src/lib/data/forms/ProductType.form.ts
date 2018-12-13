@@ -24,6 +24,7 @@ export class ProductTypeForm extends AbstractForm {
       }
     },
   };
+
   public formFields = {
     id: {
       type: FormControl
@@ -40,7 +41,13 @@ export class ProductTypeForm extends AbstractForm {
       type: FormArray,
       model: ProductAttributeModel,
     },
-  }
+    variant_attributes: {
+      type: FormArray,
+      model: ProductAttributeModel,
+    },
+
+
+  };
 
   public scaffoldFields: BuilderFormFieldConfig[] = [
     {
@@ -67,7 +74,19 @@ export class ProductTypeForm extends AbstractForm {
       label: 'Attributes',
       name: 'attributes',
       smart_table_mode: 'external',
-
     },
+    {
+      type: 'formArray',
+      label: 'Variant Attributes',
+      name: 'variant_attributes',
+      smart_table_mode: 'external',
+      conditional: {
+        '==': [
+          {var: 'product_class'},
+          ProductClasses.variant
+        ]
+      }
+    },
+
   ]
 }

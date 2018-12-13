@@ -56,12 +56,10 @@ export class EditProductComponent implements OnInit {
         this.selecting_product_type = true;
       }
     });
-
-
-
   }
 
   getProductAttributes() {
+    /*
     this.scaffoldFieldsAttributes = [];
 
     for(let attribute of this.form.get('product_type').get('attributes').value) {
@@ -69,7 +67,7 @@ export class EditProductComponent implements OnInit {
         name: attribute['code'],
         label: attribute['name'],
         type:  attribute['type'],
-        /*validation: validatprs, attribute['required']*/
+        //validation: validatprs, attribute['required']
       };
       this.scaffoldFieldsAttributes.push(attributeScaffold);
       this.form.generateForm();

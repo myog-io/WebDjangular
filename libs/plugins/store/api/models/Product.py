@@ -41,12 +41,25 @@ class ProductCategory(PermalinkModel, TranslationModel, BaseModel):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
 
+class ProductAttributeOption(BaseModel):
+    label = models.CharField()
+    value = models.CharField()
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return '%s object (%s)' % (self.__class__.__name__, self.label)
+
+
 class ProductAttribute(BaseModel):
     code = models.SlugField()
     name = models.CharField()
     required = models.BooleanField(default=False)
     type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
                             default=CoreConfigInput.FIELD_TYPE_TEXT)
+
+    options = models.ArrayModelField(model_container=ProductAttributeOption, default=None, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -60,6 +73,7 @@ class ProductType(BaseModel):
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     name = models.CharField(max_length=128)
     attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
+    variant_attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
 
     ## TODO: If ProductType is Update we need to update all the Product Childrens, Or Make a Lazy Load of this Update
 

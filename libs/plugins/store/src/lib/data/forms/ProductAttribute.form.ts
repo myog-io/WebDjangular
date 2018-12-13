@@ -78,5 +78,12 @@ export class ProductAttributeForm extends AbstractForm {
         {label:"Text Html",value: ProductAttributeTypeValues.codeEditor },
       ]
     },
+    {
+      type: 'formArray',
+      label: 'Options',
+      name: 'options',
+      //fields: new RangeForm().scaffoldFields,
+    }
   ]
+
 }

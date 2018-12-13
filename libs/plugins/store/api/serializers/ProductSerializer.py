@@ -1,6 +1,6 @@
 from libs.plugins.store.api.models.Product import BaseProduct, Product, \
     ProductCategory, ProductDimensions, ProductPricing, ProductShipping, \
-    ProductType, ProductAddon, ProductAttribute
+    ProductType, ProductAddon, ProductAttribute, ProductAttributeOption
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
@@ -9,11 +9,23 @@ from libs.plugins.store.api import defaults
 from webdjango.models.CoreConfig import CoreConfigInput
 
 
+class ProductAttributeOptionSerializer(EmbeddedSerializer):
+    label = serializers.CharField()
+    value = serializers.CharField()
+
+    class Meta:
+        model = ProductAttributeOption
+
+    def __str__(self):
+        return '%s object (%s)' % (self.__class__.__name__, self.label)
+
+
 class ProductAttributeSerializer(EmbeddedSerializer):
     code = serializers.SlugField(required=True)
     name = serializers.CharField()
     required = serializers.BooleanField(required=False)
     type = serializers.CharField()
+    options = ArrayModelFieldSerializer(serializer=ProductAttributeOptionSerializer, required=False)
 
     class Meta:
         model = ProductAttribute
