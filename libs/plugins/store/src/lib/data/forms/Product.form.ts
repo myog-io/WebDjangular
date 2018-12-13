@@ -1,12 +1,12 @@
-import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
+import {FormControl, Validators, FormGroup, FormArray} from '@angular/forms';
 
-import { AbstractForm } from '@webdjangular/core/data-forms';
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import {AbstractForm} from '@webdjangular/core/data-forms';
+import {BuilderFormFieldConfig} from '@webdjangular/core/builder';
 
-import { SmartTableSettings} from '@webdjangular/core/data';
-import { ProductClasses } from '../interfaces/Product.interface';
-import { ProductTypeModel } from '../models/ProductType.model';
-import { ProductPriceModel } from '../models/ProductPrice.model';
+import {SmartTableSettings} from '@webdjangular/core/data';
+import {ProductClasses} from '../interfaces/Product.interface';
+import {ProductTypeModel} from '../models/ProductType.model';
+import {ProductPriceModel} from '../models/ProductPrice.model';
 
 export class ProductForm extends AbstractForm {
 
@@ -89,53 +89,38 @@ export class ProductForm extends AbstractForm {
     },
   };
 
-  scaffoldFields: BuilderFormFieldConfig[] = [
-    {
-      type: 'select',
-      label: 'Product Class',
-      name: 'product_class',
-      wrapper_class: 'col-6',
-      value: ProductClasses.simple,
-      options: [
-        {label:"Simple Product", value: ProductClasses.simple},
-        {label:"Bundle Product", value: ProductClasses.bundle},
-        {label:"Variant Product", value: ProductClasses.variant},
-      ]
-    },
-    {
-      type: 'text',
-      label: 'SKU',
-      name: 'sku',
-      wrapper_class: 'col-6',
-      placeholder: '',
-    },
+  scaffoldFieldsType: BuilderFormFieldConfig[] = [
     {
       type: 'select',
       label: 'Type',
       name: 'product_type',
-      wrapper_class: 'col-6',
-      placeholder: 'Select Product Type',
+      wrapper_class: 'col-12',
+      placeholder: 'Select the Product Type',
       //value: null,
       options_model: ProductTypeModel
     },
+  ];
+
+  scaffoldFieldsGeneral: BuilderFormFieldConfig[] = [
     {
       type: 'text',
       label: 'Name',
       name: 'name',
-      wrapper_class: 'col-6',
+      wrapper_class: 'col-12',
       placeholder: '',
-    },
-    {
-      type: 'formGroup',
-      label: 'Price',
-      name: 'pricing',
-      wrapper_class: 'col-6',
     },
     {
       type: 'text',
       label: 'Slug',
       name: 'slug',
-      wrapper_class: 'col-6',
+      wrapper_class: 'col-12',
+      placeholder: '',
+    },
+    {
+      type: 'text',
+      label: 'SKU',
+      name: 'sku',
+      wrapper_class: 'col-12',
       placeholder: '',
     },
     {
@@ -145,11 +130,109 @@ export class ProductForm extends AbstractForm {
       wrapper_class: 'col-12',
       placeholder: '',
     },
+  ];
+
+  scaffoldFieldsPricing: BuilderFormFieldConfig[] = [
+    {
+      type: 'formGroup',
+      label: 'Price',
+      name: 'pricing',
+      wrapper_class: 'col-6',
+    },
+  ];
+
+  scaffoldFieldsSEO: BuilderFormFieldConfig[] = [
+    {
+      type: 'formGroup',
+      label: 'Title',
+      name: 'seo_title',
+      wrapper_class: 'col-12',
+    },
+    {
+      type: 'formGroup',
+      label: 'Description',
+      name: 'seo_description',
+      wrapper_class: 'col-12',
+    },
+  ];
+
+  scaffoldFieldsShipping: BuilderFormFieldConfig[] = [
+    {
+      type: 'switch',
+      label: 'Shippable',
+      name: 'shippable',
+      wrapper_class: 'col-6',
+      value: false,
+      placeholder: '',
+    },
+    {
+      type: 'text',
+      label: 'Weight',
+      name: 'weight ',
+      inputType: 'number',
+      wrapper_class: 'col-12',
+      placeholder: '',
+      conditional: {
+        '==': [
+          {var: 'shippable'},
+          true
+        ]
+      }
+    },
+    {
+      type: 'text',
+      label: 'Width',
+      name: 'width ',
+      inputType: 'number',
+      wrapper_class: 'col-12',
+      placeholder: '',
+      conditional: {
+        '==': [
+          {var: 'shippable'},
+          true
+        ]
+      }
+    },
+    {
+      type: 'text',
+      label: 'Height',
+      name: 'height ',
+      inputType: 'number',
+      wrapper_class: 'col-12',
+      placeholder: '',
+      conditional: {
+        '==': [
+          {var: 'shippable'},
+          true
+        ]
+      }
+    },
+    {
+      type: 'text',
+      label: 'Depth',
+      name: 'depth ',
+      inputType: 'number',
+      wrapper_class: 'col-12',
+      placeholder: '',
+      conditional: {
+        '==': [
+          {var: 'shippable'},
+          true
+        ]
+      }
+    },
+  ];
+
+  scaffoldFieldsMedias: BuilderFormFieldConfig[] = [
+
+  ];
+
+  scaffoldFieldsInventory: BuilderFormFieldConfig[] = [
     {
       type: 'switch',
       label: 'Track inventory',
       name: 'track_inventory',
-      wrapper_class: 'col-2',
+      wrapper_class: 'col-6',
       value: false,
       placeholder: '',
     },
@@ -158,11 +241,11 @@ export class ProductForm extends AbstractForm {
       label: 'Quantity',
       name: 'quantity',
       inputType: 'number',
-      wrapper_class: 'col-6',
+      wrapper_class: 'col-12',
       placeholder: '',
       conditional: {
-        '==':[
-          {var:'track_inventory'},
+        '==': [
+          {var: 'track_inventory'},
           true
         ]
       }
@@ -172,9 +255,34 @@ export class ProductForm extends AbstractForm {
       label: 'Cost',
       name: 'cost',
       inputType: 'number',
-      wrapper_class: 'col-6',
+      wrapper_class: 'col-12',
       placeholder: '',
     },
+  ];
+
+  scaffoldFields: BuilderFormFieldConfig[] = [
+    ...this.scaffoldFieldsType,
+    ...this.scaffoldFieldsGeneral,
+    {
+      type: 'select',
+      label: 'Product Class',
+      name: 'product_class',
+      wrapper_class: 'col-6',
+      value: ProductClasses.simple,
+      options: [
+        {label: "Simple Product", value: ProductClasses.simple},
+        {label: "Bundle Product", value: ProductClasses.bundle},
+        {label: "Variant Product", value: ProductClasses.variant},
+      ]
+    },
+
+
+
+
+
+
+
+
 
   ]
 }

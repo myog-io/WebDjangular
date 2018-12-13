@@ -31,7 +31,7 @@ import { Subscription } from 'rxjs';
           {{ submit_label }}
         </button>
       </div>
-   </div>
+    </div>
   </form>
 `
 })
