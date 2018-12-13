@@ -12,7 +12,6 @@ import { PageRedirectForm } from '../forms/PageRedirect.form';
 @JsonApiModelConfig({
   type: 'PageRedirect',
   modelEndpointUrl: 'provider/page-redirect',
-  meta: JsonApiMetaModel
 })
 export class PageRedirectModel extends AbstractModel {
   public static formClassRef = PageRedirectForm;
@@ -47,13 +46,6 @@ export class PageRedirectModel extends AbstractModel {
 
   permissions: PermissionModel[]
 
-  get pk() {
-    return this.id;
-  }
-
-  set pk(value) {
-
-  }
 
 }
 
