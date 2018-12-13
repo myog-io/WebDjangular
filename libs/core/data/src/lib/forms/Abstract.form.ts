@@ -11,7 +11,7 @@ export class AbstractForm extends FormGroup {
   /**
    * Form fields of abstract form
    */
-  public formFields = {};
+  public formFields: BuilderFormFieldConfig[] = [];
 
   /**
    * Scaffold fields of abstract form
@@ -34,13 +34,14 @@ export class AbstractForm extends FormGroup {
    * Generates form
    */
   public generateForm() {
-
-    for (let propName in this.formFields) {
-      if (this.formFields[propName].type == FormArray) {
+    for (let i = 0; i < this.formFields.length; i++) {
+      const element = this.formFields[i];
+      const propName = element.name
+      if (this.formFields[i].formType == FormArray) {
 
         this.registerControl(propName, new FormArray([], []));
-      } else if (this.formFields[propName].type == FormGroup) {
-        if (typeof this.formFields[propName].model !== 'undefined') {
+      } else if (this.formFields[i].formType == FormGroup) {
+        if (typeof this.formFields[i].model !== 'undefined') {
           const fb = new this.formFields[propName].model.formClassRef();
           fb.generateForm();
           this.registerControl(propName, fb);
@@ -50,8 +51,8 @@ export class AbstractForm extends FormGroup {
       } else {
         let validators = [];
 
-        if (typeof this.formFields[propName]['validators'] !== 'undefined') {
-          validators = this.formFields[propName]['validators'];
+        if (typeof this.formFields[i]['validators'] !== 'undefined') {
+          validators = this.formFields[i]['validators'];
         }
 
         this.registerControl(propName, new FormControl(null, validators));
@@ -65,14 +66,16 @@ export class AbstractForm extends FormGroup {
    */
   public populateForm(entity: JsonApiModel | any = null) {
     if (!entity) return false;
-    for (let propName in this.formFields) {
+    for (let i = 0; i < this.formFields.length; i++) {
+      const element = this.formFields[i];
+      let propName = element.name
       // From Array
-      if (this.formFields[propName].type == FormArray && typeof entity[propName] !== 'undefined') {
+      if (this.formFields[i].formType == FormArray && typeof entity[propName] !== 'undefined') {
         for (let i = 0; i < entity[propName].length; i++) {
           this.pushToFormArrayAttribute(propName, entity[propName][i]);
         }
       } else {
-        if (this.formFields[propName].type == FormGroup && typeof entity[propName] !== 'undefined') {
+        if (this.formFields[i].formType == FormGroup && typeof entity[propName] !== 'undefined') {
           let fg = this.get(propName) as AbstractForm;
           fg.populateForm(entity[propName]);
         } else if (typeof entity[propName] !== 'undefined') {

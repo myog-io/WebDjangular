@@ -14,7 +14,6 @@ export class ScaffoldComponent implements OnInit {
   source: WebAngularSmartTableDataSource;
   current_model: any;
   base_path: any;
-  form: any;
   title: string = ";D";
 
   constructor(
@@ -28,7 +27,7 @@ export class ScaffoldComponent implements OnInit {
     this.current_model = this.route.data['value'].model;
     this.title = this.route.data['value'].title;
     this.base_path = this.route.data['value'].path;
-    this.form = new this.current_model.formClassRef();
+
     this.startTableInformation()
 
   }
@@ -38,7 +37,7 @@ export class ScaffoldComponent implements OnInit {
     //Add 'implements OnInit' to the class.
 
     this.source = new WebAngularSmartTableDataSource(this.datastore, this.current_model, {
-      smartTableSettings: this.form.listingTableSettings,
+      smartTableSettings: this.current_model.smartTableOptions,
       onEditButtonClick: ($event) => {
         this.router.navigate([this.base_path, 'edit', $event.data.pk]);
       },

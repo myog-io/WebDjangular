@@ -1,6 +1,7 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
+import { AbstractModel } from '@webdjangular/core/data-models';
 
 export interface BuilderFormConfig {
   submit_label?: string;
@@ -11,12 +12,14 @@ export interface BuilderFormConfig {
 }
 
 export interface BuilderFormFieldConfig {
+  validators?: Validators[];
   disabled?: boolean;
   label?: string;
-  name: string;
+  name?: string; // Maybe we wont use it
   form_group_name?: string;
+  model?: any;//AbstractModel;
   options?: any[];
-  options_model?: any, // From AbstractModel
+  options_model?: any; // From AbstractModel
   multiple?: boolean;
   placeholder?: string;
   type: string;
@@ -33,6 +36,9 @@ export interface BuilderFormFieldConfig {
   switch_second_value?: any;
   fields?: BuilderFormFieldConfig[]; // Children of this Form
   smart_table_mode?: 'external' | 'inline';
+  backendResourceName?: string;
+  formType?: any;
+  sort?: number;
 }
 
 export interface BuilderFormField {
