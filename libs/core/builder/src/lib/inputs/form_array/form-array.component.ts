@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
-import { Subscription } from 'rxjs';
-import { SmartTableSettings } from '@webdjangular/core/data';
-import { LocalDataSource } from 'ng2-smart-table';
-import { NbWindowRef, NbWindowService } from '@nebular/theme';
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import {Component, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
+import {AbstractForm} from '@webdjangular/core/data-forms';
+import {BuilderFormField, BuilderFormFieldConfig} from '../../interfaces/form-config.interface';
+import {Subscription} from 'rxjs';
+import {SmartTableSettings} from '@webdjangular/core/data';
+import {LocalDataSource} from 'ng2-smart-table';
+import {NbWindowRef, NbWindowService} from '@nebular/theme';
+import {WebAngularDataStore} from '@webdjangular/core/services';
 
 enum state {
   start = 'start',
@@ -13,6 +13,7 @@ enum state {
   creating = 'creating',
   removing = 'removing',
 }
+
 /**
  * This class will Implement a Smart Table with Add and Fielter Button
  */
@@ -20,27 +21,33 @@ enum state {
   selector: 'wda-form-array',
   styleUrls: ['form-array.component.scss'],
   template: `
-    <label>{{ config.label }}</label>
-    <ng2-smart-table
-      [settings]="smart_table_settings"
-      [source]="source"
-      (create)="onCreate($event)"
-      (edit)="onEdit($event)"
-      (delete)="onDelete($event)">
-      ></ng2-smart-table>
-    <br/>
-    <ng-template #InseptionForm let-data >
-      <wda-form [fields]="form.scaffoldFields" (onSubmit)="submitModal($event)" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
-    </ng-template>
-`
+    <nb-accordion class="mb-3">
+      <nb-accordion-item [expanded]="true">
+        <nb-accordion-item-header>{{ config.label }}</nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <ng2-smart-table
+            [settings]="smart_table_settings"
+            [source]="source"
+            (create)="onCreate($event)"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)">
+          </ng2-smart-table>
+          <br/>
+          <ng-template #InseptionForm let-data>
+            <wda-form [fields]="form.scaffoldFields" (onSubmit)="submitModal($event)"
+                      (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
+          </ng-template>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+
+  `
 })
 export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {
   public smart_table_settings: SmartTableSettings = {
     editable: true,
     mode: 'inline',
-    columns: {
-
-    },
+    columns: {},
     pager: {
       perPage: 20,
       display: true
@@ -79,6 +86,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
 
 
   @ViewChild('InseptionForm') formTemplate: TemplateRef<any>;
+
   /**
    * Creates an instance of scaffold form select component.
    * @param datastore
@@ -89,6 +97,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   ) {
 
   }
+
   /**
    * On Initialization of the Component
    */
@@ -106,6 +115,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     });
     this.onChange();
   }
+
   private openWindow(title: string = "Edit") {
     //this.loadOptions();
 
@@ -134,6 +144,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       }
     })
   }
+
   /**
    * Including Row on the array
    * TODO: If this is for an HasMany we have to change a little bit
@@ -143,6 +154,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.group.pushToFormArrayAttribute(this.config.name, val[0]);
     this.setGroupValue(val);
   }
+
   /**
    * A row has been updated
    * @param val form value
@@ -150,6 +162,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   private updateRow(val: any) {
     this.setGroupValue(val);
   }
+
   /**
    *
    * @param val
@@ -158,6 +171,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.group.formArrayRemoveAt(this.config.name, 0);
     this.setGroupValue(val);
   }
+
   /**
    * Set Current Group Value
    * @param val
@@ -167,6 +181,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     // "Must supply a value for form control at index: 0
     this.group.get(this.config.name).setValue(val);
   }
+
   /**
    * When the smart_table_settings.mode is `external` we have to get the form config information
    */
@@ -180,6 +195,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       );
     }
   }
+
   /**
    * Updating Smart Tables Settings, Creating the Columns based on the fields
    */
@@ -218,6 +234,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     }
 
   }
+
   /**
    * Destroying The Component
    */
@@ -232,6 +249,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     }
 
   }
+
   /**
    * On Delete Entry from the table
    */
@@ -239,6 +257,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.state = state.removing;
     this.source.remove($event.data);
   }
+
   /**
    * On Create new Entry on the Table
    * @param $event
@@ -249,6 +268,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.openWindow(`New`);
     this.form.reset();
   }
+
   /**
    * On Edit Entry
    * @param $event
@@ -260,13 +280,14 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.openWindow(`Edit`);
     this.element = $event.data; // Reference to find on the table latter
     this.loading = true;
-    setTimeout(() =>{
+    setTimeout(() => {
       this.loading = false;
       this.form.populateForm($event.data);
-    },350);
+    }, 350);
 
 
   }
+
   /**
    * submitModal
    */
@@ -276,13 +297,13 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       switch (this.state) {
         case state.updating:
 
-          this.source.update(this.element, $event.data).then((val:any)=>{
+          this.source.update(this.element, $event.data).then((val: any) => {
             this.closeWindow();
           });
           this.element = null;
           break;
         case state.creating:
-          this.source.prepend($event.data).then((val:any) => {
+          this.source.prepend($event.data).then((val: any) => {
             this.closeWindow();
           });
           break;
@@ -293,14 +314,15 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
 
 
   }
-  private closeWindow(){
 
-    setTimeout(() =>{
+  private closeWindow() {
+
+    setTimeout(() => {
       this.loading = false;
       this.windowRef.close();
       this.state = state.start;
       this.form.reset();
-    },350);
+    }, 350);
   }
 
 }

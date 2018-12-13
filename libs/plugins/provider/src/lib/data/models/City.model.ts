@@ -73,7 +73,7 @@ export class CityModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   get pk() {
     return this.id;
@@ -82,9 +82,10 @@ export class CityModel extends AbstractModel {
   set pk(value) {
 
   }
+
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;
-  }
+  };
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

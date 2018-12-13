@@ -29,9 +29,6 @@ export class ProductModel extends AbstractModel{
   sku: string;
 
   @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'ProductType'
-  })
   product_type: ProductTypeModel;
 
 

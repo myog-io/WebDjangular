@@ -11,7 +11,7 @@ import {
   NbSpinnerModule,
   NbButtonModule,
   NbListModule,
-  NbCheckboxModule
+  NbCheckboxModule, NbCardModule, NbAccordionModule
 } from '@nebular/theme';
 
 import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
@@ -61,6 +61,8 @@ const ENTRY_COMPONENTS = [
     NbSpinnerModule,
     NbListModule,
     NbCheckboxModule,
+    NbCardModule,
+    NbAccordionModule,
 
   ],
   exports: [ScaffoldFieldDirective, BuilderFormComponent, ModelPaginatorComponent],

@@ -7,6 +7,7 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { CategoryForm } from '../forms/Category.form';
 import {FormControl, Validators} from "@angular/forms";
+import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'ProductCategory',
@@ -20,12 +21,33 @@ export class CategoryModel extends AbstractModel {
   id: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Name',
+    wrapper_class: 'col-12',
+    placeholder: 'Enter the Category name',
+  })
   name: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    type: 'text',
+    label: 'Category URL',
+    wrapper_class: 'col-12',
+    placeholder: 'Enter the Category URL',
+  })
   slug: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'ckeditor',
+    label: 'Description',
+    wrapper_class: 'col-12',
+    placeholder: 'Enter Page Title',
+  })
   description: string;
 
   @Attribute()
@@ -43,5 +65,18 @@ export class CategoryModel extends AbstractModel {
   set pk(value) {
 
   }
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'text',
+      },
+      description: {
+        title: 'Description',
+        type: 'text',
+      }
+    },
+  };
 
 }

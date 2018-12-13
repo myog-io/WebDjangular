@@ -1,9 +1,20 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <nb-card>
-    <nb-card-header>{{before_title}} <b>{{title}}</b></nb-card-header>
-    <nb-card-body>
-      <wda-form [fields]="form.formFields" (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading" [save_continue]="saveAndContinue"></wda-form>
+<!--
+<div class="col-12 align-self-start sticky-top">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nb-card>
+      <nb-card-header>{{ before_title }} <b>{{ title }}</b></nb-card-header>
+      <nb-card-body>
 
-    </nb-card-body>
-  </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </form>
+</div>
+-->
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+ <wda-form [fields]="form.formFields" (onSubmit)="onSubmit($event)"
+                  (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"
+                  [save_continue]="saveAndContinue" [before_title]="before_title" [title]="title"></wda-form>
+
 </form>

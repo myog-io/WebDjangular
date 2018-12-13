@@ -9,7 +9,7 @@ import { StreetModel } from '../models/Street.model';
 import { RangeModel } from '../models/Range.model';
 
 export class CityForm extends AbstractForm {
-
+/*
   public listingTableSettings: SmartTableSettings = {
     columns: {
       id: {
@@ -85,4 +85,5 @@ export class CityForm extends AbstractForm {
       //fields: new RangeForm().scaffoldFields,
     }
   ]
+  */
 }
