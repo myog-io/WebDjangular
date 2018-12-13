@@ -1,12 +1,14 @@
 import { JsonApiModel } from 'angular2-jsonapi';
-import { Observable } from 'rxjs';
 
 import 'reflect-metadata';
-import {applyMixins} from "rxjs/internal-compatibility";
+import { AbstractForm } from '../forms';
+import { SmartTableSettings } from '../data-store';
+import { FormControl } from '@angular/forms';
 
 export class AbstractModel extends JsonApiModel {
-  public static formClassRef = null;
-  public static include = null;
+
+  public include = null;
+  public smartTableOptions: SmartTableSettings
   protected service;
 
   constructor(_datastore, data?: any) {
@@ -15,6 +17,15 @@ export class AbstractModel extends JsonApiModel {
   }
 
 
+  get hasMany(): any {
+    return Reflect.getMetadata('HasMany', this)
+  }
+  get belongTo(): any {
+    return Reflect.getMetadata('BelongsTo', this)
+  }
+  get extraOptions(): any {
+    return Reflect.getMetadata('ExtraOptions', this)
+  }
 
   saveHasMany() {
     let hasManyFields = Reflect.getMetadata('HasMany', this);
@@ -41,5 +52,28 @@ export class AbstractModel extends JsonApiModel {
 
   public toString = (): string => {
     return `(ID: ${this.id})`;
+  }
+
+
+  /***
+   * This function will Generate and Abstract FormGroup
+   */
+  public getForm(): AbstractForm {
+    const fg = new AbstractForm(this._datastore)
+    let formFields = []
+    let extraOptions = this.extraOptions
+    let count = 0;
+    for (const key in extraOptions) {
+      if (extraOptions.hasOwnProperty(key)) {
+        const element = extraOptions[key];
+        element.name = key;
+        element.sort = element.sort || count;
+        formFields.push(element)
+        count++;
+      }
+    }
+    formFields.sort((a,b)=> (a.sort > b.sort) ? 1 : ((b.sort > a.sort) ? -1 : 0));
+    fg.formFields = formFields
+    return fg;
   }
 }

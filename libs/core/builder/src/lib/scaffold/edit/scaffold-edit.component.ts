@@ -71,14 +71,15 @@ export class ScaffoldEditComponent implements OnInit {
     });
     this.route.data.subscribe(data => {
       this.current_model = data.model;
+      this.entry = new this.current_model(this.datastore,{});
       this.title = data.title;
       this.base_path = data.path;
-      this.form = new this.current_model.formClassRef();
+      this.form = this.entry.getForm();
       if (this.current_model.include) {
         this.inlcude_args = {include: this.current_model.include};
       }
       this.form.generateForm();
-      this.getEntry();
+      //this.getEntry();
     })
   }
 

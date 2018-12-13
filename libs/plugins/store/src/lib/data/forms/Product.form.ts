@@ -8,7 +8,7 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from '../models/ProductType.model';
 import {ProductPriceModel} from '../models/ProductPrice.model';
 
-export class ProductForm extends AbstractForm implements SEOForm{
+export class ProductForm extends AbstractForm{
 
   public listingTableSettings: SmartTableSettings = {
     columns: {

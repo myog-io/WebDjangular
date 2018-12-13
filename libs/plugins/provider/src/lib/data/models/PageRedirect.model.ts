@@ -21,21 +21,12 @@ export class PageRedirectModel extends AbstractModel {
   id: string;
 
   @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'Page'
-  })
   default_page: PageModel;
 
   @BelongsTo()
-  @ExtraOptions({
-    backendResourceName: 'Page'
-  })
   redirect_page: PageModel;
 
   @HasMany()
-  @ExtraOptions({
-    backendResourceName: 'City'
-  })
   cities: CityModel;
 
   @Attribute()
