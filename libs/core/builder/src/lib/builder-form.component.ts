@@ -21,12 +21,12 @@ import { Subscription } from 'rxjs';
     <div class="row" *ngIf="submit">
       <div class="col-12">
         <ng-container *ngIf="save_continue">
-          <button nbButton [status]="submit_continue_status" [size]="submit_continue_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status"
+          <button nbButton [status]="submit_continue_status" [disabled]="loading || !group.valid" [size]="submit_continue_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status"
             [disabled]="loading" [nbSpinnerSize]="submit_continue_size" nbSpinnerMessage="" (click)="submitForm($event,false)">
             {{ submit_continue_label }}
           </button>
         </ng-container>
-        <button nbButton [status]="submit_status" [size]="submit_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
+        <button nbButton [status]="submit_status" [disabled]="loading || !group.valid" [size]="submit_size" [nbSpinner]="loading" [nbSpinnerStatus]="submit_status"
           [disabled]="loading" [nbSpinnerSize]="submit_size" nbSpinnerMessage="" (click)="submitForm($event,true)">
           {{ submit_label }}
         </button>
