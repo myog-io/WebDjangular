@@ -1,11 +1,11 @@
 from djongo import models
 from django import forms
-from webdjango.models.AbstractModels import DateTimeModel
+from webdjango.models.AbstractModels import BaseModel
 from libs.core.cms.api.models.Page import Page
 from .City import City
 
 
-class PageRedirect(DateTimeModel):
+class PageRedirect(BaseModel):
     default_page = models.ForeignKey(
         Page, on_delete=models.CASCADE, related_name='provider_default')
     redirect_page = models.ForeignKey(
@@ -15,4 +15,4 @@ class PageRedirect(DateTimeModel):
 
     class Meta:
         db_table = 'provider_redirect'
-        ordering = ['-id']
+        ordering = ['-created']

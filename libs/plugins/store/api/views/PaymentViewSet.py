@@ -11,7 +11,7 @@ class PaymentFilter(FilterSet):
     class Meta:
         model = Payment
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'charge_status': ['exact'],
             'customer_ip_address': ['contains', 'exact'],
             'total': ['exact'],

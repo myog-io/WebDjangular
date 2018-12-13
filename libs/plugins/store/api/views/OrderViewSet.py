@@ -11,7 +11,7 @@ class OrderFilter(FilterSet):
     class Meta:
         model = Order
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'order_num': ['contains', 'exact'],
             'status': ['exact'],
         }

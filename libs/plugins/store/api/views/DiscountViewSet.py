@@ -11,7 +11,7 @@ class VoucherFilter(FilterSet):
     class Meta:
         model = Voucher
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'code': ['contains', 'exact'],
         }
@@ -40,7 +40,7 @@ class SaleFilter(FilterSet):
     class Meta:
         model = Sale
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
         }
 
 

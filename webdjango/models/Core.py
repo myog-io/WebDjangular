@@ -21,7 +21,7 @@ class Website(models.Model):
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_website'
 
     def __str__(self):
@@ -93,7 +93,7 @@ class CoreConfig(models.Model):
 
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_config'
 
     def __str__(self):
@@ -111,7 +111,7 @@ class Author(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_author'
 
     def __str__(self):
@@ -166,7 +166,7 @@ class Plugin(DirtyFieldsMixin, models.Model):
                 print("DO Nothing for now")
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_plugin'
 
     def __str__(self):
@@ -244,5 +244,5 @@ class Theme(DirtyFieldsMixin, models.Model):
                     active_theme = theme
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_theme'

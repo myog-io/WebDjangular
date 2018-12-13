@@ -11,7 +11,7 @@ class PageRedirectFilter(FilterSet):
     class Meta:
         model = PageRedirect
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'default_page': ['in', 'exact'],
             'redirect_page': ['in', 'exact'],
             'cities': ['in', 'exact'],

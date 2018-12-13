@@ -18,7 +18,7 @@ class PageFilter(FilterSet):
     class Meta:
         model = Page
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'title': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
             'content': ['contains'],

@@ -11,7 +11,7 @@ class AddressFilter(FilterSet):
     class Meta:
         model = Address
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'first_name': ['contains', 'exact'],
             'last_name': ['contains', 'exact'],
             'company_name': ['contains', 'exact'],

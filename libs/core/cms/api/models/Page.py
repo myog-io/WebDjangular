@@ -1,19 +1,19 @@
 from djongo import models
-from django.db import models as djangoModels
-from webdjango.models.AbstractModels import SeoModel, TranslationModel, DateTimeModel
+from webdjango.models.AbstractModels import SeoModel, TranslationModel, BaseModel
 
 from libs.core.cms.api.models.Block import Block
 
-class Page(SeoModel, TranslationModel, DateTimeModel):
+
+class Page(SeoModel, TranslationModel, BaseModel):
     """
     CMS Pages Model
     """
-    title = djangoModels.CharField(max_length=255)
-    slug = djangoModels.SlugField(
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(
         max_length=255, null=True, default=None, blank=True)
-    content = djangoModels.TextField()
-    header = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
-    footer = djangoModels.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)
+    content = models.TextField()
+    header = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
+    footer = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)
     i18n_fields = ['title', 'slug', 'content']
 
     def __str__(self):
@@ -21,4 +21,4 @@ class Page(SeoModel, TranslationModel, DateTimeModel):
 
     class Meta:
         db_table = 'cms_page'
-        ordering = ['-id']
+        ordering = ['-created']

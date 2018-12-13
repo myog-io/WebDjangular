@@ -3,7 +3,7 @@ from django_prices.models import MoneyField
 from djongo import models
 
 from libs.plugins.store.api import defaults
-from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
+from webdjango.models.AbstractModels import ActiveModel, BaseModel
 from django_countries.fields import CountryField
 from measurement.measures import Weight
 from libs.core.utils.api.weight import WeightUnits, zero_weight
@@ -50,4 +50,4 @@ class ShippingMethod(models.Model):
     maximum_order_weight = MeasurementField(measurement=Weight, unit_choices=WeightUnits.CHOICES,
                                             blank=True, null=True)
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']

@@ -13,7 +13,7 @@ class ProductTypeFilter(FilterSet):
     class Meta:
         model = ProductType
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
         }
 
@@ -42,7 +42,7 @@ class ProductAddonFilter(FilterSet):
     class Meta:
         model = ProductAddon
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'description': ['contains'],
         }
@@ -71,7 +71,7 @@ class ProductCategoryFilter(FilterSet):
     class Meta:
         model = ProductCategory
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'description': ['contains'],
         }
@@ -100,7 +100,7 @@ class ProductFilter(FilterSet):
     class Meta:
         model = Product
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'sku': ['contains', 'exact'],
             'description': ['contains'],

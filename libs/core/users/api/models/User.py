@@ -2,16 +2,16 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 
-
+from webdjango.models.AbstractModels import BaseModel
 from .UserManager import UserManager
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     """
     The User model
     """
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'users'
 
     first_name = models.CharField(max_length=60)
@@ -26,8 +26,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_mobile_verified = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     is_staff = models.BooleanField(default=False, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
 
     # default_shipping_address =
     # default_billing_address =

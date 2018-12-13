@@ -1,14 +1,12 @@
-from django.db import models as djangoModels
 from djongo import models
 from djongo.models.json import JSONField
-from webdjango.models.AbstractModels import DateTimeModel
+from webdjango.models.AbstractModels import BaseModel
 
 
-class Form(DateTimeModel):
+class Form(BaseModel):
     """
     Form Model
     """
-    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=70, unique=True, null=False)
     content = JSONField(default=None, null=True)
@@ -18,4 +16,4 @@ class Form(DateTimeModel):
 
     class Meta:
         db_table = 'forms_form'
-        ordering = ['-id']
+        ordering = ['-created']

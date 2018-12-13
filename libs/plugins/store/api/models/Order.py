@@ -10,7 +10,7 @@ from djongo.models.json import JSONField
 from libs.plugins.store.api import defaults
 from libs.core.utils.api.models.Address import Address
 from libs.plugins.store.api.models.Payment import ChargeStatus
-from webdjango.models.AbstractModels import DateTimeModel
+from webdjango.models.AbstractModels import BaseModel
 
 
 class OrderStatus:
@@ -150,7 +150,7 @@ class OrderLine(models.Model):
         abstract = True
 
 
-class OrderEvent(DateTimeModel, models.Model):
+class OrderEvent(BaseModel, models.Model):
     type = models.CharField(max_length=255, choices=OrderEventTypes.CHOICES)
     data = JSONField(blank=True, )  # TODO  make it an embedded model
 
@@ -206,4 +206,4 @@ class Order(models.Model):
 
     # TODO: idk... maybe a better way to store those fields instead of "flat"
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']

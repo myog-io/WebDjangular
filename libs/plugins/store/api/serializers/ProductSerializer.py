@@ -21,6 +21,7 @@ class ProductAttributeSerializer(EmbeddedSerializer):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
 class ProductTypeSerializer(DocumentSerializer):
+    _id = serializers.CharField(required=False)
     attributes = ArrayModelFieldSerializer(serializer=ProductAttributeSerializer, required=False)
 
     class Meta:

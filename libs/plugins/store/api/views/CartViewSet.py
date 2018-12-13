@@ -13,7 +13,7 @@ class CartFilter(FilterSet):
     class Meta:
         model = Cart
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'sku': ['contains', 'exact'],
             'description': ['contains'],

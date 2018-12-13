@@ -12,7 +12,7 @@ class BlockFilter(FilterSet):
     class Meta:
         model = Block
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'title': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
             'content': ['contains'],

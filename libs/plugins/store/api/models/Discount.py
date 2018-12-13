@@ -2,7 +2,7 @@ from django_prices.models import MoneyField
 from djongo import models
 
 from libs.plugins.store.api import defaults
-from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
+from webdjango.models.AbstractModels import ActiveModel, BaseModel
 
 
 class DiscountValueType:
@@ -31,7 +31,7 @@ class VoucherType:
     ]
 
 
-class Voucher(ActiveModel, DateTimeModel, models.Model):
+class Voucher(ActiveModel, BaseModel, models.Model):
     type = models.CharField(max_length=20, choices=VoucherType.CHOICES, default=VoucherType.VALUE)
     name = models.CharField(max_length=255, null=True, blank=True)
     code = models.CharField(max_length=12, unique=True, db_index=True)
@@ -61,7 +61,7 @@ class Voucher(ActiveModel, DateTimeModel, models.Model):
     # categories = models.ManyToManyField('product.Category', blank=True)
 
 
-class Sale(ActiveModel, DateTimeModel, models.Model):
+class Sale(ActiveModel, BaseModel, models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=10,
                             choices=DiscountValueType.CHOICES,

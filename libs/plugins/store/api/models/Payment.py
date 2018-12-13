@@ -6,7 +6,7 @@ from djongo.models.json import JSONField
 
 from libs.plugins.store.api import defaults
 from libs.core.utils.api.models.Address import Address
-from webdjango.models.AbstractModels import ActiveModel, DateTimeModel
+from webdjango.models.AbstractModels import ActiveModel, BaseModel
 
 
 class TransactionError(Enum):
@@ -92,7 +92,7 @@ class Transaction(models.Model):
     gateway_response = JSONField()
 
 
-class Payment(ActiveModel, DateTimeModel, models.Model):
+class Payment(ActiveModel, BaseModel, models.Model):
     gateway = models.CharField(max_length=255)
 
     charge_status = models.CharField(max_length=15,

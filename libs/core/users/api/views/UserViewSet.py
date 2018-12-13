@@ -25,7 +25,7 @@ class UserFilter(FilterSet):
     class Meta:
         model = User
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'first_name': ['contains','exact'],
             'last_name': ['contains','exact'],
         }
@@ -45,7 +45,7 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     permission_classes = (AuthenticatedViewsetPermission, )
-    search_fields = ('id','first_name', 'last_name', 'email', 'username') # Search field is for the Search Filter ?search=
+    search_fields = ('first_name', 'last_name', 'email', 'username') # Search field is for the Search Filter ?search=
     filter_class = UserFilter
 
 

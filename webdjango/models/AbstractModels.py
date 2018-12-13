@@ -18,7 +18,18 @@ def default_i18n():
     return code or "en"
 
 
-class TranslationModel(models.Model):
+class BaseModel(models.Model):
+    readonly_fields = ('_id', )
+
+    _id = models.ObjectIdField(db_column='_id', primary_key=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class TranslationModel(BaseModel):
 
     i18n_fields = []
     language = models.CharField(
@@ -96,7 +107,7 @@ class TranslationModel(models.Model):
         abstract = True
 
 
-class PermalinkModel(models.Model):
+class PermalinkModel(BaseModel):
 
     slug = models.SlugField(max_length=256)
 
@@ -115,23 +126,17 @@ class PermalinkModel(models.Model):
         abstract = True
 
 
-class DateTimeModel(models.Model):
-
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
 
 
-class ActiveModel(models.Model):
+
+class ActiveModel(BaseModel):
     is_active = models.BooleanField(default=True)
 
     class Meta:
         abstract = True
 
 
-class SeoModel(models.Model):
+class SeoModel(BaseModel):
     seo_title = models.CharField(
         max_length=70, blank=True, null=True,
         validators=[MaxLengthValidator(70)])

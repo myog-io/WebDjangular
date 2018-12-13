@@ -15,7 +15,7 @@ class MediaFilter(FilterSet):
     class Meta:
         model = Media
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'alt': ['contains', 'exact'],
         }
 

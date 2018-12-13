@@ -1,11 +1,11 @@
 
-import os
+import os, io
 
 from dirtyfields import DirtyFieldsMixin
-from django.db import models as djangoModels
-from djongo.models import Model
+from djongo import models
 from libs.core.media.api.fields.ChunkableFieldFile import ChunkableFieldFile
 from libs.core.media.api.fields.RemoteFileField import RemoteFileField
+from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Core import CoreConfig
 from libs.core.media.api.configs import MEDIA_CONFIG_GROUP_SLUG, CONFIG_STORAGE_CLASS
 
@@ -25,28 +25,26 @@ def media_path(instance, filename):
     return '{0}/{1}/{2}{3}'.format(now.year,now.month,uuid.uuid4(),filename)
 
 
-class Media(Model, DirtyFieldsMixin):
+class Media(BaseModel, DirtyFieldsMixin):
     """
     Media Table
     """
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'medias'
         permissions = (("download_media", "Can Download Media"),)
 
-    alt = djangoModels.CharField(null=True, max_length=255)
+    alt = models.CharField(null=True, max_length=255)
     file = RemoteFileField(
         null=True, blank=True, upload_to=media_path, attr_class=ChunkableFieldFile)
-    content_type = djangoModels.CharField(
+    content_type = models.CharField(
         max_length=255, null=True, blank=True)
-    extension = djangoModels.CharField(max_length=16, null=True, blank=True)
-    bytes = djangoModels.BigIntegerField(null=True, blank=True)
-    current_chunk = djangoModels.IntegerField(
+    extension = models.CharField(max_length=16, null=True, blank=True)
+    bytes = models.BigIntegerField(null=True, blank=True)
+    current_chunk = models.IntegerField(
         null=True, blank=True, default=None)
-    total_chunks = djangoModels.IntegerField(
+    total_chunks = models.IntegerField(
         null=True, blank=True, default=None)
-    created = djangoModels.DateTimeField(auto_now_add=True)
-    updated = djangoModels.DateTimeField(auto_now=True)
 
     @property
     def upload_complete(self):
@@ -66,27 +64,6 @@ class Media(Model, DirtyFieldsMixin):
 
         # return false by default
         return False
-
-    # Returns a blured image in format of BytesIO
-    def blurImage(self, amount=8, imageBlob=None):
-        if self.isImage():
-            fileExtension = FileTools().getExtension(contentType=self.content_type)
-
-            if not imageBlob:
-                f = io.BytesIO(b"" + self.file.open())
-            else:
-                f = io.BytesIO(b"" + imageBlob)
-
-            img = Image.open(f).convert("RGB")
-            img = img.filter(ImageFilter.GaussianBlur(amount))
-
-            f = io.BytesIO(b"")
-
-            img.save(f, fileExtension.upper())
-            # Image class expects the extension in uppercase
-            return f
-        else:
-            return False
 
     def generateThumbnail(self, width=None, height=None):
         if self.isImage() is True:

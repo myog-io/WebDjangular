@@ -17,7 +17,7 @@ class WebsiteFilter(FilterSet):
     class Meta:
         model = Website
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'domain': ['contains', 'exact'],
             'code': ['contains', 'exact'],
         }
@@ -41,7 +41,7 @@ class CoreConfigFilter(FilterSet):
     class Meta:
         model = CoreConfig
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'website': ['exact'],
             'slug': ['contains', 'exact'],
         }
@@ -72,7 +72,7 @@ class AuthorFilter(FilterSet):
     class Meta:
         model = Author
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'email': ['contains', 'exact'],
             'website': ['contains', 'exact'],
@@ -97,7 +97,7 @@ class PluginFilter(FilterSet):
     class Meta:
         model = Plugin
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
         }
@@ -129,7 +129,7 @@ class ThemeFilter(FilterSet):
     class Meta:
         model = Theme
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
         }

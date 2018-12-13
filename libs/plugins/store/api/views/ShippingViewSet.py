@@ -11,7 +11,7 @@ class ShippingMethodFilter(FilterSet):
     class Meta:
         model = ShippingMethod
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'type': ['exact']
         }

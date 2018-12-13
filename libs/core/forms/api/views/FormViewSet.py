@@ -13,7 +13,7 @@ class FormFilter(FilterSet):
     class Meta:
         model = Form
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'title': ['contains', 'exact'],
             'slug': ['contains', 'exact']
         }

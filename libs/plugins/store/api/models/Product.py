@@ -9,7 +9,7 @@ from libs.core.utils.api.weight import WeightUnits, zero_weight
 from libs.plugins.store.api import defaults
 from measurement.measures import Weight
 from webdjango.fields.MongoFields import MongoDecimalField
-from webdjango.models.AbstractModels import ActiveModel, DateTimeModel, \
+from webdjango.models.AbstractModels import ActiveModel, BaseModel, \
     PermalinkModel, TranslationModel
 from webdjango.models.CoreConfig import CoreConfigInput
 
@@ -26,7 +26,7 @@ class ProductClasses:
     ]
 
 
-class ProductCategory(PermalinkModel, TranslationModel, DateTimeModel):
+class ProductCategory(PermalinkModel, TranslationModel, BaseModel):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
     # parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
@@ -34,7 +34,7 @@ class ProductCategory(PermalinkModel, TranslationModel, DateTimeModel):
     i18n_fields = ['name', 'slug', 'description']
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
 
     def __str__(self):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
@@ -54,7 +54,8 @@ class ProductAttribute(models.Model):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
 
-class ProductType(DateTimeModel):
+class ProductType(BaseModel):
+
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     name = models.CharField(max_length=128)
     attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
@@ -63,7 +64,7 @@ class ProductType(DateTimeModel):
 
     ## TODO: Work on some way to Translate The Product Attributes, Maybe create a Product Attribute Translation Table?
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
 
 
 class ProductDimensions(models.Model):
@@ -111,7 +112,7 @@ class ProductPricing(models.Model):
         return '%s object (List:%s,Sale:%s)' % (self.__class__.__name__, self.list, self.sale)
 
 
-class BaseProduct(ActiveModel, DateTimeModel, TranslationModel, ):
+class BaseProduct(ActiveModel, BaseModel, TranslationModel, ):
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True)
@@ -138,7 +139,7 @@ class BaseProduct(ActiveModel, DateTimeModel, TranslationModel, ):
 
 class ProductAddon(BaseProduct):
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
 
 
 class Product(PermalinkModel, BaseProduct):
@@ -160,7 +161,7 @@ class Product(PermalinkModel, BaseProduct):
                                         blank=True, null=True)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
 
     @property
     def quantity_available(self):

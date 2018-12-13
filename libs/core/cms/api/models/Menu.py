@@ -1,6 +1,6 @@
 from djongo import models
 from django import forms
-from django.db import models as djangoModels
+
 
 
 MENU_TARGETS = (
@@ -16,14 +16,12 @@ class MenuItem(models.Model):
     TARGET_PARENT = '_parent'
     TARGET_TOP = '_top'
 
-    name = djangoModels.CharField(max_length=255)
-    url = djangoModels.URLField()
-    alt = djangoModels.CharField(max_length=255)
-    target = djangoModels.CharField(choices=MENU_TARGETS, default=TARGET_SELF)
-    order = djangoModels.IntegerField()
-    childrens = models.ArrayModelField(
-        model_container='self',
-    )
+    name = models.CharField(max_length=255)
+    url = models.URLField()
+    alt = models.CharField(max_length=255)
+    target = models.CharField(choices=MENU_TARGETS, default=TARGET_SELF)
+    order = models.IntegerField()
+    children = models.ArrayModelField(model_container='self')
     class Meta:
         abstract = True
 
@@ -33,15 +31,15 @@ class Menu(models.Model):
     """
     CMS Menu Model
     """
-    title = djangoModels.CharField(max_length=255)
-    slug = djangoModels.SlugField(
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(
         max_length=255, null=True, default=None, blank=True)
-    wrapper_class = djangoModels.CharField(max_length=255)
+    wrapper_class = models.CharField(max_length=255)
     items = models.ArrayModelField(
         model_container=MenuItem
     )
-    created = djangoModels.DateTimeField(auto_now_add=True)
-    updated = djangoModels.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
 
 
@@ -50,4 +48,4 @@ class Menu(models.Model):
 
     class Meta:
         db_table = 'cms_menu'
-        ordering = ['-id']
+        ordering = ['-created']
