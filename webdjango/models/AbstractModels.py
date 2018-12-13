@@ -29,7 +29,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class TranslationModel(BaseModel):
+class TranslationModel(models.Model):
 
     i18n_fields = []
     language = models.CharField(
@@ -107,7 +107,7 @@ class TranslationModel(BaseModel):
         abstract = True
 
 
-class PermalinkModel(BaseModel):
+class PermalinkModel(models.Model):
 
     slug = models.SlugField(max_length=256)
 
@@ -129,14 +129,14 @@ class PermalinkModel(BaseModel):
 
 
 
-class ActiveModel(BaseModel):
+class ActiveModel(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
         abstract = True
 
 
-class SeoModel(BaseModel):
+class SeoModel(models.Model):
     seo_title = models.CharField(
         max_length=70, blank=True, null=True,
         validators=[MaxLengthValidator(70)])
