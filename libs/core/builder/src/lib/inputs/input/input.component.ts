@@ -13,6 +13,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
     class="form-control"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name">
+    <wda-form-validators [config]="config" [input]="group.get(this.config.name)"></wda-form-validators>
   </div><!--form-group-->
 `
 })

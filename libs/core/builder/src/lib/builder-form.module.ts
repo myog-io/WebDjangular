@@ -28,6 +28,7 @@ import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
 import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
 import { ModelPaginatorComponent } from './model-paginator/model-paginator.component';
+import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
 
 const ENTRY_COMPONENTS = [
   BuilderFormRelationshipComponent,
@@ -41,7 +42,8 @@ const ENTRY_COMPONENTS = [
   BuilderFormSwitcherComponent,
   BuilderFormGroupComponent,
   BuilderFormCheckboxOptionsComponent,
-  ModelPaginatorComponent
+  ModelPaginatorComponent,
+  BuilderFormValidatorComponent
 ];
 
 @NgModule({
