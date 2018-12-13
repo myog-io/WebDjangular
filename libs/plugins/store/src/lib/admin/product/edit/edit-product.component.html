@@ -2,7 +2,7 @@
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-  <div class="row">
+  <div class="row" *ngIf="selecting_product_type">
     <div class="col-6">
       <nb-card>
         <nb-card-header>Product Type</nb-card-header>
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="!selecting_product_type">
     <div class="col-8">
       <nb-accordion class="mb-3">
         <nb-accordion-item [expanded]="true">
@@ -128,7 +128,12 @@
           <nb-accordion-item-header>Attributes</nb-accordion-item-header>
           <nb-accordion-item-body>
             <div class="row">
-              <div class="col"> <p> load attrs dynamically here</p></div>
+              <ng-container class="column" *ngFor="let field of form.scaffoldFieldsAttributes">
+                <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'">
+                  <ng-container wdaBuilderFormFields [config]="field" [group]="form"
+                                (relationshipUpdated)="relationship($event)"></ng-container>
+                </div>
+              </ng-container>
             </div>
           </nb-accordion-item-body>
         </nb-accordion-item>

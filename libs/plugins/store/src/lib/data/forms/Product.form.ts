@@ -8,7 +8,7 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from '../models/ProductType.model';
 import {ProductPriceModel} from '../models/ProductPrice.model';
 
-export class ProductForm extends AbstractForm {
+export class ProductForm extends AbstractForm implements SEOForm{
 
   public listingTableSettings: SmartTableSettings = {
     columns: {
@@ -35,6 +35,11 @@ export class ProductForm extends AbstractForm {
     pk: {
       type: FormControl,
     },
+    product_type: {
+      type: FormGroup,
+      validators: [Validators.required],
+      model: ProductTypeModel
+    },
     product_class: {
       type: FormControl,
       validators: [Validators.required]
@@ -42,11 +47,6 @@ export class ProductForm extends AbstractForm {
     sku: {
       type: FormControl,
       validators: [Validators.required] // TODO: validate the uniqueness
-    },
-    product_type: {
-      type: FormGroup,
-      validators: [Validators.required],
-      model: ProductTypeModel
     },
     name: {
       type: FormControl,
@@ -80,6 +80,18 @@ export class ProductForm extends AbstractForm {
     cost: {
       type: FormControl,
       validators: [Validators.required]
+    },
+    attributes: {
+      type: FormGroup,
+      validators: []
+    },
+    seo_title: {
+      type: FormGroup,
+      validators: []
+    },
+    seo_description: {
+      type: FormGroup,
+      validators: []
     },
     created: {
       type: FormControl,
@@ -165,6 +177,7 @@ export class ProductForm extends AbstractForm {
       value: false,
       placeholder: '',
     },
+    /*
     {
       type: 'text',
       label: 'Weight',
@@ -221,6 +234,7 @@ export class ProductForm extends AbstractForm {
         ]
       }
     },
+    */
   ];
 
   scaffoldFieldsMedias: BuilderFormFieldConfig[] = [

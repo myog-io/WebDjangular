@@ -8,6 +8,9 @@ import { ExtraOptions } from '@webdjangular/core/decorator';
 import { ProductForm } from '../forms/Product.form';
 import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
 import { ProductTypeModel } from './ProductType.model';
+import {SEOModel} from "../../../../../../core/data/src/lib/models/SEO.model";
+import {applyMixins} from "rxjs/internal-compatibility";
+import {FormControl, Validators} from "@angular/forms";
 
 
 
@@ -15,7 +18,7 @@ import { ProductTypeModel } from './ProductType.model';
   type: 'Product',
   modelEndpointUrl: 'store/product',
 })
-export class ProductModel extends AbstractModel {
+export class ProductModel extends AbstractModel implements SEOModel{
   public static formClassRef = ProductForm;
   public static include = 'product_type';
 
@@ -76,3 +79,4 @@ export class ProductModel extends AbstractModel {
   }
 
 }
+applyMixins(ProductModel, [SEOModel]);

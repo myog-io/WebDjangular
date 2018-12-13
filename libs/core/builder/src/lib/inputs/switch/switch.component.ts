@@ -33,10 +33,10 @@ export class BuilderFormSwitcherComponent implements BuilderFormField, OnInit, O
   group: AbstractForm;
   alive = true;
 
-  first_value = true;
-  second_value = false;
-  first_label = "YES";
-  second_label = "NO";
+  first_value = false;
+  second_value = true;
+  first_label = "NO";
+  second_label = "YES";
   vertical = false;
   value: any = true;
   sub: Subscription;

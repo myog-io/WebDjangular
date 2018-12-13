@@ -2,6 +2,7 @@ import { JsonApiModel } from 'angular2-jsonapi';
 import { Observable } from 'rxjs';
 
 import 'reflect-metadata';
+import {applyMixins} from "rxjs/internal-compatibility";
 
 export class AbstractModel extends JsonApiModel {
   public static formClassRef = null;

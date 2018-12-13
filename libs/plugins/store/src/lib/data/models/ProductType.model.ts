@@ -43,7 +43,7 @@ export class ProductTypeModel extends AbstractModel {
 
   }
   public toString = (): string => {
-    return `${this.name} (ID: ${this.id})`;
+    return `${this.name}`;
   }
 
 }

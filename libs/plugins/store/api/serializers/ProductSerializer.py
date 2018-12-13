@@ -8,6 +8,7 @@ from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
 from libs.plugins.store.api import defaults
 from webdjango.models.CoreConfig import CoreConfigInput
 
+
 class ProductAttributeSerializer(EmbeddedSerializer):
     code = serializers.SlugField(required=True)
     name = serializers.CharField()
@@ -20,8 +21,9 @@ class ProductAttributeSerializer(EmbeddedSerializer):
     def __str__(self):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
+
 class ProductTypeSerializer(DocumentSerializer):
-    _id = serializers.CharField(required=False)
+
     attributes = ArrayModelFieldSerializer(serializer=ProductAttributeSerializer, required=False)
 
     class Meta:
