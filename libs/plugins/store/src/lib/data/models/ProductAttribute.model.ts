@@ -49,7 +49,7 @@ export class ProductAttributeModel extends AbstractModel {
     type: 'select',
     label: 'Type',
     wrapper_class: 'col-6',
-    value: ProductClasses.simple,
+    value: ProductAttributeTypeValues.text,
     options: [
       {label: "Text", value: ProductAttributeTypeValues.text},
       {label: "Select", value: ProductAttributeTypeValues.select},

@@ -37,6 +37,7 @@ class ProductAttributeSerializer(EmbeddedSerializer):
 class ProductTypeSerializer(DocumentSerializer):
 
     attributes = ArrayModelFieldSerializer(serializer=ProductAttributeSerializer, required=False)
+    variant_attributes = ArrayModelFieldSerializer(serializer=ProductAttributeSerializer, required=False)
 
     class Meta:
         model = ProductType

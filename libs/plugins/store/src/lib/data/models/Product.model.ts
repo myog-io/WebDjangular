@@ -152,11 +152,15 @@ export class ProductModel extends AbstractModel {
   shippable: boolean
 
   @Attribute()
-  //@ExtraOptions({
-  //  formType: FormArray,
-  //  type: 'formGroup',
-  //  displayGroup: productDG.attributes
-  //})
+  @ExtraOptions({
+    formType: FormGroup,
+    type: 'formGroup',
+    displayGroup: productDG.attributes,
+    copyOptions: {
+      name:'product_type',
+      field:'attributes',
+    }
+  })
   attributes: [];
 
   @Attribute()

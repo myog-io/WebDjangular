@@ -31,6 +31,10 @@ export interface BuilderFormGroupConfig {
   conditional?: any;
   fields?: BuilderFormFieldConfig[];
 }
+export interface BuilderFormCopyArray {
+  name: string;
+  field: string;
+}
 export interface BuilderFormFieldConfig {
   type: string;
   validators?: Validators[];
@@ -60,6 +64,7 @@ export interface BuilderFormFieldConfig {
   formType?: any;
   sort?: number;
   displayGroup?: string;
+  copyOptions?: BuilderFormCopyArray
 }
 
 export interface BuilderFormField {
