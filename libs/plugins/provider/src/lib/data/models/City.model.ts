@@ -1,7 +1,7 @@
 import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
-import { RangeInterface } from './Range.model';
+import { RangeInterface, RangeModel } from './Range.model';
 import { StreetInterface, StreetModel } from './Street.model';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { SmartTableSettings } from '@webdjangular/core/data';
@@ -52,9 +52,8 @@ export class CityModel extends AbstractModel {
   @ExtraOptions({
     type: 'formArray',
     formType: FormArray,
-    label: 'Streets',
-    smart_table_mode: 'external',
-    model: StreetModel
+    label: 'Postal Codes',
+    model: RangeModel
   })
   postal_codes: RangeInterface[];
 
@@ -62,7 +61,9 @@ export class CityModel extends AbstractModel {
   @ExtraOptions({
     type: 'formArray',
     formType: FormArray,
-    label: 'Postal Codes',
+    label: 'Streets',
+    smart_table_mode: 'external',
+    model: StreetModel
   })
   streets: StreetInterface[];
 

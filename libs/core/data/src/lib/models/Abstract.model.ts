@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
 export class AbstractModel extends JsonApiModel {
 
   public include = null;
-  public smartTableOptions: SmartTableSettings
+  public static smartTableOptions: SmartTableSettings
   protected service;
 
   constructor(_datastore, data?: any) {
@@ -61,6 +61,7 @@ export class AbstractModel extends JsonApiModel {
   public getForm(): AbstractForm {
     const fg = new AbstractForm(this._datastore)
     let formFields = []
+    let formMap = {}
     let extraOptions = this.extraOptions
     let count = 0;
     for (const key in extraOptions) {
@@ -69,11 +70,13 @@ export class AbstractModel extends JsonApiModel {
         element.name = key;
         element.sort = element.sort || count;
         formFields.push(element)
+        formMap[key] = count;
         count++;
       }
     }
     formFields.sort((a,b)=> (a.sort > b.sort) ? 1 : ((b.sort > a.sort) ? -1 : 0));
     fg.formFields = formFields
+
     return fg;
   }
 }

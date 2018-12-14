@@ -29,8 +29,8 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   loading = true;
   options = [];
   placeholder = "Select Option";
-  models = []
-  subsciption: Subscription
+  models = [];
+  subsciption: Subscription;
   /**
    * Creates an instance of scaffold form select component.
    * @param datastore
@@ -88,7 +88,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   }
 
   updateValue(value) {
-    if (this.group.formFields[this.config.name].type == FormGroup) {
+    if (this.group.formFields[this.index].type == FormGroup) {
       const fg = this.group.get(this.config.name) as AbstractForm;
       fg.populateForm(this.models.find((model) => model.pk == value))
     } else {

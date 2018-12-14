@@ -14,16 +14,6 @@ export class AbstractForm extends FormGroup {
   public formFields: BuilderFormFieldConfig[] = [];
 
   /**
-   * Scaffold fields of abstract form
-   */
-  public scaffoldFields: BuilderFormFieldConfig[] = [];
-
-  /**
-   * Listing table settings of abstract form
-   */
-  public listingTableSettings = {};
-
-  /**
    * Creates an instance of abstract form.
    */
   public constructor(private datastore: WebAngularDataStore) {

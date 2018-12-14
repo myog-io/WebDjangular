@@ -1,6 +1,7 @@
-import { RangeForm } from "../forms/Range.form";
 import { JsonApiModelConfig, Attribute } from "angular2-jsonapi";
 import { AbstractModel } from "@webdjangular/core/data-models";
+import { ExtraOptions } from "@webdjangular/core/decorator";
+import { SmartTableSettings } from "@webdjangular/core/data";
 
 export interface RangeInterface {
   start: number;
@@ -11,11 +12,24 @@ export interface RangeInterface {
   modelEndpointUrl: 'provider/city',
 })
 export class RangeModel extends AbstractModel {
-  public static formClassRef = RangeForm;
   @Attribute()
+  @ExtraOptions( {
+    type: 'text',
+    inputType: 'number',
+    label: 'Start',
+    name: 'start',
+    placeholder: 'Start of the Range',
+  })
   start: string;
 
   @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    inputType: 'number',
+    label: 'End',
+    name: 'end',
+    placeholder: 'End of the Range',
+  })
   end: string;
 
 
@@ -29,4 +43,17 @@ export class RangeModel extends AbstractModel {
   public toString = (): string => {
     return `Start:${this.start} End:${this.end}`;
   }
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      start: {
+        title: 'Start',
+        type: 'text',
+      },
+      end: {
+        title: 'End',
+        type: 'text',
+      },
+    },
+  };
 }

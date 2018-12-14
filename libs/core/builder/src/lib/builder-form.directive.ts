@@ -47,8 +47,6 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
 
   @Input() group: FormGroup;
 
-  @Input() name: string;
-
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
 
   component: ComponentRef<BuilderFormField>;
@@ -61,7 +59,6 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
 
   ngOnChanges() {
     if (this.component) {
-      this.config.name = this.name;
       this.component.instance.config = this.config;
       this.component.instance.group = this.group;
       this.component.instance.relationshipUpdated = this.relationshipUpdated;

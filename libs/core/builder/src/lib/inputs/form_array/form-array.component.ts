@@ -186,8 +186,9 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    * When the smart_table_settings.mode is `external` we have to get the form config information
    */
   private getFormConfig() {
-    if (this.group.formFields[this.config.name].model) {
-      this.form = new this.group.formFields[this.config.name].model.formClassRef();
+    if (this.config.model) {
+      const entity = new this.config.model(this.datastore)
+      this.form = entity.getForm();
       this.form.generateForm();
     } else {
       throw new Error(
@@ -203,20 +204,14 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     if (this.config.smart_table_mode) {
       this.smart_table_settings.mode = this.config.smart_table_mode;
     }
-    if (this.group.formFields && this.group.formFields[this.config.name]) {
-      if (this.group.formFields[this.config.name].model) {
-        const fg: AbstractForm = new this.group.formFields[this.config.name].model.formClassRef();
-
-        this.smart_table_settings = Object.assign(
+    console.log("THIS CONFIG",this.config)
+    if (this.config.model) {
+      console.log(this.config.model.smartTableOptions)
+      this.smart_table_settings = Object.assign(
           {},
           this.smart_table_settings,
-          fg.listingTableSettings
+          this.config.model.smartTableOptions
         );
-      } else {
-        throw new Error(
-          `Form Array require a 'model' with formClassRef inside formFields[${this.config.name}]`
-        );
-      }
     } else if (this.config.fields) {
       for (const key in this.config.fields) {
         if (this.config.fields.hasOwnProperty(key)) {
