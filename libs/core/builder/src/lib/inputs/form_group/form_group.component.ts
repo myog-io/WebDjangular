@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { Subscription } from 'rxjs';
-import { BuilderFormField, BuilderFormFieldConfig, BuilderFormGroupConfig } from '../../interfaces/form-config.interface';
+import { BuilderFormField, BuilderFormFieldConfig, BuilderFormDisplayGroups } from '../../interfaces/form-config.interface';
 
 @Component({
   selector: 'wda-form-formbuilder',
@@ -16,7 +15,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   form: AbstractForm;
-  displayGroups: { [key: string]: BuilderFormGroupConfig[] };
+  displayGroups: BuilderFormDisplayGroups[]
   loading:boolean = false;
   submit:boolean = false;
 

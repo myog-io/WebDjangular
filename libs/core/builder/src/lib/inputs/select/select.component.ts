@@ -42,10 +42,9 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   * on init
   */
   ngOnInit() {
-
+    console.log(this.config.options_model,"AQUI???")
     if (this.config.options_model) {
-      this.datastore.findAll(this.config.options_model).subscribe(data => {
-
+      this.datastore.findAll(this.config.options_model,{page_size:50}).subscribe(data => {
         this.models = data.getModels();
         this.options = [];
         for (let i = 0; i < this.models.length; i++) {

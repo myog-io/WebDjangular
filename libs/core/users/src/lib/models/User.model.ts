@@ -27,9 +27,6 @@ export class UserModel extends AbstractModel {
   id: string;
 
   @Attribute()
-  password: string;
-
-  @Attribute()
   last_login: Date;
 
   @Attribute()

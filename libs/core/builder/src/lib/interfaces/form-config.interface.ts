@@ -3,10 +3,11 @@ import { EventEmitter } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
 
 export interface BuilderFormDisplayGroups {
-  wrapper_class: string,
-  groups: BuilderFormGroupConfig[],
-  conditional?: any,
-  sort?: number,
+  wrapper_class: string;
+  groups: BuilderFormGroupConfig[];
+  conditional?: any;
+  sort?: number;
+  display?: boolean;
 }
 
 export interface BuilderFormConfig {

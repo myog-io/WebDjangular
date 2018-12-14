@@ -1,9 +1,9 @@
-import {Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener} from '@angular/core';
-import {AbstractForm} from '@webdjangular/core/data-forms';
-import {BuilderFormFieldConfig, BuilderFormConfig, BuilderFormGroupConfig, BuilderFormDisplayGroups} from './interfaces/form-config.interface';
-import {FormGroup} from '@angular/forms';
-import {JsonLogic} from './builder-jsonlogic';
-import {Subscription} from 'rxjs';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { AbstractForm } from '@webdjangular/core/data-forms';
+import { BuilderFormFieldConfig, BuilderFormConfig, BuilderFormGroupConfig, BuilderFormDisplayGroups } from './interfaces/form-config.interface';
+import { FormGroup } from '@angular/forms';
+import { JsonLogic } from './builder-jsonlogic';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -47,20 +47,36 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     })
 
   }
-
+  private applyLogic(obj: any, data:any) {
+    if (obj.conditional) {
+      obj.display = this.jsonLogic.apply(obj.conditional, data)
+    } else if(typeof obj.display === "undefined"){
+      obj.display = true;
+    }
+  }
   /**
    * This will check the condition for the field to hide or show based on the jsonlogic conditional of each field
    * @param data Form Data
    */
   private conditionalFields(data: any) {
+    for (let i = 0; i < this.displayGroups.length; i++) {
+      this.applyLogic(this.displayGroups[i],data);
+      for (let j = 0; j < this.displayGroups[i].groups.length; j++) {
+        this.applyLogic(this.displayGroups[i].groups[j],data);
+        for (let k = 0; k < this.displayGroups[i].groups[j].fields.length; k++) {
+          this.applyLogic(this.displayGroups[i].groups[j].fields[k],data);
+        }
+      }
+    }
+
     // TODO Improve
     //for (let i = 0; i < this.fields.length; i++) {
     //  if (this.fields[i].conditional) {
     //    this.fields[i].display = this.jsonLogic.apply(this.fields[i].conditional, data);
-//
+    //
     //  } else {
     //    this.fields[i].display = true;
-//
+    //
     //  }
     //  this.fields[i].disabled = !this.fields[i].display;
     //}

@@ -35,6 +35,7 @@ export class ProductModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     model: ProductTypeModel,
+    formType: FormGroup,
     type: 'select',
     label: 'Type',
     wrapper_class: 'col-12',
@@ -72,16 +73,7 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
-    label: 'Product Class',
-    wrapper_class: 'col-6',
-    value: ProductClasses.simple,
-    options: [
-      { label: "Simple Product", value: ProductClasses.simple },
-      { label: "Bundle Product", value: ProductClasses.bundle },
-      { label: "Variant Product", value: ProductClasses.variant },
-    ],
-    displayGroup: productDG.type
+    type: 'hidden',
   })
   product_class: ProductClasses;
 
@@ -222,7 +214,13 @@ export class ProductModel extends AbstractModel {
           name: productDG.type,
           title: 'Product Type',
         }
-      ]
+      ],
+      conditional: {
+        '==': [
+          { var: 'product_type.id' },
+          null
+        ]
+      },
     },
     {
       wrapper_class: 'col-8',
@@ -243,7 +241,13 @@ export class ProductModel extends AbstractModel {
           name: productDG.media,
           title: 'Images / Videos',
         }
-      ]
+      ],
+      conditional: {
+        '!=': [
+          { var: 'product_type.id' },
+          null
+        ]
+      },
     },
     {
       wrapper_class: 'col-4',
@@ -260,7 +264,13 @@ export class ProductModel extends AbstractModel {
           name: productDG.attributes,
           title: 'Attributes',
         },
-      ]
+      ],
+      conditional: {
+        '!=': [
+          { var: 'product_type.id' },
+          null
+        ]
+      },
     }
   ]
   public static smartTableOptions: SmartTableSettings = {

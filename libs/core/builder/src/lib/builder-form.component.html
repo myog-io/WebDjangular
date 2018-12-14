@@ -27,23 +27,27 @@
     </div>
   </div>
   <div class="row">
-    <div *ngFor="let item of displayGroups" [class]="item.wrapper_class">
-      <span *ngFor="let dg of item.groups">
-        <nb-accordion class="mb-3">
-          <nb-accordion-item [expanded]="true" [collapsed]="true">
-            <nb-accordion-item-header>{{dg.title}}</nb-accordion-item-header>
-            <nb-accordion-item-body>
-              <div class="row">
-                <ng-container class="column" *ngFor="let field of dg.fields">
-                  <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
-                    <ng-container wdaBuilderFormFields [config]="field" [group]="group" (relationshipUpdated)="relationship($event)"></ng-container>
+    <ng-container *ngFor="let item of displayGroups">
+      <div [class]="item.wrapper_class" *ngIf="item.display">
+        <ng-container *ngFor="let dg of item.groups">
+          <span *ngIf="dg.display">
+            <nb-accordion class="mb-3">
+              <nb-accordion-item [expanded]="true" [collapsed]="true">
+                <nb-accordion-item-header>{{dg.title}}</nb-accordion-item-header>
+                <nb-accordion-item-body>
+                  <div class="row">
+                    <ng-container class="column" *ngFor="let field of dg.fields">
+                      <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
+                        <ng-container wdaBuilderFormFields [config]="field" [group]="group" (relationshipUpdated)="relationship($event)"></ng-container>
+                      </div>
+                    </ng-container>
                   </div>
-                </ng-container>
-              </div>
-            </nb-accordion-item-body>
-          </nb-accordion-item>
-        </nb-accordion>
-      </span>
-    </div>
+                </nb-accordion-item-body>
+              </nb-accordion-item>
+            </nb-accordion>
+          </span>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 </form>

@@ -81,8 +81,7 @@ export class AbstractModel extends JsonApiModel {
         const element = extraOptions[key];
         element.name = key;
         element.sort = element.sort || count;
-        element.group = element.group || 'default';
-        element.display = element.display || true;
+        element.displayGroup = element.displayGroup || 'default';
         formFields.push(element)
         formMap[key] = count;
         count++;
@@ -93,10 +92,9 @@ export class AbstractModel extends JsonApiModel {
     let dg = this.displayGroups;
     for (let i = 0; i < dg.length; i++) {
       for (let j = 0; j < dg[i].groups.length; j++) {
-        dg[i].groups[j].fields = formFields.filter((field) => dg[i].groups[j].name === field.displayGroup);
+        dg[i].groups[j].fields = formFields.filter((field) => dg[i].groups[j].name == field.displayGroup);
       }
     }
-    console.log("DG", dg)
     fg.displayGroups = dg;
     return fg;
   }
