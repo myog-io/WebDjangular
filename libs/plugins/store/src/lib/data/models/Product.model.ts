@@ -84,7 +84,7 @@ export class ProductModel extends AbstractModel {
     model: ProductPriceModel,
     type: 'formGroup',
     label: 'Price',
-    wrapper_class: 'col-6',
+    wrapper_class: 'col-12',
     displayGroup: productDG.pricing
   })
   pricing: ProductPrice;
