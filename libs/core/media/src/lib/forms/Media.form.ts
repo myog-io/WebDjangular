@@ -4,6 +4,7 @@ import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 
 export class MediaForm extends AbstractForm {
+  /*
   public listingTableSettings = {
     columns: {
       id: {
@@ -50,4 +51,5 @@ export class MediaForm extends AbstractForm {
       placeholder: 'Image Alt Description'
     }
   ];
+  */
 }

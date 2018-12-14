@@ -157,7 +157,7 @@ export class ProductModel extends AbstractModel {
   //  type: 'formGroup',
   //  displayGroup: productDG.attributes
   //})
-  attributes: []
+  attributes: [];
 
   @Attribute()
   @ExtraOptions({
@@ -175,7 +175,7 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-12',
     displayGroup: productDG.seo
   })
-  seo_description: string
+  seo_description: string;
 
   @Attribute()
   quantity_allocated: string;
@@ -227,7 +227,7 @@ export class ProductModel extends AbstractModel {
       groups: [
         {
           name: productDG.general,
-          title: 'General Informaiton',
+          title: 'General information',
         },
         {
           name: productDG.pricing,
@@ -273,6 +273,7 @@ export class ProductModel extends AbstractModel {
       },
     }
   ]
+
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {

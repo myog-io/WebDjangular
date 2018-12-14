@@ -4,6 +4,7 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
 import { ContentTypeModel } from '@webdjangular/core/data-models';
 
 export class PermissionForm extends AbstractForm {
+  /*
   formFields = {
     pk: {
       type: FormControl
@@ -22,4 +23,5 @@ export class PermissionForm extends AbstractForm {
       type: FormControl
     }
   };
+  */
 }

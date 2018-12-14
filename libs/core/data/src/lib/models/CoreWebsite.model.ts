@@ -6,7 +6,7 @@ import {
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { CoreWebsiteForm } from '../forms/CoreWebsite.form';
+
 import {SmartTableSettings} from "@webdjangular/core/data";
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {Validators} from "@angular/forms";
@@ -15,7 +15,6 @@ import {Validators} from "@angular/forms";
   type: 'core_website'
 })
 export class CoreWebsiteModel extends AbstractModel {
-  public static formClassRef = CoreWebsiteForm;
 
   @Attribute()
   id: string;
@@ -56,17 +55,13 @@ export class CoreWebsiteModel extends AbstractModel {
 
    public static smartTableOptions: SmartTableSettings = {
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
       domain: {
         title: 'Domain',
-        type: 'string'
+        type: 'text'
       },
       code: {
         title: 'Code',
-        type: 'string'
+        type: 'text'
       },
     }
   };
