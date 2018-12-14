@@ -3,17 +3,11 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { MenuForm } from '../forms/Menu.form';
-
-
 @JsonApiModelConfig({
   type: 'Menu',
   modelEndpointUrl: 'menu',
 })
 export class MenuModel extends AbstractModel {
-
-  public static formClassRef = MenuForm;
-
 
   @Attribute()
   id: string;

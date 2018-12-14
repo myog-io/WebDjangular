@@ -14,7 +14,7 @@ export class AbstractModel extends JsonApiModel {
     groups: [
       {
         name: 'default',
-        title: 'Group',
+        title: null,
         sidebar: false,
       }
     ],

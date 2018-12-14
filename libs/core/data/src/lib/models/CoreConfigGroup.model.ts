@@ -12,14 +12,12 @@ import { CoreConfigInputModel } from './CoreConfigInput.model';
 import { FormControl } from '@angular/forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { JsonLogic } from 'libs/core/builder/src/lib/builder-jsonlogic';
-import {BlockModel} from "@webdjangular/core/cms-models";
 
 
 @JsonApiModelConfig({
   type: 'core_config_group'
 })
 export class CoreConfigGroupModel extends AbstractModel {
-  //public static formClassRef = CoreConfigForm;
   @Attribute()
   id: string;
 

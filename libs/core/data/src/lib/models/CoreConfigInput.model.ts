@@ -14,7 +14,6 @@ import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
   type: 'core_config_input'
 })
 export class CoreConfigInputModel extends AbstractModel {
-  //public static formClassRef = CoreConfigForm;
   @Attribute()
   id: string;
 

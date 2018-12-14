@@ -3,18 +3,12 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { BlockForm } from '../forms/Block.form';
-
 
 @JsonApiModelConfig({
   type: 'Block',
   modelEndpointUrl: 'block',
 })
 export class BlockModel extends AbstractModel {
-
-  public static formClassRef = BlockForm;
-
-
   @Attribute()
   id: string;
 

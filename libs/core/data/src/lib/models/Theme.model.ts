@@ -5,9 +5,8 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
-import {SmartTableSettings} from "@webdjangular/core/data";
-import {Validators} from "@angular/forms";
-import {BlockModel} from "@webdjangular/core/cms-models";
+import { Validators } from "@angular/forms";
+import { SmartTableSettings } from '../data-store/SmartTable.interfaces';
 
 @JsonApiModelConfig({
   type: 'core_theme'
@@ -58,7 +57,7 @@ export class ThemeModel extends AbstractModel {
     type: 'relationship',
     label: 'Author',
     wrapper_class: 'col-6',
-    options_model: BlockModel,
+    options_model: AuthorModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
@@ -68,7 +67,7 @@ export class ThemeModel extends AbstractModel {
     type: 'relationship',
     label: 'Page',
     wrapper_class: 'col-6',
-    options_model: BlockModel,
+    options_model: ThemeModel,
     backendResourceName: 'Page'
   })
   parent: ThemeModel;
@@ -79,9 +78,9 @@ export class ThemeModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
- public static smartTableOptions: SmartTableSettings = {
+  public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {
         title: 'Name',

@@ -10,7 +10,6 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { CoreWebsiteModel } from './CoreWebsite.model';
-import {CoreConfigInputModel} from "@webdjangular/core/data-models";
 
 @JsonApiModelConfig({
   type: 'core_config'

@@ -40,7 +40,7 @@
           <span *ngIf="dg.display">
             <nb-accordion class="mb-3">
               <nb-accordion-item [expanded]="true" [collapsed]="true">
-                <nb-accordion-item-header>{{dg.title}}</nb-accordion-item-header>
+                <nb-accordion-item-header *ngIf="dg.title">{{dg.title}}</nb-accordion-item-header>
                 <nb-accordion-item-body>
                   <div class="row">
                     <ng-container class="column" *ngFor="let field of dg.fields">

@@ -3,7 +3,6 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { PageForm } from '../forms/Page.form';
 import { BlockModel } from './Block.model';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import {Validators} from "@angular/forms";
@@ -15,7 +14,6 @@ import {SmartTableSettings} from "@webdjangular/core/data";
   modelEndpointUrl: 'page',
 })
 export class PageModel extends AbstractModel {
-  public static formClassRef = PageForm;
   public static include = 'header,footer';
 
   @Attribute()
@@ -95,15 +93,15 @@ export class PageModel extends AbstractModel {
     columns: {
       id: {
         title: 'ID',
-        type: 'number',
+        type: 'text',
       },
       title: {
         title: 'Title',
-        type: 'string',
+        type: 'text',
       },
       slug: {
         title: 'Url Path',
-        type: 'string',
+        type: 'text',
       },
     },
   };

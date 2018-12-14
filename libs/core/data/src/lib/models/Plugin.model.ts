@@ -13,7 +13,6 @@ import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
 import {SmartTableSettings} from "@webdjangular/core/data";
 import {Validators} from "@angular/forms";
-import {BlockModel} from "@webdjangular/core/cms-models";
 
 @JsonApiModelConfig({
   type: 'core_plugin'
@@ -61,7 +60,7 @@ export class PluginModel extends AbstractModel {
     type: 'relationship',
     label: 'Author',
     wrapper_class: 'col-6',
-    options_model: BlockModel,
+    options_model: AuthorModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
