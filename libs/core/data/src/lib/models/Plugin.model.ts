@@ -11,6 +11,8 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 import { PluginForm } from '../forms/Plugin.form';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {Validators} from "@angular/forms";
 
 @JsonApiModelConfig({
   type: 'core_plugin'
@@ -22,10 +24,22 @@ export class PluginModel extends AbstractModel {
   id: string;
 
   @Attribute()
-  slug: string;
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Name',
+    placeholder: 'Enter the Plugin Name'
+  })
+  name: string;
 
   @Attribute()
-  name: string;
+  @ExtraOptions({
+    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    type: 'text',
+    label: 'Slug',
+    placeholder: 'Enter the Plugin slug'
+  })
+  slug: string;
 
   @Attribute()
   current_version: string;
@@ -55,4 +69,33 @@ export class PluginModel extends AbstractModel {
   }
 
   set pk(value) {}
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number'
+      },
+      name: {
+        title: 'Name',
+        type: 'string'
+      },
+      slug: {
+        title: 'Url Path',
+        type: 'string'
+      },
+      version: {
+        title: 'Version',
+        type: 'string'
+      },
+      current_version: {
+        title: 'Current Version',
+        type: 'string'
+      },
+      active: {
+        title: 'Active',
+        type: 'string'
+      }
+    }
+  };
 }

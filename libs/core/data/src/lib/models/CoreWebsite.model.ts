@@ -7,6 +7,9 @@ import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { CoreWebsiteForm } from '../forms/CoreWebsite.form';
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {ExtraOptions} from "@webdjangular/core/decorator";
+import {Validators} from "@angular/forms";
 
 @JsonApiModelConfig({
   type: 'core_website'
@@ -18,9 +21,21 @@ export class CoreWebsiteModel extends AbstractModel {
   id: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Domain',
+    placeholder: 'Enter the Website Domain'
+  })
   domain: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Code',
+    placeholder: 'Enter the code'
+  })
   code: string;
 
   @Attribute()
@@ -38,4 +53,22 @@ export class CoreWebsiteModel extends AbstractModel {
   }
 
   set pk(value) {}
+
+   public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number'
+      },
+      domain: {
+        title: 'Domain',
+        type: 'string'
+      },
+      code: {
+        title: 'Code',
+        type: 'string'
+      },
+    }
+  };
+
 }

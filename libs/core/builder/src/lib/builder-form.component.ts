@@ -25,6 +25,8 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() group: FormGroup;
   @Input() submit = true;
   @Input() save_continue = false;
+  @Input() sticky_top: boolean = true;
+  @Input() show_breadcrumb: boolean = true;
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();

@@ -83,25 +83,7 @@ export class UserForm extends AbstractForm {
   };
 
   scaffoldFields: BuilderFormFieldConfig[] = [
-    {
-      type: 'text',
-      label: 'First Name',
-      name: 'first_name',
-      wrapper_class: 'col-4',
 
-    },
-    {
-      type: 'text',
-      label: 'Middle Name',
-      name: 'middle_name',
-      wrapper_class: 'col-4',
-    },
-    {
-      type: 'text',
-      label: 'Last Name',
-      name: 'last_name',
-      wrapper_class: 'col-4',
-    },
     {
       type: 'text',
       label: 'Password',
@@ -148,13 +130,5 @@ export class UserForm extends AbstractForm {
       name: 'is_mobile_verified',
       wrapper_class: 'col-4',
     },
-    {
-      type: 'checkbox',
-      label: 'Groups',
-      name: 'groups',
-      wrapper_class: 'col-12',
-      options_model: GroupModel,
-    },
-
   ]
 }

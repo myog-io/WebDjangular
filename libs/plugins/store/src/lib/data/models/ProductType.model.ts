@@ -6,7 +6,8 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {ProductAttributeInterface} from "./ProductAttribute.model";
+import {ProductAttributeInterface, ProductAttributeModel} from "./ProductAttribute.model";
+import {RangeModel} from "@webdjangular/plugins/provider-data";
 
 
 @JsonApiModelConfig({
@@ -39,8 +40,8 @@ export class ProductTypeModel extends AbstractModel {
     value: ProductClasses.simple,
     options: [
       {label: "Simple Product", value: ProductClasses.simple},
-      {label: "Bundle Product", value: ProductClasses.bundle},
       {label: "Variant Product", value: ProductClasses.variant},
+      {label: "Bundle Product", value: ProductClasses.bundle},
     ],
     sort: 1
   })
@@ -53,6 +54,7 @@ export class ProductTypeModel extends AbstractModel {
     formType: FormArray,
     label: 'Attributes',
     smart_table_mode: 'external',
+    model: ProductAttributeModel,
     sort: 2
   })
   attributes: ProductAttributeInterface[];
@@ -65,6 +67,7 @@ export class ProductTypeModel extends AbstractModel {
     formType: FormArray,
     label: 'Variant Attributes',
     smart_table_mode: 'external',
+    model: ProductAttributeModel,
     sort: 3,
     conditional: {
       '==': [

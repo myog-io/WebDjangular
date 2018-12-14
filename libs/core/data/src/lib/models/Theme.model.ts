@@ -3,24 +3,36 @@ import { JsonApiModelConfig, Attribute, BelongsTo } from 'angular2-jsonapi';
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { ThemeForm } from '../forms/Theme.form';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {Validators} from "@angular/forms";
 
 @JsonApiModelConfig({
   type: 'core_theme'
 })
 export class ThemeModel extends AbstractModel {
-  public static formClassRef = ThemeForm;
 
   @Attribute()
   id: string;
 
   @Attribute()
-  slug: string;
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Name',
+    placeholder: 'Enter the Theme Name'
+  })
+  name: string;
 
   @Attribute()
-  name: string;
+  @ExtraOptions({
+    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    type: 'text',
+    label: 'Slug',
+    placeholder: 'Enter the Slug'
+  })
+  slug: string;
 
   @Attribute()
   angular_module: string;
@@ -59,4 +71,33 @@ export class ThemeModel extends AbstractModel {
   }
 
   set pk(value) {}
+
+ public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'number'
+      },
+      name: {
+        title: 'Name',
+        type: 'string'
+      },
+      slug: {
+        title: 'Url Path',
+        type: 'string'
+      },
+      version: {
+        title: 'Version',
+        type: 'string'
+      },
+      current_version: {
+        title: 'Current Version',
+        type: 'string'
+      },
+      active: {
+        title: 'Active',
+        type: 'string'
+      }
+    }
+  };
 }
