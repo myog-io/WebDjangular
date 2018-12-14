@@ -1,8 +1,8 @@
 <form [formGroup]="group">
-  <div class="row " *ngIf="submit && !inceptionForm">
-    <div class="col-12" [ngClass]="{
+  <div class="row " [ngClass]="{
       'align-self-start sticky-top': sticky_top
-    }">
+    }" *ngIf="submit && !inceptionForm">
+    <div class="col-12">
       <nb-card>
         <nb-card-body>
           <div class="row" >
