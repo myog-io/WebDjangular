@@ -1,6 +1,5 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { StoreProductComponent } from "./product/store-product-admin.component";
 import { ShippingMethodModel } from "../data/models/ShippingMethod.model";
 import { SaleModel } from "../data/models/Sale.model";
 import { VoucherModel } from "../data/models/Voucher.model";
@@ -9,7 +8,6 @@ import { CategoryModel } from "../data/models/Category.model";
 import { ProductTypeModel } from "../data/models/ProductType.model";
 import { ProductModel } from "../data/models/Product.model";
 import { ScaffoldModule } from "@webdjangular/core/builder";
-import { EditProductComponent } from "./product/edit/edit-product.component";
 
 const routes: Routes = [
   {
@@ -18,17 +16,14 @@ const routes: Routes = [
       {
         path: 'catalog',
         children: [
-          {
+           {
             path: 'products',
-            component: StoreProductComponent,
-          },
-          {
-            path: 'product/edit/:id',
-            component: EditProductComponent,
-          },
-          {
-            path: 'product/new',
-            component: EditProductComponent,
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: ProductModel,
+              title: 'Products',
+              path: 'store/catalog/products'
+            }
           },
           {
             path: 'categories',

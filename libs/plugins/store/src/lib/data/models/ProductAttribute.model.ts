@@ -2,13 +2,11 @@ import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
-import {ProductAttributeForm} from "../forms/ProductAttribute.form";
-import {ProductAttributeTypeValues, ProductClasses} from "../interfaces/Product.interface";
+import {ProductAttributeTypeValues} from "../interfaces/Product.interface";
 import {ProductAttributeOptionModel} from "./ProductAttributeOption.model";
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {RangeInterface} from "@webdjangular/plugins/provider-data";
 
 export interface ProductAttributeInterface {
   name: string;

@@ -64,6 +64,7 @@ const ENTRY_COMPONENTS = [
     NbCardModule,
     NbAccordionModule,
 
+
   ],
   exports: [ScaffoldFieldDirective, BuilderFormComponent, ModelPaginatorComponent],
   entryComponents: [...ENTRY_COMPONENTS]

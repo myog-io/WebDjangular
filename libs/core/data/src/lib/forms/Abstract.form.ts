@@ -3,8 +3,8 @@ import { JsonApiModel } from 'angular2-jsonapi';
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
-import { AbstractModel } from '../models';
 import { WebAngularDataStore } from '@webdjangular/core/services';
+import { BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
 
 export class AbstractForm extends FormGroup {
 
@@ -12,6 +12,18 @@ export class AbstractForm extends FormGroup {
    * Form fields of abstract form
    */
   public formFields: BuilderFormFieldConfig[] = [];
+  public displayGroups: BuilderFormDisplayGroups[] = [{
+    wrapper_class: 'col-12',
+    groups: [
+      {
+        name: 'default',
+        title: 'Group',
+        sidebar: false,
+      }
+    ],
+    conditional: null,
+    sort: 0
+  }];
 
   /**
    * Creates an instance of abstract form.
@@ -87,8 +99,8 @@ export class AbstractForm extends FormGroup {
     data.attributes = data;
     return new model(this.datastore, data);
   }
-  private getFormFieldByName(name:string){
-    return this.formFields.find((data)=>data.name == name);
+  private getFormFieldByName(name: string) {
+    return this.formFields.find((data) => data.name == name);
   }
   /**
    * Updates model

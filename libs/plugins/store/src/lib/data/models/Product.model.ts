@@ -9,8 +9,16 @@ import { SmartTableSettings } from '@webdjangular/core/data';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { Validators, FormArray, FormGroup } from '@angular/forms';
 import { ProductPriceModel } from './ProductPrice.model';
-
-
+enum productDG {
+  type = 'product-type',
+  attributes = 'attributes',
+  inventory = 'inventory',
+  shipping = 'shipping',
+  general = 'general-information',
+  pricing = 'pricing',
+  seo = 'seo',
+  media = 'media',
+}
 @JsonApiModelConfig({
   type: 'Product',
   modelEndpointUrl: 'store/product',
@@ -21,15 +29,7 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   id: string;
 
-  @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
-    label: 'SKU',
-    wrapper_class: 'col-12',
-    placeholder: '',
-  })
-  sku: string;
+
 
   @BelongsTo()
   @ExtraOptions({
@@ -40,9 +40,22 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-12',
     placeholder: 'Select the Product Type',
     //value: null,
-    options_model: ProductTypeModel
+    options_model: ProductTypeModel,
+    displayGroup: productDG.type
   })
   product_type: ProductTypeModel;
+
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'SKU',
+    wrapper_class: 'col-12',
+    placeholder: '',
+    displayGroup: productDG.general
+  })
+  sku: string;
 
 
   @Attribute()
@@ -52,6 +65,7 @@ export class ProductModel extends AbstractModel {
     label: 'Name',
     wrapper_class: 'col-12',
     placeholder: '',
+    displayGroup: productDG.general
   })
   name: string;
 
@@ -63,10 +77,11 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-6',
     value: ProductClasses.simple,
     options: [
-      {label: "Simple Product", value: ProductClasses.simple},
-      {label: "Bundle Product", value: ProductClasses.bundle},
-      {label: "Variant Product", value: ProductClasses.variant},
-    ]
+      { label: "Simple Product", value: ProductClasses.simple },
+      { label: "Bundle Product", value: ProductClasses.bundle },
+      { label: "Variant Product", value: ProductClasses.variant },
+    ],
+    displayGroup: productDG.type
   })
   product_class: ProductClasses;
 
@@ -78,6 +93,7 @@ export class ProductModel extends AbstractModel {
     type: 'formGroup',
     label: 'Price',
     wrapper_class: 'col-6',
+    displayGroup: productDG.pricing
   })
   pricing: ProductPrice;
 
@@ -89,6 +105,7 @@ export class ProductModel extends AbstractModel {
     label: 'Slug',
     wrapper_class: 'col-12',
     placeholder: '',
+    displayGroup: productDG.general
 
   })
   slug: string;
@@ -99,6 +116,7 @@ export class ProductModel extends AbstractModel {
     label: 'Description',
     wrapper_class: 'col-12',
     placeholder: '',
+    displayGroup: productDG.general
   })
   description: string;
 
@@ -109,6 +127,7 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-6',
     value: false,
     placeholder: '',
+    displayGroup: productDG.inventory
   })
   track_inventory: string;
 
@@ -124,7 +143,8 @@ export class ProductModel extends AbstractModel {
         { var: 'track_inventory' },
         true
       ]
-    }
+    },
+    displayGroup: productDG.inventory
   })
   quantity: string;
 
@@ -135,30 +155,33 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-6',
     value: false,
     placeholder: '',
+    displayGroup: productDG.shipping
   })
   shippable: boolean
 
   @Attribute()
-  @ExtraOptions({
-    formType: FormArray,
-    type: 'formGroup',
-
-  })
+  //@ExtraOptions({
+  //  formType: FormArray,
+  //  type: 'formGroup',
+  //  displayGroup: productDG.attributes
+  //})
   attributes: []
 
   @Attribute()
   @ExtraOptions({
-    type: 'formGroup',
+    type: 'text',
     label: 'SEO Title',
     wrapper_class: 'col-12',
+    displayGroup: productDG.seo
   })
   seo_title: string
 
   @Attribute()
   @ExtraOptions({
-    type: 'formGroup',
+    type: 'text',
     label: 'SEO Description',
     wrapper_class: 'col-12',
+    displayGroup: productDG.seo
   })
   seo_description: string
 
@@ -172,6 +195,7 @@ export class ProductModel extends AbstractModel {
     inputType: 'number',
     wrapper_class: 'col-12',
     placeholder: '',
+    displayGroup: productDG.pricing
   })
   cost: number;
 
@@ -190,7 +214,55 @@ export class ProductModel extends AbstractModel {
   set pk(value) {
 
   }
-
+  public displayGroups = [
+    {
+      wrapper_class: 'col-6 offset-3',
+      groups: [
+        {
+          name: productDG.type,
+          title: 'Product Type',
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-8',
+      groups: [
+        {
+          name: productDG.general,
+          title: 'General Informaiton',
+        },
+        {
+          name: productDG.pricing,
+          title: 'Pricing',
+        },
+        {
+          name: productDG.seo,
+          title: 'SEO',
+        },
+        {
+          name: productDG.media,
+          title: 'Images / Videos',
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-4',
+      groups: [
+        {
+          name: productDG.shipping,
+          title: 'Shipping',
+        },
+        {
+          name: productDG.inventory,
+          title: 'Inventory',
+        },
+        {
+          name: productDG.attributes,
+          title: 'Attributes',
+        },
+      ]
+    }
+  ]
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {

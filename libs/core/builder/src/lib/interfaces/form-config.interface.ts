@@ -1,19 +1,37 @@
 import { FormGroup, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
-import { AbstractModel } from '@webdjangular/core/data-models';
+
+export interface BuilderFormDisplayGroups {
+  wrapper_class: string,
+  groups: BuilderFormGroupConfig[],
+  conditional?: any,
+  sort?: number,
+}
 
 export interface BuilderFormConfig {
   submit_label?: string;
   submit_size?: string;
   submit_status?: string;
+  submit_continue_label?: string;
+  submit_continue_size?: string;
+  submit_continue_status?: string;
   loading?: boolean;
-  fields: BuilderFormFieldConfig[];
+  displayGroups: BuilderFormDisplayGroups[];
 }
 
+export interface BuilderFormGroupConfig {
+  name: string;
+  title: string;
+  wrapper_class?: string;
+  type?: string;
+  sidebar?: boolean;
+  display?: boolean;
+  conditional?: any;
+  fields?: BuilderFormFieldConfig[];
+}
 export interface BuilderFormFieldConfig {
   type: string;
-
   validators?: Validators[];
   disabled?: boolean;
   label?: string;
@@ -40,6 +58,7 @@ export interface BuilderFormFieldConfig {
   backendResourceName?: string;
   formType?: any;
   sort?: number;
+  displayGroup?: string;
 }
 
 export interface BuilderFormField {
