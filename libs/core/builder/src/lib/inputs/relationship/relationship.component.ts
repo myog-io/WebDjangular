@@ -71,7 +71,13 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
     this.loading = false;
     const group = this.group.get(this.config.name) as AbstractForm;
     this.group_subscription = group.valueChanges.subscribe(value => {
-      this.title = group.toString();
+      if(this.config.model){
+        value.attributes = value;
+        let entity = new this.config.model(this.datastore,value)
+        this.title = entity.toString();
+      }else{
+        this.title = value;
+      }
     });
   }
 
@@ -92,6 +98,7 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
     this.windowRef.close();
     const group = this.group.get(this.config.name) as AbstractForm;
     group.populateForm(entry);
+    this.title = entry.toString()
     this.relationshipUpdated.emit({ name: this.config.name, entity: entry });
   }
   /**

@@ -12,6 +12,8 @@ export interface BuilderFormConfig {
 }
 
 export interface BuilderFormFieldConfig {
+  type: string;
+
   validators?: Validators[];
   disabled?: boolean;
   label?: string;
@@ -22,7 +24,6 @@ export interface BuilderFormFieldConfig {
   options_model?: any; // From AbstractModel
   multiple?: boolean;
   placeholder?: string;
-  type: string;
   validation?: ValidatorFn[];
   value?: any;
   wrapper_class?: string;

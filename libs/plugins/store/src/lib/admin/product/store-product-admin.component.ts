@@ -27,8 +27,6 @@ export class StoreProductComponent implements OnInit {
   source: WebAngularSmartTableDataSource;
   current_model = ProductModel;
   base_path = '/store/catalog/product/';
-  form: any;
-
   constructor(
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
@@ -37,7 +35,6 @@ export class StoreProductComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.form = new this.current_model.formClassRef(this.datastore);
     this.startTableInformation()
 
   }
@@ -46,7 +43,7 @@ export class StoreProductComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.source = new WebAngularSmartTableDataSource(this.datastore, this.current_model, {
-      smartTableSettings: this.form.listingTableSettings,
+      smartTableSettings: ProductModel.smartTableOptions,
       onEditButtonClick: ($event) => {
         this.router.navigate([this.base_path, 'edit', $event.data.pk]);
       },

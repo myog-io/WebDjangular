@@ -31,8 +31,9 @@ export class AbstractForm extends FormGroup {
 
         this.registerControl(propName, new FormArray([], []));
       } else if (this.formFields[i].formType == FormGroup) {
-        if (typeof this.formFields[i].model !== 'undefined') {
-          const fb = new this.formFields[propName].model.formClassRef();
+        if (this.formFields[i].model) {
+          let entity = new this.formFields[i].model(this.datastore)
+          const fb = entity.getForm()
           fb.generateForm();
           this.registerControl(propName, fb);
         } else {

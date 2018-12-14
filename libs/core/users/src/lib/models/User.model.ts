@@ -69,15 +69,9 @@ export class UserModel extends AbstractModel {
   data: any = {};
 
   @HasMany()
-  @ExtraOptions({
-    backendResourceName: 'Group'
-  })
   groups: GroupModel;
 
   @HasMany()
-  @ExtraOptions({
-    backendResourceName: 'Permissions'
-  })
   user_permissions: PermissionModel;
 
   get pk() {

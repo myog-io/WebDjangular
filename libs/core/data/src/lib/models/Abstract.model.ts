@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import { AbstractForm } from '../forms';
 import { SmartTableSettings } from '../data-store';
 import { FormControl } from '@angular/forms';
+import { BuilderFormConfig, BuilderFormFieldConfig } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
 
 export class AbstractModel extends JsonApiModel {
 
@@ -59,10 +60,10 @@ export class AbstractModel extends JsonApiModel {
    * This function will Generate and Abstract FormGroup
    */
   public getForm(): AbstractForm {
-    const fg = new AbstractForm(this._datastore)
-    let formFields = []
-    let formMap = {}
-    let extraOptions = this.extraOptions
+    const fg = new AbstractForm(this._datastore);
+    let formFields:BuilderFormFieldConfig[] = [{name:'id',type:'hidden'}];
+    let formMap = {};
+    let extraOptions = this.extraOptions;
     let count = 0;
     for (const key in extraOptions) {
       if (extraOptions.hasOwnProperty(key)) {
@@ -74,7 +75,7 @@ export class AbstractModel extends JsonApiModel {
         count++;
       }
     }
-    formFields.sort((a,b)=> (a.sort > b.sort) ? 1 : ((b.sort > a.sort) ? -1 : 0));
+    formFields.sort((a:any,b:any)=> (a.sort > b.sort) ? 1 : ((b.sort > a.sort) ? -1 : 0));
     fg.formFields = formFields
 
     return fg;

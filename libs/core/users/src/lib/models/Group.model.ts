@@ -26,9 +26,6 @@ export class GroupModel extends AbstractModel {
   name: string;
 
   @HasMany()
-  @ExtraOptions({
-    backendResourceName: 'Permission'
-  })
   permissions: PermissionModel;
 
   get pk() {

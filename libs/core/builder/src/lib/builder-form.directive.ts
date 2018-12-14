@@ -66,6 +66,7 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
   }
 
   ngOnInit() {
+    if(this.config.type === 'hidden') return;
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(

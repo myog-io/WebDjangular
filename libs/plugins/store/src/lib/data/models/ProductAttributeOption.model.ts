@@ -1,10 +1,8 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
 
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-import {ProductAttributeForm} from "../forms/ProductAttribute.form";
-import {ProductAttributeTypeValues} from "../interfaces/Product.interface";
-import {ProductAttributeOptionForm} from "../forms/ProductAttributeOption.form";
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { PermissionModel } from '@webdjangular/core/users-models';
+import { ExtraOptions } from '@webdjangular/core/decorator';
 
 
 @JsonApiModelConfig({
@@ -12,13 +10,20 @@ import {ProductAttributeOptionForm} from "../forms/ProductAttributeOption.form";
   modelEndpointUrl: 'store/product-attribute',
 })
 export class ProductAttributeOptionModel extends AbstractModel {
-  public static formClassRef = ProductAttributeOptionForm;
   public static include = null;
 
   @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Label',
+  })
   label: string;
 
   @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Value',
+  })
   value: string;
 
   permissions: PermissionModel[];

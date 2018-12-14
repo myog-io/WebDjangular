@@ -3,13 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {WebAngularDataStore} from "@webdjangular/core/services";
 import {AbstractForm} from "@webdjangular/core/data-forms";
 import {ProductModel} from "../../../data/models/Product.model";
-import {ProductForm} from "../../../data/forms/Product.form";
-import {PageModel} from "@webdjangular/core/cms-models";
-import {JsonApiQueryData} from "angular2-jsonapi";
-import {ProductTypeModel} from "../../../data/models/ProductType.model";
 import {BuilderFormFieldConfig} from "@webdjangular/core/builder";
-import {ValidatorFn} from "@angular/forms";
-import {validate} from "codelyzer/walkerFactory/walkerFn";
 
 
 @Component({
@@ -21,7 +15,7 @@ export class EditProductComponent implements OnInit {
 
   private readonly id: string;
   before_title: string = "Editing";
-  form: ProductForm;
+  form: AbstractForm;
   loading: boolean = false;
 
   private selecting_product_type: boolean;
@@ -40,10 +34,8 @@ export class EditProductComponent implements OnInit {
     } else {
       this.selecting_product_type = false;
     }
-    this.form = new ProductModel.formClassRef(datasource);
-    console.log("-----");
-    console.log(this.form );
-    console.log("-----");
+    let entity = new ProductModel(datasource);
+    this.form = entity.getForm();
     this.form.generateForm();
   }
 

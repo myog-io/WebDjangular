@@ -3,6 +3,7 @@ import { AbstractModel } from "@webdjangular/core/data-models";
 import { ProductModel } from "libs/plugins/store/src/lib/data/models/Product.model";
 import { ExtraOptions } from "@webdjangular/core/decorator";
 import { Validators, FormArray } from "@angular/forms";
+import { SmartTableSettings } from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'Channel',

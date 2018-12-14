@@ -22,7 +22,6 @@ export interface ProductAttributeInterface {
   modelEndpointUrl: 'store/product-attribute',
 })
 export class ProductAttributeModel extends AbstractModel {
-  public static formClassRef = ProductAttributeForm;
   public static include = null;
 
   @Attribute()
