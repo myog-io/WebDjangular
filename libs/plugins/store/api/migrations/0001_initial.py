@@ -116,30 +116,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='ProductAddon',
-            fields=[
-                ('_id', djongo.models.fields.ObjectIdField(auto_created=True, db_column='_id', editable=False, primary_key=True, serialize=False)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('language', models.CharField(default=webdjango.models.TranslationModel.default_i18n, max_length=5, validators=[webdjango.models.TranslationModel.validate_i18n])),
-                ('translation', djongo.models.json.JSONField(default=None, null=True)),
-                ('sku', models.CharField(max_length=32, unique=True)),
-                ('name', models.CharField(max_length=256)),
-                ('description', models.TextField(blank=True)),
-                ('available_on', models.DateTimeField(blank=True, null=True)),
-                ('track_inventory', models.BooleanField(default=True)),
-                ('quantity', models.IntegerField(default=Decimal('1'))),
-                ('quantity_allocated', models.IntegerField(default=Decimal('0'))),
-                ('cost', webdjango.fields.MongoFields.MongoDecimalField(decimal_places=2, max_digits=12)),
-                ('pricing', djongo.models.fields.EmbeddedModelField(model_container=libs.plugins.store.api.models.Product.ProductPricing, null=True)),
-                ('attributes', djongo.models.json.JSONField(blank=True, default=None, null=True)),
-            ],
-            options={
-                'ordering': ['-created'],
-            },
-        ),
-        migrations.CreateModel(
             name='ProductCategory',
             fields=[
                 ('_id', djongo.models.fields.ObjectIdField(auto_created=True, db_column='_id', editable=False, primary_key=True, serialize=False)),
@@ -243,7 +219,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='addons',
-            field=djongo.models.fields.ArrayReferenceField(blank=True, default=None, null=True, on_delete=djongo.models.fields.ArrayReferenceField._on_delete, related_name='products', to='store.ProductAddon'),
+            field=djongo.models.fields.ArrayReferenceField(blank=True, default=None, null=True, on_delete=djongo.models.fields.ArrayReferenceField._on_delete, related_name='products', to='store.Product'),
         ),
         migrations.AddField(
             model_name='product',

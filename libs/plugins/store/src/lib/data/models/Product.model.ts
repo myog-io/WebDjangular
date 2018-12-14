@@ -92,7 +92,6 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
-
     type: 'text',
     label: 'Slug',
     wrapper_class: 'col-12',

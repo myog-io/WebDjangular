@@ -18,11 +18,13 @@ from webdjango.models.CoreConfig import CoreConfigInput
 class ProductClasses:
     SIMPLE = 'simple'
     VARIANT = 'variant'
+    ADDON = 'addon'
     BUNDLE = 'bundle'
 
     CHOICES = [
         (SIMPLE, 'simple'),
         (VARIANT, 'variant'),
+        (ADDON, 'addon'),
         (BUNDLE, 'bundle')
     ]
 
@@ -152,11 +154,6 @@ class BaseProduct(ActiveModel, TranslationModel, BaseModel):
         abstract = True
 
 
-class ProductAddon(BaseProduct):
-    class Meta:
-        ordering = ['-created']
-
-
 class Product(PermalinkModel, BaseProduct):
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, blank=True, null=True)
@@ -172,7 +169,7 @@ class Product(PermalinkModel, BaseProduct):
     categories = models.ArrayReferenceField(to=ProductCategory, on_delete=models.CASCADE, related_name='products',
                                             default=None, blank=True, null=True)
 
-    addons = models.ArrayReferenceField(to=ProductAddon, on_delete=None, related_name='products', default=None,
+    addons = models.ArrayReferenceField(to='Product', on_delete=None, related_name='products', default=None,
                                         blank=True, null=True)
 
     class Meta:
