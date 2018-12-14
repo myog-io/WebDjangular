@@ -69,7 +69,6 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    * on destroy
    */
   ngOnDestroy() {
-    console.log("DESTROYING??");
     this.sub.unsubscribe();
   }
 

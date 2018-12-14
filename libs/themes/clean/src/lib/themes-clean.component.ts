@@ -23,7 +23,6 @@ export class ThemesCleanComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.activeRoute.data.subscribe(data => {
-      console.log(data);
       if (this.componentRef) {
         this.componentRef.destroy();
         this.componentRef = null;

@@ -43,7 +43,6 @@ const config: DatastoreConfig = {
 export class WebAngularDataStore extends JsonApiDatastore {
   protected getRelationships(data: any): any {
     let relationships: any;
-    console.log(data)
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         if (data[key] instanceof AbstractModel) {

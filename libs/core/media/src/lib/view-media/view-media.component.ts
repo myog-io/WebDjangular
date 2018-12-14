@@ -72,7 +72,6 @@ export class ViewMediaComponent implements OnInit {
     this.uploader.onRemoveItem = (item: FileItem) => {
       if (item.getId()) {
         this.datastore.deleteRecord(MediaModel, item.getId()).subscribe(r => {
-          console.log('Removed');
         });
       }
     };

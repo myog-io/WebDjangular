@@ -206,7 +206,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     if (this.config.smart_table_mode) {
       this.smart_table_settings.mode = this.config.smart_table_mode;
     }
-    console.log("THIS CONFIG",this.config)
     if (this.config.model) {
       console.log(this.config.model.smartTableOptions)
       this.smart_table_settings = Object.assign(

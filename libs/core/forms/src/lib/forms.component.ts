@@ -38,7 +38,6 @@ export class FormsComponent implements OnInit {
       this.datastore.findAll(FormModel, {slug: this.slug}).subscribe(
         (response: JsonApiQueryData<FormModel>) => {
           let forms = response.getModels();
-          console.log(forms);
           resolve(forms[0]);
         },
         (error: any) => {
