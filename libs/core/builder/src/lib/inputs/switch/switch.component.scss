@@ -7,7 +7,7 @@
 @include nb-install-component() {
   .switch-label {
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: center;
     cursor: pointer;
     margin: 0;

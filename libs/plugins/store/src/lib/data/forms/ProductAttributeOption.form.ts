@@ -9,6 +9,7 @@ import {ProductAttributeTypeValues, ProductClasses} from "../interfaces/Product.
 
 
 export class ProductAttributeOptionForm extends AbstractForm {
+  /*
   public listingTableSettings: SmartTableSettings = {
     columns: {
       label: {
@@ -50,4 +51,5 @@ export class ProductAttributeOptionForm extends AbstractForm {
       placeholder: '',
     }
   ]
+  */
 }

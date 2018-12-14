@@ -1,14 +1,12 @@
-import {JsonApiModelConfig, Attribute, HasMany, BelongsTo} from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
-import {ProductTypeForm} from '../forms/ProductType.form';
 import {ProductClasses} from '../interfaces/Product.interface';
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {StreetInterface} from "@webdjangular/plugins/provider-data";
-import {ProductAttributeInterface, ProductAttributeModel} from "./ProductAttribute.model";
+import {ProductAttributeInterface} from "./ProductAttribute.model";
 
 
 @JsonApiModelConfig({
@@ -16,7 +14,6 @@ import {ProductAttributeInterface, ProductAttributeModel} from "./ProductAttribu
   modelEndpointUrl: 'store/product-type',
 })
 export class ProductTypeModel extends AbstractModel {
-  public static formClassRef = ProductTypeForm;
   public static include = null;
 
   @Attribute()

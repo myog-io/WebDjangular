@@ -1,25 +1,17 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
 
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { ProductForm } from '../forms/Product.form';
-import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
-import { ProductTypeModel } from './ProductType.model';
-import {SEOModel} from "../../../../../../core/data/src/lib/models/SEO.model";
-import {applyMixins} from "rxjs/internal-compatibility";
-import {FormControl, Validators} from "@angular/forms";
-
+import {ProductClasses, ProductPrice} from '../interfaces/Product.interface';
+import {ProductTypeModel} from './ProductType.model';
 
 
 @JsonApiModelConfig({
   type: 'Product',
   modelEndpointUrl: 'store/product',
 })
-export class ProductModel extends AbstractModel{
-  public static formClassRef = ProductForm;
+export class ProductModel extends AbstractModel {
   public static include = 'product_type';
 
   @Attribute()
