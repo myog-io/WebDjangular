@@ -8,17 +8,17 @@ import {
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { PluginForm } from '../forms/Plugin.form';
+
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
 import {SmartTableSettings} from "@webdjangular/core/data";
 import {Validators} from "@angular/forms";
+import {BlockModel} from "@webdjangular/core/cms-models";
 
 @JsonApiModelConfig({
   type: 'core_plugin'
 })
 export class PluginModel extends AbstractModel {
-  public static formClassRef = PluginForm;
 
   @Attribute()
   id: string;
@@ -58,6 +58,10 @@ export class PluginModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Author',
+    wrapper_class: 'col-6',
+    options_model: BlockModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
@@ -72,10 +76,6 @@ export class PluginModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
       name: {
         title: 'Name',
         type: 'text'

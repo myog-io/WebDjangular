@@ -8,13 +8,10 @@ import {
 
 import { AbstractModel } from './Abstract.model';
 
-import { ContentTypeForm } from '../forms/ContentType.form';
-
 @JsonApiModelConfig({
   type: 'content_type'
 })
 export class ContentTypeModel extends AbstractModel {
-  public static formClassRef = ContentTypeForm;
 
   @Attribute()
   id: string;

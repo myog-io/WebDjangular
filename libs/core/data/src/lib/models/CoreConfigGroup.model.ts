@@ -12,6 +12,7 @@ import { CoreConfigInputModel } from './CoreConfigInput.model';
 import { FormControl } from '@angular/forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { JsonLogic } from 'libs/core/builder/src/lib/builder-jsonlogic';
+import {BlockModel} from "@webdjangular/core/cms-models";
 
 
 @JsonApiModelConfig({
@@ -33,6 +34,10 @@ export class CoreConfigGroupModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Core Config Input',
+    wrapper_class: 'col-6',
+    options_model: CoreConfigInputModel,
     backendResourceName: 'core_config_input'
   })
   core_config_input: CoreConfigInputModel[];

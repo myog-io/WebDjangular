@@ -10,13 +10,12 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { CoreWebsiteModel } from './CoreWebsite.model';
-import { CoreConfigForm } from '../forms/CoreConfig.form';
+import {CoreConfigInputModel} from "@webdjangular/core/data-models";
 
 @JsonApiModelConfig({
   type: 'core_config'
 })
 export class CoreConfigModel extends AbstractModel {
-  public static formClassRef = CoreConfigForm;
 
   @Attribute()
   slug: string;
@@ -32,9 +31,13 @@ export class CoreConfigModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Core Website',
+    wrapper_class: 'col-6',
+    options_model: CoreWebsiteModel,
     backendResourceName: 'CoreWebsite'
   })
-  core_website: CoreWebsiteModel
+  core_website: CoreWebsiteModel;
 
   permissions: PermissionModel[];
 
