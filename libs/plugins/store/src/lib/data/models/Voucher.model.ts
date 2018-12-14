@@ -1,12 +1,11 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
 
 
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { VoucherForm } from '../forms/Voucher.form';
-import {FormControl, Validators} from "@angular/forms";
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
@@ -14,7 +13,6 @@ import {SmartTableSettings} from "@webdjangular/core/data";
   modelEndpointUrl: 'store/voucher',
 })
 export class VoucherModel extends AbstractModel {
-  public static formClassRef = VoucherForm;
   public static include = null;
 
   @Attribute()

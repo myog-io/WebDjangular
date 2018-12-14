@@ -11,7 +11,7 @@ import {ProductAttributeTypeValues, ProductClasses} from "../interfaces/Product.
 export class ProductAttributeForm extends AbstractForm {
   /*
   public listingTableSettings: SmartTableSettings = {
-   
+
     columns: {
       name: {
         title: 'Name',

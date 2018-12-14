@@ -4,9 +4,6 @@ import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
 
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { OrderForm } from '../forms/Order.form';
-import {FormControl, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
@@ -14,7 +11,6 @@ import {SmartTableSettings} from "@webdjangular/core/data";
   modelEndpointUrl: 'store/order',
 })
 export class OrderModel extends AbstractModel {
-  public static formClassRef = OrderForm;
   public static include = null;
 
   @Attribute()

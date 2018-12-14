@@ -1,12 +1,11 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
 
 
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { SaleForm } from '../forms/Sale.form';
-import {FormControl, Validators} from "@angular/forms";
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
@@ -14,7 +13,6 @@ import {SmartTableSettings} from "@webdjangular/core/data";
   modelEndpointUrl: 'store/voucher',
 })
 export class SaleModel extends AbstractModel {
-  public static formClassRef = SaleForm;
   public static include = null;
 
   @Attribute()
@@ -44,9 +42,9 @@ export class SaleModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-      label: 'Start Date/Time',
-      wrapper_class: 'col-6',
-      placeholder: '',
+    label: 'Start Date/Time',
+    wrapper_class: 'col-6',
+    placeholder: '',
   })
   start: string;
 
