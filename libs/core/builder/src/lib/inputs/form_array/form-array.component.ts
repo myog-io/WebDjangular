@@ -33,10 +33,10 @@ enum state {
               (edit)="onEdit($event)"
               (delete)="onDelete($event)">
             </ng2-smart-table>
-            <ng-template #InseptionForm let-data>
+            <ng-template #InceptionForm let-data>
               <wda-form [fields]="form.formFields" (onSubmit)="submitModal($event)"
                         (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
-                        [loading]="loading"></wda-form>
+                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false" [title]="config.label" ></wda-form>
             </ng-template>
           </div>
         </nb-accordion-item-body>
@@ -87,7 +87,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   private element: any = null;
 
 
-  @ViewChild('InseptionForm') formTemplate: TemplateRef<any>;
+  @ViewChild('InceptionForm') formTemplate: TemplateRef<any>;
 
   /**
    * Creates an instance of scaffold form select component.

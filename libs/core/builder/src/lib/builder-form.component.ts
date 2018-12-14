@@ -11,12 +11,14 @@ import {Subscription} from 'rxjs';
   styleUrls: ['builder-form.component.scss'],
   template: `
     <form [formGroup]="group">
-      <div class="col-12 align-self-start sticky-top">
+      <div class="col-12 " [ngClass]="{
+        'align-self-start sticky-top': sticky_top
+      }">
         <nb-card>
           <nb-card-body>
             <div class="row" *ngIf="submit">
               <div class="col-8">
-                <h3> <span class="small">breakcrumb_here / </span> {{ before_title }} <b>{{ title }}</b></h3>
+                <h3> <span class="small" *ngIf="show_breadcrumb">breakcrumb_here / </span> {{ before_title }} <b>{{ title }}</b></h3>
               </div>
               <div class="col-4 text-right">
                 <ng-container *ngIf="save_continue">
@@ -70,6 +72,8 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() group: FormGroup;
   @Input() submit = true;
   @Input() save_continue = false;
+  @Input() sticky_top: boolean = true;
+  @Input() show_breadcrumb: boolean = true;
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
