@@ -4,7 +4,7 @@ import {AbstractForm} from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 export class FormForm extends AbstractForm {
-
+  /*
   public listingTableSettings = {
     columns: {
       id: {
@@ -65,5 +65,5 @@ export class FormForm extends AbstractForm {
       name: 'content',
     }
   ]
-
+  */
 }

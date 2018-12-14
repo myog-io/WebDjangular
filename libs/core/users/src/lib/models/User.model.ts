@@ -7,8 +7,6 @@ import {
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { GroupModel } from './Group.model';
 
-import { UserForm } from '../forms/User.form';
-
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { PermissionModel } from './Permission.model';
 import {SmartTableSettings} from "@webdjangular/core/data";
@@ -21,13 +19,9 @@ import {StreetModel} from "@webdjangular/plugins/provider-data";
   modelEndpointUrl: 'user',
 })
 export class UserModel extends AbstractModel {
-  public static formClassRef = UserForm;
-  public static include = 'groups'
+  public static include = 'groups';
   @Attribute()
   id: string;
-
-  @Attribute()
-  password: string;
 
   @Attribute()
   last_login: Date;

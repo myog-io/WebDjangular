@@ -78,23 +78,19 @@ export class PluginModel extends AbstractModel {
       },
       name: {
         title: 'Name',
-        type: 'string'
+        type: 'text'
       },
       slug: {
         title: 'Url Path',
-        type: 'string'
+        type: 'text'
       },
       version: {
         title: 'Version',
-        type: 'string'
+        type: 'text'
       },
       current_version: {
         title: 'Current Version',
-        type: 'string'
-      },
-      active: {
-        title: 'Active',
-        type: 'string'
+        type: 'text'
       }
     }
   };

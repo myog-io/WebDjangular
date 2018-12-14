@@ -7,6 +7,7 @@ import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
 import {SmartTableSettings} from "@webdjangular/core/data";
 import {Validators} from "@angular/forms";
+import {BlockModel} from "@webdjangular/core/cms-models";
 
 @JsonApiModelConfig({
   type: 'core_theme'
@@ -54,12 +55,20 @@ export class ThemeModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Author',
+    wrapper_class: 'col-6',
+    options_model: BlockModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Page',
+    wrapper_class: 'col-6',
+    options_model: BlockModel,
     backendResourceName: 'Page'
   })
   parent: ThemeModel;
@@ -74,29 +83,21 @@ export class ThemeModel extends AbstractModel {
 
  public static smartTableOptions: SmartTableSettings = {
     columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
       name: {
         title: 'Name',
-        type: 'string'
+        type: 'text'
       },
       slug: {
         title: 'Url Path',
-        type: 'string'
+        type: 'text'
       },
       version: {
         title: 'Version',
-        type: 'string'
+        type: 'text'
       },
       current_version: {
         title: 'Current Version',
-        type: 'string'
-      },
-      active: {
-        title: 'Active',
-        type: 'string'
+        type: 'text'
       }
     }
   };
