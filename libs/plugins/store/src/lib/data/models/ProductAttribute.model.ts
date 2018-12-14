@@ -2,7 +2,6 @@ import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
-import {ProductAttributeForm} from "../forms/ProductAttribute.form";
 import {ProductAttributeTypeValues, ProductClasses} from "../interfaces/Product.interface";
 import {ProductAttributeOptionModel} from "./ProductAttributeOption.model";
 import {ExtraOptions} from "@webdjangular/core/decorator";
@@ -83,7 +82,7 @@ export class ProductAttributeModel extends AbstractModel {
         title: 'Code',
         type: 'text',
       }
-    },
+    }
   };
 
 }
