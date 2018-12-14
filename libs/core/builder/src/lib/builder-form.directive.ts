@@ -63,7 +63,6 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
       this.component.instance.group = this.group;
       this.component.instance.relationshipUpdated = this.relationshipUpdated;
     }
-    console.log(this.config)
   }
 
   ngOnInit() {

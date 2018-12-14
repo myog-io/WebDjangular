@@ -88,7 +88,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   }
 
   updateValue(value) {
-    if (this.group.formFields[this.index].type == FormGroup) {
+    if (this.config.formType == FormGroup) {
       const fg = this.group.get(this.config.name) as AbstractForm;
       fg.populateForm(this.models.find((model) => model.pk == value))
     } else {

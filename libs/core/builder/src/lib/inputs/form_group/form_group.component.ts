@@ -34,10 +34,12 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
    * When the smart_table_settings.mode is `external` we have to get the form config information
    */
   private getFormConfig() {
-    if (this.group.formFields[this.index].model) {
-      this.form = new this.group.formFields[this.index].model.formClassRef();
+    if (this.config.model) {
+      let entity = new this.config.model();
+      this.form = entity.getForm();
       this.form.generateForm();
-      this.fields = this.form.scaffoldFields;
+      this.fields = this.form.formFields;
+      console.log("HERE?????",this.fields);
     } else {
       throw new Error(
         `Form Group require a 'model' with formClassRef inside formFields[${this.config.name}]`

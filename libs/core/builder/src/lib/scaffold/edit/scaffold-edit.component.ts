@@ -79,7 +79,7 @@ export class ScaffoldEditComponent implements OnInit {
         this.inlcude_args = {include: this.current_model.include};
       }
       this.form.generateForm();
-      //this.getEntry();
+      this.getEntry();
     })
   }
 
@@ -87,6 +87,7 @@ export class ScaffoldEditComponent implements OnInit {
    * Gets model Entry, Finding the Record
    */
   getEntry() {
+
     if (this.route.params['value'].id != null) {
       this.datastore.findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args).subscribe(
         (data: AbstractModel) => {
