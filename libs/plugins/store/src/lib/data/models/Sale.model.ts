@@ -7,6 +7,7 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { SaleForm } from '../forms/Sale.form';
 import {FormControl, Validators} from "@angular/forms";
+import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'Voucher',
@@ -20,18 +21,52 @@ export class SaleModel extends AbstractModel {
   id: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Type',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
   type: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Name',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
   name: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+      label: 'Start Date/Time',
+      wrapper_class: 'col-6',
+      placeholder: '',
+  })
   start: string;
 
   @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'End Date/Time',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
   end: string;
 
   @Attribute()
+  @ExtraOptions({
+    type: 'switch',
+    label: 'Is active',
+    wrapper_class: 'col-3',
+    value: true,
+  })
   is_active: boolean;
 
   @Attribute()
@@ -48,6 +83,35 @@ export class SaleModel extends AbstractModel {
 
   set pk(value) {
 
+  }
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      type: {
+        title: 'Type',
+        type: 'text',
+      },
+      name: {
+        title: 'Name',
+        type: 'text',
+      },
+      value: {
+        title: 'Value',
+        type: 'text',
+      },
+      is_active: {
+        title: 'Active',
+        type: 'text',
+      },
+      start: {
+        title: 'Start Date/Time:',
+        type: 'text',
+      },
+      end: {
+        title: 'End Date/Time',
+        type: 'text',
+      }
+    }
   }
 
 }

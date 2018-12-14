@@ -7,6 +7,7 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { OrderForm } from '../forms/Order.form';
 import {FormControl, Validators} from "@angular/forms";
+import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'Order',
@@ -43,5 +44,22 @@ export class OrderModel extends AbstractModel {
   set pk(value) {
 
   }
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      order_num: {
+        title: 'Order number',
+        type: 'text',
+      },
+      status: {
+        title: 'Status',
+        type: 'text',
+      },
+      created: {
+        title: 'Created',
+        type: 'text',
+      }
+    },
+  };
 
 }

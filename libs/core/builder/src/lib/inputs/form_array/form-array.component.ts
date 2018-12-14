@@ -25,18 +25,20 @@ enum state {
       <nb-accordion-item [expanded]="true">
         <nb-accordion-item-header>{{ config.label }}</nb-accordion-item-header>
         <nb-accordion-item-body>
-          <ng2-smart-table
-            [settings]="smart_table_settings"
-            [source]="source"
-            (create)="onCreate($event)"
-            (edit)="onEdit($event)"
-            (delete)="onDelete($event)">
-          </ng2-smart-table>
-          <br/>
-          <ng-template #InseptionForm let-data>
-            <wda-form [fields]="form.scaffoldFields" (onSubmit)="submitModal($event)"
-                      (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"></wda-form>
-          </ng-template>
+          <div class="wrapper">
+            <ng2-smart-table
+              [settings]="smart_table_settings"
+              [source]="source"
+              (create)="onCreate($event)"
+              (edit)="onEdit($event)"
+              (delete)="onDelete($event)">
+            </ng2-smart-table>
+            <ng-template #InseptionForm let-data>
+              <wda-form [fields]="form.scaffoldFields" (onSubmit)="submitModal($event)"
+                        (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
+                        [loading]="loading"></wda-form>
+            </ng-template>
+          </div>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>

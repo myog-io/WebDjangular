@@ -6,7 +6,7 @@ import {BuilderFormFieldConfig} from '@webdjangular/core/builder';
 import {SmartTableSettings} from '@webdjangular/core/data';
 
 export class ShippingMethodForm extends AbstractForm {
-
+  /*
   public listingTableSettings: SmartTableSettings = {
     columns: {
       type: {
@@ -126,4 +126,5 @@ export class ShippingMethodForm extends AbstractForm {
       placeholder: '',
     },
   ];
+  */
 }

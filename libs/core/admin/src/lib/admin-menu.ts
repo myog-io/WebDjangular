@@ -55,12 +55,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Discounts',
         children: [
           {
-            title: 'Rules & Vouchers',
-            link: '/store/vouchers',
+            title: 'Catalog Rules',
+            link: '/store/sales',
           },
           {
-            title: 'Sales',
-            link: '/store/sales',
+            title: 'Cart Rules',
+            link: '/store/vouchers',
           },
         ]
       },

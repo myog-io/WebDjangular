@@ -6,6 +6,7 @@ import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { SmartTableSettings} from '@webdjangular/core/data';
 
 export class ProductPriceForm extends AbstractForm {
+  /*
   public listingTableSettings: SmartTableSettings = {
     columns: {
       list: {
@@ -46,4 +47,5 @@ export class ProductPriceForm extends AbstractForm {
       placeholder: '',
     },
   ]
+  */
 }

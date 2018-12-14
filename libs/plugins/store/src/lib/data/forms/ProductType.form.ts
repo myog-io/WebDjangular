@@ -8,6 +8,7 @@ import { ProductAttributeModel } from "../models/ProductAttribute.model";
 import { ProductClasses } from '../interfaces/Product.interface';
 
 export class ProductTypeForm extends AbstractForm {
+  /*
   public listingTableSettings: SmartTableSettings = {
     columns: {
       name: {
@@ -89,4 +90,5 @@ export class ProductTypeForm extends AbstractForm {
     },
 
   ]
+  */
 }

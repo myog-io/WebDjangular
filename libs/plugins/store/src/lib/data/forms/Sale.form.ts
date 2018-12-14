@@ -6,7 +6,7 @@ import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { SmartTableSettings} from '@webdjangular/core/data';
 
 export class SaleForm extends AbstractForm {
-
+  /*
   public listingTableSettings: SmartTableSettings = {
     columns: {
       type: {
@@ -59,7 +59,7 @@ export class SaleForm extends AbstractForm {
   };
 
   scaffoldFields: BuilderFormFieldConfig[] = [
-    {
+    {item-body
       type: 'text',
       label: 'Type',
       name: 'type',
@@ -88,4 +88,5 @@ export class SaleForm extends AbstractForm {
       placeholder: '',
     }
   ]
+  */
 }
