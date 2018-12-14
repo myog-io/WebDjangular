@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {WebAngularDataStore} from '@webdjangular/core/services';
+import { WebAngularDataStore } from '@webdjangular/core/services';
 
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {AbstractForm} from '@webdjangular/core/data-forms';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { AbstractForm } from '@webdjangular/core/data-forms';
 import { NbToastrService } from '@nebular/theme';
 
 
@@ -71,12 +71,12 @@ export class ScaffoldEditComponent implements OnInit {
     });
     this.route.data.subscribe(data => {
       this.current_model = data.model;
-      this.entry = new this.current_model(this.datastore,{});
+      this.entry = new this.current_model(this.datastore, {});
       this.title = data.title;
       this.base_path = data.path;
       this.form = this.entry.getForm();
       if (this.current_model.include) {
-        this.inlcude_args = {include: this.current_model.include};
+        this.inlcude_args = { include: this.current_model.include };
       }
       this.form.generateForm();
       this.getEntry();
@@ -103,36 +103,36 @@ export class ScaffoldEditComponent implements OnInit {
   /**
    * Determines if it's a create or update
    */
-  onSubmit($event:any) {
-    this.update($event.redirect?$event.redirect:false);
+  onSubmit($event: any) {
+    this.update($event.redirect ? $event.redirect : false);
   }
 
   /**
    * Updates Record based on the current_model
    */
-  update(redirect:boolean) {
+  update(redirect: boolean) {
     this.loading = true;
     this.form.updateModel(this.entry);
     let sub = this.entry.save(this.inlcude_args).subscribe(
       (result) => {
-        this.toaster.success(`Changes have been saved`,`Success!`);
+        this.toaster.success(`Changes have been saved`, `Success!`);
         this.loading = false;
         sub.unsubscribe();
-        if(redirect){
+        if (redirect) {
           this.router.navigate([`/${this.base_path}`]);
         }
 
       },
       (error) => {
         this.loading = false;
-        if(error.errors && error.errors.length > 0){
+        if (error.errors && error.errors.length > 0) {
           for (let i = 0; i < error.errors.length; i++) {
             // TODO: Check pointer to see if is for an specific field and set an error inside the field
             const element = error.errors[i];
-            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`,`Error!`,{duration:5000});
+            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
           }
         } else {
-          this.toaster.danger(`Error saving the Changes`,`Error!`);
+          this.toaster.danger(`Error saving the Changes`, `Error!`);
         }
       }
     )

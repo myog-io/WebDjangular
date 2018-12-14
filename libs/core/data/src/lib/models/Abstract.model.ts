@@ -3,13 +3,24 @@ import { JsonApiModel } from 'angular2-jsonapi';
 import 'reflect-metadata';
 import { AbstractForm } from '../forms';
 import { SmartTableSettings } from '../data-store';
-import { FormControl } from '@angular/forms';
-import { BuilderFormConfig, BuilderFormFieldConfig } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
+import { BuilderFormFieldConfig, BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
 
 export class AbstractModel extends JsonApiModel {
 
   public include = null;
   public static smartTableOptions: SmartTableSettings
+  public displayGroups: BuilderFormDisplayGroups[] = [{
+    wrapper_class: 'col-12',
+    groups: [
+      {
+        name: 'default',
+        title: 'Group',
+        sidebar: false,
+      }
+    ],
+    conditional: null,
+    sort: 0
+  }];
   protected service;
 
   constructor(_datastore, data?: any) {
@@ -61,7 +72,7 @@ export class AbstractModel extends JsonApiModel {
    */
   public getForm(): AbstractForm {
     const fg = new AbstractForm(this._datastore);
-    let formFields:BuilderFormFieldConfig[] = [{name:'id',type:'hidden'}];
+    let formFields: BuilderFormFieldConfig[] = [{ name: 'id', type: 'hidden' }];
     let formMap = {};
     let extraOptions = this.extraOptions;
     let count = 0;
@@ -70,14 +81,24 @@ export class AbstractModel extends JsonApiModel {
         const element = extraOptions[key];
         element.name = key;
         element.sort = element.sort || count;
+        element.group = element.group || 'default';
+        element.display = element.display || true;
         formFields.push(element)
         formMap[key] = count;
         count++;
       }
     }
-    formFields.sort((a:any,b:any)=> (a.sort > b.sort) ? 1 : ((b.sort > a.sort) ? -1 : 0));
+    formFields.sort((a: any, b: any) => (a.sort > b.sort) ? 1 : ((b.sort > a.sort) ? -1 : 0));
     fg.formFields = formFields
-
+    let dg = this.displayGroups;
+    for (let i = 0; i < dg.length; i++) {
+      for (let j = 0; j < dg[i].groups.length; j++) {
+        dg[i].groups[j].fields = formFields.filter((field) => dg[i].groups[j].name === field.displayGroup);
+      }
+    }
+    console.log("DG", dg)
+    fg.displayGroups = dg;
     return fg;
   }
+
 }

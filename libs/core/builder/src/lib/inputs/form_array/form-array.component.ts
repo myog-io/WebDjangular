@@ -34,7 +34,7 @@ enum state {
               (delete)="onDelete($event)">
             </ng2-smart-table>
             <ng-template #InceptionForm let-data>
-              <wda-form [fields]="form.formFields" (onSubmit)="submitModal($event)"
+              <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
                         (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
                         [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false" [title]="config.label" ></wda-form>
             </ng-template>

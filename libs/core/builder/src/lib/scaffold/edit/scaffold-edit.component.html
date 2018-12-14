@@ -11,10 +11,8 @@
 </div>
 -->
 
-
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
- <wda-form [fields]="form.formFields" (onSubmit)="onSubmit($event)"
-                  (relationshipUpdated)="relationshipUpdated($event)" [group]="form" [loading]="loading"
-                  [save_continue]="saveAndContinue" [before_title]="before_title" [title]="title"></wda-form>
+  <wda-form [displayGroups]="form.displayGroups" (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)"
+    [group]="form" [loading]="loading" [save_continue]="saveAndContinue" [before_title]="before_title" [title]="title"></wda-form>
 
 </form>
