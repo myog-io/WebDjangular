@@ -36,7 +36,8 @@ enum state {
             <ng-template #InceptionForm let-data>
               <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
                         (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
-                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false" [title]="config.label" ></wda-form>
+                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false" 
+                        [title]="config.label" [inceptionForm]="true" ></wda-form>
             </ng-template>
           </div>
         </nb-accordion-item-body>
@@ -261,7 +262,8 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   onCreate($event) {
     this.getFormConfig();
     this.state = state.creating;
-    this.openWindow(`New`);
+    this.openWindow(`New ` + this.config.label);
+    console.log(this.config);
     this.form.reset();
   }
 
@@ -273,7 +275,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.getFormConfig();
     this.state = state.updating;
     this.form.reset();
-    this.openWindow(`Edit`);
+    this.openWindow(`Edit ` + this.config.label);
     this.element = $event.data; // Reference to find on the table latter
     this.loading = true;
     setTimeout(() => {

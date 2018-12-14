@@ -27,11 +27,12 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() save_continue = false;
   @Input() sticky_top: boolean = true;
   @Input() show_breadcrumb: boolean = true;
+  @Input() inceptionForm: boolean = false;
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
   private jsonLogic: JsonLogic = new JsonLogic();
-  private subscription: Subscription
+  private subscription: Subscription;
 
   constructor() {
 

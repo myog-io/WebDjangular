@@ -4,6 +4,7 @@ import { AbstractModel } from '@webdjangular/core/data-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { Validators } from '@angular/forms';
 
+
 @JsonApiModelConfig({
   type: 'ProductPrice',
   modelEndpointUrl: 'store/product-price',
@@ -37,5 +38,7 @@ export class ProductPriceModel extends AbstractModel {
   set pk(value) {
 
   }
+
+
 
 }
