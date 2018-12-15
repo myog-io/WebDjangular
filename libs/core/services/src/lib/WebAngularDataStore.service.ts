@@ -5,7 +5,10 @@ import {
   DatastoreConfig,
   JsonApiModel,
   Overrides,
+  AttributeMetadata
 } from 'angular2-jsonapi';
+
+
 
 import { UserModel, GroupModel, PermissionModel } from '@webdjangular/core/users-models';
 import { PageModel, BlockModel } from '@webdjangular/core/cms-models';
@@ -17,8 +20,44 @@ import { CityModel } from '@webdjangular/plugins/provider-data';
 import { ProductModel } from 'libs/plugins/store/src/lib/data/models/Product.model';
 import { ProductTypeModel } from 'libs/plugins/store/src/lib/data/models/ProductType.model';
 import { Observable } from 'rxjs';
+// tslint:disable-next-line:variable-name
 
+function cleanEmptyRecursive(attribute) {
+  if (attribute === '') {
+    attribute = null;
+  } else if (attribute instanceof JsonApiModel) {
+    const index = Object.getOwnPropertySymbols(attribute)[0] as any;
+    const attributesMetadata: any = attribute[index];
+    attribute = getDirtyAttributes(attributesMetadata);
+  } else if (attribute instanceof Array || typeof (attribute) == 'object') {
+    for (const i in attribute) {
+      if (attribute.hasOwnProperty(i)) {
+        console.log(attribute[i])
+        attribute[i] = cleanEmptyRecursive(attribute[i]);
+      }
+    }
+  }
+  return attribute
+}
 
+function getDirtyAttributes(attributesMetadata: any): { string: any } {
+  const dirtyData: any = {};
+
+  for (const propertyName in attributesMetadata) {
+    if (attributesMetadata.hasOwnProperty(propertyName)) {
+      const metadata: any = attributesMetadata[propertyName];
+
+      if (metadata.hasDirtyAttributes) {
+        const attributeName = metadata.serializedName != null ? metadata.serializedName : propertyName;
+        dirtyData[attributeName] = metadata.serialisationValue ? metadata.serialisationValue : metadata.newValue;
+        dirtyData[attributeName] = cleanEmptyRecursive(dirtyData[attributeName]);
+      }
+
+    }
+  }
+  console.log("DIRTY DATA???",dirtyData)
+  return dirtyData;
+}
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
@@ -36,6 +75,9 @@ const config: DatastoreConfig = {
     City: CityModel,
     Product: ProductModel,
     ProductType: ProductTypeModel,
+  },
+  overrides: {
+    getDirtyAttributes: getDirtyAttributes
   }
 };
 @Injectable()

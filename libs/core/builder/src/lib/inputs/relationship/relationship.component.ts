@@ -72,8 +72,15 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
     const group = this.group.get(this.config.name) as AbstractForm;
     this.group_subscription = group.valueChanges.subscribe(value => {
       if(this.config.model){
-        value.attributes = value;
-        let entity = new this.config.model(this.datastore,value)
+        let id = null;
+        if ('id' in value && value.id) {
+          id = value.id
+          delete(value.id);
+        } else if ('pk' in value && value.pk) {
+          id = value.pk
+          delete(value.pk);
+        }
+        let entity = this.config.model(this.datastore, {id:id,attributes:value});
         this.title = entity.toString();
       }else{
         this.title = value;

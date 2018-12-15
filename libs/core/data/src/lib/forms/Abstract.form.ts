@@ -5,12 +5,14 @@ import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { WebAngularDataStore } from '@webdjangular/core/services';
 import { BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
+import { AbstractModel } from '../models';
 
 export class AbstractForm extends FormGroup {
 
   /**
    * Form fields of abstract form
    */
+  public entity: AbstractModel;
   public formFields: BuilderFormFieldConfig[] = [];
   public displayGroups: BuilderFormDisplayGroups[] = [{
     wrapper_class: 'col-12',
@@ -69,6 +71,7 @@ export class AbstractForm extends FormGroup {
    */
   public populateForm(entity: JsonApiModel | any = null) {
     if (!entity) return false;
+    this.entity = entity;
     for (let i = 0; i < this.formFields.length; i++) {
       const element = this.formFields[i];
       let propName = element.name
@@ -80,7 +83,9 @@ export class AbstractForm extends FormGroup {
       } else {
         if (this.formFields[i].formType == FormGroup && typeof entity[propName] !== 'undefined') {
           let fg = this.get(propName) as AbstractForm;
-          fg.populateForm(entity[propName]);
+          if(fg.populateForm){
+            fg.populateForm(entity[propName]);
+          }
         } else if (typeof entity[propName] !== 'undefined') {
           this.get(propName).setValue(entity[propName], { emitEvent: true });
         }
@@ -88,16 +93,15 @@ export class AbstractForm extends FormGroup {
     }
   }
   private createEntity(model: any, data: any) {
+    let id = null;
     if ('id' in data && data.id) {
-      data.pk = data.id;
+      id = data.id;
+      delete(data.id);
     } else if ('pk' in data && data.pk) {
-      data.id = data.pk;
-    } else {
-      // It's an Abstract Model, does not have ID;
-      return data;
+      id = data.pk;
+      delete(data.pk);
     }
-    data.attributes = data;
-    return new model(this.datastore, data);
+    return new model(this.datastore, {id:id,attributes:data});
   }
   private getFormFieldByName(name: string) {
     return this.formFields.find((data) => data.name == name);
@@ -137,7 +141,7 @@ export class AbstractForm extends FormGroup {
           break;
       }
     }
-
+    console.log("ENTIDADE ATUALIZADA COM SUCESSO",entity)
   }
 
 
@@ -215,7 +219,6 @@ export class AbstractForm extends FormGroup {
    * @param entityToPush
    */
   public pushToFormArrayAttribute(formKey: string = null, entityToPush) {
-    console.log("HERE?????",entityToPush,formKey)
     let field = this.getFormFieldByName(formKey);
     if (field.formType === FormArray) {
       let fa = this.get(formKey) as FormArray;

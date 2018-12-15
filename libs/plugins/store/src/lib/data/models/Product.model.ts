@@ -73,7 +73,11 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'hidden',
+    type: 'text',
+    label: 'select',
+    display: false,
+    conditionalValue: {var:'product_type.product_class'},
+    displayGroup: productDG.general
   })
   product_class: ProductClasses;
 
@@ -103,7 +107,7 @@ export class ProductModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    type: 'ckeditor',
+    type: 'codeEditor',
     label: 'Description',
     wrapper_class: 'col-12',
     placeholder: '',
@@ -128,7 +132,6 @@ export class ProductModel extends AbstractModel {
     label: 'Quantity',
     inputType: 'number',
     wrapper_class: 'col-12',
-    placeholder: '',
     conditional: {
       '==': [
         { var: 'track_inventory' },
@@ -160,7 +163,7 @@ export class ProductModel extends AbstractModel {
       field:'attributes',
     }
   })
-  attributes: [];
+  attributes: {};
 
   @Attribute()
   @ExtraOptions({
@@ -287,7 +290,7 @@ export class ProductModel extends AbstractModel {
         title: 'SKU',
         type: 'text',
       },
-      type: {
+      product_type: {
         title: 'Type',
         type: 'text',
       },

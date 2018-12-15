@@ -29,7 +29,7 @@ export class ProductPriceModel extends AbstractModel {
     inputType: 'number',
     wrapper_class: 'col-6',
   })
-  sale: string;
+  sale: number;
 
   get pk() {
     return null;

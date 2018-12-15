@@ -78,11 +78,13 @@ class ProductShippingSerializer(EmbeddedSerializer):
 class ProductPricingSerializer(EmbeddedSerializer):
     list = serializers.DecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
     )
     sale = serializers.DecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        required=False,
+        allow_null=True,
     )
 
     class Meta:
@@ -128,7 +130,8 @@ class ProductSerializer(DocumentSerializer):
         many=True,
         queryset=Product.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='product-relationships'
+        self_link_view_name='product-relationships',
+        required=False,
     )
 
     # TODO: ArrayReferenceSerializer
@@ -137,14 +140,16 @@ class ProductSerializer(DocumentSerializer):
         many=True,
         queryset=ProductCategory.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='product-relationships'
+        self_link_view_name='product-relationships',
+        required=False,
     )
 
     addons = ResourceRelatedField(
         many=True,
         queryset=Product.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='product-relationships'
+        self_link_view_name='product-relationships',
+        required=False,
     )
 
     attributes = serializers.JSONField(required=False)
