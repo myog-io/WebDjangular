@@ -41,7 +41,7 @@ class ProductCategory(PermalinkModel, TranslationModel, BaseModel):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
 
-class ProductAttributeOption(BaseModel):
+class ProductAttributeOption(models.Model):
     label = models.CharField()
     value = models.CharField()
 
@@ -52,7 +52,7 @@ class ProductAttributeOption(BaseModel):
         return '%s object (%s)' % (self.__class__.__name__, self.label)
 
 
-class ProductAttribute(BaseModel):
+class ProductAttribute(models.Model):
     code = models.SlugField()
     name = models.CharField()
     required = models.BooleanField(default=False)
@@ -82,7 +82,7 @@ class ProductType(BaseModel):
         ordering = ['-created']
 
 
-class ProductDimensions(BaseModel):
+class ProductDimensions(models.Model):
     # TODO: change to MeasuramentField
     width = models.CharField(max_length=32)
     height = models.CharField(max_length=32)
@@ -95,7 +95,7 @@ class ProductDimensions(BaseModel):
         return '%s object (w:%s,h:%s,d:%s)' % (self.__class__.__name__, self.width, self.height, self.depth)
 
 
-class ProductShipping(BaseModel):
+class ProductShipping(models.Model):
     weight = MeasurementField(measurement=Weight,
                               unit_choices=WeightUnits.CHOICES,
                               default=zero_weight)
@@ -108,14 +108,15 @@ class ProductShipping(BaseModel):
         return '%s object (%s)' % (self.__class__.__name__, self.dimensions)
 
 
-class ProductPricing(BaseModel):
+class ProductPricing(models.Model):
     list = MongoDecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
     )
     sale = MongoDecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        null=True,
     )
 
     # TODO: tier prices
@@ -139,7 +140,8 @@ class BaseProduct(ActiveModel, TranslationModel, BaseModel):
     quantity_allocated = models.IntegerField(default=Decimal(0))
     cost = MongoDecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        blank=True, null=True
     )
 
     pricing = models.EmbeddedModelField(model_container=ProductPricing)

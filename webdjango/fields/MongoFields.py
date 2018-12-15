@@ -9,4 +9,6 @@ class MongoDecimalField(DecimalField):
 
     def get_prep_value(self, value):
         value = super().get_prep_value(value)
-        return Decimal128(value)
+        if value:
+            return Decimal128(value)
+        return None

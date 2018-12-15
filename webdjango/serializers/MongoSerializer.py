@@ -88,8 +88,9 @@ class EmbeddedSerializer(serializers.ModelSerializer):
         EmbeddedDocuments are not saved separately, so we create an instance of it.
         """
         ModelClass = self.Meta.model
+        print(validated_data)
         instance = ModelClass(**validated_data)
-
+        print("INSTANCE",instance)
         return instance
 
     def get_fields(self):
@@ -116,7 +117,8 @@ class DocumentSerializer(serializers.ModelSerializer):
     A Document Serializer For Nested Documents
     """
     _id = serializers.CharField(read_only=True, required=False)
-    def update_validated_data(self, validated_data, info):
+    def update_validated_data(self, validated_data, info, creating=False):
+        print("DATA BEFORE ENTERING THE VALIDATOR",validated_data)
         for field_name, field in info.fields.items():
             # Loop For Embbedded Model Field
             if type(field) is EmbeddedModelField:
@@ -129,6 +131,8 @@ class DocumentSerializer(serializers.ModelSerializer):
                 if(field_name in validated_data):
                     validated_data[field_name] = field.to_python(
                         validated_data[field_name])
+                elif creating:
+                    validated_data[field_name] = []
 
             # Loop Array ReferenceField
             if type(field) is ArrayReferenceField:
@@ -136,6 +140,9 @@ class DocumentSerializer(serializers.ModelSerializer):
                     info.relations[field_name].to_many = True
                     validated_data[field_name] = field.to_python(
                         validated_data[field_name])
+                elif creating:
+                    validated_data[field_name] = []
+        print("UPDATED VALIDATED DATA",validated_data)
         return validated_data
 
     def create(self, validated_data):
@@ -155,10 +162,15 @@ class DocumentSerializer(serializers.ModelSerializer):
             # If is Embbed Model Field we will treat on the next loop
             if field_name in validated_data and relation_info.to_many:
                 many_to_many[field_name] = validated_data.pop(field_name)
-            elif field_name in info.relations and type(info.relations[field_name].model_field) is ArrayReferenceField:
+            elif field_name in validated_data and type(info.relations[field_name].model_field) is ArrayReferenceField:
                 array_reference[field_name] = validated_data.pop(field_name)
+            elif type(info.relations[field_name].model_field) is ArrayModelField:
 
-        validated_data = self.update_validated_data(validated_data, info)
+                #Is an Array Model Field But is empty in it's creation, to avoid erros let set a empty value
+                validated_data[field_name] = []
+
+
+        validated_data = self.update_validated_data(validated_data, info, creating=True)
 
         try:
             instance = ModelClass.objects.create(**validated_data)

@@ -3,6 +3,7 @@ import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormField, BuilderFormFieldConfig, BuilderFormDisplayGroups } from '../../interfaces/form-config.interface';
 import { FormArray, Validators, FormGroup, FormControl } from '@angular/forms';
 import { WebAngularDataStore } from '@webdjangular/core/services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'wda-form-formbuilder',
@@ -20,6 +21,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
   displayGroups: BuilderFormDisplayGroups[]
   loading: boolean = false;
   submit: boolean = false;
+  subscription: Subscription
 
    /**
    * Creates an instance of scaffold form select component.
@@ -33,6 +35,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
 
   ngOnInit() {
     this.getFormConfig();
+
   }
 
 
@@ -59,7 +62,6 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
         let fg = this.group.get(this.config.name) as FormGroup;
         for (let i = 0; i < value[options.field].length; i++) {
           const element = value[options.field][i];
-          console.log(element)
           let field:BuilderFormFieldConfig = {
             label: element.name,
             type: element.type,
@@ -76,6 +78,9 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
           fields.push(field);
           fg.registerControl(element.code,new FormControl(null,field.validation))
         }
+        if(this.group.entity && this.group.entity[this.config.name]){
+          fg.setValue(this.group.entity[this.config.name])
+        }
         this.form = new AbstractForm(this.datastore);
         this.form.displayGroups = [{
           wrapper_class: 'col-12',
@@ -90,7 +95,8 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
           conditional: null,
           sort: 0
         }];
-        //this.form.generateForm();
+
+
       }else{
         throw new Error(
           `${this.config.copyOptions.field} does not exits inside the object ${this.config.copyOptions.name}`

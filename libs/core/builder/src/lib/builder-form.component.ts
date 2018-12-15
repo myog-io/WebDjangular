@@ -54,6 +54,9 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     } else if(typeof obj.display === "undefined"){
       obj.display = true;
     }
+    if (obj.conditionalValue){
+      this.group.get(obj.name).setValue(this.jsonLogic.apply(obj.conditionalValue, data),{emitEvent:false});
+    }
   }
   /**
    * This will check the condition for the field to hide or show based on the jsonlogic conditional of each field
