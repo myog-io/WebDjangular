@@ -5,12 +5,17 @@ import { WebAngularDataStore } from "@webdjangular/core/services";
 import { CoreConfigGroupModel } from "libs/core/data/src/lib/models/CoreConfigGroup.model";
 import { CoreConfigInputModel } from "libs/core/data/src/lib/models/CoreConfigInput.model";
 import { AbstractForm } from "@webdjangular/core/data-forms";
-import { BuilderFormFieldConfig } from "@webdjangular/core/builder";
+import { BuilderFormDisplayGroups } from "libs/core/builder/src/lib/interfaces/form-config.interface";
 
 @Component({
   selector: 'wda-core-config-group',
   styleUrls: ['./core-config-group.component.scss'],
-  templateUrl: './core-config-group.component.html',
+  template: `
+    <wda-form [before_title]="" [title]="configGroup?.title"
+    [displayGroups]="form.displayGroups" (onSubmit)="onSubmit()"
+    submit_label="Save Config" (relationshipUpdated)="relationshipUpdated($event)"
+    [group]="form" [loading]="loading" [formLoading]="formLoading"></wda-form>
+  `
 })
 export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   /**
@@ -24,12 +29,12 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   /**
    * Group  of core config group component
    */
-  public group: CoreConfigGroupModel;
+  public configGroup: CoreConfigGroupModel;
   /**
    * Inputs  of core config group component
    */
   public inputs: CoreConfigInputModel[] = [];
-  public fields: BuilderFormFieldConfig[] = [];
+
   /**
    * Form  of core config group component
    */
@@ -39,6 +44,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    * Loading state
    */
   public loading: boolean = false;
+  public formLoading: boolean = true;
   /**
    * Creates an instance of core config group component.
    * @param route
@@ -77,7 +83,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    */
   loadConfigGroup() {
     this.datastore.findRecord(CoreConfigGroupModel, this.id).subscribe((data: CoreConfigGroupModel) => {
-      this.group = data;
+      this.configGroup = data;
       this.loadConfigInput()
     })
 
@@ -88,16 +94,16 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
    */
   loadConfigInput() {
     this.inputs = [];
-    this.fields = [];
-
     this.datastore.findAll(CoreConfigInputModel, { group: this.id }).subscribe((data: any) => {
       this.inputs = data.getModels();
-      this.group.inputs = this.inputs;
-      this.fields = this.group.formFieldsConfigs;
-      this.form.formFields = this.group.formFields;
-      this.group.updateValues();
+      this.configGroup.inputs = this.inputs;
+      this.form.formFields = this.configGroup.formFieldsConfigs;
+      this.form.displayGroups[0].groups[0].fields = this.form.formFields;
       this.form.generateForm();
-      this.form.populateForm(this.group.value);
+      this.configGroup.updateValues();
+      this.form.populateForm(this.configGroup.value);
+      this.formLoading = false;
+
     })
   }
 
@@ -108,16 +114,16 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
     this.loading = true;
     const data = this.form.value;
     // Doing this a little bit more manually beucase the way we treat the CoreConfig, it's not a direct relationship
-    for (let i = 0; i < this.group.inputs.length; i++) {
-      this.group.inputs[i]['value'] = data[this.group.inputs[i].id];
+    for (let i = 0; i < this.configGroup.inputs.length; i++) {
+      this.configGroup.inputs[i]['value'] = data[this.configGroup.inputs[i].id];
     }
-    this.group.updateValues();
-    const sub = this.group.save().subscribe(
+    this.configGroup.updateValues();
+    const sub = this.configGroup.save().subscribe(
       (result) => {
         this.loading = false;
         sub.unsubscribe();
       },
-      (error: any) =>{
+      (error: any) => {
         this.loading = false;
       }
     )
