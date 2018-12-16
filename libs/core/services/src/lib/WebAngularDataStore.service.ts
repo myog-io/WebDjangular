@@ -4,8 +4,6 @@ import {
   JsonApiDatastore,
   DatastoreConfig,
   JsonApiModel,
-  Overrides,
-  AttributeMetadata
 } from 'angular2-jsonapi';
 
 
