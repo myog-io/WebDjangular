@@ -98,7 +98,7 @@ class BaseProductSerializer(EmbeddedSerializer):
     type = serializers.CharField()
     name = serializers.CharField()
     slug = serializers.SlugField()
-    description = serializers.CharField()
+    description = serializers.CharField(allow_null=True)
 
     available_on = serializers.DateTimeField(allow_null=True)
 

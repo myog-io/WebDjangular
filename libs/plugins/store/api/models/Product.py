@@ -118,7 +118,7 @@ class ProductPricing(models.Model):
     sale = MongoDecimalField(
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-        null=True,
+        null=True, blank=True,
     )
 
     # TODO: tier prices
@@ -133,7 +133,7 @@ class ProductPricing(models.Model):
 class BaseProduct(ActiveModel, TranslationModel, BaseModel):
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True, null=True)
 
     available_on = models.DateTimeField(blank=True, null=True)
 
