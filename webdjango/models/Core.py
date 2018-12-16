@@ -223,7 +223,7 @@ class Theme(DirtyFieldsMixin, BaseModel):
             if config['author']:
                 author, created = Author.objects.get_or_create(
                     config['author'])
-            config['theme']['author'] = author.id
+            config['theme']['author'] = author.pk
 
             # Creating Theme
             theme = Theme.objects.filter(slug=config['theme']['slug']).first()

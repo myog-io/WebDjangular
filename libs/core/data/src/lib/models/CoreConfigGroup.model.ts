@@ -75,8 +75,8 @@ export class CoreConfigGroupModel extends AbstractModel {
     let fields = [];
     for (let i = 0; i < this.inputs.length; i++) {
       const config:BuilderFormFieldConfig = this.inputs[i].fieldConfig;
-      if(config.conditional){
-        config.display = this.jsonLogic.apply(config.conditional,this.value)
+      if(typeof config.display === 'undefined'){
+        config.display = true;
       }
       fields.push(config);
 
