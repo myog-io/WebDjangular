@@ -8,24 +8,37 @@ import {
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { PluginForm } from '../forms/Plugin.form';
+
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {Validators} from "@angular/forms";
 
 @JsonApiModelConfig({
   type: 'core_plugin'
 })
 export class PluginModel extends AbstractModel {
-  public static formClassRef = PluginForm;
 
   @Attribute()
   id: string;
 
   @Attribute()
-  slug: string;
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Name',
+    placeholder: 'Enter the Plugin Name'
+  })
+  name: string;
 
   @Attribute()
-  name: string;
+  @ExtraOptions({
+    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    type: 'text',
+    label: 'Slug',
+    placeholder: 'Enter the Plugin slug'
+  })
+  slug: string;
 
   @Attribute()
   current_version: string;
@@ -44,6 +57,10 @@ export class PluginModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Author',
+    wrapper_class: 'col-6',
+    options_model: AuthorModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
@@ -55,4 +72,25 @@ export class PluginModel extends AbstractModel {
   }
 
   set pk(value) {}
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'text'
+      },
+      slug: {
+        title: 'Url Path',
+        type: 'text'
+      },
+      version: {
+        title: 'Version',
+        type: 'text'
+      },
+      current_version: {
+        title: 'Current Version',
+        type: 'text'
+      }
+    }
+  };
 }

@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { MediaModel } from '../models/Media.model';
 import { FileUploader, FileItem } from '@webdjangular/core/chunk-file-upload';
 import { ViewMediaService } from './view-media.service';
+import { ModelPaginatorControls } from 'libs/core/builder/src/lib/model-paginator/model-paginator.controls';
 
-import { ModelPaginatorControls } from '@webdjangular/core/admin-theme';
+
 
 @Component({
   selector: 'webdjangular-view-media',
@@ -71,7 +72,6 @@ export class ViewMediaComponent implements OnInit {
     this.uploader.onRemoveItem = (item: FileItem) => {
       if (item.getId()) {
         this.datastore.deleteRecord(MediaModel, item.getId()).subscribe(r => {
-          console.log('Removed');
         });
       }
     };

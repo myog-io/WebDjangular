@@ -3,24 +3,36 @@ import { JsonApiModelConfig, Attribute, BelongsTo } from 'angular2-jsonapi';
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { ThemeForm } from '../forms/Theme.form';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
+import { Validators } from "@angular/forms";
+import { SmartTableSettings } from '../data-store/SmartTable.interfaces';
 
 @JsonApiModelConfig({
   type: 'core_theme'
 })
 export class ThemeModel extends AbstractModel {
-  public static formClassRef = ThemeForm;
 
   @Attribute()
   id: string;
 
   @Attribute()
-  slug: string;
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Name',
+    placeholder: 'Enter the Theme Name'
+  })
+  name: string;
 
   @Attribute()
-  name: string;
+  @ExtraOptions({
+    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    type: 'text',
+    label: 'Slug',
+    placeholder: 'Enter the Slug'
+  })
+  slug: string;
 
   @Attribute()
   angular_module: string;
@@ -42,12 +54,20 @@ export class ThemeModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Author',
+    wrapper_class: 'col-6',
+    options_model: AuthorModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
 
   @BelongsTo()
   @ExtraOptions({
+    type: 'relationship',
+    label: 'Page',
+    wrapper_class: 'col-6',
+    options_model: ThemeModel,
     backendResourceName: 'Page'
   })
   parent: ThemeModel;
@@ -58,5 +78,26 @@ export class ThemeModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'text'
+      },
+      slug: {
+        title: 'Url Path',
+        type: 'text'
+      },
+      version: {
+        title: 'Version',
+        type: 'text'
+      },
+      current_version: {
+        title: 'Current Version',
+        type: 'text'
+      }
+    }
+  };
 }

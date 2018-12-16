@@ -2,6 +2,7 @@
 WebDjangular URL Configuration
 """
 import webdjango.signals.CoreSignals
+import webdjango.signals.EmailConfigRegisterSignals
 
 from django.conf.urls import include
 from django.conf import settings
@@ -38,8 +39,8 @@ router.register(r'core_theme', ThemeViewSet)
 router.register(r'core_config', CoreConfigViewSet)
 router.register(r'core_website', WebsiteViewSet)
 router.register(r'core_init', InitViewSet)
-#router.register(r'core_config_input', CoreConfigInputViewSet.as_view(), name='core_config_input')
-#router.register(r'core_config_group', CoreConfigGroupViewSet.as_view(), name='core_config_input')
+router.register(r'core_config_input', CoreConfigInputViewSet, base_name='core_config_input')
+router.register(r'core_config_group', CoreConfigGroupViewSet, base_name='core_config_group')
 
 
 urlpatterns = [
@@ -48,10 +49,23 @@ urlpatterns = [
     url(r'^api/swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^api/docs/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'^api/', include(router.urls)),
+
     url(r'^api/', include('libs.core.users.api.urls')),
     url(r'^api/', include('libs.core.cms.api.urls')),
     url(r'^api/', include('libs.core.media.api.urls')),
-    url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
-    url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
 
-] + static(settings.MEDIA_URL, document_root=settings.STATIC_ROOT)
+    url(r'^api/', include('libs.core.forms.api.urls')),
+
+    # UTILS views
+    url(r'^api/', include('libs.core.utils.api.urls')),
+
+    # TODO: Add dynamic routes based on active plugins
+    url(r'^api/', include('libs.plugins.provider.api.urls')),
+    url(r'^api/', include('libs.plugins.store.api.urls')),
+
+
+    #url(r'^api/core_config_input/$',CoreConfigInputViewSet.as_view(), name='core_config_input'),
+    #url(r'^api/core_config_group/$',CoreConfigGroupViewSet.as_view(), name='core_config_group')
+
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

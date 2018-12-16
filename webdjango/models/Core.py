@@ -1,12 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import validate_slug
 from djongo import models
+
+from webdjango.models.AbstractModels import BaseModel
 from webdjango.utils.DynamicLoader import DynamicLoader
 from distutils.version import LooseVersion
 from dirtyfields import DirtyFieldsMixin
+from djongo.models.json import JSONField
 
 
-class Website(models.Model):
+class Website(BaseModel):
     """
     Configuration for Future MultiSite
     """
@@ -21,21 +24,20 @@ class Website(models.Model):
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_website'
-        permissions = (("list_core_website", "Can list core_website"),)
 
     def __str__(self):
         return self.domain
 
 
-class CoreConfig(models.Model):
+class CoreConfig(BaseModel):
     """
     Core Config Holds Some Information for the Beggening of the application
     """
     slug = models.SlugField(max_length=200, validators=[
         validate_slug], unique=True)
-    value = models.TextField(max_length=500, null=True)
+    value = JSONField(max_length=500, null=True)
     website = models.ForeignKey(
         Website, on_delete=models.CASCADE, null=False, related_name="Configs", default=1)
     created = models.DateTimeField(auto_now_add=True)
@@ -44,12 +46,17 @@ class CoreConfig(models.Model):
     @staticmethod
     def read(slug, website=None):
         try:
+            #TODO: Make This Recursive?!
+            slug_path = slug.split('.')
             if not website:
                 website = Website.getCurrentWebsite()
-                config = CoreConfig.objects.filter(
-                    slug=slug, website=website).first()
-                if config:
-                    return config.value
+
+            config = CoreConfig.objects.filter(
+                slug=slug_path[0], website=website).first()
+            if config:
+                if len(slug_path) > 1:
+                    return config.value[slug_path[1]]
+                return config.value
             else:
                 return None
 
@@ -58,33 +65,45 @@ class CoreConfig(models.Model):
 
     @staticmethod
     def write(slug, value, website=None):
+        #TODO: Make This Recursive?!
+        slug_path = slug.split('.')
         if not website:
             website = Website.getCurrentWebsite()
-        p, created = CoreConfig.objects.get_or_create(
-            slug=slug, value=value, website=website)
-        return created
 
-    @staticmethod
-    def register_all_config():
-        from webdjango.signals.CoreSignals import config_register
-        configs = config_register.send_robust(sender=CoreConfig)
-        print("Getting Configs")
-        for config in configs:
-            print("REGISTER CONFIGS")
-            print(config)
+        config = CoreConfig.objects.filter(
+                    slug=slug_path[0], website=website).first()
+        if config:
+            config.slug = slug
+            if len(slug_path) > 1:
+                val_list = config.value
+                val_list[slug_path[1]] = value
+                value = val_list
 
-        return configs
+            config.value = value
+            config.website = website
+            config.save()
+        else:
+            # If the Value Should be inside a Json Object
+            if len(slug_path) > 1:
+                val_list = []
+                val_list[slug_path[1]] = value
+                value = val_list
+
+            config = CoreConfig.objects.create(
+                slug=slug_path[0], value=value, website=website)
+
+        return config
+
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_config'
-        permissions = (("list_core_config", "Can list core_config"),)
 
     def __str__(self):
         return self.slug
 
 
-class Author(models.Model):
+class Author(BaseModel):
     """
     Core Author, this model is used to show the Author information on the APP and Themes Acitivation Pages
     """
@@ -95,15 +114,14 @@ class Author(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_author'
-        permissions = (("list_core_author", "Can list core_author"),)
 
     def __str__(self):
         return self.name
 
 
-class Plugin(DirtyFieldsMixin, models.Model):
+class Plugin(DirtyFieldsMixin, BaseModel):
     """
     Core Plugin, this model is used to check the installed Plugin and check the actives one
     """
@@ -151,15 +169,14 @@ class Plugin(DirtyFieldsMixin, models.Model):
                 print("DO Nothing for now")
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_plugin'
-        permissions = (("list_core_plugin", "Can list core_plugin"),)
 
     def __str__(self):
         return self.name
 
 
-class Theme(DirtyFieldsMixin, models.Model):
+class Theme(DirtyFieldsMixin, BaseModel):
     """
     Core Themes, this model is used to check the installed Themes and check the activated one
     """
@@ -230,6 +247,5 @@ class Theme(DirtyFieldsMixin, models.Model):
                     active_theme = theme
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'core_theme'
-        permissions = (("list_core_theme", "Can list core_theme"),)

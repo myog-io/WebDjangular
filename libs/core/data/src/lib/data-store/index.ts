@@ -4,3 +4,13 @@ export {
 export {
   WebAngularSmartTableDataSourceOptions
 } from './WebAngularSmartTableDataSourceOptions';
+
+export {
+  SmartTableSettings,
+  SmartTableSettingsAttr,
+  SmartTableColumnSettings,
+  SmartTableEditor,
+  SmartTableEditorConfig,
+  SmartTableEditorConfigCompleter,
+  SmartTableActions
+} from './SmartTable.interfaces';

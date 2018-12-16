@@ -443,26 +443,26 @@
         }
       }
     },
-    "plugins-contact-form": {
-      "root": "libs/plugins/contact-form",
-      "sourceRoot": "libs/plugins/contact-form/src",
+    "core-forms": {
+      "root": "libs/core/forms",
+      "sourceRoot": "libs/core/forms/src",
       "projectType": "library",
-      "prefix": "wda",
+      "prefix": "webdjangular",
       "architect": {
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "libs/plugins/contact-form/src/test.ts",
-            "tsConfig": "libs/plugins/contact-form/tsconfig.spec.json",
-            "karmaConfig": "libs/plugins/contact-form/karma.conf.js"
+            "main": "libs/core/forms/src/test.ts",
+            "tsConfig": "libs/core/forms/tsconfig.spec.json",
+            "karmaConfig": "libs/core/forms/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/plugins/contact-form/tsconfig.lib.json",
-              "libs/plugins/contact-form/tsconfig.spec.json"
+              "libs/core/forms/tsconfig.lib.json",
+              "libs/core/forms/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -935,6 +935,34 @@
             "tsConfig": [
               "libs/core/chunk-file-upload/tsconfig.lib.json",
               "libs/core/chunk-file-upload/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "core-builder": {
+      "root": "libs/core/builder",
+      "sourceRoot": "libs/core/builder/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/core/builder/src/test.ts",
+            "tsConfig": "libs/core/builder/tsconfig.spec.json",
+            "karmaConfig": "libs/core/builder/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/core/builder/tsconfig.lib.json",
+              "libs/core/builder/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

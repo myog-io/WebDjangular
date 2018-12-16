@@ -67,18 +67,18 @@
     </div>
   </nb-card-body>
 </nb-card>
-<webdjangular-model-paginator [options]="modelPaginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
+<wda-model-paginator [options]="modelPaginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
   <div class="row container media-list">
 
     <nb-card size="medium" *ngFor="let media of modelPaginatorControls.getEntries(); let i=index;" class="col-md-3">
       <nb-card-body>
-        <div class="picture" style.background-image="url('{{media?.safeFileUrl}}')"></div>
+        <div class="picture" [style.background]="media?.file | safe: 'style'"></div>
         <div class="details">
           <div class="title">
             {{media?.alt}}
           </div>
           <div class="description">
-            {{media?.safeFileUrl}}
+            {{media?.file}}
           </div>
         </div>
       </nb-card-body>
@@ -95,7 +95,7 @@
     </nb-card>
 
   </div>
-</webdjangular-model-paginator>
+</wda-model-paginator>
 <div ng2FileDrop *ngIf="type === 'push'" [uploader]="uploader" (onFileDrop)="onFileSelected($event)" (fileOver)="onFileOver($event)"
   id="dragDropOverlayBackdrop" class="drag-drop-overlay-backdrop ">
 

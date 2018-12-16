@@ -1,0 +1,180 @@
+// HARDCODE
+@import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
+
+:host {
+  display: contents;
+}
+
+.card {
+
+  border-radius: $plan-card-round;
+
+  .card-header {
+    background: $pricing-plan-internet-horizontal-left-side-bg;
+    padding: 0px;
+
+    border: unset;
+
+    border-top-left-radius: $plan-card-round;
+    border-top-right-radius: $plan-card-round;
+
+    .plan-title {
+      font-size: 34px;
+      font-weight: 400;
+      font-family: $pricing-plan-amount-ff;
+      color: $pricing-plan-amount-c;
+
+      background: $primary;
+      line-height: $pricing-plan-amount-fs / 1.7;
+      margin-bottom: 0;
+
+      .plan-title-1 {
+        display: block;
+        font-size: 12px;
+        line-height: 12px;
+      }
+      .plan-title-2 {
+        display: block;
+        font-size: 24px;
+        line-height: 24px;
+      }
+      .plan-title-3 {
+        display: block;
+        font-size: 14px;
+        line-height: 14px;
+      }
+
+      &.plan-internet {
+        background: #00b9bd;
+        border-top-left-radius: $plan-card-round;
+        border-top-right-radius: $plan-card-round;
+        .icon {
+          background-image: url('../../../../../../../../themes/providerfy/src/lib/assets/images/combo_internet.png');
+          width: 36px;
+          height: 36px;
+          display: block;
+          float: right;
+        }
+      }
+      &.plan-tv {
+        background: #02cdd1;
+        .icon {
+          background-image: url('../../../../../../../../themes/providerfy/src/lib/assets/images/combo_tv.png');
+          width: 36px;
+          height: 29px;
+          display: block;
+          float: right;
+        }
+      }
+      &.plan-telephone {
+        background: #3fe1e4;
+        display: block;
+
+        .icon {
+          background-image: url('../../../../../../../../themes/providerfy/src/lib/assets/images/combo_telephone.png');
+          width: 36px;
+          height: 36px;
+          display: block;
+          float: right;
+        }
+
+      }
+
+      .fw-semibold {
+        font-weight: 500;
+      }
+      .italic {
+        font-style: italic;
+      }
+      .fw-black {
+        font-weight: 900;
+      }
+    }
+
+    h6 {
+      font-family: $pricing-plan-amount-ff;
+      font-size: 20px;
+      background: #02cdd1;
+      color: #fff;
+      margin-bottom: 0;
+      padding: 15px 0;
+      font-weight: 400;
+      strong {
+        font-weight: 900;
+      }
+    }
+
+  }
+
+  .card-body {
+    ul {
+
+      list-style: none;
+
+      li {
+        font-size: $pricing-plan-features-fs;
+        font-weight: $pricing-plan-features-fw;
+        font-family: $pricing-plan-features-ff;
+        color: $pricing-plan-features-c;
+        line-height: $pricing-plan-features-lh;
+
+        height: $pricing-plan-features-lh * 2;
+
+        display: inline-block;
+
+        .icon {
+          color: $primary;
+          float: left;
+          display: block;
+        }
+
+        p {
+          height: inherit;
+          margin-bottom: 0;
+          display: table-cell;
+          vertical-align: middle;
+        }
+
+      }
+    }
+
+    .plan-price {
+
+      .currency-unit {
+        font-size: $pricing-plan-currency-unit-fs;
+        font-weight: $pricing-plan-currency-unit-fw;
+        font-family: $pricing-plan-currency-unit-ff;
+
+        vertical-align: top;
+        line-height: $pricing-plan-price-fs * 1.2;
+      }
+
+      .price {
+        font-size: $pricing-plan-price-fs;
+        font-weight: $pricing-plan-price-fw;
+        font-family: $pricing-plan-price-ff;
+      }
+
+      .align-text-super {
+        vertical-align: super;
+      }
+
+      .plan-period {
+        color: #849daa;
+        font-size: 17px;
+        font-weight: $fw-semibold;
+        font-family: $primary-ff;
+      }
+    }
+
+    .btn {
+      font-size: $btn-subscribe-fs;
+      font-weight: $btn-subscribe-fw;
+      font-family: $btn-subscribe-ff;
+      border-radius: 30px;
+
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}

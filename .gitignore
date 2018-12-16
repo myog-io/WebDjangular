@@ -19,6 +19,8 @@
 .vscode/*
 
 
+/dump
+
 # misc
 /.sass-cache
 /connect.lock

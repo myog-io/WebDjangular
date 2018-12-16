@@ -15,7 +15,7 @@ class MediaFilter(FilterSet):
     class Meta:
         model = Media
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'alt': ['contains', 'exact'],
         }
 
@@ -33,12 +33,14 @@ class MediaViewSet(ModelViewSet):
     serializer_class = MediaSerializer
     queryset = Media.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
     filter_class = MediaFilter
     search_fields = ('id', 'alt', 'created')
     permission_classes = (AllowAny,) # Improve Allow
 
     def create(self, request, *args, **kwargs):
+        print(request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

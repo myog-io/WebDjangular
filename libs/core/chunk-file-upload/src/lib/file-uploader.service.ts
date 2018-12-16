@@ -279,10 +279,10 @@ export class FileUploaderService {
         return this.delete(link, options);
       }
       else {
-        return Observable.of(false);
+        return of(false);
       }
     } else {
-      return Observable.of(false);
+      return of(false);
     }
   }
 

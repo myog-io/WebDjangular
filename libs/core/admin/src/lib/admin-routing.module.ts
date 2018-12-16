@@ -4,15 +4,22 @@ import { NgModule } from '@angular/core';
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageModel } from '@webdjangular/core/cms-models';
+import { FormModel } from '@webdjangular/core/forms-models'
+
 
 import { PermissionGuard } from '@webdjangular/core/services';
-import { ThemeModel } from '@webdjangular/core/data-models';
+import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
 import { PluginModel } from '@webdjangular/core/data-models';
-import { ScaffoldModule } from './scaffold/scaffold.module';
-import { GroupModule } from './group/group.module';
-import { UserModule } from './user/user.module';
 import { CoreMediaModule } from '@webdjangular/core/media';
-import { CoreWebsiteModel } from 'libs/core/data/src/lib/models/CoreWebsite.model';
+
+import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
+import { CityModel } from '@webdjangular/plugins/provider-data';
+import { PageRedirectModel } from 'libs/plugins/provider/src/lib/data/models/PageRedirect.model';
+import { UserModel, GroupModel } from '@webdjangular/core/users-models';
+import { PluginStoreAdminModule } from 'libs/plugins/store/src/lib/admin/store-admin.module';
+import { ScaffoldModule } from '@webdjangular/core/builder';
+import { PluginProviderAdminModule } from 'libs/plugins/provider/src/lib/admin/provider-admin.module';
+
 
 const routes: Routes = [
   {
@@ -25,11 +32,21 @@ const routes: Routes = [
       },
       {
         path: 'user',
-        loadChildren: () => UserModule,
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: UserModel,
+          title: "Users",
+          path: 'user'
+        }
       },
       {
         path: 'group',
-        loadChildren: () => GroupModule,
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: GroupModel,
+          title: "Groups",
+          path: 'group'
+        }
       },
       {
         path: 'media',
@@ -42,6 +59,15 @@ const routes: Routes = [
           model: PageModel,
           title: "Page",
           path: 'pages'
+        }
+      },
+      {
+        path: 'forms',
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: FormModel,
+          title: "Form",
+          path: 'forms'
         }
       },
       {
@@ -67,9 +93,22 @@ const routes: Routes = [
         loadChildren: () => ScaffoldModule,
         data: {
           model: CoreWebsiteModel,
-          title: "Plugin",
+          title: 'Websites',
           path: 'core_websites'
         }
+      },
+
+      {
+        path: '',
+        loadChildren: () => PluginProviderAdminModule,
+      },
+      {
+        path: '',
+        loadChildren: () => PluginStoreAdminModule
+      },
+      {
+        path: 'core_config_group/:id',
+        loadChildren: () => CoreConfigGroupModule
       }
     ],
   },

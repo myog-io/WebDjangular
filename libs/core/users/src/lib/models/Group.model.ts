@@ -1,39 +1,60 @@
 import {
   JsonApiModelConfig,
-  JsonApiModel,
   Attribute,
   HasMany,
-  BelongsTo
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from './Permission.model';
 
-import { GroupForm } from '../forms/Group.form';
-
 import { ExtraOptions } from '@webdjangular/core/decorator';
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {FormArray} from "@angular/forms";
+import {StreetModel} from "@webdjangular/plugins/provider-data";
 
 @JsonApiModelConfig({
-  type: 'group'
+  type: 'Group',
+  modelEndpointUrl: 'group',
+
 })
 export class GroupModel extends AbstractModel {
-  public static formClassRef = GroupForm;
-
+  public static include = 'permissions';
   @Attribute()
   id: string;
 
   @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Name',
+    wrapper_class: 'col-12',
+  })
   name: string;
 
   @HasMany()
   @ExtraOptions({
-    backendResourceName: 'Permission'
+    type: 'checkbox',
+    label: 'Permissions',
+    wrapper_class: 'col-12',
+    options_model: PermissionModel,
   })
-  permissions: PermissionModel[];
+  permissions: PermissionModel;
 
   get pk() {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
+
+  public toString = (): string => {
+    return `${this.name} (ID: ${this.id})`;
+  };
+
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      name: {
+        title: 'Name',
+        type: 'text',
+      }
+    }
+  };
 }

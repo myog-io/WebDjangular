@@ -2,19 +2,17 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 
-
+from webdjango.models.AbstractModels import BaseModel
 from .UserManager import UserManager
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     """
     The User model
     """
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['-created']
         db_table = 'users'
-        permissions = (("list_user", "Can list users"),)
-
 
     first_name = models.CharField(max_length=60)
     middle_name = models.CharField(max_length=60, default=None, blank=True, null=True)
@@ -22,14 +20,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=60, unique=True, default=None, blank=True, null=False)
     email = models.EmailField(max_length=255, unique=True)
     mobile = models.CharField(max_length=64, null=True, blank=True, default=None)
-    password    = models.CharField(max_length=255, null=True);
+    password = models.CharField(max_length=255, null=True)
     is_tfa_enabled = models.BooleanField(default=False, blank=True)
     is_email_verified = models.BooleanField(default=False, blank=True)
     is_mobile_verified = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     is_staff = models.BooleanField(default=False, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+
+    # default_shipping_address =
+    # default_billing_address =
 
     objects = UserManager()
 
@@ -51,12 +50,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name + ' ' + self.middle_name + ' ' + self.last_name
 
     @property
-    def short_name(self):
+    def name(self):
         """
         Use to get the user's name without middle name.
-        :return:
+        :return: string
         """
-        return self.first_name + ' ' + selfstring.last_name
+        return self.first_name + ' ' + self.last_name
 
 
     def __str__(self):

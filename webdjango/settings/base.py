@@ -37,12 +37,17 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'webdjango',
-    'libs.core.users.api',
-    'libs.core.cms.api',
-    'libs.core.media.api',
+
     'rest_framework_json_api',
     'django_extensions',
-    'drf_yasg'
+    'drf_yasg',
+    'libs.core.users.api',
+    'libs.core.utils.api',
+    'libs.core.cms.api',
+    'libs.core.media.api',
+    'libs.core.forms.api',
+    'libs.plugins.provider.api',
+    'libs.plugins.store.api'
 ]
 
 TEMPLATES = [
@@ -69,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'webdjango.utils.CurrentWebsiteMiddleware.CurrentWebsiteMiddleware'
 ]
 
@@ -76,7 +82,7 @@ ROOT_URLCONF = 'webdjango.urls'
 
 DATABASES = {
     'default': {
-     }
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -119,8 +125,10 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json',
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+
 }
 
+EMAIL_BACKEND  = 'webdjango.email.WebDjangoEmailBackend'
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
@@ -137,7 +145,6 @@ JWT_AUTH = {
 
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'rest_framework_jwt.utils.jwt_response_payload_handler',
-
     'JWT_SECRET_KEY': '6wAp;?ffG9yh86ic,3HvfN2Ah5s3DH~s<(V)mi7#)7zai2cpfcS7Qt\m:jjGi_sW',
     'JWT_GET_USER_SECRET_KEY': None,
     'JWT_PUBLIC_KEY': None,
@@ -149,7 +156,6 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=300),  # 5 minutes
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
-
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 

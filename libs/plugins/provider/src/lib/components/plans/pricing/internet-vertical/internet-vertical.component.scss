@@ -1,5 +1,6 @@
 // HARDCODE
-@import "../../../../../../../themes/providerfy/styles/variables";
+
+@import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
 
 :host {
     display: contents;
@@ -94,11 +95,11 @@
             }
         }
 
-        .btn-subscribe {
+        .btn-outline-primary {
             font-size: $btn-subscribe-fs;
             font-weight: $btn-subscribe-fw;
             font-family: $btn-subscribe-ff;
-            color: $btn-subscribe-c;
+            //color: $btn-subscribe-c;
             text-transform: uppercase;
 
             height: $btn-subscribe-fs * 2;
@@ -106,9 +107,10 @@
 
             padding-top: 0;
             padding-bottom: 0;
-            padding-left: $spacer;
-            padding-right: $spacer;
+            //padding-left: $spacer;
+            //padding-right: $spacer;
 
+            border-radius: $card-border-radius;
         }
 
         a.more-info {

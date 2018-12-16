@@ -1,9 +1,10 @@
 import { FormControl, Validators } from '@angular/forms';
 
-import { ScaffoldFieldConfig } from '@webdjangular/core/interfaces';
+import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
 import { AbstractForm } from '@webdjangular/core/data-forms';
 
 export class MediaForm extends AbstractForm {
+  /*
   public listingTableSettings = {
     columns: {
       id: {
@@ -36,23 +37,19 @@ export class MediaForm extends AbstractForm {
     }
   };
 
-  scaffoldFields: ScaffoldFieldConfig[] = [
+  scaffoldFields: BuilderFormFieldConfig[] = [
     {
-      type: 'input',
+      type: 'text',
       label: 'File',
       name: 'file',
       placeholder: 'Upload File'
     },
     {
-      type: 'input',
+      type: 'text',
       label: 'Alt',
       name: 'alt',
       placeholder: 'Image Alt Description'
-    },
-    {
-      label: 'Submit',
-      name: 'submit',
-      type: 'button'
     }
   ];
+  */
 }

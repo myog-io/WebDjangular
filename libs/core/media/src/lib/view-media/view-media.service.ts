@@ -25,6 +25,11 @@ export class ViewMediaService extends FileUploaderService {
     fileParamName: 'file',
     idAttribute: 'id',
   }
+  /**
+   * Creates an instance of view media service.
+   * @param http
+   * @param authService
+   */
   constructor(
     public http: HttpClient,
     private authService: NbAuthService,
@@ -32,8 +37,13 @@ export class ViewMediaService extends FileUploaderService {
     super(http);
 
   }
+  /**
+   * Determines whether before upload on
+   * @param item
+   * @param options
+   * @returns before upload
+   */
   public onBeforeUpload(item: FileItem, options: FileUploaderOptions): Promise<any> {
-    console.log(item)
     const promise = new Promise((resolve, reject) => {
       this.authService.getToken().subscribe(
         (result) => {

@@ -1,4 +1,4 @@
-import { Component, Input ,OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'plugin-provider-plans',
@@ -8,11 +8,12 @@ import { Component, Input ,OnInit } from '@angular/core';
 export class PluginProviderPlansComponent implements OnInit {
 
   @Input() title: string = '';
+  @Input() titleColor: string = '';
   @Input() headline: string = '';
+  @Input() background: string = '';
 
-
-
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

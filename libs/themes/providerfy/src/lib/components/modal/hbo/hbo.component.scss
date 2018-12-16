@@ -1,0 +1,26 @@
+
+:host{
+  background-image:url("../../../assets/images/modal_hbo_bg.png");
+  background-position: right top;
+  background-size:cover;
+  background-repeat: no-repeat;
+
+  height: inherit;
+}
+
+
+.tv-channel-logo{
+  background-image:url("../../../assets/images/modal_hbo_logo.png");
+  width:172px;
+  height:78px;
+  margin-bottom:10px;
+}
+p{
+  max-width:300px;
+}
+.tv-channel-channel-list{
+  background-image:url("../../../assets/images/modal_hbo_channels.png");
+  width:314px;
+  height:202px;
+  margin-top:50px;
+}

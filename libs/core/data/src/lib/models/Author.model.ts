@@ -8,14 +8,10 @@ import {
 import { AbstractModel } from './Abstract.model';
 import { PermissionModel } from '@webdjangular/core/users-models';
 
-import { AuthorForm } from '../forms/Author.form';
-
 @JsonApiModelConfig({
   type: 'core_author'
 })
 export class AuthorModel extends AbstractModel {
-  public static formClassRef = AuthorForm;
-
   @Attribute()
   id: string;
 

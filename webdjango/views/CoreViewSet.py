@@ -2,8 +2,9 @@ from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from webdjango.models.Core import Author, CoreConfig, Plugin, Theme, Website
 from webdjango.serializers.CoreSerializer import AuthorSerializer, \
@@ -16,7 +17,7 @@ class WebsiteFilter(FilterSet):
     class Meta:
         model = Website
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'domain': ['contains', 'exact'],
             'code': ['contains', 'exact'],
         }
@@ -40,16 +41,18 @@ class CoreConfigFilter(FilterSet):
     class Meta:
         model = CoreConfig
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'website': ['exact'],
             'slug': ['contains', 'exact'],
         }
 
 
-class CoreConfigViewSet(ModelViewSet):
+class CoreConfigViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     """
     ViewSet to view all Core Config.
     """
+    lookup_field = 'slug'
+    lookup_url_kwarg = 'slug'
     resource_name = 'core_config'
     queryset = CoreConfig.objects.all()
     serializer_class = CoreConfigSerializer
@@ -59,29 +62,17 @@ class CoreConfigViewSet(ModelViewSet):
     filter_class = CoreConfigFilter
     permission_classes = (AuthenticatedViewsetPermission,)
 
-    """
-    List a queryset.
-    """
-
-    def list(self, request, *args, **kwargs):
-        # Adding the Script to update all the Themes, before listing it!
-        CoreConfig.register_all_config()
-        return super(CoreConfigViewSet, self).list(request, args, **kwargs)
-
-    @action(detail=False)
-    def list_groups(self, request):
-        groups = []
-        configs = CoreConfig.register_all_config()
-        print(configs)
-
-        return Response(groups)
+    def get_object(self):
+        obj = CoreConfig.read(self.kwargs['slug'])
+        self.check_object_permissions(self.request, obj)
+        return obj
 
 
 class AuthorFilter(FilterSet):
     class Meta:
         model = Author
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'email': ['contains', 'exact'],
             'website': ['contains', 'exact'],
@@ -106,7 +97,7 @@ class PluginFilter(FilterSet):
     class Meta:
         model = Plugin
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
         }
@@ -138,7 +129,7 @@ class ThemeFilter(FilterSet):
     class Meta:
         model = Theme
         fields = {
-            'id': ['in'],
+            '_id': ['in'],
             'name': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
         }
@@ -160,7 +151,6 @@ class ThemeViewSet(ModelViewSet):
     """
     List a queryset.
     """
-
     def list(self, request, *args, **kwargs):
         # Adding the Script to update all the Themes, before listing it!
         Theme.update_list()

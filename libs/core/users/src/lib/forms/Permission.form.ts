@@ -1,9 +1,10 @@
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { ContentTypeForm } from '@webdjangular/core/data-forms';
+import { ContentTypeModel } from '@webdjangular/core/data-models';
 
 export class PermissionForm extends AbstractForm {
+  /*
   formFields = {
     pk: {
       type: FormControl
@@ -16,10 +17,11 @@ export class PermissionForm extends AbstractForm {
     },
     content_type: {
       type: FormGroup,
-      getFormFrom: ContentTypeForm
+      model: ContentTypeModel
     },
     codename: {
       type: FormControl
     }
   };
+  */
 }

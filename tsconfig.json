@@ -37,8 +37,11 @@
       "@webdjangular/themes/cleanog": [
         "libs/themes/cleanog/src/index.ts"
       ],
-      "@webdjangular/plugins/contact-form": [
-        "libs/plugins/contact-form/src/index.ts"
+      "@webdjangular/core/forms": [
+        "libs/core/forms/src/index.ts"
+      ],
+      "@webdjangular/core/forms-models": [
+        "libs/core/forms/src/lib/models/index.ts"
       ],
       "@webdjangular/core/shared": [
         "libs/core/shared/src/index.ts"
@@ -82,11 +85,14 @@
       "@webdjangular/core/dynamic-component-loader": [
         "libs/core/dynamic-component-loader/src/index.ts"
       ],
-      "@webdjangular/provider": [
-        "libs/provider/src/index.ts"
-      ],
       "@webdjangular/plugins/provider": [
         "libs/plugins/provider/src/index.ts"
+      ],
+      "@webdjangular/plugins/provider-admin": [
+        "libs/plugins/provider/src/lib/admin/index.ts"
+      ],
+      "@webdjangular/plugins/provider-data": [
+        "libs/plugins/provider/src/lib/data/index.ts"
       ],
       "@webdjangular/themes/providerfy": [
         "libs/themes/providerfy/src/index.ts"
@@ -96,6 +102,9 @@
       ],
       "@webdjangular/core/chunk-file-upload": [
         "libs/core/chunk-file-upload/src/index.ts"
+      ],
+      "@webdjangular/core/builder": [
+        "libs/core/builder/src/index.ts"
       ]
     }
   },

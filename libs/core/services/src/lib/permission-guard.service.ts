@@ -13,7 +13,6 @@ export class PermissionGuard implements CanActivate {
     }
 
     canActivate() {
-        console.log(this.route);
 
         this.route.data.subscribe(
             (data) => {
