@@ -11,7 +11,7 @@ import { BuilderFormDisplayGroups } from "libs/core/builder/src/lib/interfaces/f
   selector: 'wda-core-config-group',
   styleUrls: ['./core-config-group.component.scss'],
   template: `
-    <wda-form [before_title]="''" [title]="group?.title"
+    <wda-form [before_title]="" [title]="configGroup?.title"
     [displayGroups]="form.displayGroups" (onSubmit)="onSubmit()"
     submit_label="Save Config" (relationshipUpdated)="relationshipUpdated($event)"
     [group]="form" [loading]="loading" [formLoading]="formLoading"></wda-form>
