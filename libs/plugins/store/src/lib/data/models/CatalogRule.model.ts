@@ -9,10 +9,10 @@ import {Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
-  type: 'Voucher',
-  modelEndpointUrl: 'store/voucher',
+  type: 'CatalogRule',
+  modelEndpointUrl: 'store/discount/catalog-rule',
 })
-export class VoucherModel extends AbstractModel {
+export class CatalogRuleModel extends AbstractModel {
   public static include = null;
 
   @Attribute()
@@ -39,27 +39,17 @@ export class VoucherModel extends AbstractModel {
   name: string;
 
   @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
-    label: 'Code',
-    wrapper_class: 'col-6',
-    placeholder: '',
-  })
-  code: string;
+  conditions: any;
 
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Usage limit',
+    label: 'Start Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
   })
-  usage_limit: string;
-
-  @Attribute()
-  used: number;
+  value: string;
 
   @Attribute()
   @ExtraOptions({
@@ -83,41 +73,12 @@ export class VoucherModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
-    label: 'Apply once per order',
-    wrapper_class: 'col-6',
-    placeholder: '',
+    type: 'switch',
+    label: 'Is active',
+    wrapper_class: 'col-3',
+    value: true,
   })
-  apply_once_per_order: string;
-
-  @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
-    label: 'Discount type',
-    wrapper_class: 'col-6',
-    placeholder: '',
-  })
-  discount_value_type: string;
-
-  @Attribute()
-  @ExtraOptions({
-    type: 'text',
-    label: 'Discount value',
-    wrapper_class: 'col-6',
-    placeholder: '',
-  })
-  discount_value: string;
-
-  @Attribute()
-  @ExtraOptions({
-    type: 'text',
-    label: 'min amount spent',
-    wrapper_class: 'col-6',
-    placeholder: '',
-  })
-  min_amount_spent: string;
+  is_active: boolean;
 
   @Attribute()
   created: Date;
@@ -145,8 +106,8 @@ export class VoucherModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      code: {
-        title: 'Code',
+      value: {
+        title: 'Value',
         type: 'text',
       },
       is_active: {
@@ -161,7 +122,7 @@ export class VoucherModel extends AbstractModel {
         title: 'End Date/Time',
         type: 'text',
       }
-    },
-  };
+    }
+  }
 
 }

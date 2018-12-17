@@ -7,6 +7,7 @@ export interface ProductPrice {
 export enum ProductClasses {
   simple = 'simple',
   variant = 'variant',
+  addon = 'addon',
   bundle = 'bundle',
 }
 

@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
   template: `
     <div class="form-group form-select" [formGroup]="config.options_model ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
-      <ng-select class="form-control" (change)="onChange($event)" [formControlName]="config.options_model ? 'id' : config.name" [multiple]="config.multiple" [loading]="loading" [placeholder]="placeholder">
-        <ng-option *ngFor="let option of options" value="{{option.value}}">
+      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" [formControlName]="config.options_model ? 'id' : config.name" [multiple]="config.multiple" [loading]="loading" [placeholder]="placeholder">
+        <ng-option *ngFor="let option of options" value="{{option.value}}"  >
           {{option.label}}
         </ng-option>
       </ng-select>

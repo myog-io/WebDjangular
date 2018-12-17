@@ -41,6 +41,7 @@ export class ProductTypeModel extends AbstractModel {
     options: [
       {label: "Simple Product", value: ProductClasses.simple},
       {label: "Variant Product", value: ProductClasses.variant},
+      {label: "AddOn Product", value: ProductClasses.addon},
       {label: "Bundle Product", value: ProductClasses.bundle},
     ],
     sort: 1

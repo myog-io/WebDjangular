@@ -9,10 +9,10 @@ import {Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
-  type: 'Voucher',
-  modelEndpointUrl: 'store/voucher',
+  type: 'CartRule',
+  modelEndpointUrl: 'store/discount/cart-rule',
 })
-export class SaleModel extends AbstractModel {
+export class CartRuleModel extends AbstractModel {
   public static include = null;
 
   @Attribute()
@@ -39,6 +39,32 @@ export class SaleModel extends AbstractModel {
   name: string;
 
   @Attribute()
+  conditions: any;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Code',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
+  voucher: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Usage limit',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
+  usage_limit: string;
+
+  @Attribute()
+  used: number;
+
+  @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
@@ -60,12 +86,22 @@ export class SaleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    type: 'switch',
-    label: 'Is active',
-    wrapper_class: 'col-3',
-    value: true,
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Apply once per order',
+    wrapper_class: 'col-6',
+    placeholder: '',
   })
-  is_active: boolean;
+  apply_once_per_order: string;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Discount value',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
+  value: string;
 
   @Attribute()
   created: Date;
@@ -93,8 +129,8 @@ export class SaleModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      value: {
-        title: 'Value',
+      code: {
+        title: 'Code',
         type: 'text',
       },
       is_active: {
@@ -109,7 +145,7 @@ export class SaleModel extends AbstractModel {
         title: 'End Date/Time',
         type: 'text',
       }
-    }
-  }
+    },
+  };
 
 }

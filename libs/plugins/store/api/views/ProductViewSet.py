@@ -1,6 +1,6 @@
-from ..models.Product import Product, ProductCategory, ProductType, ProductAddon
+from ..models.Product import Product, ProductCategory, ProductType
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
-    ProductSerializer, ProductTypeSerializer, ProductAddonSerializer
+    ProductSerializer, ProductTypeSerializer
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
@@ -33,36 +33,6 @@ class ProductTypeViewSet(ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductTypeFilter
-    search_fields = ('name',)
-    permission_classes = ()
-
-
-
-class ProductAddonFilter(FilterSet):
-    class Meta:
-        model = ProductAddon
-        fields = {
-            '_id': ['in'],
-            'name': ['contains', 'exact'],
-            'description': ['contains'],
-        }
-
-
-class ProductAddonViewSet(ModelViewSet):
-    """
-    Handles:
-    Creating Product Addons
-    Retrieve a list of Product Addons
-    Retrieve a specific Product Addon
-    Update Product Addons
-    Deleting Product Addons
-    """
-    serializer_class = ProductAddonSerializer
-    queryset = ProductAddon.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    ordering_fields = '__all__'
-    filter_class = ProductAddonFilter
     search_fields = ('name',)
     permission_classes = ()
 

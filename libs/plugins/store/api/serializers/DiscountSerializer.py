@@ -1,21 +1,17 @@
-
-from libs.plugins.store.api.models.Discount import Voucher, Sale
-
 from rest_framework_json_api import serializers
 
+from libs.plugins.store.api.models.Discount import CartRule, CatalogRule
 
-class VoucherSerializer(serializers.ModelSerializer):
+
+class CartRuleSerializer(serializers.ModelSerializer):
+    conditions = serializers.JSONField(required=False)
 
     class Meta:
-        model = Voucher
+        model = CartRule
         fields = '__all__'
 
 
-class SaleSerializer(serializers.ModelSerializer):
+class CatalogRuleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Sale
+        model = CatalogRule
         fields = '__all__'
-
-
-
-

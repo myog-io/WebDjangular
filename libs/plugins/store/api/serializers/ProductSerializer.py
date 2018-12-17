@@ -1,6 +1,6 @@
 from libs.plugins.store.api.models.Product import BaseProduct, Product, \
     ProductCategory, ProductDimensions, ProductPricing, ProductShipping, \
-    ProductType, ProductAddon, ProductAttribute, ProductAttributeOption
+    ProductType, ProductAttribute, ProductAttributeOption
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
@@ -98,7 +98,7 @@ class BaseProductSerializer(EmbeddedSerializer):
     type = serializers.CharField()
     name = serializers.CharField()
     slug = serializers.SlugField()
-    description = serializers.CharField()
+    description = serializers.CharField(allow_null=True)
 
     available_on = serializers.DateTimeField(allow_null=True)
 
@@ -114,12 +114,6 @@ class BaseProductSerializer(EmbeddedSerializer):
         model = BaseProduct
         fields = '__all__'
 
-
-class ProductAddonSerializer(DocumentSerializer):
-
-    class Meta:
-        model = ProductAddon
-        fields = '__all__'
 
 class ProductSerializer(DocumentSerializer):
     included_serializers = {
@@ -152,7 +146,7 @@ class ProductSerializer(DocumentSerializer):
 
     addons = ResourceRelatedField(
         many=True,
-        queryset=ProductAddon.objects,
+        queryset=Product.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='product-relationships',
         required=False,

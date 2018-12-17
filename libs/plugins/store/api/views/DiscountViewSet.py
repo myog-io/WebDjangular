@@ -1,63 +1,63 @@
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
-from ..models.Discount import Sale, Voucher
-from ..serializers.DiscountSerializer import SaleSerializer, VoucherSerializer
+from ..models.Discount import CartRule, CatalogRule
+from ..serializers.DiscountSerializer import CartRuleSerializer, CatalogRuleSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
 
 
-class VoucherFilter(FilterSet):
+class CartRuleFilter(FilterSet):
     class Meta:
-        model = Voucher
+        model = CartRule
         fields = {
             '_id': ['in'],
             'name': ['contains', 'exact'],
-            'code': ['contains', 'exact'],
+            'voucher': ['exact'],
         }
 
 
-class VoucherViewSet(ModelViewSet):
+class CartRuleViewSet(ModelViewSet):
     """
     Handles:
-    Creating Voucher
-    Retrieve a list of Vouchers
-    Retrieve a specific Voucher
-    Update Vouchers
-    Deleting Vouchers
+    Creating Cart Rules
+    Retrieve a list of Cart Rules
+    Retrieve a specific Cart Rule
+    Update Cart Rules
+    Deleting Cart Rules
     """
-    serializer_class = VoucherSerializer
-    queryset = Voucher.objects.all()
+    serializer_class = CartRuleSerializer
+    queryset = CartRule.objects.all()
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    filter_class = VoucherFilter
+    filter_class = CartRuleFilter
     search_fields = ('name', 'code',)
     permission_classes = ()
 
 
-class SaleFilter(FilterSet):
+class CatalogRuleFilter(FilterSet):
     class Meta:
-        model = Sale
+        model = CatalogRule
         fields = {
             '_id': ['in'],
         }
 
 
-class SaleViewSet(ModelViewSet):
+class CatalogRuleViewSet(ModelViewSet):
     """
     Handles:
-    Creating Sales
-    Retrieve a list of Sales
-    Retrieve a specific Sale
-    Update Sales
-    Deleting Sales
+    Creating Catalog Rules
+    Retrieve a list of Catalog Rules
+    Retrieve a specific Catalog Rule
+    Update Catalog Rules
+    Deleting Catalog Rules
     """
-    serializer_class = SaleSerializer
-    queryset = Sale.objects.all()
+    serializer_class = CatalogRuleSerializer
+    queryset = CatalogRule.objects.all()
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    filter_class = SaleFilter
+    filter_class = CatalogRuleFilter
     search_fields = ('name',)
     permission_classes = ()

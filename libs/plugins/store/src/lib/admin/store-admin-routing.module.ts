@@ -1,8 +1,8 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { ShippingMethodModel } from "../data/models/ShippingMethod.model";
-import { SaleModel } from "../data/models/Sale.model";
-import { VoucherModel } from "../data/models/Voucher.model";
+import { CatalogRuleModel } from "../data/models/CatalogRule.model";
+import { CartRuleModel } from "../data/models/CartRule.model";
 import { OrderModel } from "../data/models/Order.model";
 import { CategoryModel } from "../data/models/Category.model";
 import { ProductTypeModel } from "../data/models/ProductType.model";
@@ -55,22 +55,27 @@ const routes: Routes = [
         }
       },
       {
-        path: 'vouchers',
-        loadChildren: () => ScaffoldModule,
-        data: {
-          model: VoucherModel,
-          title: 'Vouchers',
-          path: 'store/vouchers'
-        }
-      },
-      {
-        path: 'sales',
-        loadChildren: () => ScaffoldModule,
-        data: {
-          model: SaleModel,
-          title: 'Sales',
-          path: 'store/sales'
-        },
+        path: 'discount',
+        children: [
+          {
+            path: 'cart-rules',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: CartRuleModel,
+              title: 'Cart Rules',
+              path: 'store/discount/cart-rules'
+            }
+          },
+          {
+            path: 'catalog-rules',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: CatalogRuleModel,
+              title: 'Catalog Rules',
+              path: 'store/discount/catalog-rules'
+            },
+          },
+        ],
       },
       {
         path: 'shipping-methods',

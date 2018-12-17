@@ -56,11 +56,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
           {
             title: 'Catalog Rules',
-            link: '/store/sales',
+            link: '/store/discount/catalog-rules',
           },
           {
             title: 'Cart Rules',
-            link: '/store/vouchers',
+            link: '/store/discount/cart-rules',
           },
         ]
       },

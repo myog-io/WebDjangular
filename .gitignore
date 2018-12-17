@@ -153,3 +153,5 @@ env.bak/
 venv.bak/
 
 *.pyc
+
+package-lock.json
