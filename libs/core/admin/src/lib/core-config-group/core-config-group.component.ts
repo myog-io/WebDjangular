@@ -5,7 +5,6 @@ import { WebAngularDataStore } from "@webdjangular/core/services";
 import { CoreConfigGroupModel } from "libs/core/data/src/lib/models/CoreConfigGroup.model";
 import { CoreConfigInputModel } from "libs/core/data/src/lib/models/CoreConfigInput.model";
 import { AbstractForm } from "@webdjangular/core/data-forms";
-import { BuilderFormDisplayGroups } from "libs/core/builder/src/lib/interfaces/form-config.interface";
 
 @Component({
   selector: 'wda-core-config-group',

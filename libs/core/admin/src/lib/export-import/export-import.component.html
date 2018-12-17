@@ -1,0 +1,41 @@
+<nb-card>
+  <nb-card-body>
+
+    <nb-tabset fullWidth>
+      <nb-tab tabTitle="Import">
+
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Import to:</label>
+            <ng-select class="form-control" (change)="onChange($event)" [multiple]="false" [loading]="loading"
+              formControlName="model">
+              <ng-option *ngFor="let option of options" value="{{option.value}}">
+                {{option.label}}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="form-group">
+            <label>Select File to Import</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <button nbButton status="success" [disabled]="loading || formGroup.invalid || formGroup.prestine" size="medium"
+              [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="medium"
+              nbSpinnerMessage="Loading..." >
+              Start Import
+            </button>
+
+          </div>
+
+          <nb-progress-bar size="xlg" *ngIf="loading_text"[value]="loading_percentage" status="primary">{{loading_text}}</nb-progress-bar>
+        </form>
+      </nb-tab>
+      <nb-tab tabTitle="Export">
+        <p>List of <strong>orders</strong>.</p>
+      </nb-tab>
+    </nb-tabset>
+
+  </nb-card-body>
+</nb-card>

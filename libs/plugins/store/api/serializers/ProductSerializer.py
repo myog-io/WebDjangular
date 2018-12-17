@@ -44,7 +44,7 @@ class ProductTypeSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-class ProductCategorySerializer(serializers.ModelSerializer):
+class ProductCategorySerializer(DocumentSerializer):
     name = serializers.CharField()
     slug = serializers.SlugField()
     description = serializers.CharField()

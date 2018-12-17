@@ -54,7 +54,7 @@ class StreetsForm(forms.ModelForm):
 class City(BaseModel):
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=255, null=True, default=None)
-    code = models.SlugField(null=True, default=None)
+    code = models.SlugField(null=True, default=None, unique=True)
     postal_codes = models.ArrayModelField(
         model_container=NumberRange,
         model_form_class=NumberRangeForm,

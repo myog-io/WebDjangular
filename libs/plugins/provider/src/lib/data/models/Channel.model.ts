@@ -77,14 +77,32 @@ export class ChannelModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
+      logo: {
+        title: 'Logo',
+        filter: false,
+        type: 'html',
+        valuePrepareFunction: (cell,row) =>{
+          return `<img src="${cell}" height="50px"></img>`
+        }
+      },
       name: {
         title: 'Name',
         type: 'text',
       },
-      email: {
-        title: 'Email',
+      number: {
+        title: 'Number',
+        type: 'text',
+      },
+      groups: {
+        title: 'Groups',
+        type: 'text',
+        filter: 'groups_in'
+      },
+      types: {
+        title: 'Types',
         type: 'text',
       }
+
     },
   };
 

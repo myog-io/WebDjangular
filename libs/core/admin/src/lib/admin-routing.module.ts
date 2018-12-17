@@ -5,20 +5,17 @@ import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageModel } from '@webdjangular/core/cms-models';
 import { FormModel } from '@webdjangular/core/forms-models'
-
-
-import { PermissionGuard } from '@webdjangular/core/services';
 import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
 import { PluginModel } from '@webdjangular/core/data-models';
 import { CoreMediaModule } from '@webdjangular/core/media';
 
 import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
-import { CityModel } from '@webdjangular/plugins/provider-data';
-import { PageRedirectModel } from 'libs/plugins/provider/src/lib/data/models/PageRedirect.model';
+
 import { UserModel, GroupModel } from '@webdjangular/core/users-models';
 import { PluginStoreAdminModule } from 'libs/plugins/store/src/lib/admin/store-admin.module';
 import { ScaffoldModule } from '@webdjangular/core/builder';
 import { PluginProviderAdminModule } from 'libs/plugins/provider/src/lib/admin/provider-admin.module';
+import { AdminExportImportComponent } from './export-import/export-import.component';
 
 
 const routes: Routes = [
@@ -109,6 +106,10 @@ const routes: Routes = [
       {
         path: 'core_config_group/:id',
         loadChildren: () => CoreConfigGroupModule
+      },
+      {
+        path: 'import-export',
+        component: AdminExportImportComponent
       }
     ],
   },

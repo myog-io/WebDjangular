@@ -1,3 +1,9 @@
+import os
+
+from django.core.exceptions import ValidationError
+from django.core.files import File
+from django.core.files.uploadedfile import UploadedFile
+from django.core.validators import URLValidator
 from django.http import JsonResponse, StreamingHttpResponse
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from django_filters.rest_framework.filterset import FilterSet
@@ -9,6 +15,10 @@ from rest_framework.decorators import detail_route
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from base64 import encode
+from urllib.parse import urlparse
+from urllib.request import urlopen, urlretrieve
 
 
 class MediaFilter(FilterSet):
@@ -33,15 +43,34 @@ class MediaViewSet(ModelViewSet):
     serializer_class = MediaSerializer
     queryset = Media.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = MediaFilter
     search_fields = ('id', 'alt', 'created')
-    permission_classes = (AllowAny,) # Improve Allow
+    permission_classes = (AllowAny,)  # Improve Allow
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
-        serializer = self.get_serializer(data=request.data)
+        data = request.data
+        validator = URLValidator()
+        if 'file'in data and isinstance(data['file'] , str):
+            try:
+                validator(data['file'])
+                tempname, info = urlretrieve(data['file'])
+                a = urlparse(data['file'])
+                name = os.path.basename(a.path).encode('utf-8')
+                data['file'] = UploadedFile(
+                    file=File(open(tempname, 'rb')),
+                    name=name,
+                    content_type=info['Content-Type'],
+                    size=info['Content-Length'],
+                    charset=None)
+
+                data['total_chunks'] = 1
+                data['current_chunk'] = 1
+            except ValidationError as e:
+                print(e)
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
 

@@ -36,5 +36,7 @@ class ChannelViewSet(ModelViewSet):
     search_fields = ('name')
     permission_classes = ()
 
+
+
 class ChannelRelationshipView(RelationshipView):
     queryset = Channel.objects

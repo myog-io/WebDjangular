@@ -14,10 +14,11 @@ class ChannelSerializer(DocumentSerializer):
         many=True,
         queryset=Product.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='channel-relationships'
+        self_link_view_name='channel-relationships',
+        required=False, allow_null=True,
     )
-    groups = serializers.ListSerializer(child=serializers.CharField())
-    types = serializers.ListSerializer(child=serializers.CharField())
+    groups = serializers.JSONField(required=False, allow_null=True)
+    types = serializers.JSONField(required=False, allow_null=True)
     class Meta:
         fields = '__all__'
         model = Channel

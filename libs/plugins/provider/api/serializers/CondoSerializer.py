@@ -14,13 +14,14 @@ class CondoSerializer(DocumentSerializer):
         many=True,
         queryset=Product.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='channel-relationships'
+        self_link_view_name='condo-relationships',
+        required=False, allow_null=True,
     )
     city = ResourceRelatedField(
         many=False,
         queryset=City.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='page-redirect-relationships'
+        self_link_view_name='condo-relationships'
     )
     class Meta:
         fields = '__all__'
