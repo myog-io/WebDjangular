@@ -92,7 +92,6 @@ class ProductPricingSerializer(EmbeddedSerializer):
         fields = '__all__'
 
 
-
 class BaseProductSerializer(EmbeddedSerializer):
     sku = serializers.CharField()
     type = serializers.CharField()

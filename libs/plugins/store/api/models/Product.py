@@ -74,6 +74,7 @@ class ProductType(BaseModel):
 
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     name = models.CharField(max_length=128)
+    code = models.CharField(max_length=64)
     attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
     variant_attributes = models.ArrayModelField(model_container=ProductAttribute, default=None, blank=True, null=True)
 
@@ -130,7 +131,7 @@ class ProductPricing(models.Model):
         return '%s object (List:%s,Sale:%s)' % (self.__class__.__name__, self.list, self.sale)
 
 
-class BaseProduct(ActiveModel, TranslationModel, BaseModel):
+class BaseProduct(ActiveModel, TranslationModel):
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
@@ -156,7 +157,7 @@ class BaseProduct(ActiveModel, TranslationModel, BaseModel):
         abstract = True
 
 
-class Product(PermalinkModel, BaseProduct):
+class Product(BaseProduct, BaseModel):
     product_class = models.CharField(max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     product_type = models.ForeignKey(ProductType, on_delete=models.SET_NULL, blank=True, null=True)
 
