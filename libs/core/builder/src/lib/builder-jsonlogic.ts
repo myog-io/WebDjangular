@@ -29,13 +29,13 @@ export class JsonLogic {
     "<=": (a, b, c) => {
       return (c === undefined) ? a <= b : (a <= b) && (b <= c);
     },
-    "!!": (a)  => {
+    "!!": (a) => {
       return this.truthy(a);
     },
-    "!":  (a) => {
+    "!": (a) => {
       return !this.truthy(a);
     },
-    "%":  (a, b) => {
+    "%": (a, b) => {
       return a % b;
     },
     "log": (a) => {
@@ -48,6 +48,22 @@ export class JsonLogic {
     "cat": function () {
       return Array.prototype.join.call(arguments, "");
     },
+    "slugfy": function (text: string) {
+      if (text) {
+        const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;'
+        const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------'
+        const p = new RegExp(a.split('').join('|'), 'g')
+        return text.toLowerCase()
+          .replace(/\s+/g, '-') // Replace spaces with
+          .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+          .replace(/&/g, '-and-') // Replace & with ‘and’
+          .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+          .replace(/\-\-+/g, '-') // Replace multiple — with single -
+          .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
+      }
+      return "";
+
+    },
     "substr": (source, start, end) => {
       if (end < 0) {
         // JavaScript doesn't support negative end, this emulates PHP behavior
@@ -56,12 +72,12 @@ export class JsonLogic {
       }
       return String(source).substr(start, end);
     },
-    "+": function() {
+    "+": function () {
       return Array.prototype.reduce.call(arguments, function (a, b) {
         return parseFloat(a) + parseFloat(b);
       }, 0);
     },
-    "*": function() {
+    "*": function () {
       return Array.prototype.reduce.call(arguments, function (a, b) {
         return parseFloat(a) * parseFloat(b);
       });
@@ -76,18 +92,18 @@ export class JsonLogic {
     "/": (a, b) => {
       return a / b;
     },
-    "min": function() {
+    "min": function () {
       return Math.min.apply(this, arguments);
     },
-    "max": function() {
+    "max": function () {
       return Math.max.apply(this, arguments);
     },
-    "merge": function() {
+    "merge": function () {
       return Array.prototype.reduce.call(arguments, function (a, b) {
         return a.concat(b);
       }, []);
     },
-    "var": function(a, b) {
+    "var": function (a, b) {
       var not_found = (b === undefined) ? null : b;
       var data = this;
       if (typeof a === "undefined" || a === "" || a === null) {
@@ -106,7 +122,7 @@ export class JsonLogic {
       }
       return data;
     },
-    "missing": function() {
+    "missing": function () {
       /*
       Missing can receive many keys as many arguments, like {"missing:[1,2]}
       Missing can also receive *one* argument that is an array of keys,

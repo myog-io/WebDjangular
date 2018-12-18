@@ -54,7 +54,9 @@ export class ProductModel extends AbstractModel {
     label: 'SKU',
     wrapper_class: 'col-12',
     placeholder: '',
-    displayGroup: productDG.general
+    displayGroup: productDG.general,
+    conditionalValue: {"slugfy": [{"var": "sku"}]},
+
   })
   sku: string;
 
@@ -100,8 +102,8 @@ export class ProductModel extends AbstractModel {
     label: 'Slug',
     wrapper_class: 'col-12',
     placeholder: '',
-    displayGroup: productDG.general
-
+    displayGroup: productDG.general,
+    conditionalValue: {"slugfy": [{"var": "sku"}]},
   })
   slug: string;
 
@@ -279,7 +281,9 @@ export class ProductModel extends AbstractModel {
       },
     }
   ]
-
+  public toString = (): string => {
+    return `${this.name} (${this.pricing.list})`;
+  };
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {

@@ -106,8 +106,8 @@ export class ProductTypeModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      created: {
-        title: 'Created',
+      product_class: {
+        title: 'Product Class',
         type: 'text',
       },
       updated: {
