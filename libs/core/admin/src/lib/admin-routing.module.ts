@@ -15,7 +15,8 @@ import { UserModel, GroupModel } from '@webdjangular/core/users-models';
 import { PluginStoreAdminModule } from 'libs/plugins/store/src/lib/admin/store-admin.module';
 import { ScaffoldModule } from '@webdjangular/core/builder';
 import { PluginProviderAdminModule } from 'libs/plugins/provider/src/lib/admin/provider-admin.module';
-import { AdminExportImportComponent } from './export-import/export-import.component';
+import { AdminImportComponent } from './export-import/import/import.component';
+import { AdminExportComponent } from './export-import/export/export.component';
 
 
 const routes: Routes = [
@@ -108,8 +109,12 @@ const routes: Routes = [
         loadChildren: () => CoreConfigGroupModule
       },
       {
-        path: 'import-export',
-        component: AdminExportImportComponent
+        path: 'import-data',
+        component: AdminImportComponent
+      },
+      {
+        path: 'export-data',
+        component: AdminExportComponent
       }
     ],
   },
