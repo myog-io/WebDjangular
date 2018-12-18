@@ -18,6 +18,9 @@ import { CityModel } from '@webdjangular/plugins/provider-data';
 import { ProductModel } from 'libs/plugins/store/src/lib/data/models/Product.model';
 import { ProductTypeModel } from 'libs/plugins/store/src/lib/data/models/ProductType.model';
 import { Observable } from 'rxjs';
+import { ResellerModel } from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
+import { CondoModel } from 'libs/plugins/provider/src/lib/data/models/Condo.model';
+import { ChannelModel } from 'libs/plugins/provider/src/lib/data/models/Channel.model';
 // tslint:disable-next-line:variable-name
 
 function cleanEmptyRecursive(attribute) {
@@ -30,7 +33,6 @@ function cleanEmptyRecursive(attribute) {
   } else if (attribute instanceof Array || typeof (attribute) == 'object') {
     for (const i in attribute) {
       if (attribute.hasOwnProperty(i)) {
-        console.log(attribute[i])
         attribute[i] = cleanEmptyRecursive(attribute[i]);
       }
     }
@@ -53,7 +55,6 @@ function getDirtyAttributes(attributesMetadata: any): { string: any } {
 
     }
   }
-  console.log("DIRTY DATA???",dirtyData)
   return dirtyData;
 }
 
@@ -70,7 +71,10 @@ const config: DatastoreConfig = {
     CoreConfigGroup: CoreConfigGroupModel,
     CoreConfigInput: CoreConfigInputModel,
     CoreConfig: CoreConfigModel,
-    City: CityModel,
+    City: CityModel, // Provider
+    Reseller: ResellerModel, // Provider
+    Condo: CondoModel, // Provider
+    Channel: ChannelModel, // Provider
     Product: ProductModel,
     ProductType: ProductTypeModel,
   },

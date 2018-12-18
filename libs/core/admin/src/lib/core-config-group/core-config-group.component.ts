@@ -5,7 +5,7 @@ import { WebAngularDataStore } from "@webdjangular/core/services";
 import { CoreConfigGroupModel } from "libs/core/data/src/lib/models/CoreConfigGroup.model";
 import { CoreConfigInputModel } from "libs/core/data/src/lib/models/CoreConfigInput.model";
 import { AbstractForm } from "@webdjangular/core/data-forms";
-import { BuilderFormDisplayGroups } from "libs/core/builder/src/lib/interfaces/form-config.interface";
+import { NbToastrService } from "@nebular/theme";
 
 @Component({
   selector: 'wda-core-config-group',
@@ -53,6 +53,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
+    private toaster: NbToastrService
   ) {
   }
 
@@ -120,11 +121,21 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
     this.configGroup.updateValues();
     const sub = this.configGroup.save().subscribe(
       (result) => {
+        this.toaster.success(`Changes have been saved`, `Success!`);
         this.loading = false;
         sub.unsubscribe();
       },
       (error: any) => {
         this.loading = false;
+        if (error.errors && error.errors.length > 0) {
+          for (let i = 0; i < error.errors.length; i++) {
+            // TODO: Check pointer to see if is for an specific field and set an error inside the field
+            const element = error.errors[i];
+            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+          }
+        } else {
+          this.toaster.danger(`Error saving the Changes`, `Error!`);
+        }
       }
     )
   }

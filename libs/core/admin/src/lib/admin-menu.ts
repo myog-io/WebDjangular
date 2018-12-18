@@ -164,7 +164,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
           ]
         }
       },
-
+      {
+        title: 'Import/Export',
+        children: [
+          {
+            title: "Import",
+            link: '/import-data',
+          },
+          {
+            title: 'Export',
+            link: '/export-data'
+          }
+        ]
+        // TODO: Permission superUser Only
+      },
       {
         title: 'Configs',
         data: {

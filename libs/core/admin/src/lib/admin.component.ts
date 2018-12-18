@@ -33,6 +33,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.roleProvider.parsedPermissionsEmitter.subscribe(
       (perms) => {
+        // TODO: Read User Is Super User
         this.hideMenuItemsRecursively(perms, this.menu);
       }
     );

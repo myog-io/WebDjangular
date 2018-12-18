@@ -25,17 +25,17 @@ urlpatterns = [
     url(
         regex=r'^provider/channel/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=ChannelRelationshipView.as_view(),
-        name='page-redirect-relationships'
+        name='channel-relationships'
     ),
     url(
         regex=r'^provider/condo/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=CondoRelationshipView.as_view(),
-        name='page-redirect-relationships'
+        name='condo-relationships'
     ),
     url(
         regex=r'^provider/reseller/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=ResellerRelationshipView.as_view(),
-        name='page-redirect-relationships'
+        name='reseller-relationships'
     )
 ]
 

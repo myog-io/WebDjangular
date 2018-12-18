@@ -7,7 +7,7 @@ import { Validators } from "@angular/forms";
 
 @JsonApiModelConfig({
   type: 'Reseller',
-  modelEndpointUrl: 'provider/resseler',
+  modelEndpointUrl: 'provider/reseller',
 })
 export class ResellerModel extends AbstractModel {
   public static include = null;
@@ -43,12 +43,8 @@ export class ResellerModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      logo: {
-        title: 'Logo',
-        type: 'text',
-      },
-      number: {
-        title: 'Number',
+      email: {
+        title: 'Email',
         type: 'text',
       }
     },

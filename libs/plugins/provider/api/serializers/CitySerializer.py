@@ -24,10 +24,12 @@ class StreetSerializer(EmbeddedSerializer):
 
 class CitySerializer(DocumentSerializer):
     postal_codes = ArrayModelFieldSerializer(
-        serializer = NumberRangeSerializer
+        serializer = NumberRangeSerializer,
+        required=False, allow_null=True,
     )
     streets = ArrayModelFieldSerializer(
-        serializer = StreetSerializer
+        serializer = StreetSerializer,
+        required=False, allow_null=True,
     )
     class Meta:
         model = City

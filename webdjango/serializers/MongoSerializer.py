@@ -118,7 +118,6 @@ class DocumentSerializer(serializers.ModelSerializer):
     """
     _id = serializers.CharField(read_only=True, required=False)
     def update_validated_data(self, validated_data, info, creating=False):
-        print("DATA BEFORE ENTERING THE VALIDATOR",validated_data)
         for field_name, field in info.fields.items():
             # Loop For Embbedded Model Field
             if type(field) is EmbeddedModelField:
@@ -142,7 +141,6 @@ class DocumentSerializer(serializers.ModelSerializer):
                         validated_data[field_name])
                 elif creating:
                     validated_data[field_name] = []
-        print("UPDATED VALIDATED DATA",validated_data)
         return validated_data
 
     def create(self, validated_data):

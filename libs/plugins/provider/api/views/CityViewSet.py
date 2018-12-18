@@ -12,9 +12,10 @@ class CityFilter(FilterSet):
     class Meta:
         model = City
         fields = {
-            '_id': ['in'],
+            '_id': ['in', 'exact'],
             'name': ['contains', 'exact'],
-            'short_name': ['contains', 'exact']
+            'short_name': ['contains', 'exact'],
+            'code': ['contains', 'exact']
         }
 
 

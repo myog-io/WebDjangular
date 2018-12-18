@@ -36,6 +36,9 @@ export class CoreConfigInputModel extends AbstractModel {
   select_options: any;
 
   @Attribute()
+  select_options_model: any;
+
+  @Attribute()
   placeholder: string;
 
   @Attribute()
@@ -70,6 +73,7 @@ export class CoreConfigInputModel extends AbstractModel {
       label: this.label,
       name: this.id,
       options: this.select_options,
+      options_model: this.select_options_model,
       placeholder: this.placeholder,
       type: this.field_type,
       validation: this.validation,

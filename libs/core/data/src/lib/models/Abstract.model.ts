@@ -38,6 +38,9 @@ export class AbstractModel extends JsonApiModel {
   get extraOptions(): any {
     return Reflect.getMetadata('ExtraOptions', this)
   }
+  public getAttributeMetada(): any {
+    return Reflect.getMetadata('Attribute', this)
+  }
 
   saveHasMany() {
     let hasManyFields = Reflect.getMetadata('HasMany', this);

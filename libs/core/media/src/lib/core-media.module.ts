@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ViewMediaComponent } from './view-media/view-media.component';
 import { RouterModule } from '@angular/router';
 import { ChunkFileUploadModule } from '@webdjangular/core/chunk-file-upload';
-import { ViewMediaService } from './view-media/view-media.service';
 import { ThemeModule } from '@webdjangular/core/admin-theme';
 import { CoreSharedSafePipe } from '@webdjangular/core/shared';
 import { BuilderFormModule } from '@webdjangular/core/builder';
+import { MediaService } from './core-media.service';
 @NgModule({
   imports: [
     ThemeModule,
@@ -19,7 +19,7 @@ import { BuilderFormModule } from '@webdjangular/core/builder';
     BuilderFormModule,
   ],
   providers: [
-    ViewMediaService
+    MediaService
   ],
   declarations: [ViewMediaComponent]
 })

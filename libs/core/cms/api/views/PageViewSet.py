@@ -1,4 +1,5 @@
 from ..signals import post_get_page, pre_get_page
+from ..configs import CMSCoreConfig
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from libs.core.cms.api.models.Page import Page
@@ -84,7 +85,7 @@ class PageViewSet(ModelViewSet):
         """
         Return the Home Page
         """
-        self.kwargs['pk'] = CoreConfig.read(slug=CONFIG_HOME_PAGE,
+        self.kwargs['pk'] = CoreConfig.read(slug=CMSCoreConfig.GROUP_SLUG+"."+CONFIG_HOME_PAGE,
                                    website=request.website)
 
         self.send_pre_get_page(request, *args)

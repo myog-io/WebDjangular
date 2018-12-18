@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 //import { AbstractService } from './abstract.service';
 @Injectable()
-export class ViewMediaService extends FileUploaderService {
+export class MediaService extends FileUploaderService {
 
   public links: UploaderLinksOptions = {
     downloadEntry: '/api/media/#id#/',

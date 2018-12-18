@@ -63,6 +63,7 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
 
@@ -85,6 +86,7 @@ const NB_MODULES = [
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
   NbAlertModule,
+  NgSelectModule,
 ];
 
 const COMPONENTS = [
@@ -107,6 +109,7 @@ const COMPONENTS = [
   NbRegisterComponent,
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
+
 ];
 
 const ENTRY_COMPONENTS = [
