@@ -23,10 +23,10 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
   submit: boolean = false;
   subscription: Subscription
 
-   /**
-   * Creates an instance of scaffold form select component.
-   * @param datastore
-   */
+  /**
+  * Creates an instance of scaffold form select component.
+  * @param datastore
+  */
   constructor(
     private datastore: WebAngularDataStore,
   ) {
@@ -57,29 +57,38 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
     } else if (this.config.copyOptions) {
       const options = this.config.copyOptions
       const value = this.group.get(options.name).value
-      if(value[options.field]){
-        let fields:BuilderFormFieldConfig[] = []
+      if (value[options.field]) {
+        let fields: BuilderFormFieldConfig[] = []
         let fg = this.group.get(this.config.name) as FormGroup;
         for (let i = 0; i < value[options.field].length; i++) {
           const element = value[options.field][i];
-          let field:BuilderFormFieldConfig = {
+          let field: BuilderFormFieldConfig = {
             label: element.name,
             type: element.type,
             name: element.code,
           }
-          if(element.options){
+          if (element.options) {
             field.options = element.options;
           }
-          if(element.required){
+          if (element.required) {
             field.validation = [Validators.required];
-          }else{
+          } else {
             field.validation = [];
           }
           fields.push(field);
-          fg.registerControl(element.code,new FormControl(null,field.validation))
+          fg.registerControl(element.code, new FormControl(null, field.validation))
         }
-        if(this.group.entity && this.group.entity[this.config.name]){
-          fg.setValue(this.group.entity[this.config.name])
+        console.log(this.group.entity,this.config.name)
+        if (this.group.entity && this.group.entity[this.config.name]) {
+          for (const key in this.group.entity[this.config.name]) {
+            if (this.group.entity[this.config.name].hasOwnProperty(key)) {
+              const value = this.group.entity[this.config.name][key];
+              if (typeof value !== "undefined"){
+                fg.get(key).setValue(value);
+              }
+            }
+          }
+          //fg.setValue(this.group.entity[this.config.name])
         }
         this.form = new AbstractForm(this.datastore);
         this.form.displayGroups = [{
@@ -97,7 +106,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
         }];
 
 
-      }else{
+      } else {
         throw new Error(
           `${this.config.copyOptions.field} does not exits inside the object ${this.config.copyOptions.name}`
         );

@@ -70,9 +70,9 @@ class ProductFilter(FilterSet):
     class Meta:
         model = Product
         fields = {
-            '_id': ['in'],
+            '_id': ['in','exact'],
             'name': ['contains', 'exact'],
-            'sku': ['contains', 'exact'],
+            'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
         }
 

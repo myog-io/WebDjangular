@@ -199,7 +199,6 @@ export class AdminImportComponent implements OnInit, OnDestroy {
     const data = this.data[index -1][1];
     if(model_name in this.models){
       const model = this.models[model_name];
-      console.log(model_name,data)
       this.getDataRelationship(model, data).then((entry) => {
         let options = {}
         if (model.include) {

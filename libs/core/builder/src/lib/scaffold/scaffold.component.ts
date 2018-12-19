@@ -43,11 +43,13 @@ export class ScaffoldComponent implements OnInit {
       },
       onDeleteButtonClick: ($event) => {
         // TODO ALERTTTTT
+        /*
         this.datastore.deleteRecord(this.current_model, $event.data.pk).subscribe(
           (r) => {
             this.source.remove($event)
           }
         );
+        */
       },
       onCreateButtonClick: () => {
         this.router.navigate([this.base_path, 'new']);
