@@ -83,7 +83,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
           for (const key in this.group.entity[this.config.name]) {
             if (this.group.entity[this.config.name].hasOwnProperty(key)) {
               const value = this.group.entity[this.config.name][key];
-              if (typeof value !== "undefined"){
+              if (typeof value !== "undefined" && fg.get(key)){
                 fg.get(key).setValue(value);
               }
             }

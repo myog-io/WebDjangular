@@ -1,5 +1,15 @@
 <div class="row" *ngIf="!loading;else loading_holder">
-  <div [class]="class" *ngFor="let plan of entries; else">
+  <div [class]="class" *ngFor="let plan of entries;">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" [innerHTML]="plan?.name"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" [innerHTML]="plan?.description">
+      </div>
+    </ng-template><!-- END MODAL -->
     <div class="card ml-2 mr-2 mt-1 mb-1">
       <div class="card-body p-0 ml-1 mr-1 ">
         <div class="row">
@@ -13,7 +23,7 @@
               <a href="javascript:void(0);" class="btn btn-primary btn-subscribe"> Assine já </a>
             </p>
             <p class="text-center m-1">
-              <a href="javascript:void(0);" class="more-info">Mais informações</a>
+              <a href="javascript:void(0);" (click)="openModal(content)" class="more-info">Mais informações</a>
             </p>
           </div>
           <div class="right-side">
@@ -24,7 +34,7 @@
               </li>
               <li class="mb-1">
                 <span class="icon icon-upload"></span>
-                <p>Upload {{ plan?.attributes?.upload }}Mbps</p>
+                <p>Upload: até {{ plan?.attributes?.upload }}Mbps</p>
               </li>
               <li class="mb-1">
                 <span [class]="plan?.attributes?.addon_icon_1"></span>

@@ -23,22 +23,17 @@
       font-weight: 400;
       font-family: $pricing-plan-amount-ff;
       color: $pricing-plan-amount-c;
-
       background: $primary;
       line-height: $pricing-plan-amount-fs / 1.7;
-
       border-top-left-radius: $plan-card-round;
       border-top-right-radius: $plan-card-round;
-
       margin-bottom: 0;
 
-      .fw-semibold {
-        font-weight: 500;
-      }
-      .italic {
+      ::ng-deep i {
+        font-weight: 600;
         font-style: italic;
       }
-      .fw-black {
+      ::ng-deep b {
         font-weight: 900;
       }
     }
@@ -105,7 +100,6 @@
         font-size: $pricing-plan-price-fs;
         font-weight: $pricing-plan-price-fw;
         font-family: $pricing-plan-price-ff;
-        color: $pricing-plan-price-c;
       }
     }
 

@@ -25,7 +25,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
   public data = [];
   public subscription: Subscription;
   public uploadedFiles = {}
-  public demo_object =  [
+  public demo_object = [
     [
       "Page",
       {
@@ -95,8 +95,8 @@ export class AdminImportComponent implements OnInit, OnDestroy {
 
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
-        // Let's check if theres a . in the middle to run Link or Download FUnctions
         if (key.search(/\./) >= 0) {
+          // Let's check if theres a . in the middle to run Link or Download FUnctions
           let keys = key.split(/\./);
           if (keys[0] && keys[1]) {
             if (keys[1] === 'download') {
@@ -189,45 +189,54 @@ export class AdminImportComponent implements OnInit, OnDestroy {
         return entry;
       })
   }
+  private saveRecord(entry:AbstractModel,options:object,index:number) {
+    this.subscription = entry.save(options).subscribe(
+      (model) => {
+        if (index >= this.data.length) {
+          this.loading = false;
+          this.toaster.success(`All Record Saved with Success`, `Success!`);
+        } else {
+          index++;
+          this.loadRecursive(index);
+        }
+      },
+      (error) => {
+        this.loading = false;
+        if (error.errors && error.errors.length > 0) {
+          for (let i = 0; i < error.errors.length; i++) {
+            // TODO: Check pointer to see if is for an specific field and set an error inside the field
+            const err = error.errors[i];
+            if(err.status == 404){
+              entry.id = null;
+              this.saveRecord(entry,options,index);
+              return;
+            }else{
+              this.toaster.danger(`Error saving the Changes, Details: ${err.detail}`, `Error!`, { duration: 5000 });
+            }
 
+          }
+        } else {
+          this.toaster.danger(`Error saving the Changes`, `Error!`);
+        }
+      });
+  }
 
   private loadRecursive(index = 1) {
     this.loading_percentage = (index * 100) / this.data.length;
     this.loading_text = `${index}/${this.data.length}`;
     this.loading = true;
-    const model_name = this.data[index -1][0];
-    const data = this.data[index -1][1];
-    if(model_name in this.models){
+    const model_name = this.data[index - 1][0];
+    const data = this.data[index - 1][1];
+    if (model_name in this.models) {
       const model = this.models[model_name];
       this.getDataRelationship(model, data).then((entry) => {
         let options = {}
         if (model.include) {
           options['include'] = model.include;
         }
-        this.subscription = entry.save(options).subscribe(
-          (model) => {
-            if (index >= this.data.length) {
-              this.loading = false;
-              this.toaster.success(`All Record Saved with Success`, `Success!`);
-            } else {
-              index++;
-              this.loadRecursive(index);
-            }
-          },
-          (error) => {
-            this.loading = false;
-            if (error.errors && error.errors.length > 0) {
-              for (let i = 0; i < error.errors.length; i++) {
-                // TODO: Check pointer to see if is for an specific field and set an error inside the field
-                const element = error.errors[i];
-                this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
-              }
-            } else {
-              this.toaster.danger(`Error saving the Changes`, `Error!`);
-            }
-          });
+        this.saveRecord(entry,options,index);
       });
-    }else{
+    } else {
       this.toaster.danger(`Model ${model_name} not found in the available models`, `Error!`);
 
       if (index < this.data.length) {
