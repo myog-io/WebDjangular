@@ -24,7 +24,7 @@ class RelatedFieldModelMixin(object):
     """
     Mixin for Related Field, this way we can get the childrens of a Model if necessary
     """
-    @action(detail=True, methods=['get'], url_path=r"(?P<related_field>\w+)" )
+    #@action(detail=True, methods=['get'], url_path=r"(?P<related_field>\w+)", url_name="related_field" )
     def related_field(self, request, pk=None, related_field=None, *args, **kwargs):
         serializers = get_included_serializers(self.serializer_class)
 

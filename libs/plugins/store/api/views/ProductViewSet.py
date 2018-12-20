@@ -9,10 +9,8 @@ from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import RelatedMixin, RelationshipView
 
-from rest_framework_json_api.views import RelationshipView
-
-from webdjango.mixins import RelatedFieldModelMixin
 
 
 class ProductTypeFilter(FilterSet):
@@ -83,7 +81,7 @@ class ProductFilter(FilterSet):
         }
 
 
-class ProductViewSet(RelatedFieldModelMixin, ModelViewSet):
+class ProductViewSet(RelatedMixin, ModelViewSet):
     """
     Handles:
     Creating Product

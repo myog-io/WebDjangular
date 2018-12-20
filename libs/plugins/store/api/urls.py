@@ -32,6 +32,9 @@ urlpatterns = [
         view=ProductRelationshipView.as_view(),
         name='product-relationships'
     ),
+    url(r'^store/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        ProductViewSet.as_view({'get': 'retrieve_related'}),
+        name='product-related'),
 
 ]
 

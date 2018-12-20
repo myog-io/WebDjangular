@@ -121,19 +121,11 @@ class ProductSerializer(DocumentSerializer):
         'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
         'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
-        'channels': 'libs.plugins.provider.api.serializers.ChannelSerializer.ChannelSerializer',
+        #TODO: Make Signal to add More Included serializers to this class
+        # 'channels': 'libs.plugins.provider.api.serializers.ChannelSerializer.ChannelSerializer',
+
     }
 
-
-    #  product class BUNDLE
-    channels = ResourceRelatedField(
-        many=True,
-        queryset=Channel.objects,
-        related_link_url_kwarg='pk',
-        self_link_view_name='product-relationships',
-        related_link_view_name='related_field',
-        required=False,
-    )
 
 
     #  product class VARIANT
@@ -150,8 +142,6 @@ class ProductSerializer(DocumentSerializer):
         required=False,
     )
 
-    # TODO: ArrayReferenceSerializer
-    # TODO:
     categories = ResourceRelatedField(
         many=True,
         queryset=ProductCategory.objects,

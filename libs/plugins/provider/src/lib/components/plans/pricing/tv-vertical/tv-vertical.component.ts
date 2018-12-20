@@ -18,26 +18,23 @@ export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbst
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {
     super(datastore, modalService)
-    //this.entriesChanged.subscribe((entries) => {
-    //  this.loadingChannels = true;
-    //  this.loadChannelsRecursive().then((channels)=>{
-    //    this.loadingChannels = false;
-    //    for (let i = 0; i < this.entries.length; i++) {
-    //      this.entries[i].channels = channels.filter((channel) => {
-    //        console.log(channel);
-    //        return channel.products && channel.products.indexOf(this.entries[i].id) !== -1
-    //      });
-    //      console.log(this.entries[i].id,this.entries[i].sku,this.entries[i].channels);
-    //    }
-    //  });
-    //});
+    this.entriesChanged.subscribe((entries) => {
+      this.loadingChannels = true;
+      this.loadChannelsRecursive().then((channels)=>{
+
+        for (let i = 0; i < this.entries.length; i++) {
+          this.entries[i].channels = channels.filter((channel) => channel.products_id && channel.products_id.indexOf(this.entries[i].id) !== -1);
+          this.entries[i].channels_hd = this.entries[i].channels.filter((channels) => channels.types.indexOf("HD") !== -1);
+        }
+        this.loadingChannels = false;
+      });
+    });
   }
   public loadChannelsRecursive(page = 1):Promise<ChannelModel[]>{
 
     return new Promise((resolve,reject)=>{
-      this.datastore.findAll(ChannelModel,{page:{size:100,number:page},include:"products"}).subscribe((query:JsonApiQueryData<ChannelModel>) => {
+      this.datastore.findAll(ChannelModel,{page:{size:100,number:page}}).subscribe((query:JsonApiQueryData<ChannelModel>) => {
         const channels = query.getModels();
-        console.log("CHANNELS", channels);
         this.loading = false;
         if (page < query.getMeta().meta.pagination.pages) {
           page++;
