@@ -36,7 +36,7 @@ enum state {
             <ng-template #InceptionForm let-data>
               <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
                         (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
-                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false" 
+                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false"
                         [title]="config.label" [inceptionForm]="true" ></wda-form>
             </ng-template>
           </div>
@@ -107,6 +107,9 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   ngOnInit() {
 
     this.updateSettings();
+    if(this.group.get(this.config.name) && typeof this.group.get(this.config.name).value !== 'undefined'){
+      this.source.load(this.group.get(this.config.name).value);
+    }
     this.subscription = this.group.valueChanges.subscribe((val) => {
       if (this.group.get(this.config.name)) {
         this.subscription.unsubscribe();
@@ -262,7 +265,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.getFormConfig();
     this.state = state.creating;
     this.openWindow(`New ` + this.config.label);
-    console.log(this.config);
     this.form.reset();
   }
 

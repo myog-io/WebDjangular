@@ -11,7 +11,7 @@
                 {{ before_title }} <b>{{ title }}</b>
               </h3>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 text-right" *ngIf="!formLoading;">
               <ng-container *ngIf="save_continue">
                 <button nbButton [status]="submit_continue_status" [disabled]="loading || !group.valid" [size]="submit_continue_size"
                   [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status" [disabled]="loading" [nbSpinnerSize]="submit_continue_size"

@@ -54,6 +54,7 @@ export class PageModel extends AbstractModel {
     label: 'Header',
     name: 'header',
     wrapper_class: 'col-6',
+    model: BlockModel,
     options_model: BlockModel,
     backendResourceName: 'Block'
   })
@@ -65,6 +66,7 @@ export class PageModel extends AbstractModel {
     label: 'Footer',
     name: 'footer',
     wrapper_class: 'col-6',
+    model: BlockModel,
     options_model: BlockModel,
     backendResourceName: 'Block'
   })

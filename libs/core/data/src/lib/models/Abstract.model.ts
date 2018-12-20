@@ -75,7 +75,10 @@ export class AbstractModel extends JsonApiModel {
    */
   public getForm(): AbstractForm {
     const fg = new AbstractForm(this._datastore);
-    let formFields: BuilderFormFieldConfig[] = [{ name: 'id', type: 'hidden' }];
+    let formFields: BuilderFormFieldConfig[] = [];
+    if('id' in this.getAttributeMetada()){
+      formFields.push({ name: 'id', type: 'hidden' });
+    }
     let formMap = {};
     let extraOptions = this.extraOptions;
     let count = 0;
