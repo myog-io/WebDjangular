@@ -12,26 +12,40 @@
 
       <table class="table ">
         <tbody>
-        <tr class="summary-item selected">
+        <tr class="summary-item " [ngClass]="{
+            'selected': providerCheckout.selected_internet_plan
+            }">
           <td class="icon align-middle ">
             <i class="fas fa-2x fa-globe"></i>
           </td>
+
           <td class="align-middle title">
-            80 MEGA
+            <span *ngIf="!providerCheckout.selected_internet_plan">
+              INTERNET
+            </span>
+            <span *ngIf="providerCheckout.selected_internet_plan.name">
+              {{providerCheckout.selected_internet_plan.name}}
+            </span>
           </td>
-          <td class="summary-action align-middle">
+          <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_internet_plan">
+            <div class="btn-add-wrapper">
+              <button class="btn add h-100" (click)="providerCheckout.openTabInternetPlan()"> Adicionar item</button>
+            </div>
+          </td>
+          <td class="summary-action align-middle" *ngIf="providerCheckout.selected_internet_plan">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">104,90</span>
-              <button type="button" class="remove" aria-label="Close">
+              <span class="price float-right">{{ providerCheckout.selected_internet_plan.price }}</span>
+              <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectInternetPlan()">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
               </button>
             </div>
           </td>
+
         </tr>
 
 
-        <tr class="summary-item selected">
+        <tr class="summary-item selected" *ngIf="false">
           <td class="icon align-middle ">
             <i class="fas fa-2x fa-globe"></i>
           </td>
@@ -58,7 +72,7 @@
           </td>
           <td class="summary-action align-middle">
             <div class="btn-add-wrapper">
-              <button class="btn add"> Adicionar item</button>
+              <button class="btn add h-100" (click)="providerCheckout.openTabTVPlan()"> Adicionar item</button>
             </div>
           </td>
         </tr>
@@ -72,7 +86,7 @@
           </td>
           <td class="summary-action align-middle">
             <div class="btn-add-wrapper">
-              <button class="btn add"> Adicionar item</button>
+              <button class="btn add h-100" (click)="providerCheckout.openTabTelephonePlan()"> Adicionar item</button>
             </div>
           </td>
         </tr>

@@ -12,11 +12,14 @@ import { PluginProviderPricingTelephoneVerticalComponent } from "./components/pl
 import { PluginProviderPricingTvVerticalComponent } from "./components/plans/pricing/tv-vertical/tv-vertical.component";
 import { PluginProviderError404Component } from './components/errors/404/404.component';
 import { PluginProviderError500Component } from './components/errors/500/500.component';
+import { ProviderCheckoutService } from "./data/services/provider-checkout.service";
+import {ScrollToModule} from "@nicky-lenaers/ngx-scroll-to";
 
 
 const MODULES = [
   CommonModule,
-  PluginProviderCheckoutModule
+  PluginProviderCheckoutModule,
+  ScrollToModule
 ];
 
 const COMPONENTS = [
@@ -32,6 +35,9 @@ const COMPONENTS = [
   PluginProviderError500Component
 ];
 
+const SERVICES = [
+  ProviderCheckoutService
+];
 
 @NgModule({
   imports: [...MODULES],
@@ -39,7 +45,8 @@ const COMPONENTS = [
     ...COMPONENTS,
     ...MODULES
   ],
-  declarations: [...COMPONENTS]
+  declarations: [...COMPONENTS],
+  providers: [...SERVICES]
 })
 export class PluginProviderModule {
 }

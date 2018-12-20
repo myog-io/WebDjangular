@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ProviderCheckoutService} from "../../../data/services/provider-checkout.service";
 
 @Component({
     selector: 'plugin-provider-checkout-summary',
@@ -8,7 +9,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PluginProviderCheckoutSummaryComponent implements OnInit {
 
-    constructor() {
+    providerCheckout: ProviderCheckoutService;
+
+    constructor(providerCheckout: ProviderCheckoutService) {
+      this.providerCheckout = providerCheckout;
     }
 
     ngOnInit() {

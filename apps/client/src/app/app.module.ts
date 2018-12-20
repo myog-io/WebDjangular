@@ -13,9 +13,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AppHttpInterceptor } from '@webdjangular/core/interceptors';
 import { CookieService } from 'ngx-cookie-service';
 import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
-
-
-
+import { ScrollToModule, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
 
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
@@ -30,6 +28,7 @@ export function wda_init(wdaconfig: WDAConfig) {
     BrowserAnimationsModule,
     HttpClientModule,
     JsonApiModule,
+    ScrollToModule.forRoot(),
     NxModule.forRoot(),
     CoreServicesModule.forRoot(),
     RouterModule.forRoot(
@@ -51,6 +50,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   providers: [
     WDAConfig,
     CookieService,
+    ScrollToService,
     { provide: APP_BASE_HREF, useValue: '/' },
     {
       provide: HTTP_INTERCEPTORS,

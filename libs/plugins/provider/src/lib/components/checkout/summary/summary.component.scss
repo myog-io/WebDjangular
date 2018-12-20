@@ -56,6 +56,8 @@ table {
           background: #f4f4f4;
           padding: 0;
 
+          position: relative;
+
           .price-wrapper {
             color: #00b9bd;
             font-family: "Boston", Arial, Helvetica, sans-serif;
@@ -79,16 +81,18 @@ table {
               position: absolute;
               font-size: 22px;
               top: -2px;
-              right: 0px;
+              right: 0;
               padding: 0;
               cursor: pointer;
             }
           }
           .btn-add-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: table;
+
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
 
             .add {
               width: 100%;
@@ -98,10 +102,8 @@ table {
               color: #00b9bd;
               text-transform: uppercase;
               text-align: center;
+              background: rgba(0,0,0,0);
 
-              position: absolute;
-              top: 0;
-              bottom: 0;
             }
           }
 
@@ -118,6 +120,8 @@ table {
           .summary-action {
             padding-left: 20px;
             padding-right: 10px;
+
+
           }
 
         }

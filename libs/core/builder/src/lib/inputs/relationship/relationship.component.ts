@@ -48,6 +48,7 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
   /**
    * Creates an instance of scaffold form select component.
    * @param datastore
+   * @param windowService
    */
   constructor(
     private datastore: WebAngularDataStore,
@@ -74,10 +75,10 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
       if(this.config.model){
         let id = null;
         if ('id' in value && value.id) {
-          id = value.id
+          id = value.id;
           delete(value.id);
         } else if ('pk' in value && value.pk) {
-          id = value.pk
+          id = value.pk;
           delete(value.pk);
         }
         let entity = this.config.model(this.datastore, {id:id,attributes:value});
@@ -103,9 +104,9 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
    */
   selectOption(entry) {
     this.windowRef.close();
-    const group = this.group.get(this.config.name) as AbstractForm;
+    const group: AbstractForm = this.group.get(this.config.name) as AbstractForm;
     group.populateForm(entry);
-    this.title = entry.toString()
+    this.title = entry.toString();
     this.relationshipUpdated.emit({ name: this.config.name, entity: entry });
   }
   /**

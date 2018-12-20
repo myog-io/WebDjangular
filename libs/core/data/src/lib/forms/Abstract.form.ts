@@ -74,7 +74,7 @@ export class AbstractForm extends FormGroup {
     this.entity = entity;
     for (let i = 0; i < this.formFields.length; i++) {
       const element = this.formFields[i];
-      let propName = element.name
+      let propName = element.name;
       // From Array
       if (this.formFields[i].formType == FormArray && typeof entity[propName] !== 'undefined') {
         for (let i = 0; i < entity[propName].length; i++) {
