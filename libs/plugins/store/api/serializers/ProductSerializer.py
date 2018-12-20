@@ -1,6 +1,7 @@
 from libs.plugins.store.api.models.Product import BaseProduct, Product, \
     ProductCategory, ProductDimensions, ProductPricing, ProductShipping, \
     ProductType, ProductAttribute, ProductAttributeOption
+from libs.plugins.provider.api.models.Channel import Channel
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
@@ -117,8 +118,23 @@ class BaseProductSerializer(EmbeddedSerializer):
 class ProductSerializer(DocumentSerializer):
     included_serializers = {
         'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',
-
+        'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
+        'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        'channels': 'libs.plugins.provider.api.serializers.ChannelSerializer.ChannelSerializer',
     }
+
+
+    #  product class BUNDLE
+    channels = ResourceRelatedField(
+        many=True,
+        queryset=Channel.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='product-relationships',
+        related_link_view_name='related_field',
+        required=False,
+    )
+
 
     #  product class VARIANT
     variants = ArrayModelFieldSerializer(serializer=BaseProductSerializer, required=False)
@@ -130,6 +146,7 @@ class ProductSerializer(DocumentSerializer):
         queryset=Product.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='product-relationships',
+        related_link_view_name='product-related',
         required=False,
     )
 
@@ -140,6 +157,7 @@ class ProductSerializer(DocumentSerializer):
         queryset=ProductCategory.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='product-relationships',
+        related_link_view_name='product-related',
         required=False,
     )
 
@@ -148,6 +166,7 @@ class ProductSerializer(DocumentSerializer):
         queryset=Product.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='product-relationships',
+        related_link_view_name='product-related',
         required=False,
     )
 
@@ -162,7 +181,8 @@ class ProductSerializer(DocumentSerializer):
         queryset=ProductType.objects,
         required=False,
         related_link_url_kwarg='pk',
-        self_link_view_name='product-relationships'
+        self_link_view_name='product-relationships',
+        related_link_view_name='product-related',
     )
 
     class Meta:

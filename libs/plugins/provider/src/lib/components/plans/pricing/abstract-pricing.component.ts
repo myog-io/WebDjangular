@@ -3,6 +3,7 @@ import { ProductModel } from "libs/plugins/store/src/lib/data/models/Product.mod
 import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { JsonApiQueryData } from "angular2-jsonapi";
+import { Subject } from "rxjs";
 
 export class PluginProviderAbstractPricingComponent implements OnInit {
 
@@ -11,13 +12,16 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
   @Input() class = "col-md-6 col-sm-6 p-0 m-0";
   loading = true;
   public entries: ProductModel[];
-
+  private include = null;
+  public entriesChanged: Subject<ProductModel[]> = new Subject();
 
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {
   }
-
+  emitChanges(){
+    this.entriesChanged.next(this.entries);
+  }
   ngOnInit() {
     let options = {};
     let order:string[] = null;
@@ -31,15 +35,19 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
     }
     if (order) {
       options['page']['size'] = order.length
-
+      if(this.include){
+        options['include'] = this.include;
+      }
       this.datastore.findAll(ProductModel, options).subscribe((query: JsonApiQueryData<ProductModel>) => {
         let entries = query.getModels();
         this.entries = [];
         for (let i = 0; i < order.length; i++) {
           const element = order[i];
-          this.entries.push(entries.find((entry) => entry.id == element || entry.sku == element))
+          this.entries.push(entries.find((entry) => entry.id == element || entry.sku == element));
+
         }
         this.loading = false;
+        this.emitChanges();
       });
     }
   }

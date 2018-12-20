@@ -12,14 +12,17 @@ from .views.ShippingViewSet import ShippingMethodViewSet
 router = DefaultRouter()
 router.register('cart', CartViewSet, base_name='cart')
 router.register('category', ProductCategoryViewSet, base_name='category')
-router.register('discount/catalog-rule', CatalogRuleViewSet, base_name='discount/catalog-rule')
-router.register('discount/cart-rule', CartRuleViewSet, base_name='discount/cart-rule')
+router.register('discount/catalog-rule', CatalogRuleViewSet,
+                base_name='discount/catalog-rule')
+router.register('discount/cart-rule', CartRuleViewSet,
+                base_name='discount/cart-rule')
 router.register('payment', PaymentViewSet, base_name='payment')
 router.register('order', OrderViewSet, base_name='order')
 router.register('product', ProductViewSet, base_name='product')
 router.register('product-type', ProductTypeViewSet, base_name='product-type')
 
-router.register('shipping-method', ShippingMethodViewSet, base_name='shipping-method')
+router.register('shipping-method', ShippingMethodViewSet,
+                base_name='shipping-method')
 
 
 urlpatterns = [
@@ -28,7 +31,8 @@ urlpatterns = [
         regex=r'^store/product/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=ProductRelationshipView.as_view(),
         name='product-relationships'
-    )
+    ),
+
 ]
 
 router = DefaultRouter()

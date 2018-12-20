@@ -8,7 +8,7 @@ from libs.core.media.api.fields.RemoteFileField import RemoteFileField
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Core import CoreConfig
 from libs.core.media.api.configs import MEDIA_CONFIG_GROUP_SLUG, CONFIG_STORAGE_CLASS
-
+from django.conf import settings
 import uuid
 
 
@@ -17,15 +17,24 @@ import uuid
 
 def media_path(instance, filename):
     import datetime
+    import os.path
     now = datetime.datetime.now()
     media_config = CoreConfig.read(MEDIA_CONFIG_GROUP_SLUG)
+    # TODO Check if file exits
     if media_config and media_config[CONFIG_STORAGE_CLASS]:
-        return '{0}-{1}-{2}{3}'.format(now.year,now.month,uuid.uuid4(),filename)
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return '{0}/{1}/{2}{3}'.format(now.year,now.month,uuid.uuid4(),filename)
+        return '{0}-{1}-{3}'.format(now.year,now.month,filename)
+    # file will be uploaded to MEDIA_ROOT/year/month/<filename>
+    count = 0
+    original_file_name = str(filename)
+    path = os.path.join(os.path.join(settings.MEDIA_ROOT, str(now.year) ),str(now.month) )
+
+    while os.path.isfile(os.path.join(str(path),str(filename) )):
+        count = count + 1
+        filename = '{0}-{1}'.format(count,original_file_name)
+    return '{0}/{1}/{2}'.format(now.year,now.month,filename)
 
 
-class Media(BaseModel):
+class Media(BaseModel, DirtyFieldsMixin):
     """
     Media Table
     """

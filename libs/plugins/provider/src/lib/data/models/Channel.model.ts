@@ -71,9 +71,13 @@ export class ChannelModel extends AbstractModel {
     formType: FormArray,
     type: 'checkbox',
     label: 'Products',
+    model: ProductModel,
     options_model: ProductModel
   })
   products: ProductModel
+
+  @Attribute()
+  products_id: string[]
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
