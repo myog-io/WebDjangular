@@ -1,32 +1,46 @@
-<div class="card">
-    <div class="card-header">
+<div class="row" *ngIf="!loading; else loading_holder">
+  <div [ngClass]="class" *ngFor="let plan of entries;">
+    <div class="card">
+      <div class="card-header">
         <div class="row title-wrapper ">
-            <div class="col col-xs-12 align-self-center">
-                <span>FIXO</span>
-                <span style="font-weight: 600"> LOCAL </span><br>
-                <span style="font-weight: 900"> ECONÔMICO</span>
-            </div>
+          <div class="col col-xs-12 align-self-center" [innerHTML]="plan?.attributes?.display_title ? plan?.attributes?.display_title : plan?.name">
+          </div>
         </div>
         <div class="price-wrapper">
-            <span class="currency-unit">R$</span>
-            <span class="price">104,90</span>
-            <span class="periodicity">/MÊS</span>
+          <span class="currency-unit">R$</span>
+          <span class="price">{{ plan.pricing?.list }}</span>
+          <span class="periodicity">/MÊS</span>
         </div>
-    </div>
-    <div class="card-body">
+      </div>
+      <div class="card-body">
         <ul class="features-wrapper text-center text-uppercase">
-            <li>
-                <strong>1000 MINUTOS</strong> fixo local
-            </li>
-            <li>
-                Identificador de Chamadas Grátis
-            </li>
+          <li class="">
+            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_1" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.attributes?.addon_text_1"></p>
+          </li>
+          <li class="">
+            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_2" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.attributes?.addon_text_2"></p>
+          </li>
+          <li class="">
+            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_3" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.attributes?.addon_text_3"></p>
+
+          </li>
+          <li class="">
+            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_4" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.attributes?.addon_text_4"></p>
+          </li>
         </ul>
         <div class="select-wrapper">
-            <button type="button" class="btn btn-outline-primary">Escolher</button>
+          <button type="button" class="btn btn-outline-primary" (click)="providerCheckout.selectTelephonePlan(plan)">Escolher</button>
         </div>
         <div class="more-info-wrapper">
-            <a href="#">INFORMAÇÕES ADICIONAIS</a>
+          <a href="#">INFORMAÇÕES ADICIONAIS</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
+
+

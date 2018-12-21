@@ -12,20 +12,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class PluginProviderCheckoutPlanInternetComponent extends PluginProviderAbstractPricingComponent {
 
-  providerCheckout: ProviderCheckoutService;
-
-  constructor(providerCheckout: ProviderCheckoutService,
-              datastore: WebAngularDataStore,
-              modalService: NgbModal) {
+  constructor(public providerCheckout: ProviderCheckoutService,
+              public datastore: WebAngularDataStore,
+              public modalService: NgbModal) {
     super(datastore, modalService)
   }
-
-  // selectPlan() {
-  //   this.providerCheckout.selected_internet_plan = {
-  //     name: "40 MEGA",
-  //     price: "104,90",
-  //   }
-  // }
-
-
 }

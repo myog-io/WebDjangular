@@ -1,11 +1,26 @@
 import { Injectable } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
+import {WebAngularDataStore} from "@webdjangular/core/services";
+import {ProductModel} from "../../../../../store/src/lib/data/models/Product.model";
+import {JsonApiQueryData} from "angular2-jsonapi";
 import { CartService } from 'libs/plugins/store/src';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProviderCheckoutService {
+
+  private skus = {
+    internet: "60mb,120mb,180mb",
+    tv: "hd-top,hd-plus,hd-pop,hd-super",
+    telephone: "local-economico,local-ilimitado,brasil-ilimitado"
+  };
+
+  public plans = {
+    internet: [],
+    tv: [],
+    telephone: []
+  };
 
   public internet_plan_collapsed: boolean = false;
   public tv_plan_collapsed: boolean = false;
@@ -21,12 +36,37 @@ export class ProviderCheckoutService {
 
 
 
-  constructor(
-    private scrollToService: ScrollToService,
-    private cartService: CartService
-    ) {
+  constructor(private scrollToService: ScrollToService,
+              private datastore: WebAngularDataStore,
+              private cartService: CartService) {
+    
+
+    this.loadPlans('internet');
+    this.loadPlans('tv');
+    this.loadPlans('telephone');
 
   }
+
+  loadPlans(type){
+
+    let options = {};
+    let order:string[] = null;
+    options['page'] = { number: 1, size: 10 };
+    if (this.skus[type]) {
+      options['sku__in'] = this.skus[type];
+      order = this.skus[type].split(",");
+    }
+    if (order) {
+      options['page']['size'] = order.length
+
+      this.datastore.findAll(ProductModel, options).subscribe((query: JsonApiQueryData<ProductModel>) => {
+        let entries = query.getModels();
+        this.plans[type] = entries;
+      });
+    }
+
+  }
+
 
   toggleCollapse($event, plan) {
     if (plan == 'internet') {
@@ -127,11 +167,26 @@ export class ProviderCheckoutService {
 
 
 
+  selectInternetPlan(plan) {
+    this.selected_internet_plan = plan;
+  }
+
+  selectTVPlan(plan) {
+    this.selected_tv_plan = plan;
+  }
+
+  selectTelephonePlan(plan) {
+    this.selected_telephone_plan = plan;
+  }
 
 
 
-
-
+  // selectPlan() {
+  //   this.providerCheckout.selected_internet_plan = {
+  //     name: "40 MEGA",
+  //     price: "104,90",
+  //   }
+  // }
 
 
 }

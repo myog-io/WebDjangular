@@ -19,14 +19,11 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {
 
-
-    console.log('skus: ' + this.skus);
   }
   emitChanges(){
     this.entriesChanged.next(this.entries);
   }
   ngOnInit() {
-
     let options = {};
     let order:string[] = null;
     options['page'] = { number: 1, size: 10 };
@@ -50,7 +47,6 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
         for (let i = 0; i < order.length; i++) {
           const element = order[i];
           this.entries.push(entries.find((entry) => entry.id == element || entry.sku == element));
-
         }
         this.loading = false;
         this.emitChanges();
