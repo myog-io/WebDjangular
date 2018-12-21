@@ -1,13 +1,13 @@
-from libs.plugins.store.api.models.Product import BaseProduct, Product, \
-    ProductCategory, ProductDimensions, ProductPricing, ProductShipping, \
-    ProductType, ProductAttribute, ProductAttributeOption
 from libs.plugins.provider.api.models.Channel import Channel
+from libs.plugins.store.api import defaults
+from libs.plugins.store.api.models.Product import BaseProduct, Product, \
+    ProductAttribute, ProductAttributeOption, ProductCategory, \
+    ProductDimensions, ProductPricing, ProductShipping, ProductType
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
-    EmbeddedSerializer, DocumentSerializer, EmbeddedModelFieldSerializer
-from libs.plugins.store.api import defaults
 from webdjango.models.CoreConfig import CoreConfigInput
+from webdjango.serializers.MongoSerializer import ArrayModelFieldSerializer, \
+    DocumentSerializer, EmbeddedModelFieldSerializer, EmbeddedSerializer
 
 
 class ProductAttributeOptionSerializer(EmbeddedSerializer):
@@ -121,12 +121,9 @@ class ProductSerializer(DocumentSerializer):
         'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
         'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
-        #TODO: Make Signal to add More Included serializers to this class
-        # 'channels': 'libs.plugins.provider.api.serializers.ChannelSerializer.ChannelSerializer',
+
 
     }
-
-
 
     #  product class VARIANT
     variants = ArrayModelFieldSerializer(serializer=BaseProductSerializer, required=False)

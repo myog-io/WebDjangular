@@ -15,6 +15,8 @@ from rest_framework_json_api.utils import get_included_resources, \
     get_included_serializers, get_resource_type_from_instance, \
     get_resource_type_from_model, get_resource_type_from_serializer
 
+from ..signals.SerializerSignals import pre_init_serializer, post_init_serializer
+
 import collections
 import copy
 import traceback
@@ -90,7 +92,7 @@ class EmbeddedSerializer(serializers.ModelSerializer):
         ModelClass = self.Meta.model
         print(validated_data)
         instance = ModelClass(**validated_data)
-        print("INSTANCE",instance)
+        print("INSTANCE", instance)
         return instance
 
     def get_fields(self):
@@ -117,13 +119,18 @@ class DocumentSerializer(serializers.ModelSerializer):
     A Document Serializer For Nested Documents
     """
     _id = serializers.CharField(read_only=True, required=False)
+
     def __init__(self, instance=None, data=empty, **kwargs):
+        pre_init_serializer.send(
+            sender=self.__class__, serializer=self, instance=instance, data=data, kwargs=kwargs)
         super(DocumentSerializer, self).__init__(instance, data, **kwargs)
+        post_init_serializer.send(
+            sender=self.__class__, serializer=self, instance=instance, data=data, kwargs=kwargs)
+
         # Include the fields Dynamicaly or via
         # ModelClass = self.Meta.model
         # info = model_meta.get_field_info(ModelClass)
         # print(info)
-
 
     def update_validated_data(self, validated_data, info, creating=False):
         for field_name, field in info.fields.items():
@@ -172,11 +179,11 @@ class DocumentSerializer(serializers.ModelSerializer):
                 array_reference[field_name] = validated_data.pop(field_name)
             elif type(info.relations[field_name].model_field) is ArrayModelField:
 
-                #Is an Array Model Field But is empty in it's creation, to avoid erros let set a empty value
+                # Is an Array Model Field But is empty in it's creation, to avoid erros let set a empty value
                 validated_data[field_name] = []
 
-
-        validated_data = self.update_validated_data(validated_data, info, creating=True)
+        validated_data = self.update_validated_data(
+            validated_data, info, creating=True)
 
         try:
             instance = ModelClass.objects.create(**validated_data)

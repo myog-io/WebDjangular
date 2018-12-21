@@ -15,10 +15,10 @@
         <h5 class="plan-title text-center pt-3 pb-3" [innerHTML]="plan?.attributes?.display_title ? plan?.attributes?.display_title : plan?.name">
         </h5>
         <div class="plan-channels">
-          <span class="amount" *ngIf="!loadingChannels;else small_loading_holder">{{plan?.channels?.length}}</span> Total de canais
+          <span class="amount">{{plan?.channel_count}}</span> Total de canais
         </div>
         <div class="plan-channels-hd">
-          <span class="amount" *ngIf="!loadingChannels;else small_loading_holder">{{plan?.channels_hd?.length}}</span> Canais HD
+          <span class="amount">{{plan?.channel_hd_count}}</span> Canais HD
         </div>
       </div>
       <div class="card-body p-0 ml-1 mr-1 ">
