@@ -49,7 +49,6 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
           this.entries.push(entries.find((entry) => entry.id == element || entry.sku == element));
 
         }
-        console.log(this.entries);
         this.loading = false;
         this.emitChanges();
       });

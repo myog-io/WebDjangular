@@ -1,4 +1,4 @@
-<div class="col col-md-3 col-xs-12 p-1">
+<div class="col col-md-3 col-xs-12 p-1"  *ngIf="!loading;else loading_holder">
     <div class="card mt-1 mb-1">
         <div class="card-header">
             <h4 class="plan-title plan-internet">
@@ -8,8 +8,8 @@
                 </div>
                 <div class="col-8 p-0">
                   <span class="plan-title-1">INTERNET</span>
-                  <span class="plan-title-2"><b>50+50 MEGA</b></span>
-                  <span class="plan-title-3"><b>2X VELOCIDADE</b></span>
+                  <span class="plan-title-2"><b>{{net?.attributes?.download}}+{{net?.attributes?.download}} MEGA</b></span>
+                  <span class="plan-title-3"><b>{{internet_call}}</b></span>
                 </div>
               </div>
             </h4>
@@ -20,8 +20,8 @@
                 </div>
                 <div class="col-8 p-0">
                   <span class="plan-title-1">HDTV</span>
-                  <span class="plan-title-2"><b>HD SUPER</b></span>
-                  <span class="plan-title-3"><b>50% DESCONTO</b></span>
+                  <span class="plan-title-2"><b>{{tv?.name}}</b></span>
+                  <span class="plan-title-3"><b>{{tv_call}}</b></span>
                 </div>
               </div>
             </h4>
@@ -32,8 +32,8 @@
                 </div>
                 <div class="col-8 p-0">
                   <span class="plan-title-1">TELEFONE</span>
-                  <span class="plan-title-2"><b>ILIMITADO</b></span>
-                  <span class="plan-title-3"><b>FIXO LOCAL</b></span>
+                  <span class="plan-title-2"><b>{{ phone?.name.split(" ")[2] }}</b></span>
+                  <span class="plan-title-3"><b>{{ phone?.name.split(" ")[0] }} {{ phone?.name.split(" ")[1] }}</b></span>
                 </div>
               </div>
             </h4>
@@ -42,7 +42,7 @@
             <div class="row mt-3">
                 <div class="col">
                     <p class="plan-price text-center mb-1">
-                        <span class="price text-black">119,90</span>
+                        <span class="price text-black">{{total.toFixed(2)}}</span>
                         <span class="plan-period"><span class="align-text-super">*</span>/mês</span>
                     </p>
                 </div>
@@ -57,3 +57,8 @@
         </div>
     </div>
 </div>
+<ng-template #loading_holder>
+  <div  class="col col-md-3 col-xs-12 p-1">
+    <i class="fas fa-spinner fa-spin fa-3x"></i>
+  </div>
+</ng-template>

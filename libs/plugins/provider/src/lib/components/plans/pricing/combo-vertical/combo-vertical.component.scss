@@ -27,6 +27,7 @@
       background: $primary;
       line-height: $pricing-plan-amount-fs / 1.7;
       margin-bottom: 0;
+      text-transform: uppercase;
 
       .plan-title-1 {
         display: block;
@@ -42,6 +43,7 @@
         display: block;
         font-size: 14px;
         line-height: 14px;
+
       }
 
       &.plan-internet {
