@@ -117,6 +117,14 @@ class DocumentSerializer(serializers.ModelSerializer):
     A Document Serializer For Nested Documents
     """
     _id = serializers.CharField(read_only=True, required=False)
+    def __init__(self, instance=None, data=empty, **kwargs):
+        super(DocumentSerializer, self).__init__(instance, data, **kwargs)
+        # Include the fields Dynamicaly or via
+        # ModelClass = self.Meta.model
+        # info = model_meta.get_field_info(ModelClass)
+        # print(info)
+
+
     def update_validated_data(self, validated_data, info, creating=False):
         for field_name, field in info.fields.items():
             # Loop For Embbedded Model Field

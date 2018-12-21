@@ -112,6 +112,9 @@ export class AdminImportComponent implements OnInit, OnDestroy {
                     entry[keys[0]] = media.safeFileUrl;
                     this.uploadedFiles[data[key]] = media.safeFileUrl;
                     resolve(true);
+                  },
+                  (error:any)=>{
+                    resolve(true);
                   });
                 }
 
@@ -119,7 +122,10 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               promises.push(promise);
             } else if (entry.extraOptions[keys[0]].model) {
               const relationshipModel = entry.extraOptions[keys[0]].model;
-              let belongsTo = entry.belongTo.find((en: any) => en.propertyName == keys[0]);
+              let belongsTo = null;
+              if(entry.belongsTo){
+                belongsTo = entry.belongsTo.find((en: any) => en.propertyName == keys[0]);
+              }
               if (belongsTo) {
                 let options = {
                   page: { size: 1, number: 1 },
@@ -147,10 +153,13 @@ export class AdminImportComponent implements OnInit, OnDestroy {
                 promises.push(promise);
                 continue;
               }
-              let hasMany = entry.hasMany.find((en: any) => en.propertyName == keys[0]);
+              let hasMany = null;
+              if(entry.hasMany){
+                hasMany = entry.hasMany.find((en: any) => en.propertyName == keys[0]);
+              }
               if (hasMany) {
                 let options = {
-                  page: { size: 1, number: 1 },
+                  page: { size: data[key].length, number: 1 },
                 }
                 options[`${keys[1]}__in`] = data[key].join(",")
                 let promise: Promise<boolean> = new Promise((resolve, reject) => {

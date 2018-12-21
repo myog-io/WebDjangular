@@ -19,6 +19,7 @@ class ChannelSerializer(DocumentSerializer):
     )
     groups = serializers.JSONField(required=False, allow_null=True)
     types = serializers.JSONField(required=False, allow_null=True)
+    products_id = serializers.JSONField(required=False, allow_null=True, read_only=True)
     class Meta:
         fields = '__all__'
         model = Channel

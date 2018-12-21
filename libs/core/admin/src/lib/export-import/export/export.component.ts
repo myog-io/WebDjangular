@@ -157,6 +157,8 @@ export class AdminExportComponent implements OnInit, OnDestroy {
           for (let j = 0; j < entity[key].length; j++) {
             if (entity[key][j].code) {
               data[`${key}.code`][j] = entity[key][j].code;
+            } else if (entity[key].sku) {
+              data[`${key}.sku`][j] = entity[key][j].sku;
             } else if (entity[key].slug) {
               data[`${key}.slug`][j] = entity[key][j].slug;
             } else if (entity[key].id) {
