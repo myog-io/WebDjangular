@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import {CartService} from "../../../../../store/src/lib/data/services/cart.service";
+import { CartService } from 'libs/plugins/store/src';
 
 @Injectable({
   providedIn: 'root',
@@ -21,21 +21,24 @@ export class ProviderCheckoutService {
 
 
 
-  constructor(private scrollToService: ScrollToService) {
+  constructor(
+    private scrollToService: ScrollToService,
+    private cartService: CartService
+    ) {
 
   }
 
   toggleCollapse($event, plan) {
-    if(plan == 'internet') {
+    if (plan == 'internet') {
       this.internet_plan_collapsed ? this.closeTabInternetPlan() : this.openTabInternetPlan();
-    } else if(plan == 'tv') {
+    } else if (plan == 'tv') {
       this.tv_plan_collapsed ? this.closeTabTVPlan() : this.openTabTVPlan();
-    } else if(plan == 'telephone') {
+    } else if (plan == 'telephone') {
       this.telephone_plan_collapsed ? this.closeTabTelephonePlan() : this.openTabTelephonePlan();
     }
   }
 
-  openTabInternetPlan(){
+  openTabInternetPlan() {
     this.internet_plan_collapsed = true;
 
     this.tv_plan_collapsed = false;
@@ -47,7 +50,7 @@ export class ProviderCheckoutService {
     // this.scrollToService.scrollTo(scrollToConfigOptions);
   }
 
-  openTabTVPlan(){
+  openTabTVPlan() {
     this.tv_plan_collapsed = true;
 
     this.internet_plan_collapsed = false;
@@ -59,7 +62,7 @@ export class ProviderCheckoutService {
     //this.scrollToService.scrollTo(scrollToConfigOptions);
   }
 
-  openTabTelephonePlan(){
+  openTabTelephonePlan() {
     this.telephone_plan_collapsed = true;
 
     this.internet_plan_collapsed = false;

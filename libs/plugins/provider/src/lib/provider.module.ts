@@ -19,7 +19,6 @@ import {ScrollToModule} from "@nicky-lenaers/ngx-scroll-to";
 const MODULES = [
   CommonModule,
   PluginProviderCheckoutModule,
-  ScrollToModule
 ];
 
 const COMPONENTS = [
@@ -40,7 +39,10 @@ const SERVICES = [
 ];
 
 @NgModule({
-  imports: [...MODULES],
+  imports: [
+    ScrollToModule,
+    ...MODULES
+  ],
   exports: [
     ...COMPONENTS,
     ...MODULES

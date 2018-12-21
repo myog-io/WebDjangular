@@ -105,6 +105,9 @@
       ],
       "@webdjangular/core/builder": [
         "libs/core/builder/src/index.ts"
+      ],
+      "@webdjangular/plugins/store": [
+        "libs/plugins/store/src/index.ts"
       ]
     }
   },
