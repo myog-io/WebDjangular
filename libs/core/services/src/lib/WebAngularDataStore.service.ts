@@ -4,6 +4,7 @@ import {
   JsonApiDatastore,
   DatastoreConfig,
   JsonApiModel,
+  ModelType,
 } from 'angular2-jsonapi';
 
 
@@ -119,6 +120,17 @@ export class WebAngularDataStore extends JsonApiDatastore {
       }
     }
     return relationships;
+  }
+  /**
+   * This Function Cleans the Attributes from the Request and send to the Model
+   * For now we don't want to do that, because could have read_only dynamic attributes added to the backend
+   * TODO: Improve how we manage Dynamic Attributes
+   * @param modelType
+   * @param attributes
+   */
+  public transformSerializedNamesToPropertyNames<T extends JsonApiModel>(modelType: ModelType<T>, attributes: any) {
+    //let properties = super.transformSerializedNamesToPropertyNames(modelType,attributes);
+    return attributes;
   }
 
   saveHasManyRelationship<T extends JsonApiModel>(hasManyFields = [], modelConfig = {}, extraOptions = {}, model: JsonApiModel): Observable<any> {

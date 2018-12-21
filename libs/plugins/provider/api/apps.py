@@ -7,3 +7,4 @@ class ProviderConfig(AppConfig):
 
     def ready(self):
         import libs.plugins.provider.api.signals.PageRedirectSignals
+        import libs.plugins.provider.api.signals.FieldsToProductSignals

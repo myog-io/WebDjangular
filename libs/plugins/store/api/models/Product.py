@@ -175,6 +175,8 @@ class Product(BaseProduct, BaseModel):
     addons = models.ArrayReferenceField(to='Product', on_delete=None, related_name='products', default=None,
                                         blank=True, null=True)
 
+
+
     class Meta:
         ordering = ['-created']
 

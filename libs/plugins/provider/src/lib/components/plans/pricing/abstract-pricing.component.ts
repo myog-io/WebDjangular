@@ -2,7 +2,7 @@ import { Input, OnInit } from "@angular/core";
 import { ProductModel } from "libs/plugins/store/src/lib/data/models/Product.model";
 import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { JsonApiQueryData } from "angular2-jsonapi";
+import { JsonApiQueryData, Attribute } from "angular2-jsonapi";
 import { Subject } from "rxjs";
 
 export class PluginProviderAbstractPricingComponent implements OnInit {
@@ -23,6 +23,7 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
     this.entriesChanged.next(this.entries);
   }
   ngOnInit() {
+
     let options = {};
     let order:string[] = null;
     options['page'] = { number: 1, size: 10 };
@@ -38,6 +39,8 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
       if(this.include){
         options['include'] = this.include;
       }
+
+
       this.datastore.findAll(ProductModel, options).subscribe((query: JsonApiQueryData<ProductModel>) => {
         let entries = query.getModels();
         this.entries = [];
