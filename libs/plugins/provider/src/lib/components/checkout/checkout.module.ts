@@ -15,6 +15,7 @@ import {PluginProviderCheckoutWizardComponent} from "./wizard/wizard.component";
 import {PluginProviderCheckoutWizardStep01Component} from "./wizard/step01/step01.component";
 import {PluginProviderCheckoutWizardStep02Component} from "./wizard/step02/step02.component";
 import {PluginProviderCheckoutWizardStep03Component} from "./wizard/step03/step03.component";
+import {NbCardModule, NbSpinnerModule} from "@nebular/theme";
 
 
 
@@ -36,7 +37,9 @@ const COMPONENTS = [
 @NgModule({
   imports: [
     //BrowserModule,
-    CommonModule
+    CommonModule,
+    NbSpinnerModule,
+    NbCardModule
   ],
   exports: [
     ...COMPONENTS,

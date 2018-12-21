@@ -18,6 +18,9 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {
+
+
+    console.log('skus: ' + this.skus);
   }
   emitChanges(){
     this.entriesChanged.next(this.entries);

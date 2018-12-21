@@ -24,7 +24,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
   public loading_text: string = null;
   public data = [];
   public subscription: Subscription;
-  public uploadedFiles = {}
+  public uploadedFiles = {};
   public demo_object = [
     [
       "Page",
@@ -36,7 +36,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
         "footer.slug": "footer"
       }
     ],
-  ]
+  ];
   constructor(
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,

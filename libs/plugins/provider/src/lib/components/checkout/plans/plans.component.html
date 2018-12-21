@@ -1,201 +1,202 @@
 <div class="accordion" id="accordionProviderCheckoutPlans">
-    <div class="card plan-select-wrapper">
-        <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'internet')">
-            <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
-            <span class="title"> Planos de internet </span>
-        </div>
-
-        <div id="collapseProviderCheckoutPlanInternet" class="collapse"
-          [ngClass]="{
-            'show': providerCheckout.internet_plan_collapsed
-          }"
-          >
-            <div class="card-body" *ngIf="!providerCheckout.selected_internet_plan">
-                <div class="select-plans-wrapper">
-                    <h3 class="plan-caption">
-                        ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
-                    </h3>
-                    <div class="row">
-                        <plugin-provider-checkout-plan-internet></plugin-provider-checkout-plan-internet>
-                        <plugin-provider-checkout-plan-internet></plugin-provider-checkout-plan-internet>
-                        <plugin-provider-checkout-plan-internet></plugin-provider-checkout-plan-internet>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
-                <div class="row selected-plan-wrapper">
-                    <div class="col col-md-4 align-self-center">
-                        <h2>80 mega</h2>
-                    </div>
-                    <div class="col col-md-4 price-wrapper align-self-center">
-                        <div class="row pull-right">
-                            <span class=" align-self-center currency-unit">R$ </span>
-                            <span class=" align-self-center price">104,90</span>
-                            <span class=" align-self-center periodicity">/MÊS</span>
-                        </div>
-                    </div>
-                    <div class="col col-md-4 actions-wrapper align-self-center">
-                        <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectInternetPlan()">Alterar</button>
-                    </div>
-                </div>
-                <div class="select-internet-optional-plan-wrapper">
-                    <plugin-provider-checkout-plan-internet-optional
-                            [title]="'BOLETO POR EMAIL'"
-                            [description]="'Desconto mensal de R$ 5,00'"
-                            [price]="'-5,00'"
-                            [currency_unit]="'R$'">
-                    </plugin-provider-checkout-plan-internet-optional>
-                    <plugin-provider-checkout-plan-internet-optional
-                            [title]="'MAXROTEADOR ac1200'"
-                            [description]="'Serviço de locação. Maior área de cobertura. 2.4 e 5ghz simultâneas'"
-                            [price]="'9,90'"
-                            [currency_unit]="'R$'">
-                    </plugin-provider-checkout-plan-internet-optional>
-                    <plugin-provider-checkout-plan-internet-optional
-                            [title]="'LPNET VIP'"
-                            [description]="'Serviço de instalação grátis*.Substituição de equipamento semcusto. Prioridade de atendimento.Suporte local aos finais de semana.'"
-                            [price]="'9,90'"
-                            [currency_unit]="'R$'">
-                    </plugin-provider-checkout-plan-internet-optional>
-                    <plugin-provider-checkout-plan-internet-optional
-                            [title]="'IP FIXO'"
-                            [description]="'Acesso a sistemas remotos Acesso a cameras de segurança  IP único para sua conexão Autenticação PPPoe'"
-                            [price]="'9,90'"
-                            [currency_unit]="'R$'">
-                    </plugin-provider-checkout-plan-internet-optional>
-                </div>
-            </div>
-        </div>
+  <div class="card plan-select-wrapper">
+    <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'internet')">
+      <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
+      <span class="title"> Planos de internet </span>
     </div>
 
-    <div class="card plan-select-wrapper">
-        <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'tv')">
-            <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
-            <span class="title"> Pacotes de TV </span>
+    <div id="collapseProviderCheckoutPlanInternet" class="collapse"
+      [ngClass]="{
+            'show': providerCheckout.internet_plan_collapsed
+          }"
+    >
+      <div class="card-body" *ngIf="!providerCheckout.selected_internet_plan">
+        <div class="select-plans-wrapper">
+          <h3 class="plan-caption">
+            ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
+          </h3>
+          <plugin-provider-checkout-plan-internet skus="60mb,120mb,180mb" [class]="'col-md-6 col-sm-12 p-1 m-0'">
+          </plugin-provider-checkout-plan-internet>
         </div>
+      </div>
+      <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
+        <div class="row selected-plan-wrapper">
+          <div class="col col-md-4 align-self-center">
+            <h2>80 mega</h2>
+          </div>
+          <div class="col col-md-4 price-wrapper align-self-center">
+            <div class="row pull-right">
+              <span class=" align-self-center currency-unit">R$ </span>
+              <span class=" align-self-center price">104,90</span>
+              <span class=" align-self-center periodicity">/MÊS</span>
+            </div>
+          </div>
+          <div class="col col-md-4 actions-wrapper align-self-center">
+            <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectInternetPlan()">
+              Alterar
+            </button>
+          </div>
+        </div>
+        <div class="select-internet-optional-plan-wrapper">
+          <plugin-provider-checkout-plan-internet-optional
+            [title]="'BOLETO POR EMAIL'"
+            [description]="'Desconto mensal de R$ 5,00'"
+            [price]="'-5,00'"
+            [currency_unit]="'R$'">
+          </plugin-provider-checkout-plan-internet-optional>
+          <plugin-provider-checkout-plan-internet-optional
+            [title]="'MAXROTEADOR ac1200'"
+            [description]="'Serviço de locação. Maior área de cobertura. 2.4 e 5ghz simultâneas'"
+            [price]="'9,90'"
+            [currency_unit]="'R$'">
+          </plugin-provider-checkout-plan-internet-optional>
+          <plugin-provider-checkout-plan-internet-optional
+            [title]="'LPNET VIP'"
+            [description]="'Serviço de instalação grátis*.Substituição de equipamento semcusto. Prioridade de atendimento.Suporte local aos finais de semana.'"
+            [price]="'9,90'"
+            [currency_unit]="'R$'">
+          </plugin-provider-checkout-plan-internet-optional>
+          <plugin-provider-checkout-plan-internet-optional
+            [title]="'IP FIXO'"
+            [description]="'Acesso a sistemas remotos Acesso a cameras de segurança  IP único para sua conexão Autenticação PPPoe'"
+            [price]="'9,90'"
+            [currency_unit]="'R$'">
+          </plugin-provider-checkout-plan-internet-optional>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <div id="collapseProviderCheckoutPlanTV" class="collapse" [ngClass]="{
+  <div class="card plan-select-wrapper">
+    <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'tv')">
+      <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
+      <span class="title"> Pacotes de TV </span>
+    </div>
+
+    <div id="collapseProviderCheckoutPlanTV" class="collapse" [ngClass]="{
             'show': providerCheckout.tv_plan_collapsed
           }">
 
-            <div class="card-body" *ngIf="!providerCheckout.selected_tv_plan">
-                <div class="select-plans-wrapper">
-                    <h3 class="plan-caption">
-                        Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
-                    </h3>
-                    <div class="row">
-                        <plugin-provider-checkout-plan-television></plugin-provider-checkout-plan-television>
-                        <plugin-provider-checkout-plan-television></plugin-provider-checkout-plan-television>
-                        <plugin-provider-checkout-plan-television></plugin-provider-checkout-plan-television>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
-                <div class="row selected-plan-wrapper">
-                    <div class="col col-md-4 align-self-center">
-                        <h2>HD POP</h2>
-                    </div>
-                    <div class="col col-md-4 price-wrapper align-self-center">
-                        <div class="row pull-right">
-                            <span class=" align-self-center currency-unit">R$ </span>
-                            <span class=" align-self-center price">104,90</span>
-                            <span class=" align-self-center periodicity">/MÊS</span>
-                        </div>
-                    </div>
-                    <div class="col col-md-4 actions-wrapper align-self-center">
-                        <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectTVPlan()">Alterar</button>
-                    </div>
-                </div>
-                <div class="row extra-tv-decoder">
-                    <div class="col col-md-6">
-                        <h4>
-                            <span class="icon"><i class="fa fa-globe"></i></span>
-                            <span class="title"> Adquirir pontos extra? </span>
-                        </h4>
-                        <div class="form-group">
-                            <select class="form-control">
-                                <option value="0">Nenhum ponto adicional</option>
-                                <option value="1">1 ponto adicional</option>
-                                <option value="2">2 pontos adicional</option>
-                                <option value="3">3 pontos adicional</option>
-                                <option value="4">4 pontos adicional</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col col-md-3 price-wrapper align-self-center">
-                        <span class="currency-unit">R$</span>
-                        <span class="price">34,90</span>
-                    </div>
-                    <div class="col-md-3 actions-wrapper align-self-center">
-                        <button type="button" class="btn btn-outline-primary">Remover</button>
-                    </div>
-                </div>
-                <div class="select-television-optional-plan-wrapper">
-                    <h4>
-                        <span class="icon"><i class="fa fa-globe"></i></span>
-                        <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
-                    </h4>
-                    <div class="row">
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                        <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
-                    </div>
-                </div>
-            </div>
+      <div class="card-body" *ngIf="!providerCheckout.selected_tv_plan">
+        <div class="select-plans-wrapper">
+          <h3 class="plan-caption">
+            Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
+          </h3>
+          <div class="row">
+            <plugin-provider-checkout-plan-television skus="hd-top,hd-plus,hd-pop,hd-super"
+            ></plugin-provider-checkout-plan-television>
+          </div>
         </div>
+      </div>
+
+      <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
+        <div class="row selected-plan-wrapper">
+          <div class="col col-md-4 align-self-center">
+            <h2>HD POP</h2>
+          </div>
+          <div class="col col-md-4 price-wrapper align-self-center">
+            <div class="row pull-right">
+              <span class=" align-self-center currency-unit">R$ </span>
+              <span class=" align-self-center price">104,90</span>
+              <span class=" align-self-center periodicity">/MÊS</span>
+            </div>
+          </div>
+          <div class="col col-md-4 actions-wrapper align-self-center">
+            <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectTVPlan()">Alterar
+            </button>
+          </div>
+        </div>
+        <div class="row extra-tv-decoder">
+          <div class="col col-md-6">
+            <h4>
+              <span class="icon"><i class="fa fa-globe"></i></span>
+              <span class="title"> Adquirir pontos extra? </span>
+            </h4>
+            <div class="form-group">
+              <select class="form-control">
+                <option value="0">Nenhum ponto adicional</option>
+                <option value="1">1 ponto adicional</option>
+                <option value="2">2 pontos adicional</option>
+                <option value="3">3 pontos adicional</option>
+                <option value="4">4 pontos adicional</option>
+              </select>
+            </div>
+          </div>
+          <div class="col col-md-3 price-wrapper align-self-center">
+            <span class="currency-unit">R$</span>
+            <span class="price">34,90</span>
+          </div>
+          <div class="col-md-3 actions-wrapper align-self-center">
+            <button type="button" class="btn btn-outline-primary">Remover</button>
+          </div>
+        </div>
+        <div class="select-television-optional-plan-wrapper">
+          <h4>
+            <span class="icon"><i class="fa fa-globe"></i></span>
+            <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
+          </h4>
+          <div class="row">
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card plan-select-wrapper">
+    <div class="card-header plan-panel"
+         id="ProviderCheckoutTabPlanTelephone"
+      (click)="providerCheckout.toggleCollapse($event, 'telephone')"
+    >
+      <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
+      <span class="title"> PLANOS DE TELEFONE FIXO </span>
     </div>
 
-
-    <div class="card plan-select-wrapper">
-        <div class="card-header plan-panel"
-          id="ProviderCheckoutTabPlanTelephone"
-          (click)="providerCheckout.toggleCollapse($event, 'telephone')"
-          >
-            <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
-            <span class="title"> PLANOS DE TELEFONE FIXO </span>
-        </div>
-
-        <div  class="collapse" [ngClass]="{
+    <div class="collapse" [ngClass]="{
             'show': providerCheckout.telephone_plan_collapsed
           }">
 
-            <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
-                <div class="select-plans-wrapper">
-                    <h3 class="plan-caption"></h3>
-                    <div class="row">
-                        <plugin-provider-checkout-plan-telephone></plugin-provider-checkout-plan-telephone>
-                        <plugin-provider-checkout-plan-telephone></plugin-provider-checkout-plan-telephone>
-                        <plugin-provider-checkout-plan-telephone></plugin-provider-checkout-plan-telephone>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
-                <div class="row selected-plan-wrapper">
-                    <div class="col col-md-4 align-self-center">
-                        <h2>FIXO LOCAL ECONÔMICO</h2>
-                    </div>
-                    <div class="col col-md-4 price-wrapper align-self-center">
-                        <div class="row pull-right">
-                            <span class=" align-self-center currency-unit">R$ </span>
-                            <span class=" align-self-center price">104,90</span>
-                            <span class=" align-self-center periodicity">/MÊS</span>
-                        </div>
-                    </div>
-                    <div class="col col-md-4 actions-wrapper align-self-center">
-                        <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectTelephonePlan()">Alterar</button>
-                    </div>
-                </div>
-
-            </div>
+      <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
+        <div class="select-plans-wrapper">
+          <h3 class="plan-caption"></h3>
+          <div class="row">
+            <plugin-provider-checkout-plan-telephone></plugin-provider-checkout-plan-telephone>
+            <plugin-provider-checkout-plan-telephone></plugin-provider-checkout-plan-telephone>
+            <plugin-provider-checkout-plan-telephone></plugin-provider-checkout-plan-telephone>
+          </div>
         </div>
+      </div>
+
+      <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
+        <div class="row selected-plan-wrapper">
+          <div class="col col-md-4 align-self-center">
+            <h2>FIXO LOCAL ECONÔMICO</h2>
+          </div>
+          <div class="col col-md-4 price-wrapper align-self-center">
+            <div class="row pull-right">
+              <span class=" align-self-center currency-unit">R$ </span>
+              <span class=" align-self-center price">104,90</span>
+              <span class=" align-self-center periodicity">/MÊS</span>
+            </div>
+          </div>
+          <div class="col col-md-4 actions-wrapper align-self-center">
+            <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectTelephonePlan()">
+              Alterar
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 
 
 </div>

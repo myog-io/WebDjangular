@@ -15,6 +15,12 @@ export class ProviderCheckoutService {
   public selected_tv_plan: any = false;
   public selected_telephone_plan: any = false;
 
+  public selected_internet_optionals = [];
+  public selected_tv_optionals = [];
+  public selected_telephone_optionals = [];
+
+
+
   constructor(private scrollToService: ScrollToService) {
 
   }
@@ -35,10 +41,10 @@ export class ProviderCheckoutService {
     this.tv_plan_collapsed = false;
     this.telephone_plan_collapsed = false;
 
-    const scrollToConfigOptions: ScrollToConfigOptions = {
-      target: 'collapseProviderCheckoutPlanInternet'
-    };
-    this.scrollToService.scrollTo(scrollToConfigOptions);
+    // const scrollToConfigOptions: ScrollToConfigOptions = {
+    //   target: 'collapseProviderCheckoutPlanInternet'
+    // };
+    // this.scrollToService.scrollTo(scrollToConfigOptions);
   }
 
   openTabTVPlan(){
@@ -47,10 +53,10 @@ export class ProviderCheckoutService {
     this.internet_plan_collapsed = false;
     this.telephone_plan_collapsed = false;
 
-    const scrollToConfigOptions: ScrollToConfigOptions = {
-      target: 'collapseProviderCheckoutPlanTV'
-    };
-    this.scrollToService.scrollTo(scrollToConfigOptions);
+    //const scrollToConfigOptions: ScrollToConfigOptions = {
+    //  target: 'collapseProviderCheckoutPlanTV'
+    //};
+    //this.scrollToService.scrollTo(scrollToConfigOptions);
   }
 
   openTabTelephonePlan(){
@@ -59,13 +65,12 @@ export class ProviderCheckoutService {
     this.internet_plan_collapsed = false;
     this.tv_plan_collapsed = false;
 
-    const scrollToConfigOptions: ScrollToConfigOptions = {
-      target: 'MyOG',
-      duration: 300,
-      offset: 0
-    };
-    this.scrollToService.scrollTo(scrollToConfigOptions);
-
+    //const scrollToConfigOptions: ScrollToConfigOptions = {
+    //  target: 'MyOG',
+    //  duration: 300,
+    //  offset: 0
+    //};
+    //this.scrollToService.scrollTo(scrollToConfigOptions);
   }
 
   closeTabInternetPlan() {
@@ -81,7 +86,6 @@ export class ProviderCheckoutService {
   }
 
 
-
   deselectInternetPlan() {
     this.selected_internet_plan = false;
   }
@@ -93,5 +97,38 @@ export class ProviderCheckoutService {
   deselectTelephonePlan() {
     this.selected_telephone_plan = false;
   }
+
+  addInternetOptional() {
+
+  }
+
+  addTVOptional() {
+
+  }
+
+  addTelephoneOptional() {
+
+  }
+
+  removeInternetOptional() {
+
+  }
+
+  removeTVOptional() {
+
+  }
+
+  removeTelephoneOptional() {
+
+  }
+
+
+
+
+
+
+
+
+
 
 }
