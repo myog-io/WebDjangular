@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+from django_mysql.models import JSONField
 from django.utils.translation import check_for_language
 from webdjango.configs import DEFAULT_I18N
 from webdjango.models.Core import CoreConfig
-
+from webdjango.models.AbstractModels import BaseModel
 
 def validate_i18n(code):
     return code and check_for_language(code)
@@ -14,7 +14,7 @@ def default_i18n():
     return code or "en"
 
 
-class TranslationModel(models.Model):
+class TranslationModel(BaseModel):
     i18n_fields = []
     language = models.CharField(
         max_length=5, blank=False, default=default_i18n,

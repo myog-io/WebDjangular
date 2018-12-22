@@ -4,7 +4,8 @@
 Django==2.1.4
 
 #PostGree Daabase
-psycopg2==2.7.6.1
+mysqlclient==1.3.14
+django-mysql==2.4.1
 
 # Enviroment
 django-environ==0.4.5

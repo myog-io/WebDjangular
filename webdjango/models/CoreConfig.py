@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+from django_mysql.models import JSONField
 from webdjango.signals.CoreSignals import config_group_register, config_register
 from webdjango.models.Core import CoreConfig
 from json.encoder import JSONEncoder

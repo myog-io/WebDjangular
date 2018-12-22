@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mysql',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -44,9 +45,10 @@ INSTALLED_APPS = [
     'libs.core.users.api',
     'libs.core.cms.api',
     'libs.core.media.api',
-    #'libs.core.forms.api',
+    ##'libs.core.forms.api',
+    'libs.plugins.store.api',
     'libs.plugins.provider.api',
-    'libs.plugins.store.api'
+
 ]
 
 TEMPLATES = [

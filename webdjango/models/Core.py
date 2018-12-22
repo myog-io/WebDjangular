@@ -1,12 +1,12 @@
+from dirtyfields import DirtyFieldsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import validate_slug
-from django.db import models
-
+from django.db import connection, models
+from django_mysql.models import JSONField
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.utils.DynamicLoader import DynamicLoader
+from django.db.utils import ProgrammingError
 from distutils.version import LooseVersion
-from dirtyfields import DirtyFieldsMixin
-from django.contrib.postgres.fields import JSONField
 
 
 class Website(BaseModel):
@@ -20,7 +20,8 @@ class Website(BaseModel):
 
     @staticmethod
     def getCurrentWebsite():
-        return Website.objects.first()
+        if 'core_website' in  connection.introspection.table_names():
+            return Website.objects.first()
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
     class Meta:
@@ -61,6 +62,8 @@ class CoreConfig(BaseModel):
                 return None
 
         except ObjectDoesNotExist:
+            return None
+        except ProgrammingError:
             return None
 
     @staticmethod

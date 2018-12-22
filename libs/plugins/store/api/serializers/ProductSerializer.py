@@ -1,4 +1,3 @@
-from libs.plugins.provider.api.models.Channel import Channel
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Product import BaseProduct, Product, \
     ProductAttribute, ProductCategory, ProductType
@@ -10,7 +9,7 @@ from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
 class ProductAttributeSerializer(WebDjangoSerializer):
-    options = serializers.HStoreField()
+
 
     class Meta:
         model = ProductAttribute

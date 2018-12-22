@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+from django_mysql.models import JSONField
 
 from libs.core.users.api.models.User import User
 from libs.plugins.store.api.models.Product import Product

@@ -13,7 +13,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 from webdjango.views.CoreViewSet import ThemeViewSet, AuthorViewSet, PluginViewSet, CoreConfigViewSet, WebsiteViewSet
 from webdjango.views.CoreConfigViewSet import CoreConfigGroupViewSet, CoreConfigInputViewSet
-from webdjango.views.InitViewSet import InitViewSet
+#from webdjango.views.InitViewSet import InitViewSet
 from webdjango.views.AddressViewSet import AddressViewSet
 from rest_framework.permissions import AllowAny
 from drf_yasg.views import get_schema_view
@@ -39,7 +39,7 @@ router.register(r'core_plugin', PluginViewSet)
 router.register(r'core_theme', ThemeViewSet)
 router.register(r'core_config', CoreConfigViewSet)
 router.register(r'core_website', WebsiteViewSet)
-router.register(r'core_init', InitViewSet)
+#router.register(r'core_init', InitViewSet)
 router.register(r'core_config_input', CoreConfigInputViewSet, base_name='core_config_input')
 router.register(r'core_config_group', CoreConfigGroupViewSet, base_name='core_config_group')
 router.register(r'address', AddressViewSet, base_name='address')
@@ -54,10 +54,6 @@ urlpatterns = [
     url(r'^api/', include('libs.core.users.api.urls')),
     url(r'^api/', include('libs.core.cms.api.urls')),
     url(r'^api/', include('libs.core.media.api.urls')),
-    #url(r'^api/', include('libs.core.forms.api.urls')),
-#
-
-    ## TODO: Add dynamic routes based on active plugins
     url(r'^api/', include('libs.plugins.provider.api.urls')),
     url(r'^api/', include('libs.plugins.store.api.urls')),
 

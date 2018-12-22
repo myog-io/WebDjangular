@@ -1,5 +1,5 @@
 from decimal import Decimal
-from django.contrib.postgres.fields import JSONField
+from django_mysql.models import JSONField
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.timezone import now

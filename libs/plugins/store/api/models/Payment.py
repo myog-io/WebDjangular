@@ -2,7 +2,7 @@ from decimal import Decimal
 from enum import Enum
 
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+from django_mysql.models import JSONField
 
 from libs.plugins.store.api import defaults
 from webdjango.models.Address import Address

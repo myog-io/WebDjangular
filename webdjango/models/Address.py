@@ -29,4 +29,6 @@ class Address(models.Model):
     def full_name(self):
         return '%s %s' % (self.first_name, self.last_name)
 
-
+    class Meta:
+        db_table = 'core_address'
+        ordering = ['-created']

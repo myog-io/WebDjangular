@@ -19,8 +19,8 @@ Now let's install [Node.js](https://nodejs.org/en/)! Node.js tends to come with 
 ``` bash
 npm install npm@latest -g
 ```
-## 3 Installing PostgreSQL & Creating DB
-To install [PostgreSQL](https://www.postgresql.org/download/) please download and follow the steps on the website for instalation
+## 3 Installing Mysql 8 & Creating DB
+To install [Mysql 8](ttps://dev.mysql.com/downloads/) please download and follow the steps on the website for instalation
 
 
 
@@ -56,13 +56,13 @@ INSTALLED_APPS += [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': 'webdjangular',
-        'USER': 'postgres',
+        'USER': 'root',
         'PASSWORD': '#######',
 
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '5432',
+        #'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        #'PORT': '3306',
     }
 }
 ```

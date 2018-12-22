@@ -1,4 +1,4 @@
-from ..models.City import City, Streets
+from ..models.City import City, Street
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
@@ -9,7 +9,7 @@ class StreetSerializer(WebDjangoSerializer):
 
     class Meta:
         fields = '__all__'
-        model = Streets
+        model = Street
 
 
 
@@ -23,7 +23,7 @@ class CitySerializer(WebDjangoSerializer):
 
     streets = ResourceRelatedField(
         many=True,
-        queryset=Streets.objects,
+        queryset=Street.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='city-relationships',
         related_link_view_name='city-related',

@@ -1,7 +1,7 @@
 from ..exceptions import InsufficientStock
 from decimal import Decimal
 from django.conf import settings
-from django.contrib.postgres.fields import HStoreField, JSONField
+from django_mysql.models import JSONField
 from django.db import models
 from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField
@@ -13,7 +13,7 @@ from webdjango.models.AbstractModels import ActiveModel, BaseModel, \
 from webdjango.models.CoreConfig import CoreConfigInput
 from webdjango.models.TranslationModel import TranslationModel
 from webdjango.utils.weight import WeightUnits, zero_weight
-
+from libs.core.media.api.models.Media import Media
 
 class ProductClasses:
     SIMPLE = 'simple'
@@ -29,11 +29,11 @@ class ProductClasses:
     ]
 
 
-class ProductCategory(PermalinkModel, TranslationModel, BaseModel):
+class ProductCategory(PermalinkModel, TranslationModel):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children', on_delete=models.CASCADE)
-
+    background_image = models.ForeignKey(Media, blank=True, null=True, on_delete=models.SET_NULL)
     i18n_fields = ['name', 'slug', 'description']
 
     class Meta:
@@ -42,6 +42,16 @@ class ProductCategory(PermalinkModel, TranslationModel, BaseModel):
     def __str__(self):
         return '%s object (%s)' % (self.__class__.__name__, self.name)
 
+
+class ProductAttributeOptions(TranslationModel):
+    code = models.SlugField()
+    name = models.CharField(max_length=255)
+    is_default = models.BooleanField(default=False)
+    attribute = models.ForeignKey('ProductAttribute', related_name='options', on_delete=models.CASCADE)
+    i18n_fields = ['name']
+
+    class Meta:
+        ordering = ['-created']
 
 class ProductAttribute(TranslationModel):
     code = models.SlugField()
@@ -52,7 +62,6 @@ class ProductAttribute(TranslationModel):
     type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
                             default=CoreConfigInput.FIELD_TYPE_TEXT)
     is_variant = models.BooleanField(default=False)
-    options = HStoreField(blank=True, null=True)
 
     class Meta:
         ordering = ['-created']
@@ -63,6 +72,12 @@ class ProductType(BaseModel):
         max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     name = models.CharField(max_length=128)
     code = models.CharField(max_length=64)
+    has_variants = models.BooleanField(default=True)
+    is_shipping_required = models.BooleanField(default=False)
+
+    weight = MeasurementField(
+        measurement=Weight, unit_choices=WeightUnits.CHOICES,
+        default=zero_weight)
     attributes = models.ManyToManyField('ProductAttribute', related_name='product_type', blank=True, null=True)
 
     class Meta:
@@ -75,6 +90,7 @@ class BaseProduct(ActiveModel, TranslationModel):
     description = models.TextField(blank=True, null=True)
 
     available_on = models.DateTimeField(blank=True, null=True)
+    images = models.ManyToManyField(Media)
 
     track_inventory = models.BooleanField(default=True)
     quantity = models.IntegerField(default=Decimal(1))
@@ -96,16 +112,15 @@ class BaseProduct(ActiveModel, TranslationModel):
     shipping_height = models.CharField(max_length=32)
     shipping_depth = models.CharField(max_length=32)
 
-    # TODO: The Validation of this Field should be realted to the Product Type
-    attributes = HStoreField(null=True)
-
     i18n_fields = ['name', 'slug', 'description']
 
     class Meta:
         abstract = True
 
 
-class Product(BaseProduct, BaseModel):
+
+
+class Product(BaseProduct):
     product_class = models.CharField(
         max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     product_type = models.ForeignKey(
@@ -114,7 +129,7 @@ class Product(BaseProduct, BaseModel):
     #  product class VARIANT
     variant_parent = models.ForeignKey('Product', related_name='variant', on_delete=models.CASCADE, blank=True, null=True)
 
-    variant_attributes = HStoreField(null=True)
+
 
     #  product class BUNDLE
     bundle_products = models.ManyToManyField('Product', related_name='bundle_parent', blank=True, null=True)
@@ -151,3 +166,9 @@ class Product(BaseProduct, BaseModel):
     @property
     def is_in_stock(self):
         return self.quantity_available > 0
+
+class ProductAttributeValue(BaseModel):
+    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
+    value = models.CharField(max_length=255, blank=True, default='')
+
+
