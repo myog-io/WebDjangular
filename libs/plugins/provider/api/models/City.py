@@ -27,11 +27,12 @@ class PostalCodeRange(BaseModel):
         db_table = 'provider_city_postal_codes'
         ordering = ['-created']
 
+
 class Street(BaseModel):
-    '''
+    """
     This Streets will be use to check if the Address Typed by the user on the frontend is in our database
     If it's in our database we will check the numbers range to check if in his number if they have Fiber/Cable Internet
-    '''
+    """
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=255)
     city = models.ForeignKey(City, related_name='streets',

@@ -4,6 +4,7 @@ from django.db import models
 from libs.core.cms.api.models.Page import Page
 from webdjango.models.AbstractModels import BaseModel
 
+
 class PageRedirect(BaseModel):
     default_page = models.OneToOneField(
         Page, on_delete=models.CASCADE, related_name='provider_default')
