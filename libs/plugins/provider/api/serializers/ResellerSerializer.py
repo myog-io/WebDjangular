@@ -1,10 +1,10 @@
 from ..models.Reseller import Reseller
 from libs.plugins.store.api.models.Product import Product
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from libs.plugins.store.api.models.Order import Order
 
-class ResellerSerializer(DocumentSerializer):
+class ResellerSerializer(WebDjangoSerializer):
     included_serializers = {
         'orders': 'libs.plugins.store.api.serializers.OrderSerializer.OrderSerializer',
     }

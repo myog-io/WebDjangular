@@ -1,5 +1,5 @@
-from djongo import models
-from djongo.models.json import JSONField
+from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import check_for_language
 from webdjango.configs import DEFAULT_I18N
 from webdjango.models.Core import CoreConfig
@@ -20,7 +20,7 @@ class TranslationModel(models.Model):
         max_length=5, blank=False, default=default_i18n,
         validators=[validate_i18n]
     )
-    # as per https://docs.mongodb.com/manual/tutorial/specify-language-for-text-index/
+
     translation = JSONField(null=True, default=None)
 
     def get_current_i18n(self, *args, **kwargs):

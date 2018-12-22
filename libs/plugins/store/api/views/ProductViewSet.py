@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 from rest_framework_json_api.views import RelatedMixin, RelationshipView
 
 
@@ -17,7 +17,7 @@ class ProductTypeFilter(FilterSet):
     class Meta:
         model = ProductType
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'name': ['contains', 'exact'],
         }
 
@@ -45,7 +45,7 @@ class ProductCategoryFilter(FilterSet):
     class Meta:
         model = ProductCategory
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'name': ['contains', 'exact'],
             'description': ['contains'],
         }
@@ -74,14 +74,14 @@ class ProductFilter(FilterSet):
     class Meta:
         model = Product
         fields = {
-            '_id': ['in','exact'],
+            'id': ['in','exact'],
             'name': ['contains', 'exact'],
             'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
         }
 
 
-class ProductViewSet(RelatedMixin, ModelViewSet):
+class ProductViewSet(ModelViewSet):
     """
     Handles:
     Creating Product

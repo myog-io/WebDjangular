@@ -1,11 +1,11 @@
 from decimal import Decimal
 from enum import Enum
 
-from djongo import models
-from djongo.models.json import JSONField
+from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 from libs.plugins.store.api import defaults
-from libs.core.utils.api.models.Address import Address
+from webdjango.models.Address import Address
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
 
 
@@ -99,7 +99,7 @@ class Payment(ActiveModel, BaseModel):
                                      choices=ChargeStatus.CHOICES,
                                      default=ChargeStatus.NOT_CHARGED)
 
-    billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
+    billing_address = models.ForeignKey(Address, related_name='', on_delete=models.CASCADE, blank=True, null=True)
 
     customer_ip_address = models.GenericIPAddressField(blank=True, null=True)
     extra_data = JSONField()

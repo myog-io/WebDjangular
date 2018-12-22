@@ -1,5 +1,5 @@
-from djongo import models
-from djongo.models.json import JSONField
+from django.db import models
+from django.contrib.postgres.fields import JSONField
 from webdjango.models.AbstractModels import BaseModel
 
 

@@ -3,10 +3,9 @@ from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.BlockSerializer import BlockSerializer
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
-
-class PageSerializer(DocumentSerializer):
+class PageSerializer(WebDjangoSerializer):
     """
     The serializer for Pages Objects
     """
@@ -32,4 +31,4 @@ class PageSerializer(DocumentSerializer):
     class Meta:
         model = Page
         fields = '__all__'
-        read_only = ('create', 'updated', 'header', 'footer')
+        read_only = ('create', 'updated')

@@ -4,7 +4,7 @@ from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 from uuid import UUID, uuid1
 from libs.plugins.store.api.models.Cart import Cart
 from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer

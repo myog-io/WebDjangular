@@ -2,10 +2,10 @@ from ..models.Condo import Condo
 from ..models.City import City
 from libs.plugins.store.api.models.Product import Product
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
-class CondoSerializer(DocumentSerializer):
+class CondoSerializer(WebDjangoSerializer):
     included_serializers = {
         'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'city' : 'libs.plugins.provider.api.serializers.CitySerializer.CitySerializer',

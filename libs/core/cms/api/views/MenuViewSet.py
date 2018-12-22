@@ -2,7 +2,7 @@ from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 from libs.core.cms.api.models.Menu import Menu
 from libs.core.cms.api.serializers.MenuSerializer import MenuSerializer

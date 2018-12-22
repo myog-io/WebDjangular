@@ -1,15 +1,10 @@
 from django.core.validators import MaxLengthValidator
-from djongo import models
+from django.db import models
 
 
 class BaseModel(models.Model):
-    readonly_fields = ('_id', )
-
-    _id = models.ObjectIdField(db_column='_id', primary_key=True, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-    objects = models.DjongoManager()
 
     class Meta:
         abstract = True

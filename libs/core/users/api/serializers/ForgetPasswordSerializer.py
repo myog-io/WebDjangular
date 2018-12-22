@@ -1,12 +1,12 @@
 from django.utils.translation import ugettext as _
 from rest_framework.serializers import EmailField
 from rest_framework.serializers import ValidationError
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from ..models.ForgetPassword import ForgetPassword
 from ..models.User import User
 
 
-class ForgetPasswordSerializer(DocumentSerializer):
+class ForgetPasswordSerializer(WebDjangoSerializer):
     """
     The serializer for ForgetPassword Objects
     """

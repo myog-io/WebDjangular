@@ -5,9 +5,9 @@ from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.PageSerializer import PageSerializer
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
-class PageRedirectSerializer(DocumentSerializer):
+class PageRedirectSerializer(WebDjangoSerializer):
     #default_page  = PageSerializer(many=False)
     #redirect_page = PageSerializer(many=False)
 

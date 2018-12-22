@@ -14,7 +14,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import detail_route
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 from base64 import encode
 from urllib.parse import urlparse
@@ -25,7 +25,7 @@ class MediaFilter(FilterSet):
     class Meta:
         model = Media
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'alt': ['contains', 'exact'],
         }
 

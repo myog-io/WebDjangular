@@ -1,5 +1,6 @@
-from djongo import models
+from django.db import models
 from django import forms
+from webdjango.models.AbstractModels import BaseModel
 
 
 
@@ -10,7 +11,7 @@ MENU_TARGETS = (
     ('_top', '_top'),
 )
 
-class MenuItem(models.Model):
+class MenuItem(BaseModel):
     TARGET_BLANK = '_blank'
     TARGET_SELF = '_self'
     TARGET_PARENT = '_parent'
@@ -19,15 +20,16 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=255)
     url = models.URLField()
     alt = models.CharField(max_length=255)
-    target = models.CharField(choices=MENU_TARGETS, default=TARGET_SELF)
-    order = models.IntegerField()
-    children = models.ArrayModelField(model_container='self')
+    target = models.CharField(max_length=255, choices=MENU_TARGETS, default=TARGET_SELF)
+    position = models.PositiveSmallIntegerField()
+    parent = models.ForeignKey('MenuItem', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
+    menu = models.ForeignKey('Menu', related_name='menu', on_delete=models.CASCADE, blank=True, null=True)
+
     class Meta:
-        abstract = True
+        db_table = 'cms_menu_item'
+        ordering = ['-created']
 
-
-
-class Menu(models.Model):
+class Menu(BaseModel):
     """
     CMS Menu Model
     """
@@ -35,9 +37,6 @@ class Menu(models.Model):
     slug = models.SlugField(
         max_length=255, null=True, default=None, blank=True)
     wrapper_class = models.CharField(max_length=255)
-    items = models.ArrayModelField(
-        model_container=MenuItem
-    )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

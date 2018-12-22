@@ -2,7 +2,7 @@
 import os, io
 
 from dirtyfields import DirtyFieldsMixin
-from djongo import models
+from django.db import models
 from libs.core.media.api.fields.ChunkableFieldFile import ChunkableFieldFile
 from libs.core.media.api.fields.RemoteFileField import RemoteFileField
 from webdjango.models.AbstractModels import BaseModel

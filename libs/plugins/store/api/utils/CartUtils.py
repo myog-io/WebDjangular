@@ -4,8 +4,6 @@ Cart related utility methods.
 from uuid import UUID, uuid1
 from datetime import date, timedelta
 
-from djongo.models import ObjectIdField
-
 from libs.plugins.store.api.models.Cart import Cart, CartItem, CartStatus
 
 
@@ -121,18 +119,8 @@ def add_item_to_cart(cart, cart_item):
         for item in cart.items:
             pass
     else:
-        #Cart.objects.mongo_update({"_id": cart.pk},
-        #                         {"$push": {"items": {
-        #                             "product": ObjectIdField(cart_item['product']['id']),
-        #                             "quantity": cart_item['quantity']
-        #                         }}})
-
-        Cart.objects.mongo_update({"_id": cart.pk}, {"$push": {"items": cart_item}})
-
 
         pass
-
-    # Cart.objects.mongo_insert_one()
 
     #cart.save()
     return cart

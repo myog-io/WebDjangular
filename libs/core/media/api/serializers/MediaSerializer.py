@@ -1,7 +1,8 @@
 from libs.core.media.api.models.Media import Media
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
-class MediaSerializer(DocumentSerializer):
+
+class MediaSerializer(WebDjangoSerializer):
     """
     The Media Serializer
     """

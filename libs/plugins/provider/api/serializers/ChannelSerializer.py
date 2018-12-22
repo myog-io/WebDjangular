@@ -2,10 +2,10 @@ from ..models.Channel import Channel
 from libs.plugins.store.api.models.Product import Product
 from rest_framework import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
-class ChannelSerializer(DocumentSerializer):
+class ChannelSerializer(WebDjangoSerializer):
     included_serializers = {
         'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
 

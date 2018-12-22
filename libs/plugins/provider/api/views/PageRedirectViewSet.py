@@ -2,7 +2,7 @@ from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 from ..models.PageRedirect import PageRedirect
 from ..serializers.PageRedirectSerializer import PageRedirectSerializer
@@ -11,7 +11,7 @@ class PageRedirectFilter(FilterSet):
     class Meta:
         model = PageRedirect
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'default_page': ['in', 'exact'],
             'redirect_page': ['in', 'exact'],
             'cities': ['in', 'exact'],

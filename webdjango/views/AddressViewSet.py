@@ -1,10 +1,10 @@
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
-from libs.core.utils.api.models.Address import Address
-from libs.core.utils.api.serializers.AddressSerializer import AddressSerializer
+from ..models.Address import Address
+from ..serializers.AddressSerializer import AddressSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 
 class AddressFilter(FilterSet):

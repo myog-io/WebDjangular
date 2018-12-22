@@ -1,29 +1,22 @@
-from djongo import models
+from django.db import models
 from django import forms
 from webdjango.models.AbstractModels import BaseModel
+from django.contrib.postgres.fields import HStoreField
 
 
-class NumberRange(BaseModel):
-    '''
-    Number Rengy Model is a entry from city, will have the range of ceps or range of street house numbers
-    '''
-    start = models.IntegerField()
-    end = models.IntegerField()
 
-
-    class Meta:
-        abstract = True
+class City(BaseModel):
+    name = models.CharField(max_length=255)
+    short_name = models.CharField(max_length=255, null=True, default=None)
+    code = models.SlugField(null=True, default=None, unique=True)
+    postal_codes = HStoreField(blank=True, null=True)
 
     def __str__(self):
-        return "start:{} - end{}".format(self.start,self.end)
+        return self.name
 
-class NumberRangeForm(forms.ModelForm):
     class Meta:
-        model = NumberRange
-        fields = (
-            'start', 'end'
-        )
-
+        db_table = 'provider_city'
+        ordering = ['-created']
 
 class Streets(BaseModel):
     '''
@@ -32,44 +25,13 @@ class Streets(BaseModel):
     '''
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=255)
-    numbers = models.ArrayModelField(
-        model_container = NumberRange,
-        model_form_class =NumberRangeForm
-    )
-    class Meta:
-        abstract = True
+    numbers = HStoreField(blank=True, null=True)
+    city = models.ForeignKey(City, related_name='streets', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
 
-
-class StreetsForm(forms.ModelForm):
     class Meta:
-        model = Streets
-        fields = (
-            'name','short_name', 'numbers'
-        )
-
-
-class City(BaseModel):
-    name = models.CharField(max_length=255)
-    short_name = models.CharField(max_length=255, null=True, default=None)
-    code = models.SlugField(null=True, default=None, unique=True)
-    postal_codes = models.ArrayModelField(
-        model_container=NumberRange,
-        model_form_class=NumberRangeForm,
-        null = True,
-        default = None
-    )
-    streets = models.ArrayModelField(
-        model_container=Streets,
-        model_form_class=StreetsForm,
-        null = True,
-        default = None,
-    )
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'provider_city'
+        db_table = 'provider_streets'
         ordering = ['-created']
+

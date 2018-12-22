@@ -4,14 +4,14 @@ from ..models.Discount import CartRule, CatalogRule
 from ..serializers.DiscountSerializer import CartRuleSerializer, CatalogRuleSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 
 class CartRuleFilter(FilterSet):
     class Meta:
         model = CartRule
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'name': ['contains', 'exact'],
             'voucher': ['exact'],
         }
@@ -40,7 +40,7 @@ class CatalogRuleFilter(FilterSet):
     class Meta:
         model = CatalogRule
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
         }
 
 

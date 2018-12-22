@@ -1,11 +1,12 @@
 from uuid import uuid4
 
-from djongo import models
-from djongo.models.json import JSONField
+from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 from libs.core.users.api.models.User import User
 from libs.plugins.store.api.models.Product import Product
 from webdjango.models.AbstractModels import BaseModel
+from webdjango.models.Address import Address
 
 
 class CartStatus:
@@ -18,50 +19,27 @@ class CartStatus:
     ]
 
 
-class CartItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=None, related_name='product')
-    quantity = models.PositiveIntegerField(default=1)
-    data = JSONField(blank=True, default=dict)
-
-    class Meta:
-        abstract = True
-
-    @property
-    def get_total(self, discounts=None, taxes=None):
-        """
-        Return the total price of this item.
-        """
-        # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
-        #total = self.quantity * self.product.get_final_price()
-        total = 0
-        return total
-
-    @property
-    def is_shipping_required(self):
-        """
-        Return True if any of the items requires shipping.
-        """
-        # TODO: self.product.is_shipping_required()
-        return False
-
-
 class Cart(BaseModel):
     """
     """
 
     # When user is null, it is a guest (not logged in user)
-    user = models.ForeignKey(User, on_delete=None, blank=True, null=True, related_name='user')
+    user = models.ForeignKey(User, on_delete=None,
+                             blank=True, null=True, related_name='user')
 
     token = models.UUIDField(default=uuid4, editable=False)
     total_quantity = models.PositiveIntegerField(default=0)
-    status = models.CharField(max_length=16, choices=CartStatus.CHOICES, default=CartStatus.ACTIVE)
+    status = models.CharField(
+        max_length=16, choices=CartStatus.CHOICES, default=CartStatus.ACTIVE)
 
-    #  billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
-    #  shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)
+    billing_address = models.ForeignKey(
+        Address, related_name='cart_billing_address', on_delete=models.CASCADE, blank=True, null=True)
+    shipping_address = models.ForeignKey(
+        Address, related_name='cart_shipping_address', on_delete=models.CASCADE, blank=True, null=True)
 
-    #  shipping_method = models.ForeignKey(ShippingMethod,
-    #                                     blank=True, null=True, related_name='carts',
-    #                                     on_delete=models.SET_NULL)
+    # shipping_method = models.ForeignKey(ShippingMethod,
+    #                                    blank=True, null=True, related_name='carts',
+    #                                    on_delete=models.SET_NULL)
 
     #  note = models.TextField(blank=True, default='')
 
@@ -73,11 +51,8 @@ class Cart(BaseModel):
 
     #  voucher_code = models.CharField(max_length=12, blank=True, null=True)
 
-    items = models.ArrayModelField(model_container=CartItem, default=None, blank=True, null=True)
-
     class Meta:
         ordering = ['-pk']
-
 
     @property
     def is_shipping_required(self):
@@ -124,4 +99,28 @@ class Cart(BaseModel):
         return 0
 
 
+class CartItem(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=None, related_name='product')
+    quantity = models.PositiveIntegerField(default=1)
+    data = JSONField(blank=True, default=dict)
+    cart = models.ForeignKey(
+        'Cart', related_name='items', on_delete=models.CASCADE)
 
+    @property
+    def get_total(self, discounts=None, taxes=None):
+        """
+        Return the total price of this item.
+        """
+        # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
+        #total = self.quantity * self.product.get_final_price()
+        total = 0
+        return total
+
+    @property
+    def is_shipping_required(self):
+        """
+        Return True if any of the items requires shipping.
+        """
+        # TODO: self.product.is_shipping_required()
+        return False

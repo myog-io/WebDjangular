@@ -1,16 +1,16 @@
 from decimal import Decimal
-from enum import Enum
-
+from django.contrib.postgres.fields import JSONField
 from django.core.validators import MinValueValidator
+from django.db import models
 from django.utils.timezone import now
 from django_prices.models import MoneyField, TaxedMoneyField
-from djongo import models
-from djongo.models.json import JSONField
-
 from libs.plugins.store.api import defaults
-from libs.core.utils.api.models.Address import Address
 from libs.plugins.store.api.models.Payment import ChargeStatus
+from libs.core.users.api.models.User import User
 from webdjango.models.AbstractModels import BaseModel
+from webdjango.models.Address import Address
+
+from enum import Enum
 
 
 class OrderStatus:
@@ -123,7 +123,7 @@ class Fulfillment(BaseModel):
     tracking_number = models.CharField(max_length=255, default='', blank=True)
     shipping_date = models.DateTimeField(default=now, editable=False)
 
-    fulfillment_lines = models.ArrayModelField(model_container=FulfillmentLine)
+    #fulfillment_lines = models.ArrayModelField(model_container=FulfillmentLine)
 
     class Meta:
         abstract = True
@@ -172,7 +172,6 @@ class OrderQueryset(models.QuerySet):
         return self.filter(status=OrderStatus.DRAFT)
 
         # def ready_to_fulfill(self):
-        # TODO: I don't know if Sum() and F() methods works with mongodb
         """
         Return orders that are ready to fulfill which are fully paid but unfulfilled or partially fulfilled.
         """
@@ -196,7 +195,7 @@ class OrderQueryset(models.QuerySet):
 class Order(BaseModel):
     order_num = models.CharField(max_length=36, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='order')
     user_email = models.EmailField(blank=True, default='')
 
     # shipping_method =

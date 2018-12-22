@@ -1,6 +1,6 @@
 from django_prices.models import MoneyField
-from djongo import models
-from djongo.models.json import JSONField
+from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel

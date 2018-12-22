@@ -3,20 +3,14 @@
 # Django
 Django==2.1.4
 
-#there is no version for that, it seems to be a package with other libs
-#pip show djongo[json] returns nothing
-djongo[json]
-
-
-# Djongo - Driver for allowing Django to use MongoDB
-djongo==1.2.31
-django-jsoneditor==0.0.13
+#PostGree Daabase
+psycopg2==2.7.6.1
 
 # Enviroment
 django-environ==0.4.5
 
 # Django REST Framework
-djangorestframework==3.8.2
+djangorestframework==3.9.0
 
 # Django REST Framework JWT token
 djangorestframework-jwt==1.11.0

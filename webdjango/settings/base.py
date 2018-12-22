@@ -42,10 +42,9 @@ INSTALLED_APPS = [
     'django_extensions',
     'drf_yasg',
     'libs.core.users.api',
-    'libs.core.utils.api',
     'libs.core.cms.api',
     'libs.core.media.api',
-    'libs.core.forms.api',
+    #'libs.core.forms.api',
     'libs.plugins.provider.api',
     'libs.plugins.store.api'
 ]
@@ -117,8 +116,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser'
     ),
     'DEFAULT_RENDERER_CLASSES': (
-        'webdjango.renderers.JSONRenderer',
-        #'rest_framework_json_api.renderers.JSONRenderer',
+        'rest_framework_json_api.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',

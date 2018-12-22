@@ -1,7 +1,6 @@
 import uuid
 
-from djongo.models import Model, ForeignKey, UUIDField, DateTimeField, CASCADE
-
+from django.db.models import ForeignKey, CASCADE
 from webdjango.models.AbstractModels import BaseModel
 
 

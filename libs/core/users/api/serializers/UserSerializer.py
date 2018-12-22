@@ -3,10 +3,10 @@ from django.contrib.auth.models import Group
 from django.db import models
 from rest_framework.serializers import ValidationError
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
-class UserSerializer(DocumentSerializer):
+class UserSerializer(WebDjangoSerializer):
     """
     The serializer for User Objects
     """

@@ -1,12 +1,12 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import validate_slug
-from djongo import models
+from django.db import models
 
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.utils.DynamicLoader import DynamicLoader
 from distutils.version import LooseVersion
 from dirtyfields import DirtyFieldsMixin
-from djongo.models.json import JSONField
+from django.contrib.postgres.fields import JSONField
 
 
 class Website(BaseModel):

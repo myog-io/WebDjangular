@@ -1,9 +1,9 @@
 from rest_framework.serializers import ValidationError
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from webdjango.models.Core import Author, Theme, Plugin, CoreConfig, Website
 
 
-class WebsiteSerializer(DocumentSerializer):
+class WebsiteSerializer(WebDjangoSerializer):
     """
     The serializer for Websites
     """
@@ -12,7 +12,7 @@ class WebsiteSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-class CoreConfigSerializer(DocumentSerializer):
+class CoreConfigSerializer(WebDjangoSerializer):
     """
     The serializer for CoreConfigs
     """
@@ -21,7 +21,7 @@ class CoreConfigSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-class AuthorSerializer(DocumentSerializer):
+class AuthorSerializer(WebDjangoSerializer):
     """
     The serializer for Authors
     """
@@ -30,7 +30,7 @@ class AuthorSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-class PluginSerializer(DocumentSerializer):
+class PluginSerializer(WebDjangoSerializer):
     """
     The serializer for Plugins
     """
@@ -39,7 +39,7 @@ class PluginSerializer(DocumentSerializer):
         fields = '__all__'
 
 
-class ThemeSerializer(DocumentSerializer):
+class ThemeSerializer(WebDjangoSerializer):
     """
     The serializer for Themes
     """
