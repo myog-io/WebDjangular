@@ -1,6 +1,8 @@
 from django.db import models
 from django_countries.fields import CountryField
 
+from webdjango.models.AbstractModels import BaseModel
+
 
 class AddressType:
     BILLING = 'billing'
@@ -12,7 +14,7 @@ class AddressType:
     ]
 
 
-class Address(models.Model):
+class Address(BaseModel):
     first_name = models.CharField(max_length=256, blank=True)
     last_name = models.CharField(max_length=256, blank=True)
     company_name = models.CharField(max_length=256, blank=True)

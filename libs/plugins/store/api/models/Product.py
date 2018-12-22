@@ -53,6 +53,7 @@ class ProductAttributeOptions(TranslationModel):
     class Meta:
         ordering = ['-created']
 
+
 class ProductAttribute(TranslationModel):
     code = models.SlugField()
     name = models.CharField(max_length=255)
@@ -78,7 +79,7 @@ class ProductType(BaseModel):
     weight = MeasurementField(
         measurement=Weight, unit_choices=WeightUnits.CHOICES,
         default=zero_weight)
-    attributes = models.ManyToManyField('ProductAttribute', related_name='product_type', blank=True, null=True)
+    attributes = models.ManyToManyField('ProductAttribute', related_name='product_type')
 
     class Meta:
         ordering = ['-created']
@@ -127,16 +128,17 @@ class Product(BaseProduct):
         ProductType, on_delete=models.SET_NULL, blank=True, null=True)
 
     #  product class VARIANT
-    variant_parent = models.ForeignKey('Product', related_name='variant', on_delete=models.CASCADE, blank=True, null=True)
+    variant_parent = models.ForeignKey('Product', related_name='variant', on_delete=models.CASCADE, blank=True,
+                                       null=True)
 
 
 
     #  product class BUNDLE
-    bundle_products = models.ManyToManyField('Product', related_name='bundle_parent', blank=True, null=True)
+    bundle_products = models.ManyToManyField('Product', related_name='bundle_parent')
 
-    categories = models.ManyToManyField('ProductCategory', related_name='products', blank=True, null=True)
+    categories = models.ManyToManyField('ProductCategory', related_name='products')
 
-    addons = models.ManyToManyField('Product', related_name='addon_parent', blank=True, null=True)
+    addons = models.ManyToManyField('Product', related_name='addon_parent')
 
     class Meta:
         ordering = ['-created']

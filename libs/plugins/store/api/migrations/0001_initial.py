@@ -155,8 +155,8 @@ class Migration(migrations.Migration):
                 ('shipping_height', models.CharField(max_length=32)),
                 ('shipping_depth', models.CharField(max_length=32)),
                 ('product_class', models.CharField(choices=[('simple', 'simple'), ('variant', 'variant'), ('addon', 'addon'), ('bundle', 'bundle')], default='simple', max_length=32)),
-                ('addons', models.ManyToManyField(blank=True, null=True, related_name='addon_parent', to='store.Product')),
-                ('bundle_products', models.ManyToManyField(blank=True, null=True, related_name='bundle_parent', to='store.Product')),
+                ('addons', models.ManyToManyField(related_name='addon_parent', to='store.Product')),
+                ('bundle_products', models.ManyToManyField(related_name='bundle_parent', to='store.Product')),
             ],
             options={
                 'ordering': ['-created'],
@@ -240,7 +240,7 @@ class Migration(migrations.Migration):
                 ('has_variants', models.BooleanField(default=True)),
                 ('is_shipping_required', models.BooleanField(default=False)),
                 ('weight', django_measurement.models.MeasurementField(default=webdjango.utils.weight.zero_weight, measurement=measurement.measures.mass.Mass)),
-                ('attributes', models.ManyToManyField(blank=True, null=True, related_name='product_type', to='store.ProductAttribute')),
+                ('attributes', models.ManyToManyField(related_name='product_type', to='store.ProductAttribute')),
             ],
             options={
                 'ordering': ['-created'],
@@ -280,7 +280,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='categories',
-            field=models.ManyToManyField(blank=True, null=True, related_name='products', to='store.ProductCategory'),
+            field=models.ManyToManyField(related_name='products', to='store.ProductCategory'),
         ),
         migrations.AddField(
             model_name='product',

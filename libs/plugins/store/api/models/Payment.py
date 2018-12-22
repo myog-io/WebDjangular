@@ -99,7 +99,7 @@ class Payment(ActiveModel, BaseModel):
                                      choices=ChargeStatus.CHOICES,
                                      default=ChargeStatus.NOT_CHARGED)
 
-    billing_address = models.ForeignKey(Address, related_name='', on_delete=models.CASCADE, blank=True, null=True)
+    billing_address = models.ForeignKey(Address, related_name='payment', on_delete=models.CASCADE, blank=True, null=True)
 
     customer_ip_address = models.GenericIPAddressField(blank=True, null=True)
     extra_data = JSONField()
