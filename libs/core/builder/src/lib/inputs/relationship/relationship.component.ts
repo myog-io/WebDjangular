@@ -81,7 +81,7 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
           id = value.pk;
           delete(value.pk);
         }
-        let entity = this.config.model(this.datastore, {id:id,attributes:value});
+        let entity = new this.config.model(this.datastore, {id:id,attributes:value});
         this.title = entity.toString();
       }else{
         this.title = value;
@@ -105,7 +105,9 @@ export class BuilderFormRelationshipComponent implements BuilderFormField, OnIni
   selectOption(entry) {
     this.windowRef.close();
     const group: AbstractForm = this.group.get(this.config.name) as AbstractForm;
-    group.populateForm(entry);
+    group.setValue(entry)
+    //group.generateForm();
+    //group.populateForm(entry);
     this.title = entry.toString();
     this.relationshipUpdated.emit({ name: this.config.name, entity: entry });
   }

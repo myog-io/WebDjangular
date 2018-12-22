@@ -95,6 +95,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
 
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
+        if (key === 'id') continue;
         if (key.search(/\./) >= 0) {
           // Let's check if theres a . in the middle to run Link or Download FUnctions
           let keys = key.split(/\./);
@@ -122,11 +123,11 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               promises.push(promise);
             } else if (entry.extraOptions[keys[0]].model) {
               const relationshipModel = entry.extraOptions[keys[0]].model;
-              let belongsTo = null;
-              if(entry.belongsTo){
-                belongsTo = entry.belongsTo.find((en: any) => en.propertyName == keys[0]);
+              let belongTo = null;
+              if(entry.belongTo){
+                belongTo = entry.belongTo.find((en: any) => en.propertyName == keys[0]);
               }
-              if (belongsTo) {
+              if (belongTo) {
                 let options = {
                   page: { size: 1, number: 1 },
                 }

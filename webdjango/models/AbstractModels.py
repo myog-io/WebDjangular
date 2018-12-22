@@ -11,7 +11,7 @@ class BaseModel(models.Model):
 
 class PermalinkModel(models.Model):
 
-    slug = models.SlugField(max_length=256)
+    slug = models.SlugField(max_length=255, unique=True)
 
     @property
     def absolute_url(self):

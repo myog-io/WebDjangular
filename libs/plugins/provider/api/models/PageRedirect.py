@@ -6,12 +6,11 @@ from webdjango.models.AbstractModels import BaseModel
 
 
 class PageRedirect(BaseModel):
-    default_page = models.OneToOneField(
+    default_page = models.ForeignKey(
         Page, on_delete=models.CASCADE, related_name='provider_default')
-    redirect_page = models.OneToOneField(
+    redirect_page = models.ForeignKey(
         Page, on_delete=models.CASCADE, related_name='provider_redirect')
-    cities = models.ForeignKey(
-        City, related_name='redirect', on_delete=models.CASCADE,blank=True, null=True)
+    cities = models.ManyToManyField(City)
 
     class Meta:
         db_table = 'provider_redirect'
