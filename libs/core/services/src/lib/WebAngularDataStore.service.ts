@@ -22,6 +22,8 @@ import { Observable } from 'rxjs';
 import { ResellerModel } from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
 import { CondoModel } from 'libs/plugins/provider/src/lib/data/models/Condo.model';
 import { ChannelModel } from 'libs/plugins/provider/src/lib/data/models/Channel.model';
+import { ProductAttributeModel } from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
+import { ProductAttributeOptionModel } from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
 // tslint:disable-next-line:variable-name
 
 function cleanEmptyRecursive(attribute) {
@@ -78,6 +80,8 @@ const config: DatastoreConfig = {
     Channel: ChannelModel, // Provider
     Product: ProductModel,
     ProductType: ProductTypeModel,
+    ProductAttribute: ProductAttributeModel,
+    ProductAttributeOption: ProductAttributeOptionModel
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes

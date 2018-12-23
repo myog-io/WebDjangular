@@ -181,7 +181,7 @@ export class AbstractForm extends FormGroup {
     let control = this.get(formKey);
 
     return (
-      control.value.filter(function (alreadyRelatedEntity) {
+      control.value && control.value.filter(function (alreadyRelatedEntity) {
         return alreadyRelatedEntity.pk == toRelateEntity.pk;
       }).length > 0
     );

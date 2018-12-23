@@ -14,7 +14,7 @@ import {ProductAttributeModel} from "./ProductAttribute.model";
   modelEndpointUrl: 'store/product-type',
 })
 export class ProductTypeModel extends AbstractModel {
-  public static include = null;
+  public static include = 'data';
 
   @Attribute()
   id: string;
@@ -58,36 +58,19 @@ export class ProductTypeModel extends AbstractModel {
   })
   product_class: ProductClasses;
 
-  @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'formArray',
-    formType: FormArray,
-    label: 'Attributes',
-    smart_table_mode: 'external',
-    model: ProductAttributeModel,
-    sort: 2
-  })
-  attributes: ProductAttributeModel[];
-
-
   @HasMany()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'formArray',
+    type: 'checkbox',
+    label: 'Attributes',
+    wrapper_class: 'col-12',
     formType: FormArray,
-    label: 'Variant Attributes',
-    smart_table_mode: 'external',
-    model: ProductAttributeModel,
-    sort: 3,
-    conditional: {
-      '==': [
-        {var: 'product_class'},
-        ProductClasses.variant
-      ]
-    }
+    options_model: ProductAttributeModel,
+    sort: 2,
+    name: 'data',
+    model: ProductAttributeModel
   })
-  variant_attributes: ProductAttributeModel[];
+  data: ProductAttributeModel[];
+
 
 
   @Attribute()

@@ -41,7 +41,7 @@ export class ProductAttributeModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    //validators: [Validators.required],
     type: 'select',
     label: 'Type',
     wrapper_class: 'col-6',
@@ -55,7 +55,7 @@ export class ProductAttributeModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    //validators: [Validators.required],
     type: 'switch',
     label: 'Is required?',
     wrapper_class: 'col-6'
