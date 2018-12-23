@@ -1,4 +1,4 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
@@ -6,8 +6,7 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {ProductAttributeInterface, ProductAttributeModel} from "./ProductAttribute.model";
-import {RangeModel} from "@webdjangular/plugins/provider-data";
+import {ProductAttributeModel} from "./ProductAttribute.model";
 
 
 @JsonApiModelConfig({
@@ -30,6 +29,17 @@ export class ProductTypeModel extends AbstractModel {
     sort: 0,
   })
   name: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Code',
+    wrapper_class: 'col-6',
+    placeholder: 'Enter the Product Type code',
+    sort: 0,
+  })
+  code: string;
 
   @Attribute()
   @ExtraOptions({
@@ -58,10 +68,10 @@ export class ProductTypeModel extends AbstractModel {
     model: ProductAttributeModel,
     sort: 2
   })
-  attributes: ProductAttributeInterface[];
+  attributes: ProductAttributeModel[];
 
 
-  @Attribute()
+  @HasMany()
   @ExtraOptions({
     validators: [Validators.required],
     type: 'formArray',
@@ -77,7 +87,7 @@ export class ProductTypeModel extends AbstractModel {
       ]
     }
   })
-  variant_attributes: ProductAttributeInterface[];
+  variant_attributes: ProductAttributeModel[];
 
 
   @Attribute()

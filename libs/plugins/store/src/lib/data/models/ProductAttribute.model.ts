@@ -7,15 +7,8 @@ import {ProductAttributeOptionModel} from "./ProductAttributeOption.model";
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {RangeInterface, RangeModel} from "@webdjangular/plugins/provider-data";
 
-export interface ProductAttributeInterface {
-  name: string;
-  code?: string;
-  required: boolean;
-  type: string;
-  options: any;
-}
+
 @JsonApiModelConfig({
   type: 'ProductAttribute',
   modelEndpointUrl: 'store/product-attribute',

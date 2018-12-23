@@ -189,7 +189,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               entry[key] = new Array();
             }
           } else {
-            entry[key] = data[key].toString('utf8');
+            entry[key] = data[key];
           }
         }
       }
@@ -224,6 +224,14 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               this.toaster.danger(`Error saving the Changes, Details: ${err.detail}`, `Error!`, { duration: 5000 });
             }
 
+          }
+          /* CONTINUE */
+          if (index >= this.data.length) {
+            this.loading = false;
+            this.toaster.success(`All Record Saved with Success`, `Success!`);
+          } else {
+            index++;
+            this.loadRecursive(index);
           }
         } else {
           this.toaster.danger(`Error saving the Changes`, `Error!`);

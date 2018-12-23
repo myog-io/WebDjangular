@@ -9,22 +9,40 @@ from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
 class ProductAttributeSerializer(WebDjangoSerializer):
-
+    included_serializers = {
+        #'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',
+        #'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        #'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
+        #'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+    }
 
     class Meta:
         model = ProductAttribute
 
 
 class ProductTypeSerializer(WebDjangoSerializer):
+    included_serializers = {
+        'attributes': 'libs.plugins.store.api.serializers.ProductSerializer.ProductAttributeSerializer',
+        'variant_attributes': 'libs.plugins.store.api.serializers.ProductSerializer.ProductAttributeSerializer',
+    }
+    weight = serializers.CharField(required=False)
+   #attributes = ResourceRelatedField(
+   #    many=True,
+   #    queryset=ProductAttribute.objects,
+   #    related_link_url_kwarg='pk',
+   #    self_link_view_name='product-type-relationships',
+   #    related_link_view_name='product-type-related',
+   #    required=False,
+   #)
 
-    attributes = ResourceRelatedField(
-        many=True,
-        queryset=ProductAttribute.objects,
-        related_link_url_kwarg='pk',
-        self_link_view_name='product-type-relationships',
-        related_link_view_name='product-type-related',
-        required=False,
-    )
+   #variant_attributes = ResourceRelatedField(
+   #    many=True,
+   #    queryset=ProductAttribute.objects,
+   #    related_link_url_kwarg='pk',
+   #    self_link_view_name='product-type-relationships',
+   #    related_link_view_name='product-type-related',
+   #    required=False,
+   #)
 
     class Meta:
         model = ProductType

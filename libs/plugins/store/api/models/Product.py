@@ -62,7 +62,12 @@ class ProductAttribute(TranslationModel):
     required = models.BooleanField(default=False)
     type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
                             default=CoreConfigInput.FIELD_TYPE_TEXT)
-    is_variant = models.BooleanField(default=False)
+    product_type = models.ForeignKey(
+        'ProductType', related_name='product_attributes', blank=True,
+        null=True, on_delete=models.CASCADE)
+    product_variant_type = models.ForeignKey(
+        'ProductType', related_name='variant_attributes', blank=True,
+        null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-created']
@@ -72,14 +77,14 @@ class ProductType(BaseModel):
     product_class = models.CharField(
         max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
     name = models.CharField(max_length=128)
-    code = models.CharField(max_length=64)
+    code = models.SlugField(max_length=64, unique=True)
     has_variants = models.BooleanField(default=True)
     is_shipping_required = models.BooleanField(default=False)
 
     weight = MeasurementField(
         measurement=Weight, unit_choices=WeightUnits.CHOICES,
         default=zero_weight)
-    attributes = models.ManyToManyField('ProductAttribute', related_name='product_type')
+
 
     class Meta:
         ordering = ['-created']
