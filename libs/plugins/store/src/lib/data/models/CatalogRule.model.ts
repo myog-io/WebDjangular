@@ -22,16 +22,6 @@ export class CatalogRuleModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Type',
-    wrapper_class: 'col-6',
-    placeholder: '',
-  })
-  type: string;
-
-  @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
     label: 'Name',
     wrapper_class: 'col-6',
     placeholder: '',
@@ -40,6 +30,17 @@ export class CatalogRuleModel extends AbstractModel {
 
   @Attribute()
   conditions: any;
+
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'Type',
+    wrapper_class: 'col-6',
+    placeholder: '',
+  })
+  rule_type: string;
 
   @Attribute()
   @ExtraOptions({
