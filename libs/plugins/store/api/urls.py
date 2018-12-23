@@ -6,7 +6,7 @@ from .views.CartViewSet import CartViewSet
 from .views.DiscountViewSet import CartRuleViewSet, CatalogRuleViewSet
 from .views.OrderViewSet import OrderViewSet
 from .views.PaymentViewSet import PaymentViewSet
-from .views.ProductViewSet import ProductViewSet, ProductCategoryViewSet, ProductRelationshipView, ProductTypeViewSet, ProductAttributeRelationshipView, ProductAttributeViewSet
+from .views.ProductViewSet import ProductViewSet, ProductCategoryViewSet, ProductRelationshipView, ProductTypeViewSet, ProductTypeRelationshipView, ProductAttributeRelationshipView, ProductAttributeViewSet
 from .views.ShippingViewSet import ShippingMethodViewSet
 
 router = DefaultRouter()
@@ -29,6 +29,7 @@ router.register('shipping-method', ShippingMethodViewSet,
 
 urlpatterns = [
     url(r'store/', include(router.urls)),
+    # Product
     url(
         regex=r'^store/product/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=ProductRelationshipView.as_view(),
@@ -37,8 +38,16 @@ urlpatterns = [
     url(r'^store/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         ProductViewSet.as_view({'get': 'retrieve_related'}),
         name='product-related'),
-
-
+    # Product Type
+    url(
+        regex=r'^store/product-type/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        view=ProductTypeRelationshipView.as_view(),
+        name='product-type-relationships'
+    ),
+    url(r'^store/product-type/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        ProductTypeViewSet.as_view({'get': 'retrieve_related'}),
+        name='product-type-related'),
+    # Product Type Attributes (data)
     url(
         regex=r'^store/product-attribute/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=ProductAttributeRelationshipView.as_view(),
