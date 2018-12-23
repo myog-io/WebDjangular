@@ -17,6 +17,9 @@ export class ProductAttributeModel extends AbstractModel {
   public static include = null;
 
   @Attribute()
+  id: string;
+
+  @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
@@ -76,13 +79,6 @@ export class ProductAttributeModel extends AbstractModel {
 
   permissions: PermissionModel[];
 
-  get pk() {
-    return null;
-  }
-
-  set pk(value) {
-
-  }
 
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;

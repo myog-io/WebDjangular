@@ -29,8 +29,6 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   id: string;
 
-
-
   @BelongsTo()
   @ExtraOptions({
     validators: [Validators.required],

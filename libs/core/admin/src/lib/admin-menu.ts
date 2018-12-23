@@ -43,7 +43,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
           },
           {
             title: 'Product types',
-            link: '/store/catalog/product-types'
+            link: '/store/catalog/types'
+          },
+          {
+            title: 'Product attribute',
+            link: '/store/catalog/attributes'
           },
         ]
       },

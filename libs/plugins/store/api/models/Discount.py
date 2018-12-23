@@ -20,7 +20,7 @@ class DiscountValueType:
 class CartRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     conditions = JSONField(default=None, blank=True, null=True)
-    type = models.CharField(max_length=10,
+    rule_type = models.CharField(max_length=10,
                             choices=DiscountValueType.CHOICES,
                             default=DiscountValueType.FIXED)
     value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
@@ -45,7 +45,7 @@ class CartRule(ActiveModel, BaseModel):
 class CatalogRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255)
     conditions = JSONField(default=None, blank=True, null=True)
-    type = models.CharField(max_length=10,
+    rule_type = models.CharField(max_length=10,
                             choices=DiscountValueType.CHOICES,
                             default=DiscountValueType.FIXED)
     value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,

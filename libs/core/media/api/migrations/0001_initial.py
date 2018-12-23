@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('webdjango', '0002_auto_20181222_2028'),
     ]
 
     operations = [

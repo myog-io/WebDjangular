@@ -55,19 +55,13 @@ class ProductAttributeOptions(TranslationModel):
 
 
 class ProductAttribute(TranslationModel):
-    code = models.SlugField()
+    code = models.SlugField(unique=True)
     name = models.CharField(max_length=255)
     i18n_fields = ['name']
-
+    is_variant = models.BooleanField(default=False)
     required = models.BooleanField(default=False)
-    type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
+    class_type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
                             default=CoreConfigInput.FIELD_TYPE_TEXT)
-    product_type = models.ForeignKey(
-        'ProductType', related_name='product_attributes', blank=True,
-        null=True, on_delete=models.CASCADE)
-    product_variant_type = models.ForeignKey(
-        'ProductType', related_name='variant_attributes', blank=True,
-        null=True, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-created']
@@ -80,6 +74,8 @@ class ProductType(BaseModel):
     code = models.SlugField(max_length=64, unique=True)
     has_variants = models.BooleanField(default=True)
     is_shipping_required = models.BooleanField(default=False)
+
+    data = models.ManyToManyField(ProductAttribute)
 
     weight = MeasurementField(
         measurement=Weight, unit_choices=WeightUnits.CHOICES,

@@ -8,6 +8,7 @@ import { CategoryModel } from "../data/models/Category.model";
 import { ProductTypeModel } from "../data/models/ProductType.model";
 import { ProductModel } from "../data/models/Product.model";
 import { ScaffoldModule } from "@webdjangular/core/builder";
+import { ProductAttributeModel } from "../data/models/ProductAttribute.model";
 
 const routes: Routes = [
   {
@@ -35,12 +36,21 @@ const routes: Routes = [
             }
           },
           {
-            path: 'product-types',
+            path: 'types',
             loadChildren: () => ScaffoldModule,
             data: {
               model: ProductTypeModel,
               title: 'Product Type',
-              path: 'store/catalog/product-types'
+              path: 'store/catalog/types'
+            }
+          },
+          {
+            path: 'attributes',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: ProductAttributeModel,
+              title: 'Product Attribute',
+              path: 'store/catalog/attributes'
             }
           },
         ]

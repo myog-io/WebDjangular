@@ -78,7 +78,7 @@ class ChargeStatus:
 
 class Transaction(models.Model):
     token = models.CharField(max_length=128, blank=True, default='')
-    type = models.CharField(max_length=10, choices=TransactionTypes.CHOICES)
+    class_type = models.CharField(max_length=10, choices=TransactionTypes.CHOICES)
     status = models.CharField(max_length=10, choices=TransactionStatus.CHOICES)
     currency = models.CharField(max_length=10)
 

@@ -1,6 +1,6 @@
-from ..models.Product import Product, ProductCategory, ProductType
+from ..models.Product import Product, ProductCategory, ProductType, ProductAttribute
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
-    ProductSerializer, ProductTypeSerializer
+    ProductSerializer, ProductTypeSerializer, ProductAttributeSerializer
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
@@ -12,6 +12,36 @@ from rest_framework_json_api.views import ModelViewSet
 from rest_framework_json_api.views import RelatedMixin, RelationshipView
 
 
+class ProductAttributeFilter(FilterSet):
+    class Meta:
+        model = ProductAttribute
+        fields = {
+            'id': ['in'],
+            'name': ['contains', 'exact'],
+            'name': ['contains', 'exact'],
+        }
+
+
+class ProductAttributeViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Types
+    Retrieve a list of Product Types
+    Retrieve a specific Product Type
+    Update Product Type
+    Deleting Product Type
+    """
+    serializer_class = ProductAttributeSerializer
+    queryset = ProductAttribute.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    filter_class = ProductAttributeFilter
+    search_fields = ('name',)
+    permission_classes = ()
+
+class ProductAttributeRelationshipView(RelationshipView):
+    queryset = ProductAttribute.objects
 
 class ProductTypeFilter(FilterSet):
     class Meta:
@@ -40,6 +70,8 @@ class ProductTypeViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
+class ProductTypeRelationshipView(RelationshipView):
+    queryset = ProductType.objects
 
 class ProductCategoryFilter(FilterSet):
     class Meta:
@@ -68,6 +100,10 @@ class ProductCategoryViewSet(ModelViewSet):
     filter_class = ProductCategoryFilter
     search_fields = ('name',)
     permission_classes = ()
+
+
+class ProductCategoryRelationshipView(RelationshipView):
+    queryset = ProductCategory.objects
 
 
 class ProductFilter(FilterSet):

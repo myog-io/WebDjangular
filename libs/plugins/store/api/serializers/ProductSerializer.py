@@ -17,6 +17,7 @@ class ProductAttributeSerializer(WebDjangoSerializer):
     }
 
     class Meta:
+        fields = '__all__'
         model = ProductAttribute
 
 

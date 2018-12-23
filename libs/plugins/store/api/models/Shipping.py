@@ -33,7 +33,7 @@ class ShippingZone(BaseModel):
 
 class ShippingMethod(BaseModel):
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=30, choices=ShippingMethodType.CHOICES)
+    method_type = models.CharField(max_length=30, choices=ShippingMethodType.CHOICES)
     price = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                        max_digits=defaults.DEFAULT_MAX_DIGITS,
                        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, default=0)

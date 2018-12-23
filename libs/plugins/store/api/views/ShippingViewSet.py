@@ -13,7 +13,7 @@ class ShippingMethodFilter(FilterSet):
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],
-            'type': ['exact']
+            'method_type': ['exact']
         }
 
 
