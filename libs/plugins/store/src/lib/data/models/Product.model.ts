@@ -17,7 +17,8 @@ enum productDG {
   general = 'general-information',
   pricing = 'pricing',
   media = 'media',
-  addons = 'addons'
+  addons = 'addons',
+  variants = 'variants'
 }
 
 @JsonApiModelConfig({
@@ -242,12 +243,6 @@ export class ProductModel extends AbstractModel {
   addons: ProductModel[];
 
 
-
-
-
-
-
-
   @Attribute()
   created: Date;
 
@@ -297,7 +292,7 @@ export class ProductModel extends AbstractModel {
         }
       ],
       conditional: {
-        '==': [
+        '!=': [
           {var: 'product_type.id'},
           null
         ]
@@ -320,7 +315,7 @@ export class ProductModel extends AbstractModel {
         },
       ],
       conditional: {
-        '==': [
+        '!=': [
           {var: 'product_type.id'},
           null
         ]
@@ -335,12 +330,51 @@ export class ProductModel extends AbstractModel {
         },
       ],
       conditional: {
-        '==': [
-          {var: 'product_type.id'},
-          null
+        // show only after the Product Type is selected and it is NOT an Product Addon
+        "and": [
+          {
+            '!=': [
+              {var: 'product_type.id'},
+              null
+            ]
+          },
+          {
+            '!=': [
+              {var: 'product_class'},
+              ProductClasses.addon
+            ]
+          }
+        ]
+      },
+    },
+
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: productDG.variants,
+          title: 'Variants',
+        },
+      ],
+      conditional: {
+        // show only after the Product Type is selected and it is the Parent Product Variant
+        "and": [
+          {
+            '!=': [
+              {var: 'product_type.id'},
+              null
+            ]
+          },
+          {
+            '==': [
+              {var: 'product_class'},
+              ProductClasses.variant
+            ]
+          }
         ]
       },
     }
+
   ];
 
   public toString = (): string => {

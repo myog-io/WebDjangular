@@ -1,16 +1,17 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
-import {RangeInterface, RangeModel} from './Range.model';
-import {StreetInterface, StreetModel} from './Street.model';
+import {RangeModel} from './Range.model';
+import {StreetModel} from './Street.model';
 import {ExtraOptions} from '@webdjangular/core/decorator';
 import {SmartTableSettings} from '@webdjangular/core/data';
 import {FormArray, Validators} from '@angular/forms';
+import {CityModel} from "@webdjangular/plugins/provider-data";
 
 
 @JsonApiModelConfig({
-  type: 'PostalCode',
-  modelEndpointUrl: 'provider/postal_code',
+  type: 'PostalCodeRange',
+  modelEndpointUrl: 'provider/attribute/postal_code',
 })
 export class PostalCodeModel extends AbstractModel {
   public static include = null;
@@ -22,51 +23,31 @@ export class PostalCodeModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Name',
+    label: 'Start',
     wrapper_class: 'col-6',
-    placeholder: 'Enter City Name',
+    placeholder: 'Enter where the Postal Code range begins',
   })
-  name: string;
+  start: string;
 
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Short Name',
+    label: 'End',
     wrapper_class: 'col-6',
-    placeholder: 'Entery City Short Name (NY)',
+    placeholder: 'Enter where the Postal Code range ends',
   })
-  short_name: string;
+  end: string;
 
-  @Attribute()
+  @BelongsTo()
   @ExtraOptions({
-    validators: [],
-    type: 'text',
-    label: 'Code',
+    type: 'relationship',
+    label: 'City',
     wrapper_class: 'col-6',
-    placeholder: 'Entery City Short Name (NY)',
-  });
-  code: string;
-
-  @Attribute()
-  @ExtraOptions({
-    type: 'formArray',
-    formType: FormArray,
-    label: 'Postal Codes',
-    model: RangeModel
+    options_model: CityModel,
+    backendResourceName: 'City'
   })
-  postal_codes: RangeInterface[];
-
-  @Attribute()
-  @ExtraOptions({
-    type: 'formArray',
-    formType: FormArray,
-    label: 'Streets',
-    smart_table_mode: 'external',
-    model: StreetModel
-  })
-  streets: StreetInterface[];
-
+  city: CityModel;
 
   @Attribute()
   created: Date;
@@ -90,16 +71,12 @@ export class PostalCodeModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-      id: {
-        title: '#',
-        type: 'text',
-      },
       name: {
-        title: 'Name',
+        title: 'start',
         type: 'text',
       },
       short_name: {
-        title: 'Short Name',
+        title: 'end',
         type: 'text',
       },
     },

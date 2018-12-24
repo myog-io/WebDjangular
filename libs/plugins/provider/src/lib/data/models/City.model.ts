@@ -1,12 +1,20 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
-import { RangeInterface, RangeModel } from './Range.model';
-import { StreetInterface, StreetModel } from './Street.model';
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { SmartTableSettings } from '@webdjangular/core/data';
-import { Validators, FormArray } from '@angular/forms';
+import {Attribute, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
+import {RangeInterface, RangeModel} from './Range.model';
+import {StreetInterface, StreetModel} from './Street.model';
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {SmartTableSettings} from '@webdjangular/core/data';
+import {FormArray, Validators} from '@angular/forms';
+import {ProductAttributeModel} from "../../../../../store/src/lib/data/models/ProductAttribute.model";
+import {PostalCodeModel} from "./PostalCode.model";
 
+
+enum DiplayGroups {
+  city = 'City',
+  postal_codes = 'Postal Codes',
+  streets = 'Streets'
+}
 
 @JsonApiModelConfig({
   type: 'City',
@@ -25,6 +33,7 @@ export class CityModel extends AbstractModel {
     label: 'Name',
     wrapper_class: 'col-6',
     placeholder: 'Enter City Name',
+    displayGroup: DiplayGroups.city
   })
   name: string;
 
@@ -35,6 +44,7 @@ export class CityModel extends AbstractModel {
     label: 'Short Name',
     wrapper_class: 'col-6',
     placeholder: 'Entery City Short Name (NY)',
+    displayGroup: DiplayGroups.city
   })
   short_name: string;
 
@@ -45,17 +55,23 @@ export class CityModel extends AbstractModel {
     label: 'Code',
     wrapper_class: 'col-6',
     placeholder: 'Entery City Short Name (NY)',
+    displayGroup: DiplayGroups.city
   })
   code: string;
 
-  @Attribute()
+
+  @HasMany()
   @ExtraOptions({
     type: 'formArray',
     formType: FormArray,
     label: 'Postal Codes',
-    model: RangeModel
+    wrapper_class: 'col-12',
+    options_model: PostalCodeModel,
+    model: PostalCodeModel,
+    displayGroup: DiplayGroups.postal_codes
   })
-  postal_codes: RangeInterface[];
+  postal_codes: PostalCodeModel[];
+
 
   @Attribute()
   @ExtraOptions({
@@ -63,9 +79,10 @@ export class CityModel extends AbstractModel {
     formType: FormArray,
     label: 'Streets',
     smart_table_mode: 'external',
-    model: StreetModel
+    model: StreetModel,
+    displayGroup: DiplayGroups.streets
   })
-  streets: StreetInterface[];
+  streets: StreetModel[];
 
 
   @Attribute()
@@ -87,6 +104,39 @@ export class CityModel extends AbstractModel {
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;
   };
+
+  public displayGroups = [
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: DiplayGroups.city,
+          title: 'City',
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: DiplayGroups.postal_codes,
+          title: '',
+          card_wrapper: false
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: DiplayGroups.streets,
+          title: '',
+          card_wrapper: false
+        }
+      ]
+    }
+  ];
+
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

@@ -10,6 +10,8 @@ from .views.ResellerViewSet import ResellerViewSet, ResellerRelationshipView
 
 router = DefaultRouter()
 router.register('city', CityViewSet, base_name='city')
+
+
 router.register('page-redirect', PageRedirectViewSet,
                 base_name='page-redirect')
 router.register('channel', ChannelViewSet, base_name='channel')
