@@ -1,13 +1,14 @@
-from django.conf.urls import include
-from django.conf.urls import url
-from rest_framework.routers import DefaultRouter
-
 from .views.CartViewSet import CartViewSet
 from .views.DiscountViewSet import CartRuleViewSet, CatalogRuleViewSet
 from .views.OrderViewSet import OrderViewSet
 from .views.PaymentViewSet import PaymentViewSet
-from .views.ProductViewSet import ProductViewSet, ProductCategoryViewSet, ProductRelationshipView, ProductTypeViewSet, ProductTypeRelationshipView, ProductAttributeRelationshipView, ProductAttributeViewSet
+from .views.ProductViewSet import ProductAttributeRelationshipView, \
+    ProductAttributeViewSet, ProductCategoryViewSet, ProductRelationshipView, \
+    ProductTypeRelationshipView, ProductTypeViewSet, ProductViewSet
 from .views.ShippingViewSet import ShippingMethodViewSet
+from django.conf.urls import include, url
+from rest_framework.routers import DefaultRouter
+
 
 router = DefaultRouter()
 router.register('cart', CartViewSet, base_name='cart')
@@ -27,38 +28,41 @@ router.register('shipping-method', ShippingMethodViewSet,
                 base_name='shipping-method')
 
 
-urlpatterns = [
-    url(r'store/', include(router.urls)),
-    # Product
+relationshipPatterns = [
     url(
-        regex=r'^store/product/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        regex=r'^product/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=ProductRelationshipView.as_view(),
         name='product-relationships'
     ),
-    url(r'^store/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+    url(r'^product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         ProductViewSet.as_view({'get': 'retrieve_related'}),
-        name='product-related'),
+        name='product-related'
+    ),
     # Product Type
     url(
-        regex=r'^store/product-type/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        regex=r'^product-type/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=ProductTypeRelationshipView.as_view(),
         name='product-type-relationships'
     ),
-    url(r'^store/product-type/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+    url(r'^product-type/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         ProductTypeViewSet.as_view({'get': 'retrieve_related'}),
-        name='product-type-related'),
+        name='product-type-related'
+    ),
     # Product Type Attributes (data)
     url(
-        regex=r'^store/product-attribute/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        regex=r'^product-attribute/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=ProductAttributeRelationshipView.as_view(),
         name='product-attribute-relationships'
     ),
-    url(r'^store/product-attribute/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+    url(r'^product-attribute/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         ProductAttributeViewSet.as_view({'get': 'retrieve_related'}),
-        name='product-attribute-related'),
-
-
-
+        name='product-attribute-related'
+    ),
 ]
 
-router = DefaultRouter()
+urlpatterns = [
+    url(r'store/', include(router.urls)),
+    url(r'store/', include(relationshipPatterns)),
+]
+
+router=DefaultRouter()

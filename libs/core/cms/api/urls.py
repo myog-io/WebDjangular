@@ -15,7 +15,7 @@ router.register('menu', MenuViewSet, base_name='menu')
 urlpatterns = [
     url(r'', include(router.urls)),
     url(
-        regex=r'^page/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        regex=r'^page/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=PageRelationshipView.as_view(),
         name='page-relationships'
     ),
@@ -24,7 +24,7 @@ urlpatterns = [
         name='page-related'
     ),
     url(
-        regex=r'^block/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        regex=r'^block/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=BlockRelationshipView.as_view(),
         name='block-relationships'
     ),
