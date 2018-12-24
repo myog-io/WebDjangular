@@ -80,7 +80,7 @@ relationshipPatterns = [
         view=CondoViewSet.as_view({'get': 'retrieve_related'}),
         name='condo-related'),
 
-    # Resseler relationships
+    # Reseller relationships
     url(regex=r'^reseller/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=ResellerRelationshipView.as_view(),
         name='reseller-relationships'),

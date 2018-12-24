@@ -87,7 +87,8 @@ const config: DatastoreConfig = {
     Product: ProductModel,
     ProductType: ProductTypeModel,
     ProductAttribute: ProductAttributeModel,
-    ProductAttributeOption: ProductAttributeOptionModel
+    ProductAttributeOption: ProductAttributeOptionModel,
+    PostalCodeRange: PostalCodeRangeModel
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes

@@ -6,6 +6,10 @@ import { SmartTableSettings } from '@webdjangular/core/data';
 import { Validators } from '@angular/forms';
 //import { CityModel } from './City.model';
 
+export interface PostalCodeRangeInterface {
+  start?: string;
+  end?: string;
+}
 
 @JsonApiModelConfig({
   type: 'PostalCodeRange',

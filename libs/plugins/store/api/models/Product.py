@@ -81,7 +81,6 @@ class ProductType(BaseModel):
         measurement=Weight, unit_choices=WeightUnits.CHOICES,
         default=zero_weight)
 
-
     class Meta:
         ordering = ['-created']
 
