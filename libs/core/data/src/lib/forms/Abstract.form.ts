@@ -179,11 +179,10 @@ export class AbstractForm extends FormGroup {
    */
   public doesEntityHasRelationship(formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey);
-
     return (
-      control.value && control.value.filter(function (alreadyRelatedEntity) {
-        return alreadyRelatedEntity.pk == toRelateEntity.pk;
-      }).length > 0
+      control.value && control.value.find(function (alreadyRelatedEntity) {
+        return alreadyRelatedEntity.id === toRelateEntity.id;
+      })
     );
   }
 
