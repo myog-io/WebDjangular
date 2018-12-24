@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.conf.urls import include
 from rest_framework.routers import DefaultRouter
 
+from libs.plugins.provider.api.views.CityViewSet import PostalCodeRangeViewSet, StreetViewSet, NumberRangeViewSet
 from .views.CityViewSet import CityViewSet, CityRelationshipView
 from .views.PageRedirectViewSet import PageRedirectViewSet, PageRedirectRelationshipView
 from .views.ChannelViewSet import ChannelViewSet, ChannelRelationshipView
@@ -10,6 +11,10 @@ from .views.ResellerViewSet import ResellerViewSet, ResellerRelationshipView
 
 router = DefaultRouter()
 router.register('city', CityViewSet, base_name='city')
+router.register('postal-code-range', PostalCodeRangeViewSet, base_name='postal-code-range')
+router.register('street', StreetViewSet, base_name='street')
+router.register('number-range', NumberRangeViewSet, base_name='number-range')
+
 
 
 router.register('page-redirect', PageRedirectViewSet,

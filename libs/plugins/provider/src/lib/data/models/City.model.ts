@@ -7,7 +7,7 @@ import {ExtraOptions} from '@webdjangular/core/decorator';
 import {SmartTableSettings} from '@webdjangular/core/data';
 import {FormArray, Validators} from '@angular/forms';
 import {ProductAttributeModel} from "../../../../../store/src/lib/data/models/ProductAttribute.model";
-import {PostalCodeModel} from "./PostalCode.model";
+import {PostalCodeRangeModel} from "./PostalCodeRangeModel";
 
 
 enum DiplayGroups {
@@ -66,11 +66,11 @@ export class CityModel extends AbstractModel {
     formType: FormArray,
     label: 'Postal Codes',
     wrapper_class: 'col-12',
-    options_model: PostalCodeModel,
-    model: PostalCodeModel,
+    options_model: PostalCodeRangeModel,
+    model: PostalCodeRangeModel,
     displayGroup: DiplayGroups.postal_codes
   })
-  postal_codes: PostalCodeModel[];
+  postal_codes: PostalCodeRangeModel[];
 
 
   @Attribute()

@@ -17,8 +17,8 @@ class PostalCodeRangeSerializer(WebDjangoSerializer):
     )
 
     class Meta:
-        fields = '__all__'
         model = PostalCodeRange
+        fields = '__all__'
 
 
 class NumberRangeSerializer(WebDjangoSerializer):
@@ -34,8 +34,8 @@ class NumberRangeSerializer(WebDjangoSerializer):
     )
 
     class Meta:
-        fields = '__all__'
         model = NumberRange
+        fields = '__all__'
 
 
 class StreetSerializer(WebDjangoSerializer):
@@ -51,8 +51,8 @@ class StreetSerializer(WebDjangoSerializer):
     )
 
     class Meta:
-        fields = '__all__'
         model = Street
+        fields = '__all__'
 
 
 class CitySerializer(WebDjangoSerializer):

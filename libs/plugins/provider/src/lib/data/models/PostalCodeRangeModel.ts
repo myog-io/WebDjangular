@@ -11,9 +11,9 @@ import {CityModel} from "@webdjangular/plugins/provider-data";
 
 @JsonApiModelConfig({
   type: 'PostalCodeRange',
-  modelEndpointUrl: 'provider/attribute/postal_code',
+  modelEndpointUrl: 'provider/postal-code-range',
 })
-export class PostalCodeModel extends AbstractModel {
+export class PostalCodeRangeModel extends AbstractModel {
   public static include = null;
 
   @Attribute()
