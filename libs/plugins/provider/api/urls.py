@@ -1,22 +1,22 @@
-from django.conf.urls import url
 from django.conf.urls import include
+from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 
-from libs.plugins.provider.api.views.CityViewSet import PostalCodeRangeViewSet, StreetViewSet, NumberRangeViewSet
-from .views.CityViewSet import CityViewSet, CityRelationshipView
-from .views.PageRedirectViewSet import PageRedirectViewSet, PageRedirectRelationshipView
+from libs.plugins.provider.api.views.CityViewSet import PostalCodeRangeViewSet, StreetViewSet, NumberRangeViewSet, \
+    CityRelationshipView, PostalCodeRangeRelationshipView, StreetRelationshipView, NumberRangeRelationshipView
+from libs.plugins.provider.api.views.CondoViewSet import CondoRelationshipView
+from libs.plugins.provider.api.views.ResellerViewSet import ResellerRelationshipView
 from .views.ChannelViewSet import ChannelViewSet, ChannelRelationshipView
-from .views.CondoViewSet import CondoViewSet, CondoRelationshipView
-from .views.ResellerViewSet import ResellerViewSet, ResellerRelationshipView
+from .views.CityViewSet import CityViewSet
+from .views.CondoViewSet import CondoViewSet
+from .views.PageRedirectViewSet import PageRedirectViewSet, PageRedirectRelationshipView
+from .views.ResellerViewSet import ResellerViewSet
 
 router = DefaultRouter()
 router.register('city', CityViewSet, base_name='city')
 router.register('postal-code-range', PostalCodeRangeViewSet, base_name='postal-code-range')
 router.register('street', StreetViewSet, base_name='street')
 router.register('number-range', NumberRangeViewSet, base_name='number-range')
-
-
-
 router.register('page-redirect', PageRedirectViewSet,
                 base_name='page-redirect')
 router.register('channel', ChannelViewSet, base_name='channel')
@@ -25,49 +25,68 @@ router.register('reseller', ResellerViewSet, base_name='reseller')
 
 urlpatterns = [
     url(r'provider/', include(router.urls)),
-    # Page Redirect Relations
-    url(
-        regex=r'^provider/page-redirect/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+
+    # Page Redirect relationships
+    url(regex=r'^provider/page-redirect/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=PageRedirectRelationshipView.as_view(),
-        name='page-redirect-relationships'
-    ),
-    url(r'^provider/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
-        PageRedirectViewSet.as_view({'get': 'retrieve_related'}),
+        name='page-redirect-relationships'),
+    url(regex=r'^provider/page-redirect/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=PageRedirectViewSet.as_view({'get': 'retrieve_related'}),
         name='page-redirect-related'),
-    # Channel Relations
-    url(
-        regex=r'^provider/city/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
-        view=ChannelRelationshipView.as_view(),
-        name='city-relationships'
-    ),
-    url(r'^provider/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
-        CityViewSet.as_view({'get': 'retrieve_related'}),
-        name='city-related'),
-    # City Relations
-    url(
-        regex=r'^provider/channel/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+
+    # City relationships
+    url(regex=r'^provider/city/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=CityRelationshipView.as_view(),
-        name='channel-relationships'
-    ),
-    url(r'^provider/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
-        ChannelViewSet.as_view({'get': 'retrieve_related'}),
+        name='city-relationships'),
+    url(regex=r'^provider/city/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=CityViewSet.as_view({'get': 'retrieve_related'}),
+        name='city-related'),
+
+    # Postal Code Range relationships
+    url(regex=r'^provider/postal-code-range/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        view=PostalCodeRangeRelationshipView.as_view(),
+        name='postal-code-range-relationships'),
+    url(regex=r'^provider/postal-code-range/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=PostalCodeRangeViewSet.as_view({'get': 'retrieve_related'}),
+        name='postal-code-range-related'),
+
+    # Street relationships
+    url(regex=r'^provider/street/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        view=StreetRelationshipView.as_view(),
+        name='street-relationships'),
+    url(regex=r'^provider/street/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=StreetViewSet.as_view({'get': 'retrieve_related'}),
+        name='street-related'),
+
+    # Number Range relationships
+    url(regex=r'^provider/number-range/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        view=NumberRangeRelationshipView.as_view(),
+        name='number-range-relationships'),
+    url(regex=r'^provider/number-range/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=NumberRangeViewSet.as_view({'get': 'retrieve_related'}),
+        name='number-range-related'),
+
+    # Channel relationships
+    url(regex=r'^provider/channel/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+        view=ChannelRelationshipView.as_view(),
+        name='channel-relationships'),
+    url(regex=r'^provider/channel/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=ChannelViewSet.as_view({'get': 'retrieve_related'}),
         name='channel-related'),
-    # Condo Relations
-    url(
-        regex=r'^provider/condo/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+
+    # Condo relationships
+    url(regex=r'^provider/condo/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=CondoRelationshipView.as_view(),
-        name='condo-relationships'
-    ),
-    url(r'^provider/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
-        CondoViewSet.as_view({'get': 'retrieve_related'}),
+        name='condo-relationships'),
+    url(regex=r'^provider/condo/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=CondoViewSet.as_view({'get': 'retrieve_related'}),
         name='condo-related'),
-    # Resseler Relations
-    url(
-        regex=r'^provider/reseller/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
+
+    # Resseler relationships
+    url(regex=r'^provider/reseller/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)$',
         view=ResellerRelationshipView.as_view(),
-        name='reseller-relationships'
-    ),
-    url(r'^provider/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
-        ResellerViewSet.as_view({'get': 'retrieve_related'}),
+        name='reseller-relationships'),
+    url(regex=r'^provider/product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=ResellerViewSet.as_view({'get': 'retrieve_related'}),
         name='reseller-related'),
 ]

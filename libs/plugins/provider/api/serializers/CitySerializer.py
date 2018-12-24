@@ -12,8 +12,8 @@ class PostalCodeRangeSerializer(WebDjangoSerializer):
         many=False,
         queryset=City.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='postal-code-relationships',
-        related_link_view_name='postal-code-related',
+        self_link_view_name='postal-code-range-relationships',
+        related_link_view_name='postal-code-range-related',
     )
 
     class Meta:

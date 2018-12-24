@@ -1,11 +1,9 @@
 import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
-import {RangeModel} from './Range.model';
-import {StreetModel} from './Street.model';
 import {ExtraOptions} from '@webdjangular/core/decorator';
 import {SmartTableSettings} from '@webdjangular/core/data';
-import {FormArray, Validators} from '@angular/forms';
+import {Validators} from '@angular/forms';
 import {CityModel} from "@webdjangular/plugins/provider-data";
 
 
