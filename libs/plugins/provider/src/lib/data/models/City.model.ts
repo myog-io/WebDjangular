@@ -1,12 +1,10 @@
 import {Attribute, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
-import {RangeInterface, RangeModel} from './Range.model';
-import {StreetInterface, StreetModel} from './Street.model';
+import {StreetModel} from './Street.model';
 import {ExtraOptions} from '@webdjangular/core/decorator';
 import {SmartTableSettings} from '@webdjangular/core/data';
 import {FormArray, Validators} from '@angular/forms';
-import {ProductAttributeModel} from "../../../../../store/src/lib/data/models/ProductAttribute.model";
 import {PostalCodeRangeModel} from "./PostalCodeRangeModel";
 
 
@@ -21,7 +19,7 @@ enum DiplayGroups {
   modelEndpointUrl: 'provider/city',
 })
 export class CityModel extends AbstractModel {
-  public static include = null;
+  public static include = 'postal_codes,streets';
 
   @Attribute()
   id: string;

@@ -5,6 +5,7 @@ import {
   DatastoreConfig,
   JsonApiModel,
   ModelType,
+  ModelConfig,
 } from 'angular2-jsonapi';
 
 
@@ -15,7 +16,7 @@ import { ContentTypeModel, AbstractModel } from '@webdjangular/core/data-models'
 import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 import { CoreConfigInputModel } from 'libs/core/data/src/lib/models/CoreConfigInput.model';
 import { CoreConfigModel } from 'libs/core/data/src/lib/models/CoreConfig.model';
-import { CityModel } from '@webdjangular/plugins/provider-data';
+import { CityModel, StreetModel } from '@webdjangular/plugins/provider-data';
 import { ProductModel } from 'libs/plugins/store/src/lib/data/models/Product.model';
 import { ProductTypeModel } from 'libs/plugins/store/src/lib/data/models/ProductType.model';
 import { Observable } from 'rxjs';
@@ -24,6 +25,8 @@ import { CondoModel } from 'libs/plugins/provider/src/lib/data/models/Condo.mode
 import { ChannelModel } from 'libs/plugins/provider/src/lib/data/models/Channel.model';
 import { ProductAttributeModel } from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
 import { ProductAttributeOptionModel } from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
+import { HttpHeaders } from '@angular/common/http';
+import { PostalCodeRangeModel } from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
 // tslint:disable-next-line:variable-name
 
 function cleanEmptyRecursive(attribute) {
@@ -75,9 +78,12 @@ const config: DatastoreConfig = {
     CoreConfigInput: CoreConfigInputModel,
     CoreConfig: CoreConfigModel,
     City: CityModel, // Provider
+    PostalCodeRange: PostalCodeRangeModel, // Preovider
+    Street: StreetModel,
     Reseller: ResellerModel, // Provider
     Condo: CondoModel, // Provider
     Channel: ChannelModel, // Provider
+
     Product: ProductModel,
     ProductType: ProductTypeModel,
     ProductAttribute: ProductAttributeModel,
@@ -132,10 +138,6 @@ export class WebAngularDataStore extends JsonApiDatastore {
    * @param modelType
    * @param attributes
    */
-  //public transformSerializedNamesToPropertyNames<T extends JsonApiModel>(modelType: ModelType<T>, attributes: any) {
-  //  //let properties = super.transformSerializedNamesToPropertyNames(modelType,attributes);
-  //  return attributes;
-  //}
 
   saveHasManyRelationship<T extends JsonApiModel>(hasManyFields = [], modelConfig = {}, extraOptions = {}, model: JsonApiModel): Observable<any> {
     return new Observable(observe => {

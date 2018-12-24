@@ -1,10 +1,10 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-import {ExtraOptions} from '@webdjangular/core/decorator';
-import {SmartTableSettings} from '@webdjangular/core/data';
-import {Validators} from '@angular/forms';
-import {CityModel} from "@webdjangular/plugins/provider-data";
+import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { PermissionModel } from '@webdjangular/core/users-models';
+import { ExtraOptions } from '@webdjangular/core/decorator';
+import { SmartTableSettings } from '@webdjangular/core/data';
+import { Validators } from '@angular/forms';
+//import { CityModel } from './City.model';
 
 
 @JsonApiModelConfig({
@@ -37,15 +37,12 @@ export class PostalCodeRangeModel extends AbstractModel {
   })
   end: string;
 
-  @BelongsTo()
+  @BelongsTo({key:'City'})
   @ExtraOptions({
-    type: 'relationship',
-    label: 'City',
-    wrapper_class: 'col-6',
-    options_model: CityModel,
-    backendResourceName: 'City'
+    type: 'hidden',
+
   })
-  city: CityModel;
+  city: number;
 
   @Attribute()
   created: Date;
@@ -69,11 +66,11 @@ export class PostalCodeRangeModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-      name: {
+      start: {
         title: 'start',
         type: 'text',
       },
-      short_name: {
+      end: {
         title: 'end',
         type: 'text',
       },

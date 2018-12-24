@@ -18,7 +18,8 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
   constructor(
     private datastore: WebAngularDataStore,
     private model,
-    conf: WebAngularSmartTableDataSourceOptions | {} = {}
+    conf: WebAngularSmartTableDataSourceOptions | {} = {},
+    private customUrl:string = null
   ) {
     super();
     this.conf = new WebAngularSmartTableDataSourceOptions(conf);
@@ -36,7 +37,7 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
       findOptions.ordering = this.buildSortOptions()
     }
     return this.datastore
-      .findAll(this.model, findOptions)
+      .findAll(this.model, findOptions,null,this.customUrl)
       .pipe(
         map(res => {
           this.meta = res.getMeta();

@@ -122,29 +122,30 @@ export class ScaffoldEditComponent implements OnInit {
   update(redirect: boolean) {
     this.loading = true;
     this.form.updateModel(this.entry);
-    let sub = this.entry.save(this.inlcude_args).subscribe(
+
+    this.entry.saveAll(this.inlcude_args).then(
       (result) => {
         this.toaster.success(`Changes have been saved`, `Success!`);
         this.loading = false;
-        sub.unsubscribe();
+
         if (redirect) {
           this.router.navigate([`/${this.base_path}`]);
         }
-
-      },
-      (error) => {
-        this.loading = false;
-        if (error.errors && error.errors.length > 0) {
-          for (let i = 0; i < error.errors.length; i++) {
-            // TODO: Check pointer to see if is for an specific field and set an error inside the field
-            const element = error.errors[i];
-            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
-          }
-        } else {
-          this.toaster.danger(`Error saving the Changes`, `Error!`);
-        }
       }
-    )
+    ).catch((error) => {
+      console.log(error)
+      this.loading = false;
+      if (error.errors && error.errors.length > 0) {
+        for (let i = 0; i < error.errors.length; i++) {
+          // TODO: Check pointer to see if is for an specific field and set an error inside the field
+          const element = error.errors[i];
+          this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+        }
+      } else {
+        this.toaster.danger(`Error saving the Changes`, `Error!`);
+      }
+    })
+
   }
 
   relationshipUpdated(data) {

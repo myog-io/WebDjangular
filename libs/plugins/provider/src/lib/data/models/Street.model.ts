@@ -13,8 +13,8 @@ export interface StreetInterface {
   numbers: RangeInterface[];
 }
 @JsonApiModelConfig({
-  type: 'City',
-  modelEndpointUrl: 'provider/city',
+  type: 'Street',
+  modelEndpointUrl: 'provider/street',
 })
 export class StreetModel extends AbstractModel {
   @Attribute()

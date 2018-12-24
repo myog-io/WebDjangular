@@ -6,6 +6,7 @@ import {SmartTableSettings} from '@webdjangular/core/data';
 import {LocalDataSource} from 'ng2-smart-table';
 import {NbWindowRef, NbWindowService} from '@nebular/theme';
 import {WebAngularDataStore} from '@webdjangular/core/services';
+import { FormArray, FormGroup } from '@angular/forms';
 
 enum state {
   start = 'start',
@@ -49,7 +50,7 @@ enum state {
 export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {
   public smart_table_settings: SmartTableSettings = {
     editable: true,
-    mode: 'inline',
+    mode: 'external',
     columns: {},
     pager: {
       perPage: 20,
@@ -185,7 +186,22 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   private setGroupValue(val: any) {
     // First Creation is Triggergin an Error
     // "Must supply a value for form control at index: 0
-    this.group.get(this.config.name).setValue(val);
+    const fa = this.group.get(this.config.name) as FormArray;
+
+    for (let i = 0; i < val.length; i++) {
+      const element = val[i];
+      const fg = fa.get(i.toString()) as FormGroup;
+      if(fg){
+        for (const key in element) {
+
+          if (element.hasOwnProperty(key)) {
+            fg.get(key).setValue(element[key])
+
+          }
+        }
+      }
+
+    }
   }
 
   /**
