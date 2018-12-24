@@ -1,7 +1,8 @@
-from ..models.City import City, Street, PostalCodeRange, NumberRange
-from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
+
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
+from ..models.City import City, Street, PostalCodeRange, NumberRange
+
 
 class PostalCodeRangeSerializer(WebDjangoSerializer):
     included_serializers = {
@@ -14,9 +15,11 @@ class PostalCodeRangeSerializer(WebDjangoSerializer):
         self_link_view_name='postal-code-relationships',
         related_link_view_name='postal-code-related',
     )
+
     class Meta:
         fields = '__all__'
         model = PostalCodeRange
+
 
 class NumberRangeSerializer(WebDjangoSerializer):
     included_serializers = {
@@ -29,9 +32,11 @@ class NumberRangeSerializer(WebDjangoSerializer):
         self_link_view_name='number-range-relationships',
         related_link_view_name='number-range-related',
     )
+
     class Meta:
         fields = '__all__'
         model = NumberRange
+
 
 class StreetSerializer(WebDjangoSerializer):
     included_serializers = {
@@ -44,10 +49,10 @@ class StreetSerializer(WebDjangoSerializer):
         self_link_view_name='street-relationships',
         related_link_view_name='street-related',
     )
+
     class Meta:
         fields = '__all__'
         model = Street
-
 
 
 class CitySerializer(WebDjangoSerializer):

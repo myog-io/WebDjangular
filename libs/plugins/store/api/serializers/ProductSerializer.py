@@ -49,6 +49,7 @@ class ProductCategorySerializer(WebDjangoSerializer):
         model = ProductCategory
         fields = '__all__'
 
+
 class ProductSerializer(WebDjangoSerializer):
     included_serializers = {
         'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',

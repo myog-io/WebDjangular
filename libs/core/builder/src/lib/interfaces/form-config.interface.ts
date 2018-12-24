@@ -30,6 +30,7 @@ export interface BuilderFormGroupConfig {
   display?: boolean;
   conditional?: any;
   fields?: BuilderFormFieldConfig[];
+  card_wrapper?: boolean;
 }
 export interface BuilderFormCopyArray {
   name: string;

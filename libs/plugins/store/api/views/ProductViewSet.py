@@ -5,12 +5,12 @@ from django_filters.filterset import FilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import action
-from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet
-from rest_framework_json_api.views import RelatedMixin, RelationshipView
+from rest_framework_json_api.views import RelationshipView
 
+from ..models.Product import Product, ProductCategory, ProductType
+from ..serializers.ProductSerializer import ProductCategorySerializer, \
+    ProductSerializer, ProductTypeSerializer
 
 class ProductAttributeFilter(FilterSet):
     class Meta:
@@ -134,7 +134,6 @@ class ProductViewSet(ModelViewSet):
     filter_class = ProductFilter
     search_fields = ('name',)
     permission_classes = ()
-
 
 
 class ProductRelationshipView(RelationshipView):

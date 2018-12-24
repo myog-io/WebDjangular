@@ -1,19 +1,19 @@
-from ..exceptions import InsufficientStock
 from decimal import Decimal
-from django.conf import settings
-from django_mysql.models import JSONField
+
 from django.db import models
 from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField
-from flex.loading.common import max_length
-from libs.plugins.store.api import defaults
 from measurement.measures import Weight
+
+from libs.core.media.api.models.Media import Media
+from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel, \
     PermalinkModel
 from webdjango.models.CoreConfig import CoreConfigInput
 from webdjango.models.TranslationModel import TranslationModel
 from webdjango.utils.weight import WeightUnits, zero_weight
-from libs.core.media.api.models.Media import Media
+from ..exceptions import InsufficientStock
+
 
 class ProductClasses:
     SIMPLE = 'simple'
@@ -100,10 +100,10 @@ class BaseProduct(ActiveModel, TranslationModel):
     cost = MoneyField(
         'list', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
-    list = MoneyField(
+    pricing_list = MoneyField(
         'list', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
-    sale = MoneyField(
+    pricing_sale = MoneyField(
         'sale', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
 
@@ -120,8 +120,6 @@ class BaseProduct(ActiveModel, TranslationModel):
         abstract = True
 
 
-
-
 class Product(BaseProduct):
     product_class = models.CharField(
         max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
@@ -131,8 +129,6 @@ class Product(BaseProduct):
     #  product class VARIANT
     variant_parent = models.ForeignKey('Product', related_name='variant', on_delete=models.CASCADE, blank=True,
                                        null=True)
-
-
 
     #  product class BUNDLE
     bundle_products = models.ManyToManyField('Product', related_name='bundle_parent')
@@ -159,19 +155,18 @@ class Product(BaseProduct):
     @property
     def base_price(self):
         # TODO: Check Based on Selected Children
-        return self.pricing.sale or self.pricing.list
+        return self.pricing_sale or self.pricing_list
 
     @property
-    def is_shipping_required(self):
+    def is_shipping_required(self) -> bool:
         # TODO: Based on the Product Class
         return True
 
     @property
-    def is_in_stock(self):
+    def is_in_stock(self) -> bool:
         return self.quantity_available > 0
+
 
 class ProductAttributeValue(BaseModel):
     product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
     value = models.CharField(max_length=255, blank=True, default='')
-
-

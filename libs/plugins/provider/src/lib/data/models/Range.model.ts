@@ -42,7 +42,7 @@ export class RangeModel extends AbstractModel {
   }
   public toString = (): string => {
     return `Start:${this.start} End:${this.end}`;
-  }
+  };
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
