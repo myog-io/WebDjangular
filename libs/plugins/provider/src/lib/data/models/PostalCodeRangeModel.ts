@@ -4,8 +4,12 @@ import {PermissionModel} from '@webdjangular/core/users-models';
 import {ExtraOptions} from '@webdjangular/core/decorator';
 import {SmartTableSettings} from '@webdjangular/core/data';
 import {Validators} from '@angular/forms';
-import {CityModel} from "@webdjangular/plugins/provider-data";
+import {CityModel, RangeInterface} from "@webdjangular/plugins/provider-data";
 
+export interface PostalCodeRangeInterface {
+  start?: string;
+  end?: string;
+}
 
 @JsonApiModelConfig({
   type: 'PostalCodeRange',

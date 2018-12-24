@@ -24,6 +24,8 @@ import { CondoModel } from 'libs/plugins/provider/src/lib/data/models/Condo.mode
 import { ChannelModel } from 'libs/plugins/provider/src/lib/data/models/Channel.model';
 import { ProductAttributeModel } from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
 import { ProductAttributeOptionModel } from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
+import {PostalCodeRangeModel} from "libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel";
+
 // tslint:disable-next-line:variable-name
 
 function cleanEmptyRecursive(attribute) {
@@ -81,7 +83,8 @@ const config: DatastoreConfig = {
     Product: ProductModel,
     ProductType: ProductTypeModel,
     ProductAttribute: ProductAttributeModel,
-    ProductAttributeOption: ProductAttributeOptionModel
+    ProductAttributeOption: ProductAttributeOptionModel,
+    PostalCodeRange: PostalCodeRangeModel
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes
