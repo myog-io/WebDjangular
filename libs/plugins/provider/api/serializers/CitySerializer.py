@@ -12,13 +12,13 @@ class PostalCodeRangeSerializer(WebDjangoSerializer):
         many=False,
         queryset=City.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='postal-code-relationships',
-        related_link_view_name='postal-code-related',
+        self_link_view_name='postal-code-range-relationships',
+        related_link_view_name='postal-code-range-related',
     )
 
     class Meta:
-        fields = '__all__'
         model = PostalCodeRange
+        fields = '__all__'
 
 
 class NumberRangeSerializer(WebDjangoSerializer):
@@ -34,8 +34,8 @@ class NumberRangeSerializer(WebDjangoSerializer):
     )
 
     class Meta:
-        fields = '__all__'
         model = NumberRange
+        fields = '__all__'
 
 
 class StreetSerializer(WebDjangoSerializer):
@@ -51,8 +51,8 @@ class StreetSerializer(WebDjangoSerializer):
     )
 
     class Meta:
-        fields = '__all__'
         model = Street
+        fields = '__all__'
 
 
 class CitySerializer(WebDjangoSerializer):

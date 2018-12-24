@@ -3,10 +3,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
+from rest_framework_json_api.views import RelationshipView
 
 from ..models.PageRedirect import PageRedirect
 from ..serializers.PageRedirectSerializer import PageRedirectSerializer
-from rest_framework_json_api.views import RelationshipView
+
+
 class PageRedirectFilter(FilterSet):
     class Meta:
         model = PageRedirect
