@@ -1,19 +1,21 @@
-import { JsonApiModelConfig, Attribute } from "angular2-jsonapi";
-import { AbstractModel } from "@webdjangular/core/data-models";
-import { ExtraOptions } from "@webdjangular/core/decorator";
-import { SmartTableSettings } from "@webdjangular/core/data";
+import {Attribute, BelongsTo, JsonApiModelConfig} from "angular2-jsonapi";
+import {AbstractModel} from "@webdjangular/core/data-models";
+import {ExtraOptions} from "@webdjangular/core/decorator";
+import {SmartTableSettings} from "@webdjangular/core/data";
 
-export interface RangeInterface {
+export interface NumberRangeInterface {
   start: number;
   end: number;
 }
+
 @JsonApiModelConfig({
-  type: 'City',
-  modelEndpointUrl: 'provider/city',
+  type: 'NumberRange',
+  modelEndpointUrl: 'provider/number-range',
 })
-export class RangeModel extends AbstractModel {
+export class NumberRangeModel extends AbstractModel {
+
   @Attribute()
-  @ExtraOptions( {
+  @ExtraOptions({
     type: 'text',
     inputType: 'number',
     label: 'Start',
@@ -32,6 +34,11 @@ export class RangeModel extends AbstractModel {
   })
   end: string;
 
+  @BelongsTo({key: 'Street'})
+  @ExtraOptions({
+    type: 'hidden',
+  })
+  street: number;
 
   get pk() {
     return null;
@@ -40,6 +47,7 @@ export class RangeModel extends AbstractModel {
   set pk(value) {
 
   }
+
   public toString = (): string => {
     return `Start:${this.start} End:${this.end}`;
   };

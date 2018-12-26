@@ -9,6 +9,7 @@ import { PermissionModel } from '@webdjangular/core/users-models';
   modelEndpointUrl: 'block',
 })
 export class BlockModel extends AbstractModel {
+
   @Attribute()
   id: string;
 
@@ -27,7 +28,7 @@ export class BlockModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   get pk() {
     return this.id;

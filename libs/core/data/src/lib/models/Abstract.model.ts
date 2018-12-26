@@ -131,7 +131,7 @@ export class AbstractModel extends JsonApiModel {
           Promise.all(promises).then(
             (values) => {
               resolve(entry);
-            }
+            },
             (error) => {
               reject(error)
             }

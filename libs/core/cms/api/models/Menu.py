@@ -1,8 +1,6 @@
 from django.db import models
-from django import forms
+
 from webdjango.models.AbstractModels import BaseModel
-
-
 
 MENU_TARGETS = (
     ('_blank', '_blank'),
@@ -10,6 +8,7 @@ MENU_TARGETS = (
     ('_parent', '_parent'),
     ('_top', '_top'),
 )
+
 
 class MenuItem(BaseModel):
     TARGET_BLANK = '_blank'
@@ -29,6 +28,7 @@ class MenuItem(BaseModel):
         db_table = 'cms_menu_item'
         ordering = ['-created']
 
+
 class Menu(BaseModel):
     """
     CMS Menu Model
@@ -39,8 +39,6 @@ class Menu(BaseModel):
     wrapper_class = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
-
 
     def __str__(self):
         return self.title

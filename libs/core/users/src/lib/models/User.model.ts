@@ -1,17 +1,11 @@
-import {
-  JsonApiModelConfig,
-  Attribute,
-  HasMany,
-} from 'angular2-jsonapi';
+import {Attribute, HasMany, JsonApiModelConfig,} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { GroupModel } from './Group.model';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {GroupModel} from './Group.model';
 
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { PermissionModel } from './Permission.model';
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {PermissionModel} from './Permission.model';
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {FormArray} from "@angular/forms";
-import {StreetModel} from "@webdjangular/plugins/provider-data";
 
 
 @JsonApiModelConfig({
@@ -19,15 +13,11 @@ import {StreetModel} from "@webdjangular/plugins/provider-data";
   modelEndpointUrl: 'user',
 })
 export class UserModel extends AbstractModel {
+
   public static include = 'groups';
+
   @Attribute()
   id: string;
-
-  @Attribute()
-  last_login: Date;
-
-  @Attribute()
-  is_superuser: boolean;
 
   @Attribute()
   @ExtraOptions({
@@ -73,20 +63,20 @@ export class UserModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     type: 'text',
-    label: 'Password',
-    wrapper_class: 'col-4',
-    inputType: 'password'
-  })
-  password: string;
-
-  @Attribute()
-  @ExtraOptions({
-    type: 'text',
     label: 'Mobile',
     wrapper_class: 'col-4',
     inputType: 'tel'
   })
   mobile: string;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Password',
+    wrapper_class: 'col-4',
+    inputType: 'password'
+  })
+  password: string;
 
   @Attribute()
   is_tfa_enabled: boolean;
@@ -96,6 +86,15 @@ export class UserModel extends AbstractModel {
 
   @Attribute()
   is_mobile_verified: boolean;
+
+  @Attribute()
+  is_active: boolean;
+
+  @Attribute()
+  is_staff: boolean;
+
+  @Attribute()
+  last_login: Date;
 
   @Attribute()
   created: Date;

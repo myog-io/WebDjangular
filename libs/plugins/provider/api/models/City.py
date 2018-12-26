@@ -49,8 +49,7 @@ class Street(BaseModel):
 class NumberRange(BaseModel):
     start = models.IntegerField(null=True, default=None)
     end = models.IntegerField(null=True, default=None)
-    street = models.ForeignKey(
-        Street, related_name='numbers', on_delete=models.CASCADE)
+    street = models.ForeignKey(Street, related_name='numbers', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'provider_city_street_numbers'

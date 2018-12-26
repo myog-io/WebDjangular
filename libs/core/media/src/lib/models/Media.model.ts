@@ -23,15 +23,36 @@ export class MediaModel extends AbstractModel {
 
   public static formClassRef = MediaForm;
 
-  @Attribute() id: string;
+  @Attribute()
+  id: string;
 
-  @Attribute() file: string;
+  @Attribute()
+  alt: string;
 
-  @Attribute() alt: string;
+  @Attribute()
+  file: string;
 
-  @Attribute() created: Date;
+  @Attribute()
+  content_type: string;
 
-  @Attribute() updated: Date;
+  @Attribute()
+  extension: string;
+
+  @Attribute()
+  bytes: number;
+
+  @Attribute()
+  current_chunk: number;
+
+  @Attribute()
+  total_chunks: number;
+
+  @Attribute()
+  created: Date;
+
+  @Attribute()
+  updated: Date;
+
   permissions: PermissionModel[];
 
   get pk() {

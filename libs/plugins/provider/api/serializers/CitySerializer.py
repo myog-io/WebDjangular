@@ -42,12 +42,14 @@ class StreetSerializer(WebDjangoSerializer):
     included_serializers = {
         'numbers': 'libs.plugins.provider.api.serializers.CitySerializer.NumberRangeSerializer',
     }
+
     numbers = ResourceRelatedField(
         many=True,
         queryset=NumberRange.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='street-relationships',
         related_link_view_name='street-related',
+        required=False
     )
 
     class Meta:
@@ -60,6 +62,7 @@ class CitySerializer(WebDjangoSerializer):
         'streets': StreetSerializer,
         'postal_codes': PostalCodeRangeSerializer
     }
+
     postal_codes = ResourceRelatedField(
         many=True,
         queryset=PostalCodeRange.objects,

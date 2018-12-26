@@ -1,17 +1,12 @@
-import { JsonApiModelConfig, Attribute } from "angular2-jsonapi";
-import { AbstractModel } from "@webdjangular/core/data-models";
-import { RangeInterface, RangeModel } from "./Range.model";
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
+import {AbstractModel} from "@webdjangular/core/data-models";
+import {NumberRangeModel} from "./NumberRangeModel";
 
-import { SmartTableSettings } from "@webdjangular/core/data";
-import { ExtraOptions } from "@webdjangular/core/decorator";
-import { Validators, FormArray } from "@angular/forms";
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {ExtraOptions} from "@webdjangular/core/decorator";
+import {FormArray, Validators} from "@angular/forms";
 
 
-export interface StreetInterface {
-  name: string;
-  short_name?: string;
-  numbers: RangeInterface[];
-}
 @JsonApiModelConfig({
   type: 'Street',
   modelEndpointUrl: 'provider/street',
@@ -37,16 +32,21 @@ export class StreetModel extends AbstractModel {
   })
   short_name: string;
 
+  @HasMany()
   @ExtraOptions({
-    formType: FormArray,
-    model: RangeModel,
     type: 'formArray',
-    label: 'Number Range',
-    name: 'numbers',
+    formType: FormArray,
+    label: 'numbers',
+    model: NumberRangeModel,
+    options_model: NumberRangeModel
   })
-  @Attribute()
-  numbers: RangeInterface;
+  numbers: NumberRangeModel[];
 
+  @BelongsTo({key: 'City'})
+  @ExtraOptions({
+    type: 'hidden',
+  })
+  city: number;
 
   get pk() {
     return null
@@ -55,10 +55,12 @@ export class StreetModel extends AbstractModel {
   set pk(value) {
 
   }
+
   public toString = (): string => {
     return `Start:${this.start} End:${this.end}`;
-  }
-  public static smartTableOptions:SmartTableSettings = {
+  };
+
+  public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {
         title: 'Name',

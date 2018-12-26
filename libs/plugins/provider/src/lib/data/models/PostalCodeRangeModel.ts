@@ -1,15 +1,9 @@
-import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { SmartTableSettings } from '@webdjangular/core/data';
-import { Validators } from '@angular/forms';
-//import { CityModel } from './City.model';
-
-export interface PostalCodeRangeInterface {
-  start?: string;
-  end?: string;
-}
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {SmartTableSettings} from '@webdjangular/core/data';
+import {Validators} from '@angular/forms';
 
 @JsonApiModelConfig({
   type: 'PostalCodeRange',
@@ -41,10 +35,9 @@ export class PostalCodeRangeModel extends AbstractModel {
   })
   end: string;
 
-  @BelongsTo({key:'City'})
+  @BelongsTo({key: 'City'})
   @ExtraOptions({
     type: 'hidden',
-
   })
   city: number;
 

@@ -1,10 +1,10 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
 
-import { BlockModel } from './Block.model';
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import {BlockModel} from './Block.model';
+import {ExtraOptions} from '@webdjangular/core/decorator';
 import {Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
@@ -78,7 +78,7 @@ export class PageModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   get pk() {
     return this.id;
@@ -87,9 +87,10 @@ export class PageModel extends AbstractModel {
   set pk(value) {
 
   }
+
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;
-  }
+  };
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

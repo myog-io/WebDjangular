@@ -19,7 +19,7 @@ export class MenuModel extends AbstractModel {
   slug: string;
 
   @Attribute()
-  content: string;
+  wrapper_class: string;
 
   @Attribute()
   created: Date;
@@ -27,7 +27,7 @@ export class MenuModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   get pk() {
     return this.id;

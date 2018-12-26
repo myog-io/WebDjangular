@@ -78,8 +78,8 @@ const config: DatastoreConfig = {
     CoreConfigInput: CoreConfigInputModel,
     CoreConfig: CoreConfigModel,
     City: CityModel, // Provider
-    PostalCodeRange: PostalCodeRangeModel, // Preovider
-    Street: StreetModel,
+    PostalCodeRange: PostalCodeRangeModel, // Provider
+    Street: StreetModel, // Provider
     Reseller: ResellerModel, // Provider
     Condo: CondoModel, // Provider
     Channel: ChannelModel, // Provider
@@ -88,7 +88,6 @@ const config: DatastoreConfig = {
     ProductType: ProductTypeModel,
     ProductAttribute: ProductAttributeModel,
     ProductAttributeOption: ProductAttributeOptionModel,
-    PostalCodeRange: PostalCodeRangeModel
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes

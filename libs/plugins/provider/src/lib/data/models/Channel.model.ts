@@ -1,9 +1,9 @@
-import { JsonApiModelConfig, Attribute, HasMany } from "angular2-jsonapi";
-import { AbstractModel } from "@webdjangular/core/data-models";
-import { ProductModel } from "libs/plugins/store/src/lib/data/models/Product.model";
-import { ExtraOptions } from "@webdjangular/core/decorator";
-import { Validators, FormArray } from "@angular/forms";
-import { SmartTableSettings } from "@webdjangular/core/data";
+import {Attribute, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
+import {AbstractModel} from "@webdjangular/core/data-models";
+import {ProductModel} from "libs/plugins/store/src/lib/data/models/Product.model";
+import {ExtraOptions} from "@webdjangular/core/decorator";
+import {FormArray, Validators} from "@angular/forms";
+import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'Channel',
@@ -23,14 +23,12 @@ export class ChannelModel extends AbstractModel {
   })
   name: string;
 
-
   @Attribute()
   @ExtraOptions({
     type: 'text',
     label: 'Logo',
   })
   logo: string;
-
 
   @Attribute()
   @ExtraOptions({
@@ -39,14 +37,12 @@ export class ChannelModel extends AbstractModel {
   })
   groups: string[];
 
-
   @Attribute()
   @ExtraOptions({
     type: 'select',
     label: 'Types',
   })
   types: string[];
-
 
   @Attribute()
   @ExtraOptions({
@@ -55,16 +51,16 @@ export class ChannelModel extends AbstractModel {
     inputType: 'number',
     label: 'Channel Number',
   })
-  number: number
+  number: number;
 
 
   @Attribute()
   @ExtraOptions({
     type: 'text',
     inputType: 'number',
-    label: 'Positon',
+    label: 'Position',
   })
-  position: number
+  position: number;
 
   @HasMany()
   @ExtraOptions({
@@ -74,10 +70,7 @@ export class ChannelModel extends AbstractModel {
     model: ProductModel,
     options_model: ProductModel
   })
-  products: ProductModel
-
-  @Attribute()
-  products_id: string[]
+  products: ProductModel;
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
@@ -85,8 +78,8 @@ export class ChannelModel extends AbstractModel {
         title: 'Logo',
         filter: false,
         type: 'html',
-        valuePrepareFunction: (cell,row) =>{
-          return `<img src="${cell}" height="50px"></img>`
+        valuePrepareFunction: (cell, row) => {
+          return `<img src="${cell}" height="50px" alt="logo"/>`
         }
       },
       name: {

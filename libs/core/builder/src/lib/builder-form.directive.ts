@@ -18,7 +18,7 @@ import { BuilderFormCkeditorComponent } from './inputs/ckeditor/ckeditor.compone
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
-import { BuilderFormFieldConfig, BuilderFormField } from './interfaces/form-config.interface';
+import { BuilderFormFieldConfig, BuilderFormField } from '@webdjangular/core/builder';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
