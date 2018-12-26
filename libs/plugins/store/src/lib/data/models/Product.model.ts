@@ -391,7 +391,7 @@ export class ProductModel extends AbstractModel {
   ];
 
   public toString = (): string => {
-    return `${this.name} (${this.pricing.list})`;
+    return `${this.name} (${this.pricing_list})`;
   };
 
   public static smartTableOptions: SmartTableSettings = {
