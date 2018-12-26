@@ -43,8 +43,15 @@ export class AbstractModel extends JsonApiModel {
   public getAttributeMetada(): any {
     return Reflect.getMetadata('Attribute', this)
   }
-  private getHasManyEntities() {
+  public getRelationshipLink(relationship:string): string {
+    return `${this.modelConfig.modelEndpointUrl}/${this.pk}/relationships/${relationship}/`;
+  }
 
+  public gerRelationLink(relationship:string): string {
+    return `${this.modelConfig.modelEndpointUrl}/${this.pk}/${relationship}/`;
+  }
+
+  private getHasManyEntities() {
     let hasMany = this.hasMany;
     let entities = []
     for (const key in hasMany) {

@@ -57,7 +57,7 @@ export class PluginModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    type: 'select',
     label: 'Author',
     wrapper_class: 'col-6',
     options_model: AuthorModel,

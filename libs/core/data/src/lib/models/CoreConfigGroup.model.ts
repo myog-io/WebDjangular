@@ -32,7 +32,7 @@ export class CoreConfigGroupModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'relationship',
+    type: 'select',
     label: 'Core Config Input',
     wrapper_class: 'col-6',
     options_model: CoreConfigInputModel,

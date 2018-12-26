@@ -14,7 +14,6 @@ import { map } from 'rxjs/operators';
 export class WebAngularSmartTableDataSource extends LocalDataSource {
   public conf;
   protected meta: any = null;
-
   constructor(
     private datastore: WebAngularDataStore,
     private model,
@@ -36,10 +35,12 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     if(this.sortConf.length > 0){
       findOptions.ordering = this.buildSortOptions()
     }
+
     return this.datastore
       .findAll(this.model, findOptions,null,this.customUrl)
       .pipe(
         map(res => {
+
           this.meta = res.getMeta();
           this.data = res.getModels();
 

@@ -14,7 +14,6 @@ import {
   NbCheckboxModule, NbCardModule, NbAccordionModule
 } from '@nebular/theme';
 
-import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
 import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
@@ -31,7 +30,6 @@ import { ModelPaginatorComponent } from './model-paginator/model-paginator.compo
 import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
 
 const ENTRY_COMPONENTS = [
-  BuilderFormRelationshipComponent,
   BuilderFormButtonComponent,
   BuilderFormInputComponent,
   BuilderFormSelectComponent,

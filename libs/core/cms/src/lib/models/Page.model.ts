@@ -5,7 +5,7 @@ import { PermissionModel } from '@webdjangular/core/users-models';
 
 import { BlockModel } from './Block.model';
 import { ExtraOptions } from '@webdjangular/core/decorator';
-import {Validators} from "@angular/forms";
+import {Validators, FormGroup} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 
@@ -50,25 +50,23 @@ export class PageModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    formType: FormGroup,
+    type: 'select',
     label: 'Header',
-    name: 'header',
     wrapper_class: 'col-6',
     model: BlockModel,
     options_model: BlockModel,
-    backendResourceName: 'Block'
   })
   header: BlockModel;
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    formType: FormGroup,
+    type: 'select',
     label: 'Footer',
-    name: 'footer',
     wrapper_class: 'col-6',
     model: BlockModel,
     options_model: BlockModel,
-    backendResourceName: 'Block'
   })
   footer: BlockModel;
 

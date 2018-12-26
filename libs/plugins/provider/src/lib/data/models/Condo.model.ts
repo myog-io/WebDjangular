@@ -30,9 +30,9 @@ export class CondoModel extends AbstractModel {
     validators: [Validators.required],
     formType: FormGroup,
     model: CityModel,
-    type: 'relationship',
-      label: 'Email',
-      name: 'email',
+    type: 'select',
+    label: 'Email',
+    name: 'email',
   })
   city: CityModel;
 
@@ -47,7 +47,7 @@ export class CondoModel extends AbstractModel {
   })
   products: ProductModel;
 
-  public static smartTableOptions:SmartTableSettings = {
+  public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {
         title: 'Name',
@@ -56,7 +56,7 @@ export class CondoModel extends AbstractModel {
       city: {
         title: 'City',
         type: 'text',
-        valuePrepareFunction:(cell,row) => {
+        valuePrepareFunction: (cell, row) => {
           return `${cell.name} (${cell.id})`
         }
       }

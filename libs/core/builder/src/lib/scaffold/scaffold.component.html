@@ -1,10 +1,10 @@
 <nb-card>
-  <nb-card-header>
+  <nb-card-header [nbSpinner]="source.loading">
     {{title}} List
   </nb-card-header>
 </nb-card>
 
-<ng2-smart-table [settings]="source.smartTableSettings" [source]="source" (create)="source.conf.onCreateButtonClick()"
+<ng2-smart-table  [settings]="source.smartTableSettings" [source]="source" (create)="source.conf.onCreateButtonClick()"
   (edit)="source.conf.onEditButtonClick($event)" (delete)="source.conf.onDeleteButtonClick($event)">
   ></ng2-smart-table>
 

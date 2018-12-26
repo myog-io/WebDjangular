@@ -56,7 +56,6 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
       this.displayGroups = this.form.displayGroups;
     } else if (this.config.copyOptions) {
       const options = this.config.copyOptions
-      console.log(options)
       const value = this.group.get(options.name).value
 
       if (value[options.field]) {
@@ -66,10 +65,9 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
           const element = value[options.field][i];
           let field: BuilderFormFieldConfig = {
             label: element.name,
-            type: element.type,
+            type: element.class_type,
             name: element.code,
           }
-          console.log("REGISTRING FIELDS?!");
           if (element.options) {
             field.options = element.options;
           }
@@ -81,7 +79,6 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
           fields.push(field);
           fg.registerControl(element.code, new FormControl(null, field.validation))
         }
-        console.log(this.group.entity,this.config.name)
         if (this.group.entity && this.group.entity[this.config.name]) {
           for (const key in this.group.entity[this.config.name]) {
             if (this.group.entity[this.config.name].hasOwnProperty(key)) {

@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
   template: `
     <div class="form-group form-select" [formGroup]="config.model ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
-      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" 
-                 [formControlName]="config.model ? 'id' : config.name" [multiple]="config.multiple" 
+      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)"
+                 [formControlName]="config.model ? 'id' : config.name" [multiple]="config.multiple"
                  [loading]="loading" [placeholder]="placeholder">
         <ng-option *ngFor="let option of options" value="{{option.value}}"  >
           {{option.label}}
@@ -51,7 +51,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
           this.config.options_model = models[this.config.options_model];
         }
       }
-      this.datastore.findAll(this.config.options_model,{page: {size:50}}).subscribe(data => {
+      this.datastore.findAll(this.config.options_model,{page: {size:50},include:this.config.options_include}).subscribe(data => {
         this.models = data.getModels();
         this.options = [];
         for (let i = 0; i < this.models.length; i++) {
