@@ -76,9 +76,6 @@ export class ChannelModel extends AbstractModel {
   })
   products: ProductModel
 
-  @Attribute()
-  products_id: string[]
-
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       logo: {

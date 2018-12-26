@@ -12,7 +12,7 @@
     </ng-template><!-- END MODAL -->
     <div class="card mt-1 mb-1 shadow-sm ">
       <div class="card-header">
-        <h5 class="plan-amount text-center pt-3 pb-2">{{ plan?.attributes?.download }}<br><span class="plan-amount-unit">
+        <h5 class="plan-amount text-center pt-3 pb-2">{{ plan?.data?.download }}<br><span class="plan-amount-unit">
             MEGA </span></h5>
       </div>
       <div class="card-body p-0 ml-1 mr-1 ">
@@ -20,26 +20,26 @@
           <ul class="pt-3 pb-3">
             <li class="mb-1">
               <i class="icon pr-1 fa fa-2x icon-download" aria-hidden="true"></i>
-              <p> Download {{ plan?.attributes?.download }}Mbps</p>
+              <p> Download {{ plan?.data?.download }}Mbps</p>
             </li>
             <li class="mb-1">
               <i class="icon pr-1 fa fa-2x icon-upload" aria-hidden="true"></i>
-              <p>Upload: até {{ plan?.attributes?.upload }}Mbps</p>
+              <p>Upload: até {{ plan?.data?.upload }}Mbps</p>
             </li>
             <li class="mb-1">
-              <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_1" aria-hidden="true"></i>
-              <p [innerHtml]="plan?.attributes?.addon_text_1"></p>
+              <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
+              <p [innerHtml]="plan?.data?.addon_text_1"></p>
             </li>
             <li class="mb-1">
-              <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_2" aria-hidden="true"></i>
-              <p [innerHtml]="plan?.attributes?.addon_text_2"></p>
+              <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_2" aria-hidden="true"></i>
+              <p [innerHtml]="plan?.data?.addon_text_2"></p>
             </li>
           </ul>
         </div>
         <div class="row">
           <div class="col">
             <p class="plan-price text-center mb-1">
-              <span class="currency-unit">R$ </span> <span class="price">{{ plan?.pricing?.list }}</span>
+              <span class="currency-unit">R$ </span> <span class="price">{{ plan?.pricing_list }}</span>
             </p>
           </div>
         </div>

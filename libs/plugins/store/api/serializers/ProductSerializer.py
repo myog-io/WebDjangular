@@ -1,4 +1,3 @@
-from django_prices.models import MoneyField
 from libs.core.media.api.models.Media import Media
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Product import BaseProduct, Product, \
@@ -7,14 +6,15 @@ from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.models.CoreConfig import CoreConfigInput
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
+from .MoneySerializer import MoneyField
 
 
 class ProductAttributeSerializer(WebDjangoSerializer):
     included_serializers = {
-        #'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',
-        #'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
-        #'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
-        #'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        # 'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',
+        # 'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        # 'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
+        # 'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
     }
 
     class Meta:
@@ -27,9 +27,7 @@ class ProductTypeSerializer(WebDjangoSerializer):
         'data': 'libs.plugins.store.api.serializers.ProductSerializer.ProductAttributeSerializer',
     }
     weight = serializers.CharField(required=False)
-    pricing_list = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
-    pricing_sale = serializers.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, required=False)
-    cost = serializers.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, required=False)
+
     data = ResourceRelatedField(
         many=True,
         queryset=ProductAttribute.objects,
@@ -55,6 +53,13 @@ class ProductCategorySerializer(WebDjangoSerializer):
 
 
 class ProductSerializer(WebDjangoSerializer):
+    pricing_list = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
+    pricing_sale = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES, required=False)
+    cost = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                      decimal_places=defaults.DEFAULT_DECIMAL_PLACES, required=False)
+    weight = serializers.CharField(required=False)
     included_serializers = {
         'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',
         'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
@@ -113,7 +118,7 @@ class ProductSerializer(WebDjangoSerializer):
     )
 
     images = ResourceRelatedField(
-        many = True,
+        many=True,
         queryset=Media.objects,
         required=False,
         related_link_url_kwarg='pk',
@@ -121,6 +126,7 @@ class ProductSerializer(WebDjangoSerializer):
         related_link_view_name='product-related',
     )
     data = serializers.JSONField(required=False)
+
     class Meta:
         model = Product
         fields = '__all__'

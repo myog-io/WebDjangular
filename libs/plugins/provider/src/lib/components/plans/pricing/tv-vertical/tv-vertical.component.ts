@@ -13,7 +13,7 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbstractPricingComponent {
   @Input() class = 'pr-1 pl-1 col-md-3 col-xs-12';
   //public include = 'channels'
-  public loadingChannels = true;
+  //public loadingChannels = true;
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {
