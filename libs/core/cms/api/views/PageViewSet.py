@@ -78,7 +78,7 @@ class PageViewSet(ModelViewSet):
             if token.token_type.value == 1:
                 filter_query.append(token.contents)
 
-        if len(filter_query) > 0 and self.recursive_block < 5:
+        if len(filter_query) > 0 and self.recursive_block <= 6:
             blocks = Block.objects.filter(
                 slug__in=filter_query).values_list('slug', 'content')
             ctx = {}
