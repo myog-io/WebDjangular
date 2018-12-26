@@ -4,6 +4,7 @@ import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import { Validators } from '@angular/forms';
+import { SmartTableSettings } from '@webdjangular/core/data';
 
 
 @JsonApiModelConfig({
@@ -59,6 +60,22 @@ export class BlockModel extends AbstractModel {
   public toString = (): string => {
     return `${this.title} (#${this.id})`;
   }
+  public static smartTableOptions: SmartTableSettings = {
+    columns: {
+      id: {
+        title: 'ID',
+        type: 'text',
+      },
+      title: {
+        title: 'Title',
+        type: 'text',
+      },
+      slug: {
+        title: 'Code',
+        type: 'text',
+      },
+    },
+  };
 
 }
 

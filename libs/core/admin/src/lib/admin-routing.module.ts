@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PageModel } from '@webdjangular/core/cms-models';
+import { PageModel, BlockModel } from '@webdjangular/core/cms-models';
 import { FormModel } from '@webdjangular/core/forms-models'
 import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
 import { PluginModel } from '@webdjangular/core/data-models';
@@ -57,6 +57,15 @@ const routes: Routes = [
           model: PageModel,
           title: "Page",
           path: 'pages'
+        }
+      },
+      {
+        path: 'blocks',
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: BlockModel,
+          title: "Block",
+          path: 'blocks'
         }
       },
       {
