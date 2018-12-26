@@ -35,20 +35,14 @@ export class PluginPricingComboVerticalComponent implements OnInit {
       this.net = entries.find( (product) => product.sku == this.sku_net );
       this.tv = entries.find( (product) => product.sku == this.sku_tv );
       this.phone = entries.find( (product) => product.sku == this.sku_phone );
-      if(this.net && this.net.pricing){
-        this.total += parseFloat(this.net.pricing.list);
-      }else{
-        console.log("NOT FOUND",entries);
+      if(this.net && this.net.pricing_list){
+        this.total += parseFloat(this.net.pricing_list);
       }
-      if(this.tv && this.tv.pricing){
-        this.total += parseFloat(this.tv.pricing.list);
-      }else{
-        console.log("NOT FOUND",entries);
+      if(this.tv && this.tv.pricing_list){
+        this.total += parseFloat(this.tv.pricing_list);
       }
-      if(this.phone && this.phone.pricing){
-        this.total += parseFloat(this.phone.pricing.list);
-      }else{
-        console.log("NOT FOUND",entries);
+      if(this.phone && this.phone.pricing_list){
+        this.total += parseFloat(this.phone.pricing_list);
       }
       // TODO: Apply Discount???
 
