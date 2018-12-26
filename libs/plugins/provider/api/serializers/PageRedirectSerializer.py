@@ -8,9 +8,6 @@ from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 class PageRedirectSerializer(WebDjangoSerializer):
-    #default_page  = PageSerializer(many=False)
-    #redirect_page = PageSerializer(many=False)
-
     default_page = ResourceRelatedField(
         many=False,
         queryset=Page.objects,

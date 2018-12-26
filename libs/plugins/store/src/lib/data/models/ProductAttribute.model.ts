@@ -51,7 +51,7 @@ export class ProductAttributeModel extends AbstractModel {
       {label: "Select", value: ProductAttributeTypeValues.select},
     ],
   })
-  type: ProductAttributeTypeValues;
+  class_type: ProductAttributeTypeValues;
 
   @Attribute()
   @ExtraOptions({

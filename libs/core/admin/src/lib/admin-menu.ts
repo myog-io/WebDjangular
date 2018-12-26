@@ -15,6 +15,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages',
       },
       {
+        title: 'Blocks',
+        link: '/blocks',
+      },
+      {
         title: 'Medias',
         link: '/media',
       },

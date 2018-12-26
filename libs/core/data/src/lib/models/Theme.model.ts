@@ -54,7 +54,7 @@ export class ThemeModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    type: 'select',
     label: 'Author',
     wrapper_class: 'col-6',
     options_model: AuthorModel,
@@ -64,7 +64,7 @@ export class ThemeModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    type: 'select',
     label: 'Page',
     wrapper_class: 'col-6',
     options_model: ThemeModel,

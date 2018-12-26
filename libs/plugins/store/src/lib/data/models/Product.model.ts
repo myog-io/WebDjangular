@@ -53,7 +53,9 @@ export class ProductModel extends AbstractModel {
     placeholder: 'Select the Product Type',
     //value: null,
     options_model: ProductTypeModel,
+    options_include: 'data',
     displayGroup: productDG.type
+
   })
   product_type: ProductTypeModel;
 

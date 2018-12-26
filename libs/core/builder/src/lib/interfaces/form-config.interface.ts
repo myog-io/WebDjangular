@@ -46,6 +46,7 @@ export interface BuilderFormFieldConfig {
   model?: any;//AbstractModel;
   options?: any[];
   options_model?: any; // From AbstractModel
+  options_include?: string;
   multiple?: boolean;
   placeholder?: string;
   validation?: ValidatorFn[];

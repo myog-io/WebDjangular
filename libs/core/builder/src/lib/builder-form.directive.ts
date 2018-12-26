@@ -32,7 +32,6 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   ckeditor: BuilderFormCkeditorComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
-  relationship: BuilderFormRelationshipComponent,
   formArray: BuilderFormArrayComponent,
   formGroup: BuilderFormGroupComponent,
   switch: BuilderFormSwitcherComponent,
