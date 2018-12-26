@@ -38,41 +38,9 @@
           </div>
         </div>
         <div class="select-internet-optional-plan-wrapper">
-          <!--
           <plugin-provider-checkout-plan-internet-optional
-            [title]="'BOLETO POR EMAIL'"
-            [description]="'Desconto mensal de R$ 5,00'"
-            [price]="'-5,00'"
-            [currency_unit]="'R$'">
+            *ngFor="let plan_optional of providerCheckout.plans_optionals.internet" [plan]="plan_optional">
           </plugin-provider-checkout-plan-internet-optional>
-          <plugin-provider-checkout-plan-internet-optional
-            [title]="'MAXROTEADOR ac1200'"
-            [description]="'Serviço de locação. Maior área de cobertura. 2.4 e 5ghz simultâneas'"
-            [price]="'9,90'"
-            [currency_unit]="'R$'">
-          </plugin-provider-checkout-plan-internet-optional>
-          <plugin-provider-checkout-plan-internet-optional
-            [title]="'LPNET VIP'"
-            [description]="'Serviço de instalação grátis*.Substituição de equipamento semcusto. Prioridade de atendimento.Suporte local aos finais de semana.'"
-            [price]="'9,90'"
-            [currency_unit]="'R$'">
-          </plugin-provider-checkout-plan-internet-optional>
-          <plugin-provider-checkout-plan-internet-optional
-            [title]="'IP FIXO'"
-            [description]="'Acesso a sistemas remotos Acesso a cameras de segurança  IP único para sua conexão Autenticação PPPoe'"
-            [price]="'9,90'"
-            [currency_unit]="'R$'">
-          </plugin-provider-checkout-plan-internet-optional>
-          -->
-
-          <plugin-provider-checkout-plan-internet-optional
-              *ngFor="let plan_optional of providerCheckout.plans_optionals.internet"
-            [title]="plan_optional.name"
-            [description]="plan_optional.description"
-            [price]="plan_optional.pricing_list"
-            [currency_unit]="'R$'">
-          </plugin-provider-checkout-plan-internet-optional>
-
         </div>
       </div>
     </div>
@@ -124,21 +92,31 @@
               <span class="title"> Adquirir pontos extra? </span>
             </h4>
             <div class="form-group">
-              <select class="form-control">
+              <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty">
                 <option value="0">Nenhum ponto adicional</option>
                 <option value="1">1 ponto adicional</option>
-                <option value="2">2 pontos adicional</option>
-                <option value="3">3 pontos adicional</option>
-                <option value="4">4 pontos adicional</option>
+                <option value="2">2 pontos adicionais</option>
               </select>
             </div>
           </div>
           <div class="col col-md-3 price-wrapper align-self-center">
-            <span class="currency-unit">R$</span>
-            <span class="price">34,90</span>
+            <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
+              <span class="currency-unit">R$</span>
+              <span class="price" [innerHTML]="providerCheckout.priceExtraTVDecoder"></span>
+            </span>
           </div>
           <div class="col-md-3 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-outline-primary">Remover</button>
+
+            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
+              type="button" class="btn btn-outline-primary" (click)="providerCheckout.addExtraTVDecoder()">
+              Adicionar
+            </button>
+
+            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
+              type="button" class="btn btn-outline-danger" (click)="providerCheckout.removeExtraTVDecoder()">
+              Remover
+            </button>
+
           </div>
         </div>
         <div class="select-television-optional-plan-wrapper">
@@ -147,7 +125,11 @@
             <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
           </h4>
           <div class="row">
-            <plugin-provider-checkout-plan-television-optional></plugin-provider-checkout-plan-television-optional>
+
+            <plugin-provider-checkout-plan-television-optional
+              *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
+            </plugin-provider-checkout-plan-television-optional>
+
           </div>
         </div>
       </div>
