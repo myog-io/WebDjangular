@@ -18,7 +18,7 @@ class ProductAttributeFilter(FilterSet):
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],
-            'name': ['contains', 'exact'],
+            'code': ['contains', 'exact'],
         }
 
 
@@ -49,6 +49,7 @@ class ProductTypeFilter(FilterSet):
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],
+            'code': ['contains', 'exact'],
         }
 
 

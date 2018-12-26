@@ -56,7 +56,9 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
       this.displayGroups = this.form.displayGroups;
     } else if (this.config.copyOptions) {
       const options = this.config.copyOptions
+      console.log(options)
       const value = this.group.get(options.name).value
+
       if (value[options.field]) {
         let fields: BuilderFormFieldConfig[] = []
         let fg = this.group.get(this.config.name) as FormGroup;
@@ -67,6 +69,7 @@ export class BuilderFormGroupComponent implements BuilderFormField, OnInit, OnDe
             type: element.type,
             name: element.code,
           }
+          console.log("REGISTRING FIELDS?!");
           if (element.options) {
             field.options = element.options;
           }

@@ -64,35 +64,43 @@ export class AbstractModel extends JsonApiModel {
   public saveAll(params?: any, headers?: HttpHeaders, customUrl?: string): Promise<this> {
     // TODO MANY TO MANY RELATIONSHIP REMOVAL
     const children = this.getHasManyEntities();
-    console.log("CHIL",children)
     const promises = [];
     return new Promise((resolve, reject) => {
       this.save(params, headers, customUrl).subscribe(
         (entry: this) => {
+
           // Let's First Create/Update All Children Entries
           // Now Delete de Relationships
           const child_to_remove = entry.getHasManyEntities();
-          console.log(child_to_remove)
+          //const child_to_unlink = child_to_remove;
           for (let i = 0; i < children.length; i++) {
             const child = children[i];
+            let save = true;
             // TODO: IMPROVE THIS ONE, Every child is being marked as hasDirtyAttributes
-            if (child.hasDirtyAttributes) {
-              child.internalDatastore = this.service;
-              const relationships: any = this.service.getRelationships(child);
-              const belongTo = child.belongTo;
-              if (belongTo) {
-                for (let j = 0; j < belongTo.length; j++) {
-                  if (belongTo[j].relationship === this.modelConfig.type) {
+
+            child.internalDatastore = this.service;
+            const relationships: any = this.service.getRelationships(child);
+            const belongTo = child.belongTo;
+            if (belongTo) {
+              for (let j = 0; j < belongTo.length; j++) {
+                if (belongTo[j].relationship === this.modelConfig.type) {
+                  if (!child[belongTo[j].propertyName] || child[belongTo[j].propertyName].id != entry.id) {
                     child[belongTo[j].propertyName] = entry;
+                  }
+
+                  // If The Relationship is on the Belongs To, we can check for Delete of the Entity
+                  if (child.id) {
+                    child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
                   }
                 }
               }
-              // Compare with New Children to Remove
+            } else if (child.id) {
+              save = false;
+              child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
+            }
 
-              if (child.id) {
-                child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
-              }
 
+            if (child.hasDirtyAttributes && save) {
               let promise = new Promise((resolve, reject) => {
                 // Maybe Use SaveALL and do it Recursive?
                 child.save().subscribe(
@@ -109,29 +117,28 @@ export class AbstractModel extends JsonApiModel {
             }
 
           }
-          // Removing
+          // Deleting Records
           for (let i = 0; i < child_to_remove.length; i++) {
             const child = child_to_remove[i];
             let promise = new Promise((resolve, reject) => {
-              // This will Delete Recordy of a ManyToMany Relationship as Well and SHould Notr
-              //this.service.deleteRecord(child.constructor, child.pk).subscribe(
-              //  (response) => {
-              //    resolve(response);
-              //  },
-              //  (error) => {
-              //    reject(error);
-              //  }
-              //);
+              //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
+              this.service.deleteRecord(child.constructor, child.pk).subscribe(
+                (response) => {
+                  resolve(response);
+                },
+                (error) => {
+                  reject(error);
+                }
+              );
 
             })
             promises.push(promise)
+
           }
-
-
           Promise.all(promises).then(
             (values) => {
               resolve(entry);
-            }
+            },
             (error) => {
               reject(error)
             }

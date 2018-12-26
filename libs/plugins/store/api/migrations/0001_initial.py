@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.PositiveIntegerField(default=1)),
-                ('data', django_mysql.models.JSONField(blank=True, default=dict)),
+                ('data', django_mysql.models.JSONField(blank=True)),
                 ('cart', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='store.Cart')),
             ],
         ),
@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
                 ('gateway', models.CharField(max_length=255)),
                 ('charge_status', models.CharField(choices=[('charged', 'Charged'), ('not-charged', 'Not-charged'), ('refunded', 'Refunded')], default='not-charged', max_length=15)),
                 ('customer_ip_address', models.GenericIPAddressField(blank=True, null=True)),
-                ('extra_data', django_mysql.models.JSONField(default=dict)),
+                ('extra_data', django_mysql.models.JSONField()),
                 ('token', models.CharField(blank=True, default='', max_length=128)),
                 ('currency', models.CharField(max_length=10)),
                 ('total', models.DecimalField(decimal_places=2, default=Decimal('0.0'), max_digits=12)),
@@ -274,7 +274,7 @@ class Migration(migrations.Migration):
                 ('currency', models.CharField(max_length=10)),
                 ('amount', models.DecimalField(decimal_places=2, default=Decimal('0.0'), max_digits=12)),
                 ('error', models.CharField(choices=[(libs.plugins.store.api.models.Payment.TransactionError('declined'), 'declined'), (libs.plugins.store.api.models.Payment.TransactionError('expired'), 'expired'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_number'), 'incorrect_number'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_zip'), 'incorrect_zip'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_address'), 'incorrect_address'), (libs.plugins.store.api.models.Payment.TransactionError('incorrect_cvv'), 'incorrect_cvv'), (libs.plugins.store.api.models.Payment.TransactionError('invalid_number'), 'invalid_number'), (libs.plugins.store.api.models.Payment.TransactionError('invalid_cvv'), 'invalid_cvv'), (libs.plugins.store.api.models.Payment.TransactionError('invalid_expiry_date'), 'invalid_expiry_date'), (libs.plugins.store.api.models.Payment.TransactionError('processing_error'), 'processing_error')], max_length=256, null=True)),
-                ('gateway_response', django_mysql.models.JSONField(default=dict)),
+                ('gateway_response', django_mysql.models.JSONField()),
             ],
         ),
         migrations.AddField(

@@ -103,7 +103,7 @@ class CartItem(models.Model):
     product = models.ForeignKey(
         Product, on_delete=None, related_name='product')
     quantity = models.PositiveIntegerField(default=1)
-    data = JSONField(blank=True, default=dict)
+    data = JSONField(blank=True)
     cart = models.ForeignKey(
         'Cart', related_name='items', on_delete=models.CASCADE)
 

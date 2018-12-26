@@ -40,10 +40,10 @@ export class ScaffoldComponent implements OnInit {
     // TODO IMplement Write id number for more
     this.dialogRef = this.dialogService.open(this.dialogTemplate,{
       context: {
-        title: `Delete ${this.title} #${element.data.pk}`;
+        title: `Delete ${this.title} #${element.data.pk}`,
         body: `Please confirm that you would like to delete this ${this.title} with Id ${element.data.pk}`,
-        element: element
-      }
+        element: element,
+      },
     });
   }
   close() {
