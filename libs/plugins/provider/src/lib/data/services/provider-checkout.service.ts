@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
-import {WebAngularDataStore} from "@webdjangular/core/services";
-import {ProductModel} from "../../../../../store/src/lib/data/models/Product.model";
-import {JsonApiQueryData} from "angular2-jsonapi";
+import { Injectable, Inject } from '@angular/core';
+import { WebAngularDataStore } from "@webdjangular/core/services";
+import { ProductModel } from "../../../../../store/src/lib/data/models/Product.model";
+import { JsonApiQueryData } from "angular2-jsonapi";
 import { CartService } from 'libs/plugins/store/src';
+import { DOCUMENT } from '@angular/common';
+import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
 
 @Injectable({
   providedIn: 'root',
@@ -36,10 +37,13 @@ export class ProviderCheckoutService {
 
 
 
-  constructor(private scrollToService: ScrollToService,
-              private datastore: WebAngularDataStore,
-              private cartService: CartService) {
-    
+  constructor(
+    private datastore: WebAngularDataStore,
+    private cartService: CartService,
+    private pageScrollService: PageScrollService,
+    @Inject(DOCUMENT) private document: any
+  ) {
+
 
     this.loadPlans('internet');
     this.loadPlans('tv');
@@ -47,10 +51,10 @@ export class ProviderCheckoutService {
 
   }
 
-  loadPlans(type){
+  loadPlans(type) {
 
     let options = {};
-    let order:string[] = null;
+    let order: string[] = null;
     options['page'] = { number: 1, size: 10 };
     if (this.skus[type]) {
       options['sku__in'] = this.skus[type];
@@ -84,10 +88,12 @@ export class ProviderCheckoutService {
     this.tv_plan_collapsed = false;
     this.telephone_plan_collapsed = false;
 
-    // const scrollToConfigOptions: ScrollToConfigOptions = {
-    //   target: 'collapseProviderCheckoutPlanInternet'
-    // };
-    // this.scrollToService.scrollTo(scrollToConfigOptions);
+    let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
+      document:this.document,
+      scrollTarget: `#ProviderCheckoutTabPlanInternet`,
+      pageScrollDuration: 350,
+    });
+    this.pageScrollService.start(pageScrollInstance);
   }
 
   openTabTVPlan() {
@@ -96,10 +102,12 @@ export class ProviderCheckoutService {
     this.internet_plan_collapsed = false;
     this.telephone_plan_collapsed = false;
 
-    //const scrollToConfigOptions: ScrollToConfigOptions = {
-    //  target: 'collapseProviderCheckoutPlanTV'
-    //};
-    //this.scrollToService.scrollTo(scrollToConfigOptions);
+    let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
+      document:this.document,
+      scrollTarget: `#ProviderCheckoutTabPlanTV`,
+      pageScrollDuration: 350,
+    });
+    this.pageScrollService.start(pageScrollInstance);
   }
 
   openTabTelephonePlan() {
@@ -108,12 +116,12 @@ export class ProviderCheckoutService {
     this.internet_plan_collapsed = false;
     this.tv_plan_collapsed = false;
 
-    //const scrollToConfigOptions: ScrollToConfigOptions = {
-    //  target: 'MyOG',
-    //  duration: 300,
-    //  offset: 0
-    //};
-    //this.scrollToService.scrollTo(scrollToConfigOptions);
+    let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
+      document:this.document,
+      scrollTarget: `#ProviderCheckoutTabPlanTelephone`,
+      pageScrollDuration: 350,
+    });
+    this.pageScrollService.start(pageScrollInstance);
   }
 
   closeTabInternetPlan() {

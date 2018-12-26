@@ -12,9 +12,8 @@ import { CoreServicesModule, WDAConfig } from '@webdjangular/core/services';
 import { APP_BASE_HREF } from '@angular/common';
 import { AppHttpInterceptor } from '@webdjangular/core/interceptors';
 import { CookieService } from 'ngx-cookie-service';
-import { FormsModule, ReactiveFormsModule,  } from '@angular/forms';
-import { ScrollToModule, ScrollToService } from '@nicky-lenaers/ngx-scroll-to';
-
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
+import { NgxPageScrollModule } from 'ngx-page-scroll';
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
 }
@@ -28,8 +27,8 @@ export function wda_init(wdaconfig: WDAConfig) {
     BrowserAnimationsModule,
     HttpClientModule,
     JsonApiModule,
-    ScrollToModule.forRoot(),
     NxModule.forRoot(),
+    NgxPageScrollModule,
     CoreServicesModule.forRoot(),
     RouterModule.forRoot(
       [
@@ -43,14 +42,13 @@ export function wda_init(wdaconfig: WDAConfig) {
           loadChildren: "@webdjangular/themes/providerfy#ThemeProviderfyModule"
         },
       ],
-      { initialNavigation: 'enabled' }
+      { initialNavigation: 'enabled', anchorScrolling: 'enabled' }
     )
   ],
   bootstrap: [AppComponent],
   providers: [
     WDAConfig,
     CookieService,
-    ScrollToService,
     { provide: APP_BASE_HREF, useValue: '/' },
     {
       provide: HTTP_INTERCEPTORS,
