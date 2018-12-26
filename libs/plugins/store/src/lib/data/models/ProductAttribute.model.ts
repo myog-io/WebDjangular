@@ -1,4 +1,4 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig, BelongsTo, HasMany} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
@@ -76,6 +76,10 @@ export class ProductAttributeModel extends AbstractModel {
     }
   })
   options: ProductAttributeOptionModel[];
+
+
+  @HasMany({key:'ProductType'})
+  product_type_set: object[];
 
   permissions: PermissionModel[];
 

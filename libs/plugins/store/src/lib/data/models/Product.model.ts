@@ -124,6 +124,19 @@ export class ProductModel extends AbstractModel {
   })
   track_inventory: string;
 
+
+  @Attribute()
+  @ExtraOptions({
+    formType: FormGroup,
+    type: 'formGroup',
+    displayGroup: productDG.attributes,
+    copyOptions: {
+      name:'product_type',
+      field:'data',
+    }
+  })
+  data:object[] ;
+
   @Attribute()
   @ExtraOptions({
     type: 'text',

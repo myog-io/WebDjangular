@@ -42,8 +42,8 @@ export class ScaffoldComponent implements OnInit {
       context: {
         title: `Delete ${this.title} #${element.data.pk}`,
         body: `Please confirm that you would like to delete this ${this.title} with Id ${element.data.pk}`,
-        element: element
-      }
+        element: element,
+      },
     });
   }
   close() {

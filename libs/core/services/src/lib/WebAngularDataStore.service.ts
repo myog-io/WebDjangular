@@ -83,11 +83,10 @@ const config: DatastoreConfig = {
     Reseller: ResellerModel, // Provider
     Condo: CondoModel, // Provider
     Channel: ChannelModel, // Provider
-
-    Product: ProductModel,
-    ProductType: ProductTypeModel,
-    ProductAttribute: ProductAttributeModel,
-    ProductAttributeOption: ProductAttributeOptionModel,
+    Product: ProductModel, // Store
+    ProductType: ProductTypeModel, // Store
+    ProductAttribute: ProductAttributeModel, // Store
+    ProductAttributeOption: ProductAttributeOptionModel, // Store
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes

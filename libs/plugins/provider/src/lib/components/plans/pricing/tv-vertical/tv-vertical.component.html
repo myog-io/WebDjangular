@@ -12,7 +12,7 @@
     </ng-template><!-- END MODAL -->
     <div class="card mt-1 mb-1">
       <div class="card-header">
-        <h5 class="plan-title text-center pt-3 pb-3" [innerHTML]="plan?.attributes?.display_title ? plan?.attributes?.display_title : plan?.name">
+        <h5 class="plan-title text-center pt-3 pb-3" [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
         </h5>
         <div class="plan-channels">
           <span class="amount">{{plan?.channel_count}}</span> Total de canais
@@ -26,8 +26,8 @@
           <div class="col">
             <ul class="pt-3 pb-3">
               <li class="mb-1">
-                <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_1" aria-hidden="true"></i>
-                <p [innerHtml]="plan?.attributes?.addon_text_1"></p>
+                <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
+                <p [innerHtml]="plan?.data?.addon_text_1"></p>
               </li>
               <li class="mb-1 can-click">
                 <i class="pr-1 fa fa-2x icon icon-channels" aria-hidden="true"></i>
@@ -48,7 +48,7 @@
         <div class="row">
           <div class="col">
             <p class="plan-price text-center mb-1">
-              <span class="currency-unit">R$ </span> <span class="price text-black">404,90</span>
+              <span class="currency-unit">R$ </span> <span class="price text-black">{{ plan?.pricing_list }}</span>
             </p>
           </div>
         </div>

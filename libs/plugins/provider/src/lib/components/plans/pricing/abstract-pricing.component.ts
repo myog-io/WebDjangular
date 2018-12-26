@@ -4,6 +4,7 @@ import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { JsonApiQueryData, Attribute } from "angular2-jsonapi";
 import { Subject } from "rxjs";
+import { AbstractModel } from "@webdjangular/core/data-models";
 
 export class PluginProviderAbstractPricingComponent implements OnInit {
 
@@ -11,6 +12,7 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
   @Input() ids: string;
   @Input() class = "col-md-6 col-sm-6 p-0 m-0";
   loading = true;
+  public model = ProductModel;
   public entries: ProductModel[];
   private include = null;
   public entriesChanged: Subject<ProductModel[]> = new Subject();
@@ -41,7 +43,7 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
       }
 
 
-      this.datastore.findAll(ProductModel, options).subscribe((query: JsonApiQueryData<ProductModel>) => {
+      this.datastore.findAll(this.model, options).subscribe((query: JsonApiQueryData<ProductModel>) => {
         let entries = query.getModels();
         this.entries = [];
         for (let i = 0; i < order.length; i++) {

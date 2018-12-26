@@ -194,10 +194,9 @@ export class AbstractForm extends FormGroup {
    */
   public checkboxRelationListener($event, formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey) as FormArray;
-
     if ($event.target.checked == false) {
       for (let i = 0; i < control.value.length; i++) {
-        if (control.value[i].pk == toRelateEntity.pk) {
+        if (control.value[i].id == toRelateEntity.id) {
           control.removeAt(i);
         }
       }

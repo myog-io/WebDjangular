@@ -4,6 +4,7 @@ from django.db import models
 from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField
 from measurement.measures import Weight
+from django_mysql.models import JSONField
 
 from libs.core.media.api.models.Media import Media
 from libs.plugins.store.api import defaults
@@ -94,24 +95,24 @@ class BaseProduct(ActiveModel, TranslationModel):
     images = models.ManyToManyField(Media)
 
     track_inventory = models.BooleanField(default=True)
-    quantity = models.IntegerField(default=Decimal(1))
-    quantity_allocated = models.IntegerField(default=Decimal(0))
+    quantity = models.IntegerField(default=Decimal(1), blank=True, null=True)
+    quantity_allocated = models.IntegerField(default=Decimal(0), blank=True, null=True)
     cost = MoneyField(
-        'list', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
+        'cost', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
     pricing_list = MoneyField(
         'list', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
     pricing_sale = MoneyField(
         'sale', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
 
     weight = MeasurementField(measurement=Weight,
                               unit_choices=WeightUnits.CHOICES,
-                              default=zero_weight)
-    shipping_width = models.CharField(max_length=32)
-    shipping_height = models.CharField(max_length=32)
-    shipping_depth = models.CharField(max_length=32)
+                              default=zero_weight,blank=True, null=True)
+    shipping_width = models.CharField(max_length=32,blank=True, null=True)
+    shipping_height = models.CharField(max_length=32,blank=True, null=True)
+    shipping_depth = models.CharField(max_length=32,blank=True, null=True)
 
     i18n_fields = ['name', 'slug', 'description']
 
@@ -128,6 +129,7 @@ class Product(BaseProduct):
     #  product class VARIANT
     variant_parent = models.ForeignKey('Product', related_name='variant', on_delete=models.CASCADE, blank=True,
                                        null=True)
+    data = JSONField(null=True, default=None)
 
     #  product class BUNDLE
     bundle_products = models.ManyToManyField('Product', related_name='bundle_parent')
@@ -165,7 +167,3 @@ class Product(BaseProduct):
     def is_in_stock(self) -> bool:
         return self.quantity_available > 0
 
-
-class ProductAttributeValue(BaseModel):
-    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
-    value = models.CharField(max_length=255, blank=True, default='')

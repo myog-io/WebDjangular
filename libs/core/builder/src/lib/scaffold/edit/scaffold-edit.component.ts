@@ -130,6 +130,9 @@ export class ScaffoldEditComponent implements OnInit {
 
         if (redirect) {
           this.router.navigate([`/${this.base_path}`]);
+        } else {
+          this.entry = result;
+          this.form.populateForm(this.entry);
         }
       }
     ).catch((error) => {

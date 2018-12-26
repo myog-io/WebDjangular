@@ -3,12 +3,12 @@
     <div class="card">
       <div class="card-header">
         <div class="title-wrapper">
-          <span class="amount-number">{{ plan?.attributes?.download}}</span>
+          <span class="amount-number">{{ plan?.data?.download}}</span>
           <span class="amount-unit">MEGA</span>
         </div>
         <div class="price-wrapper">
           <span class="currency-unit">R$</span>
-          <span class="price">{{ plan.pricing?.list }}</span>
+          <span class="price">{{ plan?.pricing_list }}</span>
           <span class="periodicity">/MÊS</span>
         </div>
       </div>
@@ -17,19 +17,19 @@
         <ul class="features-wrapper list-group d-flex flex-row flex-wrap">
           <li class="list-group-item w-50">
             <span class="icon icon-download"></span>
-            <span class="title"> {{ plan?.attributes?.download }}Mbps </span>
+            <span class="title"> {{ plan?.data?.download }}Mbps </span>
           </li>
           <li class="list-group-item w-50">
             <span class="icon icon-upload"></span>
-            <span class="title"> Até {{ plan?.attributes?.upload }}Mbps </span>
+            <span class="title"> Até {{ plan?.data?.upload }}Mbps </span>
           </li>
           <li class="list-group-item w-50">
-            <span [class]="plan?.attributes?.addon_icon_1"></span>
-            <p [innerHtml]="plan?.attributes?.addon_text_1"></p>
+            <span [class]="plan?.data?.addon_icon_1"></span>
+            <p [innerHtml]="plan?.data?.addon_text_1"></p>
           </li>
           <li class="list-group-item w-50">
-            <span [class]="plan?.attributes?.addon_icon_2"></span>
-            <p [innerHTML]="plan?.attributes?.addon_text_2"></p>
+            <span [class]="plan?.data?.addon_icon_2"></span>
+            <p [innerHTML]="plan?.data?.addon_text_2"></p>
           </li>
         </ul>
         <div class="select-wrapper">

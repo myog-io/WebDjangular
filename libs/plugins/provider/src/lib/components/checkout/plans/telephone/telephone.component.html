@@ -3,33 +3,33 @@
     <div class="card">
       <div class="card-header">
         <div class="row title-wrapper ">
-          <div class="col col-xs-12 align-self-center" [innerHTML]="plan?.attributes?.display_title ? plan?.attributes?.display_title : plan?.name">
+          <div class="col col-xs-12 align-self-center" [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
           </div>
         </div>
         <div class="price-wrapper">
           <span class="currency-unit">R$</span>
-          <span class="price">{{ plan.pricing?.list }}</span>
+          <span class="price">{{ plan?.pricing_list }}</span>
           <span class="periodicity">/MÊS</span>
         </div>
       </div>
       <div class="card-body">
         <ul class="features-wrapper text-center text-uppercase">
           <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_1" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.attributes?.addon_text_1"></p>
+            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.data?.addon_text_1"></p>
           </li>
           <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_2" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.attributes?.addon_text_2"></p>
+            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_2" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.data?.addon_text_2"></p>
           </li>
           <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_3" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.attributes?.addon_text_3"></p>
+            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_3" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.data?.addon_text_3"></p>
 
           </li>
           <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.attributes?.addon_icon_4" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.attributes?.addon_text_4"></p>
+            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_4" aria-hidden="true"></i>
+            <p [innerHtml]="plan?.data?.addon_text_4"></p>
           </li>
         </ul>
         <div class="select-wrapper">
