@@ -24,7 +24,7 @@
               INTERNET
             </span>
             <span *ngIf="providerCheckout.selected_internet_plan.name">
-              {{providerCheckout.selected_internet_plan.name}}
+              {{ providerCheckout.selected_internet_plan.name }}
             </span>
           </td>
           <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_internet_plan">
@@ -35,13 +35,12 @@
           <td class="summary-action align-middle" *ngIf="providerCheckout.selected_internet_plan">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ providerCheckout.selected_internet_plan.price }}</span>
+              <span class="price float-right">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
               <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectInternetPlan()">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
               </button>
             </div>
           </td>
-
         </tr>
 
 
@@ -63,30 +62,53 @@
           </td>
         </tr>
 
-        <tr class="summary-item">
+        <tr class="summary-item " [ngClass]="{
+            'selected': providerCheckout.selected_tv_plan
+            }">
           <td class="icon align-middle ">
             <i class="fas fa-2x fa-globe"></i>
           </td>
           <td class="align-middle title">
             TV
           </td>
-          <td class="summary-action align-middle">
+          <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_tv_plan">
             <div class="btn-add-wrapper">
               <button class="btn add h-100" (click)="providerCheckout.openTabTVPlan()"> Adicionar item</button>
             </div>
           </td>
+          <td class="summary-action align-middle" *ngIf="providerCheckout.selected_tv_plan">
+            <div class="price-wrapper">
+              <span class="currency-unit float-left">R$</span>
+              <span class="price float-right">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
+              <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectTVPlan()">
+                <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
+              </button>
+            </div>
+          </td>
         </tr>
 
-        <tr class="summary-item">
+        <tr class="summary-item " [ngClass]="{
+            'selected': providerCheckout.selected_telephone_plan
+            }">
           <td class="icon align-middle ">
             <i class="fas fa-2x fa-globe"></i>
           </td>
           <td class="align-middle title">
             TELEFONE
           </td>
-          <td class="summary-action align-middle">
+          <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_telephone_plan">
             <div class="btn-add-wrapper">
               <button class="btn add h-100" (click)="providerCheckout.openTabTelephonePlan()"> Adicionar item</button>
+            </div>
+          </td>
+          <td class="summary-action align-middle" *ngIf="providerCheckout.selected_telephone_plan">
+            <div class="price-wrapper">
+              <span class="currency-unit float-left">R$</span>
+              <span class="price float-right">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
+              <button type="button" class="remove"
+                      aria-label="Close" (click)="providerCheckout.deselectTelephonePlan()">
+                <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
+              </button>
             </div>
           </td>
         </tr>
@@ -143,7 +165,8 @@
     <div class="summary-submit-wrapper">
       <div class="row mb-3">
         <div class="col text-center">
-          <button type="submit" class="btn btn-primary btn-lg" (click)="providerCheckout.finish">FINALIZAR ASSINATURA</button>
+          <button type="submit" class="btn btn-primary btn-lg" (click)="providerCheckout.finish">FINALIZAR ASSINATURA
+          </button>
         </div>
       </div>
     </div>

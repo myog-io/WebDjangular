@@ -15,19 +15,19 @@
           <h3 class="plan-caption">
             ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
           </h3>
-          <plugin-provider-checkout-plan-internet  [class]="'col-md-6 col-sm-12 p-1 m-0'">
+          <plugin-provider-checkout-plan-internet>
           </plugin-provider-checkout-plan-internet>
         </div>
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
         <div class="row selected-plan-wrapper">
           <div class="col col-md-4 align-self-center">
-            <h2>80 mega</h2>
+            <h2>{{ providerCheckout.selected_internet_plan.name }}</h2>
           </div>
           <div class="col col-md-4 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">104,90</span>
+              <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
@@ -38,6 +38,7 @@
           </div>
         </div>
         <div class="select-internet-optional-plan-wrapper">
+          <!--
           <plugin-provider-checkout-plan-internet-optional
             [title]="'BOLETO POR EMAIL'"
             [description]="'Desconto mensal de R$ 5,00'"
@@ -62,6 +63,16 @@
             [price]="'9,90'"
             [currency_unit]="'R$'">
           </plugin-provider-checkout-plan-internet-optional>
+          -->
+
+          <plugin-provider-checkout-plan-internet-optional
+              *ngFor="let plan_optional of providerCheckout.plans_optionals.internet"
+            [title]="plan_optional.name"
+            [description]="plan_optional.description"
+            [price]="plan_optional.pricing_list"
+            [currency_unit]="'R$'">
+          </plugin-provider-checkout-plan-internet-optional>
+
         </div>
       </div>
     </div>
@@ -83,8 +94,8 @@
             Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
           </h3>
           <div class="row">
-            <plugin-provider-checkout-plan-television [class]="'col-md-6 col-sm-12 p-1 m-0'">
-            ></plugin-provider-checkout-plan-television>
+            <plugin-provider-checkout-plan-television>
+            </plugin-provider-checkout-plan-television>
           </div>
         </div>
       </div>
@@ -92,12 +103,12 @@
       <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
         <div class="row selected-plan-wrapper">
           <div class="col col-md-4 align-self-center">
-            <h2>HD POP</h2>
+            <h2>{{ providerCheckout.selected_tv_plan.name }}</h2>
           </div>
           <div class="col col-md-4 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">104,90</span>
+              <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
@@ -161,7 +172,7 @@
         <div class="select-plans-wrapper">
           <h3 class="plan-caption"></h3>
           <div class="row">
-            <plugin-provider-checkout-plan-telephone [class]="'col-md-6 col-sm-12 p-1 m-0'">
+            <plugin-provider-checkout-plan-telephone>
             </plugin-provider-checkout-plan-telephone>
           </div>
         </div>
@@ -170,12 +181,12 @@
       <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
         <div class="row selected-plan-wrapper">
           <div class="col col-md-4 align-self-center">
-            <h2>FIXO LOCAL ECONÔMICO</h2>
+            <h2>{{ providerCheckout.selected_telephone_plan.name }}</h2>
           </div>
           <div class="col col-md-4 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">104,90</span>
+              <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>

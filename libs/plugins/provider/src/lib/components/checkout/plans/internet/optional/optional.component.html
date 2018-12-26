@@ -3,8 +3,7 @@
         <span class="icon"><i class="fa fa-globe"></i></span>
         <span class="title"> {{ title }} </span>
     </h4>
-    <p>
-        {{ description }}
+    <p *ngIf="description" [innerHTML]="description">
     </p>
 </div>
 <div class="col col-md-3 price-wrapper align-self-center">

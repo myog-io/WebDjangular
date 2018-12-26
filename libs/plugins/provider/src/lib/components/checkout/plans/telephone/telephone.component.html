@@ -1,9 +1,10 @@
-<div class="row" *ngIf="!loading; else loading_holder">
-  <div [ngClass]="class" *ngFor="let plan of entries;">
+<div class="row" *ngIf="providerCheckout.plans.telephone.length > 0; else loading_holder">
+  <div class="col col-6 mb-2" *ngFor="let plan of providerCheckout.plans.telephone;">
     <div class="card">
       <div class="card-header">
         <div class="row title-wrapper ">
-          <div class="col col-xs-12 align-self-center" [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
+          <div class="col col-xs-12 align-self-center"
+            [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
           </div>
         </div>
         <div class="price-wrapper">
@@ -33,7 +34,9 @@
           </li>
         </ul>
         <div class="select-wrapper">
-          <button type="button" class="btn btn-outline-primary" (click)="providerCheckout.selectTelephonePlan(plan)">Escolher</button>
+          <button type="button" class="btn btn-outline-primary" (click)="providerCheckout.selectTelephonePlan(plan)">
+            Escolher
+          </button>
         </div>
         <div class="more-info-wrapper">
           <a href="#">INFORMAÇÕES ADICIONAIS</a>
@@ -42,5 +45,12 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #loading_holder>
+  <div class="col-12 text-center">
+    <i class="fas fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</ng-template>
 
 
