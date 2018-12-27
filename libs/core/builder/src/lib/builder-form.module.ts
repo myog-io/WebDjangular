@@ -11,7 +11,7 @@ import {
   NbSpinnerModule,
   NbButtonModule,
   NbListModule,
-  NbCheckboxModule, NbCardModule, NbAccordionModule
+  NbCheckboxModule, NbCardModule, NbAccordionModule, NbDatepickerModule, NbSelectModule
 } from '@nebular/theme';
 
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
@@ -28,6 +28,8 @@ import { BuilderFormGroupComponent } from './inputs/form_group/form_group.compon
 import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
 import { ModelPaginatorComponent } from './model-paginator/model-paginator.component';
 import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
+import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
+import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
@@ -40,6 +42,8 @@ const ENTRY_COMPONENTS = [
   BuilderFormSwitcherComponent,
   BuilderFormGroupComponent,
   BuilderFormCheckboxOptionsComponent,
+  BuilderFormDatepickerComponent,
+  BuilderFormJsonLogicComponent,
   ModelPaginatorComponent,
   BuilderFormValidatorComponent
 ];
@@ -53,6 +57,8 @@ const ENTRY_COMPONENTS = [
     ReactiveFormsModule,
     NgSelectModule,
     Ng2SmartTableModule,
+    NbSelectModule,
+    NbDatepickerModule.forRoot(),
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
     NbButtonModule,

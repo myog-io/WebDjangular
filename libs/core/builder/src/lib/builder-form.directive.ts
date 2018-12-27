@@ -22,6 +22,8 @@ import { BuilderFormArrayComponent } from './inputs/form_array/form-array.compon
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
 import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
+import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 
 
 const components: { [type: string]: Type<BuilderFormField> } = {
@@ -35,6 +37,8 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   formGroup: BuilderFormGroupComponent,
   switch: BuilderFormSwitcherComponent,
   checkbox: BuilderFormCheckboxOptionsComponent,
+  datepicker: BuilderFormDatepickerComponent,
+  jsonLogic: BuilderFormJsonLogicComponent,
 };
 
 @Directive({
