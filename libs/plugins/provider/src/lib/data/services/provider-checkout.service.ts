@@ -263,8 +263,12 @@ export class ProviderCheckoutService {
     this.selected_telephone_plan = plan;
   }
 
-  get priceExtraTVDecoder() {
-    return (this.selected_extra_tv_decoder.plan.pricing_list * this.selected_extra_tv_decoder.qty).toFixed(2);
+  get priceExtraTVDecoder(): string{
+    let price: number = 0;
+    if(this.selected_extra_tv_decoder.plan) {
+      price = this.selected_extra_tv_decoder.plan.pricing_list * this.selected_extra_tv_decoder.qty;
+    }
+    return price.toFixed(2);
   }
 
   addExtraTVDecoder() {
@@ -274,5 +278,34 @@ export class ProviderCheckoutService {
   removeExtraTVDecoder() {
     this.selected_extra_tv_decoder.qty = 0;
   }
+
+  get subtotal(){
+
+    let subtotal: number = 0;
+
+    if(this.selected_internet_plan){
+      subtotal += parseFloat(this.selected_internet_plan.pricing_list);
+    }
+    if(this.selected_tv_plan){
+      subtotal += parseFloat(this.selected_tv_plan.pricing_list);
+    }
+    if(this.selected_telephone_plan){
+      subtotal += parseFloat(this.selected_telephone_plan.pricing_list);
+    }
+
+    for(let plan of this.selected_internet_optionals){
+      subtotal += plan.pricing_list ? parseFloat(plan.pricing_list) : 0;
+    }
+    for(let plan of this.selected_tv_optionals) {
+      subtotal += plan.pricing_list ? parseFloat(plan.pricing_list) : 0;
+    }
+    for(let plan of this.selected_telephone_optionals){
+      subtotal += plan.pricing_list ? parseFloat(plan.pricing_list) : 0;
+    }
+
+    subtotal += parseFloat(this.priceExtraTVDecoder);
+    return  subtotal.toFixed(2)
+  }
+
 
 }

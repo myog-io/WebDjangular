@@ -161,5 +161,32 @@
     background-image: url("../assets/images/icon_addmore.png");
   }
 
+  &.icon-tv_big {
+    background-image: url("../assets/images/icon_tv_big.png");
+    width: 48px;
+    height: 38px;
+  }
+  &.icon-globo_big {
+    background-image: url("../assets/images/icon_globo_big.png");
+    width: 48px;
+    height: 48px;
+  }
+
+  &.icon-ip_fixo {
+    background-image: url("../assets/images/icon_ip_fixo.png");
+    width: 15px;
+    height: 21px;
+  }
+  &.icon-star {
+    background-image: url("../assets/images/icon_star.png");
+    width: 21px;
+    height: 21px;
+  }
+  &.icon-router {
+    background-image: url("../assets/images/icon_router.png");
+    width: 20px;
+    height: 21px;
+  }
+
 }
 

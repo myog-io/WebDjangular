@@ -17,6 +17,7 @@ import {PluginProviderCheckoutWizardStep02Component} from "./wizard/step02/step0
 import {PluginProviderCheckoutWizardStep03Component} from "./wizard/step03/step03.component";
 import {NbCardModule } from "@nebular/theme";
 import {FormsModule} from "@angular/forms";
+import {PluginProviderCheckoutPlanTelephoneOptionalComponent} from "./plans/telephone/optional/optional.component";
 
 
 
@@ -29,6 +30,7 @@ const COMPONENTS = [
   PluginProviderCheckoutPlanTelevisionComponent,
   PluginProviderCheckoutPlanTelevisionOptionalComponent,
   PluginProviderCheckoutPlanTelephoneComponent,
+  PluginProviderCheckoutPlanTelephoneOptionalComponent,
   PluginProviderCheckoutWizardComponent,
   PluginProviderCheckoutWizardStep01Component,
   PluginProviderCheckoutWizardStep02Component,
