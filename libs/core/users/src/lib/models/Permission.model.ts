@@ -1,11 +1,7 @@
-import {
-  JsonApiModelConfig,
-  Attribute,
-  BelongsTo
-} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel, ContentTypeModel } from '@webdjangular/core/data-models';
-import { PermissionForm } from '../forms/Permission.form';
+import {AbstractModel, ContentTypeModel} from '@webdjangular/core/data-models';
+import {PermissionForm} from '../forms/Permission.form';
 
 @JsonApiModelConfig({
   type: 'Permission',
@@ -31,7 +27,8 @@ export class PermissionModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) {
+  }
 
   public toString = (): string => {
     return `${this.name} (${this.codename})`;

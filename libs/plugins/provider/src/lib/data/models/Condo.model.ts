@@ -1,10 +1,11 @@
-import { JsonApiModelConfig, Attribute, BelongsTo, HasMany } from "angular2-jsonapi";
-import { AbstractModel } from "@webdjangular/core/data-models";
-import { CityModel } from "./City.model";
-import { ProductModel } from "libs/plugins/store/src/lib/data/models/Product.model";
-import { SmartTableSettings } from "@webdjangular/core/data";
-import { ExtraOptions } from "@webdjangular/core/decorator";
-import { FormGroup, Validators, FormArray } from "@angular/forms";
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
+import {AbstractModel} from "@webdjangular/core/data-models";
+import {CityModel} from "./City.model";
+import {ProductModel} from "libs/plugins/store/src/lib/data/models/Product.model";
+import {SmartTableSettings} from "@webdjangular/core/data";
+import {ExtraOptions} from "@webdjangular/core/decorator";
+import {FormArray, FormGroup, Validators} from "@angular/forms";
+import {BlockModel} from "@webdjangular/core/cms-models";
 
 @JsonApiModelConfig({
   type: 'Condo',
@@ -28,11 +29,12 @@ export class CondoModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     validators: [Validators.required],
-    formType: FormGroup,
+    type: 'relationship',
+    label: 'City',
+    wrapper_class: 'col-12',
     model: CityModel,
-    type: 'select',
-    label: 'Email',
-    name: 'email',
+    options_model: CityModel,
+    backendResourceName: 'City'
   })
   city: CityModel;
 
@@ -42,7 +44,6 @@ export class CondoModel extends AbstractModel {
     model: ProductModel,
     type: 'checkbox',
     label: 'Products',
-    name: 'products',
     options_model: ProductModel
   })
   products: ProductModel;

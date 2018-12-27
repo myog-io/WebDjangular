@@ -1,16 +1,10 @@
-import {
-  JsonApiModelConfig,
-  Attribute,
-  HasMany,
-} from 'angular2-jsonapi';
+import {Attribute, HasMany, JsonApiModelConfig,} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from './Permission.model';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from './Permission.model';
 
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import {ExtraOptions} from '@webdjangular/core/decorator';
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {FormArray} from "@angular/forms";
-import {StreetModel} from "@webdjangular/plugins/provider-data";
 
 @JsonApiModelConfig({
   type: 'Group',
@@ -18,7 +12,9 @@ import {StreetModel} from "@webdjangular/plugins/provider-data";
 
 })
 export class GroupModel extends AbstractModel {
+
   public static include = 'permissions';
+
   @Attribute()
   id: string;
 
@@ -43,7 +39,8 @@ export class GroupModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) { }
+  set pk(value) {
+  }
 
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;

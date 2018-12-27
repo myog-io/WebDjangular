@@ -12,6 +12,7 @@ import { SmartTableSettings } from '@webdjangular/core/data';
   modelEndpointUrl: 'block',
 })
 export class BlockModel extends AbstractModel {
+
   @Attribute()
   id: string;
 

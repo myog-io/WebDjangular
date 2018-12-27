@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ProviderCheckoutService} from "../../../../../data/services/provider-checkout.service";
 
 @Component({
     selector: 'plugin-provider-checkout-plan-internet-optional',
@@ -9,22 +10,10 @@ import {Component, Input, OnInit} from '@angular/core';
 export class PluginProviderCheckoutPlanInternetOptionalComponent implements OnInit {
 
     @Input()
-    icon_code: string;
+    plan: any;
 
+    constructor( public providerCheckout: ProviderCheckoutService) {
 
-    @Input()
-    title: string;
-
-    @Input()
-    description: string;
-
-    @Input()
-    price: number;
-
-    @Input()
-    currency_unit: string;
-
-    constructor() {
     }
 
     ngOnInit() {

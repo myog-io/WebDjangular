@@ -16,6 +16,7 @@ import {PluginProviderCheckoutWizardStep01Component} from "./wizard/step01/step0
 import {PluginProviderCheckoutWizardStep02Component} from "./wizard/step02/step02.component";
 import {PluginProviderCheckoutWizardStep03Component} from "./wizard/step03/step03.component";
 import {NbCardModule } from "@nebular/theme";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -38,7 +39,8 @@ const COMPONENTS = [
   imports: [
     //BrowserModule,
     CommonModule,
-    NbCardModule
+    NbCardModule,
+    FormsModule
   ],
   exports: [
     ...COMPONENTS,

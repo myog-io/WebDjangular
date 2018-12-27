@@ -64,24 +64,24 @@ export class CityModel extends AbstractModel {
     formType: FormArray,
     label: 'Postal Codes',
     wrapper_class: 'col-12',
-    options_model: PostalCodeRangeModel,
     model: PostalCodeRangeModel,
+    options_model: PostalCodeRangeModel,
     displayGroup: DiplayGroups.postal_codes
   })
   postal_codes: PostalCodeRangeModel[];
 
 
-  @Attribute()
+  @HasMany()
   @ExtraOptions({
     type: 'formArray',
     formType: FormArray,
     label: 'Streets',
     smart_table_mode: 'external',
     model: StreetModel,
+    options_model: StreetModel,
     displayGroup: DiplayGroups.streets
   })
   streets: StreetModel[];
-
 
   @Attribute()
   created: Date;
@@ -134,7 +134,6 @@ export class CityModel extends AbstractModel {
       ]
     }
   ];
-
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

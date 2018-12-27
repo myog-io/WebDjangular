@@ -33,10 +33,6 @@ export class ResellerModel extends AbstractModel {
   })
   email: string;
 
-  @HasMany()
-
-  orders: OrderModel;
-
   public static smartTableOptions:SmartTableSettings = {
     columns: {
       name: {

@@ -1,8 +1,7 @@
 from django.db import models
-from webdjango.models.AbstractModels import SeoModel, BaseModel, PermalinkModel
-
 
 from libs.core.cms.api.models.Block import Block
+from webdjango.models.AbstractModels import SeoModel, PermalinkModel
 from webdjango.models.TranslationModel import TranslationModel
 
 
@@ -11,7 +10,6 @@ class Page(PermalinkModel, SeoModel, TranslationModel):
     CMS Pages Model
     """
     title = models.CharField(max_length=255)
-
     content = models.TextField()
     header = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
     footer = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)

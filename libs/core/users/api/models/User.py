@@ -1,9 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.db import models
 
 from webdjango.models.AbstractModels import BaseModel
 from .UserManager import UserManager
+
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     """
@@ -40,7 +41,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     """
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
-
     @property
     def full_name(self):
         """
@@ -56,7 +56,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         :return: string
         """
         return self.first_name + ' ' + self.last_name
-
 
     def __str__(self):
         """

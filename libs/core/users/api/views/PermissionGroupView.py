@@ -1,11 +1,11 @@
 from django.contrib.auth.models import Permission
 from django_filters.rest_framework.backends import DjangoFilterBackend
-from libs.core.users.api.serializers.PermissionSerializer import PermissionSerializer
 from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.mixins import ListModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
+from libs.core.users.api.serializers.PermissionSerializer import PermissionSerializer
 
 
 class PermissionGroupView(ListModelMixin, GenericViewSet):
