@@ -11,12 +11,10 @@ import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
 
 import { PluginProviderModule } from "@webdjangular/plugins/provider"
 import { FormsModule } from "@webdjangular/core/forms";
-import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 const HARDCODEMODULES = [
   FormsModule,
   PluginProviderModule,
-  ScrollToModule,
 ];
 
 //import { ThemeProviderfyModule } from "@webdjangular/themes/providerfy";
