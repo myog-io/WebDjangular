@@ -1,12 +1,10 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
-
-import {ExtraOptions} from '@webdjangular/core/decorator';
-import {Validators} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { PermissionModel } from '@webdjangular/core/users-models';
+import { ExtraOptions } from '@webdjangular/core/decorator';
+import { Validators } from "@angular/forms";
+import { SmartTableSettings } from "@webdjangular/core/data";
+import { DiscountTypeOptions } from '../interfaces/Discount.interface';
 
 @JsonApiModelConfig({
   type: 'CartRule',
@@ -28,16 +26,16 @@ export class CartRuleModel extends AbstractModel {
   })
   name: string;
 
-  @Attribute()
-  conditions: any;
+
 
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'text',
-    label: 'Type',
+    type: 'select',
+    label: 'Discount Type',
     wrapper_class: 'col-6',
     placeholder: '',
+    options: DiscountTypeOptions
   })
   rule_type: string;
 
@@ -53,9 +51,9 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
     type: 'text',
-    label: 'Usage limit',
+    inputType: 'number',
+    label: 'Usage limit (0 for empty)',
     wrapper_class: 'col-6',
     placeholder: '',
   })
@@ -66,8 +64,7 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
+    type: 'datepicker',
     label: 'Start Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
@@ -76,8 +73,7 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
+    type: 'datepicker',
     label: 'End Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
@@ -86,11 +82,11 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
+    type: 'switch',
     label: 'Apply once per order',
     wrapper_class: 'col-6',
     placeholder: '',
+    value: false,
   })
   apply_once_per_order: string;
 
@@ -102,6 +98,13 @@ export class CartRuleModel extends AbstractModel {
     placeholder: '',
   })
   value: string;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'jsonLogic',
+    label: 'Apply Rule only if all conditions are true',
+  })
+  conditions: any;
 
   @Attribute()
   created: Date;

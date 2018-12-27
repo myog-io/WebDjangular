@@ -13,7 +13,6 @@ import { PluginProviderPricingTvVerticalComponent } from "./components/plans/pri
 import { PluginProviderError404Component } from './components/errors/404/404.component';
 import { PluginProviderError500Component } from './components/errors/500/500.component';
 import { ProviderCheckoutService } from "./data/services/provider-checkout.service";
-import {ScrollToModule} from "@nicky-lenaers/ngx-scroll-to";
 
 
 const MODULES = [
@@ -40,7 +39,6 @@ const SERVICES = [
 
 @NgModule({
   imports: [
-    ScrollToModule,
     ...MODULES
   ],
   exports: [

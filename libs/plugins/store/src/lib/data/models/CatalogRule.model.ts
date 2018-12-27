@@ -1,12 +1,10 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
-
-import {ExtraOptions} from '@webdjangular/core/decorator';
-import {Validators} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
+import { AbstractModel } from '@webdjangular/core/data-models';
+import { PermissionModel } from '@webdjangular/core/users-models';
+import { ExtraOptions } from '@webdjangular/core/decorator';
+import { Validators } from "@angular/forms";
+import { SmartTableSettings } from "@webdjangular/core/data";
+import { DiscountTypeOptions } from '../interfaces/Discount.interface';
 
 @JsonApiModelConfig({
   type: 'CatalogRule',
@@ -29,16 +27,13 @@ export class CatalogRuleModel extends AbstractModel {
   name: string;
 
   @Attribute()
-  conditions: any;
-
-
-  @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'text',
-    label: 'Type',
+    type: 'select',
+    label: 'Discount Type',
     wrapper_class: 'col-6',
     placeholder: '',
+    options: DiscountTypeOptions
   })
   rule_type: string;
 
@@ -46,7 +41,7 @@ export class CatalogRuleModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Start Date/Time',
+    label: 'Discout Ammount',
     wrapper_class: 'col-6',
     placeholder: '',
   })
@@ -54,8 +49,7 @@ export class CatalogRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
+    type: 'datepicker',
     label: 'Start Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
@@ -64,8 +58,7 @@ export class CatalogRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
+    type: 'datepicker',
     label: 'End Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
@@ -77,9 +70,16 @@ export class CatalogRuleModel extends AbstractModel {
     type: 'switch',
     label: 'Is active',
     wrapper_class: 'col-3',
-    value: true,
+    value: false,
   })
   is_active: boolean;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'jsonLogic',
+    label: 'Apply Rule only if all conditions are true',
+  })
+  conditions: any;
 
   @Attribute()
   created: Date;
