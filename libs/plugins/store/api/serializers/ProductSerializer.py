@@ -59,6 +59,13 @@ class ProductSerializer(WebDjangoSerializer):
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES, required=False)
     cost = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                       decimal_places=defaults.DEFAULT_DECIMAL_PLACES, required=False)
+
+    price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                       decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
+
+    base_price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                       decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
+
     weight = serializers.CharField(required=False)
     included_serializers = {
         'product_type': 'libs.plugins.store.api.serializers.ProductSerializer.ProductTypeSerializer',

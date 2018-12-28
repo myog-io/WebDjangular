@@ -202,6 +202,7 @@ export class AbstractModel extends JsonApiModel {
     for (const key in extraOptions) {
       if (extraOptions.hasOwnProperty(key)) {
         const element = extraOptions[key];
+
         element.name = key;
         element.sort = element.sort || count;
         element.displayGroup = element.displayGroup || 'default';

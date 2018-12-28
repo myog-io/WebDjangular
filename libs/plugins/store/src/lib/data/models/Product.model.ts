@@ -257,6 +257,11 @@ export class ProductModel extends AbstractModel {
   })
   addons: ProductModel[];
 
+  @Attribute()
+  price: number;
+
+  @Attribute()
+  base_price: number;
 
   @Attribute()
   created: Date;

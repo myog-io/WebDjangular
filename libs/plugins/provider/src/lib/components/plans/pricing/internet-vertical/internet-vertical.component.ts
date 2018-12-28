@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PluginProviderPricingInternetVerticalComponent extends PluginProviderAbstractPricingComponent {
   @Input() class = "col col-md-3 col-xs-12";
+  @Input() discount:number = 0
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {

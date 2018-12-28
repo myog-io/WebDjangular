@@ -8,6 +8,7 @@ import {BuilderFormFieldConfig} from "@webdjangular/core/builder";
   template: `
     <div *ngIf="input">
       <div *ngIf="input.invalid && (input.dirty || input.touched)" class="alert alert-danger">
+
         <div *ngIf="input.errors.required">
           {{config.label}} is required.
         </div>
@@ -20,6 +21,7 @@ import {BuilderFormFieldConfig} from "@webdjangular/core/builder";
         <div *ngIf="input.errors.pattern">
           {{config.label}} invalid.
         </div>
+        <code><pre class="code">{{input.errors | json}}</pre></code>
       </div>
     </div>
   `

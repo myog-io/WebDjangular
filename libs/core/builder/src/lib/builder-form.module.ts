@@ -3,7 +3,7 @@ import { CommonModule, NgSwitch } from '@angular/common';
 import { ScaffoldFieldDirective } from './builder-form.directive';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {
   NbDialogModule,
@@ -11,7 +11,7 @@ import {
   NbSpinnerModule,
   NbButtonModule,
   NbListModule,
-  NbCheckboxModule, NbCardModule, NbAccordionModule, NbDatepickerModule, NbSelectModule
+  NbCheckboxModule, NbCardModule, NbAccordionModule, NbDatepickerModule, NbSelectModule, NbAlertModule
 } from '@nebular/theme';
 
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
@@ -54,6 +54,7 @@ const ENTRY_COMPONENTS = [
     CommonModule,
     CKEditorModule,
     MonacoEditorModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
     Ng2SmartTableModule,
@@ -63,6 +64,7 @@ const ENTRY_COMPONENTS = [
     NbWindowModule.forChild(),
     NbButtonModule,
     NbSpinnerModule,
+    NbAlertModule,
     NbListModule,
     NbCheckboxModule,
     NbCardModule,

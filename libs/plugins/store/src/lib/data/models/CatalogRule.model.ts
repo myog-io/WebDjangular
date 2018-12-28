@@ -41,7 +41,8 @@ export class CatalogRuleModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Discout Ammount',
+    inputType: 'number',
+    label: 'Discount Ammount',
     wrapper_class: 'col-6',
     placeholder: '',
   })
@@ -49,33 +50,38 @@ export class CatalogRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
+    validators: [],
     type: 'datepicker',
+    inputType: 'datetime-local',
     label: 'Start Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
   })
-  start: string;
+  start: Date;
 
   @Attribute()
   @ExtraOptions({
+    validators: [],
     type: 'datepicker',
+    inputType: 'datetime-local',
     label: 'End Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
   })
-  end: string;
+  end: Date;
 
   @Attribute()
   @ExtraOptions({
     type: 'switch',
     label: 'Is active',
     wrapper_class: 'col-3',
-    value: false,
+    value: true,
   })
   is_active: boolean;
 
   @Attribute()
   @ExtraOptions({
+    validators: [],
     type: 'jsonLogic',
     label: 'Apply Rule only if all conditions are true',
   })
@@ -99,12 +105,13 @@ export class CatalogRuleModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-      type: {
-        title: 'Type',
-        type: 'text',
-      },
+
       name: {
         title: 'Name',
+        type: 'text',
+      },
+      rule_type: {
+        title: 'Type',
         type: 'text',
       },
       value: {
@@ -114,6 +121,7 @@ export class CatalogRuleModel extends AbstractModel {
       is_active: {
         title: 'Active',
         type: 'text',
+        valuePrepareFunction: (cell,row) => cell ? 'Yes':'No'
       },
       start: {
         title: 'Start Date/Time:',
