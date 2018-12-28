@@ -1,10 +1,11 @@
-import { Injectable, Inject } from '@angular/core';
-import { WebAngularDataStore } from "@webdjangular/core/services";
-import { ProductModel } from "../../../../../store/src/lib/data/models/Product.model";
-import { JsonApiQueryData } from "angular2-jsonapi";
-import { CartService } from 'libs/plugins/store/src';
-import { DOCUMENT } from '@angular/common';
-import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
+import {Inject, Injectable} from '@angular/core';
+import {WebAngularDataStore} from "@webdjangular/core/services";
+import {ProductModel} from "../../../../../store/src/lib/data/models/Product.model";
+import {JsonApiQueryData} from "angular2-jsonapi";
+import {CartService} from 'libs/plugins/store/src';
+import {DOCUMENT} from '@angular/common';
+import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 
 export enum ProviderCheckoutSteps {
@@ -17,7 +18,6 @@ export enum ProviderCheckoutSteps {
   providedIn: 'root',
 })
 export class ProviderCheckoutService {
-
 
 
   private skus = {
@@ -41,10 +41,8 @@ export class ProviderCheckoutService {
   };
 
 
-
-
-
-  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
+  //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
+  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.wizard;
   public current_wizard_step: number = 1;
 
   public plans = {
@@ -79,18 +77,44 @@ export class ProviderCheckoutService {
   public selected_tv_optionals = [];
   public selected_telephone_optionals = [];
 
+  public formBeforeCheckout: FormGroup;
+  public formBeforeCheckoutSubmitted: boolean = false;
+  public formBeforeCheckoutLoading: boolean = false;
 
+  public formWizardStep01: FormGroup;
+  public formWizardStep01Submitted: boolean = false;
 
   constructor(
     private datastore: WebAngularDataStore,
     private cartService: CartService,
     private pageScrollService: PageScrollService,
+    private formBuilder: FormBuilder,
     @Inject(DOCUMENT) private document: any
   ) {
 
     this.loadPlans('internet');
     this.loadPlans('tv');
     this.loadPlans('telephone');
+
+    this.formBeforeCheckout = this.formBuilder.group({
+      postalCode: ['', Validators.required],
+      numberOfAddress: ['', Validators.required],
+      typeOfAccess: ['', [Validators.required]],
+      typeOfCustomer: ['', [Validators.required]]
+    });
+
+    this.formWizardStep01 = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.minLength(11)]],
+      telephone: ['', [Validators.minLength(10)]],
+      cpf: ['', [Validators.required]],
+      rg: ['', [Validators.required]],
+      dob: ['', [Validators.required]]
+    });
+
+
+
   }
 
   loadPlans(type) {
@@ -124,7 +148,7 @@ export class ProviderCheckoutService {
             if (type === 'tv') {
               let plan = this.plans_optionals.tv[this.plans_optionals.tv.findIndex(
                 (data) => data.sku === this.sku_extra_tv_decoder)];
-              this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(plan),1);
+              this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(plan), 1);
               this.selected_extra_tv_decoder = {
                 plan: plan,
                 qty: 0
@@ -156,7 +180,7 @@ export class ProviderCheckoutService {
     this.telephone_plan_collapsed = false;
 
     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
-      document:this.document,
+      document: this.document,
       scrollTarget: `#ProviderCheckoutTabPlanInternet`,
       pageScrollDuration: 350,
     });
@@ -170,7 +194,7 @@ export class ProviderCheckoutService {
     this.telephone_plan_collapsed = false;
 
     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
-      document:this.document,
+      document: this.document,
       scrollTarget: `#ProviderCheckoutTabPlanTV`,
       pageScrollDuration: 350,
     });
@@ -184,7 +208,7 @@ export class ProviderCheckoutService {
     this.tv_plan_collapsed = false;
 
     let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
-      document:this.document,
+      document: this.document,
       scrollTarget: `#ProviderCheckoutTabPlanTelephone`,
       pageScrollDuration: 350,
     });
@@ -274,9 +298,9 @@ export class ProviderCheckoutService {
     this.selected_telephone_plan = plan;
   }
 
-  get priceExtraTVDecoder(): string{
+  get priceExtraTVDecoder(): string {
     let price: number = 0;
-    if(this.selected_extra_tv_decoder.plan) {
+    if (this.selected_extra_tv_decoder.plan) {
       price = this.selected_extra_tv_decoder.plan.pricing_list * this.selected_extra_tv_decoder.qty;
     }
     return price.toFixed(2);
@@ -290,35 +314,33 @@ export class ProviderCheckoutService {
     this.selected_extra_tv_decoder.qty = 0;
   }
 
-  get subtotal(){
+  get subtotal() {
 
     let subtotal: number = 0;
 
-    if(this.selected_internet_plan){
+    if (this.selected_internet_plan) {
       subtotal += parseFloat(this.selected_internet_plan.pricing_list);
     }
-    if(this.selected_tv_plan){
+    if (this.selected_tv_plan) {
       subtotal += parseFloat(this.selected_tv_plan.pricing_list);
     }
-    if(this.selected_telephone_plan){
+    if (this.selected_telephone_plan) {
       subtotal += parseFloat(this.selected_telephone_plan.pricing_list);
     }
 
-    for(let plan of this.selected_internet_optionals){
+    for (let plan of this.selected_internet_optionals) {
       subtotal += plan.pricing_list ? parseFloat(plan.pricing_list) : 0;
     }
-    for(let plan of this.selected_tv_optionals) {
+    for (let plan of this.selected_tv_optionals) {
       subtotal += plan.pricing_list ? parseFloat(plan.pricing_list) : 0;
     }
-    for(let plan of this.selected_telephone_optionals){
+    for (let plan of this.selected_telephone_optionals) {
       subtotal += plan.pricing_list ? parseFloat(plan.pricing_list) : 0;
     }
 
     subtotal += parseFloat(this.priceExtraTVDecoder);
-    return  subtotal.toFixed(2)
+    return subtotal.toFixed(2)
   }
-
-
 
 
   get currentStep() {
@@ -327,24 +349,41 @@ export class ProviderCheckoutService {
   }
 
   nextStep() {
-    // TODO validation to next step;
-
-    if(this.current_step == ProviderCheckoutSteps.beforeCheckout){
+    if (this.current_step == ProviderCheckoutSteps.beforeCheckout) {
       this.current_step = ProviderCheckoutSteps.buildingPlan;
-    } else if ( this.current_step == ProviderCheckoutSteps.buildingPlan) {
+    } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
       this.current_step = ProviderCheckoutSteps.wizard;
     } else {
-
       this.current_wizard_step++;
-
     }
   }
 
+  onBeforeCheckoutSubmit() {
+    this.formBeforeCheckoutSubmitted = true;
+    // TODO: checar CEP
 
-  confirmCheckout(){
-    this.nextStep();
+    if (this.formBeforeCheckout.valid) {
+      this.nextStep();
+    }
   }
 
+  isBuildingPlanValid() {
+    return !!(this.selected_internet_plan || this.selected_tv_plan || this.selected_telephone_plan);
+  }
+
+  onBuildingPlanSubmit() {
+    if(this.isBuildingPlanValid()){
+      this.nextStep();
+    }
+  }
+
+  onWizardStep01Submit() {
+
+  }
+
+  confirmCheckout() {
+    this.nextStep();
+  }
 
 
 }
