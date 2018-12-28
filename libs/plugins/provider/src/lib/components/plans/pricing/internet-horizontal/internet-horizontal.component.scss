@@ -1,5 +1,6 @@
 // HARDCODE
 @import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
+@import '~bootstrap/scss/bootstrap';
 
 :host {
   display: contents;
@@ -8,6 +9,11 @@
 .card {
 
   border-radius: $plan-card-round;
+
+  @include media-breakpoint-down(sm) {
+    margin-left: 0 !important;
+    margin-right:0 !important;
+  }
 
   .left-side {
     width: 45%;
@@ -70,6 +76,11 @@
       padding-left: $spacer;
       padding-right: $spacer;
 
+      @include media-breakpoint-down(sm) {
+        padding-left: $spacer / 2;
+        padding-right: $spacer/ 2;
+      }
+
     }
 
     a.more-info {
@@ -80,11 +91,13 @@
       text-decoration: underline;
       text-transform: uppercase;
     }
+
     a.more-info:hover {
       color: darken($pricing-plan-more-info-c, 15%);
     }
 
   }
+
   .right-side {
     width: 53%;
     background: $pricing-plan-internet-horizontal-right-side-bg;
@@ -94,10 +107,19 @@
 
     ul {
 
+      @include media-breakpoint-down(sm) {
+        padding-left: 10px;
+      }
+
       list-style: none;
 
       li {
         font-size: $pricing-plan-features-fs;
+
+        @include media-breakpoint-down(sm) {
+          font-size: $pricing-plan-features-fs *0.85;
+        }
+
         font-weight: $pricing-plan-features-fw;
         font-family: $pricing-plan-features-ff;
         color: $pricing-plan-features-c;

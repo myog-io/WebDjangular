@@ -149,20 +149,20 @@ select.form-control {
   color: $input-cc;
   display: block;
   border: none;
-  border-radius:0;
+  border-radius: 0;
   border-bottom: 1px solid $input-cc;
   outline-color: $primary;
 
-   -moz-appearance: none;
-   -webkit-appearance: none;
-   -webkit-border-radius: 0;
-   appearance: none;
-   outline-width: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  appearance: none;
+  outline-width: 0;
 
   background: url('../assets/images/select_arrow_down.png') no-repeat right 5px center;
 }
 
-select.form-control:after{
+select.form-control:after {
 
 }
 
@@ -197,13 +197,13 @@ textarea:focus ~ label, textarea:valid ~ label {
   border-color: transparent;
 }
 
-.btn.disabled, .btn:disabled{
+.btn.disabled, .btn:disabled {
   opacity: 0.25;
 }
 
-.errors-feedback{
+.errors-feedback {
   position: absolute;
-  right:0;
+  right: 0;
 }
 
 /* BOTTOM BARS ================================= */
@@ -313,12 +313,22 @@ input:focus ~ .highlight {
     ul {
       list-style: none;
       padding: 0;
+
       h6 {
         margin-bottom: 0;
       }
+
       li {
         font-size: 16px;
       }
+    }
+  }
+}
+
+#row_1 {
+  @include media-breakpoint-down(sm) {
+    h5 {
+      text-align: center;
     }
   }
 }
@@ -337,13 +347,16 @@ input:focus ~ .highlight {
       background: unset;
       border: 0;
     }
+
     font-family: "Open Sans", Helvetica, sans-serif;
+
     .card-title {
       color: #000;
       font-size: 23px;
       font-weight: 600;
       margin-bottom: 5px;
     }
+
     .card-text {
       color: #8ea5b0;
       font-size: 18px;
@@ -357,10 +370,12 @@ input:focus ~ .highlight {
       font-weight: $fw-black;
     }
   }
+
   .card.contact.bg-primary {
     .card-header {
       height: 80px;
     }
+
     a {
       font-size: 18px;
     }
@@ -386,6 +401,7 @@ input:focus ~ .highlight {
 .modal.tv-channel {
   .modal-dialog {
     max-width: 900px;
+
     .modal-content {
       height: 500px;
     }
@@ -416,6 +432,7 @@ input:focus ~ .highlight {
     font-size: 21px;
     font-weight: $fw-semibold;
     color: #616c74;
+
     .plus {
       font-size: 32px;
       line-height: 21px;
@@ -457,6 +474,7 @@ input:focus ~ .highlight {
     color: #8a939a;
     max-width: 390px;
   }
+
   span.bottom {
     position: absolute;
     bottom: 0;
@@ -487,6 +505,7 @@ input:focus ~ .highlight {
     width: 100%;
     text-align: center;
   }
+
   h6 {
     width: 100%;
     text-align: center;
@@ -518,6 +537,7 @@ input:focus ~ .highlight {
 
     span {
       display: flex;
+
       a {
         display: inline-block;
         width: 100%;
@@ -529,8 +549,8 @@ input:focus ~ .highlight {
   }
 }
 
-.btn-round{
- border-radius:25px;
+.btn-round {
+  border-radius: 25px;
 }
 
 #cidades-atendidas {
@@ -561,15 +581,18 @@ input:focus ~ .highlight {
   max-width: 460px;
   height: 455px;
   padding-left: 30px;
+
   h4 {
     margin-top: 85%;
     margin-bottom: 0;
   }
+
   p {
     font-size: 16px;
     line-height: 20px;
   }
 }
+
 #banner-tv {
   background-position: center center;
   background-repeat: no-repeat;
