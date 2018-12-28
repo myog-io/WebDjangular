@@ -6,7 +6,7 @@
   "description": "Framework WebDjangular 1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve client --port=4200 --proxy-config proxy.conf.json",
+    "start": "ng serve client --port=4200 --deployUrl= --proxy-config proxy.conf.json",
     "start:admin": "ng serve admin --port=4201 --proxy-config proxy.conf.json",
     "build": "ng build client",
     "build:admin": "ng build admin",
