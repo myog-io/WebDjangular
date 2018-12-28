@@ -24,8 +24,7 @@ THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 PLUGIN_DIR = os.path.join(BASE_DIR, 'libs/plugins')
 
 ANGULAR_APP_DIR = os.path.join(os.path.join(BASE_DIR,'dist'),'apps')
-ANGULAR_CLIENT_APP_DIR = os.path.join(ANGULAR_APP_DIR, 'client')
-ANGULAR_ADMIN_APP_DIR = os.path.join(ANGULAR_APP_DIR, 'admin' )
+
 DEBUG = False
 
 ALLOWED_HOSTS = []
@@ -189,7 +188,3 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
-
-STATICFILES_DIRS = [
-    ANGULAR_APP_DIR,
-]

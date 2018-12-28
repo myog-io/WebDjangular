@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "deployUrl": "/client_app/",
-            "outputPath": "dist/apps/client",
+            "outputPath": "static/client",
             "index": "apps/client/src/index.html",
             "main": "apps/client/src/main.ts",
             "polyfills": "apps/client/src/polyfills.ts",
@@ -192,7 +192,7 @@
           "options": {
             "deployUrl": "/admin/",
             "baseHref": "/admin/",
-            "outputPath": "dist/apps/admin",
+            "outputPath": "static/admin",
             "index": "apps/admin/src/index.html",
             "main": "apps/admin/src/main.ts",
             "polyfills": "apps/admin/src/polyfills.ts",

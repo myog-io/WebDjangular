@@ -53,7 +53,7 @@ const ENTRY_COMPONENTS = [
   imports: [
     CommonModule,
     CKEditorModule,
-    MonacoEditorModule.forRoot(),
+    MonacoEditorModule.forRoot({baseUrl: "./assets"}),
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
