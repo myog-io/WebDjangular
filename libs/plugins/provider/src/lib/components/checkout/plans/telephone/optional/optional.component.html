@@ -12,13 +12,13 @@
   <span class="price">{{ plan.pricing_list }}</span>
 </div>
 <div class="col col-md-3 actions-wrapper align-self-center">
-  <button type="button" class="btn btn-outline-primary"
+  <button type="button" class="btn btn-outline-primary btn-round text-uppercase"
     *ngIf="!providerCheckout.selected_telephone_optionals.includes(plan)"
     (click)="providerCheckout.addTelephoneOptional(plan)">
     Adicionar
   </button>
 
-  <button type="button" class="btn btn-outline-danger"
+  <button type="button" class="btn btn-outline-danger btn-round text-uppercase"
     *ngIf="providerCheckout.selected_telephone_optionals.includes(plan)"
     (click)="providerCheckout.removeTelephoneOptional(plan)">
     Remover

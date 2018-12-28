@@ -16,7 +16,7 @@
             'selected': providerCheckout.selected_internet_plan
             }">
           <td class="icon-wrapper align-middle ">
-            <i class="fas fa-2x fa-globe"></i>
+            <i class="icon icon-globo_big"></i>
           </td>
 
           <td class="align-middle title">
@@ -44,9 +44,10 @@
         </tr>
 
 
-        <tr class="summary-item selected" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+        <tr class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
           <td class="icon-wrapper align-middle ">
-            <i class="fas fa-2x fa-globe"></i>
+            <span *ngIf="plan_optional.data.checkout_icon"   [class]="'icon ' + plan_optional?.data?.checkout_icon"></span>
+            <span *ngIf="!plan_optional.data.checkout_icon" class="fa fa-globe"></span>
           </td>
           <td class="align-middle title">
             {{ plan_optional.name }}
@@ -67,7 +68,7 @@
             'selected': providerCheckout.selected_tv_plan
             }">
           <td class="icon-wrapper align-middle ">
-            <i class="fas fa-2x fa-globe"></i>
+            <i class="icon icon-tv_big"></i>
           </td>
           <td class="align-middle title">
             <span *ngIf="!providerCheckout.selected_tv_plan">
@@ -93,12 +94,18 @@
           </td>
         </tr>
 
-        <tr class="summary-item selected" *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
+        <tr class="summary-item selected optionals" *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
           <td class="icon-wrapper align-middle ">
-            <i class="fas fa-2x fa-globe"></i>
+            <span class="icon icon-extra-decoder"></span>
           </td>
           <td class="align-middle title">
-            {{ providerCheckout.selected_extra_tv_decoder.qty }} PONTO ADICIONAL
+            {{ providerCheckout.selected_extra_tv_decoder.qty }}
+            <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 1">
+             PONTO ADICIONAL
+            </span>
+            <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 1">
+             PONTOS ADICIONAIS
+            </span>
           </td>
           <td class="summary-action align-middle">
             <div class="price-wrapper">
@@ -114,9 +121,9 @@
           </td>
         </tr>
 
-        <tr class="summary-item selected" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
+        <tr class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
           <td class="icon-wrapper align-middle ">
-            <i class="fas fa-2x fa-globe"></i>
+            <span class="icon icon-squares"></span>
           </td>
           <td class="align-middle title">
             {{ plan_optional.name }}
@@ -138,7 +145,7 @@
             'selected': providerCheckout.selected_telephone_plan
             }">
           <td class="icon-wrapper align-middle ">
-            <i class="fas fa-2x fa-globe"></i>
+            <i class="icon icon-telephone"></i>
           </td>
           <td class="align-middle title">
             <span *ngIf="!providerCheckout.selected_telephone_plan">

@@ -51,6 +51,20 @@ table {
           color: #00b9bd;
           opacity: 0.5;
           border:0;
+          .icon{
+            width:30px;
+            height:30px;
+            background-size:contain;
+          }
+        }
+
+        &.optionals{
+          .icon-wrapper {
+            .icon{
+              height:23px;
+            }
+
+          }
         }
 
         .title {

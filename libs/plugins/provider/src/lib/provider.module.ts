@@ -22,7 +22,6 @@ const MODULES = [
 
 const COMPONENTS = [
   PluginProviderComponent,
-
   PluginProviderPlansComponent,
   PluginProviderPricingInternetHorizontalComponent,
   PluginPricingComboVerticalComponent,

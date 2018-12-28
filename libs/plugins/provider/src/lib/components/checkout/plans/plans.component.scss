@@ -114,14 +114,15 @@
       .actions-wrapper {
         text-align: center;
 
-        .btn-deselect-plan{
-          width:140px;
+        .btn-deselect-plan {
+          width: 140px;
           font-family: "Boston", Arial, Helvetica, sans-serif;
           font-weight: 700;
-          font-size:14px;
+          font-size: 14px;
         }
       }
     }
+
 
     .extra-tv-decoder {
       padding: 30px 60px;
@@ -178,6 +179,17 @@
 
     }
 
+  }
+
+  &.telephone {
+    .card-body {
+      .selected-plan-wrapper {
+        h2 {
+          font-size: 26px;
+          line-height: 28px;
+        }
+      }
+    }
   }
 
 }
@@ -238,13 +250,3 @@
     padding-left: 35px;
   }
 }
-
-#collapseProviderCheckoutPlanTelephone {
-  .selected-plan-wrapper {
-    h2 {
-      font-size: 26px;
-      line-height: 28px;
-    }
-  }
-}
-

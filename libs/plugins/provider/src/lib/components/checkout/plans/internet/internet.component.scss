@@ -81,18 +81,23 @@
 
       .list-group-item {
         border: unset;
-        padding: 2px 20px;
+
 
         font-size: 14px;
         font-family: "Open Sans", Arial, Helvetica, sans-serif;
         font-weight: 400;
 
         .icon {
+          width:20px;
+          height:20px;
+          background-size:contain;
           color: #00b9bd;
         }
 
         .title {
           color: #8a939a;
+          display: flex;
+          line-height: 15px;
         }
       }
 

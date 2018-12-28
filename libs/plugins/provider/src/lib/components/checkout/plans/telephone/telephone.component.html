@@ -14,27 +14,35 @@
         </div>
       </div>
       <div class="card-body">
-        <ul class="features-wrapper text-center text-uppercase">
-          <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.data?.addon_text_1"></p>
-          </li>
-          <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_2" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.data?.addon_text_2"></p>
-          </li>
-          <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_3" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.data?.addon_text_3"></p>
-
-          </li>
-          <li class="">
-            <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_4" aria-hidden="true"></i>
-            <p [innerHtml]="plan?.data?.addon_text_4"></p>
-          </li>
-        </ul>
+        <div class="features-wrapper text-center text-uppercase pl-2 pr-2">
+          <div class="d-flex flex-row ">
+            <div class="list-group-item col d-flex">
+              <span class="icon" [class]="plan?.data?.addon_icon_1"></span>
+              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_1"></span>
+            </div>
+          </div>
+          <div class="d-flex flex-row">
+            <div class="list-group-item col d-flex">
+              <span class="icon" [class]="plan?.data?.addon_icon_2"></span>
+              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_2"></span>
+            </div>
+          </div>
+          <div class="d-flex flex-row">
+            <div class="list-group-item col d-flex">
+              <span class="icon" [class]="plan?.data?.addon_icon_3"></span>
+              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_3"></span>
+            </div>
+          </div>
+          <div class="d-flex flex-row">
+            <div class="list-group-item col d-flex">
+              <span class="icon" [class]="plan?.data?.addon_icon_4"></span>
+              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_4"></span>
+            </div>
+          </div>
+        </div>
         <div class="select-wrapper">
-          <button type="button" class="btn btn-outline-primary" (click)="providerCheckout.selectTelephonePlan(plan)">
+          <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+            (click)="providerCheckout.selectTelephonePlan(plan)">
             Escolher
           </button>
         </div>
