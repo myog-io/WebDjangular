@@ -1,4 +1,5 @@
 @import "../../styles/variables.scss";
+@import '~bootstrap/scss/bootstrap';
 
 header {
   height: $header-h;
@@ -6,9 +7,20 @@ header {
 }
 
 
-.header-logo{
-  background:url("../../assets/images/header_logo.png");
+.header-logo {
+  background: url("../../assets/images/header_logo.png");
   width: 236px;
   height: 72px;
 }
 
+
+@include media-breakpoint-down(sm) {
+  #navbarSupportedContent {
+    position: absolute;
+    top: 90px;
+    z-index: 999999;
+    background: #fff;
+    padding: 0px 50px 20px 50px;
+    right: 0;
+  }
+}
