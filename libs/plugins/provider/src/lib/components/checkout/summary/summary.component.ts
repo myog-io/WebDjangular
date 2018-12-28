@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderCheckoutService} from "../../../data/services/provider-checkout.service";
+import {Validators} from "@angular/forms";
 
 @Component({
     selector: 'plugin-provider-checkout-summary',
@@ -17,5 +18,4 @@ export class PluginProviderCheckoutSummaryComponent implements OnInit {
 
     ngOnInit() {
     }
-
 }
