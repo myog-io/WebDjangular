@@ -11,9 +11,11 @@ import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
 
 import { PluginProviderModule } from "@webdjangular/plugins/provider"
 import { FormsModule } from "@webdjangular/core/forms";
+import { CoreCmsModule } from '@webdjangular/core/cms';
 
 const HARDCODEMODULES = [
   FormsModule,
+  CoreCmsModule,
   PluginProviderModule,
 ];
 
