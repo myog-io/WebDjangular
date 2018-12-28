@@ -104,6 +104,14 @@ ul.wizard {
         font-weight: 700;
         text-transform: uppercase;
       }
+      .subitem{
+        color: #fff;
+        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 400;
+        text-transform: uppercase;
+      }
     }
     .links-wrapper {
       position: absolute;
@@ -121,10 +129,16 @@ ul.wizard {
     }
 
     .info-wrapper {
-      table {
+
+      .table-responsive{
         background: #a5b6bd;
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
+      }
+
+      table {
+
+
         margin: 0;
 
         color: #fff;

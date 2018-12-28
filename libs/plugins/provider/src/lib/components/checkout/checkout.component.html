@@ -1,17 +1,29 @@
+<section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.beforeCheckout"
+  style="background:#F8F8F8;">
+  <div class="container">
+    <div class="row">
+      <plugin-provider-checkout-before-checkout>
+      </plugin-provider-checkout-before-checkout>
+    </div>
+  </div>
+</section>
 
-<div class="row"  *ngIf="true">
-  <plugin-provider-checkout-before-checkout>
-  </plugin-provider-checkout-before-checkout>
-</div>
+<section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.buildingPlan"
+  style="background:#F8F8F8;">
+  <div class="container">
+    <div class="row">
+      <plugin-provider-checkout-plans></plugin-provider-checkout-plans>
+      <plugin-provider-checkout-summary></plugin-provider-checkout-summary>
+    </div>
+  </div>
+</section>
 
 
-
-
-<div class="row"  *ngIf="false">
-  <plugin-provider-checkout-plans></plugin-provider-checkout-plans>
-  <plugin-provider-checkout-summary></plugin-provider-checkout-summary>
-</div>
-
-<div class="row" *ngIf="false">
-  <plugin-provider-checkout-wizard></plugin-provider-checkout-wizard>
-</div>
+<section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.wizard"
+  style="background:#FFFFFF;">
+  <div class="container">
+    <div class="row">
+      <plugin-provider-checkout-wizard></plugin-provider-checkout-wizard>
+    </div>
+  </div>
+</section>

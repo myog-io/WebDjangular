@@ -6,6 +6,13 @@ import { CartService } from 'libs/plugins/store/src';
 import { DOCUMENT } from '@angular/common';
 import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
 
+
+export enum ProviderCheckoutSteps {
+  beforeCheckout = 0,
+  buildingPlan = 1,
+  wizard = 2
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -34,6 +41,11 @@ export class ProviderCheckoutService {
   };
 
 
+
+
+
+  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
+  public current_wizard_step: number = 1;
 
   public plans = {
     internet: [],
@@ -75,7 +87,6 @@ export class ProviderCheckoutService {
     private pageScrollService: PageScrollService,
     @Inject(DOCUMENT) private document: any
   ) {
-
 
     this.loadPlans('internet');
     this.loadPlans('tv');
@@ -306,6 +317,34 @@ export class ProviderCheckoutService {
     subtotal += parseFloat(this.priceExtraTVDecoder);
     return  subtotal.toFixed(2)
   }
+
+
+
+
+  get currentStep() {
+    //return ProviderCheckoutSteps.buildingPlan;
+    return this.current_step;
+  }
+
+  nextStep() {
+    // TODO validation to next step;
+
+    if(this.current_step == ProviderCheckoutSteps.beforeCheckout){
+      this.current_step = ProviderCheckoutSteps.buildingPlan;
+    } else if ( this.current_step == ProviderCheckoutSteps.buildingPlan) {
+      this.current_step = ProviderCheckoutSteps.wizard;
+    } else {
+
+      this.current_wizard_step++;
+
+    }
+  }
+
+
+  confirmCheckout(){
+    this.nextStep();
+  }
+
 
 
 }

@@ -2,8 +2,13 @@
   <div class="card">
     <div class="card-body p-4">
 
-      <div class="row justify-content-md-center pt-4">
+      <div class="row justify-content-md-center pt-2">
         <div class="col col-md-12">
+          <div class="row">
+            <div class="col pb-2">
+              <span class="icon icon-pin"></span>
+            </div>
+          </div>
           <h4 class="text-center text-black mb-0">ONDE VOCÊ ESTÁ?</h4>
           <p class="text-center subtitle mx-auto">
             Digite seu CEP e número de sua residência para
@@ -67,7 +72,7 @@
 
             <div class="row">
               <div class="col">
-                <button class="btn btn-primary btn-block p-2">
+                <button class="btn btn-primary btn-block p-2" (click)="providerCheckout.nextStep();">
                   CONTINUAR
                 </button>
               </div>

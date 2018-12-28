@@ -1,15 +1,32 @@
 <div class="step-item">
   <div class="row mt-4">
-    <div class="col col-md-6 offset-3">
+    <div class="col col-md-8 offset-2">
       <h4 class="text-primary text-uppercase mb-4">Obrigado por escolher a LPNet!</h4>
 
-      <h5>INFORMAÇÕES SOBRE SUA ASSINATURA</h5>
+      <h5 class="text-primary">INFORMAÇÕES SOBRE SUA ASSINATURA</h5>
 
-      <p>Internet - <b>50MB</b></p>
-      <p>TV - <b>HD Pop</b></p>
-      <p>Telefone - <b>Fixo Local Econômico</b></p>
-      <p><b>Telecine HD </b></p>
-      <p><b>HBO Max </b></p>
+      <p *ngIf="providerCheckout.selected_internet_plan">
+        Internet - <b>{{ providerCheckout.selected_internet_plan.name }}</b>
+      </p>
+      <p *ngIf="providerCheckout.selected_tv_plan">
+        TV - <b>{{ providerCheckout.selected_tv_plan.name }}</b>
+      </p>
+      <p *ngIf="providerCheckout.selected_telephone_plan">
+        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.name }}</b>
+      </p>
+
+      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
+        <b>{{ plan_optional.name }}</b>
+      </p>
+
+      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
+        <b>{{ plan_optional.name }}</b>
+      </p>
+
+      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
+        <b>{{ plan_optional.name }}</b>
+      </p>
+
       <p>Taxa de Instalação: <b>Grátis </b></p>
       <p>Taxa de Adesão: <b>Grátis </b></p>
       <p>Valor do 1º ao 3º mês:<b> R$ 231,20 </b></p>
@@ -17,19 +34,18 @@
       <p>Pagamento: <b>Boleto por email </b></p>
       <p>Email p/ envio do boleto: <b>fulano@edge.com.br </b></p>
 
-      <h5 class="text-primary">AGENDAMENTO DA INSTALAÇÃO</h5>
+      <h5 class="text-primary mt-3">AGENDAMENTO DA INSTALAÇÃO</h5>
 
-      <p>Nossa Central de Atendimento entrará em contato para agendar a instalação.</p>
+      <p class="mb-2">Nossa Central de Atendimento entrará em contato para agendar a instalação.</p>
 
-      <p>Para conhecer outras solicitações que você pode fazer em nosso site, acesse a Central do Assinante:
+      <p class="mb-2">Para conhecer outras solicitações que você pode fazer em nosso site, acesse a Central do Assinante:
         <a href="http://central.lpnet.com.br">central.lpnet.com.br</a></p>
 
-      <p>Qualquer dúvida, estamos a disposição: <a routerLink="/contato"> lpnet.com.br/contato</a></p>
+      <p class="mb-2">Qualquer dúvida, estamos a disposição: <a routerLink="/contato"> lpnet.com.br/contato</a></p>
 
       <h6 class="text-primary">Equipe LPNet</h6>
 
     </div>
   </div>
 </div>
-
 

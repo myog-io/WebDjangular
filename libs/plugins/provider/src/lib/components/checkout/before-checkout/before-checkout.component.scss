@@ -3,28 +3,34 @@
 
 // TODO get variables config based on database.
 
-:host{
-  display:contents;
+:host {
+  display: contents;
 }
 
-.card{
-  border:0;
+.card {
+  border: 0;
 }
 
-.subtitle{
-  max-width:360px;
-  font-size:16px;
-  line-height:18px;
+.icon {
+  float: none;
+  display: block;
+  margin: auto;
 }
 
-button{
+.subtitle {
+  max-width: 360px;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+button {
   font-weight: bold;
 }
 
-.link{
-  position:absolute;
+.link {
+  position: absolute;
 }
 
-input:focus ~ .link, input:valid ~ .link{
-  display:none;
+input:focus ~ .link, input:valid ~ .link {
+  display: none;
 }

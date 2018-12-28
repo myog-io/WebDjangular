@@ -194,7 +194,13 @@
   }
   &.icon-squares{
     background-image: url("../assets/images/icon_squares.png");
+    width: 21px;
+    height: 21px;
   }
-
+  &.icon-pin{
+    background-image:url("../assets/images/icon_pin.png");
+    width:25px;
+    height: 37px;
+  }
 }
 
