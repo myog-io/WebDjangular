@@ -11,6 +11,7 @@ export class PluginProviderPlansComponent implements OnInit {
   @Input() titleColor: string = '';
   @Input() headline: string = '';
   @Input() background: string = '';
+  @Input() title_id: string = 'provider-plan';
 
   constructor() {
   }

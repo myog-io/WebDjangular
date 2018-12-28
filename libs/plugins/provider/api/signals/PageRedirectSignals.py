@@ -31,5 +31,4 @@ def redirect(sender, request, *args, **kwargs):
                     if pageRedirect:
                         kwargs['slug'] = pageRedirect.redirect_page.slug
                         kwargs['pk'] = pageRedirect.redirect_page.pk
-                        print("FOUND PAGE REDIRECT,",kwargs)
     return kwargs

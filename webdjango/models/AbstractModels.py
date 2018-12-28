@@ -1,11 +1,7 @@
 from django.core.validators import MaxLengthValidator
-from djongo import models
-
+from django.db import models
 
 class BaseModel(models.Model):
-    readonly_fields = ('_id', )
-
-    _id = models.ObjectIdField(db_column='_id', primary_key=True, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -15,7 +11,7 @@ class BaseModel(models.Model):
 
 class PermalinkModel(models.Model):
 
-    slug = models.SlugField(max_length=256)
+    slug = models.SlugField(max_length=255, unique=True)
 
     @property
     def absolute_url(self):

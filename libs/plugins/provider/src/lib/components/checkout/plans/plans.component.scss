@@ -5,190 +5,248 @@
 
 .plan-select-wrapper {
 
-    background: unset;
+  background: unset;
+  border: unset;
+
+  .plan-panel {
+    background-color: #FFF;
     border: unset;
+    height: 100px;
+    margin-top: 2px;
 
-    .plan-panel {
-        background-color: #FFF;
-        border: unset;
-        height: 100px;
-        margin-top: 2px;
+    padding: 30px 40px;
 
+    border-radius: 0;
+
+    cursor: pointer;
+
+    .icon-wrapper {
+      color: #00b9bd;
+      padding-right: 20px;
+      position: relative;
+      top: -10px;
+
+      .icon {
+        width: 48px;
+      }
+    }
+
+    .title {
+      font-family: "Boston", Arial, Helvetica, sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #899299;
+      text-transform: uppercase;
+      vertical-align: top;
+    }
+  }
+
+  &.internet {
+    .card-header {
+      .icon {
+        position: relative;
+        top: -5px;
+      }
+    }
+  }
+
+  .card-body {
+    background: #fff;
+    padding: 0;
+
+
+    .select-plans-wrapper {
+      background-color: #fff;
+      margin-top: 2px;
+      padding: 20px 40px;
+
+      .plan-caption {
+        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        color: #899299;
+        text-transform: uppercase;
+      }
+    }
+
+    .selected-plan-wrapper {
+      background: #00b9bd;
+      padding: 0;
+      margin: 0;
+      height: 140px;
+
+      h2 {
+        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-size: 36px;
+        font-weight: 900;
+        color: #fff;
+        text-transform: uppercase;
         padding-left: 40px;
-        padding-right: 40px;
+        margin: 0;
+      }
 
-        padding-top: 30px;
-        padding-bottom: 30px;
+      .price-wrapper {
+        color: #fff;
 
-        .icon {
-            color: #00b9bd;
-            padding-right: 20px;
-            position: relative;
-            top: -10px;
+        .row {
+          justify-content: flex-end;
+
+
+          .currency-unit {
+            font-size: 19px;
+            font-weight: 600;
+            padding-right: 2px;
+
+          }
+
+          .price {
+            font-size: 32px;
+            font-weight: 600;
+          }
+
+          .periodicity {
+            font-size: 19px;
+            font-weight: 400;
+          }
         }
+      }
 
-        .title {
-            font-family: "Boston", Arial, Helvetica, sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: #899299;
-            text-transform: uppercase;
-            vertical-align: top;
+      .actions-wrapper {
+        text-align: center;
+
+        .btn-deselect-plan {
+          width: 140px;
+          font-family: "Boston", Arial, Helvetica, sans-serif;
+          font-weight: 700;
+          font-size: 14px;
         }
+      }
     }
 
-    .card-body {
-        background: #fff;
-        padding: 0;
 
-        .select-plans-wrapper {
-            background-color: #fff;
-            margin-top: 2px;
-            padding: 20px 40px;
+    .extra-tv-decoder {
+      padding: 30px 60px;
+      border-bottom: 1px solid #f1f1f1;
 
-            .plan-caption {
-                font-family: "Boston", Arial, Helvetica, sans-serif;
-                font-size: 13px;
-                font-weight: 700;
-                color: #899299;
-                text-transform: uppercase;
-            }
-        }
-
-        .selected-plan-wrapper {
-            background: #00b9bd;
-            padding: 0;
-            margin: 0;
-            height: 140px;
-
-            h2 {
-                font-family: "Boston", Arial, Helvetica, sans-serif;
-                font-size: 36px;
-                font-weight: 900;
-                color: #fff;
-                text-transform: uppercase;
-                padding-left: 40px;
-                margin:0;
-            }
-
-            .price-wrapper {
-                color: #fff;
-                .currency-unit {
-                    font-size: 19px;
-                    font-weight: 600;
-                    padding-right: 2px;
-
-                }
-                .price {
-                    font-size: 32px;
-                    font-weight: 600;
-                }
-                .periodicity {
-                    font-size: 19px;
-                    font-weight: 400;
-                }
-            }
-            .actions-wrapper {
-                text-align: center;
-                button {
-
-                }
-            }
-        }
-
-        .extra-tv-decoder {
-            padding: 30px 60px;
-            border-bottom: 1px solid #f1f1f1;
-
-            h4 {
-                color: #00b9bd;
-                font-size: 20px;
-                font-family: "Boston", Arial, Helvetica, sans-serif;
-                margin-bottom: 5px;
-                .icon {
-
-                }
-                .title {
-                    text-transform: uppercase;
-                    font-weight: 700;
-                    padding-left: 3px;
-                }
-            }
-            .form-group {
-                font-family: "Open Sans", Helvetica, sans-serif;
-                font-size: 16px;
-                line-height: 17px;
-                font-weight: 400;
-                color: #5f6a73;
-                padding-left: 25px;
-                margin: 0;
-            }
-            .price-wrapper {
-                font-family: "Boston", Arial, Helvetica, sans-serif;
-                font-size: 22px;
-                color: #697075;
-                font-weight: 700;
-                text-align: center;
-
-                .currency-unit {
-                }
-                .price {
-                }
-            }
-            .actions-wrapper {
-                text-align: center;
-                button {
-
-                }
-            }
-
-        }
-
-    }
-
-}
-
-.plan-select-wrapper:first-child {
-    .plan-panel {
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-    }
-}
-
-.plan-select-wrapper:last-child {
-    .card-body {
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-}
-
-.select-television-optional-plan-wrapper {
-    padding: 30px 60px;
-    h4 {
+      h4 {
         color: #00b9bd;
         font-size: 20px;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        margin-bottom: 25px;
+        margin-bottom: 5px;
+
         .icon {
 
         }
+
         .title {
-            text-transform: uppercase;
-            font-weight: 700;
-            padding-left: 3px;
+          text-transform: uppercase;
+          font-weight: 700;
+          padding-left: 3px;
         }
+      }
+
+      .form-group {
+        font-family: "Open Sans", Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 17px;
+        font-weight: 400;
+        color: #5f6a73;
+        padding-left: 25px;
+        margin: 0;
+      }
+
+      .price-wrapper {
+        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-size: 22px;
+        color: #697075;
+        font-weight: 700;
+        text-align: center;
+
+        .currency-unit {
+        }
+
+        .price {
+        }
+      }
+
+      .actions-wrapper {
+        text-align: center;
+
+        button {
+
+        }
+      }
+
     }
-    .row{
-        padding-left:35px;
+
+  }
+
+  &.telephone {
+    .card-body {
+      .selected-plan-wrapper {
+        h2 {
+          font-size: 26px;
+          line-height: 28px;
+        }
+      }
     }
+  }
+
 }
 
-#collapseProviderCheckoutPlanTelephone{
-    .selected-plan-wrapper{
-        h2{
-            font-size:26px;
-            line-height: 28px;
-        }
+.plan-select-wrapper {
+  &.internet {
+    .plan-panel {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
     }
+  }
 }
 
+.plan-select-wrapper {
+  &.telephone {
+    .plan-panel.closed {
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+
+    .show {
+      .card-body {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+
+        .select-plans-wrapper {
+          border-bottom-left-radius: 15px;
+          border-bottom-right-radius: 15px;
+        }
+      }
+    }
+
+  }
+}
+
+
+.select-television-optional-plan-wrapper {
+  padding: 30px 60px;
+
+  h4 {
+    color: #00b9bd;
+    font-size: 20px;
+    font-family: "Boston", Arial, Helvetica, sans-serif;
+    margin-bottom: 25px;
+
+    .icon {
+
+    }
+
+    .title {
+      text-transform: uppercase;
+      font-weight: 700;
+      padding-left: 3px;
+    }
+  }
+
+  .row {
+    padding-left: 35px;
+  }
+}

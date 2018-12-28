@@ -1,12 +1,12 @@
 from django_measurement.models import MeasurementField
 from django_prices.models import MoneyField
-from djongo import models
+from django.db import models
 
 from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
 from django_countries.fields import CountryField
 from measurement.measures import Weight
-from libs.core.utils.api.weight import WeightUnits, zero_weight
+from webdjango.utils.weight import WeightUnits, zero_weight
 
 
 class ShippingMethodType:
@@ -33,11 +33,12 @@ class ShippingZone(BaseModel):
 
 class ShippingMethod(BaseModel):
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=30, choices=ShippingMethodType.CHOICES)
+    method_type = models.CharField(max_length=30, choices=ShippingMethodType.CHOICES)
     price = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                        max_digits=defaults.DEFAULT_MAX_DIGITS,
                        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, default=0)
     # shipping_zone = models.EmbeddedModelField(model_container=ShippingZone)
+
     minimum_order_price = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                                      max_digits=defaults.DEFAULT_MAX_DIGITS,
                                      decimal_places=defaults.DEFAULT_DECIMAL_PLACES, default=0, blank=True,

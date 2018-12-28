@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/client_app/",
             "outputPath": "dist/apps/client",
             "index": "apps/client/src/index.html",
             "main": "apps/client/src/main.ts",
@@ -189,6 +190,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "/admin/",
+            "baseHref": "/admin/",
             "outputPath": "dist/apps/admin",
             "index": "apps/admin/src/index.html",
             "main": "apps/admin/src/main.ts",

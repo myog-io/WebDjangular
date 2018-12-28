@@ -9,7 +9,7 @@ table {
 .card {
 
   top: 20px;
-  border:0;
+  border: 0;
 
   .card-header {
     height: 100px;
@@ -25,8 +25,12 @@ table {
   .card-body {
     padding: 0;
 
-    .summary-itens-wrapper {
-      margin-bottom:20px;
+    .summary-items-wrapper {
+      margin-bottom: 20px;
+
+      table{
+        table-layout: auto;
+      }
 
       .summary-item {
         margin: 0;
@@ -42,19 +46,38 @@ table {
         border-top: 3px solid #fff;
         border-bottom: 3px solid #fff;
 
-        .icon {
+        .icon-wrapper {
+          width:35px;
           color: #00b9bd;
           opacity: 0.5;
+          border:0;
+          .icon{
+            width:30px;
+            height:30px;
+            background-size:contain;
+          }
         }
+
+        &.optionals{
+          .icon-wrapper {
+            .icon{
+              height:23px;
+            }
+
+          }
+        }
+
         .title {
           padding: 0;
           opacity: 0.5;
         }
 
         .summary-action {
-          min-width: 160px;
+          width: 160px;
           background: #f4f4f4;
           padding: 0;
+
+          position: relative;
 
           .price-wrapper {
             color: #00b9bd;
@@ -67,11 +90,13 @@ table {
               font-size: 17px;
               font-weight: 400;
             }
+
             .price {
               font-weight: 700;
               text-align: right;
               margin-right: 30px;
             }
+
             .remove {
               color: #899299;
               background: transparent;
@@ -79,16 +104,19 @@ table {
               position: absolute;
               font-size: 22px;
               top: -2px;
-              right: 0px;
+              right: 0;
               padding: 0;
               cursor: pointer;
             }
           }
+
           .btn-add-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: table;
+
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
 
             .add {
               width: 100%;
@@ -98,19 +126,18 @@ table {
               color: #00b9bd;
               text-transform: uppercase;
               text-align: center;
+              background: rgba(0, 0, 0, 0);
 
-              position: absolute;
-              top: 0;
-              bottom: 0;
             }
           }
 
         }
 
         &.selected {
-          .icon {
+          .icon-wrapper {
             opacity: 1;
           }
+
           .title {
             opacity: 1;
           }
@@ -118,6 +145,8 @@ table {
           .summary-action {
             padding-left: 20px;
             padding-right: 10px;
+
+
           }
 
         }
@@ -151,6 +180,7 @@ table {
         .currency-unit {
 
         }
+
         .price {
 
         }
@@ -159,7 +189,7 @@ table {
     }
 
     .summary-info-wrapper {
-      margin-bottom:20px;
+      margin-bottom: 20px;
 
       .table {
 
@@ -173,9 +203,11 @@ table {
             font-weight: 400;
             color: #000;
           }
+
           td:first-child {
 
           }
+
           td:last-child {
             text-align: right;
           }
@@ -194,8 +226,8 @@ table {
 
     .summary-submit-wrapper {
       button[type="submit"] {
-        padding-left:45px;
-        padding-right:45px;
+        padding-left: 45px;
+        padding-right: 45px;
       }
     }
 

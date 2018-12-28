@@ -13,6 +13,7 @@ class CoreConfigInputSerializer(serializers.Serializer):
     disabled = serializers.BooleanField(read_only=True)
     label = serializers.CharField(read_only=True)
     select_options = serializers.JSONField(read_only=True)
+    select_options_model = serializers.CharField(read_only=True)
     placeholder = serializers.CharField(read_only=True)
     validation = serializers.JSONField(read_only=True)
     wrapper_class = serializers.CharField(read_only=True)

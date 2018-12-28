@@ -1,32 +1,46 @@
-<div class="card">
-    <div class="card-header">
+<div class="row" *ngIf="providerCheckout.plans.tv.length > 0; else loading_holder">
+  <div class="col col-6 mb-2" *ngFor="let plan of providerCheckout.plans.tv;">
+    <div class="card">
+      <div class="card-header">
         <div class="title-wrapper">
-            <span class="prefix">HD</span>
-            <span class="title">SUPER</span>
+          <span class="prefix">HD</span>
+          <span class="title">{{plan?.name.split(" ")[1]}}</span>
         </div>
         <div class="price-wrapper">
-            <span class="currency-unit">R$</span>
-            <span class="price">104,90</span>
-            <span class="periodicity">/MÊS</span>
+          <span class="currency-unit">R$</span>
+          <span class="price">{{plan?.pricing_list}}</span>
+          <span class="periodicity">/MÊS</span>
         </div>
-    </div>
-    <div class="card-body">
+      </div>
+      <div class="card-body">
         <ul class="features-wrapper text-center text-uppercase">
-            <li>
-                <span class=""> canais <strong>TOTAL:</strong></span>
-                <span class="text-primary"> <strong> 43</strong> </span>
-            </li>
-            <li>
-                <span class=""> canais <strong>HD:</strong></span>
-                <span class="text-primary"> <strong> 19</strong> </span>
-            </li>
+          <li>
+            <span class=""> canais <strong>TOTAL:</strong></span>
+            <span class="text-primary"> <strong> {{plan?.channel_count}}</strong> </span>
+          </li>
+          <li>
+            <span class=""> canais <strong>HD:</strong></span>
+            <span class="text-primary"> <strong> {{plan?.channel_hd_count}}</strong> </span>
+          </li>
         </ul>
         <div class="select-wrapper">
-            <button type="button" class="btn btn-outline-primary">Escolher</button>
+          <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+            (click)="providerCheckout.selectTVPlan(plan)">
+            Escolher
+          </button>
         </div>
         <div class="more-info-wrapper">
-            <a href="#">detalhes do pacote</a>
-            <a href="#">grade de canais</a>
+          <a href="#">detalhes do pacote</a>
+          <a href="#">grade de canais</a>
         </div>
+      </div>
     </div>
+
+  </div>
 </div>
+
+<ng-template #loading_holder>
+  <div class="col-12 text-center">
+    <i class="fas fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</ng-template>

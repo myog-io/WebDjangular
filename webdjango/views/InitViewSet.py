@@ -20,16 +20,22 @@ class InitViewSet(viewsets.GenericViewSet):
         """
         Return the essential data.
         """
-        pluginsSerializer = PluginSerializer(
-            Plugin.objects.filter(active=True),
-            many=True
-        )
-
-        themeSerializer = ThemeSerializer(
-            Theme.objects.filter(active=True).first(),
-            many=False
-        )
-
+        plugins = Plugin.objects.filter(active=True);
+        pluginsSerializer = None
+        if plugins:
+            pluginsSerializer = PluginSerializer(
+                plugins,
+                many=True
+            )
+            pluginsSerializer.is_valid()
+        theme = Theme.objects.filter(active=True).first()
+        themeSerializer = None
+        if theme:
+            themeSerializer = ThemeSerializer(
+                theme,
+                many=False
+            )
+            themeSerializer.is_valid()
         # TODO: retrieve locale(s)
         """
         if there is more than 1 locale, get the locale based on localization
@@ -50,7 +56,11 @@ class InitViewSet(viewsets.GenericViewSet):
                 "en-us"
             ],
             'locale_active': 'pt-br',
-            'plugins': pluginsSerializer.data,
-            'theme': themeSerializer.data,
+            'plugins': [],
+            'theme': None,
         }
+        if pluginsSerializer:
+            response['plugins'] = pluginsSerializer.data
+        if themeSerializer:
+            response['theme'] = themeSerializer.data
         return Response(response)

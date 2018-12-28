@@ -1,13 +1,16 @@
 from django_prices.models import MoneyField
-from djongo import models
-
+from django.db import models
+from django_mysql.models import JSONField
+from django.utils import timezone
 from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
-
+from functools import partial
+from prices import Money, fixed_discount, percentage_discount
 
 class DiscountValueType:
     FIXED = 'fixed'
     PERCENTAGE = 'percentage'
+    TO_VALUE = 'to_value'
 
     CHOICES = [
         (FIXED, defaults.DEFAULT_CURRENCY),
@@ -15,26 +18,23 @@ class DiscountValueType:
     ]
 
 
-class VoucherType:
-    PRODUCT = 'product'
-    COLLECTION = 'collection'
-    CATEGORY = 'category'
-    SHIPPING = 'shipping'
-    VALUE = 'value'
+class CartRuleQueryset(models.QuerySet):
+    def active(self):
+        today = timezone.now()
+        return self.filter(
+            is_active=True,
+            end__gte=today, start__lte=today)
 
-    CHOICES = [
-        (VALUE, 'All products'),
-        (PRODUCT, 'Specific products'),
-        (COLLECTION, 'Specific collections of products'),
-        (CATEGORY, 'Specific categories of products'),
-        (SHIPPING, 'Shipping')
-    ]
-
-
-class Voucher(ActiveModel, BaseModel):
-    type = models.CharField(max_length=20, choices=VoucherType.CHOICES, default=VoucherType.VALUE)
+class CartRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
-    code = models.CharField(max_length=12, unique=True, db_index=True)
+    conditions = JSONField(default=None, blank=True, null=True)
+    rule_type = models.CharField(max_length=10,
+                                 choices=DiscountValueType.CHOICES,
+                                 default=DiscountValueType.FIXED)
+    value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
+
+    voucher = models.CharField(max_length=12, unique=True, db_index=True)
 
     usage_limit = models.PositiveIntegerField(null=True, blank=True)
     used = models.PositiveIntegerField(default=0, editable=False)
@@ -44,35 +44,42 @@ class Voucher(ActiveModel, BaseModel):
 
     # if the discount is applied per order or individually to every product
     apply_once_per_order = models.BooleanField(default=False)
-
-    discount_value_type = models.CharField(max_length=10,
-                                           choices=DiscountValueType.CHOICES,
-                                           default=DiscountValueType.FIXED)
-    discount_value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
-                                         decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
-
-    min_amount_spent = MoneyField(currency=defaults.DEFAULT_CURRENCY,
-                                  max_digits=defaults.DEFAULT_MAX_DIGITS,
-                                  decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-                                  null=True, blank=True)
-
-    # products = models.ManyToManyField('product.Product', blank=True)
-    # collections = models.ManyToManyField('product.Collection', blank=True)
-    # categories = models.ManyToManyField('product.Category', blank=True)
+    is_active = models.BooleanField(default=False)
+    objects = CartRuleQueryset.as_manager()
+    class Meta:
+        ordering = ['-pk']
 
 
-class Sale(ActiveModel, BaseModel):
+class CatalogRuleQueryset(models.QuerySet):
+    def active(self):
+        today = timezone.now()
+        return self.filter(
+            is_active=True,
+            end__gte=today, start__lte=today)
+
+
+class CatalogRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255)
-    type = models.CharField(max_length=10,
-                            choices=DiscountValueType.CHOICES,
-                            default=DiscountValueType.FIXED)
+    conditions = JSONField(default=None, blank=True, null=True)
+    rule_type = models.CharField(max_length=10,
+                                 choices=DiscountValueType.CHOICES,
+                                 default=DiscountValueType.FIXED)
     value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                                 decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                 default=0)
-
-    # products = models.ManyToManyField('product.Product', blank=True)
-    # categories = models.ManyToManyField('product.Category', blank=True)
-    # collections = models.ManyToManyField('product.Collection', blank=True)
+    is_active = models.BooleanField(default=False)
 
     start = models.DateTimeField(null=False)
     end = models.DateTimeField(null=False)
+    objects = CatalogRuleQueryset.as_manager()
+
+    class Meta:
+        ordering = ['-pk']
+
+    def get_discount(self):
+        if self.rule_type == DiscountValueType.FIXED:
+            discount_amount = Money(self.value, defaults.DEFAULT_CURRENCY)
+            return partial(fixed_discount, discount=discount_amount)
+        if self.rule_type == DiscountValueType.PERCENTAGE:
+            return partial(percentage_discount, percentage=self.value)
+        raise NotImplementedError('Unknown discount type')

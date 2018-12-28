@@ -62,7 +62,7 @@
       <div ngbDropdown placement="bottom-right" class="d-inline-block">
         <a class="nav-link" ngbDropdownToggle> Assine Já </a>
         <div class="" ngbDropdownMenu>
-          <a class="dropdown-item">Planos</a>
+          <a class="dropdown-item" [routerLink]="['/assine']">Planos</a>
           <a class="dropdown-item">Assine pelo chat</a>
           <a class="dropdown-item" (click)="openModalWeCallYou()">Nós ligamos pra você</a>
         </div>

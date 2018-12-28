@@ -1,11 +1,11 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
 
 import { BlockModel } from './Block.model';
 import { ExtraOptions } from '@webdjangular/core/decorator';
-import {Validators} from "@angular/forms";
+import {Validators, FormGroup} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
 
 
@@ -50,23 +50,23 @@ export class PageModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    formType: FormGroup,
+    type: 'select',
     label: 'Header',
-    name: 'header',
     wrapper_class: 'col-6',
+    model: BlockModel,
     options_model: BlockModel,
-    backendResourceName: 'Block'
   })
   header: BlockModel;
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    formType: FormGroup,
+    type: 'select',
     label: 'Footer',
-    name: 'footer',
     wrapper_class: 'col-6',
+    model: BlockModel,
     options_model: BlockModel,
-    backendResourceName: 'Block'
   })
   footer: BlockModel;
 
@@ -76,7 +76,7 @@ export class PageModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   get pk() {
     return this.id;
@@ -85,9 +85,10 @@ export class PageModel extends AbstractModel {
   set pk(value) {
 
   }
+
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;
-  }
+  };
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

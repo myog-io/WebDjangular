@@ -17,12 +17,13 @@ import { BuilderFormSelectComponent } from './inputs/select/select.component';
 import { BuilderFormCkeditorComponent } from './inputs/ckeditor/ckeditor.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
-import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
-import { BuilderFormFieldConfig, BuilderFormField } from './interfaces/form-config.interface';
+import { BuilderFormFieldConfig, BuilderFormField } from '@webdjangular/core/builder';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
 import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
+import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 
 
 const components: { [type: string]: Type<BuilderFormField> } = {
@@ -32,11 +33,12 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   ckeditor: BuilderFormCkeditorComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
-  relationship: BuilderFormRelationshipComponent,
   formArray: BuilderFormArrayComponent,
   formGroup: BuilderFormGroupComponent,
   switch: BuilderFormSwitcherComponent,
   checkbox: BuilderFormCheckboxOptionsComponent,
+  datepicker: BuilderFormDatepickerComponent,
+  jsonLogic: BuilderFormJsonLogicComponent,
 };
 
 @Directive({

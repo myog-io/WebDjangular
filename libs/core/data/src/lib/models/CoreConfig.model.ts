@@ -30,7 +30,7 @@ export class CoreConfigModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'relationship',
+    type: 'select',
     label: 'Core Website',
     wrapper_class: 'col-6',
     options_model: CoreWebsiteModel,

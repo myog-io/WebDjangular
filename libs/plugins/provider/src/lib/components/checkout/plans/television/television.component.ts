@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ProviderCheckoutService} from "../../../../data/services/provider-checkout.service";
 
 @Component({
-    selector: 'plugin-provider-checkout-plan-television',
-    templateUrl: './television.component.html',
-    styleUrls: ['./television.component.scss'],
-    host: {'class': 'col col-md-6 col-sm-12'}
+  selector: 'plugin-provider-checkout-plan-television',
+  templateUrl: './television.component.html',
+  styleUrls: ['./television.component.scss']
 })
-export class PluginProviderCheckoutPlanTelevisionComponent implements OnInit {
+export class PluginProviderCheckoutPlanTelevisionComponent {
 
-    constructor() {
-    }
+  constructor(public providerCheckout: ProviderCheckoutService,
+              public modalService: NgbModal) {
+  }
 
-    ngOnInit() {
-    }
 
 }
 

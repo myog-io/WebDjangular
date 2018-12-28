@@ -1,14 +1,14 @@
-import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
+import {AbstractModel} from '@webdjangular/core/data-models';
+import {PermissionModel} from '@webdjangular/core/users-models';
 
-import { ProductClasses, ProductPrice } from '../interfaces/Product.interface';
-import { ProductTypeModel } from './ProductType.model';
-import { SmartTableSettings } from '@webdjangular/core/data';
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { Validators, FormArray, FormGroup } from '@angular/forms';
-import { ProductPriceModel } from './ProductPrice.model';
+import {ProductClasses} from '../interfaces/Product.interface';
+import {ProductTypeModel} from './ProductType.model';
+import {SmartTableSettings} from '@webdjangular/core/data';
+import {ExtraOptions} from '@webdjangular/core/decorator';
+import {FormGroup, Validators} from '@angular/forms';
+
 enum productDG {
   type = 'product-type',
   attributes = 'attributes',
@@ -16,9 +16,11 @@ enum productDG {
   shipping = 'shipping',
   general = 'general-information',
   pricing = 'pricing',
-  seo = 'seo',
   media = 'media',
+  addons = 'addons',
+  variants = 'variants'
 }
+
 @JsonApiModelConfig({
   type: 'Product',
   modelEndpointUrl: 'store/product',
@@ -29,7 +31,16 @@ export class ProductModel extends AbstractModel {
   @Attribute()
   id: string;
 
-
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    label: 'select',
+    display: false,
+    conditionalValue: {var: 'product_type.product_class'},
+    displayGroup: productDG.general
+  })
+  product_class: ProductClasses;
 
   @BelongsTo()
   @ExtraOptions({
@@ -42,7 +53,9 @@ export class ProductModel extends AbstractModel {
     placeholder: 'Select the Product Type',
     //value: null,
     options_model: ProductTypeModel,
+    options_include: 'data',
     displayGroup: productDG.type
+
   })
   product_type: ProductTypeModel;
 
@@ -54,7 +67,9 @@ export class ProductModel extends AbstractModel {
     label: 'SKU',
     wrapper_class: 'col-12',
     placeholder: '',
-    displayGroup: productDG.general
+    displayGroup: productDG.general,
+    conditionalValue: {"slugfy": [{"var": "sku"}]},
+
   })
   sku: string;
 
@@ -70,40 +85,25 @@ export class ProductModel extends AbstractModel {
   })
   name: string;
 
-  @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'text',
-    label: 'select',
-    display: false,
-    conditionalValue: {var:'product_type.product_class'},
-    displayGroup: productDG.general
-  })
-  product_class: ProductClasses;
 
   @Attribute()
   @ExtraOptions({
-    formType: FormGroup,
-    validators: [Validators.required],
-    model: ProductPriceModel,
-    type: 'formGroup',
-    label: 'Price',
-    wrapper_class: 'col-12',
+    type: 'text',
+    label: 'List',
+    wrapper_class: 'col-6',
     displayGroup: productDG.pricing
   })
-  pricing: ProductPrice;
+  pricing_list: string;
+
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
     type: 'text',
-    label: 'Slug',
-    wrapper_class: 'col-12',
-    placeholder: '',
-    displayGroup: productDG.general
-
+    label: 'Sale',
+    wrapper_class: 'col-6',
+    displayGroup: productDG.pricing
   })
-  slug: string;
+  pricing_sale: string;
 
   @Attribute()
   @ExtraOptions({
@@ -126,6 +126,19 @@ export class ProductModel extends AbstractModel {
   })
   track_inventory: string;
 
+
+  @Attribute()
+  @ExtraOptions({
+    formType: FormGroup,
+    type: 'formGroup',
+    displayGroup: productDG.attributes,
+    copyOptions: {
+      name:'product_type',
+      field:'data',
+    }
+  })
+  data:object[] ;
+
   @Attribute()
   @ExtraOptions({
     type: 'text',
@@ -134,7 +147,7 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-12',
     conditional: {
       '==': [
-        { var: 'track_inventory' },
+        {var: 'track_inventory'},
         true
       ]
     },
@@ -146,42 +159,77 @@ export class ProductModel extends AbstractModel {
   @ExtraOptions({
     type: 'switch',
     label: 'Shippable',
-    wrapper_class: 'col-6',
+    wrapper_class: 'col-12',
     value: false,
     placeholder: '',
     displayGroup: productDG.shipping
   })
-  shippable: boolean
-
-  @Attribute()
-  @ExtraOptions({
-    formType: FormGroup,
-    type: 'formGroup',
-    displayGroup: productDG.attributes,
-    copyOptions: {
-      name:'product_type',
-      field:'attributes',
-    }
-  })
-  attributes: {};
+  shippable: boolean;
 
   @Attribute()
   @ExtraOptions({
     type: 'text',
-    label: 'SEO Title',
-    wrapper_class: 'col-12',
-    displayGroup: productDG.seo
+    label: 'Weight',
+    inputType: 'text',
+    wrapper_class: 'col-3',
+    conditional: {
+      '==': [
+        {var: 'shippable'},
+        true
+      ]
+    },
+    displayGroup: productDG.shipping
   })
-  seo_title: string
+  weight: string;
 
   @Attribute()
   @ExtraOptions({
     type: 'text',
-    label: 'SEO Description',
-    wrapper_class: 'col-12',
-    displayGroup: productDG.seo
+    label: 'Width',
+    inputType: 'text',
+    wrapper_class: 'col-3',
+    conditional: {
+      '==': [
+        {var: 'shippable'},
+        true
+      ]
+    },
+    displayGroup: productDG.shipping
   })
-  seo_description: string;
+  shipping_width: string;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Height',
+    inputType: 'text',
+    wrapper_class: 'col-3',
+    conditional: {
+      '==': [
+        {var: 'shippable'},
+        true
+      ]
+    },
+    displayGroup: productDG.shipping
+  })
+  shipping_height: string;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Depth',
+    inputType: 'text',
+    wrapper_class: 'col-3',
+    conditional: {
+      '==': [
+        {var: 'shippable'},
+        true
+      ]
+    },
+    displayGroup: productDG.shipping
+  })
+  shipping_depth: string;
+
 
   @Attribute()
   quantity_allocated: string;
@@ -196,6 +244,24 @@ export class ProductModel extends AbstractModel {
     displayGroup: productDG.pricing
   })
   cost: number;
+
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'text',
+    label: 'Cost',
+    inputType: 'number',
+    wrapper_class: 'col-6',
+    placeholder: '',
+    displayGroup: productDG.addons
+  })
+  addons: ProductModel[];
+
+  @Attribute()
+  price: number;
+
+  @Attribute()
+  base_price: number;
 
   @Attribute()
   created: Date;
@@ -212,6 +278,7 @@ export class ProductModel extends AbstractModel {
   set pk(value) {
 
   }
+
   public displayGroups = [
     {
       wrapper_class: 'col-6 offset-3',
@@ -223,7 +290,7 @@ export class ProductModel extends AbstractModel {
       ],
       conditional: {
         '==': [
-          { var: 'product_type.id' },
+          {var: 'product_type.id'},
           null
         ]
       },
@@ -240,17 +307,13 @@ export class ProductModel extends AbstractModel {
           title: 'Pricing',
         },
         {
-          name: productDG.seo,
-          title: 'SEO',
-        },
-        {
           name: productDG.media,
           title: 'Images / Videos',
         }
       ],
       conditional: {
         '!=': [
-          { var: 'product_type.id' },
+          {var: 'product_type.id'},
           null
         ]
       },
@@ -273,12 +336,70 @@ export class ProductModel extends AbstractModel {
       ],
       conditional: {
         '!=': [
-          { var: 'product_type.id' },
+          {var: 'product_type.id'},
           null
         ]
       },
+    },
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: productDG.addons,
+          title: 'Add-ons',
+        },
+      ],
+      conditional: {
+        // show only after the Product Type is selected and it is NOT an Product Addon
+        "and": [
+          {
+            '!=': [
+              {var: 'product_type.id'},
+              null
+            ]
+          },
+          {
+            '!=': [
+              {var: 'product_class'},
+              ProductClasses.addon
+            ]
+          }
+        ]
+      },
+    },
+
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: productDG.variants,
+          title: 'Variants',
+        },
+      ],
+      conditional: {
+        // show only after the Product Type is selected and it is the Parent Product Variant
+        "and": [
+          {
+            '!=': [
+              {var: 'product_type.id'},
+              null
+            ]
+          },
+          {
+            '==': [
+              {var: 'product_class'},
+              ProductClasses.variant
+            ]
+          }
+        ]
+      },
     }
-  ]
+
+  ];
+
+  public toString = (): string => {
+    return `${this.name} (${this.pricing_list})`;
+  };
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

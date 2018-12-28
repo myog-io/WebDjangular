@@ -1,13 +1,25 @@
 <nb-card>
-	<nb-card-header>
-		{{title}} List
-	</nb-card-header>
+  <nb-card-header [nbSpinner]="source.loading">
+    {{title}} List
+  </nb-card-header>
 </nb-card>
 
-<ng2-smart-table 
-    [settings]="source.smartTableSettings" 
-    [source]="source"
-    (create)="source.conf.onCreateButtonClick()" 
-    (edit)="source.conf.onEditButtonClick($event)" 
-    (delete)="source.conf.onDeleteButtonClick($event)">
-    ></ng2-smart-table>
+<ng2-smart-table  [settings]="source.smartTableSettings" [source]="source" (create)="source.conf.onCreateButtonClick()"
+  (edit)="source.conf.onEditButtonClick($event)" (delete)="source.conf.onDeleteButtonClick($event)">
+  ></ng2-smart-table>
+
+<ng-template #dialog let-data>
+
+  <nb-card>
+    <nb-card-header> {{ data.title }}</nb-card-header>
+    <nb-card-body>
+      {{data.body}}
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+      <button nbButton [nbSpinner]="loading" status="warning" class="mr-1" (click)="deleteRecord(data.element)">
+        <i class="fa fa-trash"></i> Confirm</button>
+      <button nbButton [nbSpinner]="loading" status="info" class="ml-1" (click)="close()">Cancel</button>
+
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

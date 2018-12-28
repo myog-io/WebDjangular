@@ -1,114 +1,130 @@
-:host{
-    padding-left:5px;
-    padding-right:5px;
-    margin-bottom:10px;
+:host {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 10px;
 }
-.card{
 
-    border:unset;
+.card {
 
-    .card-header{
-        background: unset;
-        text-align:center;
-        padding:0;
+  border: unset;
 
-        .title-wrapper{
-            background: #00b9bd;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            font-family: "Boston", Arial, Helvetica, sans-serif;
-            color: #fff;
-            padding: 0;
-            height:80px;
-            line-height:80px;
-            vertical-align: text-bottom;
+  .card-header {
+    background: unset;
+    text-align: center;
+    padding: 0;
 
-            .amount-number{
-                font-weight: 900;
-                font-size:50px;
-            }
-            .amount-unit{
-                font-size:30px;
-                font-weight: 400;
-                padding-left: 5px;
-                vertical-align: top;
-            }
-        }
+    .title-wrapper {
+      background: #00b9bd;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      font-family: "Boston", Arial, Helvetica, sans-serif;
+      color: #fff;
+      padding: 0;
+      height: 80px;
+      line-height: 80px;
+      vertical-align: text-bottom;
 
-        .price-wrapper{
+      .amount-number {
+        font-weight: 900;
+        font-size: 50px;
+      }
 
-            background: #899299;
-            height:50px;
-            line-height: 50px;
-            text-align:center;
-
-            font-family: "Boston", Arial, Helvetica, sans-serif;
-            color:#fff;
-
-            .currency-unit{
-                font-size:16px;
-                font-weight: 600;
-                vertical-align: text-bottom;
-                padding-right:5px;
-
-            }
-            .price{
-                font-size:30px;
-                font-weight: 600;
-                vertical-align: text-bottom;
-            }
-            .periodicity{
-                font-size:16px;
-                font-weight: 400;
-                vertical-align: text-bottom;
-            }
-        }
+      .amount-unit {
+        font-size: 30px;
+        font-weight: 400;
+        padding-left: 5px;
+        vertical-align: top;
+      }
     }
-    .card-body{
-        padding:0;
-        border:1px solid #f1f1f1;
 
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+    .price-wrapper {
 
-        .features-wrapper{
-            padding:10px 0;
+      background: #899299;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
 
-            .list-group-item{
-                border:unset;
-                padding:2px 20px;
+      font-family: "Boston", Arial, Helvetica, sans-serif;
+      color: #fff;
 
-                font-size:14px;
-                font-family: "Open Sans", Arial, Helvetica, sans-serif;
-                font-weight: 400;
-                .icon {
-                    color: #00b9bd;
-                }
-                .title {
-                    color:#8a939a;
-                }
-            }
+      .currency-unit {
+        font-size: 16px;
+        font-weight: 600;
+        vertical-align: text-bottom;
+        padding-right: 5px;
 
+      }
 
-        }
-        .select-wrapper{
-            text-align:center;
-            button{
+      .price {
+        font-size: 30px;
+        font-weight: 600;
+        vertical-align: text-bottom;
+      }
 
-            }
-        }
-        .more-info-wrapper{
-            text-align:center;
-            padding-top:10px;
-            padding-bottom:5px;
-            a{
-                font-family: "Boston", Arial, Helvetica, sans-serif;
-                font-size:11px;
-                font-weight: 600;
-                color:#899299;
-                text-decoration: underline;
-                text-transform: uppercase;
-            }
-        }
+      .periodicity {
+        font-size: 16px;
+        font-weight: 400;
+        vertical-align: text-bottom;
+      }
     }
+  }
+
+  .card-body {
+    padding: 0;
+    border: 1px solid #f1f1f1;
+
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    .features-wrapper {
+      padding: 10px 0;
+
+      .list-group-item {
+        border: unset;
+
+
+        font-size: 14px;
+        font-family: "Open Sans", Arial, Helvetica, sans-serif;
+        font-weight: 400;
+
+        .icon {
+          width:20px;
+          height:20px;
+          background-size:contain;
+          color: #00b9bd;
+        }
+
+        .title {
+          color: #8a939a;
+          display: flex;
+          line-height: 15px;
+        }
+      }
+
+
+    }
+
+    .select-wrapper {
+      text-align: center;
+
+      button {
+
+      }
+    }
+
+    .more-info-wrapper {
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 5px;
+
+      a {
+        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        color: #899299;
+        text-decoration: underline;
+        text-transform: uppercase;
+      }
+    }
+  }
 }

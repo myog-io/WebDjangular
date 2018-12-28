@@ -1,10 +1,9 @@
 from django.db import models
-from djongo.models.json import JSONField
+from django_mysql.models import JSONField
 from webdjango.signals.CoreSignals import config_group_register, config_register
 from webdjango.models.Core import CoreConfig
 from json.encoder import JSONEncoder
 # TODO: Implement Permissions based on Groups
-
 
 class AbstractCoreConfigModel(models.Model):
     id = models.SlugField(null=False, primary_key=True)
@@ -77,6 +76,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
     disabled = models.BooleanField(default=False)
     label = models.CharField(default=None)
     select_options = JSONField(default=None)
+    select_options_model = models.CharField(default=None)
     placeholder = models.CharField(default=None)
     validation = JSONField(default=None)
     wrapper_class = models.CharField(default=None)

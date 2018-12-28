@@ -40,15 +40,17 @@ export class AppHttpInterceptor implements HttpInterceptor {
         // Forcing Trailing Slash
         let parts = url.split('?');
         if (parts[0]) {
-          if (parts[0][parts[0].length - 1] != '/') {
-            if (parts[1]) {
-              url = parts[0] + '/?' + parts[1];
-            } else {
-              url = parts[0] + '/';
+          // Checking if is a File... Patern .png .jpg
+          if (parts[0].search(/\.[0-9a-z]{1,5}$/i) === -1){
+            if (parts[0][parts[0].length - 1] != '/') {
+              if (parts[1]) {
+                url = parts[0] + '/?' + parts[1];
+              } else {
+                url = parts[0] + '/';
+              }
             }
           }
         }
-
         let newHeaders = {};
 
         if (request.headers.get('Accept') == null) {
@@ -58,7 +60,6 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (request.headers.get('Content-Type') == null) {
           newHeaders['Content-Type'] = 'application/vnd.api+json';
         }
-
         if (token.isValid()) {
           newHeaders['Authorization'] = 'Bearer ' + token.getValue();
           var req = request.clone({

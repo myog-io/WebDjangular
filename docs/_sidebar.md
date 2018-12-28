@@ -7,7 +7,7 @@
 * Getting Started
     * [Installing Django](getting_started/install_django.md)
     * [Installing Angular](getting_started/install_angular.md)
-    * [Installing MongoDB](getting_started/install_mongo.md)
+    * [Installing PostgreSQL](getting_started/install_postgre.md)
     * [Running WebDjangular](getting_started/running.md)
 
 * Using WebDjangular

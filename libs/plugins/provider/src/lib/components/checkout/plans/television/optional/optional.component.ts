@@ -1,17 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ProviderCheckoutService} from "../../../../../data/services/provider-checkout.service";
 
 @Component({
-    selector: 'plugin-provider-checkout-plan-television-optional',
-    templateUrl: './optional.component.html',
-    styleUrls: ['./optional.component.scss'],
-    host: {'class': 'col col-md-4'}
+  selector: 'plugin-provider-checkout-plan-television-optional',
+  templateUrl: './optional.component.html',
+  styleUrls: ['./optional.component.scss'],
+  host: {'class': 'col col-md-4'}
 })
-export class PluginProviderCheckoutPlanTelevisionOptionalComponent implements OnInit {
+export class PluginProviderCheckoutPlanTelevisionOptionalComponent {
 
-    constructor() {
-    }
+  @Input() plan;
 
-    ngOnInit() {
-    }
+  constructor( public providerCheckout: ProviderCheckoutService) {
+
+  }
+
 
 }

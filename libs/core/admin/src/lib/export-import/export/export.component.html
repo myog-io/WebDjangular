@@ -1,0 +1,36 @@
+<nb-card accent="info">
+  <nb-card-header>
+    Export
+  </nb-card-header>
+</nb-card>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <nb-card size="medium">
+    <nb-card-body>
+
+      <div class="form-group">
+        <label>Import from:</label>
+        <ng-select class="form-control" [multiple]="true" [loading]="loading"
+          formControlName="model">
+          <ng-option *ngFor="let option of options" value="{{option.value}}">
+            {{option.label}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <ng-container *ngFor="let loading_info of loading_infos">
+        <nb-progress-bar size="xlg" [value]="loading_info.value" status="primary">{{loading_info.text}}</nb-progress-bar>
+      </ng-container>
+
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="form-group">
+        <button nbButton status="success" [disabled]="loading || formGroup.invalid || formGroup.prestine" size="medium"
+          [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="medium" nbSpinnerMessage="Loading...">
+          Start Export
+        </button>
+
+      </div>
+
+    </nb-card-footer>
+  </nb-card>
+</form>

@@ -3,26 +3,23 @@
 # Django
 Django==2.1.4
 
-#there is no version for that, it seems to be a package with other libs
-#pip show djongo[json] returns nothing
-djongo[json]
-
-
-# Djongo - Driver for allowing Django to use MongoDB
-djongo==1.2.31
-django-jsoneditor==0.0.13
+#MySQL
+mysqlclient==1.3.14
+django-mysql==2.4.1
+# If for some reaonse the Mysqlclient does not work you can use this one
+# mysql-connector-python==8.0.13
 
 # Enviroment
 django-environ==0.4.5
 
 # Django REST Framework
-djangorestframework==3.8.2
+djangorestframework==3.9.0
 
 # Django REST Framework JWT token
 djangorestframework-jwt==1.11.0
 
 # Django REST Framework JSON.API Format
-djangorestframework-jsonapi==2.5.0
+djangorestframework-jsonapi==2.6.0
 
 # Timezone
 pytz==2018.4
@@ -33,7 +30,6 @@ wincertstore==0.2
 # Access-Control-Allow-Origin headers
 django-cors-headers==2.4.0
 
-djangorestframework-jsonapi==2.5.0
 django-extensions==2.1.2
 
 django-dirtyfields==1.3.1
@@ -41,11 +37,6 @@ django-dirtyfields==1.3.1
 django-filter==2.0.0
 #django-url-filter==0.3.8 Not Working For now
 
-# For the API Documentation Made Eazy
-coreapi==2.3.3
-drf-yasg==1.10.2
-flex==6.13.2
-swagger-spec-validator==2.4.0
 
 # For the CDNS
 

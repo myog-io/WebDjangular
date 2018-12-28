@@ -30,6 +30,7 @@ export interface BuilderFormGroupConfig {
   display?: boolean;
   conditional?: any;
   fields?: BuilderFormFieldConfig[];
+  card_wrapper?: boolean;
 }
 export interface BuilderFormCopyArray {
   name: string;
@@ -45,6 +46,7 @@ export interface BuilderFormFieldConfig {
   model?: any;//AbstractModel;
   options?: any[];
   options_model?: any; // From AbstractModel
+  options_include?: string;
   multiple?: boolean;
   placeholder?: string;
   validation?: ValidatorFn[];

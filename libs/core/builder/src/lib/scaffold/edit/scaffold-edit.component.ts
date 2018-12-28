@@ -11,7 +11,13 @@ import { NbToastrService } from '@nebular/theme';
 @Component({
   selector: 'wda-scaffold-edit',
   styleUrls: ['./scaffold-edit.component.scss'],
-  templateUrl: './scaffold-edit.component.html',
+  template: `
+      <wda-form [displayGroups]="form.displayGroups"
+        (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)"
+        [group]="form" [loading]="loading" [save_continue]="saveAndContinue"
+        [before_title]="before_title" [title]="title" [formLoading]="formLoading">
+      </wda-form>
+`,
 })
 export class ScaffoldEditComponent implements OnInit {
   /**
@@ -41,7 +47,8 @@ export class ScaffoldEditComponent implements OnInit {
   /**
    * Check if we are sending or not a entry, to disable/enable button
    */
-  loading: boolean = false;
+  loading = false;
+  formLoading = false;
 
   inlcude_args: any = {};
   saveAndContinue = true;
@@ -93,10 +100,13 @@ export class ScaffoldEditComponent implements OnInit {
         (data: AbstractModel) => {
           this.entry = data;
           this.form.populateForm(this.entry);
+          this.formLoading = false;
         }
       );
     } else {
       this.entry = this.datastore.createRecord(this.current_model, this.form.value);
+      this.form.entity = this.entry;
+      this.formLoading = false;
     }
   }
 
@@ -113,29 +123,33 @@ export class ScaffoldEditComponent implements OnInit {
   update(redirect: boolean) {
     this.loading = true;
     this.form.updateModel(this.entry);
-    let sub = this.entry.save(this.inlcude_args).subscribe(
+
+    this.entry.saveAll(this.inlcude_args).then(
       (result) => {
         this.toaster.success(`Changes have been saved`, `Success!`);
         this.loading = false;
-        sub.unsubscribe();
+
         if (redirect) {
           this.router.navigate([`/${this.base_path}`]);
-        }
-
-      },
-      (error) => {
-        this.loading = false;
-        if (error.errors && error.errors.length > 0) {
-          for (let i = 0; i < error.errors.length; i++) {
-            // TODO: Check pointer to see if is for an specific field and set an error inside the field
-            const element = error.errors[i];
-            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
-          }
         } else {
-          this.toaster.danger(`Error saving the Changes`, `Error!`);
+          this.entry = result;
+          this.form.populateForm(this.entry);
         }
       }
-    )
+    ).catch((error) => {
+      console.log(error)
+      this.loading = false;
+      if (error.errors && error.errors.length > 0) {
+        for (let i = 0; i < error.errors.length; i++) {
+          // TODO: Check pointer to see if is for an specific field and set an error inside the field
+          const element = error.errors[i];
+          this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+        }
+      } else {
+        this.toaster.danger(`Error saving the Changes`, `Error!`);
+      }
+    })
+
   }
 
   relationshipUpdated(data) {

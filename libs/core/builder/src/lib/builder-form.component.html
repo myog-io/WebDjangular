@@ -1,30 +1,27 @@
-<form [formGroup]="group">
-  <div class="row " *ngIf="submit && !inceptionForm">
-    <div class="col-12" [ngClass]="{
+<form [formGroup]="group" >
+   <div class="row " [ngClass]="{
       'align-self-start sticky-top': sticky_top
-    }">
+    }" *ngIf="submit && !inceptionForm">
+    <div class="col-12">
       <nb-card>
         <nb-card-body>
-          <div class="row" >
+          <div class="row">
             <div class="col-8">
               <h3><span class="small" *ngIf="show_breadcrumb">breakcrumb_here / </span>
-                {{ before_title }}  <b>{{ title }}</b>
+                {{ before_title }} <b>{{ title }}</b>
               </h3>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 text-right" *ngIf="!formLoading;">
               <ng-container *ngIf="save_continue">
-                <button nbButton [status]="submit_continue_status" [disabled]="loading || !group.valid"
-                        [size]="submit_continue_size"
-                        [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status" [disabled]="loading"
-                        [nbSpinnerSize]="submit_continue_size"
-                        nbSpinnerMessage="" (click)="submitForm($event,false)">
+                <button nbButton [status]="submit_continue_status" [disabled]="loading || !group.valid" [size]="submit_continue_size"
+                  [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status" [disabled]="loading" [nbSpinnerSize]="submit_continue_size"
+                  nbSpinnerMessage="" (click)="submitForm($event,false)">
                   {{ submit_continue_label }}
                 </button>
               </ng-container>
               <button nbButton [status]="submit_status" [disabled]="loading || !group.valid" [size]="submit_size"
-                      [nbSpinner]="loading" [nbSpinnerStatus]="submit_status" [disabled]="loading"
-                      [nbSpinnerSize]="submit_size"
-                      nbSpinnerMessage="" (click)="submitForm($event,true)">
+                [nbSpinner]="loading" [nbSpinnerStatus]="submit_status" [disabled]="loading" [nbSpinnerSize]="submit_size"
+                nbSpinnerMessage="" (click)="submitForm($event,true)">
                 {{ submit_label }}
               </button>
             </div>
@@ -33,7 +30,7 @@
       </nb-card>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="!formLoading;else loading_holder">
     <ng-container *ngFor="let item of displayGroups">
       <div [class]="item.wrapper_class" *ngIf="item.display">
         <ng-container *ngFor="let dg of item.groups">
@@ -41,7 +38,7 @@
             <nb-accordion class="mb-3" *ngIf="submit && !inceptionForm">
               <nb-accordion-item [expanded]="true" [collapsed]="true">
                 <nb-accordion-item-header *ngIf="dg.title">{{dg.title}}</nb-accordion-item-header>
-                <nb-accordion-item-body>
+                <nb-accordion-item-body *ngIf="dg.card_wrapper===undefined || dg.card_wrapper===true">
                   <div class="row">
                     <ng-container class="column" *ngFor="let field of dg.fields">
                       <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
@@ -52,6 +49,16 @@
                 </nb-accordion-item-body>
               </nb-accordion-item>
             </nb-accordion>
+
+
+            <div class="row" *ngIf="dg.card_wrapper===false">
+              <ng-container class="column" *ngFor="let field of dg.fields">
+                <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'" *ngIf="field.display">
+                  <ng-container wdaBuilderFormFields [config]="field" [group]="group" (relationshipUpdated)="relationship($event)"></ng-container>
+                </div>
+              </ng-container>
+            </div>
+
 
             <div class="row" *ngIf="!submit || inceptionForm">
               <ng-container class="column" *ngFor="let field of dg.fields">
@@ -65,18 +72,15 @@
               <div class="col-12 text-right">
                 <hr>
                 <ng-container *ngIf="save_continue">
-                  <button nbButton [status]="submit_continue_status" [disabled]="loading || !group.valid"
-                          [size]="submit_continue_size"
-                          [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status" [disabled]="loading"
-                          [nbSpinnerSize]="submit_continue_size"
-                          nbSpinnerMessage="" (click)="submitForm($event,false)">
+                  <button nbButton [status]="submit_continue_status" [disabled]="loading || !group.valid" [size]="submit_continue_size"
+                    [nbSpinner]="loading" [nbSpinnerStatus]="submit_continue_status" [disabled]="loading"
+                    [nbSpinnerSize]="submit_continue_size" nbSpinnerMessage="" (click)="submitForm($event,false)">
                     {{ submit_continue_label }}
                   </button>
                 </ng-container>
                 <button nbButton [status]="submit_status" [disabled]="loading || !group.valid" [size]="submit_size"
-                        [nbSpinner]="loading" [nbSpinnerStatus]="submit_status" [disabled]="loading"
-                        [nbSpinnerSize]="submit_size"
-                        nbSpinnerMessage="" (click)="submitForm($event,true)">
+                  [nbSpinner]="loading" [nbSpinnerStatus]="submit_status" [disabled]="loading" [nbSpinnerSize]="submit_size"
+                  nbSpinnerMessage="" (click)="submitForm($event,true)">
                   {{ submit_label }}
                 </button>
               </div>
@@ -87,3 +91,4 @@
     </ng-container>
   </div>
 </form>
+

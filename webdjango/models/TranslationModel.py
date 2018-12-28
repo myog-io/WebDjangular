@@ -1,9 +1,9 @@
-from djongo import models
-from djongo.models.json import JSONField
+from django.db import models
+from django_mysql.models import JSONField
 from django.utils.translation import check_for_language
 from webdjango.configs import DEFAULT_I18N
 from webdjango.models.Core import CoreConfig
-
+from webdjango.models.AbstractModels import BaseModel
 
 def validate_i18n(code):
     return code and check_for_language(code)
@@ -14,13 +14,13 @@ def default_i18n():
     return code or "en"
 
 
-class TranslationModel(models.Model):
+class TranslationModel(BaseModel):
     i18n_fields = []
     language = models.CharField(
         max_length=5, blank=False, default=default_i18n,
         validators=[validate_i18n]
     )
-    # as per https://docs.mongodb.com/manual/tutorial/specify-language-for-text-index/
+
     translation = JSONField(null=True, default=None)
 
     def get_current_i18n(self, *args, **kwargs):

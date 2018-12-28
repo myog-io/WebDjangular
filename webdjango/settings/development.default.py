@@ -17,7 +17,7 @@ INSTALLED_APPS += [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        'ENGINE': 'django',
         'NAME': 'your-db-name',
     }
 }

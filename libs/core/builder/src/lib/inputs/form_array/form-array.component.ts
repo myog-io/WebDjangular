@@ -6,6 +6,7 @@ import {SmartTableSettings} from '@webdjangular/core/data';
 import {LocalDataSource} from 'ng2-smart-table';
 import {NbWindowRef, NbWindowService} from '@nebular/theme';
 import {WebAngularDataStore} from '@webdjangular/core/services';
+import { FormArray, FormGroup } from '@angular/forms';
 
 enum state {
   start = 'start',
@@ -36,7 +37,7 @@ enum state {
             <ng-template #InceptionForm let-data>
               <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
                         (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
-                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false" 
+                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false"
                         [title]="config.label" [inceptionForm]="true" ></wda-form>
             </ng-template>
           </div>
@@ -49,7 +50,7 @@ enum state {
 export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {
   public smart_table_settings: SmartTableSettings = {
     editable: true,
-    mode: 'inline',
+    mode: 'external',
     columns: {},
     pager: {
       perPage: 20,
@@ -107,6 +108,9 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   ngOnInit() {
 
     this.updateSettings();
+    if(this.group.get(this.config.name) && typeof this.group.get(this.config.name).value !== 'undefined'){
+      this.source.load(this.group.get(this.config.name).value);
+    }
     this.subscription = this.group.valueChanges.subscribe((val) => {
       if (this.group.get(this.config.name)) {
         this.subscription.unsubscribe();
@@ -182,7 +186,22 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   private setGroupValue(val: any) {
     // First Creation is Triggergin an Error
     // "Must supply a value for form control at index: 0
-    this.group.get(this.config.name).setValue(val);
+    const fa = this.group.get(this.config.name) as FormArray;
+
+    for (let i = 0; i < val.length; i++) {
+      const element = val[i];
+      const fg = fa.get(i.toString()) as FormGroup;
+      if(fg){
+        for (const key in element) {
+
+          if (element.hasOwnProperty(key)) {
+            fg.get(key).setValue(element[key])
+
+          }
+        }
+      }
+
+    }
   }
 
   /**
@@ -262,7 +281,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.getFormConfig();
     this.state = state.creating;
     this.openWindow(`New ` + this.config.label);
-    console.log(this.config);
     this.form.reset();
   }
 

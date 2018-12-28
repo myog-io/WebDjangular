@@ -1,18 +1,15 @@
-from djongo import models
-from webdjango.models.AbstractModels import SeoModel, BaseModel
-
+from django.db import models
 
 from libs.core.cms.api.models.Block import Block
+from webdjango.models.AbstractModels import SeoModel, PermalinkModel
 from webdjango.models.TranslationModel import TranslationModel
 
 
-class Page(SeoModel, TranslationModel, BaseModel):
+class Page(PermalinkModel, SeoModel, TranslationModel):
     """
     CMS Pages Model
     """
     title = models.CharField(max_length=255)
-    slug = models.SlugField(
-        max_length=255, null=True, default=None, blank=True)
     content = models.TextField()
     header = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
     footer = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)

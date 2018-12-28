@@ -1,4 +1,4 @@
-import { ComponentFactory, Injectable, Injector, NgModuleFactoryLoader, Compiler, Component, NgModule, ModuleWithComponentFactories, SystemJsNgModuleLoader, NgModuleFactory, Type } from '@angular/core';
+import { ComponentFactory, Injectable, Injector, NgModuleFactoryLoader, Compiler, Component, NgModule, ModuleWithComponentFactories, SystemJsNgModuleLoader, NgModuleFactory, Type, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise as ObservableFromPromise } from 'rxjs/observable/fromPromise';
 
@@ -14,14 +14,22 @@ import { FormsModule } from "@webdjangular/core/forms";
 
 const HARDCODEMODULES = [
   FormsModule,
-  PluginProviderModule
+  PluginProviderModule,
 ];
 
 //import { ThemeProviderfyModule } from "@webdjangular/themes/providerfy";
 
 
 export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');
+export class CoreDynamicCustomComponent implements OnInit, OnDestroy {
+  name = "CoreDynamicCustomComponent"
+  ngOnInit() {
 
+  }
+  ngOnDestroy() {
+
+  }
+}
 
 @Injectable()
 export class CoreDynamicComponentLoader {
@@ -49,7 +57,7 @@ export class CoreDynamicComponentLoader {
 
   createComponentFactorySync(metadata: Component, componentClass?: any, cmpiler?: Compiler): ComponentFactory<any> {
     const compiler = cmpiler || this.compiler;
-    const cmpClass = componentClass || class RuntimeComponent { name = 'Dany' };
+    const cmpClass = componentClass || class RuntimeComponent extends CoreDynamicCustomComponent {}
     const decoratedCmp = Component(metadata)(cmpClass);
     // TODO:: Imporvement, try to find a list on the HTML before Generating and Therefore Loading the components
 

@@ -3,9 +3,12 @@ Django settings for webdjangular project.
 
 """
 
-import os
-import datetime
 import sys
+import os
+
+import datetime
+
+
 # sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.join("libs","core")))
 
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
@@ -20,7 +23,9 @@ THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 
 PLUGIN_DIR = os.path.join(BASE_DIR, 'libs/plugins')
 
-
+ANGULAR_APP_DIR = os.path.join(os.path.join(BASE_DIR,'dist'),'apps')
+ANGULAR_CLIENT_APP_DIR = os.path.join(ANGULAR_APP_DIR, 'client')
+ANGULAR_ADMIN_APP_DIR = os.path.join(ANGULAR_APP_DIR, 'admin' )
 DEBUG = False
 
 ALLOWED_HOSTS = []
@@ -33,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mysql',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -40,14 +46,13 @@ INSTALLED_APPS = [
 
     'rest_framework_json_api',
     'django_extensions',
-    'drf_yasg',
     'libs.core.users.api',
-    'libs.core.utils.api',
     'libs.core.cms.api',
     'libs.core.media.api',
-    'libs.core.forms.api',
+    ##'libs.core.forms.api',
+    'libs.plugins.store.api',
     'libs.plugins.provider.api',
-    'libs.plugins.store.api'
+
 ]
 
 TEMPLATES = [
@@ -124,7 +129,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
     'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json',
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_json_api.filters.QueryParameterValidationFilter',
+        'rest_framework_json_api.filters.OrderingFilter',
+        'rest_framework_json_api.django_filters.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+    ),
+    'SEARCH_PARAM': 'filter[search]',
 
 }
 
@@ -175,7 +186,10 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
 
-
+STATICFILES_DIRS = [
+    ANGULAR_APP_DIR,
+]

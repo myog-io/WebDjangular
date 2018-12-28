@@ -4,14 +4,14 @@ from ..models.Payment import Payment
 from ..serializers.PaymentSerializer import PaymentSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 
 class PaymentFilter(FilterSet):
     class Meta:
         model = Payment
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'charge_status': ['exact'],
             'customer_ip_address': ['contains', 'exact'],
             'total': ['exact'],

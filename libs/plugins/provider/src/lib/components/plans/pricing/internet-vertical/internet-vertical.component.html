@@ -1,49 +1,68 @@
-<div class="col col-md-3 col-xs-12 ">
+<div class="row" *ngIf="!loading;else loading_holder">
+  <div [class]="class" *ngFor="let plan of entries;">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" [innerHTML]="plan?.name"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" [innerHTML]="plan?.description">
+      </div>
+    </ng-template><!-- END MODAL -->
     <div class="card mt-1 mb-1 shadow-sm ">
-        <div class="card-header">
-            <h5 class="plan-amount text-center pt-3 pb-2">200 <span class="plan-amount-unit"> MEGA </span></h5>
+      <div class="card-header">
+        <h5 class="plan-amount text-center pt-3 pb-2">{{ plan?.data?.download }}<br><span class="plan-amount-unit">
+            MEGA </span></h5>
+      </div>
+      <div class="card-body p-0 ml-1 mr-1 ">
+        <div class="row">
+          <ul class="pt-3 pb-3">
+            <li class="mb-1">
+              <i class="icon pr-1 fa fa-2x icon-download" aria-hidden="true"></i>
+              <p> Download {{ plan?.data?.download }}Mbps</p>
+            </li>
+            <li class="mb-1">
+              <i class="icon pr-1 fa fa-2x icon-upload" aria-hidden="true"></i>
+              <p>Upload: até {{ plan?.data?.upload }}Mbps</p>
+            </li>
+            <li class="mb-1">
+              <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
+              <p [innerHtml]="plan?.data?.addon_text_1"></p>
+            </li>
+            <li class="mb-1">
+              <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_2" aria-hidden="true"></i>
+              <p [innerHtml]="plan?.data?.addon_text_2"></p>
+            </li>
+          </ul>
         </div>
-        <div class="card-body p-0 ml-1 mr-1 ">
-            <div class="row">
-                <ul class="pt-3 pb-3">
-                    <li class="mb-1">
-                        <i class="icon pr-1 fa fa-2x fa-cube" aria-hidden="true"></i>
-                        <p>Et malesuada fame</p>
-                    </li>
-                    <li class="mb-1">
-                        <i class="icon pr-1 fa fa-2x fa-cube" aria-hidden="true"></i>
-                        <p>Cras ante ligula</p>
-                    </li>
-                    <li class="mb-1">
-                        <i class="icon pr-1 fa fa-2x fa-cube" aria-hidden="true"></i>
-                        <p>Nam suscipit ipsum non</p>
-                    </li>
-                    <li class="mb-1">
-                        <i class="icon pr-1 fa fa-2x fa-cube" aria-hidden="true"></i>
-                        <p>Ante ligula suscipit ipsum malesuada fam non</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p class="plan-price text-center mb-1">
-                        <span class="currency-unit">R$ </span> <span class="price">404,90</span>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p class="text-center m-1">
-                        <a href="javascript:void(0);" class="btn btn-outline-primary"> Assine já </a>
-                    </p></div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p class="text-center m-1">
-                        <a href="javascript:void(0);" class="more-info">Mais informações</a>
-                    </p>
-                </div>
-            </div>
+        <div class="row">
+          <div class="col">
+            <p class="plan-price text-center mb-1">
+              <span class="currency-unit">R$ </span> <span class="price">{{ (plan?.price - discount).toFixed(2) }}</span>
+            </p>
+          </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <p class="text-center m-1">
+              <a href="javascript:void(0);" class="btn btn-outline-primary"> Assine já </a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="text-center m-1">
+              <a href="javascript:void(0);" (click)="openModal(content)" class="more-info">Mais informações</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
+<ng-template #loading_holder>
+  <div class="col-12 text-center">
+    <i class="fas fa-spinner fa-spin fa-5x"></i>
+  </div>
+</ng-template>

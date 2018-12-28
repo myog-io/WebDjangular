@@ -1,20 +1,55 @@
-from ..models.Product import Product, ProductCategory, ProductType, ProductAddon
+from ..models.Product import Product, ProductCategory, ProductType, ProductAttribute
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
-    ProductSerializer, ProductTypeSerializer, ProductAddonSerializer
+    ProductSerializer, ProductTypeSerializer, ProductAttributeSerializer
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 from rest_framework_json_api.views import RelationshipView
 
+from ..models.Product import Product, ProductCategory, ProductType
+from ..serializers.ProductSerializer import ProductCategorySerializer, \
+    ProductSerializer, ProductTypeSerializer
+
+class ProductAttributeFilter(FilterSet):
+    class Meta:
+        model = ProductAttribute
+        fields = {
+            'id': ['in'],
+            'name': ['contains', 'exact'],
+            'code': ['contains', 'exact'],
+        }
+
+
+class ProductAttributeViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Types
+    Retrieve a list of Product Types
+    Retrieve a specific Product Type
+    Update Product Type
+    Deleting Product Type
+    """
+    serializer_class = ProductAttributeSerializer
+    queryset = ProductAttribute.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    filter_class = ProductAttributeFilter
+    search_fields = ('name',)
+    permission_classes = ()
+
+class ProductAttributeRelationshipView(RelationshipView):
+    queryset = ProductAttribute.objects
 
 class ProductTypeFilter(FilterSet):
     class Meta:
         model = ProductType
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'name': ['contains', 'exact'],
+            'code': ['contains', 'exact'],
         }
 
 
@@ -36,42 +71,14 @@ class ProductTypeViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
-
-
-class ProductAddonFilter(FilterSet):
-    class Meta:
-        model = ProductAddon
-        fields = {
-            '_id': ['in'],
-            'name': ['contains', 'exact'],
-            'description': ['contains'],
-        }
-
-
-class ProductAddonViewSet(ModelViewSet):
-    """
-    Handles:
-    Creating Product Addons
-    Retrieve a list of Product Addons
-    Retrieve a specific Product Addon
-    Update Product Addons
-    Deleting Product Addons
-    """
-    serializer_class = ProductAddonSerializer
-    queryset = ProductAddon.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    ordering_fields = '__all__'
-    filter_class = ProductAddonFilter
-    search_fields = ('name',)
-    permission_classes = ()
-
+class ProductTypeRelationshipView(RelationshipView):
+    queryset = ProductType.objects
 
 class ProductCategoryFilter(FilterSet):
     class Meta:
         model = ProductCategory
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'name': ['contains', 'exact'],
             'description': ['contains'],
         }
@@ -96,13 +103,17 @@ class ProductCategoryViewSet(ModelViewSet):
     permission_classes = ()
 
 
+class ProductCategoryRelationshipView(RelationshipView):
+    queryset = ProductCategory.objects
+
+
 class ProductFilter(FilterSet):
     class Meta:
         model = Product
         fields = {
-            '_id': ['in'],
+            'id': ['in','exact'],
             'name': ['contains', 'exact'],
-            'sku': ['contains', 'exact'],
+            'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
         }
 

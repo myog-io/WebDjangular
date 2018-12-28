@@ -19,32 +19,25 @@ Now let's install [Node.js](https://nodejs.org/en/)! Node.js tends to come with 
 ``` bash
 npm install npm@latest -g
 ```
-## 3 Installing mongoDB & Creating DB
-To install [mongoDB](https://docs.mongodb.com/manual/installation/) plesae check [mongoDB's manual for installation](https://docs.mongodb.com/manual/installation/)
+## 3 Installing Mysql 8 & Creating DB
+To install [Mysql 8](ttps://dev.mysql.com/downloads/) please download and follow the steps on the website for instalation
 
-After the mongoDB is installed, open it and let's create the first dabaste that we will be using on our website 😁
 
-### 4 The "use" Command
-MongoDB *use DATABASE_NAME* is used to create database. The command will create a new database if it doesn't exist, otherwise it will return the existing database.  
-For this quickstart, the database will be caled *webdjangular*
-``` bash
-use webdjangular
-```
 
-## 5 Clone WebDjangular
+## 4 Clone WebDjangular
 Now, to the cool part, let's starting using our beloved WebDjangular 😍
 Navegate to the folder of your choise and clone 
 ``` bash
 git clone git@github.com:MyOwnGamesLLC/WebDjangular.git
 ```
 
-## 6 Installing Pip Packages
+## 5 Installing Pip Packages
 Now Navegate to the cloned root folder, and run pip to install all packages necessary, assuming you have your python(anconda) enviroment is running
 ``` bash
 cd webdjangular
 pip install -r ./requirements.txt
 ```
-## 7 Configuring your local.py
+## 6 Configuring your local.py
 after that, let's create a copy of the settings from the 📁*/webdjango/settings/development.default.py* duplicate it, and name it 📁 */webdjango/settings/local.py*,  
 change the *SECRET_KEY* for one you would like, and change the *DATABASES* name to the one you created in our case is *webdjangular*
 and your *local.py* should look something like this
@@ -63,8 +56,13 @@ INSTALLED_APPS += [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'webdjangular', # Don`t forget to change  the database name the name of the dabase you created
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'webdjangular',
+        'USER': 'root',
+        'PASSWORD': '#######',
+
+        #'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        #'PORT': '3306',
     }
 }
 ```

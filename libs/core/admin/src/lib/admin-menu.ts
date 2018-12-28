@@ -15,6 +15,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages',
       },
       {
+        title: 'Blocks',
+        link: '/blocks',
+      },
+      {
         title: 'Medias',
         link: '/media',
       },
@@ -43,7 +47,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
           },
           {
             title: 'Product types',
-            link: '/store/catalog/product-types'
+            link: '/store/catalog/types'
+          },
+          {
+            title: 'Product attribute',
+            link: '/store/catalog/attributes'
           },
         ]
       },
@@ -56,11 +64,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         children: [
           {
             title: 'Catalog Rules',
-            link: '/store/sales',
+            link: '/store/discount/catalog-rules',
           },
           {
             title: 'Cart Rules',
-            link: '/store/vouchers',
+            link: '/store/discount/cart-rules',
           },
         ]
       },
@@ -164,7 +172,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
           ]
         }
       },
-
+      {
+        title: 'Import/Export',
+        children: [
+          {
+            title: "Import",
+            link: '/import-data',
+          },
+          {
+            title: 'Export',
+            link: '/export-data'
+          }
+        ]
+        // TODO: Permission superUser Only
+      },
       {
         title: 'Configs',
         data: {

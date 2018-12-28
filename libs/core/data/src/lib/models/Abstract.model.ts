@@ -4,6 +4,8 @@ import 'reflect-metadata';
 import { AbstractForm } from '../forms';
 import { SmartTableSettings } from '../data-store';
 import { BuilderFormFieldConfig, BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export class AbstractModel extends JsonApiModel {
 
@@ -38,9 +40,127 @@ export class AbstractModel extends JsonApiModel {
   get extraOptions(): any {
     return Reflect.getMetadata('ExtraOptions', this)
   }
+  public getAttributeMetada(): any {
+    return Reflect.getMetadata('Attribute', this)
+  }
+  public getRelationshipLink(relationship:string): string {
+    return `${this.modelConfig.modelEndpointUrl}/${this.pk}/relationships/${relationship}/`;
+  }
+
+  public gerRelationLink(relationship:string): string {
+    return `${this.modelConfig.modelEndpointUrl}/${this.pk}/${relationship}/`;
+  }
+
+  private getHasManyEntities() {
+    let hasMany = this.hasMany;
+    let entities = []
+    for (const key in hasMany) {
+      if (hasMany.hasOwnProperty(key)) {
+        const element = hasMany[key];
+        if (this.hasOwnProperty(element.propertyName)) {
+          const data = this[element.propertyName];
+          for (let i = 0; i < data.length; i++) {
+            entities.push(data[i])
+
+          }
+        }
+      }
+    }
+    return entities;
+  }
+  public saveAll(params?: any, headers?: HttpHeaders, customUrl?: string): Promise<this> {
+    // TODO MANY TO MANY RELATIONSHIP REMOVAL
+    const children = this.getHasManyEntities();
+    const promises = [];
+    return new Promise((resolve, reject) => {
+      this.save(params, headers, customUrl).subscribe(
+        (entry: this) => {
+
+          // Let's First Create/Update All Children Entries
+          // Now Delete de Relationships
+          const child_to_remove = entry.getHasManyEntities();
+          //const child_to_unlink = child_to_remove;
+          for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            let save = true;
+            // TODO: IMPROVE THIS ONE, Every child is being marked as hasDirtyAttributes
+
+            child.internalDatastore = this.service;
+            const relationships: any = this.service.getRelationships(child);
+            const belongTo = child.belongTo;
+            if (belongTo) {
+              for (let j = 0; j < belongTo.length; j++) {
+                if (belongTo[j].relationship === this.modelConfig.type) {
+                  if (!child[belongTo[j].propertyName] || child[belongTo[j].propertyName].id != entry.id) {
+                    child[belongTo[j].propertyName] = entry;
+                  }
+
+                  // If The Relationship is on the Belongs To, we can check for Delete of the Entity
+                  if (child.id) {
+                    child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
+                  }
+                }
+              }
+            } else if (child.id) {
+              save = false;
+              child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
+            }
+
+
+            if (child.hasDirtyAttributes && save) {
+              let promise = new Promise((resolve, reject) => {
+                // Maybe Use SaveALL and do it Recursive?
+                child.save().subscribe(
+                  (response) => {
+                    resolve(response);
+                  },
+                  (error) => {
+                    reject(error);
+                  }
+                )
+              })
+              promises.push(promise)
+
+            }
+
+          }
+          // Deleting Records
+          for (let i = 0; i < child_to_remove.length; i++) {
+            const child = child_to_remove[i];
+            let promise = new Promise((resolve, reject) => {
+              //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
+              this.service.deleteRecord(child.constructor, child.pk).subscribe(
+                (response) => {
+                  resolve(response);
+                },
+                (error) => {
+                  reject(error);
+                }
+              );
+
+            })
+            promises.push(promise)
+
+          }
+          Promise.all(promises).then(
+            (values) => {
+              resolve(entry);
+            },
+            (error) => {
+              reject(error)
+            }
+          )
+        },
+        (error: any) => {
+          reject(error)
+        }
+      )
+
+    })
+  }
 
   saveHasMany() {
-    let hasManyFields = Reflect.getMetadata('HasMany', this);
+    let hasManyFields = this.hasMany;
     let modelConfig = Reflect.getMetadata(
       'JsonApiModelConfig',
       this.constructor
@@ -72,13 +192,17 @@ export class AbstractModel extends JsonApiModel {
    */
   public getForm(): AbstractForm {
     const fg = new AbstractForm(this._datastore);
-    let formFields: BuilderFormFieldConfig[] = [{ name: 'id', type: 'hidden' }];
+    let formFields: BuilderFormFieldConfig[] = [];
+    if ('id' in this.getAttributeMetada()) {
+      formFields.push({ name: 'id', type: 'hidden' });
+    }
     let formMap = {};
     let extraOptions = this.extraOptions;
     let count = 0;
     for (const key in extraOptions) {
       if (extraOptions.hasOwnProperty(key)) {
         const element = extraOptions[key];
+
         element.name = key;
         element.sort = element.sort || count;
         element.displayGroup = element.displayGroup || 'default';

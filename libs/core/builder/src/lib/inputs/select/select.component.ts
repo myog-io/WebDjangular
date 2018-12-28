@@ -9,16 +9,18 @@ import { Subscription } from 'rxjs';
   selector: 'wda-form-select',
   styleUrls: ['select.component.scss'],
   template: `
-    <div class="form-group form-select" [formGroup]="config.options_model ? group.get(config.name) : group" >
+    <div class="form-group form-select" [formGroup]="config.model ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
-      <ng-select class="form-control" (change)="onChange($event)" [formControlName]="config.options_model ? 'id' : config.name" [multiple]="config.multiple" [loading]="loading" [placeholder]="placeholder">
-        <ng-option *ngFor="let option of options" value="{{option.value}}">
+      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)"
+                 [formControlName]="config.model ? 'id' : config.name" [multiple]="config.multiple"
+                 [loading]="loading" [placeholder]="placeholder">
+        <ng-option *ngFor="let option of options" value="{{option.value}}"  >
           {{option.label}}
         </ng-option>
       </ng-select>
       <wda-form-validators
-        [config]="config.options_model ? group.get(config.name) : group"
-        [input]="config.options_model ? group.get('id') : group.get(config.name)">
+        [config]="config.model ? group.get(config.name) : group"
+        [input]="config.model ? group.get('id') : group.get(config.name)">
       </wda-form-validators>
     </div><!--form-group-->
   `
@@ -43,7 +45,13 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   */
   ngOnInit() {
     if (this.config.options_model) {
-      this.datastore.findAll(this.config.options_model,{page_size:50}).subscribe(data => {
+      if(typeof this.config.options_model === 'string'){
+        const models = Reflect.getMetadata('JsonApiDatastoreConfig', this.datastore.constructor).models;
+        if(models[this.config.options_model]){
+          this.config.options_model = models[this.config.options_model];
+        }
+      }
+      this.datastore.findAll(this.config.options_model,{page: {size:50},include:this.config.options_include}).subscribe(data => {
         this.models = data.getModels();
         this.options = [];
         for (let i = 0; i < this.models.length; i++) {

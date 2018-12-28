@@ -1,4 +1,4 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig, BelongsTo, HasMany} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
@@ -7,21 +7,17 @@ import {ProductAttributeOptionModel} from "./ProductAttributeOption.model";
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {RangeInterface, RangeModel} from "@webdjangular/plugins/provider-data";
 
-export interface ProductAttributeInterface {
-  name: string;
-  code?: string;
-  required: boolean;
-  type: string;
-  options: any;
-}
+
 @JsonApiModelConfig({
   type: 'ProductAttribute',
   modelEndpointUrl: 'store/product-attribute',
 })
 export class ProductAttributeModel extends AbstractModel {
   public static include = null;
+
+  @Attribute()
+  id: string;
 
   @Attribute()
   @ExtraOptions({
@@ -45,7 +41,7 @@ export class ProductAttributeModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    //validators: [Validators.required],
     type: 'select',
     label: 'Type',
     wrapper_class: 'col-6',
@@ -55,11 +51,11 @@ export class ProductAttributeModel extends AbstractModel {
       {label: "Select", value: ProductAttributeTypeValues.select},
     ],
   })
-  type: ProductAttributeTypeValues;
+  class_type: ProductAttributeTypeValues;
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    //validators: [Validators.required],
     type: 'switch',
     label: 'Is required?',
     wrapper_class: 'col-6'
@@ -81,15 +77,12 @@ export class ProductAttributeModel extends AbstractModel {
   })
   options: ProductAttributeOptionModel[];
 
+
+  @HasMany({key:'ProductType'})
+  product_type_set: object[];
+
   permissions: PermissionModel[];
 
-  get pk() {
-    return null;
-  }
-
-  set pk(value) {
-
-  }
 
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;

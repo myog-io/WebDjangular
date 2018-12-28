@@ -59,7 +59,7 @@ export class AbstractForm extends FormGroup {
         if (typeof this.formFields[i]['validators'] !== 'undefined') {
           validators = this.formFields[i]['validators'];
         }
-
+        if (this.formFields[i].type === 'jsonLogic') continue;
         this.registerControl(propName, new FormControl(null, validators));
       }
     }
@@ -74,7 +74,7 @@ export class AbstractForm extends FormGroup {
     this.entity = entity;
     for (let i = 0; i < this.formFields.length; i++) {
       const element = this.formFields[i];
-      let propName = element.name
+      let propName = element.name;
       // From Array
       if (this.formFields[i].formType == FormArray && typeof entity[propName] !== 'undefined') {
         for (let i = 0; i < entity[propName].length; i++) {
@@ -86,7 +86,7 @@ export class AbstractForm extends FormGroup {
           if(fg.populateForm){
             fg.populateForm(entity[propName]);
           }
-        } else if (typeof entity[propName] !== 'undefined') {
+        } else if (typeof entity[propName] !== 'undefined' && this.get(propName)) {
           this.get(propName).setValue(entity[propName], { emitEvent: true });
         }
       }
@@ -141,7 +141,6 @@ export class AbstractForm extends FormGroup {
           break;
       }
     }
-    console.log("ENTIDADE ATUALIZADA COM SUCESSO",entity)
   }
 
 
@@ -180,11 +179,10 @@ export class AbstractForm extends FormGroup {
    */
   public doesEntityHasRelationship(formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey);
-
     return (
-      control.value.filter(function (alreadyRelatedEntity) {
-        return alreadyRelatedEntity.pk == toRelateEntity.pk;
-      }).length > 0
+      control.value && control.value.find(function (alreadyRelatedEntity) {
+        return alreadyRelatedEntity.id === toRelateEntity.id;
+      })
     );
   }
 
@@ -196,10 +194,9 @@ export class AbstractForm extends FormGroup {
    */
   public checkboxRelationListener($event, formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey) as FormArray;
-
     if ($event.target.checked == false) {
       for (let i = 0; i < control.value.length; i++) {
-        if (control.value[i].pk == toRelateEntity.pk) {
+        if (control.value[i].id == toRelateEntity.id) {
           control.removeAt(i);
         }
       }

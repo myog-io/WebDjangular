@@ -3,7 +3,7 @@ import { CommonModule, NgSwitch } from '@angular/common';
 import { ScaffoldFieldDirective } from './builder-form.directive';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {
   NbDialogModule,
@@ -11,10 +11,9 @@ import {
   NbSpinnerModule,
   NbButtonModule,
   NbListModule,
-  NbCheckboxModule, NbCardModule, NbAccordionModule
+  NbCheckboxModule, NbCardModule, NbAccordionModule, NbDatepickerModule, NbSelectModule, NbAlertModule
 } from '@nebular/theme';
 
-import { BuilderFormRelationshipComponent } from './inputs/relationship/relationship.component';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
 import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
@@ -29,9 +28,10 @@ import { BuilderFormGroupComponent } from './inputs/form_group/form_group.compon
 import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
 import { ModelPaginatorComponent } from './model-paginator/model-paginator.component';
 import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
+import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
+import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 
 const ENTRY_COMPONENTS = [
-  BuilderFormRelationshipComponent,
   BuilderFormButtonComponent,
   BuilderFormInputComponent,
   BuilderFormSelectComponent,
@@ -42,6 +42,8 @@ const ENTRY_COMPONENTS = [
   BuilderFormSwitcherComponent,
   BuilderFormGroupComponent,
   BuilderFormCheckboxOptionsComponent,
+  BuilderFormDatepickerComponent,
+  BuilderFormJsonLogicComponent,
   ModelPaginatorComponent,
   BuilderFormValidatorComponent
 ];
@@ -52,13 +54,17 @@ const ENTRY_COMPONENTS = [
     CommonModule,
     CKEditorModule,
     MonacoEditorModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
     Ng2SmartTableModule,
+    NbSelectModule,
+    NbDatepickerModule.forRoot(),
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
     NbButtonModule,
     NbSpinnerModule,
+    NbAlertModule,
     NbListModule,
     NbCheckboxModule,
     NbCardModule,

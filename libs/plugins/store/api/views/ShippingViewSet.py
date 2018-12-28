@@ -4,16 +4,16 @@ from ..models.Shipping import ShippingMethod
 from ..serializers.ShippingSerializer import ShippingMethodSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 
 class ShippingMethodFilter(FilterSet):
     class Meta:
         model = ShippingMethod
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'name': ['contains', 'exact'],
-            'type': ['exact']
+            'method_type': ['exact']
         }
 
 

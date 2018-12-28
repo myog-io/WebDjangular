@@ -6,13 +6,16 @@ import {
   Compiler,
   ComponentRef,
   Injector,
-  ViewEncapsulation
+  ViewEncapsulation,
+  Inject
 } from '@angular/core';
-import { UrlSegment, ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { UrlSegment, ActivatedRoute, ParamMap, Router, Scroll, RouterEvent } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { WDAConfig } from '@webdjangular/core/services';
 import { CoreDynamicComponentLoader } from '@webdjangular/core/dynamic-component-loader';
 import { ThemesCleanModule } from '@webdjangular/themes/clean';
+import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
+import { CoreDynamicCustomComponent } from 'libs/core/dynamic-component-loader/src/lib/core-dynamic-component-loader.service';
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
@@ -26,18 +29,37 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private paramSubscription;
   private links = []
   private bodyRef: ComponentRef<{}>;
+  public completeLoadCallback = null;
   @ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private wdaConfig: WDAConfig,
     private componentLoader: CoreDynamicComponentLoader,
     private compiler: Compiler,
-    private injector: Injector) {
+    private injector: Injector,
+    private pageScrollService: PageScrollService,
+    @Inject(DOCUMENT) private document: any
+  ) {
     this.links.push(
       { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
     );
 
+    this.router.events.subscribe((event: any) => {
+      if (event.anchor) {
+        this.completeLoadCallback = () => {
+          this.completeLoadCallback = null;
+          let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
+            document:this.document,
+            scrollTarget: `#${event.anchor}`,
+            pageScrollDuration: 350,
+          });
+          this.pageScrollService.start(pageScrollInstance);
+
+        }
+      }
+    })
 
   }
 
@@ -45,12 +67,14 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     this.domain = document.location.hostname;
     this.url = document.location.protocol + '//' + this.domain;
     this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
+
       if (segments.length <= 0) {
         this.HomePage();
       } else {
         this.LoadPages(segments);
       }
     });
+
   }
 
   private getPageContent(data: any) {
@@ -147,7 +171,17 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       this.bodyRef = null;
     }
     this.bodyContainer.clear();
-    this.bodyRef = this.bodyContainer.createComponent(data.bodyFactory, 0, this.injector)
+    this.bodyRef = this.bodyContainer.createComponent(data.bodyFactory, 0, this.injector);
+
+    (<CoreDynamicCustomComponent>this.bodyRef.instance).ngOnInit = () => {
+      if (this.completeLoadCallback) {
+        setTimeout(() => {
+          this.completeLoadCallback();
+        }, 200);
+      }
+
+    }
+
   }
 
 }

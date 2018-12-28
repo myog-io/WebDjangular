@@ -25,7 +25,7 @@ class UserFilter(FilterSet):
     class Meta:
         model = User
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'first_name': ['contains','exact'],
             'last_name': ['contains','exact'],
         }

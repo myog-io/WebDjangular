@@ -1,12 +1,15 @@
+import sys
+
+from dirtyfields import DirtyFieldsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import validate_slug
-from djongo import models
-
+from django.db import connection, models
+from django.db.utils import OperationalError, ProgrammingError
+from django_mysql.models import JSONField
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.utils.DynamicLoader import DynamicLoader
+
 from distutils.version import LooseVersion
-from dirtyfields import DirtyFieldsMixin
-from djongo.models.json import JSONField
 
 
 class Website(BaseModel):
@@ -20,7 +23,11 @@ class Website(BaseModel):
 
     @staticmethod
     def getCurrentWebsite():
-        return Website.objects.first()
+        try:
+            return Website.objects.first()
+        except:
+            print ("Unexpected error: {0}".format(sys.exc_info()[0]))
+            return None
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
     class Meta:
@@ -59,8 +66,8 @@ class CoreConfig(BaseModel):
                 return config.value
             else:
                 return None
-
-        except ObjectDoesNotExist:
+        except:
+            print ("Unexpected error: {0}".format(sys.exc_info()[0]))
             return None
 
     @staticmethod
@@ -223,7 +230,7 @@ class Theme(DirtyFieldsMixin, BaseModel):
             if config['author']:
                 author, created = Author.objects.get_or_create(
                     config['author'])
-            config['theme']['author'] = author.id
+            config['theme']['author'] = author.pk
 
             # Creating Theme
             theme = Theme.objects.filter(slug=config['theme']['slug']).first()

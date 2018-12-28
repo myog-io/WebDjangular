@@ -1,7 +1,7 @@
 from libs.core.cms.api.models.Block import Block
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
-class BlockSerializer(DocumentSerializer):
+class BlockSerializer(WebDjangoSerializer):
     """
     The serializer for Pages Objects
     """

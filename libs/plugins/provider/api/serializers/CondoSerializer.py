@@ -2,10 +2,10 @@ from ..models.Condo import Condo
 from ..models.City import City
 from libs.plugins.store.api.models.Product import Product
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
-class CondoSerializer(DocumentSerializer):
+class CondoSerializer(WebDjangoSerializer):
     included_serializers = {
         'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'city' : 'libs.plugins.provider.api.serializers.CitySerializer.CitySerializer',
@@ -14,13 +14,14 @@ class CondoSerializer(DocumentSerializer):
         many=True,
         queryset=Product.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='channel-relationships'
+        self_link_view_name='condo-relationships',
+        required=False, allow_null=True,
     )
     city = ResourceRelatedField(
         many=False,
         queryset=City.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='page-redirect-relationships'
+        self_link_view_name='condo-relationships'
     )
     class Meta:
         fields = '__all__'

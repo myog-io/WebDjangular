@@ -4,14 +4,14 @@ from ..models.Order import Order
 from ..serializers.OrderSerializer import OrderSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.viewsets import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet
 
 
 class OrderFilter(FilterSet):
     class Meta:
         model = Order
         fields = {
-            '_id': ['in'],
+            'id': ['in'],
             'order_num': ['contains', 'exact'],
             'status': ['exact'],
         }

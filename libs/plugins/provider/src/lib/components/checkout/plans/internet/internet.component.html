@@ -1,40 +1,59 @@
-<div class="card">
-    <div class="card-header">
+<div class="row" *ngIf="providerCheckout.plans.internet.length > 0; else loading_holder">
+  <div class="col col-6 mb-2" *ngFor="let plan of providerCheckout.plans.internet;">
+    <div class="card">
+      <div class="card-header">
         <div class="title-wrapper">
-            <span class="amount-number">40</span>
-            <span class="amount-unit">MEGA</span>
+          <span class="amount-number">{{ plan?.data?.download}}</span>
+          <span class="amount-unit">MEGA</span>
         </div>
         <div class="price-wrapper">
-            <span class="currency-unit">R$</span>
-            <span class="price">104,90</span>
-            <span class="periodicity">/MÊS</span>
+          <span class="currency-unit">R$</span>
+          <span class="price">{{ plan?.pricing_list }}</span>
+          <span class="periodicity">/MÊS</span>
         </div>
-    </div>
-    <div class="card-body">
+      </div>
+      <div class="card-body">
 
-        <ul class="features-wrapper list-group d-flex flex-row flex-wrap">
-            <li class="list-group-item w-50">
-                <span class="icon"><i class="fa fa-globe"></i></span>
-                <span class="title"> 40Mbps </span>
-            </li>
-            <li class="list-group-item w-50">
-                <span class="icon"><i class="fa fa-globe"></i></span>
-                <span class="title"> Até 40Mbps </span>
-            </li>
-            <li class="list-group-item w-50">
-                <span class="icon"><i class="fa fa-globe"></i></span>
-                <span class="title"> Instalação </span>
-            </li>
-            <li class="list-group-item w-50">
-                <span class="icon"><i class="fa fa-globe"></i></span>
-                <span class="title"> Boleto por email </span>
-            </li>
-        </ul>
+        <div class="features-wrapper">
+          <div class="d-flex flex-row">
+            <div class="list-group-item col p-0 pl-3">
+              <span class="icon icon-download"></span>
+              <span class="title pl-1"> {{ plan?.data?.download }}Mbps </span>
+            </div>
+            <div class="list-group-item col p-0 pr-3">
+              <span [class]="plan?.data?.addon_icon_1 "></span>
+              <!--<p [innerHtml]="plan?.data?.addon_text_1" class="pl-1 mb-0"></p>-->
+              <p class="title pl-1">Instalação</p>
+            </div>
+          </div>
+          <div class="d-flex flex-row">
+            <div class="list-group-item col p-0 pl-3">
+              <span class="icon icon-upload"></span>
+              <span class="title pl-1"> Até {{ plan?.data?.upload }}Mbps </span>
+            </div>
+            <div class="list-group-item col p-0 pr-3">
+              <span [class]="plan?.data?.addon_icon_2"></span>
+              <!--<p [innerHTML]="plan?.data?.addon_text_2" class="pl-1"></p>-->
+              <p class="title pl-1">Boleto por email</p>
+            </div>
+          </div>
+        </div>
         <div class="select-wrapper">
-            <button type="button" class="btn btn-outline-primary">Escolher</button>
+          <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+            (click)="providerCheckout.selectInternetPlan(plan)">
+            Escolher
+          </button>
         </div>
         <div class="more-info-wrapper">
-            <a href="#">Mais detalhes</a>
+          <a href="#">Mais detalhes</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
+
+<ng-template #loading_holder>
+  <div class="col-12 text-center">
+    <i class="fas fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</ng-template>

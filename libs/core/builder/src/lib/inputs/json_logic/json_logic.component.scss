@@ -1,0 +1,12 @@
+@import '~@nebular/theme/styles/prebuilt/corporate';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import '~@nebular/bootstrap/styles/hero-buttons';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+
+@include nb-install-component() {
+  .alert-group{
+    border: 1px solid #000;
+  }
+}

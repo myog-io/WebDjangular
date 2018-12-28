@@ -1,4 +1,4 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
@@ -6,8 +6,7 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
-import {ProductAttributeInterface, ProductAttributeModel} from "./ProductAttribute.model";
-import {RangeModel} from "@webdjangular/plugins/provider-data";
+import {ProductAttributeModel} from "./ProductAttribute.model";
 
 
 @JsonApiModelConfig({
@@ -15,7 +14,7 @@ import {RangeModel} from "@webdjangular/plugins/provider-data";
   modelEndpointUrl: 'store/product-type',
 })
 export class ProductTypeModel extends AbstractModel {
-  public static include = null;
+  public static include = 'data';
 
   @Attribute()
   id: string;
@@ -34,6 +33,17 @@ export class ProductTypeModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
+    type: 'text',
+    label: 'Code',
+    wrapper_class: 'col-6',
+    placeholder: 'Enter the Product Type code',
+    sort: 0,
+  })
+  code: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
     type: 'select',
     label: 'Product Class',
     wrapper_class: 'col-6',
@@ -41,42 +51,26 @@ export class ProductTypeModel extends AbstractModel {
     options: [
       {label: "Simple Product", value: ProductClasses.simple},
       {label: "Variant Product", value: ProductClasses.variant},
+      {label: "AddOn Product", value: ProductClasses.addon},
       {label: "Bundle Product", value: ProductClasses.bundle},
     ],
     sort: 1
   })
   product_class: ProductClasses;
 
-  @Attribute()
+  @HasMany()
   @ExtraOptions({
-    validators: [Validators.required],
-    type: 'formArray',
-    formType: FormArray,
+    type: 'checkbox',
     label: 'Attributes',
-    smart_table_mode: 'external',
-    model: ProductAttributeModel,
-    sort: 2
-  })
-  attributes: ProductAttributeInterface[];
-
-
-  @Attribute()
-  @ExtraOptions({
-    validators: [Validators.required],
-    type: 'formArray',
+    wrapper_class: 'col-12',
     formType: FormArray,
-    label: 'Variant Attributes',
-    smart_table_mode: 'external',
-    model: ProductAttributeModel,
-    sort: 3,
-    conditional: {
-      '==': [
-        {var: 'product_class'},
-        ProductClasses.variant
-      ]
-    }
+    options_model: ProductAttributeModel,
+    sort: 2,
+    name: 'data',
+    model: ProductAttributeModel
   })
-  variant_attributes: ProductAttributeInterface[];
+  data: ProductAttributeModel[];
+
 
 
   @Attribute()
@@ -105,8 +99,8 @@ export class ProductTypeModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      created: {
-        title: 'Created',
+      product_class: {
+        title: 'Product Class',
         type: 'text',
       },
       updated: {

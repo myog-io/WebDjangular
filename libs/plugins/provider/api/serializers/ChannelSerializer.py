@@ -2,10 +2,10 @@ from ..models.Channel import Channel
 from libs.plugins.store.api.models.Product import Product
 from rest_framework import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
-class ChannelSerializer(DocumentSerializer):
+class ChannelSerializer(WebDjangoSerializer):
     included_serializers = {
         'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
 
@@ -14,10 +14,11 @@ class ChannelSerializer(DocumentSerializer):
         many=True,
         queryset=Product.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='channel-relationships'
+        self_link_view_name='channel-relationships',
+        required=False, allow_null=True,
     )
-    groups = serializers.ListSerializer(child=serializers.CharField())
-    types = serializers.ListSerializer(child=serializers.CharField())
+    groups = serializers.JSONField(required=False, allow_null=True)
+    types = serializers.JSONField(required=False, allow_null=True)
     class Meta:
         fields = '__all__'
         model = Channel

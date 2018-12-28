@@ -61,8 +61,10 @@ nb-card-body {
   }
 
   .picture {
-    background-position: center;
-    background-size: cover;
+    background-position: center !important;
+    background-size: initial !important;
+    background-color: #f3f3f3 !important;
+    background-repeat: no-repeat !important;
     position: relative;
     border-top-left-radius: nb-theme(card-border-radius);
     border-top-right-radius: nb-theme(card-border-radius);

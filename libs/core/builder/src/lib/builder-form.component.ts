@@ -22,6 +22,7 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() submit_continue_size = "medium";
   @Input() submit_continue_status = "info";
   @Input() loading = false;
+  @Input() formLoading = false;
   @Input() group: FormGroup;
   @Input() submit = true;
   @Input() save_continue = false;
@@ -48,14 +49,14 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     })
 
   }
-  private applyLogic(obj: any, data:any) {
+  private applyLogic(obj: any, data: any) {
     if (obj.conditional) {
       obj.display = this.jsonLogic.apply(obj.conditional, data)
-    } else if(typeof obj.display === "undefined"){
+    } else if (typeof obj.display === "undefined") {
       obj.display = true;
     }
-    if (obj.conditionalValue){
-      this.group.get(obj.name).setValue(this.jsonLogic.apply(obj.conditionalValue, data),{emitEvent:false});
+    if (obj.conditionalValue) {
+      this.group.get(obj.name).setValue(this.jsonLogic.apply(obj.conditionalValue, data), { emitEvent: false });
     }
   }
   /**
@@ -64,11 +65,15 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
    */
   private conditionalFields(data: any) {
     for (let i = 0; i < this.displayGroups.length; i++) {
-      this.applyLogic(this.displayGroups[i],data);
-      for (let j = 0; j < this.displayGroups[i].groups.length; j++) {
-        this.applyLogic(this.displayGroups[i].groups[j],data);
-        for (let k = 0; k < this.displayGroups[i].groups[j].fields.length; k++) {
-          this.applyLogic(this.displayGroups[i].groups[j].fields[k],data);
+      this.applyLogic(this.displayGroups[i], data);
+      if (this.displayGroups[i].groups) {
+        for (let j = 0; j < this.displayGroups[i].groups.length; j++) {
+          this.applyLogic(this.displayGroups[i].groups[j], data);
+          if (this.displayGroups[i].groups[j].fields) {
+            for (let k = 0; k < this.displayGroups[i].groups[j].fields.length; k++) {
+              this.applyLogic(this.displayGroups[i].groups[j].fields[k], data);
+            }
+          }
         }
       }
     }

@@ -91,6 +91,11 @@
                     float: left;
                     display: block;
                 }
+                &.can-click {
+                  cursor: pointer;
+                  color: $primary;
+                  font-weight: 500;
+                }
 
                 p {
                     height: inherit;
@@ -117,7 +122,6 @@
                 font-size: $pricing-plan-price-fs;
                 font-weight: $pricing-plan-price-fw;
                 font-family: $pricing-plan-price-ff;
-                color: $pricing-plan-price-c;
             }
         }
 

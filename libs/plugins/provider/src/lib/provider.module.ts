@@ -12,16 +12,18 @@ import { PluginProviderPricingTelephoneVerticalComponent } from "./components/pl
 import { PluginProviderPricingTvVerticalComponent } from "./components/plans/pricing/tv-vertical/tv-vertical.component";
 import { PluginProviderError404Component } from './components/errors/404/404.component';
 import { PluginProviderError500Component } from './components/errors/500/500.component';
+import { ProviderCheckoutService } from "./data/services/provider-checkout.service";
+import { PluginProviderCityListComponent } from './components/city-list/city-list.component';
 
 
 const MODULES = [
   CommonModule,
-  PluginProviderCheckoutModule
+  PluginProviderCheckoutModule,
 ];
 
 const COMPONENTS = [
   PluginProviderComponent,
-
+  PluginProviderCityListComponent,
   PluginProviderPlansComponent,
   PluginProviderPricingInternetHorizontalComponent,
   PluginPricingComboVerticalComponent,
@@ -32,14 +34,20 @@ const COMPONENTS = [
   PluginProviderError500Component
 ];
 
+const SERVICES = [
+  ProviderCheckoutService
+];
 
 @NgModule({
-  imports: [...MODULES],
+  imports: [
+    ...MODULES
+  ],
   exports: [
     ...COMPONENTS,
     ...MODULES
   ],
-  declarations: [...COMPONENTS]
+  declarations: [...COMPONENTS],
+  providers: [...SERVICES]
 })
 export class PluginProviderModule {
 }

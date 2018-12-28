@@ -1,7 +1,7 @@
 from libs.core.cms.api.models.Menu import Menu
-from webdjango.serializers.MongoSerializer import DocumentSerializer
+from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
-class MenuSerializer(DocumentSerializer):
+class MenuSerializer(WebDjangoSerializer):
     """
     The serializer for Menu Objects
     """
