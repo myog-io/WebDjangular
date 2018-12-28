@@ -12,7 +12,9 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
     inputType="date"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name"
-    [nbDatepicker]="picker">
+    [nbDatepicker]="picker"
+    required="false"
+    />
 
     <nb-datepicker #picker></nb-datepicker>
     <wda-form-validators [config]="config" [input]="group.get(this.config.name)"></wda-form-validators>

@@ -9,7 +9,7 @@ import { PluginProviderAbstractPricingComponent } from '../abstract-pricing.comp
   styleUrls: ['./internet-horizontal.component.scss']
 })
 export class PluginProviderPricingInternetHorizontalComponent extends PluginProviderAbstractPricingComponent {
-
+  @Input() discount:number = 0
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal) {

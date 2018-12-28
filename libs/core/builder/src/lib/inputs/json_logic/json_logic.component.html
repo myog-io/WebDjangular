@@ -1,50 +1,76 @@
 <div class="form-group" [formGroup]="group">
+
   <label>{{ config.label }}</label>
-  <div class="alert alert-warning alert-group">
+  <ng-container *ngTemplateOutlet="nodeGroup; context: { logicGroup: logic_group }">
+  </ng-container>
+</div>
+<!--form-group-->
+<ng-template #nodeGroup let-logicGroup="logicGroup" let-parent="parent">
+
+  <nb-alert outline="success">
     <div class="form-inline">
-      <ng-container *ngTemplateOutlet="operatorSelect; context: { on: this.on, toggle: this.toggle, fns: { toggle: this.toggle } }">
-      </ng-container>
-      <ng-container *ngTemplateOutlet="buttonsRow;">
-        </ng-container>
+      <nb-select placeholder="Select Operator" [(ngModel)]="logicGroup.operator" (selectedChange)="updateField()" outline status="success" size="xsmall">
+        <nb-option *ngFor="let option of operators" value="{{option.value}}">
+          {{option.label}}
+        </nb-option>
+      </nb-select>
+
+      <button nbButton class="ml-1" size="xsmall" (click)="addCondition(logicGroup)" status="success">
+        <i class="far fa-plus-square"></i> Add Condition
+      </button>
+      <button nbButton class="ml-1" size="xsmall" (click)="addGroup(logicGroup)" status="success">
+        <i class="fas fa-plus-square"></i> Add Group
+      </button>
+      <button nbButton class="ml-1" size="xsmall" (click)="removeGroup(parent,logicGroup)" status="danger"
+        *ngIf="parent">
+        <i class="fas fa-trash"></i> Remove Group
+      </button>
+
 
     </div>
     <div class="group-conditions">
-      <div ng-repeat="rule in group.rules | orderBy:'index'" class="condition">
-        <div ng-switch="rule.hasOwnProperty('group')">
-          <div ng-switch-when="true">
-
-          </div>
-          <div ng-switch-default="ng-switch-default">
-            <div class="form-inline">
-              <select ng-options="t.name as t.name for t in fields" ng-model="rule.field" class="form-control input-sm"></select>
-              <select style="margin-left: 5px" ng-options="c.name as c.name for c in conditions" ng-model="rule.condition"
-                class="form-control input-sm"></select>
-              <input style="margin-left: 5px" type="text" ng-model="rule.data" class="form-control input-sm" />
-              <button style="margin-left: 5px" (click)="removeCondition($index)" class="btn btn-sm btn-danger"><span
-                  class="glyphicon glyphicon-minus-sign"></span></button>
-            </div>
-          </div>
-        </div>
+      <div *ngFor="let child of logicGroup.children">
+        <span [ngSwitch]="child.type">
+          <span *ngSwitchCase="'logic_condition'">
+            <ng-container *ngTemplateOutlet="nodeOperator; context: { child: child, parent: logicGroup }">
+            </ng-container>
+          </span>
+          <span *ngSwitchDefault>
+            <ng-container *ngTemplateOutlet="nodeGroup; context: { logicGroup: child, parent: logicGroup }">
+            </ng-container>
+          </span>
+        </span>
       </div>
     </div>
+  </nb-alert>
+</ng-template>
+<!-- END OF GROUP -->
+
+
+<ng-template #nodeOperator let-child="child" let-parent="parent">
+  <div class="form-inline p-2">
+
+    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="width:30%" class="form-control input-sm">
+      <ng-option *ngFor="let option of fields" value="{{option.value}}">
+        {{option.label}}
+      </ng-option>
+    </ng-select>
+
+
+    <nb-select class="ml-2" placeholder="Select Condition" (selectedChange)="updateField()"  [(ngModel)]="child.condition" status="info" size="xsmall">
+      <nb-option *ngFor="let option of conditions" value="{{option.value}}">
+        {{option.label}}
+      </nb-option>
+    </nb-select>
+
+
+
+    <input class="ml-2" type="text" (change)="updateField()" [(ngModel)]="child.value" class="form-control input-sm" />
+
+    <button nbButton class="ml-2" size="xsmall" (click)="removeCondition(parent,child)" status="danger"
+      *ngIf="parent">
+      <i class="fas fa-trash"></i>
+    </button>
   </div>
-
-
-</div>
-<!--form-group-->
-<ng-template #operatorSelect>
-  <nb-select placeholder="Select Operator" [(selected)]="selectedItem" outline status="success" size="xsmall">
-    <nb-option *ngFor="let option of operators" value="{{option.value}}">
-      {{option.label}}
-    </nb-option>
-  </nb-select>
 </ng-template>
-<!-- OPERATOR SELECT -->
-<ng-template #buttonsRow>
-  <button nbButton style="margin-left: 5px" size="xsmall" (click)="addCondition()" status="success"><i class="far fa-plus-square"></i>
-    Add Condition</button>
-  <button nbButton style="margin-left: 5px" size="xsmall" (click)="addGroup()" status="success"><i class="fas fa-plus-square"></i>
-    Add Group</button>
-  <button nbButton style="margin-left: 5px" size="xsmall" (click)="removeGroup()" status="danger"><i class="fas fa-trash"></i>
-    Remove Group</button>
-</ng-template>
+<!-- END OF OPERATOR -->

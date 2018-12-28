@@ -59,7 +59,7 @@ export class AbstractForm extends FormGroup {
         if (typeof this.formFields[i]['validators'] !== 'undefined') {
           validators = this.formFields[i]['validators'];
         }
-
+        if (this.formFields[i].type === 'jsonLogic') continue;
         this.registerControl(propName, new FormControl(null, validators));
       }
     }
@@ -86,7 +86,7 @@ export class AbstractForm extends FormGroup {
           if(fg.populateForm){
             fg.populateForm(entity[propName]);
           }
-        } else if (typeof entity[propName] !== 'undefined') {
+        } else if (typeof entity[propName] !== 'undefined' && this.get(propName)) {
           this.get(propName).setValue(entity[propName], { emitEvent: true });
         }
       }
