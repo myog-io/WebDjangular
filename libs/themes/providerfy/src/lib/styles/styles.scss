@@ -197,6 +197,15 @@ textarea:focus ~ label, textarea:valid ~ label {
   border-color: transparent;
 }
 
+.btn.disabled, .btn:disabled{
+  opacity: 0.25;
+}
+
+.errors-feedback{
+  position: absolute;
+  right:0;
+}
+
 /* BOTTOM BARS ================================= */
 .bar {
   position: relative;

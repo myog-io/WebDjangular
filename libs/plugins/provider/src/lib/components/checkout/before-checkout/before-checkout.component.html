@@ -18,26 +18,43 @@
       </div>
       <div class="row justify-content-md-center pt-3">
         <div class="col col-md-12">
-          <form>
+          <form [formGroup]="providerCheckout.formBeforeCheckout"
+            (ngSubmit)="providerCheckout.onBeforeCheckoutSubmit()">
 
             <div class="row">
               <div class="col col-md-6">
                 <div class="form-group">
-                  <input type="text" required/>
+                  <input type="text" required mask="00000-000" formControlName="postalCode"/>
                   <span class="highlight"></span>
                   <span class="bar"></span>
                   <label>CEP da instalação</label>
 
                   <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="BLANK" class="link">Não sei meu CEP</a>
                 </div>
-
+                <div class="errors-feedback"
+                  *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
+                        providerCheckout.formBeforeCheckout.controls['postalCode'].errors">
+                  <div *ngIf="providerCheckout.formBeforeCheckout.controls['postalCode'].errors['required']"
+                    class="alert alert-danger" role="alert">
+                    CEP é obrigatório
+                  </div>
+                </div>
               </div>
+
               <div class="col col-md-6">
                 <div class="form-group">
-                  <input type="text" required/>
+                  <input type="text" required formControlName="numberOfAddress"/>
                   <span class="highlight"></span>
                   <span class="bar"></span>
                   <label>Nº da Residência</label>
+                </div>
+                <div class="errors-feedback"
+                  *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
+                        providerCheckout.formBeforeCheckout.controls['numberOfAddress'].errors">
+                  <div *ngIf="providerCheckout.formBeforeCheckout.controls['numberOfAddress'].errors['required']"
+                    class="alert alert-danger" role="alert">
+                    Nº da Residência é obrigatório
+                  </div>
                 </div>
               </div>
             </div>
@@ -45,13 +62,21 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <select class="form-control">
-                    <option>Tipo de acesso</option>
+                  <select class="form-control" formControlName="typeOfAccess">
+                    <option value="">Tipo de acesso</option>
                     <option value="empresarial">Empresarial</option>
                     <option value="residencial">Residencial</option>
                     <option value="condominio_residencial">Condomínio Residencial</option>
                     <option value="condominio_empresarial">Condomínio Empresarial</option>
                   </select>
+                  <div class="errors-feedback"
+                    *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
+                        providerCheckout.formBeforeCheckout.controls['typeOfAccess'].errors">
+                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['typeOfAccess'].errors['required']"
+                      class="alert alert-danger" role="alert">
+                      Selecione um tipo de acesso
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -60,19 +85,29 @@
             <div class="row">
               <div class="col">
                 <div class="form-group">
-                  <select class="form-control">
-                    <option>Já é client LPNet?</option>
+                  <select class="form-control" formControlName="typeOfCustomer">
+                    <option value="">Já é client LPNet?</option>
                     <option value="no">Não sou cliente</option>
                     <option value="internet_fibra">Sou client Fibra</option>
                     <option value="internet_radio">Sou client Rádio</option>
                   </select>
+                  <div class="errors-feedback"
+                    *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
+                        providerCheckout.formBeforeCheckout.controls['typeOfCustomer'].errors">
+                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['typeOfCustomer'].errors['required']"
+                      class="alert alert-danger" role="alert">
+                      Esse campo é obrigatório
+                    </div>
+                  </div>
                 </div>
+
               </div>
             </div>
 
             <div class="row">
               <div class="col">
-                <button class="btn btn-primary btn-block p-2" (click)="providerCheckout.nextStep();">
+                <button class="btn btn-primary btn-block p-2"
+                  [disabled]="providerCheckout.formBeforeCheckoutLoading || !providerCheckout.formBeforeCheckout.valid">
                   CONTINUAR
                 </button>
               </div>

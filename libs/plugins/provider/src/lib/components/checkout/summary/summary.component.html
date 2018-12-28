@@ -243,7 +243,8 @@
       <div class="row mb-3">
         <div class="col text-center">
           <button type="submit" class="btn btn-primary btn-lg"
-                  (click)="providerCheckout.nextStep();">
+                  [disabled]="!providerCheckout.isBuildingPlanValid()"
+                  (click)="providerCheckout.onBuildingPlanSubmit();">
             FINALIZAR ASSINATURA
           </button>
         </div>
