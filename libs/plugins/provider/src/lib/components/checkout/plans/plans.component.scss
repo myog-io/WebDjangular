@@ -1,5 +1,6 @@
 @import "../checkout_variables";
-//@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+@import '../../../../../../../themes/providerfy/src/lib/styles/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
 
 // TODO get variables config based on database.
 
@@ -11,10 +12,15 @@
   .plan-panel {
     background-color: #FFF;
     border: unset;
-    height: 100px;
+
+    min-height: 70px;
     margin-top: 2px;
 
-    padding: 30px 40px;
+    padding: 10px 20px;
+    @include media-breakpoint-up(md) {
+      height: 100px;
+      padding: 30px 40px;
+    }
 
     border-radius: 0;
 
@@ -24,7 +30,11 @@
       color: #00b9bd;
       padding-right: 20px;
       position: relative;
-      top: -10px;
+      top: 10px;
+
+      @include media-breakpoint-up(md) {
+        top: -10px;
+      }
 
       .icon {
         width: 48px;
@@ -33,7 +43,13 @@
 
     .title {
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      font-size: 26px;
+      font-size: 22px;
+      line-height: 24px;
+
+      @include media-breakpoint-up(md) {
+        font-size: 26px;
+      }
+
       font-weight: 700;
       color: #899299;
       text-transform: uppercase;
@@ -58,7 +74,11 @@
     .select-plans-wrapper {
       background-color: #fff;
       margin-top: 2px;
-      padding: 20px 40px;
+      padding:15px;
+
+      @include media-breakpoint-up(md) {
+        padding: 20px 40px;
+      }
 
       .plan-caption {
         font-family: "Boston", Arial, Helvetica, sans-serif;
@@ -71,9 +91,17 @@
 
     .selected-plan-wrapper {
       background: #00b9bd;
-      padding: 0;
+      padding: map-get($spacers, 2);
       margin: 0;
-      height: 140px;
+
+
+      text-align: center;
+
+      @include media-breakpoint-up(md) {
+        padding: 0;
+        text-align: left;
+        height: 140px;
+      }
 
       h2 {
         font-family: "Boston", Arial, Helvetica, sans-serif;
@@ -81,15 +109,26 @@
         font-weight: 900;
         color: #fff;
         text-transform: uppercase;
-        padding-left: 40px;
+        padding-left: 5px;
+
         margin: 0;
+
+        @include media-breakpoint-up(md) {
+          padding-left: 40px;
+        }
       }
 
       .price-wrapper {
         color: #fff;
 
         .row {
-          justify-content: flex-end;
+
+          justify-content: center;
+
+          @include media-breakpoint-up(md) {
+            justify-content: flex-end;
+          }
+
 
 
           .currency-unit {
@@ -125,8 +164,13 @@
 
 
     .extra-tv-decoder {
-      padding: 30px 60px;
+      padding: 15px;
+
       border-bottom: 1px solid #f1f1f1;
+
+      @include media-breakpoint-up(md) {
+        padding: 30px 60px;
+      }
 
       h4 {
         color: #00b9bd;
@@ -151,8 +195,13 @@
         line-height: 17px;
         font-weight: 400;
         color: #5f6a73;
-        padding-left: 25px;
-        margin: 0;
+
+        margin: 0 0 10px 0;
+
+        @include media-breakpoint-up(md) {
+          padding-left: 25px;
+          margin:0;
+        }
       }
 
       .price-wrapper {

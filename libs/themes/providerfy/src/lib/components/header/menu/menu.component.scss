@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import '~bootstrap/scss/bootstrap';
 
 .navbar-nav {
   cursor: pointer;
@@ -24,6 +25,11 @@
   .dropdown-menu {
     border-radius: 15px;
     padding:20px 0;
+
+    @include media-breakpoint-down(sm) {
+      position: absolute;
+      left: unset !important;
+    }
 
     .dropdown-item{
       display:flex;
@@ -68,6 +74,7 @@
       padding: 0;
       border: 0;
     }
+
 
     .dropdown-menu:after, .dropdown-menu:before {
       right: 30%;

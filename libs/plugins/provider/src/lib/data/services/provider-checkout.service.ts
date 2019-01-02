@@ -42,7 +42,7 @@ export class ProviderCheckoutService {
 
 
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
-  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.wizard;
+  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
   public current_wizard_step: number = 1;
 
   public plans = {
