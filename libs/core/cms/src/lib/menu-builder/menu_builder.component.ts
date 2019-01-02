@@ -42,7 +42,7 @@ export class MenuBuilderComponent {
 
     retrieveEntry(){
         this.datastore.findRecord(MenuModel, '1', {
-            include: 'MenuItem'
+            include: 'menu_item'
         }).subscribe(
             (data: MenuModel) => {
                 this.menu = data;
@@ -55,7 +55,7 @@ export class MenuBuilderComponent {
 
     createMenuItem($event) {
         this.formLoading = true;
-        
+
         let newMenuItem = this.datastore.createRecord(MenuItemModel)
         this.menuItemForm.updateModel(newMenuItem);
 
@@ -67,7 +67,7 @@ export class MenuBuilderComponent {
                 console.log(result);
             }
         )
-    
+
       }
 
 }
