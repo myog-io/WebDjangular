@@ -36,9 +36,9 @@ export class MenuBuilderComponent {
         let menuItemEmpty = this.datastore.createRecord(MenuItemModel)
         this.menuItemForm = menuItemEmpty.getForm()
         this.menuItemForm.generateForm()
-        
+
         this.datastore.findRecord(MenuModel, '1', {
-            include: 'MenuItem'
+            include: 'menu_item'
         }).subscribe(
             (data: MenuModel) => {
                 this.menu = data;
@@ -52,21 +52,21 @@ export class MenuBuilderComponent {
 
     createMenuItem($event) {
         this.formLoading = true;
-        
+
         let newMenuItem = this.datastore.createRecord(MenuItemModel)
         this.menuItemForm.updateModel(newMenuItem);
 
         this.menu.menu_item.push(newMenuItem)
 
         this.menu.save({
-            include: 'MenuItem',
+            include: 'menu_item',
         }).subscribe(
             (result) => {
                 this.formLoading = false;
                 console.log(result)
             }
         )
-    
+
       }
 
 }

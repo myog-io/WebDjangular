@@ -3,7 +3,7 @@ import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-json
 import { AbstractModel } from '@webdjangular/core/data-models';
 import { PermissionModel } from '@webdjangular/core/users-models';
 import { ExtraOptions } from '@webdjangular/core/decorator';
-import {Validators } from "@angular/forms";
+import { Validators } from "@angular/forms";
 
 
 @JsonApiModelConfig({
@@ -60,6 +60,15 @@ export class MenuItemModel extends AbstractModel {
     wrapper_class: 'col-12'
   })
   position: string;
+
+  @BelongsTo()
+  parent:MenuItemModel;
+
+  @BelongsTo()
+  menu: any;
+
+  @HasMany()
+  children:MenuItemModel[];
 
   @Attribute()
   created: Date;
