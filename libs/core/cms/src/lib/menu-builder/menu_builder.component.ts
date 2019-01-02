@@ -37,6 +37,10 @@ export class MenuBuilderComponent {
         this.menuItemForm = menuItemEmpty.getForm()
         this.menuItemForm.generateForm()
         
+        this.retrieveEntry()
+    }
+
+    retrieveEntry(){
         this.datastore.findRecord(MenuModel, '1', {
             include: 'MenuItem'
         }).subscribe(
@@ -47,7 +51,6 @@ export class MenuBuilderComponent {
                 this.formLoading = false;
             }
         );
-
     }
 
     createMenuItem($event) {
@@ -60,6 +63,7 @@ export class MenuBuilderComponent {
 
         this.menu.saveAll().then(
             (result) => {
+                this.retrieveEntry()
                 console.log(result);
             }
         )
