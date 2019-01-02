@@ -11,13 +11,15 @@ class MenuItemSerializer(WebDjangoSerializer):
         many=False,
         queryset=MenuItem.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='menu-relationships'
+        self_link_view_name='menu-relationships',
+        required=False,
     )
     children = ResourceRelatedField(
         many=True,
         queryset=MenuItem.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='menu-relationships'
+        self_link_view_name='menu-relationships',
+        required=False,
     )
     menu = ResourceRelatedField(
         many=False,

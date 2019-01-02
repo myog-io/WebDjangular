@@ -55,15 +55,15 @@ export class MenuBuilderComponent {
 
         let newMenuItem = this.datastore.createRecord(MenuItemModel)
         this.menuItemForm.updateModel(newMenuItem);
-
+        if (!this.menu.menu_item) this.menu.menu_item = [];
+        //newMenuItem.menu = this.menu
         this.menu.menu_item.push(newMenuItem)
 
-        this.menu.save({
-            include: 'menu_item',
-        }).subscribe(
+        this.menu.saveAll().then(
             (result) => {
                 this.formLoading = false;
-                console.log(result)
+                this.menu = result;
+
             }
         )
 

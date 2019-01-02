@@ -61,13 +61,13 @@ export class MenuItemModel extends AbstractModel {
   })
   position: string;
 
-  @BelongsTo()
+  @BelongsTo({key:'MenuItem'})
   parent:MenuItemModel;
 
-  @BelongsTo()
+  @BelongsTo({key:'Menu'})
   menu: any;
 
-  @HasMany()
+  @HasMany({key:'MenuItem'})
   children:MenuItemModel[];
 
   @Attribute()

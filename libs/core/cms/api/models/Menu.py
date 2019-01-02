@@ -17,10 +17,10 @@ class MenuItem(BaseModel):
     TARGET_TOP = '_top'
 
     name = models.CharField(max_length=255)
-    url = models.URLField()
-    alt = models.CharField(max_length=255)
+    url = models.SlugField()
+    alt = models.CharField(max_length=255, blank=True, null=True)
     target = models.CharField(max_length=255, choices=MENU_TARGETS, default=TARGET_SELF)
-    position = models.PositiveSmallIntegerField()
+    position = models.PositiveSmallIntegerField(default=0)
     parent = models.ForeignKey('MenuItem', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
     menu = models.ForeignKey('Menu', related_name='menu_item', on_delete=models.CASCADE, blank=True, null=True)
 
