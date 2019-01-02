@@ -170,7 +170,7 @@ export class AdminExportComponent implements OnInit, OnDestroy {
     }
 
 
-    const belongsTo = entity.belongTo;
+    const belongsTo = entity.belongsTo;
     if (belongsTo) {
       for (let i = 0; i < belongsTo.length; i++) {
         const key = belongsTo[i].propertyName;

@@ -27,6 +27,8 @@ import { ProductAttributeModel } from 'libs/plugins/store/src/lib/data/models/Pr
 import { ProductAttributeOptionModel } from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
 import { HttpHeaders } from '@angular/common/http';
 import { PostalCodeRangeModel } from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
+import { MenuModel } from 'libs/core/cms/src/lib/models/Menu.model';
+import { MenuItemModel } from 'libs/core/cms/src/lib/models/MenuItem.model';
 // tslint:disable-next-line:variable-name
 
 function cleanEmptyRecursive(attribute) {
@@ -87,6 +89,8 @@ const config: DatastoreConfig = {
     ProductType: ProductTypeModel, // Store
     ProductAttribute: ProductAttributeModel, // Store
     ProductAttributeOption: ProductAttributeOptionModel, // Store
+    MenuItem: MenuItemModel,
+    Menu: MenuModel,
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes

@@ -3,20 +3,10 @@
 <header>
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']" >
+      <a class="navbar-brand" [routerLink]="['/']">
         <div class="header-logo"></div>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-        (click)="isNavbarCollapsed = !isNavbarCollapsed"
-              aria-controls="navbarColor02" aria-expanded="false"
-              aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
-      </button>
-
-
-      <div class="collapse navbar-collapse" [ngbCollapse]="!isNavbarCollapsed" id="navbarSupportedContent">
-        <theme-providerfy-header-menu></theme-providerfy-header-menu>
-      </div>
+      <theme-providerfy-header-menu class="mt-3"></theme-providerfy-header-menu>
     </div>
   </nav>
 </header>

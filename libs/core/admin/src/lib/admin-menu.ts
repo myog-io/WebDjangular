@@ -26,6 +26,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Forms',
         link: '/forms',
       },
+      {
+        title: 'Menus',
+        link: '/menu_builder',
+      },
       /* MENU BUILDER is the NExt */
     ]
   },
