@@ -7,5 +7,5 @@ import {ThemeProviderfyComponent} from "../../providerfy.component";
   templateUrl: './header.component.html',
 })
 export class  ThemeProviderfyHeaderComponent{
-  isNavbarCollapsed: boolean = false;
+
 }

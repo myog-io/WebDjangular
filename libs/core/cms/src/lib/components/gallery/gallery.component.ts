@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  styleUrls: ['gallery.component.scss'],
   selector: 'image-gallery',
+  styleUrls: ['gallery.component.scss'],
   templateUrl: './gallery.component.html',
 })
 export class CoreCmsGalleryComponent implements OnInit {
