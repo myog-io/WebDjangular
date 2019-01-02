@@ -1,5 +1,7 @@
+
 @import "../checkout_variables";
-//@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+@import '../../../../../../../themes/providerfy/src/lib/styles/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
 
 // TODO get variables config based on database.
 
@@ -9,6 +11,36 @@
 
 .card {
   border: 0;
+
+  .card-body{
+
+    padding: map-get($spacers, 2);
+
+    @include media-breakpoint-up(md) {
+      padding: map-get($spacers, 4);
+    }
+
+
+    h4{
+      margin-bottom: map-get($spacers, 1);
+
+      @include media-breakpoint-up(md) {
+        margin-bottom: 0;
+      }
+
+    }
+
+    > .row {
+       padding-top: map-get($spacers, 1);
+
+      @include media-breakpoint-up(md) {
+        padding-top: map-get($spacers, 3);
+      }
+    }
+
+
+  }
+
 }
 
 .icon {

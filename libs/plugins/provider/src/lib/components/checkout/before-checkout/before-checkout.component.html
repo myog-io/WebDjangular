@@ -1,35 +1,36 @@
-<div class="col col-md-6 col-sm-12 offset-md-3 offset-sm-0">
+<div class="col-12 col-sm-8 col-lg-6 offset-md-2  offset-lg-3 offset-sm-0">
   <div class="card">
-    <div class="card-body p-4">
+    <div class="card-body">
 
-      <div class="row justify-content-md-center pt-2">
+      <div class="row justify-content-md-center">
         <div class="col col-md-12">
           <div class="row">
             <div class="col pb-2">
               <span class="icon icon-pin"></span>
             </div>
           </div>
-          <h4 class="text-center text-black mb-0">ONDE VOCÊ ESTÁ?</h4>
+          <h4 class="text-center text-black">ONDE VOCÊ ESTÁ?</h4>
           <p class="text-center subtitle mx-auto">
             Digite seu CEP e número de sua residência para
             consultar a disponibilidade dos nossos serviços.
           </p>
         </div>
       </div>
-      <div class="row justify-content-md-center pt-3">
+      <div class="row justify-content-md-center">
         <div class="col col-md-12">
           <form [formGroup]="providerCheckout.formBeforeCheckout"
             (ngSubmit)="providerCheckout.onBeforeCheckoutSubmit()">
 
             <div class="row">
-              <div class="col col-md-6">
+              <div class="col-12 col-md-6">
                 <div class="form-group">
                   <input type="text" required mask="00000-000" formControlName="postalCode"/>
                   <span class="highlight"></span>
                   <span class="bar"></span>
                   <label>CEP da instalação</label>
 
-                  <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="BLANK" class="link">Não sei meu CEP</a>
+                  <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="BLANK" class="link">Não sei
+                    meu CEP</a>
                 </div>
                 <div class="errors-feedback"
                   *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
@@ -41,7 +42,7 @@
                 </div>
               </div>
 
-              <div class="col col-md-6">
+              <div class="col-12 col-md-6">
                 <div class="form-group">
                   <input type="text" required formControlName="numberOfAddress"/>
                   <span class="highlight"></span>

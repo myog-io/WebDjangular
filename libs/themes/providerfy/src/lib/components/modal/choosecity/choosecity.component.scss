@@ -1,29 +1,28 @@
 
-
-.modal-logo{
+.modal-logo {
   background-image: url("../../../assets/images/modal_choose_city_logo.png");
-  width:256px;
-  height:190px;
-  display:block;
-  margin-bottom:40px;
+  width: 256px;
+  height: 190px;
+  display: block;
+  margin-bottom: 40px;
 }
 
 
-h2{
+h2 {
   font-family: "Boston", Helvetica, sans-serif;
-  font-size:24px;
-  font-weight:900;
+  font-size: 24px;
+  font-weight: 900;
   letter-spacing: 3px;
-  color:#fff;
-  margin-bottom:25px;
+  color: #fff;
+  margin-bottom: 25px;
 }
 
-.form-group{
-  max-width:330px;
+.form-group {
+  max-width: 330px;
 
-  margin-bottom:25px;
+  margin-bottom: 25px;
 
-  select, .ng-select{
+  select, .ng-select {
     border-radius: 30px;
   }
 
@@ -31,18 +30,17 @@ h2{
 }
 
 
-
-button[type=submit]{
-  font-size:14px;
+button[type=submit] {
+  font-size: 14px;
   font-family: "Boston", Helvetica, sans-serif;
   letter-spacing: 2px;
-  font-weight:700;
+  font-weight: 700;
   border-width: 2px;
-  padding:10px 20px;
+  padding: 10px 20px;
   text-transform: uppercase;
   border-radius: 25px;
 
-  &:disabled{
+  &:disabled {
     opacity: 0.5;
   }
 

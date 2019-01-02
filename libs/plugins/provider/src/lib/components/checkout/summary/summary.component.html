@@ -44,7 +44,8 @@
         </tr>
 
 
-        <tr class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+        <tr
+          class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
           <td class="icon-wrapper align-middle ">
             <span *ngIf="plan_optional.data.checkout_icon"   [class]="'icon ' + plan_optional?.data?.checkout_icon"></span>
             <span *ngIf="!plan_optional.data.checkout_icon" class="fa fa-globe"></span>
@@ -121,7 +122,8 @@
           </td>
         </tr>
 
-        <tr class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
+        <tr
+          class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
           <td class="icon-wrapper align-middle ">
             <span class="icon icon-squares"></span>
           </td>
@@ -240,11 +242,11 @@
     </div>
 
     <div class="summary-submit-wrapper">
-      <div class="row mb-3">
+      <div class="row">
         <div class="col text-center">
           <button type="submit" class="btn btn-primary btn-lg"
-                  [disabled]="!providerCheckout.isBuildingPlanValid()"
-                  (click)="providerCheckout.onBuildingPlanSubmit();">
+            [disabled]="!providerCheckout.isBuildingPlanValid()"
+            (click)="providerCheckout.onBuildingPlanSubmit();">
             FINALIZAR ASSINATURA
           </button>
         </div>

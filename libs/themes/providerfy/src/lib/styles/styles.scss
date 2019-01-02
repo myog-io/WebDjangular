@@ -1,8 +1,8 @@
 @import '../assets/fonts/Boston/stylesheet.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
-@import 'variables';
-@import '~bootstrap/scss/bootstrap';
+@import 'config';
 @import './icons.scss';
+
 
 @mixin border-radius($radius: 5px) { // the 5px is the default
   -webkit-border-radius: $radius;
@@ -79,36 +79,60 @@ h1 {
   font-size: $h1-fs;
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm){
+    font-size: $h1-fs * 0.75;
+  }
 }
 
 h2 {
   font-size: $h2-fs;
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm){
+    font-size: $h2-fs * 0.75;
+  }
 }
 
 h3 {
   font-size: $h3-fs;
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm){
+    font-size: $h3-fs * 0.75;
+  }
 }
 
 h4 {
   font-size: $h4-fs;
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm){
+    font-size: $h4-fs * 0.75;
+  }
 }
 
 h5 {
   font-size: $h5-fs;
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm){
+    font-size: $h5-fs * 0.75;
+  }
 }
 
 h6 {
   font-size: $h6-fs;
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm){
+    font-size: $h6-fs * 0.75;
+  }
 }
 
 p.subtitle {
@@ -455,6 +479,12 @@ input:focus ~ .highlight {
 #portabilidade {
   color: #99d7d7;
 
+  padding: map-get($spacers, 1);
+
+  @include media-breakpoint-up(md) {
+    padding: map-get($spacers, 5);
+  }
+
   p {
     font-size: 17px;
     line-height: 28px;
@@ -468,17 +498,37 @@ input:focus ~ .highlight {
 }
 
 #economia-e-controle {
+
+  padding-top: map-get($spacers, 1);
+
+  @include media-breakpoint-up(md) {
+    padding-top: map-get($spacers, 5);
+  }
+
+
+  h4 {
+    padding-top: map-get($spacers, 1);
+
+    @include media-breakpoint-up(md) {
+      padding-top: map-get($spacers, 5);
+      padding-bottom: map-get($spacers, 2);
+    }
+  }
+
+
   p {
     font-size: 17px;
     line-height: 28px;
     color: #8a939a;
     max-width: 390px;
+
+    padding-bottom: 1rem;
   }
 
   span.bottom {
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 1rem;
 
     font-size: 13px;
     color: #9ea3a1;
@@ -486,6 +536,37 @@ input:focus ~ .highlight {
 }
 
 #quem-esta-ligando {
+
+  padding-top: map-get($spacers, 1);
+  padding-bottom: map-get($spacers, 1);
+
+  @include media-breakpoint-up(md) {
+    padding-top: map-get($spacers, 5);
+    padding-bottom: map-get($spacers,3);
+  }
+
+  h6{
+    margin-bottom: 0;
+    padding-bottom: map-get($spacers, 1);
+
+    @include media-breakpoint-up(md) {
+      padding-top: map-get($spacers, 5);
+    }
+  }
+
+  h4{
+
+    padding-bottom: map-get($spacers, 1);
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 0;
+    }
+
+  }
+
+
+
   p {
     font-size: 17px;
     line-height: 28px;
