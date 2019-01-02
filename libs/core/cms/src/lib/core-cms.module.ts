@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxGalleryModule } from 'ngx-gallery';
 import { CoreCmsGalleryComponent } from './components/gallery/gallery.component';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const MODULES = [
   CommonModule,
-  NgxGalleryModule
+  NgbCarouselModule,
 ];
 
 
