@@ -12,7 +12,7 @@ import { MenuItemModel } from './MenuItem.model';
   modelEndpointUrl: 'menu',
 })
 export class MenuModel extends AbstractModel {
-
+  include = "menu_item"
   @Attribute()
   id: string;
 
@@ -50,7 +50,6 @@ export class MenuModel extends AbstractModel {
     label: 'Menu Itens',
     wrapper_class: 'col-6',
     model: MenuItemModel,
-    options_model: MenuItemModel,
     backendResourceName: 'menu_item'
   })
   menu_item: MenuItemModel[];
