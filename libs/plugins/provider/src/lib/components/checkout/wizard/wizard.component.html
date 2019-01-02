@@ -8,24 +8,24 @@
     <div class="col-md-12">
       <ul class="wizard">
 
-        <li class="step-tab" [ngClass]="{'active': providerCheckout.current_wizard_step == 1}">
+        <li class="step-tab step-1" [ngClass]="{'active': providerCheckout.current_wizard_step == 1}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Dados pessoais</span>
           </a>
         </li>
 
-        <li class="step-tab" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
+        <li class="step-tab step-2" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Endereço / Pagamento</span>
           </a>
         </li>
 
-        <li class="step-tab" [ngClass]="{'active': providerCheckout.current_wizard_step == 3}">
+        <li class="step-tab step-3" [ngClass]="{'active': providerCheckout.current_wizard_step == 3}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-check"></i></span>
-            <span class="label"></span>
+            <span class="label "></span>
           </a>
         </li>
       </ul>
@@ -33,7 +33,7 @@
       <div class="card mt-3 mini-summary-wrapper" *ngIf="providerCheckout.current_wizard_step < 3">
         <div class="card-body">
           <div class="row">
-            <div class="col col-md-6">
+            <div class="col-12 col-md-6">
               <ul class="items-wrapper pb-3">
                 <li class="item" *ngIf="providerCheckout.selected_internet_plan.name">
                   {{ providerCheckout.selected_internet_plan.name }}
@@ -64,7 +64,7 @@
 
             </div>
 
-            <div class="col col-md-6 info-wrapper">
+            <div class="col-12 col-md-6 info-wrapper">
               <div class="table-responsive h-100">
                 <table class="table ">
                   <thead>

@@ -58,12 +58,12 @@
   </div>
 
   <div class="card tv plan-select-wrapper">
-    <div class="card-header  d-flex justify-content-center  plan-panel"
+    <div class="card-header d-flex justify-content-center plan-panel"
       (click)="providerCheckout.toggleCollapse($event, 'tv')">
       <span class="icon-wrapper">
         <i class="icon icon-tv_big"></i>
       </span>
-      <span class="title"> Pacotes de TV </span>
+      <span class="title">  PLANOS DE TV </span>
       <span class="caret float-right">
         <i [ngClass]="{
           'fa-chevron-up': providerCheckout.tv_plan_collapsed,
@@ -82,10 +82,8 @@
           <h3 class="plan-caption">
             Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
           </h3>
-          <div class="row">
-            <plugin-provider-checkout-plan-television>
-            </plugin-provider-checkout-plan-television>
-          </div>
+          <plugin-provider-checkout-plan-television>
+          </plugin-provider-checkout-plan-television>
         </div>
       </div>
 
@@ -130,13 +128,13 @@
           <div class="col-md-3 actions-wrapper align-self-center">
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
-              type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+              type="button" class="btn btn-outline-primary btn-round text-uppercase"
               (click)="providerCheckout.addExtraTVDecoder()">
               Adicionar
             </button>
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
-              type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
+              type="button" class="btn btn-outline-danger btn-round text-uppercase"
               (click)="providerCheckout.removeExtraTVDecoder()">
               Remover
             </button>
@@ -149,11 +147,9 @@
             <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
           </h4>
           <div class="row">
-
-            <plugin-provider-checkout-plan-television-optional
-              *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
-            </plugin-provider-checkout-plan-television-optional>
-
+          <plugin-provider-checkout-plan-television-optional
+            *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
+          </plugin-provider-checkout-plan-television-optional>
           </div>
         </div>
       </div>
@@ -186,10 +182,8 @@
       <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
         <div class="select-plans-wrapper">
           <h3 class="plan-caption"></h3>
-          <div class="row">
-            <plugin-provider-checkout-plan-telephone>
-            </plugin-provider-checkout-plan-telephone>
-          </div>
+          <plugin-provider-checkout-plan-telephone>
+          </plugin-provider-checkout-plan-telephone>
         </div>
       </div>
 

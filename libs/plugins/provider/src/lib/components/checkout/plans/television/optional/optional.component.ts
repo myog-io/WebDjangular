@@ -5,7 +5,7 @@ import {ProviderCheckoutService} from "../../../../../data/services/provider-che
   selector: 'plugin-provider-checkout-plan-television-optional',
   templateUrl: './optional.component.html',
   styleUrls: ['./optional.component.scss'],
-  host: {'class': 'col col-md-4'}
+  host: {'class': 'col-12 col-sm-6 col-lg-4'}
 })
 export class PluginProviderCheckoutPlanTelevisionOptionalComponent {
 
