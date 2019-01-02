@@ -21,8 +21,8 @@ class MenuItem(BaseModel):
     alt = models.CharField(max_length=255)
     target = models.CharField(max_length=255, choices=MENU_TARGETS, default=TARGET_SELF)
     position = models.PositiveSmallIntegerField()
-    parent = models.ForeignKey('MenuItem', related_name='children', on_delete=models.CASCADE, blank=True, null=True)
-    menu = models.ForeignKey('Menu', related_name='menu', on_delete=models.CASCADE, blank=True, null=True)
+    parent = models.ForeignKey('MenuItem', related_name='father', on_delete=models.CASCADE, blank=True, null=True)
+    menu = models.ForeignKey('Menu', related_name='menu_item', on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         db_table = 'cms_menu_item'
