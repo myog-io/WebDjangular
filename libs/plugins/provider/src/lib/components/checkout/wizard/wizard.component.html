@@ -1,25 +1,28 @@
 <div class="col wizard-wrapper">
-  <h3 class="text-center">FINALIZE SUA ASSINATURA ONLINE</h3>
+  <h3 class="text-center text-black pb-2">
+    <span *ngIf="providerCheckout.current_wizard_step < 3">FINALIZE SUA ASSINATURA ONLINE</span>
+    <span *ngIf="providerCheckout.current_wizard_step == 3">SOLICITAÇÃO DE ASSINATURA RECEBIDA</span>
+  </h3>
 
   <div class="row">
     <div class="col-md-12">
       <ul class="wizard">
 
-        <li class="step-tab active">
+        <li class="step-tab" [ngClass]="{'active': providerCheckout.current_wizard_step == 1}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Dados pessoais</span>
           </a>
         </li>
 
-        <li class="step-tab">
+        <li class="step-tab" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Endereço / Pagamento</span>
           </a>
         </li>
 
-        <li class="step-tab">
+        <li class="step-tab" [ngClass]="{'active': providerCheckout.current_wizard_step == 3}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-check"></i></span>
             <span class="label"></span>
@@ -27,14 +30,31 @@
         </li>
       </ul>
 
-      <div class="card mt-3 mini-summary-wrapper">
+      <div class="card mt-3 mini-summary-wrapper" *ngIf="providerCheckout.current_wizard_step < 3">
         <div class="card-body">
           <div class="row">
             <div class="col col-md-6">
-              <ul class="items-wrapper">
-                <li class="s-wrapper">
-                <li clas class="item">HD POP+</li>
-                <li class="item">FIXO LOCAL ECONÔMICO</li>
+              <ul class="items-wrapper pb-3">
+                <li class="item" *ngIf="providerCheckout.selected_internet_plan.name">
+                  {{ providerCheckout.selected_internet_plan.name }}
+                </li>
+                <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+                  + {{ plan_optional.name }}
+                </li>
+
+                <li class="item" *ngIf="providerCheckout.selected_tv_plan.name">
+                  {{ providerCheckout.selected_tv_plan.name }}
+                </li>
+                <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
+                  + {{ plan_optional.name }}
+                </li>
+
+                <li class="item" *ngIf="providerCheckout.selected_telephone_plan.name">
+                  {{ providerCheckout.selected_telephone_plan.name }}
+                </li>
+                <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
+                  + {{ plan_optional.name }}
+                </li>
               </ul>
 
               <div class="links-wrapper">
@@ -44,43 +64,48 @@
 
             </div>
 
-            <div class="col col-md-6 info-wrapper table-responsive">
-              <table class="table">
-                <thead>
-                <tr>
-                  <td>TOTAL</td>
-                  <td>R$ 231,20</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>Taxa de Instalação</td>
-                  <td>Grátis</td>
-                </tr>
-                <tr>
-                  <td>Taxa de Adesão</td>
-                  <td>Grátis</td>
-                </tr>
-                <tr>
-                  <td>Valor do 1º ao 3º mês</td>
-                  <td>R$ 297,50</td>
-                </tr>
-                <tr>
-                  <td>Valor a partir do 4º mês</td>
-                  <td>R$ 297,50</td>
-                </tr>
+            <div class="col col-md-6 info-wrapper">
+              <div class="table-responsive h-100">
+                <table class="table ">
+                  <thead>
+                  <tr>
+                    <td>TOTAL</td>
+                    <td>R$ {{ providerCheckout.subtotal }}</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>Taxa de Instalação</td>
+                    <td>Grátis</td>
+                  </tr>
+                  <tr>
+                    <td>Taxa de Adesão</td>
+                    <td>Grátis</td>
+                  </tr>
+                  <tr>
+                    <td>Valor do 1º ao 3º mês</td>
+                    <td>R$ 297,50</td>
+                  </tr>
+                  <tr>
+                    <td>Valor a partir do 4º mês</td>
+                    <td>R$ 297,50</td>
+                  </tr>
 
 
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <plugin-provider-checkout-wizard-step01></plugin-provider-checkout-wizard-step01>
-      <plugin-provider-checkout-wizard-step02 *ngIf="false"></plugin-provider-checkout-wizard-step02>
-      <plugin-provider-checkout-wizard-step03 *ngIf="false"></plugin-provider-checkout-wizard-step03>
+      <plugin-provider-checkout-wizard-step01 *ngIf="providerCheckout.current_wizard_step == 1">
+      </plugin-provider-checkout-wizard-step01>
+      <plugin-provider-checkout-wizard-step02 *ngIf="providerCheckout.current_wizard_step == 2">
+      </plugin-provider-checkout-wizard-step02>
+      <plugin-provider-checkout-wizard-step03 *ngIf="providerCheckout.current_wizard_step == 3">
+      </plugin-provider-checkout-wizard-step03>
 
     </div>
   </div>

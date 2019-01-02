@@ -1,0 +1,56 @@
+:host {
+  padding: 30px 60px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+h4 {
+  color: #00b9bd;
+  font-size: 20px;
+  font-family: "Boston", Arial, Helvetica, sans-serif;
+  margin-bottom: 5px;
+
+  .icon {
+
+  }
+
+  .title {
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-left: 3px;
+  }
+}
+
+p {
+  font-family: "Open Sans", Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 17px;
+  font-weight: 400;
+  color: #5f6a73;
+  padding-left: 25px;
+  margin: 0;
+}
+
+.price-wrapper {
+  font-family: "Boston", Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  color: #697075;
+  font-weight: 700;
+  text-align: center;
+
+  .currency-unit {
+  }
+
+  .price {
+  }
+}
+
+.actions-wrapper {
+  text-align: center;
+
+  button {
+    width: 140px;
+    font-family: "Boston", Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+  }
+}

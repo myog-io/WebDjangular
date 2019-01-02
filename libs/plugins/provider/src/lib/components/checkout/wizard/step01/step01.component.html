@@ -2,38 +2,53 @@
   <div class="row mt-4">
     <div class="col">
       <h5 class="text-primary mb-3">DADOS PESSOAIS</h5>
-      <form>
+      <form [formGroup]="providerCheckout.formWizardStep01"
+        (ngSubmit)="providerCheckout.onWizardStep01Submit()">
 
         <div class="row">
-          <div class="col col-md-12">
+          <div class="col col-md-6">
             <div class="form-group">
-              <input type="text" required/>
+              <input type="text" required formControlName="name"/>
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Nome completo</label>
             </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col col-md-12">
-            <div class="form-group">
-              <input type="text" required/>
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>Nome da mãe</label>
+            <div class="errors-feedback"
+              *ngIf="providerCheckout.formWizardStep01Submitted &&
+                        providerCheckout.formWizardStep01.controls['name'].errors">
+              <div *ngIf="providerCheckout.formWizardStep01.controls['name'].errors['required']"
+                class="alert alert-danger" role="alert">
+                Nome é obrigatório
+              </div>
             </div>
+
           </div>
         </div>
 
         <div class="row">
           <div class="col col-md-6">
             <div class="form-group">
-              <input type="text" required/>
+              <input type="text" required formControlName="email"/>
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Email</label>
+
+              <div class="errors-feedback"
+                *ngIf="providerCheckout.formWizardStep01.controls['email'].touched &&
+                        providerCheckout.formWizardStep01.controls['email'].errors">
+
+                <div *ngIf="providerCheckout.formWizardStep01.controls['email'].errors['required']"
+                  class="alert alert-danger" role="alert">
+                  Email é obrigatório
+                </div>
+                <div *ngIf="providerCheckout.formWizardStep01.controls['email'].errors['email']"
+                  class="alert alert-danger" role="alert">
+                  Email inválido
+                </div>
+              </div>
+
             </div>
+
           </div>
           <div class="col col-md-6">
             <p class="text-primary">
@@ -46,10 +61,37 @@
         <div class="row">
           <div class="col col-md-6">
             <div class="form-group">
-              <input type="text" required/>
+              <input type="text" required formControlName="mobile" mask="(00) 00000-0000"/>
               <span class="highlight"></span>
               <span class="bar"></span>
-              <label>Telefone celular com DDD</label>
+              <label>Telefone Celular com DDD</label>
+              <div class="errors-feedback"
+                *ngIf="providerCheckout.formWizardStep01.controls['mobile'].touched &&
+                        providerCheckout.formWizardStep01.controls['mobile'].errors">
+
+                <div *ngIf="providerCheckout.formWizardStep01.controls['mobile'].errors['required']"
+                  class="alert alert-danger" role="alert">
+                  Telefone Celular é obrigatório
+                </div>
+                <div *ngIf="providerCheckout.formWizardStep01.controls['mobile'].errors['minLength']"
+                  class="alert alert-danger" role="alert">
+                  Telefone Celular inválido
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-md-6">
+            <div class="form-group">
+              <input type="text" required formControlName="telephone" mask="(00) 0000-0000"/>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Telefone Fixo com DDD
+                <small>(opcional)</small>
+              </label>
             </div>
           </div>
         </div>
@@ -57,32 +99,18 @@
         <div class="row">
           <div class="col col-md-6">
             <div class="form-group">
-              <input type="text" required/>
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>Outro telefone</label>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col col-md-6">
-            <div class="form-group">
-              <input type="text" required/>
+              <input type="text" required formControlName="cpf" mask="000.000.000-00"/>
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>CPF</label>
             </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col col-md-6">
-            <div class="form-group">
-              <input type="text" required/>
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>RG</label>
+            <div class="errors-feedback"
+              *ngIf="providerCheckout.formWizardStep01Submitted &&
+                        providerCheckout.formWizardStep01.controls['cpf'].errors">
+              <div *ngIf="providerCheckout.formWizardStep01.controls['cpf'].errors['required']"
+                class="alert alert-danger" role="alert">
+                CPF é obrigatório
+              </div>
             </div>
           </div>
         </div>
@@ -90,10 +118,39 @@
         <div class="row">
           <div class="col col-md-6">
             <div class="form-group">
-              <input type="text" required/>
+              <input type="text" required formControlName="rg" mask="00.000.000-0"/>
               <span class="highlight"></span>
               <span class="bar"></span>
-              <label>Data de Nascimento</label>
+              <label>RG</label>
+            </div>
+            <div class="errors-feedback"
+              *ngIf="providerCheckout.formWizardStep01Submitted &&
+                        providerCheckout.formWizardStep01.controls['rg'].errors">
+              <div *ngIf="providerCheckout.formWizardStep01.controls['rg'].errors['required']"
+                class="alert alert-danger" role="alert">
+                RG é obrigatório
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-md-6">
+            <div class="form-group">
+              <input type="text" required formControlName="dob" mask="00/00/0000"/>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Data de Nascimento
+                <small>(dd/mm/aaaa)</small>
+              </label>
+            </div>
+            <div class="errors-feedback"
+              *ngIf="providerCheckout.formWizardStep01Submitted &&
+                        providerCheckout.formWizardStep01.controls['dob'].errors">
+              <div *ngIf="providerCheckout.formWizardStep01.controls['dob'].errors['required']"
+                class="alert alert-danger" role="alert">
+                Data de Nascimento é obrigatório
+              </div>
             </div>
           </div>
           <div class="col col-md-6">
@@ -115,7 +172,9 @@
 
         <div class="row mt-3">
           <div class="col col-md-3">
-            <button class="btn btn-primary btn-block">Continuar</button>
+            <button class="btn btn-primary btn-block" (click)="providerCheckout.nextStep();">
+              Continuar
+            </button>
 
           </div>
           <div class="col col-md-3">

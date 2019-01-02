@@ -16,7 +16,10 @@ import {PluginProviderCheckoutWizardStep01Component} from "./wizard/step01/step0
 import {PluginProviderCheckoutWizardStep02Component} from "./wizard/step02/step02.component";
 import {PluginProviderCheckoutWizardStep03Component} from "./wizard/step03/step03.component";
 import {NbCardModule } from "@nebular/theme";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {PluginProviderCheckoutPlanTelephoneOptionalComponent} from "./plans/telephone/optional/optional.component";
+import {PluginProviderCheckoutBeforeCheckoutComponent} from "./before-checkout/before-checkout.component";
+import {NgxMaskModule} from "ngx-mask";
 
 
 
@@ -29,6 +32,8 @@ const COMPONENTS = [
   PluginProviderCheckoutPlanTelevisionComponent,
   PluginProviderCheckoutPlanTelevisionOptionalComponent,
   PluginProviderCheckoutPlanTelephoneComponent,
+  PluginProviderCheckoutPlanTelephoneOptionalComponent,
+  PluginProviderCheckoutBeforeCheckoutComponent,
   PluginProviderCheckoutWizardComponent,
   PluginProviderCheckoutWizardStep01Component,
   PluginProviderCheckoutWizardStep02Component,
@@ -40,7 +45,9 @@ const COMPONENTS = [
     //BrowserModule,
     CommonModule,
     NbCardModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot(),
   ],
   exports: [
     ...COMPONENTS,

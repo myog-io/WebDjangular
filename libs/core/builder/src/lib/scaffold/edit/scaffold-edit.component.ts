@@ -105,6 +105,7 @@ export class ScaffoldEditComponent implements OnInit {
       );
     } else {
       this.entry = this.datastore.createRecord(this.current_model, this.form.value);
+      this.form.entity = this.entry;
       this.formLoading = false;
     }
   }

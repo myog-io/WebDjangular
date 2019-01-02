@@ -1,0 +1,27 @@
+<div class="col col-md-6 p-0">
+  <h4>
+    <span class="icon"><i class="fa fa-globe"></i></span>
+    <span class="title"> {{ plan.name }} </span>
+  </h4>
+  <p [innerHTML]="plan.data.short_description ? plan.data.short_description : plan.description">
+  </p>
+
+</div>
+<div class="col col-md-3 price-wrapper align-self-center">
+  <span class="currency-unit">R$ </span>
+  <span class="price">{{ plan.pricing_list }}</span>
+</div>
+<div class="col col-md-3 actions-wrapper align-self-center">
+  <button type="button" class="btn btn-outline-primary btn-round text-uppercase"
+    *ngIf="!providerCheckout.selected_telephone_optionals.includes(plan)"
+    (click)="providerCheckout.addTelephoneOptional(plan)">
+    Adicionar
+  </button>
+
+  <button type="button" class="btn btn-outline-danger btn-round text-uppercase"
+    *ngIf="providerCheckout.selected_telephone_optionals.includes(plan)"
+    (click)="providerCheckout.removeTelephoneOptional(plan)">
+    Remover
+  </button>
+
+</div>

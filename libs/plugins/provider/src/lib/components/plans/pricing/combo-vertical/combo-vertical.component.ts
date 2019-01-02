@@ -18,7 +18,7 @@ export class PluginPricingComboVerticalComponent implements OnInit {
   net:ProductModel;
   tv:ProductModel;
   phone:ProductModel;
-  total:number = 0;
+  total:string | number = 0;
   constructor(private datastore: WebAngularDataStore) { }
 
   ngOnInit() {
@@ -35,15 +35,16 @@ export class PluginPricingComboVerticalComponent implements OnInit {
       this.net = entries.find( (product) => product.sku == this.sku_net );
       this.tv = entries.find( (product) => product.sku == this.sku_tv );
       this.phone = entries.find( (product) => product.sku == this.sku_phone );
-      if(this.net && this.net.pricing_list){
-        this.total += parseFloat(this.net.pricing_list);
+      if(this.net && this.net.price){
+        (<number>this.total) += parseFloat(this.net.price.toString());
       }
-      if(this.tv && this.tv.pricing_list){
-        this.total += parseFloat(this.tv.pricing_list);
+      if(this.tv && this.tv.price){
+        (<number>this.total) += parseFloat(this.tv.price.toString());
       }
-      if(this.phone && this.phone.pricing_list){
-        this.total += parseFloat(this.phone.pricing_list);
+      if(this.phone && this.phone.price){
+        (<number>this.total) += parseFloat(this.phone.price.toString());
       }
+      this.total = (<number>this.total).toFixed(2);
       // TODO: Apply Discount???
 
       this.loading = false;

@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ProviderCheckoutService} from "../../../../../data/services/provider-checkout.service";
 
 @Component({
   selector: 'plugin-provider-checkout-plan-television-optional',
@@ -6,14 +7,13 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./optional.component.scss'],
   host: {'class': 'col col-md-4'}
 })
-export class PluginProviderCheckoutPlanTelevisionOptionalComponent implements OnInit {
+export class PluginProviderCheckoutPlanTelevisionOptionalComponent {
 
   @Input() plan;
 
-  constructor() {
+  constructor( public providerCheckout: ProviderCheckoutService) {
+
   }
 
-  ngOnInit() {
-  }
 
 }

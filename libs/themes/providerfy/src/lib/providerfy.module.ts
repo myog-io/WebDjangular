@@ -29,6 +29,7 @@ import { ThemeProviderfyModalVenusComponent } from "./components/modal/venus/ven
 import { ThemeProviderfyModalChannelsComponent } from "./components/modal/channels/channels.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from '@ng-select/ng-select';
+import {NgxMaskModule} from "ngx-mask";
 
 const COMPONENTS = [
   ThemeProviderfyComponent,
@@ -73,6 +74,7 @@ const COMPONENTS = [
     NgbModule,
     CoreDynamicComponentLoaderModule.forRoot(),
     NgSelectModule,
+    NgxMaskModule.forRoot(),
     RouterModule.forChild([
       // TODO: remove the redirect to the page (remove these errors from routes as well) and make the error showing inside the page that gave the error.
       { path: '**', pathMatch: 'full', component: ThemeProviderfyComponent }

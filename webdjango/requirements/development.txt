@@ -3,3 +3,10 @@
 
 -r staging.txt
 -r live.txt
+
+
+# For the API Documentation Made Eazy
+coreapi==2.3.3
+drf-yasg==1.10.2
+flex==6.13.2
+swagger-spec-validator==2.4.0

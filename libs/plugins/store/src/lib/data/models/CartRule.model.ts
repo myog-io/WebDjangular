@@ -65,20 +65,22 @@ export class CartRuleModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     type: 'datepicker',
+    inputType: 'datetime-local',
     label: 'Start Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
   })
-  start: string;
+  start: Date;
 
   @Attribute()
   @ExtraOptions({
     type: 'datepicker',
+    inputType: 'datetime-local',
     label: 'End Date/Time',
     wrapper_class: 'col-6',
     placeholder: '',
   })
-  end: string;
+  end: Date;
 
   @Attribute()
   @ExtraOptions({

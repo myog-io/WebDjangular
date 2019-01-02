@@ -1,8 +1,17 @@
 <div class="accordion" id="accordionProviderCheckoutPlans">
-  <div class="card plan-select-wrapper">
-    <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'internet')">
-      <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
+  <div class="card internet plan-select-wrapper">
+    <div class="card-header  plan-panel" (click)="providerCheckout.toggleCollapse($event, 'internet')">
+      <span class="icon-wrapper">
+        <i class="icon icon-globo_big"></i>
+      </span>
       <span class="title"> Planos de internet </span>
+      <span class="caret float-right">
+        <i [ngClass]="{
+          'fa-chevron-up': providerCheckout.internet_plan_collapsed,
+          'fa-chevron-down': !providerCheckout.internet_plan_collapsed
+          }"
+          class="text-primary fas fa-3x"></i>
+      </span>
     </div>
 
     <div id="collapseProviderCheckoutPlanInternet" class="collapse"
@@ -21,10 +30,10 @@
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col col-md-4 align-self-center">
+          <div class="col col-md-5 align-self-center">
             <h2>{{ providerCheckout.selected_internet_plan.name }}</h2>
           </div>
-          <div class="col col-md-4 price-wrapper align-self-center">
+          <div class="col col-md-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
@@ -32,7 +41,8 @@
             </div>
           </div>
           <div class="col col-md-4 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectInternetPlan()">
+            <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
+              (click)="providerCheckout.deselectInternetPlan()">
               Alterar
             </button>
           </div>
@@ -46,10 +56,19 @@
     </div>
   </div>
 
-  <div class="card plan-select-wrapper">
+  <div class="card tv plan-select-wrapper">
     <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'tv')">
-      <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
+      <span class="icon-wrapper">
+        <i class="icon icon-tv_big"></i>
+      </span>
       <span class="title"> Pacotes de TV </span>
+      <span class="caret float-right">
+        <i [ngClass]="{
+          'fa-chevron-up': providerCheckout.tv_plan_collapsed,
+          'fa-chevron-down': !providerCheckout.tv_plan_collapsed
+          }"
+          class="text-primary fas fa-3x"></i>
+      </span>
     </div>
 
     <div id="collapseProviderCheckoutPlanTV" class="collapse" [ngClass]="{
@@ -70,10 +89,10 @@
 
       <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col col-md-4 align-self-center">
+          <div class="col col-md-5 align-self-center">
             <h2>{{ providerCheckout.selected_tv_plan.name }}</h2>
           </div>
-          <div class="col col-md-4 price-wrapper align-self-center">
+          <div class="col col-md-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
@@ -81,14 +100,15 @@
             </div>
           </div>
           <div class="col col-md-4 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectTVPlan()">Alterar
+            <button type="button" class="btn btn-outline-light btn-deselect-plan btn-round text-uppercase"
+              (click)="providerCheckout.deselectTVPlan()">Alterar
             </button>
           </div>
         </div>
         <div class="row extra-tv-decoder">
           <div class="col col-md-6">
             <h4>
-              <span class="icon"><i class="fa fa-globe"></i></span>
+              <span class="icon icon-extra-decoder"></span>
               <span class="title"> Adquirir pontos extra? </span>
             </h4>
             <div class="form-group">
@@ -108,12 +128,14 @@
           <div class="col-md-3 actions-wrapper align-self-center">
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
-              type="button" class="btn btn-outline-primary" (click)="providerCheckout.addExtraTVDecoder()">
+              type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+              (click)="providerCheckout.addExtraTVDecoder()">
               Adicionar
             </button>
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
-              type="button" class="btn btn-outline-danger" (click)="providerCheckout.removeExtraTVDecoder()">
+              type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
+              (click)="providerCheckout.removeExtraTVDecoder()">
               Remover
             </button>
 
@@ -121,7 +143,7 @@
         </div>
         <div class="select-television-optional-plan-wrapper">
           <h4>
-            <span class="icon"><i class="fa fa-globe"></i></span>
+            <span class="icon icon-squares"></span>
             <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
           </h4>
           <div class="row">
@@ -137,13 +159,22 @@
   </div>
 
 
-  <div class="card plan-select-wrapper">
+  <div class="card telephone plan-select-wrapper">
     <div class="card-header plan-panel"
          id="ProviderCheckoutTabPlanTelephone"
       (click)="providerCheckout.toggleCollapse($event, 'telephone')"
-    >
-      <span class="icon"><i class="fa fa-4x  fa-globe"></i></span>
+      [ngClass]="{
+          'closed': !providerCheckout.telephone_plan_collapsed
+          }">
+      <span class="icon-wrapper"><i class="icon icon-telephone_big"></i></span>
       <span class="title"> PLANOS DE TELEFONE FIXO </span>
+      <span class="caret float-right">
+        <i [ngClass]="{
+          'fa-chevron-up': providerCheckout.telephone_plan_collapsed,
+          'fa-chevron-down': !providerCheckout.telephone_plan_collapsed
+          }"
+          class="text-primary fas fa-3x"></i>
+      </span>
     </div>
 
     <div class="collapse" [ngClass]="{
@@ -162,10 +193,10 @@
 
       <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col col-md-4 align-self-center">
+          <div class="col col-md-5 align-self-center">
             <h2>{{ providerCheckout.selected_telephone_plan.name }}</h2>
           </div>
-          <div class="col col-md-4 price-wrapper align-self-center">
+          <div class="col col-md-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
@@ -173,10 +204,17 @@
             </div>
           </div>
           <div class="col col-md-4 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-outline-light" (click)="providerCheckout.deselectTelephonePlan()">
+            <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
+              (click)="providerCheckout.deselectTelephonePlan()">
               Alterar
             </button>
           </div>
+        </div>
+
+        <div class="select-internet-optional-plan-wrapper">
+          <plugin-provider-checkout-plan-telephone-optional
+            *ngFor="let plan_optional of providerCheckout.plans_optionals.telephone" [plan]="plan_optional">
+          </plugin-provider-checkout-plan-telephone-optional>
         </div>
 
       </div>

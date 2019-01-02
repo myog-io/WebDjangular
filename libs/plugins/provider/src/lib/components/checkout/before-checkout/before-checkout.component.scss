@@ -1,0 +1,36 @@
+@import "../checkout_variables";
+//@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
+// TODO get variables config based on database.
+
+:host {
+  display: contents;
+}
+
+.card {
+  border: 0;
+}
+
+.icon {
+  float: none;
+  display: block;
+  margin: auto;
+}
+
+.subtitle {
+  max-width: 360px;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+button {
+  font-weight: bold;
+}
+
+.link {
+  position: absolute;
+}
+
+input:focus ~ .link, input:valid ~ .link {
+  display: none;
+}

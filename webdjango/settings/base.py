@@ -3,9 +3,12 @@ Django settings for webdjangular project.
 
 """
 
-import os
-import datetime
 import sys
+import os
+
+import datetime
+
+
 # sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.join("libs","core")))
 
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
@@ -20,6 +23,7 @@ THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 
 PLUGIN_DIR = os.path.join(BASE_DIR, 'libs/plugins')
 
+ANGULAR_APP_DIR = os.path.join(os.path.join(BASE_DIR,'dist'),'apps')
 
 DEBUG = False
 
@@ -41,7 +45,6 @@ INSTALLED_APPS = [
 
     'rest_framework_json_api',
     'django_extensions',
-    'drf_yasg',
     'libs.core.users.api',
     'libs.core.cms.api',
     'libs.core.media.api',
@@ -182,7 +185,6 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
-
-
