@@ -63,7 +63,6 @@ export class MenuBuilderComponent {
 
         this.menu.saveAll().then(
             (result) => {
-                this.retrieveEntry()
                 console.log(result);
             }
         )
