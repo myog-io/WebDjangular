@@ -58,12 +58,9 @@ export class MenuBuilderComponent {
 
         this.menu.menu_item.push(newMenuItem)
 
-        this.menu.save({
-            include: 'MenuItem',
-        }).subscribe(
+        this.menu.saveAll().then(
             (result) => {
-                this.formLoading = false;
-                console.log(result)
+                console.log(result);
             }
         )
     
