@@ -80,7 +80,7 @@ h1 {
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     font-size: $h1-fs * 0.75;
   }
 }
@@ -90,7 +90,7 @@ h2 {
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     font-size: $h2-fs * 0.75;
   }
 }
@@ -100,7 +100,7 @@ h3 {
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     font-size: $h3-fs * 0.75;
   }
 }
@@ -110,7 +110,7 @@ h4 {
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     font-size: $h4-fs * 0.75;
   }
 }
@@ -120,7 +120,7 @@ h5 {
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     font-size: $h5-fs * 0.75;
   }
 }
@@ -130,7 +130,7 @@ h6 {
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     font-size: $h6-fs * 0.75;
   }
 }
@@ -542,10 +542,10 @@ input:focus ~ .highlight {
 
   @include media-breakpoint-up(md) {
     padding-top: map-get($spacers, 5);
-    padding-bottom: map-get($spacers,3);
+    padding-bottom: map-get($spacers, 3);
   }
 
-  h6{
+  h6 {
     margin-bottom: 0;
     padding-bottom: map-get($spacers, 1);
 
@@ -554,7 +554,7 @@ input:focus ~ .highlight {
     }
   }
 
-  h4{
+  h4 {
 
     padding-bottom: map-get($spacers, 1);
     margin-bottom: 0;
@@ -564,7 +564,6 @@ input:focus ~ .highlight {
     }
 
   }
-
 
 
   p {
@@ -640,15 +639,45 @@ input:focus ~ .highlight {
   }
 
   ul {
-    -webkit-column-count: 4; /* Chrome, Safari, Opera */
-    -moz-column-count: 4; /* Firefox */
-    column-count: 4;
+    padding: 0;
+
+    $citiesColumnCount: 1;
+
+    -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+    -moz-column-count: $citiesColumnCount; /* Firefox */
+    column-count: $citiesColumnCount;
     list-style: none;
+
+    @include media-breakpoint-up(sm) {
+      $citiesColumnCount: 2;
+
+      -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+      -moz-column-count: $citiesColumnCount; /* Firefox */
+      column-count: $citiesColumnCount;
+    }
+
+    @include media-breakpoint-up(md) {
+      $citiesColumnCount: 3;
+
+      -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+      -moz-column-count: $citiesColumnCount; /* Firefox */
+      column-count: $citiesColumnCount;
+    }
+
+    @include media-breakpoint-up(lg) {
+      $citiesColumnCount: 4;
+
+      -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+      -moz-column-count: $citiesColumnCount; /* Firefox */
+      column-count: $citiesColumnCount;
+    }
+
 
     li {
       font-size: 17px;
       color: #616c74;
-
+      width:100%;
+      display: inline-block;
     }
   }
 
@@ -662,24 +691,24 @@ input:focus ~ .highlight {
   background-repeat: no-repeat;
   background-size: cover;
 
-  height:100%;
+  height: 100%;
   max-width: 460px;
   //max-height: 455px;
   padding-left: 30px;
 
-  padding-top:100%;
+  padding-top: 100%;
 
-  @include media-breakpoint-up(sm){
-    padding-top:50%;
+  @include media-breakpoint-up(sm) {
+    padding-top: 50%;
   }
 
-  @include media-breakpoint-up(lg){
-    padding-top:33.33333333%;
+  @include media-breakpoint-up(lg) {
+    padding-top: 33.33333333%;
   }
 
-  .text{
+  .text {
     position: absolute;
-    bottom:0;
+    bottom: 0;
 
     h4 {
       margin-bottom: 0;
@@ -688,7 +717,7 @@ input:focus ~ .highlight {
     p {
       font-size: 16px;
       line-height: 20px;
-      max-width:300px;
+      max-width: 300px;
     }
   }
 
