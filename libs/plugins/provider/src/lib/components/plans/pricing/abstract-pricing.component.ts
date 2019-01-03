@@ -10,7 +10,7 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
 
   @Input() skus: string;
   @Input() ids: string;
-  @Input() class = "col-md-6 col-sm-6 p-0 m-0";
+  @Input() class = "col-12 col-md-6 p-0 m-0";
   loading = true;
   public model = ProductModel;
   public entries: ProductModel[];

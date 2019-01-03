@@ -6,7 +6,7 @@ import {Validators} from "@angular/forms";
     selector: 'plugin-provider-checkout-summary',
     templateUrl: './summary.component.html',
     styleUrls: ['./summary.component.scss'],
-    host: {'class': 'col-12 col-md-4'}
+    host: {'class': 'col-12 col-md-5 col-lg-4'}
 })
 export class PluginProviderCheckoutSummaryComponent implements OnInit {
 

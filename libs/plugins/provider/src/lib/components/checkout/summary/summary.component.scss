@@ -260,7 +260,7 @@ table {
 
       button[type="submit"] {
 
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
           padding-left: 45px;
           padding-right: 45px;
         }
