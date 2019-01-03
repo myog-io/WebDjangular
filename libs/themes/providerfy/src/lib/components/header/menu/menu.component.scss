@@ -1,5 +1,5 @@
 @import "../../../styles/variables.scss";
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/mixins/breakpoints';
 @import '~rfs/sass/_rfs';
 
 .navbar-nav {
@@ -12,6 +12,11 @@
     color: $header-menu-c !important;
     text-transform: uppercase;
   }
+  .nav-item.active {
+    .nav-link{
+      color: $primary !important;
+    }
+  }
 
   .nav-item.featured {
     background: $header-menu-featured-bg;
@@ -22,11 +27,6 @@
       color: $header-menu-featured-c !important;
     }
 
-  }
-  .nav-item.active {
-    .nav-link{
-      color: $primary !important;
-    }
   }
 
   .dropdown-menu {
