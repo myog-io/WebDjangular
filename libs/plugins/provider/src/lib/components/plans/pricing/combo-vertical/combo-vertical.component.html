@@ -50,7 +50,7 @@
             <div class="row mt-2 mb-3">
                 <div class="col">
                     <p class="text-center m-1">
-                        <a href="javascript:void(0);" class="btn btn-outline-primary"> QUERO ESTE </a>
+                        <a [routerLink]="['/assine']" [queryParams]="{net: net?.sku, phone: phone?.sku, tv: tv?.sku}" class="btn btn-outline-primary"> QUERO ESTE </a>
                     </p>
                 </div>
             </div>
