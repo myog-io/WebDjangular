@@ -361,7 +361,11 @@ input:focus ~ .highlight {
   .card.contact {
     border-radius: $card-border-radius;
     border-color: transparent;
-    padding: 20px 10px 0px 20px;
+    padding: 0px;
+
+    @include media-breakpoint-up(lg){
+      padding: 20px 10px 0 20px;
+    }
 
     &:not(.bg-primary) {
       box-shadow: 0 0 22px rgba(0, 0, 0, 0.2);
