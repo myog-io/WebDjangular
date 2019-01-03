@@ -3,11 +3,12 @@ from django import forms
 from webdjango.models.AbstractModels import BaseModel
 from django_mysql.models import DynamicField
 
-
 class City(BaseModel):
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=255, null=True, default=None)
     code = models.SlugField(null=True, default=None, unique=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=7, blank=True, null=True)
+    long = models.DecimalField(max_digits=9, decimal_places=7, blank=True, null=True)
 
     def __str__(self):
         return self.name
