@@ -31,17 +31,17 @@
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col-12 col-md-5 align-self-center">
+          <div class="col-12 col-lg-5 align-self-center">
             <h2>{{ providerCheckout.selected_internet_plan.name }}</h2>
           </div>
-          <div class="col-12 col-md-3 price-wrapper align-self-center">
+          <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
-          <div class="col-12 col-md-4 actions-wrapper align-self-center">
+          <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
               (click)="providerCheckout.deselectInternetPlan()">
               Alterar
@@ -89,24 +89,24 @@
 
       <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col-12 col-md-5 align-self-center">
+          <div class="col-12 col-lg-5 align-self-center">
             <h2>{{ providerCheckout.selected_tv_plan.name }}</h2>
           </div>
-          <div class="col-12 col-md-3 price-wrapper align-self-center">
+          <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
-          <div class="col-12 col-md-4 actions-wrapper align-self-center">
+          <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-outline-light btn-deselect-plan btn-round text-uppercase"
               (click)="providerCheckout.deselectTVPlan()">Alterar
             </button>
           </div>
         </div>
         <div class="row extra-tv-decoder">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <h4>
               <span class="icon icon-extra-decoder"></span>
               <span class="title"> Adquirir pontos extra? </span>
@@ -119,13 +119,13 @@
               </select>
             </div>
           </div>
-          <div class="col col-md-3 price-wrapper align-self-center">
+          <div class="col col-lg-3 price-wrapper align-self-center">
             <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
               <span class="currency-unit">R$</span>
               <span class="price" [innerHTML]="providerCheckout.priceExtraTVDecoder"></span>
             </span>
           </div>
-          <div class="col-md-3 actions-wrapper align-self-center">
+          <div class="col-lg-3 actions-wrapper align-self-center">
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
               type="button" class="btn btn-outline-primary btn-round text-uppercase"
@@ -189,17 +189,17 @@
 
       <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col-12 col-md-5 align-self-center">
+          <div class="col-12 col-lg-5 align-self-center">
             <h2>{{ providerCheckout.selected_telephone_plan.name }}</h2>
           </div>
-          <div class="col-12 col-md-3 price-wrapper align-self-center">
+          <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
-          <div class="col-12 col-md-4 actions-wrapper align-self-center">
+          <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
               (click)="providerCheckout.deselectTelephonePlan()">
               Alterar
