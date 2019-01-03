@@ -94,6 +94,7 @@
     "ngx-page-scroll": "^5.0.1",
     "normalize.css": "6.0.0",
     "pace-js": "1.0.2",
+    "rfs": "^7.1.9",
     "roboto-fontface": "0.8.0",
     "rxjs": "6.3.3",
     "rxjs-compat": "6.3.3",

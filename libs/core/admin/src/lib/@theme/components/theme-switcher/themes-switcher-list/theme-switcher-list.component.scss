@@ -2,6 +2,7 @@
 @import '~@nebular/theme/styles/core/mixins';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
+@import '~rfs/sass/_rfs';
 
 $icon-color-default: #0bbb79;
 $icon-color-cosmic: #7958fa;
@@ -28,7 +29,7 @@ $icon-top-color-corporate: #e9e8eb;
       }
 
       i {
-        font-size: 2rem;
+        @include responsive-font-size(2rem);
 
         &.drop-icon-default {
           color: $icon-color-default;

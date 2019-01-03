@@ -1,4 +1,4 @@
-
+@import '~rfs/sass/_rfs';
 //HARDCODE
 
 :host {
@@ -7,7 +7,7 @@
 
 /*
 h3 {
-    font-size: $plan-title-fs;
+    @include responsive-font-size( $plan-title-fs);
     font-weight: $plan-title-fw;
     font-family: $plan-title-ff;
     color: $plan-title-c;
@@ -15,7 +15,7 @@ h3 {
 }
 
 h6 {
-    font-size: $plan-headline-fs;
+    @include responsive-font-size( $plan-headline-fs);
     font-weight: $plan-headline-fw;
     font-family: $plan-headline-ff;
     color: $plan-headline-c;

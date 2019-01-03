@@ -1,6 +1,7 @@
 @import '../../styles/themes';
 @import '~@nebular/theme/styles/global/breakpoints';
 @import '~bootstrap/scss/mixins/breakpoints';
+@import '~rfs/sass/_rfs';
 
 @include nb-install-component() {
   width: 100%;
@@ -9,7 +10,7 @@
   align-items: center;
 
   .socials {
-    font-size: 2rem;
+    @include responsive-font-size(2rem);
 
     a {
       padding: 0.4rem;
@@ -24,7 +25,7 @@
 
   @include media-breakpoint-down(is) {
     .socials {
-      font-size: 1.5rem;
+      @include responsive-font-size(1.5rem);
     }
   }
 }

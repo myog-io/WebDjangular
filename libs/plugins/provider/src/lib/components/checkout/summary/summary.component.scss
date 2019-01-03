@@ -1,6 +1,7 @@
 @import "../checkout_variables";
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
+@import '~rfs/sass/_rfs';
 
 :host {
 
@@ -26,7 +27,7 @@ table {
 
     background: #00b9bd;
     font-family: "Boston", Arial, Helvetica, sans-serif;
-    font-size: 24px;
+    @include responsive-font-size( 24px);
     font-weight: 900;
     color: #fff;
     text-align: center;
@@ -53,7 +54,7 @@ table {
         padding: 0;
 
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 14px;
+        @include responsive-font-size( 14px);
         line-height: 16px;
         font-weight: 700;
         color: #899299;
@@ -63,7 +64,7 @@ table {
         border-bottom: 3px solid #fff;
 
         @include media-breakpoint-up(md) {
-          font-size: 17px;
+          @include responsive-font-size( 17px);
           line-height: 19px;
         }
 
@@ -109,12 +110,12 @@ table {
           .price-wrapper {
             color: #00b9bd;
             font-family: "Boston", Arial, Helvetica, sans-serif;
-            font-size: 19px;
+            @include responsive-font-size( 19px);
 
             position: relative;
 
             .currency-unit {
-              font-size: 17px;
+              @include responsive-font-size( 17px);
               font-weight: 400;
             }
 
@@ -129,7 +130,7 @@ table {
               background: transparent;
               border: 0;
               position: absolute;
-              font-size: 22px;
+              @include responsive-font-size( 22px);
               top: -2px;
               right: 0;
               padding: 0;
@@ -148,7 +149,7 @@ table {
             .add {
               width: 100%;
               font-family: "Boston", Arial, Helvetica, sans-serif;
-              font-size: 14px;
+              @include responsive-font-size( 14px);
               font-weight: 600;
               color: #00b9bd;
               text-transform: uppercase;
@@ -187,7 +188,7 @@ table {
         background: #899299;
         color: #ffffff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 22px;
+        @include responsive-font-size( 22px);
         font-weight: bold;
         text-align: right;
         padding-top: 20px;
@@ -200,7 +201,7 @@ table {
         background: #00b9bd;
         color: #ffffff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 22px;
+        @include responsive-font-size( 22px);
         font-weight: bold;
         text-align: right;
 
@@ -225,7 +226,7 @@ table {
             border: 0;
             padding: 0 20px;
             font-family: "Open Sans", Helvetica, sans-serif;
-            font-size: 13px;
+            @include responsive-font-size( 13px);
             line-height: 22px;
             font-weight: 400;
             color: #000;
@@ -244,7 +245,7 @@ table {
 
     .btn-summary-details {
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      font-size: 11px;
+      @include responsive-font-size( 11px);
       font-weight: 600;
       color: #899299;
       text-decoration: underline;

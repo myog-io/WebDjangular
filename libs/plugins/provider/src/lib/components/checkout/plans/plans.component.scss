@@ -1,6 +1,7 @@
 @import "../checkout_variables";
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
+@import '~rfs/sass/_rfs';
 
 // TODO get variables config based on database.
 
@@ -50,7 +51,7 @@
 
       width: 100%;
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      font-size: 22px;
+      @include responsive-font-size( 22px);
       line-height: 24px;
       font-weight: 700;
       color: #899299;
@@ -58,7 +59,7 @@
       vertical-align: top;
 
       @include media-breakpoint-up(md) {
-        font-size: 26px;
+        @include responsive-font-size( 26px);
       }
 
     }
@@ -89,7 +90,7 @@
 
       .plan-caption {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 13px;
+        @include responsive-font-size( 13px);
         font-weight: 700;
         color: #899299;
         text-transform: uppercase;
@@ -112,7 +113,7 @@
 
       h2 {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 36px;
+        @include responsive-font-size( 36px);
         font-weight: 900;
         color: #fff;
         text-transform: uppercase;
@@ -138,19 +139,19 @@
 
 
           .currency-unit {
-            font-size: 19px;
+            @include responsive-font-size( 19px);
             font-weight: 600;
             padding-right: 2px;
 
           }
 
           .price {
-            font-size: 32px;
+            @include responsive-font-size( 32px);
             font-weight: 600;
           }
 
           .periodicity {
-            font-size: 19px;
+            @include responsive-font-size( 19px);
             font-weight: 400;
           }
         }
@@ -165,7 +166,7 @@
           width: 140px;
           font-family: "Boston", Arial, Helvetica, sans-serif;
           font-weight: 700;
-          font-size: 14px;
+          @include responsive-font-size( 14px);
         }
       }
     }
@@ -182,7 +183,7 @@
 
       h4 {
         color: #00b9bd;
-        font-size: 20px;
+        @include responsive-font-size( 20px);
         font-family: "Boston", Arial, Helvetica, sans-serif;
         margin-bottom: 5px;
 
@@ -199,7 +200,7 @@
 
       .form-group {
         font-family: "Open Sans", Helvetica, sans-serif;
-        font-size: 16px;
+        @include responsive-font-size( 16px);
         line-height: 17px;
         font-weight: 400;
         color: #5f6a73;
@@ -214,7 +215,7 @@
 
       .price-wrapper {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 22px;
+        @include responsive-font-size( 22px);
         color: #697075;
         font-weight: 700;
         text-align: center;
@@ -248,7 +249,7 @@
     .card-body {
       .selected-plan-wrapper {
         h2 {
-          font-size: 26px;
+          @include responsive-font-size( 26px);
           line-height: 28px;
         }
       }
@@ -299,7 +300,7 @@
 
   h4 {
     color: #00b9bd;
-    font-size: 20px;
+    @include responsive-font-size( 20px);
     font-family: "Boston", Arial, Helvetica, sans-serif;
     margin-bottom: 25px;
 

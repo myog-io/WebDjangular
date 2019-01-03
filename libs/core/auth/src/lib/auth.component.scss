@@ -1,3 +1,4 @@
+@import '~rfs/sass/_rfs';
 :host /deep/ {
   $auth-layout-padding: 2.5rem;
 
@@ -13,7 +14,7 @@
     a {
       text-decoration: none;
       i {
-        font-size: 2rem;
+        @include responsive-font-size( 2rem);
         font-weight: bold;
       }
     }

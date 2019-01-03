@@ -1,11 +1,12 @@
 @import '../../styles/themes';
 @import '~@nebular/theme/styles/core/mixins';
 @import '~@nebular/theme/styles/core/functions';
+@import '~rfs/sass/_rfs';
 
 @include nb-install-component() {
   .themes-switcher {
     display: flex;
-    font-size: 1.25rem;
+    @include responsive-font-size(1.25rem);
     padding: 0.8rem 1.25rem;
     align-items: center;
     cursor: pointer;
@@ -25,7 +26,7 @@
 
     i {
       color: nb-theme(color-primary);
-      font-size: 1.8rem;
+      @include responsive-font-size(1.8rem);
       border-radius: 50%;
       position: relative;
 

@@ -1,7 +1,7 @@
 // HARDCODE
 
 @import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
-
+@import '~rfs/sass/_rfs';
 :host {
     display: contents;
 }
@@ -20,7 +20,7 @@
          border-top-right-radius: $plan-card-round;
 
         .plan-title {
-            font-size: 39px;
+            @include responsive-font-size( 39px);
             font-weight: $pricing-plan-amount-fw;
             font-family: $pricing-plan-amount-ff;
             color: $pricing-plan-amount-c;
@@ -38,13 +38,13 @@
         .plan-channels{
           background:#02cdd1;
           color:#fff;
-          font-size:16px;
+          @include responsive-font-size(16px);
           font-weight: 400;
           padding:5px 45px;
           text-align: left;
           .amount{
             font-family: $pricing-plan-amount-ff;
-            font-size:30px;
+            @include responsive-font-size(30px);
             font-weight: 500;
             vertical-align: sub;
 
@@ -54,14 +54,14 @@
         .plan-channels-hd{
           background:#3fe1e4;
           color:#fff;
-          font-size:16px;
+          @include responsive-font-size(16px);
           font-weight: 700;
           padding:5px 45px;
            text-align: left;
 
           .amount{
             font-family: $pricing-plan-amount-ff;
-            font-size:30px;
+            @include responsive-font-size(30px);
             font-weight: 700;
             vertical-align: sub;
 
@@ -76,7 +76,7 @@
             list-style: none;
 
             li {
-                font-size: $pricing-plan-features-fs;
+                @include responsive-font-size( $pricing-plan-features-fs);
                 font-weight: $pricing-plan-features-fw;
                 font-family: $pricing-plan-features-ff;
                 color: $pricing-plan-features-c;
@@ -110,7 +110,7 @@
         .plan-price {
 
             .currency-unit {
-                font-size: $pricing-plan-currency-unit-fs;
+                @include responsive-font-size( $pricing-plan-currency-unit-fs);
                 font-weight: $pricing-plan-currency-unit-fw;
                 font-family: $pricing-plan-currency-unit-ff;
                 color: $pricing-plan-currency-unit-c;
@@ -119,14 +119,14 @@
             }
 
             .price {
-                font-size: $pricing-plan-price-fs;
+                @include responsive-font-size( $pricing-plan-price-fs);
                 font-weight: $pricing-plan-price-fw;
                 font-family: $pricing-plan-price-ff;
             }
         }
 
         .btn-subscribe {
-            font-size: $btn-subscribe-fs;
+            @include responsive-font-size( $btn-subscribe-fs);
             font-weight: $btn-subscribe-fw;
             font-family: $btn-subscribe-ff;
             color: $btn-subscribe-c;
@@ -143,7 +143,7 @@
         }
 
         a.more-info {
-            font-size: $pricing-plan-more-info-fs;
+            @include responsive-font-size( $pricing-plan-more-info-fs);
             font-weight: $pricing-plan-more-info-fw;
             font-family: $pricing-plan-more-info-ff;
             color: $pricing-plan-more-info-c;

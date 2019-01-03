@@ -1,6 +1,7 @@
 @import "../../../checkout_variables";
 @import '../../../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
+@import '~rfs/sass/_rfs';
 
 :host {
   padding: 15px;
@@ -13,7 +14,7 @@
 
 h4 {
   color: #00b9bd;
-  font-size: 20px;
+  @include responsive-font-size( 20px);
   font-family: "Boston", Arial, Helvetica, sans-serif;
   margin-bottom: 5px;
 
@@ -31,7 +32,7 @@ h4 {
 
 p {
   font-family: "Open Sans", Helvetica, sans-serif;
-  font-size: 16px;
+  @include responsive-font-size( 16px);
   line-height: 17px;
   font-weight: 400;
   color: #5f6a73;
@@ -42,7 +43,7 @@ p {
 
 .price-wrapper {
   font-family: "Boston", Arial, Helvetica, sans-serif;
-  font-size: 22px;
+  @include responsive-font-size( 22px);
   color: #697075;
   font-weight: 700;
   text-align: center;
@@ -66,6 +67,6 @@ p {
     width: 140px;
     font-family: "Boston", Arial, Helvetica, sans-serif;
     font-weight: 700;
-    font-size: 14px;
+    @include responsive-font-size( 14px);
   }
 }

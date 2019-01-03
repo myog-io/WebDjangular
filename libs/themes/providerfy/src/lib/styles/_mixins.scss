@@ -1,32 +1,22 @@
 @import 'variables';
-
+@import '~rfs/sass/_rfs';
 
 
 
 // Makes the @content apply to the given breakpoint and wider.
-@include media-breakpoint-up($name, $breakpoints: $grid-breakpoints)
+@include media-breakpoint-up($name, $breakpoints: $grid-breakpoints);
 
-// Makes the @content apply to the given breakpoint and narrower.
-@include media-breakpoint-down($name, $breakpoints: $grid-breakpoints)
+// Makes the @content apply to the given breakpoint and narrower.;
+@include media-breakpoint-down($name, $breakpoints: $grid-breakpoints);
 
 // Makes the @content apply between the min and max breakpoints
-@include media-breakpoint-between($lower, $upper, $breakpoints: $grid-breakpoints)
+@include media-breakpoint-between($lower, $upper, $breakpoints: $grid-breakpoints);
 
 
 // Makes the @content apply only to the given breakpoint, not viewports any wider or narrower.
-@include media-breakpoint-only($name, $breakpoints: $grid-breakpoints)
+@include media-breakpoint-only($name, $breakpoints: $grid-breakpoints);
 
 
-
-@mixin fs($fs: $font-size-base){
-  font-size:$fs;
-}
-@mixin ff($ff: $font-family-sans-serif){
-  font-size:$ff;
-}
-@mixin fw($fw: 400){
-  font-size:$fw;
-}
 @mixin c($c: #000){
   color:$c;
 }

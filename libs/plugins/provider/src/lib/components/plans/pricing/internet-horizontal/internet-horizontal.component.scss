@@ -1,6 +1,7 @@
 // HARDCODE
 @import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
 @import '~bootstrap/scss/bootstrap';
+@import '~rfs/sass/_rfs';
 
 :host {
   display: contents;
@@ -23,7 +24,7 @@
     border-bottom-left-radius: $plan-card-round;
 
     .plan-amount {
-      font-size: $pricing-plan-amount-fs;
+      @include responsive-font-size( $pricing-plan-amount-fs);
       font-weight: $pricing-plan-amount-fw;
       font-family: $pricing-plan-amount-ff;
       color: $pricing-plan-amount-c;
@@ -34,7 +35,7 @@
       border-top-left-radius: $plan-card-round;
 
       .plan-amount-unit {
-        font-size: $pricing-plan-amount-unit-fs;
+        @include responsive-font-size( $pricing-plan-amount-unit-fs);
         font-weight: $pricing-plan-amount-unit-fw;
         font-family: $pricing-plan-amount-unit-ff;
         color: $pricing-plan-amount-unit-c;
@@ -45,7 +46,7 @@
     .plan-price {
 
       .currency-unit {
-        font-size: $pricing-plan-currency-unit-fs;
+        @include responsive-font-size( $pricing-plan-currency-unit-fs);
         font-weight: $pricing-plan-currency-unit-fw;
         font-family: $pricing-plan-currency-unit-ff;
         color: $pricing-plan-currency-unit-c;
@@ -54,7 +55,7 @@
       }
 
       .price {
-        font-size: $pricing-plan-price-fs;
+        @include responsive-font-size( $pricing-plan-price-fs);
         font-weight: $pricing-plan-price-fw;
         font-family: $pricing-plan-price-ff;
         color: $pricing-plan-price-c;
@@ -62,7 +63,7 @@
     }
 
     .btn-subscribe {
-      font-size: $btn-subscribe-fs;
+      @include responsive-font-size( $btn-subscribe-fs);
       font-weight: $btn-subscribe-fw;
       font-family: $btn-subscribe-ff;
       color: $btn-subscribe-c;
@@ -84,7 +85,7 @@
     }
 
     a.more-info {
-      font-size: $pricing-plan-more-info-fs;
+      @include responsive-font-size( $pricing-plan-more-info-fs);
       font-weight: $pricing-plan-more-info-fw;
       font-family: $pricing-plan-more-info-ff;
       color: $pricing-plan-more-info-c;
@@ -114,10 +115,10 @@
       list-style: none;
 
       li {
-        font-size: $pricing-plan-features-fs;
+        @include responsive-font-size( $pricing-plan-features-fs);
 
         @include media-breakpoint-down(sm) {
-          font-size: $pricing-plan-features-fs *0.85;
+          @include responsive-font-size( $pricing-plan-features-fs *0.85);
         }
 
         font-weight: $pricing-plan-features-fw;

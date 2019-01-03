@@ -1,11 +1,12 @@
 @import "../../../styles/variables.scss";
 @import '~bootstrap/scss/bootstrap';
+@import '~rfs/sass/_rfs';
 
 .navbar-nav {
   cursor: pointer;
 
   .nav-link {
-    font-size: $header-menu-fs;
+    @include responsive-font-size( $header-menu-fs);
     font-family: $header-menu-ff;
     font-weight: $header-menu-fw;
     color: $header-menu-c !important;

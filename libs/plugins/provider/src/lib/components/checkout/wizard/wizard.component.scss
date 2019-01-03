@@ -1,7 +1,7 @@
 @import "../checkout_variables";
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
-
+@import '~rfs/sass/_rfs';
 
 :host {
   display: contents;
@@ -24,7 +24,7 @@ ul.wizard {
     a {
       color: #d9e2e5;
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      font-size: 14px;
+      @include responsive-font-size( 14px);
       font-weight: 700;
       text-transform: uppercase;
       display: block;
@@ -36,7 +36,7 @@ ul.wizard {
         color: #fff;
         background: #d9e2e5;
         border-radius: 50%;
-        font-size: 18px;
+        @include responsive-font-size( 18px);
         font-weight: 300;
         width: 30px;
         height: 30px;
@@ -139,7 +139,7 @@ ul.wizard {
       .item {
         color: #fff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 18px;
+        @include responsive-font-size( 18px);
         line-height: 22px;
         font-weight: 700;
         text-transform: uppercase;
@@ -148,7 +148,7 @@ ul.wizard {
       .subitem {
         color: #fff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 14px;
+        @include responsive-font-size( 14px);
         line-height: 16px;
         font-weight: 400;
         text-transform: uppercase;
@@ -166,7 +166,7 @@ ul.wizard {
 
       a {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 11px;
+        @include responsive-font-size( 11px);
         font-weight: 600;
         color: #fff;
         text-decoration: underline;
@@ -233,7 +233,7 @@ ul.wizard {
         td {
           border: 0;
           font-family: "Boston", Arial, Helvetica, sans-serif;
-          font-size: 17px;
+          @include responsive-font-size( 17px);
           font-weight: 700;
           padding-top: 10px;
           padding-bottom: 10px;
@@ -244,7 +244,7 @@ ul.wizard {
         td {
           border: 0;
           font-family: "Open Sans", Helvetica, sans-serif;
-          font-size: 13px;
+          @include responsive-font-size( 13px);
           font-weight: 400;
         }
 

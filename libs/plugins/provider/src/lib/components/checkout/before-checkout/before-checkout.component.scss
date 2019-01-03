@@ -1,8 +1,7 @@
-
 @import "../checkout_variables";
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
-
+@import '~rfs/sass/_rfs';
 // TODO get variables config based on database.
 
 :host {
@@ -51,7 +50,7 @@
 
 .subtitle {
   max-width: 360px;
-  font-size: 16px;
+  @include responsive-font-size( 16px);
   line-height: 18px;
 }
 
