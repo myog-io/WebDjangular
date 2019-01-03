@@ -1,3 +1,4 @@
+@import '~rfs/sass/_rfs';
 
 nb-card-body {
   overflow: visible;
@@ -18,7 +19,7 @@ nb-card-body {
 .my-drop-zone{
   padding-top:2rem;
   padding-bottom:2rem;
-  font-size:1.5rem;
+  @include responsive-font-size(1.5rem);
   text-align: center;
   font-weight:bold;
 }
@@ -78,7 +79,7 @@ nb-card-body {
       font-family: nb-theme(font-secondary);
       font-weight: nb-theme(font-weight-bold);
       color: nb-theme(color-fg-heading);
-      font-size: 1.5rem;
+      @include responsive-font-size( 1.5rem);
       margin-bottom: 1rem;
 
     }
@@ -109,7 +110,7 @@ nb-card-body {
       }
 
       i {
-        font-size: 1.75rem;
+        @include responsive-font-size( 1.75rem);
       }
     }
   }

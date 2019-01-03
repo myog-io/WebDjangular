@@ -1,5 +1,6 @@
 // HARDCODE
 @import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
+@import '~rfs/sass/_rfs';
 
 :host {
   display: contents;
@@ -19,7 +20,7 @@
     border-top-right-radius: $plan-card-round;
 
     .plan-title {
-      font-size: 34px;
+      @include responsive-font-size( 34px);
       font-weight: 400;
       font-family: $pricing-plan-amount-ff;
       color: $pricing-plan-amount-c;
@@ -40,7 +41,7 @@
 
     h6{
       font-family: $pricing-plan-amount-ff;
-      font-size:20px;
+      @include responsive-font-size( 20px);
       background:#02cdd1;
       color:#fff;
       margin-bottom:0;
@@ -59,7 +60,7 @@
       list-style: none;
 
       li {
-        font-size: $pricing-plan-features-fs;
+        @include responsive-font-size( $pricing-plan-features-fs);
         font-weight: $pricing-plan-features-fw;
         font-family: $pricing-plan-features-ff;
         color: $pricing-plan-features-c;
@@ -88,7 +89,7 @@
     .plan-price {
 
       .currency-unit {
-        font-size: $pricing-plan-currency-unit-fs;
+        @include responsive-font-size( $pricing-plan-currency-unit-fs);
         font-weight: $pricing-plan-currency-unit-fw;
         font-family: $pricing-plan-currency-unit-ff;
         color: $pricing-plan-currency-unit-c;
@@ -97,14 +98,14 @@
       }
 
       .price {
-        font-size: $pricing-plan-price-fs;
+        @include responsive-font-size( $pricing-plan-price-fs);
         font-weight: $pricing-plan-price-fw;
         font-family: $pricing-plan-price-ff;
       }
     }
 
     .btn-subscribe {
-      font-size: $btn-subscribe-fs;
+      @include responsive-font-size( $btn-subscribe-fs);
       font-weight: $btn-subscribe-fw;
       font-family: $btn-subscribe-ff;
       color: $btn-subscribe-c;
@@ -121,7 +122,7 @@
     }
 
     a.more-info {
-      font-size: $pricing-plan-more-info-fs;
+      @include responsive-font-size( $pricing-plan-more-info-fs);
       font-weight: $pricing-plan-more-info-fw;
       font-family: $pricing-plan-more-info-ff;
       color: $pricing-plan-more-info-c;

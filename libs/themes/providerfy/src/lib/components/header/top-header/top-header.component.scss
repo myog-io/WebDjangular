@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import '~rfs/sass/_rfs';
 
 .top-header {
   background-color: $primary;
@@ -42,7 +43,7 @@
           display: flex;
 
           text-transform: none;
-          font-size: 16px;
+          @include responsive-font-size( 16px);
           line-height: 46px;
 
           height: 46px;
@@ -72,7 +73,7 @@
 }
 
 .location{
-  font-size: 14px;
+  @include responsive-font-size( 14px);
   font-family: $secondary-ff;
   line-height: 50px;
   color: $white;

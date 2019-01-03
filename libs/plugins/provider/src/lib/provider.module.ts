@@ -51,6 +51,7 @@ const SERVICES = [
   ],
   exports: [
     ...COMPONENTS,
+    ...MODULES
 
   ],
   declarations: [...COMPONENTS],

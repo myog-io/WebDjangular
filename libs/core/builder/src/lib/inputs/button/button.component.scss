@@ -1,3 +1,4 @@
+@import '~rfs/sass/_rfs';
 button {
   letter-spacing: -0.5px;
   cursor: pointer;
@@ -6,7 +7,7 @@ button {
   line-height: 1;
   text-align: center;
   padding: 12px 30px;
-  font-size: 15px;
+  @include responsive-font-size( 15px);
   font-weight: 600;
   border-radius: 2px;
   display: inline-block;
