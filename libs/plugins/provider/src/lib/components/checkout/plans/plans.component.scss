@@ -10,6 +10,7 @@
   border: unset;
 
   .plan-panel {
+
     background-color: #FFF;
     border: unset;
 
@@ -42,18 +43,24 @@
     }
 
     .title {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+
+      width: 100%;
       font-family: "Boston", Arial, Helvetica, sans-serif;
       font-size: 22px;
       line-height: 24px;
+      font-weight: 700;
+      color: #899299;
+      text-transform: uppercase;
+      vertical-align: top;
 
       @include media-breakpoint-up(md) {
         font-size: 26px;
       }
 
-      font-weight: 700;
-      color: #899299;
-      text-transform: uppercase;
-      vertical-align: top;
     }
   }
 
@@ -74,7 +81,7 @@
     .select-plans-wrapper {
       background-color: #fff;
       margin-top: 2px;
-      padding:15px;
+      padding: 15px;
 
       @include media-breakpoint-up(md) {
         padding: 20px 40px;
@@ -130,7 +137,6 @@
           }
 
 
-
           .currency-unit {
             font-size: 19px;
             font-weight: 600;
@@ -152,6 +158,8 @@
 
       .actions-wrapper {
         text-align: center;
+
+
 
         .btn-deselect-plan {
           width: 140px;
@@ -200,7 +208,7 @@
 
         @include media-breakpoint-up(md) {
           padding-left: 25px;
-          margin:0;
+          margin: 0;
         }
       }
 
@@ -222,7 +230,13 @@
         text-align: center;
 
         button {
+          padding-left: map-get($spacers, 2);
+          padding-right: map-get($spacers, 2);
 
+          @include media-breakpoint-up(md) {
+            padding-left: map-get($spacers, 3);
+            padding-right: map-get($spacers, 3);
+          }
         }
       }
 
@@ -276,7 +290,12 @@
 
 
 .select-television-optional-plan-wrapper {
-  padding: 30px 60px;
+
+  padding: 15px;
+
+  @include media-breakpoint-up(md) {
+    padding: 30px 60px;
+  }
 
   h4 {
     color: #00b9bd;
@@ -296,6 +315,10 @@
   }
 
   .row {
-    padding-left: 35px;
+
+    @include media-breakpoint-up(md) {
+
+    }
+
   }
 }

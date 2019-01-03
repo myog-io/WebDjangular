@@ -8,7 +8,7 @@
     font-size: $header-menu-fs;
     font-family: $header-menu-ff;
     font-weight: $header-menu-fw;
-    color: $header-menu-c;
+    color: $header-menu-c !important;
     text-transform: uppercase;
   }
 
@@ -18,7 +18,13 @@
 
     padding: 0 20px;
     .nav-link {
-      color: $header-menu-featured-c;
+      color: $header-menu-featured-c !important;
+    }
+
+  }
+  .nav-item.active {
+    .nav-link{
+      color: $primary !important;
     }
   }
 
@@ -118,6 +124,27 @@
     }
 
   }
+
+
+}
+
+@include media-breakpoint-down(sm) {
+  #navbarSupportedContent {
+    position: absolute;
+    top: 90px;
+    z-index: 999999;
+    background: #fff;
+    padding: 0 50px 20px 50px;
+    left:0;
+    right: 0;
+  }
+
+  .navbar.navbar-expand-lg{
+    padding:10px;
+  }
+
+
+
 
 }
 
