@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core'
-import {HttpClient} from '@angular/common/http';
-import {Theme} from "@webdjangular/core/interfaces";
+import { Injectable, EventEmitter } from '@angular/core'
+import { HttpClient } from '@angular/common/http';
+import { Theme } from "@webdjangular/core/interfaces";
 import 'rxjs/add/operator/map';
-import {UrlSegment} from '@angular/router';
-import {WebAngularDataStore} from './WebAngularDataStore.service';
-import {PageModel} from '@webdjangular/core/cms-models';
-import {JsonApiQueryData} from 'angular2-jsonapi';
-import {ClientUserService} from './client-user.service';
+import { UrlSegment } from '@angular/router';
+import { WebAngularDataStore } from './WebAngularDataStore.service';
+import { PageModel } from '@webdjangular/core/cms-models';
+import { JsonApiQueryData } from 'angular2-jsonapi';
+import { ClientUserService } from './client-user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,27 +16,45 @@ export class WDAConfig {
   private locale_list: object;
   private locale_active: string;
   private plugins: object;
+  private core_config: object;
   private theme: Theme;
-
+  private data: object;
+  private loading = false;
+  private compleLoading: any = null
 
   constructor(private http: HttpClient,
-              private datastore: WebAngularDataStore,
-              private clientUser: ClientUserService,
+    private datastore: WebAngularDataStore,
+    private clientUser: ClientUserService,
   ) {
-
   }
 
   public WDAInit(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get('/api/core_init/').subscribe(
-        (data: any) => {
-          this.populateWDAConfig(data.data);
-          resolve(data.data);
-        },
-        (error: any) => {
-          /* TODO: error on WDA Init */
-          reject(error);
-        })
+      if (this.data) {
+        resolve(this.data)
+      } else if(this.loading) {
+        this.compleLoading = () => {
+          resolve(this.data);
+        }
+      } else {
+        this.loading = true;
+        this.http.get('/api/core_init/').subscribe(
+          (data: any) => {
+            this.populateWDAConfig(data.data);
+            this.data = data.data;
+            this.loading = false;
+            if(this.compleLoading) {
+              this.compleLoading();
+              this.compleLoading = null;
+            }
+            resolve(data.data);
+          },
+          (error: any) => {
+            /* TODO: error o WDA Init */
+            this.loading = false;
+            reject(error);
+          });
+      }
     });
   }
 
@@ -50,6 +68,26 @@ export class WDAConfig {
     if (data.locale_active) {
       this.setCurrentLocale(data.locale_active);
     }
+    if (data.core_config) {
+      this.setCoreConfig(data.core_config);
+    }
+  }
+
+  public getCoreConfig(name: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (this.core_config) {
+        resolve(this.core_config[name] ? this.core_config[name] : null);
+      } else {
+        this.WDAInit().then((data) => {
+          resolve(this.core_config[name] ? this.core_config[name] : null);
+        })
+      }
+
+    });
+
+  }
+  private setCoreConfig(data) {
+    this.core_config = data
   }
 
   public getTheme() {
@@ -63,6 +101,7 @@ export class WDAConfig {
     return '@webdjangular/themes/' + this.theme.slug + '#' + this.theme.angular_module;
     //return "../../../themes/" + this.theme.slug + "/" + this.theme.slug + ".module#" + this.theme.angular_module;
   }
+
 
   public setTheme(data: any) {
     this.theme = new Theme(data);
@@ -97,7 +136,7 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null,null,null, `api/page/get_home/`).subscribe(
+      this.datastore.findRecord(PageModel, null, null, null, `api/page/get_home/`).subscribe(
         (page: PageModel) => {
           resolve(page);
         },
@@ -108,9 +147,9 @@ export class WDAConfig {
     });
   }
 
-  public getPage(path: UrlSegment[]): Promise<PageModel|any> {
+  public getPage(path: UrlSegment[]): Promise<PageModel | any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null,null,null,`api/page/${path.join('|')}/get_page`).subscribe(
+      this.datastore.findRecord(PageModel, null, null, null, `api/page/${path.join('|')}/get_page`).subscribe(
         (page: PageModel) => {
           resolve(page);
         },
@@ -123,7 +162,7 @@ export class WDAConfig {
 
   public getErrorPage(errorCode): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, {slug: errorCode}).subscribe(
+      this.datastore.findAll(PageModel, { slug: errorCode }).subscribe(
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           let page: PageModel = models[0];

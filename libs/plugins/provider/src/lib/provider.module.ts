@@ -15,11 +15,14 @@ import { PluginProviderError500Component } from './components/errors/500/500.com
 import { ProviderCheckoutService } from "./data/services/provider-checkout.service";
 import { PluginProviderCityListComponent } from './components/city-list/city-list.component';
 import { PluginProviderCityCoverageComponent } from './components/city-coverage/city-coverage.component';
+import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
+import { GoogleMapsLazyConfig } from '@webdjangular/core/cms';
 
 
 const MODULES = [
   CommonModule,
   PluginProviderCheckoutModule,
+
 ];
 
 const COMPONENTS = [
@@ -37,16 +40,18 @@ const COMPONENTS = [
 ];
 
 const SERVICES = [
-  ProviderCheckoutService
+  ProviderCheckoutService,
+
 ];
 
 @NgModule({
   imports: [
-    ...MODULES
+    ...MODULES,
+    AgmCoreModule,
   ],
   exports: [
     ...COMPONENTS,
-    ...MODULES
+
   ],
   declarations: [...COMPONENTS],
   providers: [...SERVICES]

@@ -5,13 +5,13 @@ from django.utils.deprecation import MiddlewareMixin
 
 def get_website(request):
     if not hasattr(request, '_cached_website'):
-        #TODO: Improve 
+        #TODO: Improve
         website = Website.objects.filter(domain__contains=request.get_host()).first()
         if website:
             request._cached_website = website
         else:
-            return None
-        
+            request._cached_website = Website.getCurrentWebsite()
+
     return request._cached_website
 
 
