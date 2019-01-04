@@ -11,7 +11,7 @@ import { ProviderProductModel } from '../../../../data/models/ProviderProduct.mo
     //encapsulation: ViewEncapsulation.None,
 })
 export class PluginProviderPricingTelephoneVerticalComponent extends PluginProviderAbstractPricingComponent {
-  @Input() class = "col col-md-4 col-xs-12";
+  @Input() class = "col-12 col-md-6 col-lg-4";
   model = ProviderProductModel;
   constructor(
     public datastore: WebAngularDataStore,

@@ -11,7 +11,7 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
   styleUrls: ['./tv-vertical.component.scss']
 })
 export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbstractPricingComponent {
-  @Input() class = 'pr-1 pl-1 col-md-3 col-xs-12';
+  @Input() class = 'pr-1 pl-1 col-12 col-sm-6 col-lg-3 col-xs-12';
   //public include = 'channels'
   //public loadingChannels = true;
   constructor(

@@ -17,11 +17,15 @@
   }
 
   .left-side {
+    position:relative;
+    overflow: hidden;
+
     width: 45%;
     background: $pricing-plan-internet-horizontal-left-side-bg;
 
     border-top-left-radius: $plan-card-round;
     border-bottom-left-radius: $plan-card-round;
+
 
     .plan-amount {
       @include responsive-font-size( $pricing-plan-amount-fs);
@@ -72,10 +76,9 @@
       height: $btn-subscribe-fs * 2;
       line-height: $btn-subscribe-fs * 2;
 
-      padding-top: 0;
-      padding-bottom: 0;
-      padding-left: $spacer;
-      padding-right: $spacer;
+      padding: 0 $spacer;
+
+      border-radius:30px;
 
       @include media-breakpoint-down(sm) {
         padding-left: $spacer / 2;

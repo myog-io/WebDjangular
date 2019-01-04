@@ -14,10 +14,13 @@
       <div class="card-body p-0 ml-1 mr-1 ">
         <div class="row">
           <div class="left-side">
-            <h5 class="plan-amount text-center pt-3 pb-2">{{ plan?.data?.download }} <br><span class="plan-amount-unit">
-                MEGA </span></h5>
+            <div class="corner-ribbon top-right" *ngIf="plan?.data?.is_best_seller == 1">Mais vendido</div>
+            <h5 class="plan-amount text-center pt-3 pb-2">{{ plan?.data?.download }} <br>
+              <span class="plan-amount-unit"> MEGA </span>
+            </h5>
             <p class="plan-price text-center mb-1">
-              <span class="currency-unit">R$ </span> <span class="price">{{ (plan?.price - discount).toFixed(2) }}</span>
+              <span class="currency-unit">R$ </span> <span
+              class="price">{{ (plan?.price - discount).toFixed(2) }}</span>
             </p>
             <p class="text-center m-1">
               <a href="javascript:void(0);" class="btn btn-primary btn-subscribe"> Assine já </a>
@@ -38,7 +41,7 @@
               </li>
               <li class="mb-1">
                 <span [class]="plan?.data?.addon_icon_1"></span>
-                <p [innerHtml]="plan?.data?.addon_text_1"></p>
+                <p [innerHTML]="plan?.data?.addon_text_1"></p>
               </li>
               <li class="mb-1">
                 <span [class]="plan?.data?.addon_icon_2"></span>

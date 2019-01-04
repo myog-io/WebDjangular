@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  @include responsive-font-size( $primary-fs);
+  @include responsive-font-size($primary-fs);
   font-weight: $primary-fw;
   font-family: $primary-ff;
 }
@@ -76,67 +76,67 @@ a:hover {
 }
 
 h1 {
-  @include responsive-font-size( $h1-fs);
+  @include responsive-font-size($h1-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
-    @include responsive-font-size( $h1-fs * 0.75);
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h1-fs * 0.75);
   }
 }
 
 h2 {
-  @include responsive-font-size( $h2-fs);
+  @include responsive-font-size($h2-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
-    @include responsive-font-size( $h2-fs * 0.75);
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h2-fs * 0.75);
   }
 }
 
 h3 {
-  @include responsive-font-size( $h3-fs);
+  @include responsive-font-size($h3-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
-    @include responsive-font-size( $h3-fs * 0.75);
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h3-fs * 0.75);
   }
 }
 
 h4 {
-  @include responsive-font-size( $h4-fs);
+  @include responsive-font-size($h4-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
-    @include responsive-font-size( $h4-fs * 0.75);
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h4-fs * 0.75);
   }
 }
 
 h5 {
-  @include responsive-font-size( $h5-fs);
+  @include responsive-font-size($h5-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
-    @include responsive-font-size( $h5-fs * 0.75);
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h5-fs * 0.75);
   }
 }
 
 h6 {
-  @include responsive-font-size( $h6-fs);
+  @include responsive-font-size($h6-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
 
-  @include media-breakpoint-down(sm){
-    @include responsive-font-size( $h6-fs * 0.75);
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h6-fs * 0.75);
   }
 }
 
 p.subtitle {
-  @include responsive-font-size( $fs-subtitle);
+  @include responsive-font-size($fs-subtitle);
 }
 
 .opacity-0 {
@@ -155,7 +155,7 @@ p.subtitle {
 input, textarea {
   width: 100%;
   font-family: $input-ff;
-  @include responsive-font-size( $input-fs);
+  @include responsive-font-size($input-fs);
   font-weight: $input-fw;
   color: $input-cc;
   display: block;
@@ -168,7 +168,7 @@ input, textarea {
 select.form-control {
   width: 100%;
   font-family: $input-ff;
-  @include responsive-font-size( $input-fs);
+  @include responsive-font-size($input-fs);
   font-weight: $input-fw;
   color: $input-cc;
   display: block;
@@ -196,7 +196,7 @@ input:focus {
 
 label {
   color: $input-cc;
-  @include responsive-font-size( $input-fs);
+  @include responsive-font-size($input-fs);
   font-weight: $input-fw;
   position: absolute;
   pointer-events: none;
@@ -216,7 +216,7 @@ input:focus, textarea:focus {
 input:focus ~ label, input:valid ~ label,
 textarea:focus ~ label, textarea:valid ~ label {
   bottom: -$input-fs*2;
-  @include responsive-font-size( $input-fs*0.95);
+  @include responsive-font-size($input-fs*0.95);
   color: $primary;
   border-color: transparent;
 }
@@ -343,7 +343,7 @@ input:focus ~ .highlight {
       }
 
       li {
-        @include responsive-font-size( 16px);
+        @include responsive-font-size(16px);
       }
     }
   }
@@ -363,7 +363,7 @@ input:focus ~ .highlight {
     border-color: transparent;
     padding: 0px;
 
-    @include media-breakpoint-up(lg){
+    @include media-breakpoint-up(lg) {
       padding: 20px 10px 0 20px;
     }
 
@@ -380,21 +380,21 @@ input:focus ~ .highlight {
 
     .card-title {
       color: #000;
-      @include responsive-font-size( 23px);
+      @include responsive-font-size(23px);
       font-weight: 600;
       margin-bottom: 5px;
     }
 
     .card-text {
       color: #8ea5b0;
-      @include responsive-font-size( 18px);
+      @include responsive-font-size(18px);
       line-height: 22px;
       font-weight: 400;
     }
 
     a[href^="tel"] {
       color: $primary;
-      @include responsive-font-size( 38px);
+      @include responsive-font-size(38px);
       font-weight: $fw-black;
     }
   }
@@ -405,7 +405,7 @@ input:focus ~ .highlight {
     }
 
     a {
-      @include responsive-font-size( 18px);
+      @include responsive-font-size(18px);
     }
 
   }
@@ -439,30 +439,47 @@ input:focus ~ .highlight {
 
 #banner-experiment {
   .img-wrapper {
-    margin-left: -65%;
+    @include media-breakpoint-up(lg) {
+      margin-left: -65%;
+    }
   }
+
+  .text-container {
+    padding: map-get($spacers, 2);
+
+    @include media-breakpoint-up(lg) {
+      padding-left: map-get($spacers, 4);
+    }
+  }
+
 
   h2 {
     font-family: $secondary-ff;
-    @include responsive-font-size( 44px);
+    @include responsive-font-size(44px);
     line-height: 39px;
     font-weight: $fw-regular;
     font-style: italic;
 
+
     b {
       font-weight: $fw-black;
-
     }
   }
 
   h5 {
     font-family: $secondary-ff;
-    @include responsive-font-size( 21px);
+    @include responsive-font-size(21px);
     font-weight: $fw-semibold;
     color: #616c74;
 
+    padding-top: map-get($spacers, 2);
+
+    @include media-breakpoint-up(lg) {
+      white-space: nowrap;
+    }
+
     .plus {
-      @include responsive-font-size( 32px);
+      @include responsive-font-size(32px);
       line-height: 21px;
       vertical-align: top;
     }
@@ -490,7 +507,7 @@ input:focus ~ .highlight {
   }
 
   p {
-    @include responsive-font-size( 17px);
+    @include responsive-font-size(17px);
     line-height: 28px;
     max-width: 445px;
 
@@ -521,7 +538,7 @@ input:focus ~ .highlight {
 
 
   p {
-    @include responsive-font-size( 17px);
+    @include responsive-font-size(17px);
     line-height: 28px;
     color: #8a939a;
     max-width: 390px;
@@ -534,7 +551,7 @@ input:focus ~ .highlight {
     bottom: 0;
     right: 1rem;
 
-    @include responsive-font-size( 13px);
+    @include responsive-font-size(13px);
     color: #9ea3a1;
   }
 }
@@ -571,7 +588,7 @@ input:focus ~ .highlight {
 
 
   p {
-    @include responsive-font-size( 17px);
+    @include responsive-font-size(17px);
     line-height: 28px;
     color: #8a939a;
     max-width: 415px;
@@ -584,7 +601,7 @@ input:focus ~ .highlight {
   margin: auto;
 
   h1 {
-    @include responsive-font-size( 40px);
+    @include responsive-font-size(40px);
     line-height: 40px;
     width: 100%;
     text-align: center;
@@ -605,7 +622,7 @@ input:focus ~ .highlight {
     input {
       border-radius: 50px;
       font-family: $primary-ff;
-      @include responsive-font-size( 16px);
+      @include responsive-font-size(16px);
       height: 45px;
       padding: 0 20px;
       color: #6f787f;
@@ -678,9 +695,9 @@ input:focus ~ .highlight {
 
 
     li {
-      @include responsive-font-size( 17px);
+      @include responsive-font-size(17px);
       color: #616c74;
-      width:100%;
+      width: 100%;
       display: inline-block;
     }
   }
@@ -736,3 +753,48 @@ input:focus ~ .highlight {
   margin: auto;
 }
 
+.corner-ribbon {
+  width: 190px;
+  background: #fff;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  color: #00b9bd;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  font-size: 14px;
+  line-height: 30px;
+}
+
+.corner-ribbon.top-left {
+  top: 30px;
+  left: -55px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.corner-ribbon.top-right {
+  top: 22px;
+  right: -61px;
+  left: auto;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.bottom-left {
+  top: auto;
+  bottom: 25px;
+  left: -50px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.bottom-right {
+  top: auto;
+  right: -50px;
+  bottom: 25px;
+  left: auto;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

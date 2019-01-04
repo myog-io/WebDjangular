@@ -12,7 +12,9 @@
     </ng-template><!-- END MODAL -->
     <div class="card mt-1 mb-1">
       <div class="card-header">
-        <h5 class="plan-title text-center pt-3 pb-3" [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
+        <div class="corner-ribbon top-right" *ngIf="plan?.data?.is_best_seller == 1">Mais vendido</div>
+        <h5 class="plan-title text-center pt-3 pb-3"
+          [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
         </h5>
         <div class="plan-channels">
           <span class="amount">{{plan?.channel_count}}</span> Total de canais
@@ -24,22 +26,22 @@
       <div class="card-body p-0 ml-1 mr-1 ">
         <div class="row">
           <div class="col">
-            <ul class="pt-3 pb-3">
+            <ul class="pt-3 pb-1 pl-2 mb-0">
               <li class="mb-1">
-                <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
-                <p [innerHtml]="plan?.data?.addon_text_1"></p>
+                <i [class]="plan?.data?.addon_icon_1 + ' mr-2'" aria-hidden="true"></i>
+                <p [innerHTML]="plan?.data?.addon_text_1"></p>
               </li>
               <li class="mb-1 can-click">
-                <i class="pr-1 fa fa-2x icon icon-channels" aria-hidden="true"></i>
+                <i class="fa fa-2x icon icon-channels mr-2" aria-hidden="true"></i>
                 <p>Ver lista de canais</p>
               </li>
               <li class="mb-1 can-click">
-                <i class="pr-1 fa fa-2x icon icon-addmore" aria-hidden="true"></i>
+                <i class="fa fa-2x icon icon-addmore mr-2" aria-hidden="true"></i>
                 <p>Adicionar Pacotes</p>
 
               </li>
               <li class="mb-1 can-click">
-                <i class="pr-1 fa fa-2x icon icon-extra-tv-point" aria-hidden="true"></i>
+                <i class="fa fa-2x icon icon-extra-tv-point mr-2" aria-hidden="true"></i>
                 <p>Pontos adicionais</p>
               </li>
             </ul>
@@ -55,7 +57,7 @@
         <div class="row">
           <div class="col">
             <p class="text-center m-1">
-              <a href="javascript:void(0);" class="btn btn-primary btn-subscribe"> Assine já </a>
+              <a href="javascript:void(0);" class="btn btn-outline-primary pl-3 pr-3"> Assine já </a>
             </p>
           </div>
         </div>

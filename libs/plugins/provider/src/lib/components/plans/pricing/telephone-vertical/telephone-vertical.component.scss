@@ -19,6 +19,9 @@
     border-top-left-radius: $plan-card-round;
     border-top-right-radius: $plan-card-round;
 
+    position:relative;
+    overflow: hidden;
+
     .plan-title {
       @include responsive-font-size( 34px);
       font-weight: 400;
@@ -105,19 +108,14 @@
     }
 
     .btn-subscribe {
-      @include responsive-font-size( $btn-subscribe-fs);
-      font-weight: $btn-subscribe-fw;
+      font-weight: bold;
       font-family: $btn-subscribe-ff;
-      color: $btn-subscribe-c;
+      //color: $btn-subscribe-c;
       text-transform: uppercase;
 
-      height: $btn-subscribe-fs * 2;
-      line-height: $btn-subscribe-fs * 2;
 
-      padding-top: 0;
-      padding-bottom: 0;
-      padding-left: $spacer;
-      padding-right: $spacer;
+
+      border-radius: 30px;
 
     }
 
