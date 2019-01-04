@@ -23,7 +23,7 @@
               class="price">{{ (plan?.price - discount).toFixed(2) }}</span>
             </p>
             <p class="text-center m-1">
-              <a href="javascript:void(0);" class="btn btn-primary btn-subscribe"> Assine já </a>
+              <a [routerLink]="['/assine']" [queryParams]="{net: plan?.sku}" class="btn btn-primary btn-subscribe"> Assine já </a>
             </p>
             <p class="text-center m-1">
               <a href="javascript:void(0);" (click)="openModal(content)" class="more-info">Mais informações</a>

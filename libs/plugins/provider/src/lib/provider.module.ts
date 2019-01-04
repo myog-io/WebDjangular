@@ -17,6 +17,7 @@ import { PluginProviderCityListComponent } from './components/city-list/city-lis
 import { PluginProviderCityCoverageComponent } from './components/city-coverage/city-coverage.component';
 import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { GoogleMapsLazyConfig } from '@webdjangular/core/cms';
+import { RouterModule } from '@angular/router';
 
 
 const MODULES = [
@@ -48,6 +49,7 @@ const SERVICES = [
   imports: [
     ...MODULES,
     AgmCoreModule,
+    RouterModule
   ],
   exports: [
     ...COMPONENTS,
