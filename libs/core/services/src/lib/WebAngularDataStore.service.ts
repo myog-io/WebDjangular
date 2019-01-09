@@ -99,41 +99,41 @@ const config: DatastoreConfig = {
 @Injectable()
 @JsonApiDatastoreConfig(config)
 export class WebAngularDataStore extends JsonApiDatastore {
-  //protected getRelationships(data: any): any {
-  //  let relationships: any;
-  //  for (const key in data) {
-  //    if (data.hasOwnProperty(key)) {
-  //      if (data[key] instanceof AbstractModel) {
-//
-  //        relationships = relationships || {};
-//
-  //        if (data[key].id) {
-  //          relationships[key] = {
-  //            data: this.buildSingleRelationshipData(data[key])
-  //          };
-  //        }
-  //      } else if (data[key] instanceof Array && data[key].length > 0 && this.isValidToManyRelation(data[key])) {
-//
-  //        relationships = relationships || {};
-//
-  //        const relationshipData = data[key]
-  //          .filter((model: AbstractModel) => model.id)
-  //          .map((model: AbstractModel) => this.buildSingleRelationshipData(model));
-//
-  //        relationships[key] = {
-  //          data: relationshipData
-  //        };
-  //      } else if (data[key] instanceof Array && data[key].length <= 0) {
-  //        relationships = relationships || {};
-  //        // Cleaning to Many Relationship
-  //        relationships[key] = {
-  //          data: []
-  //        };
-  //      }
-  //    }
-  //  }
-  //  return relationships;
-  //}
+  protected getRelationships(data: any): any {
+    let relationships: any;
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (data[key] instanceof AbstractModel) {
+
+          relationships = relationships || {};
+
+          if (data[key].id) {
+            relationships[key] = {
+              data: this.buildSingleRelationshipData(data[key])
+            };
+          }
+        } else if (data[key] instanceof Array && data[key].length > 0 && this.isValidToManyRelation(data[key])) {
+
+          relationships = relationships || {};
+
+          const relationshipData = data[key]
+            .filter((model: AbstractModel) => model.id)
+            .map((model: AbstractModel) => this.buildSingleRelationshipData(model));
+
+          relationships[key] = {
+            data: relationshipData
+          };
+        } else if (data[key] instanceof Array && data[key].length <= 0) {
+          relationships = relationships || {};
+          // Cleaning to Many Relationship
+          relationships[key] = {
+            data: []
+          };
+        }
+      }
+    }
+    return relationships;
+  }
   /**
    * This Function Cleans the Attributes from the Request and send to the Model
    * For now we don't want to do that, because could have read_only dynamic attributes added to the backend

@@ -158,7 +158,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               if(entry.hasMany){
                 hasMany = entry.hasMany.find((en: any) => en.propertyName == keys[0]);
               }
-              if (hasMany) {
+              if (hasMany && data[key].length) {
                 let options = {
                   page: { size: data[key].length, number: 1 },
                 }

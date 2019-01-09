@@ -45,7 +45,8 @@ export class AbstractForm extends FormGroup {
 
         this.registerControl(propName, new FormArray([], []));
       } else if (this.formFields[i].formType == FormGroup) {
-        if (this.formFields[i].model) {
+        // If we Have Copy Options the form_group component will handle its creations
+        if (this.formFields[i].model && !this.formFields[i].copyOptions) {
           let entity = new this.formFields[i].model(this.datastore)
           const fb = entity.getForm()
           fb.generateForm();
@@ -223,6 +224,9 @@ export class AbstractForm extends FormGroup {
       if (field.model) {
         let entity = new field.model();
         f = entity.getForm();
+      } else if (typeof entityToPush === "string") {
+        fa.push(new FormControl(entityToPush, []))
+        return;
       } else {
         f = entityToPush.getForm();
       }

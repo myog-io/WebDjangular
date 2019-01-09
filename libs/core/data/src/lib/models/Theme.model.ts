@@ -57,7 +57,7 @@ export class ThemeModel extends AbstractModel {
     type: 'select',
     label: 'Author',
     wrapper_class: 'col-6',
-    options_model: AuthorModel,
+    model: AuthorModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;
@@ -67,7 +67,7 @@ export class ThemeModel extends AbstractModel {
     type: 'select',
     label: 'Page',
     wrapper_class: 'col-6',
-    options_model: ThemeModel,
+    model: ThemeModel,
     backendResourceName: 'Page'
   })
   parent: ThemeModel;

@@ -115,6 +115,7 @@ class ProductFilter(FilterSet):
             'name': ['contains', 'exact'],
             'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
+            'product_class': ['contains', 'exact'],
         }
 
 

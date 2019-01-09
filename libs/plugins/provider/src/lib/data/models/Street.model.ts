@@ -38,7 +38,6 @@ export class StreetModel extends AbstractModel {
     formType: FormArray,
     label: 'numbers',
     model: NumberRangeModel,
-    options_model: NumberRangeModel
   })
   numbers: NumberRangeModel[];
 

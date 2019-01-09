@@ -33,7 +33,6 @@ export class CondoModel extends AbstractModel {
     label: 'City',
     wrapper_class: 'col-12',
     model: CityModel,
-    options_model: CityModel,
     backendResourceName: 'City'
   })
   city: CityModel;
@@ -44,7 +43,6 @@ export class CondoModel extends AbstractModel {
     model: ProductModel,
     type: 'checkbox',
     label: 'Products',
-    options_model: ProductModel
   })
   products: ProductModel;
 

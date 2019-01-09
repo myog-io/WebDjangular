@@ -64,10 +64,9 @@ export class ProductTypeModel extends AbstractModel {
     label: 'Attributes',
     wrapper_class: 'col-12',
     formType: FormArray,
-    options_model: ProductAttributeModel,
+    model: ProductAttributeModel,
     sort: 2,
     name: 'data',
-    model: ProductAttributeModel
   })
   data: ProductAttributeModel[];
 

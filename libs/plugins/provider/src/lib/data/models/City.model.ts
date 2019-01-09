@@ -83,7 +83,6 @@ export class CityModel extends AbstractModel {
     label: 'Postal Codes',
     wrapper_class: 'col-12',
     model: PostalCodeRangeModel,
-    options_model: PostalCodeRangeModel,
     displayGroup: DiplayGroups.postal_codes
   })
   postal_codes: PostalCodeRangeModel[];
@@ -96,7 +95,6 @@ export class CityModel extends AbstractModel {
     label: 'Streets',
     smart_table_mode: 'external',
     model: StreetModel,
-    options_model: StreetModel,
     displayGroup: DiplayGroups.streets
   })
   streets: StreetModel[];

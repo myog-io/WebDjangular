@@ -11,12 +11,12 @@ import { Subscription } from 'rxjs';
   template: `
     <div class="form-group form-select" [formGroup]="config.model ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
-      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)"
-                 [formControlName]="config.model ? 'id' : config.name" [multiple]="config.multiple"
-                 [loading]="loading" [placeholder]="placeholder">
-        <ng-option *ngFor="let option of options" value="{{option.value}}"  >
-          {{option.label}}
-        </ng-option>
+      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" bindLabel="name"
+                 [formControlName]="config.model ? 'id' : config.name" [multiple]="config.multiple" [addTag]="addTagPromise"
+                 [loading]="loading" [placeholder]="placeholder" [items]="options">
+          <ng-template ng-tag-tmp let-search="searchTerm">
+            <b>create new tag</b>: {{search}}
+        </ng-template>
       </ng-select>
       <wda-form-validators
         [config]="config.model ? group.get(config.name) : group"
@@ -30,7 +30,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   group: AbstractForm;
   loading = true;
   options = [];
-  placeholder = "Select Option";
+  placeholder = "";
   models = [];
   subsciption: Subscription;
   /**
@@ -40,26 +40,43 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   constructor(private datastore: WebAngularDataStore) {
 
   }
+  addTagPromise(name) {
+    return new Promise((resolve) => {
+      this.loading = true;
+      resolve({ id: this.options.length, name: name, valid: true });
+      this.loading = false;
+    })
+  }
   /**
   * on init
   */
   ngOnInit() {
-    if (this.config.options_model) {
-      if(typeof this.config.options_model === 'string'){
+    if (this.config.addTags === true) {
+      let tags = this.group.get(this.config.name).value;
+      for (let i = 0; i < tags.length; i++) {
+        const tag = tags[i];
+        this.options.push({
+          id: i,
+          name: tag,
+        })
+        this.loading = false;
+      }
+    } else if (this.config.model) {
+      if (typeof this.config.model === 'string') {
         const models = Reflect.getMetadata('JsonApiDatastoreConfig', this.datastore.constructor).models;
-        if(models[this.config.options_model]){
-          this.config.options_model = models[this.config.options_model];
+        if (models[this.config.model]) {
+          this.config.model = models[this.config.model];
         }
       }
-      this.datastore.findAll(this.config.options_model,{page: {size:50},include:this.config.options_include}).subscribe(data => {
+      this.datastore.findAll(this.config.model, { page: { size: 50 }, include: this.config.options_include }).subscribe(data => {
         this.models = data.getModels();
         this.options = [];
         for (let i = 0; i < this.models.length; i++) {
           const entry = this.models[i];
 
           this.options.push({
-            value: entry.id,
-            label: entry.toString()
+            id: entry.id,
+            name: entry.toString()
           });
           this.loading = false;
         }

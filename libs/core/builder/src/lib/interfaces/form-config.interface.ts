@@ -44,9 +44,9 @@ export interface BuilderFormFieldConfig {
   name?: string; // Maybe we wont use it
   form_group_name?: string;
   model?: any;//AbstractModel;
-  options?: any[];
-  options_model?: any; // From AbstractModel
+  options?: any;
   options_include?: string;
+  addTags?: boolean;
   multiple?: boolean;
   placeholder?: string;
   validation?: ValidatorFn[];

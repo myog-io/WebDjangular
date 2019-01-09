@@ -60,7 +60,7 @@ export class PluginModel extends AbstractModel {
     type: 'select',
     label: 'Author',
     wrapper_class: 'col-6',
-    options_model: AuthorModel,
+    model: AuthorModel,
     backendResourceName: 'Author'
   })
   author: AuthorModel;

@@ -89,25 +89,17 @@ export class AbstractModel extends JsonApiModel {
             child.internalDatastore = this.service;
             const relationships: any = this.service.getRelationships(child);
             const belongsTo = child.belongsTo;
+            console.log(belongsTo)
             if (belongsTo) {
               for (let j = 0; j < belongsTo.length; j++) {
                 if (belongsTo[j].relationship === this.modelConfig.type) {
                   if (!child[belongsTo[j].propertyName] || child[belongsTo[j].propertyName].id != entry.id) {
                     child[belongsTo[j].propertyName] = entry;
                   }
-
-                  // If The Relationship is on the Belongs To, we can check for Delete of the Entity
-                  if (child.id) {
-                    child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
-                  }
                 }
               }
-            } else if (child.id) {
-              save = false;
-              child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
             }
-
-
+            child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
             if (child.hasDirtyAttributes && save) {
               let promise = new Promise((resolve, reject) => {
                 // Maybe Use SaveALL and do it Recursive?
@@ -128,12 +120,14 @@ export class AbstractModel extends JsonApiModel {
             }
 
           }
-          // Deleting Records
+          
+          // Not Working as Intended =(
           for (let i = 0; i < child_to_remove.length; i++) {
             const child = child_to_remove[i];
             if (child.id) {
               let promise = new Promise((resolve, reject) => {
                 //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
+                // If the Relationship is One to One
                 this.service.deleteRecord(child.constructor, child.id).subscribe(
                   (response) => {
                     resolve(response);
@@ -147,6 +141,7 @@ export class AbstractModel extends JsonApiModel {
               promises.push(promise)
             }
           }
+          
           Promise.all(promises).then(
             (values) => {
               resolve(entry);

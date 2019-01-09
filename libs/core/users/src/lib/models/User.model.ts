@@ -110,7 +110,7 @@ export class UserModel extends AbstractModel {
     type: 'checkbox',
     label: 'Groups',
     wrapper_class: 'col-12',
-    options_model: GroupModel,
+    model: GroupModel,
   })
   groups: GroupModel;
 
