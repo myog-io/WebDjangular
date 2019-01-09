@@ -436,6 +436,23 @@ input:focus ~ .highlight {
   }
 }
 
+.modal-channel-list {
+  .modal-content {
+    background: transparent;
+    border: unset;
+  }
+
+  .modal-dialog {
+    max-width: 700px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    .modal-dialog {
+      max-width: 900px;
+    }
+  }
+}
+
 
 #banner-experiment {
   .img-wrapper {
