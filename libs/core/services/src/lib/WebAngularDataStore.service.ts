@@ -11,7 +11,7 @@ import {
 
 import {GroupModel, PermissionModel, UserModel} from '@webdjangular/core/users-models';
 import {BlockModel, PageModel} from '@webdjangular/core/cms-models';
-import {ContentTypeModel} from '@webdjangular/core/data-models';
+import {ContentTypeModel, AbstractModel} from '@webdjangular/core/data-models';
 import {CoreConfigGroupModel} from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 import {CoreConfigInputModel} from 'libs/core/data/src/lib/models/CoreConfigInput.model';
 import {CoreConfigModel} from 'libs/core/data/src/lib/models/CoreConfig.model';

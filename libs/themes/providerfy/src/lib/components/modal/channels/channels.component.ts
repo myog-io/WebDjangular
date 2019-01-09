@@ -1,8 +1,8 @@
-import {Component, ElementRef, Inject, Input, OnInit, Renderer2} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {WebAngularDataStore} from "@webdjangular/core/services";
-import {JsonApiQueryData} from "angular2-jsonapi";
-import {ChannelModel} from "../../../../../../../plugins/provider/src/lib/data/models/Channel.model";
+import { Component, ElementRef, Inject, Input, OnInit, Renderer2 } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { WebAngularDataStore } from "@webdjangular/core/services";
+import { JsonApiQueryData } from "angular2-jsonapi";
+import { ChannelModel } from '@webdjangular/plugins/provider-data';
 
 @Component({
   selector: 'webdjangular-channels',
@@ -20,9 +20,9 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
   public selected_type: string = '';
 
   constructor(public activeModal: NgbActiveModal,
-              public datastore: WebAngularDataStore,
-              public renderer: Renderer2,
-              @Inject(ElementRef) public elementRef: ElementRef) {
+    public datastore: WebAngularDataStore,
+    public renderer: Renderer2,
+    @Inject(ElementRef) public elementRef: ElementRef) {
     this.channels = [];
   }
 
@@ -35,14 +35,14 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
     this.filterChannelBySearch();
   }
 
-  filterChannelBySearch(){
-     let search = this.search.toUpperCase();
-     if (search) {
+  filterChannelBySearch() {
+    let search = this.search.toUpperCase();
+    if (search) {
       this.elementRef.nativeElement.querySelectorAll('.channel:not([data-name*="' + search + '"])')
         .forEach((el) => {
           this.renderer.removeClass(el, 'active');
         }
-      );
+        );
     }
   }
 
@@ -80,7 +80,8 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
     let options = {
       fields: 'types,name,logo,number',
       products: this.product_id,
-      page: {number: this.get_channels_current_page, size: 10}
+      page: { number: this.get_channels_current_page, size: 10 },
+      order: 'number'
     };
 
     this.datastore.findAll(ChannelModel, options).subscribe(
