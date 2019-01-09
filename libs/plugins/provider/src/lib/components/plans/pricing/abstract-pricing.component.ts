@@ -14,7 +14,7 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
   loading = true;
   public model = ProductModel;
   public entries: ProductModel[];
-  private include = null;
+  protected include = null;
   public entriesChanged: Subject<ProductModel[]> = new Subject();
 
   constructor(

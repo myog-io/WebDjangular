@@ -69,8 +69,18 @@ export class ModelPaginatorControls {
 
   getPagesArray() {
     let a = [];
-    for (let i = 0; i < this.getTotalPages(); i++) {
+    let start_i = 0;
+    const max = 7;
+    const left = 4;
+    if(this.currentPage > left){
+      start_i = this.currentPage - left;
+    }
+
+    for (let i = start_i; i < this.getTotalPages(); i++) {
       a.push(i + 1);
+      if (a.length >= max) {
+        return a;
+      }
     }
     return a;
   }

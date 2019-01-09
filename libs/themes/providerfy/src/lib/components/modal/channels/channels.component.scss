@@ -1,5 +1,142 @@
+@import "../../../styles/variables";
+@import '~rfs/sass/_rfs';
+@import '~@nebular/theme/styles/global/breakpoints';
+@import '~bootstrap/scss/mixins/breakpoints';
 
-
-.left-side{
-  background:#5f6a73;
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1090;
 }
+
+.left-side {
+  background: #5f6a73;
+}
+
+.right-side {
+  background: #fff
+}
+
+h3.title {
+  font-family: $secondary-ff;
+  color: #fff;
+  @include responsive-font-size(24px);
+  font-weight: $fw-black;
+}
+
+h5.amount {
+  color: $primary;
+  @include responsive-font-size(18px);
+  font-family: $secondary-ff;
+  font-weight: $fw-semibold;
+  text-transform: uppercase;
+}
+
+.categories-title {
+  @include responsive-font-size(18px);
+  font-family: $secondary-ff;
+  font-weight: $fw-semibold;
+  text-transform: uppercase;
+  color: #7f868b;
+}
+
+
+.nav-item {
+  width: 100%;
+
+
+  .nav-link {
+    width: 100%;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+
+    font-family: $secondary-ff;
+    @include responsive-font-size(14px);
+    font-weight: $fw-semibold;
+
+    text-transform: uppercase;
+    color: #fff;
+
+    outline: unset;
+
+    &.active {
+      background: #fff;
+      color: #5f6a73;
+      font-weight: $fw-black;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+}
+
+
+.form-group {
+  position: static;
+  margin-bottom: unset;
+
+  label {
+    position: static;
+    left: unset;
+    bottom: 0;
+  }
+
+  input.form-control {
+    border-radius: 30px;
+  }
+}
+
+.channels-wrapper {
+  position: absolute;
+  top: 100px;
+  bottom: 20px;
+  left: 20px;
+  right: 30px;
+
+  overflow-y: scroll;
+
+  .channel{
+    display: none;
+  }
+
+  .channel.active{
+    display: block;
+  }
+
+  .img-wrapper {
+    width: 50px;
+    height: 50px;
+
+    @include media-breakpoint-up(lg){
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #5f6a73;
+  }
+}
+
+
+

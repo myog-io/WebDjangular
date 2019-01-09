@@ -23,7 +23,7 @@ class Channel(BaseModel):
     )  # Will Treat as a Tag
     number = models.FloatField(unique=True)
     position = models.PositiveIntegerField()
-    products = models.ManyToManyField(Product,related_name="channels")
+    products = models.ManyToManyField(Product, related_name="channels")
 
     class Meta:
         db_table = 'provider_channel'
