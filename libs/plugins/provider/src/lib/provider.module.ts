@@ -20,6 +20,7 @@ import { GoogleMapsLazyConfig } from '@webdjangular/core/cms';
 import { RouterModule } from '@angular/router';
 
 
+
 const MODULES = [
   CommonModule,
   PluginProviderCheckoutModule,

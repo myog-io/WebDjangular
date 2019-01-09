@@ -1,4 +1,3 @@
-from django_prices.models import MoneyField
 from django.db import models
 from django_mysql.models import JSONField
 from django.utils import timezone
@@ -6,6 +5,16 @@ from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
 from functools import partial
 from prices import Money, fixed_discount, percentage_discount
+from functools import partial
+
+from django.db import models
+from django.utils import timezone
+from django_mysql.models import JSONField
+from prices import Money, fixed_discount, percentage_discount
+
+from libs.plugins.store.api import defaults
+from webdjango.models.AbstractModels import ActiveModel, BaseModel
+
 
 class DiscountValueType:
     FIXED = 'fixed'

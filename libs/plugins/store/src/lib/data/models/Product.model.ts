@@ -26,7 +26,7 @@ enum productDG {
   modelEndpointUrl: 'store/product',
 })
 export class ProductModel extends AbstractModel {
-  public static include = 'product_type';
+  public static include = 'product_type, channel';
 
   @Attribute()
   id: string;

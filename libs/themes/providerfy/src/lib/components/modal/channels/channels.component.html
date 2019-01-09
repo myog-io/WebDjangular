@@ -1,48 +1,80 @@
-<div class="modal-body">
+<div class="modal-body p-0">
+  <div class="close text-primary p-1" (click)="activeModal.dismiss('Cross click')">
+    <i class="fas fa-times"></i>
+  </div>
   <div class="row">
-    <div class="col col-3 left-side">
-      <h3 class="title">HD POP</h3>
+    <div class="col-5 col-md-4 col-lg-3 left-side pt-2 pl-2 pb-2 pr-0">
+      <h3 class="title mb-0">HD POP</h3>
       <h5 class="amount">112 canais</h5>
 
       <p class="categories-title">Categorias</p>
 
       <ul class="categories nav flex-column">
         <li class="nav-item">
-          <button class="nav-link active" >Todos</button>
+          <button class="nav-link active" (click)="toggleChannels($event, '');"
+            [disabled]="loadingChannels">Todos</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" >HD</button>
+          <button class="nav-link" (click)="toggleChannels($event, 'HD');"
+          [disabled]="loadingChannels" >HD</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" >Cortesia</button>
+          <button class="nav-link" (click)="toggleChannels($event, 'Cortesia');"
+          [disabled]="loadingChannels" >Cortesia</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" >Aberto</button>
+          <button class="nav-link" (click)="toggleChannels($event, 'Aberto');"
+          [disabled]="loadingChannels" >Aberto</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" >Obrigatório</button>
+          <button class="nav-link" (click)="toggleChannels($event, 'Obrigatório');"
+          [disabled]="loadingChannels" >Obrigatório</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" >Local</button>
+          <button class="nav-link" (click)="toggleChannels($event, 'Local'); "
+          [disabled]="loadingChannels">Local</button>
         </li>
 
       </ul>
 
     </div>
-    <div class="col col-9 right-side">
+    <div class="col-7 col-md-8  col-lg-9 pr-3 right-side">
       <div class="row">
-        <form action="" class="search-form">
-          <div class="form-group has-feedback">
+        <form action="" class="form search-form" autocomplete="off">
+          <div class="form-group p-1">
             <label for="search">Encontre o canal:</label>
-            <input type="text" class="form-control" name="search-channel" id="search-channel" placeholder="">
+            <input type="text" class="form-control" name="search-channel"
+                   id="search-channel" placeholder=""
+                   [(ngModel)]="search" (ngModelChange)="onSearch($event)">
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
         </form>
       </div>
-      <div class="row">
-        <div class="col">
+      <div class="row  p-2">
+
+        <div class="channels-wrapper">
+          <div class="row m-0" *ngIf="!loadingChannels">
+
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-0 channel active" *ngFor="let channel of channels;"
+              [ngClass]="channel.types" [attr.data-name]="channel.name">
+              <div class="img-wrapper d-block mt-1 mb-1">
+                <img class="img-fluid" [src]="channel.logo"/>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="loading-wrapper h-100 d-flex justify-content-center" *ngIf="loadingChannels">
+
+            <div>
+              <i class="fa fa-spinner fa-pulse fa-4x"></i>
+            </div>
+          </div>
+
 
         </div>
+
+
       </div>
     </div>
   </div>
