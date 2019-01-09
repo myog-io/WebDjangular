@@ -23,7 +23,8 @@ export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbst
   openChannelListModel(product_id: string = '') {
     const modalChannelList = this.modalService.open(ThemeProviderfyModalChannelsComponent, {
       size: 'lg',
-      centered: true
+      centered: true,
+      windowClass: 'modal-channel-list'
     });
     modalChannelList.componentInstance.product_id = product_id;
   }

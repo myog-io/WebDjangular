@@ -1,9 +1,9 @@
-<div class="modal-body p-0">
+<div class="modal-body pt-0 pb-0">
   <div class="close text-primary p-1" (click)="activeModal.dismiss('Cross click')">
     <i class="fas fa-times"></i>
   </div>
-  <div class="row">
-    <div class="col-5 col-md-4 col-lg-3 left-side pt-2 pl-2 pb-2 pr-0">
+  <div class="row main-wrapper">
+    <div class="col-5 col-md-3 col-lg-3 left-side pt-2 pl-1 pl-sm-2 pb-2 pr-0">
       <h3 class="title mb-0">HD POP</h3>
       <h5 class="amount">112 canais</h5>
 
@@ -12,40 +12,47 @@
       <ul class="categories nav flex-column">
         <li class="nav-item">
           <button class="nav-link active" (click)="toggleChannels($event, '');"
-            [disabled]="loadingChannels">Todos</button>
+            [disabled]="loadingChannels">Todos
+          </button>
         </li>
         <li class="nav-item">
           <button class="nav-link" (click)="toggleChannels($event, 'HD');"
-          [disabled]="loadingChannels" >HD</button>
+            [disabled]="loadingChannels" >HD
+          </button>
         </li>
         <li class="nav-item">
           <button class="nav-link" (click)="toggleChannels($event, 'Cortesia');"
-          [disabled]="loadingChannels" >Cortesia</button>
+            [disabled]="loadingChannels" >Cortesia
+          </button>
         </li>
         <li class="nav-item">
           <button class="nav-link" (click)="toggleChannels($event, 'Aberto');"
-          [disabled]="loadingChannels" >Aberto</button>
+            [disabled]="loadingChannels" >Aberto
+          </button>
         </li>
         <li class="nav-item">
           <button class="nav-link" (click)="toggleChannels($event, 'Obrigatório');"
-          [disabled]="loadingChannels" >Obrigatório</button>
+            [disabled]="loadingChannels" >Obrigatório
+          </button>
         </li>
         <li class="nav-item">
           <button class="nav-link" (click)="toggleChannels($event, 'Local'); "
-          [disabled]="loadingChannels">Local</button>
+            [disabled]="loadingChannels">Local
+          </button>
         </li>
 
       </ul>
 
     </div>
-    <div class="col-7 col-md-8  col-lg-9 pr-3 right-side">
+    <div class="col-7 col-md-9 col-lg-9 pr-3 right-side">
       <div class="row">
-        <form action="" class="form search-form" autocomplete="off">
+        <form action="" class="form-inline search-form" autocomplete="off">
           <div class="form-group p-1">
             <label for="search">Encontre o canal:</label>
             <input type="text" class="form-control" name="search-channel"
                    id="search-channel" placeholder=""
-                   [(ngModel)]="search" (ngModelChange)="onSearch($event)">
+              [(ngModel)]="search" (ngModelChange)="onSearch($event)"
+              [disabled]="loadingChannels" >
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
           </div>
         </form>
@@ -55,11 +62,18 @@
         <div class="channels-wrapper">
           <div class="row m-0" *ngIf="!loadingChannels">
 
-            <div class="col-6 col-sm-4 col-md-3 col-lg-2 p-0 channel active" *ngFor="let channel of channels;"
+            <div class="col-6 col-sm-4 col-md-3 p-0 channel active mt-1 mb-3" *ngFor="let channel of channels;"
               [ngClass]="channel.types" [attr.data-name]="channel.name">
-              <div class="img-wrapper d-block mt-1 mb-1">
+              <div class="img-wrapper d-block ">
                 <img class="img-fluid" [src]="channel.logo"/>
               </div>
+              <span class="number d-block mx-auto text-center ">
+                <b *ngIf=" channel.types.indexOf('HD')">HD</b>
+                {{ channel.number }}
+              </span>
+              <span class="name d-block mx-auto text-center">
+                <small>{{ channel.name }}</small>
+              </span>
             </div>
 
           </div>

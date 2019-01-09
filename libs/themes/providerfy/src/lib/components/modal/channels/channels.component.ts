@@ -78,6 +78,7 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
   private getChannels() {
 
     let options = {
+      fields: 'types,name,logo,number',
       products: this.product_id,
       page: {number: this.get_channels_current_page, size: 10}
     };
@@ -91,11 +92,9 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
           this.get_channels_current_page++;
           this.getChannels();
         } else {
-
           this.channels.sort(function (a: ChannelModel, b: ChannelModel) {
-            return b.position - a.position;
+            return a.number - b.number;
           });
-          console.log(this.channels);
           this.loadingChannels = false;
         }
       }

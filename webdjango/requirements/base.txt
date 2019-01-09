@@ -21,6 +21,9 @@ djangorestframework-jwt==1.11.0
 # Django REST Framework JSON.API Format
 djangorestframework-jsonapi==2.6.0
 
+# Django REST Framework QueryFilters
+djangorestframework-queryfields==1.0.0
+
 # Timezone
 pytz==2018.4
 
