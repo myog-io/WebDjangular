@@ -22,7 +22,7 @@ export class ProviderCheckoutService {
 
   private skus = {
     internet: ["60mb", "120mb", "180mb"],
-    tv: ["hdtop", "hdplus", "hdpop", "hdsuper"],
+    tv: ["hd-top", "hd-plus", "hd-pop", "hd-super"],
     telephone: ["local-economico", "local-ilimitado", "brasil-ilimitado"]
   };
 
@@ -114,7 +114,6 @@ export class ProviderCheckoutService {
     });
 
 
-
   }
 
   loadPlans(type) {
@@ -153,6 +152,7 @@ export class ProviderCheckoutService {
                 plan: plan,
                 qty: 0
               }
+              console.log(this.plans.tv);
             }
           }
         }, (error) => {
@@ -372,7 +372,7 @@ export class ProviderCheckoutService {
   }
 
   onBuildingPlanSubmit() {
-    if(this.isBuildingPlanValid()){
+    if (this.isBuildingPlanValid()) {
       this.nextStep();
     }
   }
