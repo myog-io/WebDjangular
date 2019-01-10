@@ -64,7 +64,7 @@ urlpatterns = [
     #url(r'^admin', TemplateView.as_view(template_name="/static/admin/index.html")),
     url(r'^admin', serve, kwargs={'path':  'admin/index.html'}),
    
-    url(r'^$', serve, kwargs={'path':  'client/index.html'}),
+    url(r'^', serve, kwargs={'path':  'client/index.html'}),
     #url(r'^$', TemplateView.as_view(template_name='/client/index.html')),
 
 ]
