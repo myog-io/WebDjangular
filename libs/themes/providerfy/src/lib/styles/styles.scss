@@ -1,8 +1,8 @@
 @import '../assets/fonts/Boston/stylesheet.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
-@import 'variables';
-@import '~bootstrap/scss/bootstrap';
+@import 'config';
 @import './icons.scss';
+@import '~rfs/sass/_rfs';
 
 @mixin border-radius($radius: 5px) { // the 5px is the default
   -webkit-border-radius: $radius;
@@ -22,7 +22,7 @@ html {
 }
 
 body {
-  font-size: $primary-fs;
+  @include responsive-font-size($primary-fs);
   font-weight: $primary-fw;
   font-family: $primary-ff;
 }
@@ -76,43 +76,67 @@ a:hover {
 }
 
 h1 {
-  font-size: $h1-fs;
+  @include responsive-font-size($h1-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h1-fs * 0.75);
+  }
 }
 
 h2 {
-  font-size: $h2-fs;
+  @include responsive-font-size($h2-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h2-fs * 0.75);
+  }
 }
 
 h3 {
-  font-size: $h3-fs;
+  @include responsive-font-size($h3-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h3-fs * 0.75);
+  }
 }
 
 h4 {
-  font-size: $h4-fs;
+  @include responsive-font-size($h4-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h4-fs * 0.75);
+  }
 }
 
 h5 {
-  font-size: $h5-fs;
+  @include responsive-font-size($h5-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h5-fs * 0.75);
+  }
 }
 
 h6 {
-  font-size: $h6-fs;
+  @include responsive-font-size($h6-fs);
   font-family: $secondary-ff;
   font-weight: $fw-bold;
+
+  @include media-breakpoint-down(sm) {
+    @include responsive-font-size($h6-fs * 0.75);
+  }
 }
 
 p.subtitle {
-  font-size: $fs-subtitle;
+  @include responsive-font-size($fs-subtitle);
 }
 
 .opacity-0 {
@@ -131,7 +155,7 @@ p.subtitle {
 input, textarea {
   width: 100%;
   font-family: $input-ff;
-  font-size: $input-fs;
+  @include responsive-font-size($input-fs);
   font-weight: $input-fw;
   color: $input-cc;
   display: block;
@@ -144,7 +168,7 @@ input, textarea {
 select.form-control {
   width: 100%;
   font-family: $input-ff;
-  font-size: $input-fs;
+  @include responsive-font-size($input-fs);
   font-weight: $input-fw;
   color: $input-cc;
   display: block;
@@ -172,7 +196,7 @@ input:focus {
 
 label {
   color: $input-cc;
-  font-size: $input-fs;
+  @include responsive-font-size($input-fs);
   font-weight: $input-fw;
   position: absolute;
   pointer-events: none;
@@ -192,7 +216,7 @@ input:focus, textarea:focus {
 input:focus ~ label, input:valid ~ label,
 textarea:focus ~ label, textarea:valid ~ label {
   bottom: -$input-fs*2;
-  font-size: $input-fs*0.95;
+  @include responsive-font-size($input-fs*0.95);
   color: $primary;
   border-color: transparent;
 }
@@ -319,7 +343,7 @@ input:focus ~ .highlight {
       }
 
       li {
-        font-size: 16px;
+        @include responsive-font-size(16px);
       }
     }
   }
@@ -337,7 +361,11 @@ input:focus ~ .highlight {
   .card.contact {
     border-radius: $card-border-radius;
     border-color: transparent;
-    padding: 20px 10px 0px 20px;
+    padding: 0px;
+
+    @include media-breakpoint-up(lg) {
+      padding: 20px 10px 0 20px;
+    }
 
     &:not(.bg-primary) {
       box-shadow: 0 0 22px rgba(0, 0, 0, 0.2);
@@ -352,21 +380,21 @@ input:focus ~ .highlight {
 
     .card-title {
       color: #000;
-      font-size: 23px;
+      @include responsive-font-size(23px);
       font-weight: 600;
       margin-bottom: 5px;
     }
 
     .card-text {
       color: #8ea5b0;
-      font-size: 18px;
+      @include responsive-font-size(18px);
       line-height: 22px;
       font-weight: 400;
     }
 
     a[href^="tel"] {
       color: $primary;
-      font-size: 38px;
+      @include responsive-font-size(38px);
       font-weight: $fw-black;
     }
   }
@@ -377,7 +405,7 @@ input:focus ~ .highlight {
     }
 
     a {
-      font-size: 18px;
+      @include responsive-font-size(18px);
     }
 
   }
@@ -408,33 +436,67 @@ input:focus ~ .highlight {
   }
 }
 
+.modal-channel-list {
+  .modal-content {
+    background: transparent;
+    border: unset;
+  }
+
+  .modal-dialog {
+    max-width: 700px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    .modal-dialog {
+      max-width: 900px;
+    }
+  }
+}
+
 
 #banner-experiment {
   .img-wrapper {
-    margin-left: -65%;
+    @include media-breakpoint-up(lg) {
+      margin-left: -65%;
+    }
   }
+
+  .text-container {
+    padding: map-get($spacers, 2);
+
+    @include media-breakpoint-up(lg) {
+      padding-left: map-get($spacers, 4);
+    }
+  }
+
 
   h2 {
     font-family: $secondary-ff;
-    font-size: 44px;
+    @include responsive-font-size(44px);
     line-height: 39px;
     font-weight: $fw-regular;
     font-style: italic;
 
+
     b {
       font-weight: $fw-black;
-
     }
   }
 
   h5 {
     font-family: $secondary-ff;
-    font-size: 21px;
+    @include responsive-font-size(21px);
     font-weight: $fw-semibold;
     color: #616c74;
 
+    padding-top: map-get($spacers, 2);
+
+    @include media-breakpoint-up(lg) {
+      white-space: nowrap;
+    }
+
     .plus {
-      font-size: 32px;
+      @include responsive-font-size(32px);
       line-height: 21px;
       vertical-align: top;
     }
@@ -455,8 +517,14 @@ input:focus ~ .highlight {
 #portabilidade {
   color: #99d7d7;
 
+  padding: map-get($spacers, 1);
+
+  @include media-breakpoint-up(md) {
+    padding: map-get($spacers, 5);
+  }
+
   p {
-    font-size: 17px;
+    @include responsive-font-size(17px);
     line-height: 28px;
     max-width: 445px;
 
@@ -468,26 +536,76 @@ input:focus ~ .highlight {
 }
 
 #economia-e-controle {
+
+  padding-top: map-get($spacers, 1);
+
+  @include media-breakpoint-up(md) {
+    padding-top: map-get($spacers, 5);
+  }
+
+
+  h4 {
+    padding-top: map-get($spacers, 1);
+
+    @include media-breakpoint-up(md) {
+      padding-top: map-get($spacers, 5);
+      padding-bottom: map-get($spacers, 2);
+    }
+  }
+
+
   p {
-    font-size: 17px;
+    @include responsive-font-size(17px);
     line-height: 28px;
     color: #8a939a;
     max-width: 390px;
+
+    padding-bottom: 1rem;
   }
 
   span.bottom {
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 1rem;
 
-    font-size: 13px;
+    @include responsive-font-size(13px);
     color: #9ea3a1;
   }
 }
 
 #quem-esta-ligando {
+
+  padding-top: map-get($spacers, 1);
+  padding-bottom: map-get($spacers, 1);
+
+  @include media-breakpoint-up(md) {
+    padding-top: map-get($spacers, 5);
+    padding-bottom: map-get($spacers, 3);
+  }
+
+  h6 {
+    margin-bottom: 0;
+    padding-bottom: map-get($spacers, 1);
+
+    @include media-breakpoint-up(md) {
+      padding-top: map-get($spacers, 5);
+    }
+  }
+
+  h4 {
+
+    padding-bottom: map-get($spacers, 1);
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 0;
+    }
+
+  }
+
+
   p {
-    font-size: 17px;
+    @include responsive-font-size(17px);
     line-height: 28px;
     color: #8a939a;
     max-width: 415px;
@@ -500,7 +618,7 @@ input:focus ~ .highlight {
   margin: auto;
 
   h1 {
-    font-size: 40px;
+    @include responsive-font-size(40px);
     line-height: 40px;
     width: 100%;
     text-align: center;
@@ -521,7 +639,7 @@ input:focus ~ .highlight {
     input {
       border-radius: 50px;
       font-family: $primary-ff;
-      font-size: 16px;
+      @include responsive-font-size(16px);
       height: 45px;
       padding: 0 20px;
       color: #6f787f;
@@ -559,15 +677,45 @@ input:focus ~ .highlight {
   }
 
   ul {
-    -webkit-column-count: 4; /* Chrome, Safari, Opera */
-    -moz-column-count: 4; /* Firefox */
-    column-count: 4;
+    padding: 0;
+
+    $citiesColumnCount: 1;
+
+    -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+    -moz-column-count: $citiesColumnCount; /* Firefox */
+    column-count: $citiesColumnCount;
     list-style: none;
 
-    li {
-      font-size: 17px;
-      color: #616c74;
+    @include media-breakpoint-up(sm) {
+      $citiesColumnCount: 2;
 
+      -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+      -moz-column-count: $citiesColumnCount; /* Firefox */
+      column-count: $citiesColumnCount;
+    }
+
+    @include media-breakpoint-up(md) {
+      $citiesColumnCount: 3;
+
+      -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+      -moz-column-count: $citiesColumnCount; /* Firefox */
+      column-count: $citiesColumnCount;
+    }
+
+    @include media-breakpoint-up(lg) {
+      $citiesColumnCount: 4;
+
+      -webkit-column-count: $citiesColumnCount; /* Chrome, Safari, Opera */
+      -moz-column-count: $citiesColumnCount; /* Firefox */
+      column-count: $citiesColumnCount;
+    }
+
+
+    li {
+      @include responsive-font-size(17px);
+      color: #616c74;
+      width: 100%;
+      display: inline-block;
     }
   }
 
@@ -578,19 +726,39 @@ input:focus ~ .highlight {
 }
 
 .tv_channelbox {
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  height: 100%;
   max-width: 460px;
-  height: 455px;
+  //max-height: 455px;
   padding-left: 30px;
 
-  h4 {
-    margin-top: 85%;
-    margin-bottom: 0;
+  padding-top: 100%;
+
+  @include media-breakpoint-up(sm) {
+    padding-top: 50%;
   }
 
-  p {
-    font-size: 16px;
-    line-height: 20px;
+  @include media-breakpoint-up(lg) {
+    padding-top: 33.33333333%;
   }
+
+  .text {
+    position: absolute;
+    bottom: 0;
+
+    h4 {
+      margin-bottom: 0;
+    }
+
+    p {
+      @include responsive-font-size(16px);
+      line-height: 20px;
+      max-width: 300px;
+    }
+  }
+
 }
 
 #banner-tv {
@@ -602,3 +770,48 @@ input:focus ~ .highlight {
   margin: auto;
 }
 
+.corner-ribbon {
+  width: 190px;
+  background: #fff;
+  position: absolute;
+  top: 25px;
+  left: -50px;
+  text-align: center;
+  color: #00b9bd;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  font-size: 14px;
+  line-height: 30px;
+}
+
+.corner-ribbon.top-left {
+  top: 30px;
+  left: -55px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.corner-ribbon.top-right {
+  top: 22px;
+  right: -61px;
+  left: auto;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.bottom-left {
+  top: auto;
+  bottom: 25px;
+  left: -50px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-ribbon.bottom-right {
+  top: auto;
+  right: -50px;
+  bottom: 25px;
+  left: auto;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

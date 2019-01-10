@@ -1,6 +1,7 @@
 <div class="accordion" id="accordionProviderCheckoutPlans">
   <div class="card internet plan-select-wrapper">
-    <div class="card-header  plan-panel" (click)="providerCheckout.toggleCollapse($event, 'internet')">
+    <div class="card-header d-flex justify-content-center plan-panel"
+      (click)="providerCheckout.toggleCollapse($event, 'internet')">
       <span class="icon-wrapper">
         <i class="icon icon-globo_big"></i>
       </span>
@@ -30,17 +31,17 @@
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col col-md-5 align-self-center">
+          <div class="col-12 col-lg-5 align-self-center">
             <h2>{{ providerCheckout.selected_internet_plan.name }}</h2>
           </div>
-          <div class="col col-md-3 price-wrapper align-self-center">
+          <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
-          <div class="col col-md-4 actions-wrapper align-self-center">
+          <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
               (click)="providerCheckout.deselectInternetPlan()">
               Alterar
@@ -57,11 +58,12 @@
   </div>
 
   <div class="card tv plan-select-wrapper">
-    <div class="card-header plan-panel" (click)="providerCheckout.toggleCollapse($event, 'tv')">
+    <div class="card-header d-flex justify-content-center plan-panel"
+      (click)="providerCheckout.toggleCollapse($event, 'tv')">
       <span class="icon-wrapper">
         <i class="icon icon-tv_big"></i>
       </span>
-      <span class="title"> Pacotes de TV </span>
+      <span class="title">  PLANOS DE TV </span>
       <span class="caret float-right">
         <i [ngClass]="{
           'fa-chevron-up': providerCheckout.tv_plan_collapsed,
@@ -80,33 +82,31 @@
           <h3 class="plan-caption">
             Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
           </h3>
-          <div class="row">
-            <plugin-provider-checkout-plan-television>
-            </plugin-provider-checkout-plan-television>
-          </div>
+          <plugin-provider-checkout-plan-television>
+          </plugin-provider-checkout-plan-television>
         </div>
       </div>
 
       <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col col-md-5 align-self-center">
+          <div class="col-12 col-lg-5 align-self-center">
             <h2>{{ providerCheckout.selected_tv_plan.name }}</h2>
           </div>
-          <div class="col col-md-3 price-wrapper align-self-center">
+          <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
-          <div class="col col-md-4 actions-wrapper align-self-center">
+          <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-outline-light btn-deselect-plan btn-round text-uppercase"
               (click)="providerCheckout.deselectTVPlan()">Alterar
             </button>
           </div>
         </div>
         <div class="row extra-tv-decoder">
-          <div class="col col-md-6">
+          <div class="col-12 col-lg-6">
             <h4>
               <span class="icon icon-extra-decoder"></span>
               <span class="title"> Adquirir pontos extra? </span>
@@ -119,22 +119,22 @@
               </select>
             </div>
           </div>
-          <div class="col col-md-3 price-wrapper align-self-center">
+          <div class="col col-lg-3 price-wrapper align-self-center">
             <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
               <span class="currency-unit">R$</span>
               <span class="price" [innerHTML]="providerCheckout.priceExtraTVDecoder"></span>
             </span>
           </div>
-          <div class="col-md-3 actions-wrapper align-self-center">
+          <div class="col-lg-3 actions-wrapper align-self-center">
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
-              type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+              type="button" class="btn btn-outline-primary btn-round text-uppercase"
               (click)="providerCheckout.addExtraTVDecoder()">
               Adicionar
             </button>
 
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
-              type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
+              type="button" class="btn btn-outline-danger btn-round text-uppercase"
               (click)="providerCheckout.removeExtraTVDecoder()">
               Remover
             </button>
@@ -147,11 +147,9 @@
             <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
           </h4>
           <div class="row">
-
-            <plugin-provider-checkout-plan-television-optional
-              *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
-            </plugin-provider-checkout-plan-television-optional>
-
+          <plugin-provider-checkout-plan-television-optional
+            *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
+          </plugin-provider-checkout-plan-television-optional>
           </div>
         </div>
       </div>
@@ -160,7 +158,7 @@
 
 
   <div class="card telephone plan-select-wrapper">
-    <div class="card-header plan-panel"
+    <div class="card-header  d-flex justify-content-center  plan-panel"
          id="ProviderCheckoutTabPlanTelephone"
       (click)="providerCheckout.toggleCollapse($event, 'telephone')"
       [ngClass]="{
@@ -184,26 +182,24 @@
       <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
         <div class="select-plans-wrapper">
           <h3 class="plan-caption"></h3>
-          <div class="row">
-            <plugin-provider-checkout-plan-telephone>
-            </plugin-provider-checkout-plan-telephone>
-          </div>
+          <plugin-provider-checkout-plan-telephone>
+          </plugin-provider-checkout-plan-telephone>
         </div>
       </div>
 
       <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
         <div class="row selected-plan-wrapper">
-          <div class="col col-md-5 align-self-center">
+          <div class="col-12 col-lg-5 align-self-center">
             <h2>{{ providerCheckout.selected_telephone_plan.name }}</h2>
           </div>
-          <div class="col col-md-3 price-wrapper align-self-center">
+          <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
               <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
-          <div class="col col-md-4 actions-wrapper align-self-center">
+          <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
               (click)="providerCheckout.deselectTelephonePlan()">
               Alterar

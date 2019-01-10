@@ -12,31 +12,32 @@
     </ng-template><!-- END MODAL -->
     <div class="card mt-1 mb-1">
       <div class="card-header">
+        <div class="corner-ribbon top-right" *ngIf="plan?.data?.is_best_seller == 1">Mais vendido</div>
         <h5 class="plan-title text-center pt-3 pb-2"
-        [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
+          [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
         </h5>
-        <h6 class="text-center" [innerHtml]="plan?.data?.sub_title"></h6>
+        <h6 class="text-center" [innerHTML]="plan?.data?.sub_title"></h6>
       </div>
       <div class="card-body p-0 ml-1 mr-1 ">
         <div class="row">
           <div class="col">
-            <ul class="pt-3 pb-3">
+            <ul class="pt-3 pb-1 mb-0">
               <li class="mb-1">
-                <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_1" aria-hidden="true"></i>
-                <p [innerHtml]="plan?.data?.addon_text_1"></p>
+                <i [class]="plan?.data?.addon_icon_1 + ' mr-1'" aria-hidden="true"></i>
+                <p [innerHTML]="plan?.data?.addon_text_1"></p>
               </li>
               <li class="mb-1">
-                <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_2" aria-hidden="true"></i>
-                <p [innerHtml]="plan?.data?.addon_text_2"></p>
+                <i [class]="plan?.data?.addon_icon_2 + ' mr-1'" aria-hidden="true"></i>
+                <p [innerHTML]="plan?.data?.addon_text_2"></p>
               </li>
               <li class="mb-1">
-                <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_3" aria-hidden="true"></i>
-                <p [innerHtml]="plan?.data?.addon_text_3"></p>
+                <i [class]="plan?.data?.addon_icon_3 + ' mr-1'" aria-hidden="true"></i>
+                <p [innerHTML]="plan?.data?.addon_text_3"></p>
 
               </li>
               <li class="mb-1">
-                <i class="pr-1 fa fa-2x" [class]="plan?.data?.addon_icon_4" aria-hidden="true"></i>
-                <p [innerHtml]="plan?.data?.addon_text_4"></p>
+                <i [class]="plan?.data?.addon_icon_4 + ' mr-1'" aria-hidden="true"></i>
+                <p [innerHTML]="plan?.data?.addon_text_4"></p>
               </li>
             </ul>
           </div>
@@ -51,7 +52,7 @@
         <div class="row">
           <div class="col">
             <p class="text-center m-1">
-              <a href="javascript:void(0);" class="btn btn-primary btn-subscribe"> Assine já </a>
+              <a [routerLink]="['/assine']" [queryParams]="{phone: plan?.sku}" class="btn btn-primary btn-subscribe pl-3 pr-3"> Assine já </a>
             </p>
           </div>
         </div>

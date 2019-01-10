@@ -1,7 +1,8 @@
+@import '~rfs/sass/_rfs';
 input {
   display: block;
   font-family: inherit;
-  font-size: 14px;
+  @include responsive-font-size( 14px);
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   outline: none;

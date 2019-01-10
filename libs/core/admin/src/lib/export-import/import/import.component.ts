@@ -123,11 +123,11 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               promises.push(promise);
             } else if (entry.extraOptions[keys[0]].model) {
               const relationshipModel = entry.extraOptions[keys[0]].model;
-              let belongTo = null;
-              if(entry.belongTo){
-                belongTo = entry.belongTo.find((en: any) => en.propertyName == keys[0]);
+              let belongsTo = null;
+              if(entry.belongsTo){
+                belongsTo = entry.belongsTo.find((en: any) => en.propertyName == keys[0]);
               }
-              if (belongTo) {
+              if (belongsTo) {
                 let options = {
                   page: { size: 1, number: 1 },
                 }
@@ -158,7 +158,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
               if(entry.hasMany){
                 hasMany = entry.hasMany.find((en: any) => en.propertyName == keys[0]);
               }
-              if (hasMany) {
+              if (hasMany && data[key].length) {
                 let options = {
                   page: { size: data[key].length, number: 1 },
                 }

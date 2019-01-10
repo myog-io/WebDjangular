@@ -1,86 +1,36 @@
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-        (click)="isNavbarCollapsed = !isNavbarCollapsed"
-        aria-controls="navbarColor02" aria-expanded="false"
-        aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon">menu</span>
+
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+  aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
 </button>
 
-<div [ngbCollapse]="isNavbarCollapsed"  class="collapse navbar-collapse">
-  <ul class="navbar-nav mr-auto mt-3">
-    <li class="nav-item dropdown pr-1">
-      <div ngbDropdown class="d-inline-block">
-        <a class="nav-link" ngbDropdownToggle> Internet </a>
-        <div class="shadow-lg" ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/planos-de-internet']" fragment="fibra">
-            <span class="icon icon-fiber"></span>
-            Fibra Óptica
-          </a>
-          <a class="dropdown-item" [routerLink]="['/planos-de-internet']" fragment="radio">
-            <span class="icon icon-radio"></span>
-            Via Rádio
-          </a>
-        </div>
+<ng-template #simpleMenu let-item="item">
+  <li class="nav-item pr-1 {{ item?.class }}" [routerLinkActive]="['active']">
+    <a class="nav-link" [routerLink]="[item?.url]" (click)="action(item)" [innerHtml]="item?.name"></a>
+  </li>
+</ng-template>
+
+<ng-template #dropdownMenu let-item="item">
+  <li class="nav-item pr-1 dropdown {{ item?.class }}" [routerLinkActive]="['active']">
+    <div ngbDropdown class="d-inline-block" [autoClose]="true">
+      <a class="nav-link" ngbDropdownToggle [innerHtml]="item?.name"></a>
+      <div class="shadow-lg" ngbDropdownMenu>
+        <a *ngFor="let child of item.children" class="dropdown-item {{child?.class}}" (click)="action(item)"
+          [routerLink]="[child?.url]" [fragment]="child?.fragment">
+          <span [class]="child?.icon"></span>
+          <span class="name" [innerHtml]="child?.name"></span>
+        </a>
       </div>
-    </li>
-    <li class="nav-item pr-1">
-      <a class="nav-link" [routerLink]="['/planos-de-telefone']"> Telefone</a>
-    </li>
-    <li class="nav-item dropdown pr-1">
-      <div ngbDropdown class="d-inline-block">
-        <a class="nav-link" ngbDropdownToggle> HDTV </a>
-        <div class="shadow-lg" ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/planos-de-tv']">
-            <span class="icon icon-plans"></span> Planos
-          </a>
-          <a class="dropdown-item" [routerLink]="['/ponto-extra']">
-            <span class="icon icon-extra-point"></span> Ponto Extra
-          </a>
-        </div>
-      </div>
-    </li>
-    <li class="nav-item pr-1">
-      <a class="nav-link" [routerLink]="['/combos']"> Combos </a>
-    </li>
+    </div>
+  </li>
+</ng-template>
 
-    <li class="nav-item pr-1">
-      <a class="nav-link" [routerLink]="['/cobertura']"> Cobertura </a>
-    </li>
+<div class="collapse navbar-collapse" [ngbCollapse]="!isNavbarCollapsed" id="navbarSupportedContent">
+  <ul class="navbar-nav">
+    <ng-container *ngFor="let item of items">
+      <ng-container *ngTemplateOutlet="item?.children?.length > 0 ? dropdownMenu : simpleMenu; context: {item: item}">
 
-    <li class="nav-item dropdown pr-1">
-      <div ngbDropdown class="d-inline-block">
-        <a class="nav-link" ngbDropdownToggle> Contato </a>
-        <div class="shadow-lg" ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/contato']" fragment="chat-online">
-            <span class="icon icon-chat"></span> Chat Online
-          </a>
-          <a class="dropdown-item" [routerLink]="['/contato']" fragment="formulario-de-contato">
-            <span class="icon icon-form"></span> Formuário de Contato
-          </a>
-          <a class="dropdown-item" [routerLink]="['/contato']" fragment="escritorios">
-            <span class="icon icon-offices"></span> Escritórios
-          </a>
-          <a class="dropdown-item" [routerLink]="['/contato']" fragment="emails">
-            <span class="icon icon-email"></span> Emails
-          </a>
-          <a class="dropdown-item" [routerLink]="['/contato']" fragment="telefones">
-            <span class="icon icon-telephone"></span> Telefones
-          </a>
-        </div>
-      </div>
-    </li>
-
-    <li class="nav-item dropdown pr-1 featured btn-enroll-now">
-      <div ngbDropdown placement="bottom-right" class="d-inline-block">
-        <a class="nav-link" ngbDropdownToggle> Assine Já </a>
-        <div class="" ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/assine']">Planos</a>
-          <a class="dropdown-item">Assine pelo chat</a>
-          <a class="dropdown-item" (click)="openModalWeCallYou()">Nós ligamos pra você</a>
-        </div>
-      </div>
-    </li>
-
-
+      </ng-container>
+    </ng-container>
   </ul>
 </div>
-

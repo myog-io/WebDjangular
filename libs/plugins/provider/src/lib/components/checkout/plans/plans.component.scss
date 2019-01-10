@@ -1,5 +1,7 @@
 @import "../checkout_variables";
-//@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+@import '../../../../../../../themes/providerfy/src/lib/styles/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~rfs/sass/_rfs';
 
 // TODO get variables config based on database.
 
@@ -9,22 +11,33 @@
   border: unset;
 
   .plan-panel {
+
     background-color: #FFF;
     border: unset;
-    height: 100px;
+
+    min-height: 70px;
     margin-top: 2px;
 
-    padding: 30px 40px;
-
+    padding: 10px 20px;
     border-radius: 0;
 
     cursor: pointer;
+
+
+    @include media-breakpoint-up(md) {
+      height: 100px;
+      padding: 30px 40px;
+    }
 
     .icon-wrapper {
       color: #00b9bd;
       padding-right: 20px;
       position: relative;
-      top: -10px;
+      top: 10px;
+
+      @include media-breakpoint-up(md) {
+        top: -10px;
+      }
 
       .icon {
         width: 48px;
@@ -32,12 +45,24 @@
     }
 
     .title {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+
+      width: 100%;
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      font-size: 26px;
+      @include responsive-font-size( 22px);
+      line-height: 24px;
       font-weight: 700;
       color: #899299;
       text-transform: uppercase;
       vertical-align: top;
+
+      @include media-breakpoint-up(md) {
+        @include responsive-font-size( 26px);
+      }
+
     }
   }
 
@@ -58,11 +83,15 @@
     .select-plans-wrapper {
       background-color: #fff;
       margin-top: 2px;
-      padding: 20px 40px;
+      padding: 15px;
+
+      @include media-breakpoint-up(md) {
+        padding: 20px 40px;
+      }
 
       .plan-caption {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 13px;
+        @include responsive-font-size( 13px);
         font-weight: 700;
         color: #899299;
         text-transform: uppercase;
@@ -71,41 +100,59 @@
 
     .selected-plan-wrapper {
       background: #00b9bd;
-      padding: 0;
+      padding: map-get($spacers, 2);
       margin: 0;
-      height: 140px;
+
+
+      text-align: center;
+
+      @include media-breakpoint-up(lg) {
+        padding: 0;
+        text-align: left;
+        height: 140px;
+      }
 
       h2 {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 36px;
+        @include responsive-font-size( 36px);
         font-weight: 900;
         color: #fff;
         text-transform: uppercase;
-        padding-left: 40px;
+        padding-left: 5px;
+
         margin: 0;
+
+        @include media-breakpoint-up(lg) {
+          padding-left: 40px;
+        }
       }
 
       .price-wrapper {
         color: #fff;
 
         .row {
-          justify-content: flex-end;
+
+          justify-content: center;
+
+          @include media-breakpoint-up(lg) {
+            justify-content: flex-end;
+          }
 
 
           .currency-unit {
-            font-size: 19px;
+            @include responsive-font-size( 19px);
             font-weight: 600;
             padding-right: 2px;
 
           }
 
           .price {
-            font-size: 32px;
+            @include responsive-font-size( 32px);
             font-weight: 600;
           }
 
           .periodicity {
-            font-size: 19px;
+            @include responsive-font-size( 19px);
             font-weight: 400;
           }
         }
@@ -114,23 +161,34 @@
       .actions-wrapper {
         text-align: center;
 
+
+
         .btn-deselect-plan {
           width: 140px;
           font-family: "Boston", Arial, Helvetica, sans-serif;
           font-weight: 700;
-          font-size: 14px;
+          @include responsive-font-size( 14px);
         }
       }
     }
 
 
     .extra-tv-decoder {
-      padding: 30px 60px;
+      padding: 15px;
+
       border-bottom: 1px solid #f1f1f1;
+
+      @include media-breakpoint-up(md) {
+        padding: 25px;
+      }
+
+      @include media-breakpoint-up(lg) {
+        padding: 30px 60px;
+      }
 
       h4 {
         color: #00b9bd;
-        font-size: 20px;
+        @include responsive-font-size( 20px);
         font-family: "Boston", Arial, Helvetica, sans-serif;
         margin-bottom: 5px;
 
@@ -147,17 +205,22 @@
 
       .form-group {
         font-family: "Open Sans", Helvetica, sans-serif;
-        font-size: 16px;
+        @include responsive-font-size( 16px);
         line-height: 17px;
         font-weight: 400;
         color: #5f6a73;
-        padding-left: 25px;
-        margin: 0;
+
+        margin: 0 0 10px 0;
+
+        @include media-breakpoint-up(lg) {
+          padding-left: 25px;
+          margin: 0;
+        }
       }
 
       .price-wrapper {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 22px;
+        @include responsive-font-size( 22px);
         color: #697075;
         font-weight: 700;
         text-align: center;
@@ -173,7 +236,13 @@
         text-align: center;
 
         button {
+          padding-left: map-get($spacers, 2);
+          padding-right: map-get($spacers, 2);
 
+          @include media-breakpoint-up(md) {
+            padding-left: map-get($spacers, 3);
+            padding-right: map-get($spacers, 3);
+          }
         }
       }
 
@@ -185,7 +254,7 @@
     .card-body {
       .selected-plan-wrapper {
         h2 {
-          font-size: 26px;
+          @include responsive-font-size( 26px);
           line-height: 28px;
         }
       }
@@ -227,11 +296,20 @@
 
 
 .select-television-optional-plan-wrapper {
-  padding: 30px 60px;
+
+  padding: 15px;
+
+  @include media-breakpoint-up(md) {
+    padding: 25px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 30px 60px;
+  }
 
   h4 {
     color: #00b9bd;
-    font-size: 20px;
+    @include responsive-font-size( 20px);
     font-family: "Boston", Arial, Helvetica, sans-serif;
     margin-bottom: 25px;
 
@@ -247,6 +325,10 @@
   }
 
   .row {
-    padding-left: 35px;
+
+    @include media-breakpoint-up(md) {
+
+    }
+
   }
 }

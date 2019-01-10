@@ -25,6 +25,10 @@ const HARDCODEMODULES = [
 export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');
 export class CoreDynamicCustomComponent implements OnInit, OnDestroy {
   name = "CoreDynamicCustomComponent"
+  public instance: CoreDynamicCustomComponent;
+  constructor() {
+    this.instance = this;
+  }
   ngOnInit() {
 
   }
@@ -59,7 +63,7 @@ export class CoreDynamicComponentLoader {
 
   createComponentFactorySync(metadata: Component, componentClass?: any, cmpiler?: Compiler): ComponentFactory<any> {
     const compiler = cmpiler || this.compiler;
-    const cmpClass = componentClass || class RuntimeComponent extends CoreDynamicCustomComponent {}
+    const cmpClass = componentClass || class RuntimeComponent extends CoreDynamicCustomComponent { }
     const decoratedCmp = Component(metadata)(cmpClass);
     // TODO:: Imporvement, try to find a list on the HTML before Generating and Therefore Loading the components
 

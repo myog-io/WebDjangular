@@ -1,14 +1,21 @@
 @import "../../../styles/variables.scss";
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~rfs/sass/_rfs';
 
 .navbar-nav {
   cursor: pointer;
 
   .nav-link {
-    font-size: $header-menu-fs;
+    @include responsive-font-size( $header-menu-fs);
     font-family: $header-menu-ff;
     font-weight: $header-menu-fw;
-    color: $header-menu-c;
+    color: $header-menu-c !important;
     text-transform: uppercase;
+  }
+  .nav-item.active {
+    .nav-link{
+      color: $primary !important;
+    }
   }
 
   .nav-item.featured {
@@ -17,13 +24,19 @@
 
     padding: 0 20px;
     .nav-link {
-      color: $header-menu-featured-c;
+      color: $header-menu-featured-c !important;
     }
+
   }
 
   .dropdown-menu {
     border-radius: 15px;
     padding:20px 0;
+
+    @include media-breakpoint-down(sm) {
+      position: absolute;
+      left: unset !important;
+    }
 
     .dropdown-item{
       display:flex;
@@ -69,6 +82,7 @@
       border: 0;
     }
 
+
     .dropdown-menu:after, .dropdown-menu:before {
       right: 30%;
       left: unset;
@@ -111,6 +125,27 @@
     }
 
   }
+
+
+}
+
+@include media-breakpoint-down(sm) {
+  #navbarSupportedContent {
+    position: absolute;
+    top: 90px;
+    z-index: 999999;
+    background: #fff;
+    padding: 0 50px 20px 50px;
+    left:0;
+    right: 0;
+  }
+
+  .navbar.navbar-expand-lg{
+    padding:10px;
+  }
+
+
+
 
 }
 

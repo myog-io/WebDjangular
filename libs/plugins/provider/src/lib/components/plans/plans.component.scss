@@ -1,13 +1,13 @@
-
+@import '~rfs/sass/_rfs';
 //HARDCODE
-//@import "../../../../../themes/providerfy/styles/variables";
 
 :host {
     display: contents;
 }
+
 /*
 h3 {
-    font-size: $plan-title-fs;
+    @include responsive-font-size( $plan-title-fs);
     font-weight: $plan-title-fw;
     font-family: $plan-title-ff;
     color: $plan-title-c;
@@ -15,11 +15,27 @@ h3 {
 }
 
 h6 {
-    font-size: $plan-headline-fs;
+    @include responsive-font-size( $plan-headline-fs);
     font-weight: $plan-headline-fw;
     font-family: $plan-headline-ff;
     color: $plan-headline-c;
     text-transform: uppercase;
     letter-spacing: 2px;
+}
+*/
+
+
+/*
+TODO: DAN
+h3{
+  padding-top: map-get($spacers, 3);
+  margin-bottom:0;
+
+
+  @include media-breakpoint-up(sm){
+    padding-top: map-get($spacers, 5);
+
+  }
+
 }
 */

@@ -12,10 +12,11 @@ import { NbToastrService } from '@nebular/theme';
   selector: 'wda-scaffold-edit',
   styleUrls: ['./scaffold-edit.component.scss'],
   template: `
+
       <wda-form [displayGroups]="form.displayGroups"
         (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)"
         [group]="form" [loading]="loading" [save_continue]="saveAndContinue"
-        [before_title]="before_title" [title]="title" [formLoading]="formLoading">
+        [before_title]="before_title" [title]="title" [formLoading]="formLoading" >
       </wda-form>
 `,
 })
@@ -48,7 +49,7 @@ export class ScaffoldEditComponent implements OnInit {
    * Check if we are sending or not a entry, to disable/enable button
    */
   loading = false;
-  formLoading = false;
+  formLoading = true;
 
   inlcude_args: any = {};
   saveAndContinue = true;
@@ -94,7 +95,7 @@ export class ScaffoldEditComponent implements OnInit {
    * Gets model Entry, Finding the Record
    */
   getEntry() {
-
+    this.formLoading = true;
     if (this.route.params['value'].id != null) {
       this.datastore.findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args).subscribe(
         (data: AbstractModel) => {

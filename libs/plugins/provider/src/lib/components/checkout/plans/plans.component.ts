@@ -6,7 +6,7 @@ import {ProviderCheckoutService} from "../../../data/services/provider-checkout.
   selector: 'plugin-provider-checkout-plans',
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.scss'],
-  host: {'class': 'col col-md-8'}
+  host: {'class': 'col-12 col-md-7 col-lg-8'}
 })
 export class PluginProviderCheckoutPlansComponent implements OnInit {
 

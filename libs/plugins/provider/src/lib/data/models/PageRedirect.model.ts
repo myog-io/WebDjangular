@@ -28,7 +28,6 @@ export class PageRedirectModel extends AbstractModel {
     type: 'select',
     label: 'Redirect from Page:',
     wrapper_class: 'col-6',
-    options_model: PageModel,
   })
   default_page: PageModel;
 
@@ -40,7 +39,6 @@ export class PageRedirectModel extends AbstractModel {
     type: 'select',
     label: 'Redirect to Page:',
     wrapper_class: 'col-6',
-    options_model: PageModel,
   })
   redirect_page: PageModel;
 
@@ -52,7 +50,6 @@ export class PageRedirectModel extends AbstractModel {
     type: 'checkbox',
     label: 'Cities',
     name: 'cities',
-    options_model: CityModel,
   })
   cities: CityModel;
 

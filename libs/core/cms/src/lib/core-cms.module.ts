@@ -1,17 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxGalleryModule } from 'ngx-gallery';
+import { MenuBuilderModule } from './menu-builder/menu_builder.module';
 import { CoreCmsGalleryComponent } from './components/gallery/gallery.component';
-
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgmCoreModule } from '@agm/core';
+import { CoreCmsMapsComponent } from './components/maps/maps.component';
 
 const MODULES = [
   CommonModule,
-  NgxGalleryModule
+  MenuBuilderModule,
+  NgbCarouselModule,
+  AgmCoreModule,
 ];
 
 
 const COMPONENTS = [
-  CoreCmsGalleryComponent
+  CoreCmsGalleryComponent,
+  CoreCmsMapsComponent
 ];
 
 

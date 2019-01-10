@@ -33,7 +33,7 @@ export class CoreConfigModel extends AbstractModel {
     type: 'select',
     label: 'Core Website',
     wrapper_class: 'col-6',
-    options_model: CoreWebsiteModel,
+    model: CoreWebsiteModel,
     backendResourceName: 'CoreWebsite'
   })
   core_website: CoreWebsiteModel;

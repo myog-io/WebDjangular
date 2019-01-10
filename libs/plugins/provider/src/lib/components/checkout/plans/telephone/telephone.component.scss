@@ -1,3 +1,4 @@
+@import '~rfs/sass/_rfs';
 :host {
   padding-left: 5px;
   padding-right: 5px;
@@ -20,7 +21,7 @@
       font-family: "Boston", Arial, Helvetica, sans-serif;
       color: #fff;
       padding: 0;
-      font-size: 24px;
+      @include responsive-font-size( 24px);
       height: 80px;
       line-height: 26px;
       vertical-align: text-bottom;
@@ -38,7 +39,7 @@
       color: #fff;
 
       .currency-unit {
-        font-size: 16px;
+        @include responsive-font-size( 16px);
         font-weight: 600;
         vertical-align: text-bottom;
         padding-right: 5px;
@@ -46,13 +47,13 @@
       }
 
       .price {
-        font-size: 30px;
+        @include responsive-font-size( 30px);
         font-weight: 600;
         vertical-align: text-bottom;
       }
 
       .periodicity {
-        font-size: 16px;
+        @include responsive-font-size( 16px);
         font-weight: 400;
         vertical-align: text-bottom;
       }
@@ -98,7 +99,7 @@
 
       a {
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        font-size: 11px;
+        @include responsive-font-size( 11px);
         font-weight: 600;
         color: #899299;
         text-decoration: underline;

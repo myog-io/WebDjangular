@@ -35,7 +35,7 @@ export class CoreConfigGroupModel extends AbstractModel {
     type: 'select',
     label: 'Core Config Input',
     wrapper_class: 'col-6',
-    options_model: CoreConfigInputModel,
+    model: CoreConfigInputModel,
     backendResourceName: 'core_config_input'
   })
   core_config_input: CoreConfigInputModel[];

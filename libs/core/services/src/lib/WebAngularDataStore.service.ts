@@ -1,32 +1,26 @@
-import { Injectable } from '@angular/core';
-import {
-  JsonApiDatastoreConfig,
-  JsonApiDatastore,
-  DatastoreConfig,
-  JsonApiModel,
-  ModelType,
-  ModelConfig,
-} from 'angular2-jsonapi';
+import {Injectable} from '@angular/core';
+import {DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel,} from 'angular2-jsonapi';
 
 
+import {GroupModel, PermissionModel, UserModel} from '@webdjangular/core/users-models';
+import {BlockModel, PageModel} from '@webdjangular/core/cms-models';
+import {AbstractModel, ContentTypeModel} from '@webdjangular/core/data-models';
+import {CoreConfigGroupModel} from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
+import {CoreConfigInputModel} from 'libs/core/data/src/lib/models/CoreConfigInput.model';
+import {CoreConfigModel} from 'libs/core/data/src/lib/models/CoreConfig.model';
+import {CityModel, StreetModel} from '@webdjangular/plugins/provider-data';
+import {ProductModel} from 'libs/plugins/store/src/lib/data/models/Product.model';
+import {ProductTypeModel} from 'libs/plugins/store/src/lib/data/models/ProductType.model';
+import {Observable} from 'rxjs';
+import {ResellerModel} from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
+import {CondoModel} from 'libs/plugins/provider/src/lib/data/models/Condo.model';
+import {ChannelModel} from 'libs/plugins/provider/src/lib/data/models/Channel.model';
+import {ProductAttributeModel} from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
+import {ProductAttributeOptionModel} from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
+import {PostalCodeRangeModel} from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
+import {MenuModel} from 'libs/core/cms/src/lib/models/Menu.model';
+import {MenuItemModel} from 'libs/core/cms/src/lib/models/MenuItem.model';
 
-import { UserModel, GroupModel, PermissionModel } from '@webdjangular/core/users-models';
-import { PageModel, BlockModel } from '@webdjangular/core/cms-models';
-import { ContentTypeModel, AbstractModel } from '@webdjangular/core/data-models';
-import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
-import { CoreConfigInputModel } from 'libs/core/data/src/lib/models/CoreConfigInput.model';
-import { CoreConfigModel } from 'libs/core/data/src/lib/models/CoreConfig.model';
-import { CityModel, StreetModel } from '@webdjangular/plugins/provider-data';
-import { ProductModel } from 'libs/plugins/store/src/lib/data/models/Product.model';
-import { ProductTypeModel } from 'libs/plugins/store/src/lib/data/models/ProductType.model';
-import { Observable } from 'rxjs';
-import { ResellerModel } from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
-import { CondoModel } from 'libs/plugins/provider/src/lib/data/models/Condo.model';
-import { ChannelModel } from 'libs/plugins/provider/src/lib/data/models/Channel.model';
-import { ProductAttributeModel } from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
-import { ProductAttributeOptionModel } from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
-import { HttpHeaders } from '@angular/common/http';
-import { PostalCodeRangeModel } from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
 // tslint:disable-next-line:variable-name
 
 function cleanEmptyRecursive(attribute) {
@@ -87,55 +81,61 @@ const config: DatastoreConfig = {
     ProductType: ProductTypeModel, // Store
     ProductAttribute: ProductAttributeModel, // Store
     ProductAttributeOption: ProductAttributeOptionModel, // Store
+    MenuItem: MenuItemModel,
+    Menu: MenuModel,
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes
   //}
 };
+
 @Injectable()
 @JsonApiDatastoreConfig(config)
 export class WebAngularDataStore extends JsonApiDatastore {
-  //protected getRelationships(data: any): any {
-  //  let relationships: any;
-  //  for (const key in data) {
-  //    if (data.hasOwnProperty(key)) {
-  //      if (data[key] instanceof AbstractModel) {
-//
-  //        relationships = relationships || {};
-//
-  //        if (data[key].id) {
-  //          relationships[key] = {
-  //            data: this.buildSingleRelationshipData(data[key])
-  //          };
-  //        }
-  //      } else if (data[key] instanceof Array && data[key].length > 0 && this.isValidToManyRelation(data[key])) {
-//
-  //        relationships = relationships || {};
-//
-  //        const relationshipData = data[key]
-  //          .filter((model: AbstractModel) => model.id)
-  //          .map((model: AbstractModel) => this.buildSingleRelationshipData(model));
-//
-  //        relationships[key] = {
-  //          data: relationshipData
-  //        };
-  //      } else if (data[key] instanceof Array && data[key].length <= 0) {
-  //        relationships = relationships || {};
-  //        // Cleaning to Many Relationship
-  //        relationships[key] = {
-  //          data: []
-  //        };
-  //      }
-  //    }
-  //  }
-  //  return relationships;
-  //}
+  protected getRelationships(data: any): any {
+    let relationships: any;
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (data[key] instanceof AbstractModel) {
+
+          relationships = relationships || {};
+
+          if (data[key].id) {
+            relationships[key] = {
+              data: this.buildSingleRelationshipData(data[key])
+            };
+          }
+        } else if (data[key] instanceof Array && data[key].length > 0 && this.isValidToManyRelation(data[key])) {
+
+          relationships = relationships || {};
+
+          const relationshipData = data[key]
+            .filter((model: AbstractModel) => model.id)
+            .map((model: AbstractModel) => this.buildSingleRelationshipData(model));
+
+          relationships[key] = {
+            data: relationshipData
+          };
+        } else if (data[key] instanceof Array && data[key].length <= 0) {
+          relationships = relationships || {};
+          // Cleaning to Many Relationship
+          relationships[key] = {
+            data: []
+          };
+        }
+      }
+    }
+    return relationships;
+  }
+
   /**
    * This Function Cleans the Attributes from the Request and send to the Model
    * For now we don't want to do that, because could have read_only dynamic attributes added to the backend
    * TODO: Improve how we manage Dynamic Attributes
-   * @param modelType
-   * @param attributes
+   * @param hasManyFields
+   * @param modelConfig
+   * @param extraOptions
+   * @param model
    */
 
   saveHasManyRelationship<T extends JsonApiModel>(hasManyFields = [], modelConfig = {}, extraOptions = {}, model: JsonApiModel): Observable<any> {
@@ -170,7 +170,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
         let body: any = {
           data: null // TODO: Improve this
         };
-        this.http.patch(url, body, { headers: this.buildHttpHeaders() }).subscribe(
+        this.http.patch(url, body, {headers: this.buildHttpHeaders()}).subscribe(
           (r) => {
             if (i + 1 == hasManyFields.length) {
               observe.complete();
@@ -181,4 +181,5 @@ export class WebAngularDataStore extends JsonApiDatastore {
       }
     });
   }
+
 }

@@ -31,7 +31,7 @@ export class GroupModel extends AbstractModel {
     type: 'checkbox',
     label: 'Permissions',
     wrapper_class: 'col-12',
-    options_model: PermissionModel,
+    model: PermissionModel,
   })
   permissions: PermissionModel;
 

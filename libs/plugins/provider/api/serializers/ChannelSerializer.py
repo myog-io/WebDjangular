@@ -1,8 +1,9 @@
-from ..models.Channel import Channel
-from libs.plugins.store.api.models.Product import Product
 from rest_framework import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
+
+from libs.plugins.store.api.models.Product import Product
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
+from ..models.Channel import Channel
 
 
 class ChannelSerializer(WebDjangoSerializer):
@@ -19,6 +20,7 @@ class ChannelSerializer(WebDjangoSerializer):
     )
     groups = serializers.JSONField(required=False, allow_null=True)
     types = serializers.JSONField(required=False, allow_null=True)
+
     class Meta:
         fields = '__all__'
         model = Channel

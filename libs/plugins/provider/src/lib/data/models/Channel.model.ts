@@ -32,15 +32,21 @@ export class ChannelModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
+    formType: FormArray,
     type: 'select',
     label: 'Groups',
+    addTags: true,
+    multiple: true,
   })
   groups: string[];
 
   @Attribute()
   @ExtraOptions({
+    formType: FormArray,
     type: 'select',
     label: 'Types',
+    addTags: true,
+    multiple: true,
   })
   types: string[];
 
@@ -68,7 +74,6 @@ export class ChannelModel extends AbstractModel {
     type: 'checkbox',
     label: 'Products',
     model: ProductModel,
-    options_model: ProductModel
   })
   products: ProductModel;
 

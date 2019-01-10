@@ -1,47 +1,81 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { WebAngularDataStore } from '@webdjangular/core/services';
 import { CityModel } from '../../data/models/City.model';
+import { Subscription } from 'rxjs';
+import { AgmMap, MapTypeStyle } from '@agm/core';
 
 @Component({
   selector: 'plugin-provider-plans-list',
-  template: `
-  <section [id]="title_id">
-    <div class="container">
-        <div class="col-md-12">
-            <h3 class="pt-4 pb-3 mb-0 text-center text-uppercase" [style.color]="titleColor" [style.background]="background">{{title}}</h3>
-            <ul *ngIf="cities.length > 0">
-                <li class="pb-3" *ngFor="let city of cities;">
-                  <i class="icon text-primary fas fa-map-marker-alt"></i> {{city.name}}
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-<ng-template #loading_holder>
-  <div class="col-12 text-center">
-    <i class="fas fa-spinner fa-spin fa-5x"></i>
-  </div>
-</ng-template>
-
-  `,
+  styleUrls: ['city-list.component.scss'],
+  templateUrl: 'city-list.component.html',
 })
-export class PluginProviderCityListComponent implements OnInit {
+export class PluginProviderCityListComponent implements OnInit, OnDestroy {
 
-  @Input() title: string = 'CIDADES ATENDIDAS';
+  @Input() title = 'CIDADES ATENDIDAS';
   @Input() titleColor: string = null;
   @Input() background: string = null;
-  @Input() title_id: string = 'cidades-atendidas';
-  private cities = []
+  @Input() title_id = 'cidades-atendidas';
+  @Input() show_map = true
+  @Input() color = '#00b8bc';
+  @Input() zoom = 7.5;
+  public cities = []
   public loading = true;
-  constructor(private datastore: WebAngularDataStore) {
+  public sub: Subscription
+  public lat: number;
+  public lng: number;
+  public styles: MapTypeStyle[]
+  constructor(
+    private datastore: WebAngularDataStore,
+  ) {
+    this.styles = [
+      {
+        featureType: "all",
+        elementType: "all", stylers: [
+          { hue: this.color }
+        ]
+      },
+      {
+        featureType: "water",
+        elementType: "all", stylers: [
+          { hue: this.color },
+          { saturation: 0 }, { lightness: 50 }
+        ]
+      },
+      {
+        featureType: "poi", elementType: "all", stylers: [{ visibility: "off" }]
+      }
+    ];
   }
 
   ngOnInit() {
     // TODO: Make Recursive The find
-    this.datastore.findAll(CityModel,{page:{size:100},order:'name',field:'name'}).subscribe((query)=>{
+    this.sub = this.datastore.findAll(CityModel, { page: { size: 100 }, order: 'name', field: 'name' }).subscribe((query) => {
       this.cities = query.getModels();
+
+      let count = 0;
+      let minLat: number = 999999;
+      let maxLat: number = -99999;
+      let minLon: number = 99999;
+      let maxLon: number = -99999;
+
+      for (let i = 0; i < this.cities.length; i++) {
+        const city = this.cities[i];
+        if (city.lat && city.long) {
+          count += 1;
+          maxLat = Math.max(city.lat, maxLat);
+          minLat = Math.min(city.lat, minLat);
+          maxLon = Math.max(city.long, maxLon);
+          minLon = Math.min(city.long, minLon);
+        }
+      }
+      this.lat = (maxLat + minLat) / 2;
+      this.lng = (maxLon + minLon) / 2;
       this.loading = false;
     })
+  }
+  ngOnDestroy() {
+    this.sub.unsubscribe()
+    this.sub = null;
   }
 
 }

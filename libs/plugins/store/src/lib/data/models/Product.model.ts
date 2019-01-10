@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
@@ -7,7 +7,7 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from './ProductType.model';
 import {SmartTableSettings} from '@webdjangular/core/data';
 import {ExtraOptions} from '@webdjangular/core/decorator';
-import {FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormGroup, Validators} from '@angular/forms';
 
 enum productDG {
   type = 'product-type',
@@ -26,7 +26,7 @@ enum productDG {
   modelEndpointUrl: 'store/product',
 })
 export class ProductModel extends AbstractModel {
-  public static include = 'product_type';
+  public static include = 'product_type,addons';
 
   @Attribute()
   id: string;
@@ -52,7 +52,6 @@ export class ProductModel extends AbstractModel {
     wrapper_class: 'col-12',
     placeholder: 'Select the Product Type',
     //value: null,
-    options_model: ProductTypeModel,
     options_include: 'data',
     displayGroup: productDG.type
 
@@ -132,12 +131,13 @@ export class ProductModel extends AbstractModel {
     formType: FormGroup,
     type: 'formGroup',
     displayGroup: productDG.attributes,
+    model: ProductTypeModel,
     copyOptions: {
-      name:'product_type',
-      field:'data',
+      name: 'product_type',
+      field: 'data',
     }
   })
-  data:object[] ;
+  data: object[];
 
   @Attribute()
   @ExtraOptions({
@@ -246,16 +246,16 @@ export class ProductModel extends AbstractModel {
   cost: number;
 
 
-  @Attribute()
+  @HasMany()
   @ExtraOptions({
-    type: 'text',
-    label: 'Cost',
-    inputType: 'number',
-    wrapper_class: 'col-6',
-    placeholder: '',
+    type: 'checkbox',
+    formType: FormArray,
+    label: 'Product Addons',
+    model: ProductModel,
+    options: {product_class: ProductClasses.addon},
     displayGroup: productDG.addons
   })
-  addons: ProductModel[];
+  addons: ProductModel;
 
   @Attribute()
   price: number;

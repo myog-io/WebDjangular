@@ -10,25 +10,29 @@ export class ModelPaginatorControls {
   unparsedPaginatorMeta = null;
   entries = [];
 
-  options = {};
+  options: any = {};
 
   initControls(options) {
     this.options = options;
     if (this.options['pageSize'] !== 'undefined') {
       this.pageSize = this.options['pageSize'];
     }
-   this.makeQuery();
+    this.makeQuery();
   }
 
   makeQuery() {
+    let query_options: any = {};
+    if (this.options.options) {
+      query_options = this.options.options
+    }
+    query_options.page = {
+      size: this.pageSize,
+      number: this.currentPage,
+    }
+
     if (typeof this.options['useDatastore'] !== 'undefined') {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
-        this.options['useDatastore'].findAll(this.options['modelToPaginate'], {
-          page: {
-            size: this.pageSize,
-            number: this.currentPage
-          }
-        }).subscribe(
+        this.options['useDatastore'].findAll(this.options['modelToPaginate'], query_options).subscribe(
           (r: JsonApiQueryData<JsonApiModel>) => {
             this.updatePaginationControls(r.getMeta(), r.getModels());
           }
@@ -65,8 +69,18 @@ export class ModelPaginatorControls {
 
   getPagesArray() {
     let a = [];
-    for (let i = 0; i < this.getTotalPages(); i++) {
+    let start_i = 0;
+    const max = 7;
+    const left = 4;
+    if(this.currentPage > left){
+      start_i = this.currentPage - left;
+    }
+
+    for (let i = start_i; i < this.getTotalPages(); i++) {
       a.push(i + 1);
+      if (a.length >= max) {
+        return a;
+      }
     }
     return a;
   }

@@ -2,7 +2,7 @@ from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework_json_api.views import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from libs.core.cms.api.models.Menu import Menu
 from libs.core.cms.api.serializers.MenuSerializer import MenuSerializer
@@ -22,3 +22,8 @@ class MenuViewSet(ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     permission_classes = ()
+
+
+
+class MenuRelationshipView(RelationshipView):
+    queryset = Menu.objects

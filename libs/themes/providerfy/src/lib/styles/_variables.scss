@@ -105,7 +105,16 @@ $cyan: rgb(31, 197, 241);
 $red: rgb(243, 52, 12);
 
 
-$spacer: 2rem;
+$spacer: 2rem !default;;
+$spacers: () !default;
+$spacers: map-merge((
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3)
+), $spacers);
 
 
 $primary: #00b9bd;
@@ -131,6 +140,9 @@ $gray-600: #707b85;
 $gray-700: #616c74;
 $gray-800: #5f6a73;
 $gray-900: #7c868e;
+
+
+
 
 
 $h1-fs: 56px;

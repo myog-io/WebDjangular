@@ -1,14 +1,40 @@
 @import "../../styles/variables.scss";
+@import '~bootstrap/scss/bootstrap';
 
 header {
   height: $header-h;
   background: $white;
+
 }
 
 
-.header-logo{
-  background:url("../../assets/images/header_logo.png");
+.header-logo {
+  background: url("../../assets/images/header_logo.png");
   width: 236px;
   height: 72px;
 }
 
+
+
+@include media-breakpoint-down(sm) {
+  #navbarSupportedContent {
+    position: absolute;
+    top: 90px;
+    z-index: 999999;
+    background: #fff;
+    padding: 0 50px 20px 50px;
+    left:0;
+    right: 0;
+  }
+
+  .navbar.navbar-expand-lg{
+    padding:10px;
+  }
+
+
+  .navbar-brand{
+    margin-right:0;
+  }
+
+
+}

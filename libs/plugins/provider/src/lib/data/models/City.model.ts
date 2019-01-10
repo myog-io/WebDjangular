@@ -30,7 +30,6 @@ export class CityModel extends AbstractModel {
     type: 'text',
     label: 'Name',
     wrapper_class: 'col-6',
-    placeholder: 'Enter City Name',
     displayGroup: DiplayGroups.city
   })
   name: string;
@@ -41,7 +40,6 @@ export class CityModel extends AbstractModel {
     type: 'text',
     label: 'Short Name',
     wrapper_class: 'col-6',
-    placeholder: 'Entery City Short Name (NY)',
     displayGroup: DiplayGroups.city
   })
   short_name: string;
@@ -51,12 +49,32 @@ export class CityModel extends AbstractModel {
     validators: [],
     type: 'text',
     label: 'Code',
-    wrapper_class: 'col-6',
-    placeholder: 'Entery City Short Name (NY)',
+    wrapper_class: 'col-4',
     displayGroup: DiplayGroups.city
   })
   code: string;
 
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    inputType: 'number',
+    label: 'Latitude',
+    wrapper_class: 'col-4',
+    displayGroup: DiplayGroups.city
+  })
+  lat: number;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    inputType: 'number',
+    label: 'Longitude',
+    wrapper_class: 'col-4',
+    displayGroup: DiplayGroups.city
+  })
+  long: number;
 
   @HasMany()
   @ExtraOptions({
@@ -65,7 +83,6 @@ export class CityModel extends AbstractModel {
     label: 'Postal Codes',
     wrapper_class: 'col-12',
     model: PostalCodeRangeModel,
-    options_model: PostalCodeRangeModel,
     displayGroup: DiplayGroups.postal_codes
   })
   postal_codes: PostalCodeRangeModel[];
@@ -78,7 +95,6 @@ export class CityModel extends AbstractModel {
     label: 'Streets',
     smart_table_mode: 'external',
     model: StreetModel,
-    options_model: StreetModel,
     displayGroup: DiplayGroups.streets
   })
   streets: StreetModel[];
@@ -145,10 +161,14 @@ export class CityModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      short_name: {
-        title: 'Short Name',
+      lat: {
+        title: 'Latitude',
         type: 'text',
       },
+      long: {
+        title: 'Longitude',
+        type: 'text',
+      }
     },
   };
 }
