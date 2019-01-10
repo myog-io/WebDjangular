@@ -1,34 +1,25 @@
 import {Injectable} from '@angular/core';
-import {
-  DatastoreConfig,
-  JsonApiDatastore,
-  JsonApiDatastoreConfig,
-  JsonApiModel,
-  JsonApiQueryData,
-  ModelType,
-} from 'angular2-jsonapi';
+import {DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel,} from 'angular2-jsonapi';
 
 
 import {GroupModel, PermissionModel, UserModel} from '@webdjangular/core/users-models';
 import {BlockModel, PageModel} from '@webdjangular/core/cms-models';
-import {ContentTypeModel, AbstractModel} from '@webdjangular/core/data-models';
+import {AbstractModel, ContentTypeModel} from '@webdjangular/core/data-models';
 import {CoreConfigGroupModel} from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 import {CoreConfigInputModel} from 'libs/core/data/src/lib/models/CoreConfigInput.model';
 import {CoreConfigModel} from 'libs/core/data/src/lib/models/CoreConfig.model';
 import {CityModel, StreetModel} from '@webdjangular/plugins/provider-data';
 import {ProductModel} from 'libs/plugins/store/src/lib/data/models/Product.model';
 import {ProductTypeModel} from 'libs/plugins/store/src/lib/data/models/ProductType.model';
-import {EMPTY, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ResellerModel} from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
 import {CondoModel} from 'libs/plugins/provider/src/lib/data/models/Condo.model';
 import {ChannelModel} from 'libs/plugins/provider/src/lib/data/models/Channel.model';
 import {ProductAttributeModel} from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
 import {ProductAttributeOptionModel} from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
-import {HttpHeaders} from '@angular/common/http';
 import {PostalCodeRangeModel} from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
 import {MenuModel} from 'libs/core/cms/src/lib/models/Menu.model';
 import {MenuItemModel} from 'libs/core/cms/src/lib/models/MenuItem.model';
-import {expand} from "rxjs/operators";
 
 // tslint:disable-next-line:variable-name
 
@@ -136,6 +127,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
     }
     return relationships;
   }
+
   /**
    * This Function Cleans the Attributes from the Request and send to the Model
    * For now we don't want to do that, because could have read_only dynamic attributes added to the backend
@@ -189,77 +181,5 @@ export class WebAngularDataStore extends JsonApiDatastore {
       }
     });
   }
-
-
-  /*
-  findAllRecursively<T extends JsonApiModel>(modelType: ModelType<T>,
-                                             params?: any, headers?: HttpHeaders,
-                                             customUrl?: string): Observable<JsonApiQueryData<T>> {
-
-    return new Observable(observe => {
-      let keepRecursively: boolean = true;
-      let asd = 0;
-
-      while (keepRecursively) {
-
-        asd++;
-        if (asd > 100) {
-          console.log("INFINITE LOOP");
-          break;
-        }
-      }
-
-
-      this.findAll(modelType, params, headers, customUrl).subscribe(
-        (queryData: JsonApiQueryData<ObservableT>) => {
-          let meta = queryData.getMeta();
-          let entries = queryData.getModels();
-
-          if (meta.pagination.page < meta.pagination.pages) {
-
-          }
-
-          console.log("findALL", queryData);
-
-          console.log(meta);
-          observe.complete();
-        });
-
-
-    });
-  }
-  */
-
-  /*
-  findAllRecursively<T extends JsonApiModel>(modelType: ModelType<T>,
-                                             params?: any, headers?: HttpHeaders,
-                                             customUrl?: string): Observable<JsonApiQueryData<T>> {
-
-    const getRange  = (params?: string): Observable<JsonApiQueryData<T>> => {
-
-      this.findAll(modelType, params, headers, customUrl).subscribe(
-        (queryData: JsonApiQueryData<T>) => {
-
-          let meta = queryData.getMeta();
-          let entries = queryData.getModels();
-
-        });
-
-
-    };
-
-    return getRange().pipe(expand((queryData: JsonApiQueryData<T>) => {
-      let meta = queryData.getMeta();
-
-      if (meta.pagination.page < meta.pagination.pages) {
-        params.page = meta.pagination.page++;
-        return getRange (params).subcribe();
-      } else {
-        return EMPTY;
-      }
-    }));
-  }
-  */
-
 
 }
