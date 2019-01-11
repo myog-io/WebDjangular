@@ -67,6 +67,7 @@
     ],
     "unified-signatures": true,
     "variable-name": false,
+    "semicolon": [true, "always"],
     "directive-selector": [
       true,
       "attribute",
