@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
 
 import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from '@webdjangular/core/users-models';
@@ -7,7 +7,7 @@ import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from './ProductType.model';
 import {SmartTableSettings} from '@webdjangular/core/data';
 import {ExtraOptions} from '@webdjangular/core/decorator';
-import {FormGroup, Validators, FormArray} from '@angular/forms';
+import {FormArray, FormGroup, Validators} from '@angular/forms';
 
 enum productDG {
   type = 'product-type',
@@ -133,11 +133,11 @@ export class ProductModel extends AbstractModel {
     displayGroup: productDG.attributes,
     model: ProductTypeModel,
     copyOptions: {
-      name:'product_type',
-      field:'data',
+      name: 'product_type',
+      field: 'data',
     }
   })
-  data:object[] ;
+  data: object[];
 
   @Attribute()
   @ExtraOptions({
@@ -244,7 +244,7 @@ export class ProductModel extends AbstractModel {
     displayGroup: productDG.pricing
   })
   cost: number;
- 
+
 
   @HasMany()
   @ExtraOptions({
@@ -252,7 +252,7 @@ export class ProductModel extends AbstractModel {
     formType: FormArray,
     label: 'Product Addons',
     model: ProductModel,
-    options: {product_class:ProductClasses.addon},
+    options: {product_class: ProductClasses.addon},
     displayGroup: productDG.addons
   })
   addons: ProductModel;
