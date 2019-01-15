@@ -9,7 +9,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <input
-    [type]="config.inputType ? config.inputType : text"
+    [type]="config.inputType ? config.inputType : 'text'"
     class="form-control"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name">

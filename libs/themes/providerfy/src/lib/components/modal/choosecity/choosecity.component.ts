@@ -15,10 +15,10 @@ import {ClientUserService} from "@webdjangular/core/services";
 })
 export class ThemeProviderfyModalChoosecityComponent {
 
-  private form: FormGroup;
-  private cities: any;
-  public loading = true;
-  public placeholder = "Onde você está?"
+  form: FormGroup;
+  cities: any;
+  loading = true;
+  placeholder = "Onde você está?"
 
   constructor(public activeModal: NgbActiveModal, private http: HttpClient, private datastore: WebAngularDataStore,
               private formBuilder: FormBuilder, private clientUserService: ClientUserService ) {
@@ -33,7 +33,7 @@ export class ThemeProviderfyModalChoosecityComponent {
 
   }
 
-  public getCities(): Promise<any> {
+  getCities(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.datastore.findAll(CityModel, {ordering:'name',page:{size:100}}).subscribe(
         (response: JsonApiQueryData<CityModel>) => {
@@ -47,11 +47,13 @@ export class ThemeProviderfyModalChoosecityComponent {
       )
     });
   }
+
   selectChange($event){
     if($event){
       this.placeholder = '';
     }
   }
+
   onSubmit() {
     //this.activeModal.close();
 

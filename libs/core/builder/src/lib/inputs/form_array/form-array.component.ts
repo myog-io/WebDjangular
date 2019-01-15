@@ -36,7 +36,7 @@ enum state {
             </ng2-smart-table>
             <ng-template #InceptionForm let-data>
               <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
-                        (relationshipUpdated)="relationshipUpdated($event)" [group]="form"
+                        [group]="form"
                         [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false"
                         [title]="config.label" [inceptionForm]="true" ></wda-form>
             </ng-template>
@@ -44,7 +44,6 @@ enum state {
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>
-
   `
 })
 export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {

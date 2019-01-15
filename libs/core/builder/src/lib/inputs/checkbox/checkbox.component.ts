@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractForm } from '@webdjangular/core/data-forms';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import { BuilderFormField, BuilderFormFieldConfig } from '@webdjangular/core/builder';
 
 import { WebAngularDataStore } from '@webdjangular/core/services';
 import { ModelPaginatorControls } from '../../model-paginator/model-paginator.controls';

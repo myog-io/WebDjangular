@@ -16,7 +16,7 @@ export class FormsComponent implements OnInit {
 
   @Input() slug: string;
 
-  private form: FormModel;
+  form: FormModel;
 
   private prePopulateData: object = {};
 

@@ -30,7 +30,7 @@
       </nb-card>
     </div>
   </div>
-  <div class="row" *ngIf="!formLoading;else loading_holder">
+  <div class="row" *ngIf="!formLoading;">
     <ng-container *ngFor="let item of displayGroups">
       <div [class]="item.wrapper_class" *ngIf="item.display">
         <ng-container *ngFor="let dg of item.groups">

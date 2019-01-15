@@ -13,6 +13,11 @@ import { throwIfAlreadyLoaded } from '@webdjangular/core/shared';
 import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { ClientUserService } from './client-user.service';
 
+export function jwtTokenGetter(module: string, res: any, options: NbAuthJWTToken) {
+  if (typeof res.body['data'] !== 'undefined') {
+    return res.body['data']['token'];
+  }
+}
 
 const SERVICES = [
   LayoutService,
@@ -46,11 +51,7 @@ const SERVICES = [
         token: {
           key: 'data.token',
           class: NbAuthJWTToken,
-          getter: (module: string, res: any, options: NbPasswordAuthStrategyOptions) => {
-            if (typeof res.body['data'] !== 'undefined') {
-              return res.body['data']['token'];
-            }
-          },
+          getter: jwtTokenGetter,
         }
       }),
     ],

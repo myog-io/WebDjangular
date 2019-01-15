@@ -12,9 +12,9 @@ import {ClientUserService} from "@webdjangular/core/services";
 })
 export class ThemeProviderfyTopHeaderComponent implements OnInit {
 
-  private city_name: string;
-  private plan_type: string;
-  private plan_type_default: string = 'personal';
+  city_name: string;
+  plan_type: string;
+  plan_type_default: string = 'personal';
 
   constructor(private modalService: NgbModal,
               private clientUserService: ClientUserService) {

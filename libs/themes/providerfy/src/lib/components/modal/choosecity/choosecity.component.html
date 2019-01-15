@@ -5,7 +5,7 @@
     <h2>SEJA BEM VINDO!</h2>
 
     <div class="form-group">
-      <ng-select class="form-control" (change)="onChange" formControlName="city" (change)="selectChange($event)" [multiple]="false"
+      <ng-select class="form-control" formControlName="city" (change)="selectChange($event)" [multiple]="false"
         [loading]="loading" [placeholder]="placeholder" [clearable]="false">
         <ng-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ng-option>
       </ng-select>

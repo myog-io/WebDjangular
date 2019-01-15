@@ -12,7 +12,7 @@ export class ModelPaginatorComponent implements OnChanges, OnInit {
 
   @Output() controls = new EventEmitter<ModelPaginatorControls>();
 
-  protected paginatorControls = new ModelPaginatorControls();
+  paginatorControls = new ModelPaginatorControls();
 
   ngOnInit(): void {
     this.startPaginator();
