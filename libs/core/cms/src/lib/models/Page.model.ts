@@ -7,7 +7,12 @@ import { BlockModel } from './Block.model';
 import { ExtraOptions } from '@webdjangular/core/decorator';
 import {Validators, FormGroup} from "@angular/forms";
 import {SmartTableSettings} from "@webdjangular/core/data";
+import {ProductClasses} from "../../../../../plugins/store/src/lib/data/interfaces/Product.interface";
 
+enum pageDG {
+  general = 'general',
+  seo = 'seo'
+}
 
 @JsonApiModelConfig({
   type: 'Page',
@@ -26,6 +31,7 @@ export class PageModel extends AbstractModel {
     label: 'Page Title',
     wrapper_class: 'col-12',
     placeholder: 'Enter the Page Title',
+    displayGroup: pageDG.general
   })
   title: string;
 
@@ -36,6 +42,7 @@ export class PageModel extends AbstractModel {
     label: 'Page URL',
     wrapper_class: 'col-12',
     placeholder: 'Enter the Page Url (slug)',
+    displayGroup: pageDG.general
   })
   slug: string;
 
@@ -44,7 +51,8 @@ export class PageModel extends AbstractModel {
     validators: [Validators.required],
     type: 'codeEditor',
     label: 'Page Content',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-12',
+    displayGroup: pageDG.general
   })
   content: string;
 
@@ -55,6 +63,7 @@ export class PageModel extends AbstractModel {
     label: 'Header',
     wrapper_class: 'col-6',
     model: BlockModel,
+    displayGroup: pageDG.general
   })
   header: BlockModel;
 
@@ -65,8 +74,31 @@ export class PageModel extends AbstractModel {
     label: 'Footer',
     wrapper_class: 'col-6',
     model: BlockModel,
+    displayGroup: pageDG.general
   })
   footer: BlockModel;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Title',
+    wrapper_class: 'col-12',
+    placeholder: '',
+    displayGroup: pageDG.seo
+  })
+  seo_title: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Description',
+    wrapper_class: 'col-12',
+    placeholder: '',
+    displayGroup: pageDG.seo
+  })
+  seo_description: string;
 
   @Attribute()
   created: Date;
@@ -83,6 +115,29 @@ export class PageModel extends AbstractModel {
   set pk(value) {
 
   }
+
+
+  public displayGroups = [
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: pageDG.general,
+          title: '',
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: pageDG.seo,
+          title: 'SEO',
+        }
+      ]
+    }
+
+  ];
 
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;

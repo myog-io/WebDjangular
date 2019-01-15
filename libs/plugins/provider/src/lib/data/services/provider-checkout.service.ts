@@ -62,6 +62,10 @@ export class ProviderCheckoutService {
   public tv_plan_collapsed: boolean = false;
   public telephone_plan_collapsed: boolean = false;
 
+  public pre_selected_internet_sku: string = '';
+  public pre_selected_tv_sku: string =  '';
+  public pre_selected_telephone_sku: string = '';
+
   public selected_internet_plan: any = false;
   public selected_tv_plan: any = false;
   public selected_telephone_plan: any = false;
@@ -112,9 +116,12 @@ export class ProviderCheckoutService {
       rg: ['', [Validators.required]],
       dob: ['', [Validators.required]]
     });
+  }
 
+  checkPageLoad(){
 
   }
+
 
   loadPlans(type) {
     for (let i = 0; i < 2; i++) {
@@ -141,8 +148,11 @@ export class ProviderCheckoutService {
         this.datastore.findAll(ProductModel, options).subscribe((query: JsonApiQueryData<ProductModel>) => {
           if (i == 0) {
             this.plans[type] = query.getModels();
+            this.addPreSelectPlans(type);
           } else {
             this.plans_optionals[type] = query.getModels();
+
+
 
             if (type === 'tv') {
               let plan = this.plans_optionals.tv[this.plans_optionals.tv.findIndex(
@@ -152,13 +162,27 @@ export class ProviderCheckoutService {
                 plan: plan,
                 qty: 0
               }
-              console.log(this.plans.tv);
             }
           }
         }, (error) => {
           // TODO: do something
         });
       }
+    }
+  }
+
+  addPreSelectPlans(type: string) {
+    if(type == 'internet' && this.pre_selected_internet_sku){
+      this.selectInternetPlan(this.plans.internet.find(
+        (data) => data.sku == this.pre_selected_internet_sku));
+    }
+    if(type == 'tv' && this.pre_selected_tv_sku){
+      this.selectTVPlan(this.plans.tv.find(
+        (data) => data.sku == this.pre_selected_tv_sku));
+    }
+    if(type == 'telephone' && this.pre_selected_telephone_sku){
+      this.selectTelephonePlan(this.plans.telephone.find(
+        (data) => data.sku == this.pre_selected_telephone_sku));
     }
   }
 
