@@ -973,6 +973,60 @@
           }
         }
       }
+    },
+    "prerender": {
+      "root": "apps/prerender",
+      "sourceRoot": "apps/prerender/src",
+      "projectType": "application",
+      "prefix": "prerender",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/builders:node-build",
+          "options": {
+            "outputPath": "dist/apps/prerender",
+            "main": "apps/prerender/src/main.ts",
+            "tsConfig": "apps/prerender/tsconfig.app.json"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/prerender/src/environments/environment.ts",
+                  "with": "apps/prerender/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/builders:node-execute",
+          "options": {
+            "buildTarget": "prerender:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/prerender/tsconfig.app.json",
+              "apps/prerender/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/prerender/jest.config.js",
+            "tsConfig": "apps/prerender/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

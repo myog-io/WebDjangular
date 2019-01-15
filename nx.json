@@ -84,6 +84,9 @@
       "tags": [
         "builder htmlbuilder form"
       ]
+    },
+    "prerender": {
+      "tags": []
     }
   }
 }
