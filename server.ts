@@ -16,13 +16,13 @@ enableProdMode();
 const app = express();
 
 const PORT = process.env.PORT || 4000;
-const DIST_FOLDER = join(process.cwd(), 'dist/browser');
-
+const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
+const clientAppServer = (file = '') => join(DIST_FOLDER, 'client', file)
 
 // Fixing window is not defined https://github.com/angular/universal/issues/830
 const domino = require('domino');
 const fs = require('fs');
-const template = fs.readFileSync(join(DIST_FOLDER, 'index.html')).toString();
+const template = fs.readFileSync(clientAppServer('index.html')).toString();
 const win = domino.createWindow(template);
 global['window'] = win;
 global['document'] = win.document;
@@ -45,20 +45,20 @@ app.engine('html', ngExpressEngine({
 }));
 
 app.set('view engine', 'html');
-app.set('views', DIST_FOLDER);
+//app.set('views', DIST_FOLDER);
+app.set('views', clientAppServer());
+
 
 // Example Express Rest API endpoints
 // app.get('/api/**', (req, res) => { });
 // Server static files from /browser
-app.get('*.*', express.static(DIST_FOLDER, {
-  maxAge: '1y'
-}));
+
+app.get('*.*', express.static(clientAppServer()));
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render('index', { req });
+  res.render(clientAppServer('index.html'), { req });
 });
-
 // Start up the Node server
 app.listen(PORT, () => {
   console.log(`Node Express server listening on http://localhost:${PORT}`);

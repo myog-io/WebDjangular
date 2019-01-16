@@ -107,7 +107,13 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
 
     })
   }
-
+  /**
+   * relationshipUpdated
+   * @param $event relationshipUpdated
+   */
+  relationshipUpdated($event){
+    console.log($event)
+  }
   /**
    * Submit Form Values
    */

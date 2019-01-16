@@ -16,8 +16,17 @@ import { CoreServicesModule } from '@core/services/src/lib/core-services.module'
 import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.interceptor';
 import { GoogleMapsLazyConfig } from '@core/cms/src/lib/services/GoogleMapsLazyConfig';
 import { ServerTransferStateModule } from '@angular/platform-server';
+import { AppRoutingModule } from 'apps/admin/src/app/app-routing.module';
 
 export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
+
+
+
+declare var global;
+
+export function getBaseHttpUrl() {
+  return (global as any)['HTTP_BASE_URL'];
+}
 
 export function getLocalStorage() {
   return (typeof window !== "undefined") ? window.localStorage : null;
@@ -30,31 +39,18 @@ export function wda_init(wdaconfig: WDAConfig) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     JsonApiModule,
+    BrowserModule.withServerTransition({appId: 'client'}),
     AgmCoreModule.forRoot(),
     NxModule.forRoot(),
     NgxPageScrollModule,
     CoreServicesModule.forRoot(),
-    BrowserModule.withServerTransition({appId: 'app'}),
     ServerTransferStateModule,
-    RouterModule.forRoot(
-      [
-        /*
-        {
-          path: '',
-          loadChildren: () => CoreDynamicPageLoaderModule
-        }*/
-        {
-          path: '',
-          loadChildren: "@themes/providerfy/src/lib/providerfy.module#ThemeProviderfyModule"
-        },
-      ],
-      {initialNavigation: 'enabled', anchorScrolling: 'enabled'}
-    )
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -68,9 +64,8 @@ export function wda_init(wdaconfig: WDAConfig) {
       multi: true
     },
     {provide: LAZY_MAPS_API_CONFIG, useClass: GoogleMapsLazyConfig},
-    {provide: APP_INITIALIZER, useFactory: wda_init, deps: [WDAConfig], multi: true},
-
-
+    //{provide: APP_INITIALIZER, useFactory: wda_init, deps: [WDAConfig], multi: true},
+    {provide: HTTP_BASE_URL, useFactory: getBaseHttpUrl},
   ],
 })
 export class AppModule {
