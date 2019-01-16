@@ -1,12 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import { HttpClient } from '@angular/common/http';
-import { Theme } from "@webdjangular/core/interfaces";
+
 import 'rxjs/add/operator/map';
 import { UrlSegment } from '@angular/router';
 import { WebAngularDataStore } from './WebAngularDataStore.service';
-import { PageModel } from '@webdjangular/core/cms-models';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { ClientUserService } from './client-user.service';
+import { Theme } from '@core/interfaces/src/lib/theme';
+import { PageModel } from '@core/cms/src/lib/models';
 
 @Injectable({
   providedIn: 'root',
@@ -95,10 +96,10 @@ export class WDAConfig {
   }
 
   public getThemePath() {
-    //return '@webdjangular/themes/clean#ThemesCleanModule'
+    //return '@themes/clean#ThemesCleanModule'
     //console.log(this.theme);
     //return "../../../../../libs/themes/clean/src/index.ts#ThemesCleanModule"
-    return '@webdjangular/themes/' + this.theme.slug + '#' + this.theme.angular_module;
+    return '@themes/' + this.theme.slug + '#' + this.theme.angular_module;
     //return "../../../themes/" + this.theme.slug + "/" + this.theme.slug + ".module#" + this.theme.angular_module;
   }
 

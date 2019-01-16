@@ -1,7 +1,7 @@
-import { Component, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
+import { Component, OnInit } from '@angular/core';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import { AbstractForm } from '@core/data/src/lib/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 interface BaseLogicCondition {
   type: 'logic_condition',

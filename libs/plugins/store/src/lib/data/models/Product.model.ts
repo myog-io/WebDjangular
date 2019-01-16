@@ -1,13 +1,11 @@
 import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
 import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from './ProductType.model';
-import {SmartTableSettings} from '@webdjangular/core/data';
-import {ExtraOptions} from '@webdjangular/core/decorator';
 import {FormArray, FormGroup, Validators} from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 enum productDG {
   type = 'product-type',

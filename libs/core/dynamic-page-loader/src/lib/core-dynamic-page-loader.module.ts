@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CoreDynamicPageLoaderComponent } from './core-dynamic-page-loader.component';
-import { CoreDynamicComponentLoaderModule } from '@webdjangular/core/dynamic-component-loader';
+import { CoreDynamicComponentLoaderModule } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.module';
+
 
 @NgModule({
   imports: [
@@ -11,7 +12,7 @@ import { CoreDynamicComponentLoaderModule } from '@webdjangular/core/dynamic-com
     CoreDynamicComponentLoaderModule.forRoot(),
     RouterModule.forChild([
 
-      //{path: 'themes-clean', loadChildren: '@webdjangular/themes/clean#ThemesCleanModule'},
+      //{path: 'themes-clean', loadChildren: '@themes/clean#ThemesCleanModule'},
       //{path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent}
 
     ])

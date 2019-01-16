@@ -1,7 +1,4 @@
-import { FormControl, Validators } from '@angular/forms';
-
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
-import { AbstractForm } from '@webdjangular/core/data-forms';
+import { AbstractForm } from "@core/data/src/lib/forms";
 
 export class MediaForm extends AbstractForm {
   /*

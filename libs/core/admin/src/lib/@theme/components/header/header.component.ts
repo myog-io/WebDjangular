@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
-import { AnalyticsService } from '@webdjangular/core/services';
-import { LayoutService } from '@webdjangular/core/services';
+
 
 import { NbAccessChecker } from '@nebular/security'
+import { AnalyticsService } from '@core/services/src/lib/analytics.service';
+import { LayoutService } from '@core/services/src/lib/layout.service';
 
 @Component({
   selector: 'webdjangular-header',

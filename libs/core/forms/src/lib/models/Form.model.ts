@@ -1,9 +1,7 @@
 import {JsonApiModelConfig, Attribute, HasMany, BelongsTo} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
 import {FormForm} from '../forms/Form.form';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { PermissionModel } from '@core/users/src/lib/models';
 
 
 @JsonApiModelConfig({

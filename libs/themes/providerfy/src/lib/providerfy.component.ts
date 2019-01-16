@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {CoreDynamicPageLoaderComponent} from "@webdjangular/core/dynamic-page-loader";
+import { CoreDynamicPageLoaderComponent } from "@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.component";
 
 @Component({
   selector: 'theme-providerfy',

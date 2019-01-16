@@ -1,11 +1,11 @@
 import { Validators, FormBuilder } from "@angular/forms";
 import { OnDestroy, OnInit, Component, ChangeDetectorRef } from "@angular/core";
 import { Subscription } from "rxjs";
-import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NbToastrService } from "@nebular/theme";
-import { AbstractModel } from "@webdjangular/core/data-models";
-import { MediaModel } from "libs/core/media/src/lib/models/Media.model";
 import { JsonApiQueryData } from "angular2-jsonapi";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
+import { AbstractModel } from "@core/data/src/lib/models";
+import { MediaModel } from "@core/media/src/lib/models/Media.model";
 
 @Component({
   selector: 'wda-import-json',

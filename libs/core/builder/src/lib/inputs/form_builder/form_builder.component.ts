@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { Subscription } from 'rxjs';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-formbuilder',

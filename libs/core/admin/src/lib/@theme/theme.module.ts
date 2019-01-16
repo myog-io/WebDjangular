@@ -3,13 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { NbAuthComponent,
- NbAuthBlockComponent,
- NbLoginComponent,
- NbLogoutComponent,
- NbRegisterComponent,
- NbRequestPasswordComponent,
- NbResetPasswordComponent } from '@webdjangular/core/auth';
+
 
 
 import { RouterModule } from '@angular/router';
@@ -64,6 +58,9 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { NgSelectModule } from '@ng-select/ng-select';
+
+import { NbAuthBlockComponent, NbLoginComponent, NbRequestPasswordComponent, NbAuthComponent, NbResetPasswordComponent, NbRegisterComponent, NbLogoutComponent } from '@core/auth/src/lib';
+
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
 

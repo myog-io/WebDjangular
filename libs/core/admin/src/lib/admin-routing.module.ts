@@ -3,21 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AdminComponent } from './admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PageModel, BlockModel, MenuModel } from '@webdjangular/core/cms-models';
-import { FormModel } from '@webdjangular/core/forms-models'
-import { ThemeModel, CoreWebsiteModel } from '@webdjangular/core/data-models';
-import { PluginModel } from '@webdjangular/core/data-models';
-import { CoreMediaModule } from '@webdjangular/core/media';
 
 import { CoreConfigGroupModule } from './core-config-group/core-config-group.module';
 
-import { UserModel, GroupModel } from '@webdjangular/core/users-models';
-import { PluginStoreAdminModule } from 'libs/plugins/store/src/lib/admin/store-admin.module';
-import { ScaffoldModule } from '@webdjangular/core/builder';
-import { PluginProviderAdminModule } from 'libs/plugins/provider/src/lib/admin/provider-admin.module';
 import { AdminImportComponent } from './export-import/import/import.component';
 import { AdminExportComponent } from './export-import/export/export.component';
-import { MenuBuilderModule } from 'libs/core/cms/src/lib/menu-builder/menu_builder.module';
+import { ScaffoldModule } from '@core/builder/src/lib/scaffold/scaffold.module';
+import { UserModel, GroupModel } from '@core/users/src/lib/models';
+import { CoreMediaModule } from '@core/media/src/lib/core-media.module';
+import { PageModel, BlockModel } from '@core/cms/src/lib/models';
+import { FormModel } from '@core/forms/src/lib/models';
+import { ThemeModel, PluginModel, CoreWebsiteModel } from '@core/data/src/lib/models';
+import { MenuBuilderModule } from '@core/cms/src/lib/menu-builder/menu_builder.module';
+import { PluginProviderAdminModule } from '@plugins/provider/src/lib/admin/provider-admin.module';
+import { PluginStoreAdminModule } from '@plugins/store/src/lib/admin/store-admin.module';
 
 
 const routes: Routes = [
@@ -116,7 +115,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        loadChildren: () => PluginStoreAdminModule
+        loadChildren: () => PluginStoreAdminModule,
       },
       {
         path: 'core_config_group/:id',

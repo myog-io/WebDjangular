@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-
 import { LocalDataSource } from 'ng2-smart-table';
-
-import { WebAngularDataStore } from '@webdjangular/core/services';
-
-import { JsonApiModel, JsonApiQueryData } from 'angular2-jsonapi';
-
 import { WebAngularSmartTableDataSourceOptions } from './WebAngularSmartTableDataSourceOptions';
-
 import { map } from 'rxjs/operators';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Injectable()
 export class WebAngularSmartTableDataSource extends LocalDataSource {

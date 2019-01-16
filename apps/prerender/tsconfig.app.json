@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../dist/out-tsc/apps/prerender",
-    "types": ["node"]
-  },
-  "exclude": ["**/*.spec.ts"],
-  "include": ["**/*.ts"]
-}

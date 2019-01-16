@@ -1,12 +1,12 @@
 import {Component, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
-import {AbstractForm} from '@webdjangular/core/data-forms';
 import {BuilderFormField, BuilderFormFieldConfig} from '../../interfaces/form-config.interface';
 import {Subscription} from 'rxjs';
-import {SmartTableSettings} from '@webdjangular/core/data';
 import {LocalDataSource} from 'ng2-smart-table';
 import {NbWindowRef, NbWindowService} from '@nebular/theme';
-import {WebAngularDataStore} from '@webdjangular/core/services';
 import { FormArray, FormGroup } from '@angular/forms';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { AbstractForm } from '@core/data/src/lib/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 enum state {
   start = 'start',

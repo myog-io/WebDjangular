@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { LazyMapsAPILoaderConfigLiteral } from "@agm/core";
-import { WDAConfig } from "@webdjangular/core/services";
+import { WDAConfig } from "@core/services/src/lib/wda-config.service";
 
 @Injectable()
 export class GoogleMapsLazyConfig implements LazyMapsAPILoaderConfigLiteral {

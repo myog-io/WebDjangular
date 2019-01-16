@@ -1,10 +1,8 @@
 import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
-
-
-import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'Order',

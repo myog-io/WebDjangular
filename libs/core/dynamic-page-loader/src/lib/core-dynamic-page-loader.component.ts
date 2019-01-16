@@ -11,11 +11,11 @@ import {
 } from '@angular/core';
 import { UrlSegment, ActivatedRoute, ParamMap, Router, Scroll, RouterEvent } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
-import { WDAConfig } from '@webdjangular/core/services';
-import { CoreDynamicComponentLoader } from '@webdjangular/core/dynamic-component-loader';
-import { ThemesCleanModule } from '@webdjangular/themes/clean';
 import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
-import { CoreDynamicCustomComponent } from 'libs/core/dynamic-component-loader/src/lib/core-dynamic-component-loader.service';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+import { CoreDynamicComponentLoader, CoreDynamicCustomComponent } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.service';
+import { ThemesCleanModule } from '@themes/clean/src/lib/themes-clean.module';
+
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',

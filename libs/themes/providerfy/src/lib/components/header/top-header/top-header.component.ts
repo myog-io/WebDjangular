@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemeProviderfyComponent} from "../../../providerfy.component";
+
 import {ThemeProviderfyModalChoosecityComponent} from "../../modal/choosecity/choosecity.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {CookieService} from "ngx-cookie-service";
-import {ClientUserService} from "@webdjangular/core/services";
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+
 
 @Component({
   selector: 'theme-providerfy-top-header',

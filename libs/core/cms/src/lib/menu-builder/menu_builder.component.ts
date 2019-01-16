@@ -1,13 +1,10 @@
 import {Component} from '@angular/core';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
-import { WebAngularDataStore } from '@webdjangular/core/services';
-
 import { MenuModel } from '../models/Menu.model';
 import { MenuItemModel } from '../models/MenuItem.model';
-import { PageModel } from '../models/Page.model';
-
-import { AbstractForm } from '@webdjangular/core/data-forms';
+import { AbstractForm } from '@core/data/src/lib/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
 @Component({

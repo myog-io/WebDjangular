@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {WebAngularDataStore} from "@webdjangular/core/services";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
+
 
 @Injectable({
   providedIn: 'root',

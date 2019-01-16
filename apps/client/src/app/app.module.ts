@@ -6,14 +6,17 @@ import {RouterModule} from '@angular/router';
 import {JsonApiModule} from 'angular2-jsonapi';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CoreServicesModule, WDAConfig} from '@webdjangular/core/services';
 import {APP_BASE_HREF} from '@angular/common';
-import {AppHttpInterceptor} from '@webdjangular/core/interceptors';
 import {CookieService} from 'ngx-cookie-service';
 import {FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
 import {AgmCoreModule, LAZY_MAPS_API_CONFIG} from '@agm/core';
-import {GoogleMapsLazyConfig} from '@webdjangular/core/cms';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+import { CoreServicesModule } from '@core/services/src/lib/core-services.module';
+import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.interceptor';
+import { GoogleMapsLazyConfig } from '@core/cms/src/lib/services/GoogleMapsLazyConfig';
+
+
 
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
@@ -41,7 +44,7 @@ export function wda_init(wdaconfig: WDAConfig) {
         }*/
         {
           path: '',
-          loadChildren: "@webdjangular/themes/providerfy#ThemeProviderfyModule"
+          loadChildren: "@themes/providerfy/src/lib/providerfy.module#ThemeProviderfyModule"
         },
       ],
       {initialNavigation: 'enabled', anchorScrolling: 'enabled'}

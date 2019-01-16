@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
-import {WebAngularDataStore} from "@webdjangular/core/services";
-import {ProductModel} from "../../../../../store/src/lib/data/models/Product.model";
 import {JsonApiQueryData} from "angular2-jsonapi";
-import {CartService} from 'libs/plugins/store/src';
 import {DOCUMENT} from '@angular/common';
 import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 
 
 export enum ProviderCheckoutSteps {

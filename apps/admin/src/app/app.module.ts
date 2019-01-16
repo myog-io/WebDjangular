@@ -6,12 +6,13 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { CoreAdminModule } from "@webdjangular/core/admin";
-import { WDAConfig, CoreServicesModule } from "@webdjangular/core/services";
-import { AppHttpInterceptor } from "@webdjangular/core/interceptors";
-import { ThemeModule } from "@webdjangular/core/admin-theme";
+
 import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
 import { CookieService } from "ngx-cookie-service";
+import { WDAConfig } from "@core/services/src/lib/wda-config.service";
+import { ThemeModule } from "@core/admin/src/lib/@theme";
+import { CoreAdminModule } from "@core/admin/src/lib/core-admin.module";
+import { AppHttpInterceptor } from "@core/interceptors/src/lib/apphttp.interceptor";
 
 
 export function wda_init(wdaconfig: WDAConfig) {

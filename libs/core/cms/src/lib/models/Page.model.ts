@@ -1,13 +1,11 @@
 import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
 import { BlockModel } from './Block.model';
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import {Validators, FormGroup} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
-import {ProductClasses} from "../../../../../plugins/store/src/lib/data/interfaces/Product.interface";
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+
 
 enum pageDG {
   general = 'general',

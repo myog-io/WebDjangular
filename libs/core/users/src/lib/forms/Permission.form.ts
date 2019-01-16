@@ -1,7 +1,4 @@
-import { FormGroup, FormControl } from '@angular/forms';
-
-import { AbstractForm } from '@webdjangular/core/data-forms';
-import { ContentTypeModel } from '@webdjangular/core/data-models';
+import { AbstractForm } from "@core/data/src/lib/forms";
 
 export class PermissionForm extends AbstractForm {
   /*

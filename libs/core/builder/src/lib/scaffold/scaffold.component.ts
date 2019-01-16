@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-
-import { WebAngularDataStore } from '@webdjangular/core/services';
-import { WebAngularSmartTableDataSource } from "@webdjangular/core/data";
 import { NbDialogService, NbDialogRef } from "@nebular/theme";
+import { WebAngularSmartTableDataSource } from "@core/data/src/lib/data-store";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
 
 
 @Component({

@@ -11,8 +11,6 @@ import { ThemeProviderfyHeaderMenuComponent } from "./components/header/menu/men
 import { ThemeProviderfyFooterComponent } from "./components/footer/footer.component";
 import { ThemeProviderfyBottomFooterComponent } from "./components/footer/bottom-footer/bottom-footer.component";
 import { ThemeProviderfySignatureFooterComponent } from "./components/footer/signature-footer/signature-footer.component";
-import { CoreDynamicPageLoaderModule } from '@webdjangular/core/dynamic-page-loader';
-import { CoreDynamicComponentLoaderModule } from '@webdjangular/core/dynamic-component-loader';
 import { ThemeProviderfyModalWecallyouComponent } from './components/modal/wecallyou/wecallyou.component';
 import { ThemeProviderfyModalChoosecityComponent } from "./components/modal/choosecity/choosecity.component";
 import { ThemeProviderfyModalAdultContentComponent } from "./components/modal/adult-content/adult-content.component";
@@ -30,6 +28,8 @@ import { ThemeProviderfyModalChannelsComponent } from "./components/modal/channe
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from '@ng-select/ng-select';
 import {NgxMaskModule} from "ngx-mask";
+import { CoreDynamicComponentLoaderModule } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.module';
+import { CoreDynamicPageLoaderModule } from '@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.module';
 
 const COMPONENTS = [
   ThemeProviderfyComponent,

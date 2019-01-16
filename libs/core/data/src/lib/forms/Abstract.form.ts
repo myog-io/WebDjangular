@@ -1,11 +1,8 @@
 import { JsonApiModel } from 'angular2-jsonapi';
-
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
-import { WebAngularDataStore } from '@webdjangular/core/services';
-import { BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
 import { AbstractModel } from '../models';
+import { BuilderFormFieldConfig, BuilderFormDisplayGroups } from '@core/builder/src/lib/interfaces/form-config.interface';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 export class AbstractForm extends FormGroup {
 

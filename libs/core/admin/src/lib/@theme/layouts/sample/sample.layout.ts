@@ -8,8 +8,8 @@ import {
   NbSidebarService,
   NbThemeService,
 } from '@nebular/theme';
+import { StateService } from '@core/services/src/lib/state.service';
 
-import { StateService } from '@webdjangular/core/services';
 
 // TODO: move layouts into the framework
 @Component({

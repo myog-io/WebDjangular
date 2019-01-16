@@ -3,19 +3,25 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/client-server",
     "baseUrl": ".",
-    "types": []
+    "types": [],
+    "paths": {
+      "@core/*": [
+        "../../libs/core/*"
+      ],
+      "@plugins/*": [
+        "../../libs/plugins/*"
+      ],
+      "@themes/*": [
+        "../../libs/themes/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "entryModule": "src/app/app.server.module#AppServerModule"
   },
-  "exclude": [
-    "src/test.ts",
-    "**/*.spec.ts"
-  ],
   "include": [
     "**/*.ts",
-    "../../libs/core/dynamic-page-loader/src/index.ts",
-    "../../libs/themes/clean/src/index.ts",
-    "../../libs/themes/providerfy/src/index.ts"
+    "../../libs/core/dynamic-page-loader/src/lib/core-dynamic-page-loader.module.ts",
+    "../../libs/themes/**/*.ts"
   ]
 }

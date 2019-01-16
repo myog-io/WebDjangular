@@ -1,11 +1,11 @@
 import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {AbstractModel} from "@webdjangular/core/data-models";
 import {CityModel} from "./City.model";
-import {ProductModel} from "libs/plugins/store/src/lib/data/models/Product.model";
-import {SmartTableSettings} from "@webdjangular/core/data";
-import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, FormGroup, Validators} from "@angular/forms";
-import {BlockModel} from "@webdjangular/core/cms-models";
+import { AbstractModel } from "@core/data/src/lib/models";
+import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
+import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
+import { SmartTableSettings } from "@core/data/src/lib/data-store";
+
 
 @JsonApiModelConfig({
   type: 'Condo',

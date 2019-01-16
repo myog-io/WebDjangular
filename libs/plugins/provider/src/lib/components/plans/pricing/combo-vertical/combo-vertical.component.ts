@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WebAngularDataStore } from '@webdjangular/core/services';
+
 import { ProductModel } from 'libs/plugins/store/src/lib/data/models/Product.model';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
   selector: 'plugin-provider-plan-pricing-combo-vertical',

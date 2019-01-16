@@ -6,9 +6,9 @@ import {
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
-import { PermissionModel } from '@webdjangular/core/users-models';
 import { CoreConfigModel } from './CoreConfig.model';
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { BuilderFormFieldConfig } from '@core/builder/src/lib/interfaces/form-config.interface';
 
 @JsonApiModelConfig({
   type: 'core_config_input'

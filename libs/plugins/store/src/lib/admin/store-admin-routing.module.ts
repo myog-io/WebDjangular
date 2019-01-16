@@ -7,8 +7,8 @@ import { OrderModel } from "../data/models/Order.model";
 import { CategoryModel } from "../data/models/Category.model";
 import { ProductTypeModel } from "../data/models/ProductType.model";
 import { ProductModel } from "../data/models/Product.model";
-import { ScaffoldModule } from "@webdjangular/core/builder";
 import { ProductAttributeModel } from "../data/models/ProductAttribute.model";
+import { ScaffoldModule } from "@core/builder/src/lib/scaffold/scaffold.module";
 
 const routes: Routes = [
   {

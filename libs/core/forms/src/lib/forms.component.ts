@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {WebAngularDataStore} from "@webdjangular/core/services";
 import {FormModel} from "./models/Form.model"
 import {JsonApiQueryData} from "angular2-jsonapi";
-import {PageModel} from "@webdjangular/core/cms-models";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
 @Component({

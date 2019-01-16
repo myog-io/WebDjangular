@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { WebAngularDataStore } from '@webdjangular/core/services';
 import { CityModel } from '../../data/models/City.model';
 import { Subscription } from 'rxjs';
 import { AgmMap, MapTypeStyle } from '@agm/core';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
   selector: 'plugin-provider-plans-list',

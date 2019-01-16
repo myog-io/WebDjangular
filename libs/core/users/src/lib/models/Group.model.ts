@@ -1,10 +1,9 @@
 import {Attribute, HasMany, JsonApiModelConfig,} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
 import {PermissionModel} from './Permission.model';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
-import {ExtraOptions} from '@webdjangular/core/decorator';
-import {SmartTableSettings} from "@webdjangular/core/data";
 
 @JsonApiModelConfig({
   type: 'Group',

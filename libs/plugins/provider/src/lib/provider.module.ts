@@ -15,8 +15,7 @@ import { PluginProviderError500Component } from './components/errors/500/500.com
 import { ProviderCheckoutService } from "./data/services/provider-checkout.service";
 import { PluginProviderCityListComponent } from './components/city-list/city-list.component';
 import { PluginProviderCityCoverageComponent } from './components/city-coverage/city-coverage.component';
-import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
-import { GoogleMapsLazyConfig } from '@webdjangular/core/cms';
+import { AgmCoreModule } from '@agm/core';
 import { RouterModule } from '@angular/router';
 
 

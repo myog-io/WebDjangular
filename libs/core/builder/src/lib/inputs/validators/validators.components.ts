@@ -1,7 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {AbstractForm} from "@webdjangular/core/data-forms";
-import {group} from "@angular/animations";
-import {BuilderFormFieldConfig} from "@webdjangular/core/builder";
+import { BuilderFormFieldConfig } from "../../interfaces/form-config.interface";
+import { AbstractForm } from "@core/data/src/lib/forms";
 
 @Component({
   selector: 'wda-form-validators',

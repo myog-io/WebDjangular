@@ -4,9 +4,11 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { Component, OnInit } from '@angular/core';
-import { AnalyticsService } from '@webdjangular/core/services';
-import { WDAConfig } from "@webdjangular/core/services";
+
 import { Router } from "@angular/router";
+import { AnalyticsService } from '@core/services/src/lib/analytics.service';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+
 
 
 @Component({

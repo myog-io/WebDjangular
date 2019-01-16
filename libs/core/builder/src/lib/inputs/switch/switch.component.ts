@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
 import { Subscription } from 'rxjs';
+import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-switch',

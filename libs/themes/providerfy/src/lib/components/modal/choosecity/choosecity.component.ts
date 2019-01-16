@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
-import {CityModel} from "@webdjangular/plugins/provider-data";
 import {JsonApiQueryData} from "angular2-jsonapi";
 import {HttpClient} from "@angular/common/http";
-import {WebAngularDataStore} from "@webdjangular/core/services";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {ClientUserService} from "@webdjangular/core/services";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { CityModel } from '@plugins/provider/src/lib/data';
+
 
 @Component({
   selector: 'webdjangular-choosecity',

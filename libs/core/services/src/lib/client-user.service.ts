@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http';
-import {UserModel} from '@webdjangular/core/users-forms';
 import {CookieService} from 'ngx-cookie-service';
 import {WebAngularDataStore} from './WebAngularDataStore.service';
+import { UserModel } from '@core/users/src/lib/models';
 
 
 export interface CookieClientUser {

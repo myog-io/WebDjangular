@@ -1,11 +1,11 @@
 
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, } from "@angular/router";
-import { WebAngularDataStore } from "@webdjangular/core/services";
-import { CoreConfigGroupModel } from "libs/core/data/src/lib/models/CoreConfigGroup.model";
-import { CoreConfigInputModel } from "libs/core/data/src/lib/models/CoreConfigInput.model";
-import { AbstractForm } from "@webdjangular/core/data-forms";
+
 import { NbToastrService } from "@nebular/theme";
+import { CoreConfigGroupModel, CoreConfigInputModel } from "@core/data/src/lib/models";
+import { AbstractForm } from "@core/data/src/lib/forms";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
 
 @Component({
   selector: 'wda-core-config-group',

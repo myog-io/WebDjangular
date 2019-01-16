@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import { NbThemeService, NbPopoverDirective } from '@nebular/theme';
-import { AnalyticsService } from '@webdjangular/core/services';
+
 import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.options';
+import { AnalyticsService } from '@core/services/src/lib/analytics.service';
 
 @Component({
   selector: 'wda-theme-switcher-list',

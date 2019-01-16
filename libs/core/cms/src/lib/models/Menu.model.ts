@@ -1,10 +1,10 @@
 import { JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
-
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import { Validators, FormGroup, FormArray } from "@angular/forms";
 import { MenuItemModel } from './MenuItem.model';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+
 
 
 @JsonApiModelConfig({

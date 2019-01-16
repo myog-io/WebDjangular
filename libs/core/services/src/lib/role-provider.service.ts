@@ -1,14 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
 import { NbRoleProvider, NbAclService } from '@nebular/security';
-
 import { of as observableOf } from 'rxjs'
 import { map } from 'rxjs/operators';
-
-
 import { WebAngularDataStore } from './WebAngularDataStore.service'
-import { PermissionModel } from '@webdjangular/core/users-models';
+import { PermissionModel } from '@core/users/src/lib/models';
+
 
 @Injectable()
 export class RoleProvider implements NbRoleProvider {

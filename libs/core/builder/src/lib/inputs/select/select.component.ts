@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
-import { WebAngularDataStore } from '@webdjangular/core/services';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AbstractForm } from '@core/data/src/lib/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
   selector: 'wda-form-select',

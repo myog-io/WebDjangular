@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { WebAngularDataStore } from '@webdjangular/core/services';
 import { Router } from '@angular/router';
 import { MediaModel } from '../models/Media.model';
-import { FileUploader, FileItem } from '@webdjangular/core/chunk-file-upload';
-import { ModelPaginatorControls } from 'libs/core/builder/src/lib/model-paginator/model-paginator.controls';
 import { MediaService } from '../core-media.service';
+import { FileUploader } from '@core/chunk-file-upload/src/lib/file-uploader.class';
+import { ModelPaginatorControls } from '@core/builder/src/lib/model-paginator/model-paginator.controls';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { FileItem } from '@core/chunk-file-upload/src/lib/file-item.class';
 
 
 

@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core';
-import { WebAngularDataStore } from '@webdjangular/core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PluginProviderAbstractPricingComponent } from '../abstract-pricing.component';
 import { ProviderProductModel } from '../../../../data/models/ProviderProduct.model';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
     selector: 'plugin-provider-plan-pricing-telephone-vertical',

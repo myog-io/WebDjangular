@@ -1,9 +1,10 @@
 import {Attribute, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {AbstractModel} from "@webdjangular/core/data-models";
-import {ProductModel} from "libs/plugins/store/src/lib/data/models/Product.model";
-import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { AbstractModel } from "@core/data/src/lib/models";
+import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
+import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
+import { SmartTableSettings } from "@core/data/src/lib/data-store";
+
 
 @JsonApiModelConfig({
   type: 'Channel',

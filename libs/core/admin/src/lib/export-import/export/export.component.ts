@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NbToastrService } from "@nebular/theme";
 import { JsonApiQueryData } from "angular2-jsonapi";
-import { AbstractModel } from "@webdjangular/core/data-models";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
+import { AbstractModel } from "@core/data/src/lib/models";
 
 @Component({
   selector: 'wda-export-json',

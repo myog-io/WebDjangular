@@ -1,7 +1,6 @@
 import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel, ContentTypeModel} from '@webdjangular/core/data-models';
 import {PermissionForm} from '../forms/Permission.form';
+import { AbstractModel, ContentTypeModel } from '@core/data/src/lib/models';
 
 @JsonApiModelConfig({
   type: 'Permission',

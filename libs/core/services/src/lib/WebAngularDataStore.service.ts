@@ -1,25 +1,16 @@
 import {Injectable} from '@angular/core';
 import {DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel,} from 'angular2-jsonapi';
+import { Observable } from 'rxjs';
+import { UserModel, GroupModel, PermissionModel } from '@core/users/src/lib/models';
+import { PageModel, BlockModel, MenuItemModel, MenuModel } from '@core/cms/src/lib/models';
+import { ContentTypeModel, CoreConfigGroupModel, CoreConfigInputModel, CoreConfigModel, AbstractModel } from '@core/data/src/lib/models';
+import { CityModel, StreetModel, ResellerModel, CondoModel, ChannelModel } from '@plugins/provider/src/lib/data';
+import { PostalCodeRangeModel } from '@plugins/provider/src/lib/data/models/PostalCodeRangeModel';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { ProductTypeModel } from '@plugins/store/src/lib/data/models/ProductType.model';
+import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/ProductAttribute.model';
+import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
 
-
-import {GroupModel, PermissionModel, UserModel} from '@webdjangular/core/users-models';
-import {BlockModel, PageModel} from '@webdjangular/core/cms-models';
-import {AbstractModel, ContentTypeModel} from '@webdjangular/core/data-models';
-import {CoreConfigGroupModel} from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
-import {CoreConfigInputModel} from 'libs/core/data/src/lib/models/CoreConfigInput.model';
-import {CoreConfigModel} from 'libs/core/data/src/lib/models/CoreConfig.model';
-import {CityModel, StreetModel} from '@webdjangular/plugins/provider-data';
-import {ProductModel} from 'libs/plugins/store/src/lib/data/models/Product.model';
-import {ProductTypeModel} from 'libs/plugins/store/src/lib/data/models/ProductType.model';
-import {Observable} from 'rxjs';
-import {ResellerModel} from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
-import {CondoModel} from 'libs/plugins/provider/src/lib/data/models/Condo.model';
-import {ChannelModel} from 'libs/plugins/provider/src/lib/data/models/Channel.model';
-import {ProductAttributeModel} from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
-import {ProductAttributeOptionModel} from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
-import {PostalCodeRangeModel} from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
-import {MenuModel} from 'libs/core/cms/src/lib/models/Menu.model';
-import {MenuItemModel} from 'libs/core/cms/src/lib/models/MenuItem.model';
 
 // tslint:disable-next-line:variable-name
 

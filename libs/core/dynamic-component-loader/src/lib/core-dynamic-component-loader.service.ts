@@ -6,20 +6,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { InjectionToken } from '@angular/core';
 import { CoreDynamicLazyLoadConfig } from './core-dynamic-lazy-load.module';
+import { FormsModule } from '@core/forms/src';
+import { CoreCmsModule } from '@core/cms/src/lib/core-cms.module';
+import { PluginProviderModule } from '@plugins/provider/src/lib/provider.module';
 
-// TODO: HARDCODE
-
-import { PluginProviderModule } from "@webdjangular/plugins/provider"
-import { FormsModule } from "@webdjangular/core/forms";
-import { CoreCmsModule } from '@webdjangular/core/cms';
-
+// TODO: REMOVE HARDCODE
 const HARDCODEMODULES = [
   FormsModule,
   CoreCmsModule,
   PluginProviderModule,
 ];
 
-//import { ThemeProviderfyModule } from "@webdjangular/themes/providerfy";
 
 
 export const DYNAMIC_COMPONENT = new InjectionToken<any>('DYNAMIC_COMPONENT');

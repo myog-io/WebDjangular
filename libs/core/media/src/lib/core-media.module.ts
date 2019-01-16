@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewMediaComponent } from './view-media/view-media.component';
 import { RouterModule } from '@angular/router';
-import { ChunkFileUploadModule } from '@webdjangular/core/chunk-file-upload';
-import { ThemeModule } from '@webdjangular/core/admin-theme';
-import { CoreSharedSafePipe } from '@webdjangular/core/shared';
-import { BuilderFormModule } from '@webdjangular/core/builder';
 import { MediaService } from './core-media.service';
+import { ThemeModule } from '@core/admin/src/lib/@theme';
+import { ChunkFileUploadModule } from '@core/chunk-file-upload/src/lib/chunk-file-upload.module';
+import { CoreSharedSafePipe } from '@core/shared/src/lib/pipes/safe/safe.module';
+import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
 @NgModule({
   imports: [
     ThemeModule,
