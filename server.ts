@@ -8,7 +8,11 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
-import 'localstorage-polyfill'  
+import 'localstorage-polyfill';
+
+var cors = require('cors');
+var proxy = require('express-http-proxy');
+
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
@@ -48,10 +52,17 @@ app.set('view engine', 'html');
 //app.set('views', DIST_FOLDER);
 app.set('views', clientAppServer());
 
+//app.use(cors());
 
-// Example Express Rest API endpoints
-// app.get('/api/**', (req, res) => { });
-// Server static files from /browser
+// Example Express Rest API endpoint, Proxying to Django
+// TODO: Make URL Dynamic!
+app.use('/api/**', proxy('http://127.0.0.1:8000',{
+  proxyReqPathResolver: function (req) {
+    
+    return req.originalUrl;
+  }
+}));
+
 
 app.get('*.*', express.static(clientAppServer()));
 
