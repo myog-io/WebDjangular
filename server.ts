@@ -8,7 +8,7 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
-import 'localstorage-polyfill'
+import 'localstorage-polyfill'  
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
@@ -22,8 +22,7 @@ const DIST_FOLDER = join(process.cwd(), 'dist/browser');
 // Fixing window is not defined https://github.com/angular/universal/issues/830
 const domino = require('domino');
 const fs = require('fs');
-const path = require('path');
-const template = fs.readFileSync(path.join(__dirname, join(DIST_FOLDER, 'index.html'))).toString();
+const template = fs.readFileSync(join(DIST_FOLDER, 'index.html')).toString();
 const win = domino.createWindow(template);
 global['window'] = win;
 global['document'] = win.document;
