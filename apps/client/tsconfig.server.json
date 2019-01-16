@@ -9,9 +9,17 @@
   "angularCompilerOptions": {
     "entryModule": "src/app/app.server.module#AppServerModule"
   },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts",
+    "../../libs/core/**/*.spec.ts",
+    "../../libs/themes/**/*.spec.ts",
+    "../../libs/plugins/**/*.spec.ts"
+  ],
   "include": [
     "**/*.ts",
-    "../../libs/core/dynamic-page-loader/src/lib/core-dynamic-page-loader.module.ts",
-    "../../libs/themes/**/*.ts"
+    "../../libs/core/**/*.ts",
+    "../../libs/themes/**/*.ts",
+    "../../libs/plugins/**/*.ts"
   ]
 }

@@ -16,7 +16,8 @@ import { CoreServicesModule } from '@core/services/src/lib/core-services.module'
 import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.interceptor';
 import { GoogleMapsLazyConfig } from '@core/cms/src/lib/services/GoogleMapsLazyConfig';
 import { ServerTransferStateModule } from '@angular/platform-server';
-import { AppRoutingModule } from 'apps/admin/src/app/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+
 
 export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
 

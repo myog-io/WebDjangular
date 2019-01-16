@@ -58,8 +58,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { NgSelectModule } from '@ng-select/ng-select';
-
-import { NbAuthBlockComponent, NbLoginComponent, NbRequestPasswordComponent, NbAuthComponent, NbResetPasswordComponent, NbRegisterComponent, NbLogoutComponent } from '@core/auth/src/lib';
+import { CoreAuthModule } from '@core/auth/src/lib/core-auth.module';
 
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
@@ -84,6 +83,7 @@ const NB_MODULES = [
   NbProgressBarModule,
   NbAlertModule,
   NgSelectModule,
+  CoreAuthModule,
 ];
 
 const COMPONENTS = [
@@ -99,13 +99,7 @@ const COMPONENTS = [
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
-  NbAuthComponent,
-  NbAuthBlockComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
+
 
 ];
 

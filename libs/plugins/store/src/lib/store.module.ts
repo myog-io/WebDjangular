@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import { PluginStoreComponent } from './store.component';
 
 
 
@@ -9,7 +10,7 @@ const MODULES = [
 ];
 
 const COMPONENTS = [
-
+  PluginStoreComponent,
 
 ];
 

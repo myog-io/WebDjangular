@@ -13,6 +13,7 @@ import { WDAConfig } from "@core/services/src/lib/wda-config.service";
 import { ThemeModule } from "@core/admin/src/lib/@theme";
 import { CoreAdminModule } from "@core/admin/src/lib/core-admin.module";
 import { AppHttpInterceptor } from "@core/interceptors/src/lib/apphttp.interceptor";
+import { CoreAuthModule } from "@core/auth/src/lib/core-auth.module";
 
 
 export function wda_init(wdaconfig: WDAConfig) {
@@ -26,6 +27,7 @@ export function wda_init(wdaconfig: WDAConfig) {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    CoreAuthModule,
     AppRoutingModule,
     //CoreServicesModule.forRoot(), // Not Sure if we should do here or note
     NgbModule.forRoot(),

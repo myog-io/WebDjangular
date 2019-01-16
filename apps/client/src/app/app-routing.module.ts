@@ -11,7 +11,7 @@ const routes: Routes = [
     }*/
     {
         path: '',
-        loadChildren: "@themes/providerfy/src/lib/providerfy.module#ThemeProviderfyModule"
+        loadChildren: "@themes/providerfy/src/lib/providerfy.module.ts#ThemeProviderfyModule"
     },
 ];
 
