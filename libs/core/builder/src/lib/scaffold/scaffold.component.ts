@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NbDialogService, NbDialogRef } from "@nebular/theme";
-import { WebAngularSmartTableDataSource } from "@core/data/src/lib/data-store";
+import { WebAngularSmartTableDataSource, WebAngularSmartTableDataSourceOptions } from "@core/data/src/lib/data-store";
 import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
 
 
@@ -64,7 +64,9 @@ export class ScaffoldComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-    this.source = new WebAngularSmartTableDataSource(this.datastore, this.current_model, {
+    this.source = new WebAngularSmartTableDataSource(this.datastore);
+    this.source.model = this.current_model;
+    this.source.conf = new WebAngularSmartTableDataSourceOptions({
       smartTableSettings: this.current_model.smartTableOptions,
       onEditButtonClick: ($event) => {
         this.router.navigate([this.base_path, 'edit', $event.data.pk]);

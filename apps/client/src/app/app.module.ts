@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule, InjectionToken} from '@angular/core';
 import {AppComponent} from './app.component';
 import {NxModule} from '@nrwl/nx';
 import {RouterModule} from '@angular/router';
@@ -15,8 +15,13 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 import { CoreServicesModule } from '@core/services/src/lib/core-services.module';
 import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.interceptor';
 import { GoogleMapsLazyConfig } from '@core/cms/src/lib/services/GoogleMapsLazyConfig';
+import { ServerTransferStateModule } from '@angular/platform-server';
 
+export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
 
+export function getLocalStorage() {
+  return (typeof window !== "undefined") ? window.localStorage : null;
+}
 
 export function wda_init(wdaconfig: WDAConfig) {
   return () => wdaconfig.WDAInit();
@@ -25,7 +30,6 @@ export function wda_init(wdaconfig: WDAConfig) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule.withServerTransition({appId: 'serverApp'}),
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -35,6 +39,8 @@ export function wda_init(wdaconfig: WDAConfig) {
     NxModule.forRoot(),
     NgxPageScrollModule,
     CoreServicesModule.forRoot(),
+    BrowserModule.withServerTransition({appId: 'app'}),
+    ServerTransferStateModule,
     RouterModule.forRoot(
       [
         /*
@@ -54,6 +60,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   providers: [
     WDAConfig,
     CookieService,
+    {provide: 'LOCALSTORAGE', useFactory: getLocalStorage},
     {provide: APP_BASE_HREF, useValue: '/'},
     {
       provide: HTTP_INTERCEPTORS,

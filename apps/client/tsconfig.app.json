@@ -3,17 +3,6 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/client",
     "types": [],
-    "paths": {
-      "@core/*": [
-        "../../libs/core/*"
-      ],
-      "@plugins/*": [
-        "../../libs/plugins/*"
-      ],
-      "@themes/*": [
-        "../../libs/themes/*"
-      ]
-    }
   },
   "exclude": [
     "src/test.ts",

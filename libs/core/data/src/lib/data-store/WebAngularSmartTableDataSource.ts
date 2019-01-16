@@ -3,19 +3,19 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { WebAngularSmartTableDataSourceOptions } from './WebAngularSmartTableDataSourceOptions';
 import { map } from 'rxjs/operators';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { ModelType, JsonApiModel } from 'angular2-jsonapi';
+import { AbstractModel } from '../models';
 
 @Injectable()
 export class WebAngularSmartTableDataSource extends LocalDataSource {
-  public conf;
+  public conf: WebAngularSmartTableDataSourceOptions;
+  public customUrl:string = null;
+  public model: any = null;
   protected meta: any = null;
   constructor(
     private datastore: WebAngularDataStore,
-    private model,
-    conf: WebAngularSmartTableDataSourceOptions | {} = {},
-    private customUrl:string = null
   ) {
     super();
-    this.conf = new WebAngularSmartTableDataSourceOptions(conf);
   }
 
   get smartTableSettings() {
@@ -25,7 +25,8 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
   getElements(): Promise<any> {
     let findOptions: any = this.buildFilterOptions();
     findOptions.page = this.buildPageOptions();
-    findOptions.include = this.model.include
+    const model = this.model as AbstractModel;
+    findOptions.include = this.model.include;
     if(this.sortConf.length > 0){
       findOptions.ordering = this.buildSortOptions()
     }

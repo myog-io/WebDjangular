@@ -88,19 +88,20 @@ export class AdminExportComponent implements OnInit, OnDestroy {
       e = document.createEvent('MouseEvents'),
       a = document.createElement('a')
     // FOR IE:
-
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, filename);
-    }
-    else {
-      const e = document.createEvent('MouseEvents'),
-        a = document.createElement('a');
-
-      a.download = filename;
-      a.href = window.URL.createObjectURL(blob);
-      a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
-      e.initEvent('click', true, false);
-      a.dispatchEvent(e);
+    // Error window on universal server
+    if (typeof window !== 'undefined') {
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob, filename);
+      }
+      else {
+        const e = document.createEvent('MouseEvents'),
+          a = document.createElement('a');
+        a.download = filename;
+        a.href = window.URL.createObjectURL(blob); // Error window on server need to do a IF?
+        a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
+        e.initEvent('click', true, false);
+        a.dispatchEvent(e);
+      }
     }
   }
 

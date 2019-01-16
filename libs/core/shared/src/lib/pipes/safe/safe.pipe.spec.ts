@@ -1,8 +1,8 @@
-import { SafePipe } from './safe.pipe';
+import { CoreSharedSafePipe } from './safe.module';
 
-describe('SafePipe', () => {
+describe('CoreSharedSafePipe', () => {
   it('create an instance', () => {
-    const pipe = new SafePipe();
+    const pipe = new CoreSharedSafePipe();
     expect(pipe).toBeTruthy();
   });
 });

@@ -64,7 +64,9 @@ export class ThemeProviderfyModalChoosecityComponent {
     };
     this.clientUserService.updateCookie();
     // TODO: remake it with a better way
-    window.location.reload();
+    if (typeof window !== 'undefined') {
+      window.location.reload(); // Error window on server need to do a IF?
+    }
   }
 
 }
