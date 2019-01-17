@@ -11,6 +11,8 @@ import { PluginProviderCheckoutComponent } from '@plugins/provider/src/lib/compo
 import { PluginProviderCityCoverageComponent } from '@plugins/provider/src/lib/components/city-coverage/city-coverage.component';
 import { PluginProviderPlansComponent } from '@plugins/provider/src/lib/components/plans/plans.component';
 import { PluginProviderCityListComponent } from '@plugins/provider/src/lib/components/city-list/city-list.component';
+import {PluginProviderError500Component} from "@plugins/provider/src/lib/components/errors/500/500.component";
+import {PluginProviderError404Component} from "@plugins/provider/src/lib/components/errors/404/404.component";
 
 
 export const embeddedComponents = [
@@ -24,8 +26,10 @@ export const embeddedComponents = [
   PluginProviderCheckoutComponent,
   PluginProviderCityCoverageComponent,
   PluginProviderPlansComponent,
-  PluginProviderCityListComponent
-]
+  PluginProviderCityListComponent,
+  PluginProviderError404Component,
+  PluginProviderError500Component
+];
 
 export class EmbeddedComponents {
   components = embeddedComponents;

@@ -6,6 +6,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy } from '@angular/core';
+import {PageModel} from "@core/cms/src/lib/models";
+import {ErrorResponse} from "angular2-jsonapi";
 
 
 
@@ -61,20 +63,27 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       this.loadPagesContent(data.page);
       this.cdr.detectChanges();
     })
-    //this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
-    //  console.log(segments)
-    //  if (segments.length <= 0) {
-    //    this.HomePage();
-    //  } else {
-    //    this.LoadPages(segments);
-    //  }
-    //});
-
   }
 
 
-  private loadPagesContent(data:any) {
-    this.content = data.content;
+  private loadPagesContent(data:PageModel|ErrorResponse) {
+    if (data instanceof PageModel) {
+      this.content = data.content;
+    } else if (data instanceof ErrorResponse) {
+      if (data.errors) {
+        if (data.errors.length > 0) {
+          if (data.errors[0].status === "404") {
+            this.content = `<wda-error-404></wda-error-404>`;
+            return;
+          }
+        }
+        this.content = `<wda-error-500></wda-error-500>`;
+      } else {
+        this.content = `<wda-error-404></wda-error-404>`;
+      }
+    }
+
+
   }
 
 }
