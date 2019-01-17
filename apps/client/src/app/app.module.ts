@@ -17,6 +17,7 @@ import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.intercept
 import { GoogleMapsLazyConfig } from '@core/cms/src/lib/services/GoogleMapsLazyConfig';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { AppRoutingModule } from './app-routing.module';
+import {CoreDynamicPageLoaderResolver} from "@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.resolver";
 
 
 export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
@@ -57,6 +58,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   providers: [
     WDAConfig,
     CookieService,
+    CoreDynamicPageLoaderResolver,
     {provide: 'LOCALSTORAGE', useFactory: getLocalStorage},
     {provide: APP_BASE_HREF, useValue: '/'},
     {

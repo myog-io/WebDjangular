@@ -12,6 +12,7 @@ export class CoreCmsGalleryComponent implements OnInit {
   @Input() images: any[];
   @Input() pauseOnHover = true;
   @Input() interval = 5000;
+
   constructor(private router: Router) {
 
   }
@@ -25,6 +26,7 @@ export class CoreCmsGalleryComponent implements OnInit {
       this.indicators = this.images.length > 1;
     }
     //this.indicators = true;
+
   }
 
   action(image: any) {

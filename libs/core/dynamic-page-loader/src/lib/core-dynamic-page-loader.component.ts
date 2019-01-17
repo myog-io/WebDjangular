@@ -1,21 +1,25 @@
 import {
-  Component,
-  ViewChild,
-  ViewContainerRef,
   AfterViewInit,
   Compiler,
+  Component,
   ComponentRef,
+  Inject,
   Injector,
-  ViewEncapsulation,
-  Inject
+  ViewChild,
+  ViewContainerRef,
+  ViewEncapsulation
 } from '@angular/core';
-import { UrlSegment, ActivatedRoute, ParamMap, Router, Scroll, RouterEvent } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
-import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
-import { WDAConfig } from '@core/services/src/lib/wda-config.service';
-import { CoreDynamicComponentLoader, CoreDynamicCustomComponent } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.service';
-import { ThemesCleanModule } from '@themes/clean/src/lib/themes-clean.module';
-
+import {ActivatedRoute, Router, UrlSegment} from '@angular/router';
+import {DOCUMENT, Meta, Title} from '@angular/platform-browser';
+import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
+import {WDAConfig} from '@core/services/src/lib/wda-config.service';
+import {
+  CoreDynamicComponentLoader,
+  CoreDynamicCustomComponent
+} from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.service';
+import {ThemesCleanModule} from '@themes/clean/src/lib/themes-clean.module';
+import {ErrorResponse} from "angular2-jsonapi";
+import {PageModel} from "@core/cms/src/lib/models";
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
@@ -27,10 +31,10 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private url = null;
   private domain = null;
   private paramSubscription;
-  private links = []
+  private links = [];
   private bodyRef: ComponentRef<{}>;
   public completeLoadCallback = null;
-  @ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
+  @ViewChild('bodyContainer', {read: ViewContainerRef}) bodyContainer: ViewContainerRef;
 
   constructor(
     private router: Router,
@@ -40,10 +44,15 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     private compiler: Compiler,
     private injector: Injector,
     private pageScrollService: PageScrollService,
+    public meta: Meta,
+    public title: Title,
     @Inject(DOCUMENT) private document: any
   ) {
     this.links.push(
-      { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
+      {
+        path: '**', pathMatch: 'full',
+        component: CoreDynamicPageLoaderComponent,
+      },
     );
 
     this.router.events.subscribe((event: any) => {
@@ -60,31 +69,34 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         }
       }
     })
-
   }
 
   async ngAfterViewInit() {
+
     this.domain = document.location.hostname;
     this.url = document.location.protocol + '//' + this.domain;
-    this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
 
-      if (segments.length <= 0) {
-        this.HomePage();
-      } else {
-        this.LoadPages(segments);
-      }
+    this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
+      this.loadPage();
+      //if (segments.length <= 0) {
+      //  this.HomePage();
+      //} else {
+      //  this.LoadPages(segments);
+      //}
     });
 
   }
 
   private getPageContent(data: any) {
+
     const metadata = {
       selector: 'wda-body',
       template: data.content,
       encapsulation: ViewEncapsulation.None
-    }
-    const factory = this.componentLoader.createComponentFactorySync(metadata, null, this.compiler)
-    data.bodyFactory = factory;
+    };
+
+    data.bodyFactory = this.componentLoader.createComponentFactorySync(metadata,
+      null, this.compiler);
     return data;
   }
 
@@ -99,7 +111,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       pathMatch: 'full',
       loadChildren: () => ThemesCleanModule,//'@webdjangular/themes/clean#ThemesCleanModule',//this.wdaConfig.getThemePath(),
       data: data
-    })
+    });
 
     // Putting Last in correct Order
     this.links.push(last);
@@ -108,17 +120,47 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     this.router.navigate(path);
   }
 
-  private HomePage() {
-    this.wdaConfig.getHome().then((data: any) => {
-      if (data) {
-        this.loadPagesContent(data);
+  private loadPage() {
+    let page = this.activatedRoute.snapshot.data['page'];
+
+    if (page instanceof PageModel) {
+      this.loadPagesContent(page);
+    } else if (page instanceof ErrorResponse) {
+      if (page.errors) {
+        if (page.errors.length > 0) {
+          if (page.errors[0].status === "404") {
+            this.loadPagesContent({
+              content: '<wda-error-404></wda-error-404>'
+            })
+          }
+          return;
+        }
+        this.loadPagesContent({
+          content: '<wda-error-500></wda-error-500>'
+        })
       } else {
-        // PAGE NOT FOUND
         this.loadPagesContent({
           content: '<wda-error-404></wda-error-404>'
         })
       }
-    },
+    }
+  }
+
+
+  private HomePage() {
+    //this.loadPagesContent();
+
+    /*
+    this.wdaConfig.getHome().then((data: any) => {
+        if (data) {
+          this.loadPagesContent(data);
+        } else {
+          // PAGE NOT FOUND
+          this.loadPagesContent({
+            content: '<wda-error-404></wda-error-404>'
+          })
+        }
+      },
       (error) => {
         console.log(error)
         if (error.errors) {
@@ -139,9 +181,14 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
           })
         }
       })
+      */
   }
 
   private LoadPages(segments: UrlSegment[]) {
+    console.log(this.activatedRoute.snapshot.data['page']);
+    this.loadPagesContent(this.activatedRoute.snapshot.data['page']);
+
+    /*
     this.wdaConfig.getPage(segments).then(data => {
       if (data) {
         this.loadPagesContent(data);
@@ -171,9 +218,11 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       // TODO: load the component dynamically based on theme, instead of redirecting
       //this.router.navigateByUrl('internal-server-error');
     })
+    */
   }
 
   private loadPagesContent(data) {
+
     data = this.getPageContent(data);
     if (this.bodyRef) {
       this.bodyRef.destroy();
@@ -188,8 +237,14 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
           this.completeLoadCallback();
         }, 200);
       }
+    };
 
-    }
+    this.title.setTitle('DAAAN');
+    this.meta.addTags([
+      {name: 'author', content: 'Daniel H G Mescoloto'},
+      {name: 'keywords', content: 'pudim, wda'},
+      {name: 'description', content: 'I really like pudim'}
+    ]);
 
   }
 
