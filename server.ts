@@ -11,6 +11,7 @@ import {join} from 'path';
 import 'localstorage-polyfill';
 import {REQUEST, RESPONSE} from "@nguniversal/express-engine/tokens";
 import {renderModuleFactory} from "@angular/platform-server";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
 var cors = require('cors');
@@ -47,12 +48,17 @@ const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main'
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 
 app.engine('html', (_, options, callback) => {
+  let serverUrl = options.req.protocol + '://' + options.req.get('host');
   renderModuleFactory(AppServerModuleNgFactory, {
     // Our index.html
     document: template,
     url: options.req.url,
     extraProviders: [
       provideModuleMap(LAZY_MODULE_MAP),
+      {
+        provide: 'APP_BASE_HREF',
+        useValue: serverUrl
+      },
       {
         provide: NgModuleFactoryLoader,
         useClass: ModuleMapNgFactoryLoader,

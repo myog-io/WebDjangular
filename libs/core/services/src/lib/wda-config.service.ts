@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core'
+import {Injectable, Optional, Inject} from '@angular/core'
 import {HttpClient} from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
@@ -8,7 +8,6 @@ import {JsonApiQueryData} from 'angular2-jsonapi';
 import {ClientUserService} from './client-user.service';
 import {Theme} from '@core/interfaces/src/lib/theme';
 import {PageModel} from '@core/cms/src/lib/models';
-import {Url} from "url";
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +22,18 @@ export class WDAConfig {
   private data: object;
   private loading = false;
   private compleLoading: any = null
-
-  constructor(private http: HttpClient,
-              private datastore: WebAngularDataStore,
-              private clientUser: ClientUserService,
+  public init_rul = '/api/core_init/';
+  
+  constructor(
+    private http: HttpClient,
+    private datastore: WebAngularDataStore,
+    private clientUser: ClientUserService,
+    @Optional() @Inject('APP_BASE_HREF') baseHref: string,
   ) {
+    
+    if (baseHref){
+      this.init_rul = `${baseHref}${this.init_rul}`;
+    }
   }
 
   public WDAInit(): Promise<any> {
@@ -40,7 +46,8 @@ export class WDAConfig {
         }
       } else {
         this.loading = true;
-        this.http.get('/api/core_init/').subscribe(
+        console.log(`########REQUESTING ${this.init_rul}`)
+        this.http.get(this.init_rul).subscribe(
           (data: any) => {
             this.populateWDAConfig(data.data);
             this.data = data.data;
@@ -141,7 +148,7 @@ export class WDAConfig {
     return new Promise((resolve, reject) => {
       this.datastore.findRecord(PageModel,
         null, null, null,
-        `api/page/get_home/`).subscribe(
+        `/api/page/get_home/`).subscribe(
         (page: PageModel) => {
           resolve(page);
         },
@@ -156,7 +163,7 @@ export class WDAConfig {
     return new Promise((resolve, reject) => {
       this.datastore.findRecord(PageModel,
         null, null, null,
-        `api/page/${path.join('|')}/get_page`).subscribe(
+        `/api/page/${path.join('|')}/get_page`).subscribe(
         (page: PageModel) => {
           resolve(page);
         },

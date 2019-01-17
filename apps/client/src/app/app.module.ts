@@ -6,7 +6,6 @@ import {RouterModule} from '@angular/router';
 import {JsonApiModule} from 'angular2-jsonapi';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {APP_BASE_HREF} from '@angular/common';
 import {CookieService} from 'ngx-cookie-service';
 import {FormsModule, ReactiveFormsModule,} from '@angular/forms';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
@@ -28,6 +27,8 @@ export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
 declare var global;
 
 export function getBaseHttpUrl() {
+  console.log("GETTING BASE URL");
+  console.log((global as any))
   return (global as any)['HTTP_BASE_URL'];
 }
 
@@ -61,7 +62,6 @@ export function wda_init(wdaconfig: WDAConfig) {
     CookieService,
     CoreDynamicPageLoaderResolver,
     {provide: 'LOCALSTORAGE', useFactory: getLocalStorage},
-    {provide: APP_BASE_HREF, useValue: '/'},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,

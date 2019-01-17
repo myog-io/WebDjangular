@@ -1,4 +1,3 @@
-import { APP_BASE_HREF } from "@angular/common";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgModule, APP_INITIALIZER } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -45,7 +44,6 @@ export function wda_init(wdaconfig: WDAConfig) {
   providers: [
     CookieService,
     WDAConfig,
-    { provide: APP_BASE_HREF, useValue: "/" },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
