@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import { CoreDynamicPageLoaderComponent } from "@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.component";
+import {CoreDynamicPageLoaderComponent} from "@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.component";
+
 
 @Component({
   selector: 'theme-providerfy',
@@ -8,6 +9,7 @@ import { CoreDynamicPageLoaderComponent } from "@core/dynamic-page-loader/src/li
   encapsulation: ViewEncapsulation.None
 })
 
-export class ThemeProviderfyComponent {
+export class ThemeProviderfyComponent extends CoreDynamicPageLoaderComponent{
+
 
 }

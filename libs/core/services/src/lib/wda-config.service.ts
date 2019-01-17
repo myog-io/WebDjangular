@@ -1,13 +1,14 @@
-import { Injectable, EventEmitter } from '@angular/core'
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core'
+import {HttpClient} from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
-import { UrlSegment } from '@angular/router';
-import { WebAngularDataStore } from './WebAngularDataStore.service';
-import { JsonApiQueryData } from 'angular2-jsonapi';
-import { ClientUserService } from './client-user.service';
-import { Theme } from '@core/interfaces/src/lib/theme';
-import { PageModel } from '@core/cms/src/lib/models';
+import {UrlSegment} from '@angular/router';
+import {WebAngularDataStore} from './WebAngularDataStore.service';
+import {JsonApiQueryData} from 'angular2-jsonapi';
+import {ClientUserService} from './client-user.service';
+import {Theme} from '@core/interfaces/src/lib/theme';
+import {PageModel} from '@core/cms/src/lib/models';
+import {Url} from "url";
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +25,8 @@ export class WDAConfig {
   private compleLoading: any = null
 
   constructor(private http: HttpClient,
-    private datastore: WebAngularDataStore,
-    private clientUser: ClientUserService,
+              private datastore: WebAngularDataStore,
+              private clientUser: ClientUserService,
   ) {
   }
 
@@ -33,7 +34,7 @@ export class WDAConfig {
     return new Promise((resolve, reject) => {
       if (this.data) {
         resolve(this.data)
-      } else if(this.loading) {
+      } else if (this.loading) {
         this.compleLoading = () => {
           resolve(this.data);
         }
@@ -44,7 +45,7 @@ export class WDAConfig {
             this.populateWDAConfig(data.data);
             this.data = data.data;
             this.loading = false;
-            if(this.compleLoading) {
+            if (this.compleLoading) {
               this.compleLoading();
               this.compleLoading = null;
             }
@@ -87,6 +88,7 @@ export class WDAConfig {
     });
 
   }
+
   private setCoreConfig(data) {
     this.core_config = data
   }
@@ -137,7 +139,9 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null, null, null, `api/page/get_home/`).subscribe(
+      this.datastore.findRecord(PageModel,
+        null, null, null,
+        `api/page/get_home/`).subscribe(
         (page: PageModel) => {
           resolve(page);
         },
@@ -150,7 +154,9 @@ export class WDAConfig {
 
   public getPage(path: UrlSegment[]): Promise<PageModel | any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null, null, null, `api/page/${path.join('|')}/get_page`).subscribe(
+      this.datastore.findRecord(PageModel,
+        null, null, null,
+        `api/page/${path.join('|')}/get_page`).subscribe(
         (page: PageModel) => {
           resolve(page);
         },
@@ -163,7 +169,7 @@ export class WDAConfig {
 
   public getErrorPage(errorCode): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, { slug: errorCode }).subscribe(
+      this.datastore.findAll(PageModel, {slug: errorCode}).subscribe(
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           let page: PageModel = models[0];

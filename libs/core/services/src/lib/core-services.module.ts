@@ -12,6 +12,7 @@ import { WDAConfig } from './wda-config.service';
 import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { ClientUserService } from './client-user.service';
 import { throwIfAlreadyLoaded } from '@core/shared/src/lib/module-import-guard';
+import {ServerResponse} from "@core/services/src/lib/server-response.service";
 
 export function jwtTokenGetter(module: string, res: any, options: NbAuthJWTToken) {
   if (typeof res.body['data'] !== 'undefined') {
@@ -27,6 +28,7 @@ const SERVICES = [
   RoleProvider,
   PermissionGuard,
   AuthGuard,
+  ServerResponse,
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {

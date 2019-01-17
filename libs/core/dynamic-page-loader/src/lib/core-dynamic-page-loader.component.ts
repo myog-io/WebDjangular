@@ -2,9 +2,11 @@ import {
   Component,
   AfterViewInit,
   ViewEncapsulation,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { UrlSegment, ActivatedRoute } from '@angular/router';
 import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
 
 
 
@@ -14,9 +16,10 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
   <wda-content-viewer [content]="content" ></wda-content-viewer>
   `,
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoreDynamicPageLoaderComponent implements AfterViewInit {
-  public content = '<h1>Testing</h1>';
+  public content = '';
   private url = null;
   private domain = null;
   //private paramSubscription;
@@ -28,6 +31,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private wdaConfig: WDAConfig,
+    private cdr:ChangeDetectorRef
   ) {
     this.links.push(
       { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
@@ -54,83 +58,23 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   async ngAfterViewInit() {
     this.domain = document.location.hostname;
     this.url = document.location.protocol + '//' + this.domain;
-    this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
-      console.log(segments)
-      if (segments.length <= 0) {
-        this.HomePage();
-      } else {
-        this.LoadPages(segments);
-      }
-    });
-
-  }
-
-  private HomePage() {
-    this.wdaConfig.getHome().then((data: any) => {
-      if (data) {
-        this.loadPagesContent(data);
-      } else {
-        // PAGE NOT FOUND
-        this.loadPagesContent({
-          content: '<wda-error-404></wda-error-404>'
-        })
-      }
-    },
-      (error) => {
-        console.log(error)
-        if (error.errors) {
-          if (error.errors.length > 0) {
-            if (error.errors[0].status[0] === '4') {
-              this.loadPagesContent({
-                content: '<wda-error-404></wda-error-404>'
-              })
-            }
-            return;
-          }
-          this.loadPagesContent({
-            content: '<wda-error-500></wda-error-500>'
-          })
-        } else {
-          this.loadPagesContent({
-            content: '<wda-error-404></wda-error-404>'
-          })
-        }
-      })
-  }
-
-  private LoadPages(segments: UrlSegment[]) {
-    this.wdaConfig.getPage(segments).then(data => {
-      if (data) {
-        this.loadPagesContent(data);
-      } else {
-        // TODO: load the 404 component dynamically based on theme, instead of redirecting
-        // this.router.navigateByUrl('not-found');
-        this.loadPagesContent({
-          content: '<wda-error-404></wda-error-404>'
-        })
-      }
-    }, (error) => {
-      if (error.errors) {
-        if (error.errors.length > 0) {
-          if (error.errors[0].status[0] === '4') {
-            this.loadPagesContent({
-              content: '<wda-error-404></wda-error-404>'
-            })
-          }
-          return;
-        }
-      }
-      this.loadPagesContent({
-        content: '<wda-error-500></wda-error-500>'
-      })
-
-      // TODO: maybe others errors? Right now everything is 500 - Internal Server Error
-      // TODO: load the component dynamically based on theme, instead of redirecting
-      //this.router.navigateByUrl('internal-server-error');
+    this.activatedRoute.data.subscribe((data:any)=>{
+      this.loadPagesContent(data.page);
+      this.cdr.markForCheck();
     })
+    //this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
+    //  console.log(segments)
+    //  if (segments.length <= 0) {
+    //    this.HomePage();
+    //  } else {
+    //    this.LoadPages(segments);
+    //  }
+    //});
+
   }
 
-  private loadPagesContent(data) {
+
+  private loadPagesContent(data:any) {
     this.content = data.content;
   }
 

@@ -30,6 +30,7 @@ export class CoreCmsGalleryComponent implements OnInit {
       }
     }
     //this.indicators = true;
+
   }
 
   action(image: any) {
