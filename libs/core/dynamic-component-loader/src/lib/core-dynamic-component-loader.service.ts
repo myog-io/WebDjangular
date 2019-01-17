@@ -1,4 +1,16 @@
-import { ComponentFactory, Injectable, Injector, NgModuleFactoryLoader, Compiler, Component, NgModule, ModuleWithComponentFactories, SystemJsNgModuleLoader, NgModuleFactory, Type, OnInit, OnDestroy } from '@angular/core';
+import {
+  ComponentFactory,
+  Injectable,
+  Injector,
+  Compiler,
+  Component,
+  NgModule,
+  ModuleWithComponentFactories,
+  SystemJsNgModuleLoader,
+  NgModuleFactory,
+  OnInit,
+  OnDestroy
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { fromPromise as ObservableFromPromise } from 'rxjs/observable/fromPromise';
 

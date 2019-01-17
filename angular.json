@@ -209,7 +209,7 @@
           "options": {
             "deployUrl": "/admin/",
             "baseHref": "/admin/",
-            "outputPath": "/dist/app/admin",
+            "outputPath": "dist/apps/admin",
             "index": "apps/admin/src/index.html",
             "main": "apps/admin/src/main.ts",
             "polyfills": "apps/admin/src/polyfills.ts",

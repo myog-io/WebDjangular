@@ -21,7 +21,8 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
-const clientAppServer = (file = '') => join(DIST_FOLDER, 'client', file)
+const clientAppServer = (file = '') => join(DIST_FOLDER, 'client', file);
+const adminAppServer = (file = '') => join(DIST_FOLDER, 'admin', file);
 
 // Fixing window is not defined https://github.com/angular/universal/issues/830
 const domino = require('domino');
@@ -55,15 +56,26 @@ app.set('views', clientAppServer());
 //app.use(cors());
 
 // Example Express Rest API endpoint, Proxying to Django
+const api_url = 'http://127.0.0.1:8000';
 // TODO: Make URL Dynamic!
-app.use('/api/**', proxy('http://127.0.0.1:8000',{
+app.use('/api/**', proxy(api_url,{
   proxyReqPathResolver: function (req) {
-    
     return req.originalUrl;
   }
 }));
+app.use('/files/**', proxy(api_url,{
+  proxyReqPathResolver: function (req) {
+    return req.originalUrl;
+  }
+}));
+/* ADMIN PART */
+app.get('/admin/*.*', express.static(adminAppServer()));
 
+app.get('/admin/', (req, res) => {
+  res.render(adminAppServer('index.html'), { req });
+});
 
+/* CLIENT PART */
 app.get('*.*', express.static(clientAppServer()));
 
 // All regular routes use the Universal engine

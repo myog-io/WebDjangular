@@ -51,7 +51,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         this.completeLoadCallback = () => {
           this.completeLoadCallback = null;
           let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance({
-            document:this.document,
+            document: this.document,
             scrollTarget: `#${event.anchor}`,
             pageScrollDuration: 350,
           });
@@ -120,17 +120,24 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       }
     },
       (error) => {
-        if (error.errors.length > 0) {
-          if (error.errors[0].status[0] === '4') {
-            this.loadPagesContent({
-              content: '<wda-error-404></wda-error-404>'
-            })
+        console.log(error)
+        if (error.errors) {
+          if (error.errors.length > 0) {
+            if (error.errors[0].status[0] === '4') {
+              this.loadPagesContent({
+                content: '<wda-error-404></wda-error-404>'
+              })
+            }
+            return;
           }
-          return;
+          this.loadPagesContent({
+            content: '<wda-error-500></wda-error-500>'
+          })
+        } else {
+          this.loadPagesContent({
+            content: '<wda-error-404></wda-error-404>'
+          })
         }
-        this.loadPagesContent({
-          content: '<wda-error-500></wda-error-500>'
-        })
       })
   }
 
@@ -146,13 +153,15 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         })
       }
     }, (error) => {
-      if (error.errors.length > 0) {
-        if (error.errors[0].status[0] === '4') {
-          this.loadPagesContent({
-            content: '<wda-error-404></wda-error-404>'
-          })
+      if (error.errors) {
+        if (error.errors.length > 0) {
+          if (error.errors[0].status[0] === '4') {
+            this.loadPagesContent({
+              content: '<wda-error-404></wda-error-404>'
+            })
+          }
+          return;
         }
-        return;
       }
       this.loadPagesContent({
         content: '<wda-error-500></wda-error-500>'
