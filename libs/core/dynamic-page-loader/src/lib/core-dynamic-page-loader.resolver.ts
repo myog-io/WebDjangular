@@ -18,7 +18,6 @@ export class CoreDynamicPageLoaderResolver implements Resolve<PageModel|ErrorRes
 
   constructor(public router: Router,
               public wdaConfig: WDAConfig) {
-    console.log('resolver constructor');
   }
 
   resolve(route: ActivatedRouteSnapshot,
