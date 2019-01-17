@@ -17,6 +17,7 @@ import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.intercept
 import { GoogleMapsLazyConfig } from '@core/cms/src/lib/services/GoogleMapsLazyConfig';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { AppRoutingModule } from './app-routing.module';
+import { EmbeddedComponents } from '@core/dynamic-page-loader/src/lib/core-dynamic-content-viewer';
 
 
 export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
@@ -65,7 +66,7 @@ export function wda_init(wdaconfig: WDAConfig) {
       multi: true
     },
     {provide: LAZY_MAPS_API_CONFIG, useClass: GoogleMapsLazyConfig},
-    //{provide: APP_INITIALIZER, useFactory: wda_init, deps: [WDAConfig], multi: true},
+    {provide: APP_INITIALIZER, useFactory: wda_init, deps: [WDAConfig], multi: true},
     {provide: HTTP_BASE_URL, useFactory: getBaseHttpUrl},
   ],
 })

@@ -8,6 +8,6 @@ import { CoreDynamicPageLoaderComponent } from "@core/dynamic-page-loader/src/li
   encapsulation: ViewEncapsulation.None
 })
 
-export class ThemeProviderfyComponent extends CoreDynamicPageLoaderComponent {
+export class ThemeProviderfyComponent {
 
 }

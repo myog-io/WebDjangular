@@ -3,14 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const routes: Routes = [
-
-    /*
     {
-      path: '',
-      loadChildren: () => CoreDynamicPageLoaderModule
-    }*/
-    {
-        path: '',
+        path: '**',
         loadChildren: "@themes/providerfy/src/lib/providerfy.module.ts#ThemeProviderfyModule"
     },
 ];

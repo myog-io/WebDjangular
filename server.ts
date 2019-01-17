@@ -1,14 +1,16 @@
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, NgModuleFactoryLoader, Compiler, SystemJsNgModuleLoader, Injector } from '@angular/core';
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+import { provideModuleMap, ModuleMapNgFactoryLoader, MODULE_MAP } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
 import 'localstorage-polyfill';
+import { renderModuleFactory } from '@angular/platform-server';
+
 
 var cors = require('cors');
 var proxy = require('express-http-proxy');
@@ -42,12 +44,35 @@ global['localStorage'] = localStorage;
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+/*
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,
   providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
+    provideModuleMap(LAZY_MODULE_MAP),
+    //{
+    //  provide: NgModuleFactoryLoader,
+    //  useClass: ModuleMapNgFactoryLoader,
+    //  deps: [
+    //    Compiler,
+    //    MODULE_MAP
+    //  ],
+    //},
   ]
 }));
+*/
+app.engine('html', (_, options, callback) => {
+  renderModuleFactory(AppServerModuleNgFactory, {
+    // Our index.html
+    document: template,
+    url: options.req.url,
+    // DI so that we can get lazy-loading to work differently (since we need it to just instantly render it)
+    extraProviders: [
+      provideModuleMap(LAZY_MODULE_MAP)
+    ]
+  }).then(html => {
+    callback(null, html);
+  });
+});
 
 app.set('view engine', 'html');
 //app.set('views', DIST_FOLDER);

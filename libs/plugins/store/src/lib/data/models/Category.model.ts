@@ -38,7 +38,7 @@ export class CategoryModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'ckeditor',
+    type: 'codeEditor',
     label: 'Description',
     wrapper_class: 'col-12',
     placeholder: 'Enter Page Title',

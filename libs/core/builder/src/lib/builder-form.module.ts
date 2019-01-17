@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgSwitch } from '@angular/common';
 import { ScaffoldFieldDirective } from './builder-form.directive';
-import { CKEditorModule } from 'ng2-ckeditor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -17,7 +16,6 @@ import {
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
 import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
-import { BuilderFormCkeditorComponent } from './inputs/ckeditor/ckeditor.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
@@ -35,7 +33,6 @@ const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
   BuilderFormInputComponent,
   BuilderFormSelectComponent,
-  BuilderFormCkeditorComponent,
   BuilderFormCodeComponent,
   BuilderFormBuilderComponent,
   BuilderFormArrayComponent,
@@ -52,7 +49,6 @@ const ENTRY_COMPONENTS = [
   declarations: [ScaffoldFieldDirective, BuilderFormComponent, ...ENTRY_COMPONENTS],
   imports: [
     CommonModule,
-    CKEditorModule,
     MonacoEditorModule.forRoot({baseUrl: "./assets"}),
     FormsModule,
     ReactiveFormsModule,

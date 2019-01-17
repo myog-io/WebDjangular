@@ -1,51 +1,39 @@
 import {
   Component,
-  ViewChild,
-  ViewContainerRef,
   AfterViewInit,
-  Compiler,
-  ComponentRef,
-  Injector,
   ViewEncapsulation,
-  Inject
 } from '@angular/core';
-import { UrlSegment, ActivatedRoute, ParamMap, Router, Scroll, RouterEvent } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
-import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
+import { UrlSegment, ActivatedRoute } from '@angular/router';
 import { WDAConfig } from '@core/services/src/lib/wda-config.service';
-import { CoreDynamicComponentLoader, CoreDynamicCustomComponent } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.service';
-import { ThemesCleanModule } from '@themes/clean/src/lib/themes-clean.module';
+
 
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
   template: `
-    <div #bodyContainer></div>
+  <wda-content-viewer [content]="content" ></wda-content-viewer>
   `,
+  encapsulation: ViewEncapsulation.None,
 })
 export class CoreDynamicPageLoaderComponent implements AfterViewInit {
+  public content = '<h1>Testing</h1>';
   private url = null;
   private domain = null;
-  private paramSubscription;
+  //private paramSubscription;
   private links = []
-  private bodyRef: ComponentRef<{}>;
+  //private bodyRef: ComponentRef<{}>;
   public completeLoadCallback = null;
-  @ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
+  //@ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
 
   constructor(
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private wdaConfig: WDAConfig,
-    private componentLoader: CoreDynamicComponentLoader,
-    private compiler: Compiler,
-    private injector: Injector,
-    private pageScrollService: PageScrollService,
-    @Inject(DOCUMENT) private document: any
   ) {
     this.links.push(
       { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
     );
-
+    /*
+    Scrolling on the Page
     this.router.events.subscribe((event: any) => {
       if (event.anchor) {
         this.completeLoadCallback = () => {
@@ -60,14 +48,14 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         }
       }
     })
-
+    */
   }
 
   async ngAfterViewInit() {
     this.domain = document.location.hostname;
     this.url = document.location.protocol + '//' + this.domain;
     this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
-
+      console.log(segments)
       if (segments.length <= 0) {
         this.HomePage();
       } else {
@@ -75,37 +63,6 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       }
     });
 
-  }
-
-  private getPageContent(data: any) {
-    const metadata = {
-      selector: 'wda-body',
-      template: data.content,
-      encapsulation: ViewEncapsulation.None
-    }
-    const factory = this.componentLoader.createComponentFactorySync(metadata, null, this.compiler)
-    data.bodyFactory = factory;
-    return data;
-  }
-
-  private addLinkToRoute(path: any, data: any) {
-    // TODO Check if link already has poath
-    // Removing Last From Link
-    data = this.getPageContent(data);
-
-    const last = this.links.pop();
-    this.links.push({
-      path: path.join(),
-      pathMatch: 'full',
-      loadChildren: () => ThemesCleanModule,//'@webdjangular/themes/clean#ThemesCleanModule',//this.wdaConfig.getThemePath(),
-      data: data
-    })
-
-    // Putting Last in correct Order
-    this.links.push(last);
-
-    this.router.resetConfig(this.links);
-    this.router.navigate(path);
   }
 
   private HomePage() {
@@ -174,23 +131,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   }
 
   private loadPagesContent(data) {
-    data = this.getPageContent(data);
-    if (this.bodyRef) {
-      this.bodyRef.destroy();
-      this.bodyRef = null;
-    }
-    this.bodyContainer.clear();
-    this.bodyRef = this.bodyContainer.createComponent(data.bodyFactory, 0, this.injector);
-
-    (<CoreDynamicCustomComponent>this.bodyRef.instance).ngOnInit = () => {
-      if (this.completeLoadCallback) {
-        setTimeout(() => {
-          this.completeLoadCallback();
-        }, 200);
-      }
-
-    }
-
+    this.content = data.content;
   }
 
 }

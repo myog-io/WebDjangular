@@ -15,6 +15,5 @@ export enum ProductAttributeTypeValues {
   button = 'button',
   text = 'text',
   select = 'select',
-  ckeditor = 'ckeditor',
   codeEditor = 'codeEditor'
 }

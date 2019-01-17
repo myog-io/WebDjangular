@@ -28,7 +28,6 @@ import { ThemeProviderfyModalChannelsComponent } from "./components/modal/channe
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from '@ng-select/ng-select';
 import {NgxMaskModule} from "ngx-mask";
-import { CoreDynamicComponentLoaderModule } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.module';
 import { CoreDynamicPageLoaderModule } from '@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.module';
 
 const COMPONENTS = [
@@ -72,13 +71,13 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    CoreDynamicComponentLoaderModule.forRoot(),
     NgSelectModule,
+    CoreDynamicPageLoaderModule,
     NgxMaskModule.forRoot(),
     RouterModule.forChild([
       // TODO: remove the redirect to the page (remove these errors from routes as well) and make the error showing inside the page that gave the error.
       { path: '**', pathMatch: 'full', component: ThemeProviderfyComponent }
-
+      
     ])
   ],
   exports: [...COMPONENTS],
@@ -101,7 +100,7 @@ const COMPONENTS = [
 
   ]
 })
-export class ThemeProviderfyModule extends CoreDynamicPageLoaderModule {
+export class ThemeProviderfyModule {
 }
 
 

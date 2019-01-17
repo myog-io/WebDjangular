@@ -55,6 +55,9 @@ const COMPONENTS = [
   declarations: [
     ...COMPONENTS,
   ],
+  entryComponents: [
+    ...COMPONENTS,  
+  ]
 })
 export class PluginProviderCheckoutModule {
 }

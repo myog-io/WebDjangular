@@ -3,25 +3,41 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CoreDynamicPageLoaderComponent } from './core-dynamic-page-loader.component';
-import { CoreDynamicComponentLoaderModule } from '@core/dynamic-component-loader/src/lib/core-dynamic-component-loader.module';
+import { ContentViewer, EmbeddedComponents } from './core-dynamic-content-viewer';
+import { PluginProviderModule } from '@plugins/provider/src/lib/provider.module';
+import { CoreCmsModule } from '@core/cms/src/lib/core-cms.module';
+import { PluginProviderCheckoutModule } from '@plugins/provider/src/lib/components/checkout/checkout.module';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
+const DECLARATIONS = [
+  ContentViewer,
+  CoreDynamicPageLoaderComponent
+
+]
+//  TODO: DYNAMIC??
+const IMPORTS_FOR_DYNAMIC = [
+  PluginProviderModule,
+  CoreCmsModule,
+  PluginProviderCheckoutModule,
+]
 
 @NgModule({
   imports: [
     CommonModule,
-    CoreDynamicComponentLoaderModule.forRoot(),
-    RouterModule.forChild([
-
-      //{path: 'themes-clean', loadChildren: '@themes/clean#ThemesCleanModule'},
-      //{path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent}
-
-    ])
+    ...IMPORTS_FOR_DYNAMIC,
+    RouterModule,
+    
   ],
   declarations: [
-    CoreDynamicPageLoaderComponent
+    ...DECLARATIONS
   ],
   entryComponents: [
-    CoreDynamicPageLoaderComponent
-  ]
+    ...DECLARATIONS
+  ],
+  exports: [
+    ...DECLARATIONS
+  ],
+  bootstrap: [CoreDynamicPageLoaderComponent],
+  providers: [EmbeddedComponents]
 })
 export class CoreDynamicPageLoaderModule { }

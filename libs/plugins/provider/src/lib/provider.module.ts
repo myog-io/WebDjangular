@@ -56,6 +56,7 @@ const SERVICES = [
     ...MODULES
 
   ],
+  entryComponents: [...COMPONENTS],
   declarations: [...COMPONENTS],
   providers: [...SERVICES]
 })
