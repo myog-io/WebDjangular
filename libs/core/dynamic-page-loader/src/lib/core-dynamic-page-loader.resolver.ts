@@ -8,17 +8,17 @@ import {
   UrlSegmentGroup,
   UrlTree
 } from "@angular/router";
-import {Inject, Injectable, Optional, PLATFORM_ID} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {WDAConfig} from "@core/services/src/lib/wda-config.service";
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
-import {isPlatformBrowser} from '@angular/common';
+import {PageModel} from "@core/cms/src/lib/models";
+import {ErrorResponse} from "angular2-jsonapi";
 
 @Injectable()
-export class CoreDynamicPageLoaderResolver implements Resolve<any> {
+export class CoreDynamicPageLoaderResolver implements Resolve<PageModel|ErrorResponse> {
 
   constructor(public router: Router,
               public wdaConfig: WDAConfig) {
-
+    console.log('resolver constructor');
   }
 
   resolve(route: ActivatedRouteSnapshot,
@@ -31,20 +31,18 @@ export class CoreDynamicPageLoaderResolver implements Resolve<any> {
     if (urlSegmentGroup) {
       const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
 
-      return this.wdaConfig.getPage(urlSegments).then((data: any) => {
+      return this.wdaConfig.getPage(urlSegments).then((data: PageModel) => {
           return data;
         },
-        (error) => {
-          console.log(error);
+        (error: ErrorResponse) => {
           return error;
         })
 
     } else {
-      return this.wdaConfig.getHome().then((data: any) => {
+      return this.wdaConfig.getHome().then((data: PageModel) => {
           return data;
         },
-        (error) => {
-          console.log(error);
+        (error: ErrorResponse) => {
           return error;
         })
     }
