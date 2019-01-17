@@ -4,9 +4,8 @@ import {
   ViewEncapsulation,
   ChangeDetectorRef,
 } from '@angular/core';
-import { UrlSegment, ActivatedRoute } from '@angular/router';
-import { WDAConfig } from '@core/services/src/lib/wda-config.service';
-import { ChangeDetectionStrategy } from '@angular/compiler/src/core';
+import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 
 
@@ -30,12 +29,12 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private wdaConfig: WDAConfig,
     private cdr:ChangeDetectorRef
   ) {
     this.links.push(
       { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
     );
+    //this.cdr.detach();
     /*
     Scrolling on the Page
     this.router.events.subscribe((event: any) => {
@@ -60,7 +59,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     this.url = document.location.protocol + '//' + this.domain;
     this.activatedRoute.data.subscribe((data:any)=>{
       this.loadPagesContent(data.page);
-      this.cdr.markForCheck();
+      this.cdr.detectChanges();
     })
     //this.activatedRoute.url.subscribe((segments: UrlSegment[]) => {
     //  console.log(segments)
