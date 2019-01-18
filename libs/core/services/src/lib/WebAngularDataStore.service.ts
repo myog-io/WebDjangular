@@ -91,9 +91,8 @@ export class WebAngularDataStore extends JsonApiDatastore {
     @Optional() @Inject('APP_BASE_HREF') baseHref: string,
   ) {
     super(http);
-    console.log("Starting Basehref",baseHref);
-    if (baseHref) {
-      this.datastoreConfig.baseUrl = `${baseHref}${this.datastoreConfig}`;
+    if (baseHref && this.datastoreConfig.baseUrl.search(baseHref) === -1) {
+      this.datastoreConfig.baseUrl = `${baseHref}${this.datastoreConfig.baseUrl}`;
       console.log("this.datastoreConfig.baseUrl");
     }
   }
