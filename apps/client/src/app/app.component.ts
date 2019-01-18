@@ -5,7 +5,7 @@ import { AnalyticsService } from '@core/services/src/lib/analytics.service';
 
 
 @Component({
-  selector: 'wda-client',
+  selector: 'root',
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
