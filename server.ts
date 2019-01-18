@@ -22,6 +22,7 @@ enableProdMode();
 
 // Express server
 const app = express();
+const adminApp = express();
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
@@ -32,6 +33,7 @@ const adminAppServer = (file = '') => join(DIST_FOLDER, 'admin', file);
 const domino = require('domino');
 const fs = require('fs');
 const template = fs.readFileSync(clientAppServer('index.html')).toString();
+const adminTemplate = fs.readFileSync(adminAppServer('index.html')).toString();
 const win = domino.createWindow(template);
 global['window'] = win;
 global['document'] = win.document;
@@ -45,8 +47,42 @@ global['localStorage'] = localStorage;
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main');
 
-// Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+// Universal express-engine for the Admin
+adminApp.engine('html', (_, options, callback) => {
+  let serverUrl = options.req.protocol + '://' + options.req.get('host');
+  renderModuleFactory(AppServerModuleNgFactory, {
+    // Our index.html
+    document: adminTemplate,
+    url: options.req.url,
+    extraProviders: [
+      provideModuleMap(LAZY_MODULE_MAP),
+      {
+        provide: 'APP_BASE_HREF',
+        useValue: serverUrl
+      },
+      {
+        provide: NgModuleFactoryLoader,
+        useClass: ModuleMapNgFactoryLoader,
+        deps: [
+          Compiler,
+          MODULE_MAP
+        ],
+      },
+      <ValueProvider>{
+        provide: REQUEST,
+        useValue: options.req
+      },
+      <ValueProvider>{
+        provide: RESPONSE,
+        useValue: options.req.res,
+      },
+    ]
+  }).then(html => {
+    callback(null, html);
+  });
+});
 
+// Our Universal express-engine For the APP(found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', (_, options, callback) => {
   let serverUrl = options.req.protocol + '://' + options.req.get('host');
   renderModuleFactory(AppServerModuleNgFactory, {
@@ -83,8 +119,10 @@ app.engine('html', (_, options, callback) => {
 
 
 app.set('view engine', 'html');
+adminApp.set('view engine', 'html');
 //app.set('views', DIST_FOLDER);
 app.set('views', clientAppServer());
+adminApp.set('views', clientAppServer());
 
 //app.use(cors());
 
@@ -102,11 +140,14 @@ app.use('/files/**', proxy(api_url, {
   }
 }));
 /* ADMIN PART */
-app.get('/admin/*.*', express.static(adminAppServer()));
+adminApp.get('*.*', express.static(adminAppServer()));
 
-app.get('/admin/', (req, res) => {
+// All regular routes use the Universal engine
+adminApp.get('*', (req, res) => {
   res.render(adminAppServer('index.html'), {req});
 });
+
+app.use('/admin', adminApp);
 
 /* CLIENT PART */
 app.get('*.*', express.static(clientAppServer()));

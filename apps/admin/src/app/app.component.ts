@@ -12,7 +12,7 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 
 
 @Component({
-  selector: 'wda-admin',
+  selector: 'root',
   template: `<router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnInit {

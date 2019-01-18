@@ -93,7 +93,6 @@ export class WebAngularDataStore extends JsonApiDatastore {
     super(http);
     if (baseHref && this.datastoreConfig.baseUrl.search(baseHref) === -1) {
       this.datastoreConfig.baseUrl = `${baseHref}${this.datastoreConfig.baseUrl}`;
-      console.log("this.datastoreConfig.baseUrl");
     }
   }
 

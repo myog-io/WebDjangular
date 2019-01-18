@@ -50,7 +50,6 @@ export class WDAConfig {
         }
       } else {
         this.loading = true;
-        console.log(`########REQUESTING ${this.init_url}`)
         this.http.get(this.init_url).subscribe(
           (data: any) => {
             this.populateWDAConfig(data.data);
