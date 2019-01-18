@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel,} from 'angular2-jsonapi';
+import { Injectable, Optional, Inject } from '@angular/core';
+import { DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel, ModelType, ModelConfig, } from 'angular2-jsonapi';
 import { Observable } from 'rxjs';
 import { UserModel, GroupModel, PermissionModel } from '@core/users/src/lib/models';
 import { PageModel, BlockModel, MenuItemModel, MenuModel } from '@core/cms/src/lib/models';
@@ -10,6 +10,8 @@ import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 import { ProductTypeModel } from '@plugins/store/src/lib/data/models/ProductType.model';
 import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/ProductAttribute.model';
 import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
+import { HttpClient } from '@angular/common/http';
+
 
 
 // tslint:disable-next-line:variable-name
@@ -83,6 +85,19 @@ const config: DatastoreConfig = {
 @Injectable()
 @JsonApiDatastoreConfig(config)
 export class WebAngularDataStore extends JsonApiDatastore {
+
+  constructor(
+    protected http: HttpClient,
+    @Optional() @Inject('APP_BASE_HREF') baseHref: string,
+  ) {
+    super(http);
+    console.log("Starting Basehref",baseHref);
+    if (baseHref) {
+      this.datastoreConfig.baseUrl = `${baseHref}${this.datastoreConfig}`;
+      console.log("this.datastoreConfig.baseUrl");
+    }
+  }
+
   protected getRelationships(data: any): any {
     let relationships: any;
     for (const key in data) {
@@ -161,7 +176,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
         let body: any = {
           data: null // TODO: Improve this
         };
-        this.http.patch(url, body, {headers: this.buildHttpHeaders()}).subscribe(
+        this.http.patch(url, body, { headers: this.buildHttpHeaders() }).subscribe(
           (r) => {
             if (i + 1 == hasManyFields.length) {
               observe.complete();
@@ -172,5 +187,29 @@ export class WebAngularDataStore extends JsonApiDatastore {
       }
     });
   }
+
+  //protected buildUrl<T extends JsonApiModel>(
+  //  modelType: ModelType<T>,
+  //  params?: any,
+  //  id?: string,
+  //  customUrl?: string
+  //): string {
+  //  // TODO: use HttpParams instead of appending a string to the url
+  //  const queryParams: string = this.toQueryString(params);
+//
+  //  if (customUrl) {
+  //    return queryParams ? `${customUrl}?${queryParams}` : customUrl;
+  //  }
+//
+  //  const modelConfig: ModelConfig = Reflect.getMetadata('JsonApiModelConfig', modelType);
+//
+  //  const baseUrl = modelConfig.baseUrl || this.datastoreConfig.baseUrl;
+  //  const apiVersion = modelConfig.apiVersion || this.datastoreConfig.apiVersion;
+  //  const modelEndpointUrl: string = modelConfig.modelEndpointUrl || modelConfig.type;
+//
+  //  const url: string = [baseUrl, apiVersion, modelEndpointUrl, id].filter((x) => x).join('/');
+//
+  //  return queryParams ? `${url}?${queryParams}` : url;
+  //}
 
 }
