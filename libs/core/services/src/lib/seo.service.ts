@@ -17,8 +17,8 @@ export class SEOService {
 
   setTitleByPage(page: PageModel) {
     let title: string = '';
-    let site_title: string = 'LPNET'; // TODO: WDA Config title dynamic from Core Website Configuration
-    let title_separator: string = '•'; // TODO: WDA Config choose which character is the separator, e.g.: - / | •
+    let site_title: string = 'LPNET'; // TODO:  #39 WDA Config title dynamic from Core Website Configuration
+    let title_separator: string = '•'; // TODO:  #39 WDA Config choose which character is the separator, e.g.: - / | •
 
     if (page.is_home) {
       title = `${site_title}`;
@@ -161,7 +161,7 @@ export class SEOService {
    */
 
 
-  // TODO: improve SEO after the Page Classes is done
+  // TODO: #40 improve SEO after the Page Classes is done
   // e.g.: if the page is an article,
   //      og:type = article
   //      article:published_time - datetime - When the article was first published.
