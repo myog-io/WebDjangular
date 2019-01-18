@@ -65,7 +65,6 @@ export class CoreCmsMapsComponent implements OnInit {
         }
       ];
     }
-    console.log(this.lat,this.lng,this.styles)
     this.loading = false;
   }
 }

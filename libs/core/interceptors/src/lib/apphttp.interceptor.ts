@@ -21,7 +21,6 @@ export class AppHttpInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return this.authService.getToken().pipe(
       switchMap(function(token) {
-        console.log(`Intercepting request ${request.url}`);
         const suffix = request.url;
         let url = '/';
 

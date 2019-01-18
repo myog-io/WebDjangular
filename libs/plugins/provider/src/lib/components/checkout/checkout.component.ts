@@ -25,7 +25,7 @@ export class PluginProviderCheckoutComponent implements OnInit {
         if(params['phone']){
           providerCheckout.pre_selected_telephone_sku = params['phone'];
         }
-        console.log("ROUTE QUERY PARAMS");
+        
       })
     );
   }

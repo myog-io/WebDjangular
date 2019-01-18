@@ -89,7 +89,6 @@ export class AbstractModel extends JsonApiModel {
             child.internalDatastore = this.service;
             const relationships: any = this.service.getRelationships(child);
             const belongsTo = child.belongsTo;
-            console.log(belongsTo)
             if (belongsTo) {
               for (let j = 0; j < belongsTo.length; j++) {
                 if (belongsTo[j].relationship === this.modelConfig.type) {

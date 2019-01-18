@@ -22,7 +22,6 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
     private clientUserService: ClientUserService,
     @Inject(PLATFORM_ID) platformId: string
   ) {
-    console.log(platformId);
     this.testBrowser = isPlatformBrowser(platformId);
     if (this.clientUserService.clientUser.data.hasOwnProperty('city')) {
       this.city_name = this.clientUserService.clientUser.data['city']['name'];

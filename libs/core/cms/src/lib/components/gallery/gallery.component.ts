@@ -20,7 +20,6 @@ export class CoreCmsGalleryComponent implements OnInit {
   ngOnInit() {
     
     this.image_array = JSON.parse(this.images);
-    console.log("INITTING",this.image_array);
     if (this.image_array){
       if (this.arrows === null) {
         this.arrows = this.image_array.length > 1;

@@ -27,8 +27,6 @@ export const HTTP_BASE_URL = new InjectionToken<string>('HTTP_BASE_URL');
 declare var global;
 
 export function getBaseHttpUrl() {
-  console.log("GETTING BASE URL");
-  console.log((global as any))
   return (global as any)['HTTP_BASE_URL'];
 }
 
