@@ -1,20 +1,15 @@
-import {
-  Component,
-  AfterViewInit,
-  ViewEncapsulation,
-  ChangeDetectorRef,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy } from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation,} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {PageModel} from "@core/cms/src/lib/models";
 import {ErrorResponse} from "angular2-jsonapi";
-
+import {Meta, Title} from "@angular/platform-browser";
+import {SEOService} from "@core/services/src/lib/seo.service";
 
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
   template: `
-  <wda-content-viewer [content]="content" ></wda-content-viewer>
+    <wda-content-viewer [content]="content"></wda-content-viewer>
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,14 +22,16 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private links = []
   //private bodyRef: ComponentRef<{}>;
   public completeLoadCallback = null;
+
   //@ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private cdr:ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public seo: SEOService,
   ) {
     this.links.push(
-      { path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent },
+      {path: '**', pathMatch: 'full', component: CoreDynamicPageLoaderComponent},
     );
     //this.cdr.detach();
     /*
@@ -59,20 +56,22 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   async ngAfterViewInit() {
     this.domain = document.location.hostname;
     this.url = document.location.protocol + '//' + this.domain;
-    this.activatedRoute.data.subscribe((data:any)=>{
+    this.activatedRoute.data.subscribe((data: any) => {
       this.loadPagesContent(data.page);
       this.cdr.detectChanges();
     })
   }
 
 
-  private loadPagesContent(data:PageModel|ErrorResponse) {
-    if (data instanceof PageModel) {
-      this.content = data.content;
-    } else if (data instanceof ErrorResponse) {
-      if (data.errors) {
-        if (data.errors.length > 0) {
-          if (data.errors[0].status === "404") {
+  private loadPagesContent(page: PageModel | ErrorResponse) {
+    if (page instanceof PageModel) {
+      this.content = page.content;
+      this.seo.setTitleByPage(page);
+      this.seo.createMetaByPage(page);
+    } else if (page instanceof ErrorResponse) {
+      if (page.errors) {
+        if (page.errors.length > 0) {
+          if (page.errors[0].status === "404") {
             this.content = `<wda-error-404></wda-error-404>`;
             return;
           }
@@ -82,8 +81,6 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         this.content = `<wda-error-404></wda-error-404>`;
       }
     }
-
-
   }
 
 }

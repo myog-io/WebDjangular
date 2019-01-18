@@ -78,6 +78,18 @@ export class PageModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
+    type: 'switch',
+    label: 'Searchable',
+    wrapper_class: 'col-12',
+    value: true,
+    placeholder: '',
+    displayGroup: pageDG.seo
+  })
+  is_searchable: boolean;
+
+
+  @Attribute()
+  @ExtraOptions({
     validators: [],
     type: 'text',
     label: 'Title',
@@ -104,6 +116,8 @@ export class PageModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
+  is_home: boolean = false;
+
   permissions: PermissionModel[];
 
   get pk() {
@@ -114,6 +128,9 @@ export class PageModel extends AbstractModel {
 
   }
 
+  setHome() {
+    this.is_home = true;
+  }
 
   public displayGroups = [
     {

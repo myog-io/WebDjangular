@@ -13,6 +13,7 @@ import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordAuthStr
 import { ClientUserService } from './client-user.service';
 import { throwIfAlreadyLoaded } from '@core/shared/src/lib/module-import-guard';
 import {ServerResponse} from "@core/services/src/lib/server-response.service";
+import {SEOService} from "@core/services/src/lib/seo.service";
 
 export function jwtTokenGetter(module: string, res: any, options: NbAuthJWTToken) {
   if (typeof res.body['data'] !== 'undefined') {
@@ -29,6 +30,7 @@ const SERVICES = [
   PermissionGuard,
   AuthGuard,
   ServerResponse,
+  SEOService,
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {

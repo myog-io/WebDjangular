@@ -1,5 +1,7 @@
 from django.core.validators import MaxLengthValidator
 from django.db import models
+from django_mysql.models import JSONField
+
 
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -36,12 +38,15 @@ class ActiveModel(models.Model):
 
 
 class SeoModel(models.Model):
+    is_searchable = models.BooleanField(default=True, null=False)
     seo_title = models.CharField(
         max_length=70, blank=True, null=True,
         validators=[MaxLengthValidator(70)])
     seo_description = models.CharField(
         max_length=300, blank=True, null=True,
         validators=[MaxLengthValidator(300)])
+    opengraph = JSONField(null=True, default=None)
+    twitter = JSONField(null=True, default=None)
 
     class Meta:
         abstract = True

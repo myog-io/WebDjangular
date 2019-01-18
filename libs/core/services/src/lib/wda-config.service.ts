@@ -154,6 +154,7 @@ export class WDAConfig {
         null, null, null,
         this.get_home_url).subscribe(
         (page: PageModel) => {
+          page.setHome();
           resolve(page);
         },
         (error: any) => {
