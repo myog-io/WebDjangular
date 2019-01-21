@@ -30,7 +30,22 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import {NgxMaskModule} from "ngx-mask";
 import { CoreDynamicPageLoaderModule } from '@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.module';
 
+import {LayoutComponent} from "@themes/providerfy/src/lib/components/layout/layout.component";
+import { LayoutFullContentComponent } from "@themes/providerfy/src/lib/components/layout/full-content/full-content.component";
+import { LayoutRightSidebarComponent } from "@themes/providerfy/src/lib/components/layout/right-sidebar/right-sidebar.component";
+import { LayoutLeftSidebarComponent } from "@themes/providerfy/src/lib/components/layout/left-sidebar/left-sidebar.component";
+
+
+const LAYOUTS = [
+  LayoutComponent,
+  LayoutFullContentComponent,
+  LayoutRightSidebarComponent,
+  LayoutLeftSidebarComponent,
+];
+
+
 const COMPONENTS = [
+  ...LAYOUTS,
   ThemeProviderfyComponent,
   ThemeProviderfyHeaderComponent,
   ThemeProviderfyTopHeaderComponent,
