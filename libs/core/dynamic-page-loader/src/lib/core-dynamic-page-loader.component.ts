@@ -19,7 +19,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private url = null;
   private domain = null;
   //private paramSubscription;
-  private links = []
+  private links = [];
   //private bodyRef: ComponentRef<{}>;
   public completeLoadCallback = null;
 
