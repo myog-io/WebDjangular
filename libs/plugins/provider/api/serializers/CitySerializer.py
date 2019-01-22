@@ -61,7 +61,7 @@ class CitySerializer(WebDjangoSerializer):
     included_serializers = {
         'streets': StreetSerializer,
         'postal_codes': PostalCodeRangeSerializer,
-        'products': 'libs.plugins.store.api.serializers.ProductSerializer'
+        'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer'
     }
 
     postal_codes = ResourceRelatedField(

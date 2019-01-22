@@ -22,7 +22,7 @@ enum DiplayGroups {
   modelEndpointUrl: 'provider/city',
 })
 export class CityModel extends AbstractModel {
-  public static include = 'postal_codes,streets,plans';
+  public static include = 'postal_codes,streets,products';
 
   @Attribute()
   id: string;
