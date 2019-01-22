@@ -20,6 +20,7 @@ class Address(BaseModel):
     company_name = models.CharField(max_length=256, blank=True)
     street_address_1 = models.CharField(max_length=256, blank=True)
     street_address_2 = models.CharField(max_length=256, blank=True)
+    street_address_3 = models.CharField(max_length=256, blank=True)
     city = models.CharField(max_length=256, blank=True)
     state = models.CharField(max_length=128, blank=True)
     postal_code = models.CharField(max_length=20, blank=True)

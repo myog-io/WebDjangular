@@ -21,7 +21,8 @@
     </nb-card-body>
     <nb-card-footer>
       <div class="form-group">
-        <button nbButton status="success" [disabled]="loading || formGroup.invalid || formGroup.pristine" size="medium"
+        
+        <button nbButton status="success" [disabled]="loading || formGroup.invalid " size="medium"
           [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="medium" nbSpinnerMessage="Loading...">
           Start Import
         </button>

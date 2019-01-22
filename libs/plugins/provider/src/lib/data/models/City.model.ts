@@ -100,6 +100,18 @@ export class CityModel extends AbstractModel {
   streets: StreetModel[];
 
   @Attribute()
+  neighborhood: string;
+
+  @Attribute()
+  street: string;
+
+  @Attribute()
+  state: string;
+
+  @Attribute()
+  postal_code: string;
+
+  @Attribute()
   created: Date;
 
   @Attribute()

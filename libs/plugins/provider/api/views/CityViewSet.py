@@ -3,13 +3,17 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
-
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import exceptions
 from libs.plugins.provider.api.models.City import PostalCodeRange, Street, NumberRange
 from libs.plugins.provider.api.serializers.CitySerializer import PostalCodeRangeSerializer, StreetSerializer, \
     NumberRangeSerializer
 from ..models.City import City
 from ..serializers.CitySerializer import CitySerializer
-
+from ..utils import getClientUserCookie
+import requests
+import json
 
 class CityFilter(FilterSet):
     class Meta:
@@ -39,6 +43,56 @@ class CityViewSet(ModelViewSet):
     filter_class = CityFilter
     search_fields = ('name',)
     permission_classes = ()
+
+    @action(methods=['GET'], detail=True, url_path='postal_code', lookup_field='postal_code', lookup_url_kwarg='postal_code')
+    def postal_code(self, request, *args, **kwargs):
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        # TODO: Correct Way wold be, Search on Our Database First, On the CEP Range, If we Don't Find Search on viacep.com.br, If We Find We Update Our Database and Send to the User    
+        # For now we will only search on viacep.com and cross reference with our information
+
+        postal_code = self.kwargs['pk']
+        r = requests.get('http://viacep.com.br/ws/{0}/json/'.format(postal_code))
+        
+        city_data = json.loads(r.text)
+        print(city_data)
+        city = None
+        if city_data['localidade']:
+            # Distrito de Potunduva (Potunduva)
+            if city_data['bairro'] and city_data['bairro'].lower().find('Distrito') is not -1:
+                city = City.objects.filter(name=city_data['bairro']).first()
+            
+            if not city:
+                # City not found let's search by name
+                city = City.objects.filter(name=city_data['localidade']).first()
+        else:
+            # Vamos utlizar a Cidade do Cookie Como Padrão o CEP não retornou uma CIdade Valida
+            # PS: Isso pode dar merda mas vamos deixar o cliente arrumar a ciadade dele no final do formulario
+            # city = $this->getCidadeByName(self::getCity());
+            if getClientUserCookie():
+                city = City.objects.get(getClientUserCookie()['data']['city']['id'])
+
+        
+        if not city:
+            raise exceptions.NotFound("City not Found");
+
+        serializer = self.get_serializer(city)
+        data = serializer.data
+        
+        if city_data['bairro']:
+            data['neighborhood'] = city_data['bairro']
+        if city_data['logradouro']:
+            data['street'] = city_data['logradouro']
+        if city_data['uf']:
+            data['state'] = city_data['uf']
+        if city_data['cep']:
+            data['postal_code'] = city_data['cep']
+        return Response(data)
+
 
 
 class CityRelationshipView(RelationshipView):

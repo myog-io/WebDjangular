@@ -16,6 +16,7 @@ class AddressFilter(FilterSet):
             'company_name': ['contains', 'exact'],
             'street_address_1': ['contains', 'exact'],
             'street_address_2': ['contains', 'exact'],
+            'street_address_3': ['contains', 'exact'],
             'city': ['contains', 'exact'],
             'state': ['contains', 'exact'],
             'postal_code': ['exact'],

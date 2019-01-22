@@ -50,13 +50,14 @@ export class AdminImportComponent implements OnInit, OnDestroy {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsText(file);
-
       reader.onload = () => {
         this.formGroup.patchValue({
           file: reader.result
         });
+        
         try {
           this.data = JSON.parse(reader.result as string);
+          
         } catch (error) {
           this.toaster.danger(`Error Invalid File, Details: ${error}`, `Error!`, { duration: 5000 });
         }
