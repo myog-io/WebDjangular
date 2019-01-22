@@ -468,7 +468,9 @@ export class ProviderCheckoutService {
     // TODO: checar CEP
     
     if (this.formBeforeCheckout.valid) {
+      this.loadPlans();
       this.nextStep();
+
     }
   }
 

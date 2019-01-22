@@ -23,7 +23,7 @@ def redirect(sender, request, *args, **kwargs):
                         filter_args['default_page__pk'] = kwargs['pk']
 
                     filter_args['cities__pk'] = city['id']
-
+                    print(filter_args)
                     pageRedirect = PageRedirect.objects.filter(**filter_args).first()
                     if pageRedirect:
                         kwargs['slug'] = pageRedirect.redirect_page.slug
