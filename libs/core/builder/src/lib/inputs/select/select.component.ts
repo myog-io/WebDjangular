@@ -1,26 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { config } from 'ngx-mask';
 
 @Component({
   selector: 'wda-form-select',
   styleUrls: ['select.component.scss'],
   template: `
-    <div class="form-group form-select" [formGroup]="config.model ? group.get(config.name) : group" >
+    <div class="form-group form-select" [formGroup]="isFormGroup ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
       <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" bindLabel="name"
-                 [formControlName]="config.model ? 'id' : config.name" [multiple]="config.multiple" [addTag]="addTagPromise"
-                 [loading]="loading" [placeholder]="placeholder" [items]="options">
-          <ng-template ng-tag-tmp let-search="searchTerm">
+                 [formControlName]="isFormGroup ? 'id' : config.name" [multiple]="config.multiple" [addTag]="addTagPromise"
+                 [loading]="loading" [placeholder]="placeholder" [items]="options" [compareWith]="compareValues">
+          <ng-template ng-tag-tmp let-search="searchTerm" *ngIf="config.addTags">
             <b>create new tag</b>: {{search}}
         </ng-template>
       </ng-select>
       <wda-form-validators
-        [config]="config.model ? group.get(config.name) : group"
-        [input]="config.model ? group.get('id') : group.get(config.name)">
+        [config]="isFormGroup ? group.get(config.name) : group"
+        [input]="isFormGroup ? group.get('id') : group.get(config.name)">
       </wda-form-validators>
     </div><!--form-group-->
   `
@@ -40,6 +41,9 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   constructor(private datastore: WebAngularDataStore) {
 
   }
+  get isFormGroup():boolean{
+    return this.config.model && this.config.formType == FormGroup;
+  }
   addTagPromise(name) {
     return new Promise((resolve) => {
       this.loading = true;
@@ -51,6 +55,9 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   * on init
   */
   ngOnInit() {
+    if (!this.config.addTags) {
+      this.addTagPromise = null;
+    }
     if (this.config.addTags === true) {
       let tags = this.group.get(this.config.name).value;
       for (let i = 0; i < tags.length; i++) {
@@ -62,6 +69,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
         this.loading = false;
       }
     } else if (this.config.model) {
+      
       if (typeof this.config.model === 'string') {
         const models = Reflect.getMetadata('JsonApiDatastoreConfig', this.datastore.constructor).models;
         if (models[this.config.model]) {
@@ -96,6 +104,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
 
       this.onChange(value);
     });
+    console.log(this.group)
   }
 
 
@@ -109,12 +118,19 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
     this.updateValue($event);
 
   }
-
-  updateValue(value) {
+  compareValues(a:any,b:any){
+    return a.id === b;
+  }
+  updateValue(value:any) {
+    if (value.id) {
+      value = value.id;
+    }
     if (this.config.formType == FormGroup) {
       const fg = this.group.get(this.config.name) as AbstractForm;
-      fg.populateForm(this.models.find((model) => model.pk == value))
+
+      fg.populateForm(this.models.find((model) => model.id == value))
     } else {
+      
       this.group.get(this.config.name).setValue(value);
     }
   }

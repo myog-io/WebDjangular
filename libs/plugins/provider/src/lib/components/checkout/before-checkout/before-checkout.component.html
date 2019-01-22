@@ -63,9 +63,9 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfAccess">
                     <option value="">Tipo de acesso</option>
-                    <option value="empresarial">Empresarial</option>
                     <option value="residencial">Residencial</option>
                     <option value="condominio_residencial">Condomínio Residencial</option>
+                    <option value="empresarial">Empresarial</option>
                     <option value="condominio_empresarial">Condomínio Empresarial</option>
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
@@ -122,8 +122,8 @@
                   <select class="form-control" formControlName="typeOfCustomer">
                     <option value="">Já é client LPNet?</option>
                     <option value="no">Não sou cliente</option>
-                    <option value="internet_fibra">Sou client Fibra</option>
-                    <option value="internet_radio">Sou client Rádio</option>
+                    <option value="internet_fibra">Sou cliente Fibra</option>
+                    <option value="internet_radio">Sou cliente Rádio</option>
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
                         providerCheckout.formBeforeCheckout.controls['typeOfCustomer'].errors">
