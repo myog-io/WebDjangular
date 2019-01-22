@@ -3,16 +3,13 @@ from django.dispatch import receiver, Signal
 from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.signals import pre_get_page, post_get_page
 from ..models.PageRedirect import PageRedirect
+from ..utils import getClientUserCookie
 import json
 import urllib
 @receiver(pre_get_page)
 def redirect(sender, request, *args, **kwargs):
-
-    if request.COOKIES.get('clientUser'):
-        cookie_val = request.COOKIES.get('clientUser')
-        cookie_val = urllib.parse.unquote(cookie_val)
-        client = json.loads(cookie_val)
-
+    if getClientUserCookie(request):
+        client = getClientUserCookie(request)
         if 'data' in client:
             data = client['data']
 

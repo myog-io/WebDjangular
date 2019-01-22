@@ -56,7 +56,7 @@ export function wda_init(wdaconfig: WDAConfig) {
   ],
   bootstrap: [AppComponent],
   providers: [
-    WDAConfig,
+    
     CookieService,
     CoreDynamicPageLoaderResolver,
     {provide: 'LOCALSTORAGE', useFactory: getLocalStorage},
@@ -65,6 +65,7 @@ export function wda_init(wdaconfig: WDAConfig) {
       useClass: AppHttpInterceptor,
       multi: true
     },
+    WDAConfig,
     {provide: LAZY_MAPS_API_CONFIG, useClass: GoogleMapsLazyConfig},
     {provide: APP_INITIALIZER, useFactory: wda_init, deps: [WDAConfig], multi: true},
     {provide: HTTP_BASE_URL, useFactory: getBaseHttpUrl},

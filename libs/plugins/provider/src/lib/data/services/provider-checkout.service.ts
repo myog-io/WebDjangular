@@ -6,6 +6,12 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
 import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { CityModel } from '../models/City.model';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { AddressModel } from '@core/data/src/lib/models';
+import { HttpHeaders } from '@angular/common/http';
+import { Subscription, Observable } from 'rxjs';
+import { CondoModel } from '../models/Condo.model';
 
 
 export enum ProviderCheckoutSteps {
@@ -18,33 +24,38 @@ export enum ProviderCheckoutSteps {
   providedIn: 'root',
 })
 export class ProviderCheckoutService {
-
-
-  private skus = {
-    internet: ["60mb", "120mb", "180mb"],
-    tv: ["hd-top", "hd-plus", "hd-pop", "hd-super"],
-    telephone: ["local-economico", "local-ilimitado", "brasil-ilimitado"]
-  };
+  public address:AddressModel;
+  public city:CityModel;
+  //private skus = {
+  //  internet: ["60mb", "120mb", "180mb"],
+  //  tv: ["hd-top", "hd-plus", "hd-pop", "hd-super"],
+  //  telephone: ["local-economico", "local-ilimitado", "brasil-ilimitado"]
+  //};
 
   private sku_extra_tv_decoder = "aluguel-ponto-adicional";
 
-  private skus_optionals = {
-    internet: ["ip-fixo", "aluguel-roteador", "pacote-premium-plus"],
-    tv: [
-      "telecine-light", "telecine-full", "telecine-full-hd", "hbo-hd", "internacionais", "premiere-basico",
-      "premiere-total", "combate", "sexhot-playboy-tv", "playboy-tv-venus", "venus-sexhot", "sexhot", "playboy-tv",
-      "venus", "sexprive",
-      this.sku_extra_tv_decoder
-    ],
-    telephone: ["movel-local-50", "movel-local-100", "movel-local-500",
-      "movel-brasil-50", "movel-brasil-100", "movel-brasil-500", "linha-extra"]
-  };
+  //private skus_optionals = {
+  //  internet: ["ip-fixo", "aluguel-roteador", "pacote-premium-plus"],
+  //  tv: [
+  //    "telecine-light", "telecine-full", "telecine-full-hd", "hbo-hd", "internacionais", "premiere-basico",
+  //    "premiere-total", "combate", "sexhot-playboy-tv", "playboy-tv-venus", "venus-sexhot", "sexhot", "playboy-tv",
+  //    "venus", "sexprive",
+  //    this.sku_extra_tv_decoder
+  //  ],
+  //  telephone: ["movel-local-50", "movel-local-100", "movel-local-500",
+  //    "movel-brasil-50", "movel-brasil-100", "movel-brasil-500", "linha-extra"]
+  //};
 
+  
 
-  //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
-  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
+  private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
+  //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
   public current_wizard_step: number = 1;
-
+  // TODO: Make a Core Config Dynamic
+  private plan_type_codes_internet = ['radio','fiber'];
+  private plan_type_codes_tv = ['tv'];
+  private plan_type_codes_phone = ['phone'];
+  //private plan_type_codes_addon = ['opcionais'];
   public plans = {
     internet: [],
     tv: [],
@@ -87,22 +98,25 @@ export class ProviderCheckoutService {
 
   public formWizardStep01: FormGroup;
   public formWizardStep01Submitted: boolean = false;
-
+  
+  public condos: Observable<CondoModel[]>;
   constructor(
     private datastore: WebAngularDataStore,
     private cartService: CartService,
+    public clientUserService: ClientUserService,
     private pageScrollService: PageScrollService,
     private formBuilder: FormBuilder,
     @Inject(DOCUMENT) private document: any
   ) {
-
-    this.loadPlans('internet');
-    this.loadPlans('tv');
-    this.loadPlans('telephone');
-
+    
+    this.city = this.clientUserService.clientUser.data['city'];
+    this.addressFromCity(this.city);
+    
     this.formBeforeCheckout = this.formBuilder.group({
-      postalCode: ['', Validators.required],
-      numberOfAddress: ['', Validators.required],
+      postalCode: ['', [Validators.required] ],
+      numberOfAddress: ['', [Validators.required] ],
+      condo: ['',null],
+      condoNumber: ['',null],
       typeOfAccess: ['', [Validators.required]],
       typeOfCustomer: ['', [Validators.required]]
     });
@@ -117,13 +131,79 @@ export class ProviderCheckoutService {
       dob: ['', [Validators.required]]
     });
   }
+  addressFromCity(city:CityModel){
+    if (!this.address){
+      this.address = new AddressModel(this.datastore,{});
+    }
+    this.address.city = city.name;
+    this.address.street_address_1 = city.street;
+    this.address.street_address_3 = city.neighborhood;
+    this.address.state = city.state;
+    this.address.postal_code = city.postal_code;
+    if (this.condos){
+      this.findCondos();
+    }
+  }
+  getCurrentCity() {
+    const postalCode = this.formBeforeCheckout.get('postalCode').value;
 
+    if (postalCode.length >= 8){
+      // Search The City
+      const url = `/api/provider/city/${postalCode}/postal_code/`;
+      this.datastore.findRecord(
+        CityModel,
+        null,
+        null,
+        new HttpHeaders({'Authorization':'none'}),
+        url
+      ).subscribe((city:CityModel) => {
+        this.city = city;
+        this.addressFromCity(this.city);
+        // TODO: Create Address Baser on City
+      })
+    }
+  }
+  public findCondos() { 
+    this.condos = this.datastore.findAll(
+      CondoModel,
+      {city__id:this.city.id},
+      new HttpHeaders({'Authorization':'none'}),
+    ).map((query:JsonApiQueryData<CondoModel>) => query.getModels())
+  }
   checkPageLoad(){
 
   }
 
 
-  loadPlans(type) {
+  loadPlans() {
+    let options = {};
+    options['page'] = {number: 1, size: 100};
+    const url = `/api/provider/city/${this.city.id}/products/`;
+    this.datastore.findAll(ProductModel, options,new HttpHeaders({'Authorization':'none'}),).subscribe((query: JsonApiQueryData<ProductModel>) => {
+      console.log(query);
+      //if (i == 0) {
+      //  this.plans[type] = query.getModels();
+      //  this.addPreSelectPlans(type);
+      //} else {
+      //  this.plans_optionals[type] = query.getModels();
+//
+//
+//
+      //  if (type === 'tv') {
+      //    let plan = this.plans_optionals.tv[this.plans_optionals.tv.findIndex(
+      //      (data) => data.sku === this.sku_extra_tv_decoder)];
+      //    this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(plan), 1);
+      //    this.selected_extra_tv_decoder = {
+      //      plan: plan,
+      //      qty: 0
+      //    }
+      //  }
+      //}
+    }, (error) => {
+      // TODO: do something
+    });
+    
+    /*
     for (let i = 0; i < 2; i++) {
       // i = 0 == plan
       // i = 1 == the optionals
@@ -169,6 +249,7 @@ export class ProviderCheckoutService {
         });
       }
     }
+    */
   }
 
   addPreSelectPlans(type: string) {
@@ -385,7 +466,7 @@ export class ProviderCheckoutService {
   onBeforeCheckoutSubmit() {
     this.formBeforeCheckoutSubmitted = true;
     // TODO: checar CEP
-
+    
     if (this.formBeforeCheckout.valid) {
       this.nextStep();
     }

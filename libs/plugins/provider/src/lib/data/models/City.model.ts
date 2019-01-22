@@ -6,12 +6,15 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { ProductClasses } from '@plugins/store/src/lib/data/interfaces/Product.interface';
 
 
 enum DiplayGroups {
   city = 'City',
   postal_codes = 'Postal Codes',
-  streets = 'Streets'
+  streets = 'Streets',
+  products = 'Products',
 }
 
 @JsonApiModelConfig({
@@ -19,7 +22,7 @@ enum DiplayGroups {
   modelEndpointUrl: 'provider/city',
 })
 export class CityModel extends AbstractModel {
-  public static include = 'postal_codes,streets';
+  public static include = 'postal_codes,streets,products';
 
   @Attribute()
   id: string;
@@ -100,6 +103,29 @@ export class CityModel extends AbstractModel {
   streets: StreetModel[];
 
   @Attribute()
+  neighborhood: string;
+
+  @Attribute()
+  street: string;
+
+  @Attribute()
+  state: string;
+
+  @Attribute()
+  postal_code: string;
+
+  @HasMany()
+  @ExtraOptions({
+    type: 'checkbox',
+    formType: FormArray,
+    label: 'Products',
+    model: ProductModel,
+    options: {product_class: ProductClasses.simple},
+    displayGroup: DiplayGroups.products
+  })
+  addons: ProductModel;
+
+  @Attribute()
   created: Date;
 
   @Attribute()
@@ -126,6 +152,16 @@ export class CityModel extends AbstractModel {
         {
           name: DiplayGroups.city,
           title: 'City',
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: DiplayGroups.products,
+          title: '',
+          card_wrapper: true
         }
       ]
     },
