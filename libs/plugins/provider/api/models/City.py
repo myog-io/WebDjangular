@@ -1,8 +1,8 @@
 from django.db import models
-from django import forms
-from webdjango.models.AbstractModels import BaseModel
-from django_mysql.models import DynamicField
+
 from libs.plugins.store.api.models.Product import Product
+from webdjango.models.AbstractModels import BaseModel
+
 
 class City(BaseModel):
     name = models.CharField(max_length=255)
@@ -11,6 +11,7 @@ class City(BaseModel):
     lat = models.DecimalField(max_digits=9, decimal_places=7, blank=True, null=True)
     long = models.DecimalField(max_digits=9, decimal_places=7, blank=True, null=True)
     products = models.ManyToManyField(Product)
+
     def __str__(self):
         return self.name
 

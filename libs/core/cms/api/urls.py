@@ -5,13 +5,16 @@ from rest_framework.routers import DefaultRouter
 from libs.core.cms.api.views.BlockViewSet import BlockViewSet, BlockRelationshipView
 from libs.core.cms.api.views.MenuItemViewSet import MenuItemViewSet, MenuItemRelationshipView
 from libs.core.cms.api.views.MenuViewSet import MenuViewSet, MenuRelationshipView
-from libs.core.cms.api.views.PageViewSet import PageViewSet, PageRelationshipView
+from libs.core.cms.api.views.PageViewSet import PageViewSet, PageRelationshipView, PageTagViewSet, PageCategoryViewSet
 
 router = DefaultRouter()
 router.register('block', BlockViewSet, base_name='block')
 router.register('menu', MenuViewSet, base_name='menu')
 router.register('menu_item', MenuItemViewSet, base_name='menuitem')
 router.register('page', PageViewSet, base_name='page')
+router.register('page_tag', PageTagViewSet, base_name='page-tag')
+router.register('page_category', PageCategoryViewSet, base_name='page-category')
+
 
 urlpatterns = [
     url(r'', include(router.urls)),

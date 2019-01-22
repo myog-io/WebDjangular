@@ -15,6 +15,7 @@ from ..utils import getClientUserCookie
 import requests
 import json
 
+
 class CityFilter(FilterSet):
     class Meta:
         model = City
@@ -52,7 +53,7 @@ class CityViewSet(ModelViewSet):
             'attribute on the view correctly.' %
             (self.__class__.__name__, 'pk')
         )
-        # TODO: Correct Way wold be, Search on Our Database First, On the CEP Range, If we Don't Find Search on viacep.com.br, If We Find We Update Our Database and Send to the User    
+        # TODO: Correct Way wold be, Search on Our Database First, On the CEP Range, If we Don't Find Search on viacep.com.br, If We Find We Update Our Database and Send to the User
         # For now we will only search on viacep.com and cross reference with our information
 
         postal_code = self.kwargs['pk']
@@ -92,7 +93,6 @@ class CityViewSet(ModelViewSet):
         if city_data['cep']:
             data['postal_code'] = city_data['cep']
         return Response(data)
-
 
 
 class CityRelationshipView(RelationshipView):

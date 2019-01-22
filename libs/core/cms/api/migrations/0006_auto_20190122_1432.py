@@ -115,10 +115,12 @@ def insert_system_blocks(apps, schema_editor):
 
     website = Website.objects.filter(code__exact='default').first()
 
-    CoreConfig.write(CMSCoreConfig.GROUP_SLUG, {
-        DEFAULT_SITE_TITLE: 'WDA',
-        DEFAULT_TITLE_SEPARATOR: '|',
-        DEFAULT_TITLE_PLACEHOLDER: '${page.seo_title} ${title_separator} ${site_title}'}, website=website)
+    core_config = CoreConfig.read(CMSCoreConfig.GROUP_SLUG)
+    core_config[DEFAULT_SITE_TITLE] = 'WDA'
+    core_config[DEFAULT_TITLE_SEPARATOR] = '-'
+    core_config[DEFAULT_TITLE_PLACEHOLDER] = '${page.seo_title} ${title_separator} ${site_title}'
+
+    CoreConfig.write(CMSCoreConfig.GROUP_SLUG, core_config, website=website)
 
 
 class Migration(migrations.Migration):

@@ -2,9 +2,9 @@ from ..signals import post_get_page, pre_get_page
 from ..configs import CMSCoreConfig
 from django_filters.filterset import FilterSet
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models.Page import Page
+from ..models.Page import Page, PageTag, PageCategory
 from ..models.Block import Block
-from ..serializers.PageSerializer import PageSerializer
+from ..serializers.PageSerializer import PageSerializer, PageTagSerializer, PageCategorySerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
@@ -14,6 +14,64 @@ from webdjango.models.Core import CoreConfig
 from django.template import Template, Context
 from django.template.base import Lexer
 from webdjango.configs import CONFIG_HOME_PAGE
+
+
+class PageTagFilter(FilterSet):
+    class Meta:
+        model = PageTag
+        fields = {
+            'id': ['in'],
+            'name': ['contains', 'exact'],
+            'description': ['contains'],
+        }
+
+
+class PageTagViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Page Tags
+    Retrieve a list of Page Tags
+    Retrieve a specific Page Tag
+    Update Page Tags
+    Deleting Page Tags
+    """
+    serializer_class = PageTagSerializer
+    queryset = PageTag.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    filter_class = PageTagFilter
+    search_fields = ('name',)
+    permission_classes = ()
+
+
+class PageCategoryFilter(FilterSet):
+    class Meta:
+        model = PageCategory
+        fields = {
+            'id': ['in'],
+            'name': ['contains', 'exact'],
+            'description': ['contains'],
+        }
+
+
+class PageCategoryViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Page Categories
+    Retrieve a list of Page Categories
+    Retrieve a specific Page Category
+    Update Page Categories
+    Deleting Page Categories
+    """
+    serializer_class = PageCategorySerializer
+    queryset = PageCategory.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    filter_class = PageCategoryFilter
+    search_fields = ('name',)
+    permission_classes = ()
 
 
 class PageFilter(FilterSet):
@@ -66,10 +124,10 @@ class PageViewSet(ModelViewSet):
         return instance
 
     def update_block_codes(self, content, request):
-        '''
+        """
             Using Django Template Capabilites we will pre-render a little bit of the blocks to facilitate for the frontend thus reducing the number of requests
             TODO: Improvement make blocks Do the same
-        '''
+        """
         lexer = Lexer(content)
         tokens = lexer.tokenize()
         filter_query = []
