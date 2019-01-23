@@ -39,6 +39,12 @@ class PageSerializer(WebDjangoSerializer):
         related_link_url_kwarg='pk',
         self_link_view_name='page-relationships'
     )
+    layout = ResourceRelatedField(
+        many=False,
+        queryset=Block.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='page-relationships'
+    )
     footer = ResourceRelatedField(
         many=False,
         queryset=Block.objects,
@@ -48,6 +54,7 @@ class PageSerializer(WebDjangoSerializer):
 
     included_serializers = {
         'header': 'libs.core.cms.api.serializers.BlockSerializer.BlockSerializer',
+        'layout': 'libs.core.cms.api.serializers.BlockSerializer.BlockSerializer',
         'footer': 'libs.core.cms.api.serializers.BlockSerializer.BlockSerializer'
     }
 

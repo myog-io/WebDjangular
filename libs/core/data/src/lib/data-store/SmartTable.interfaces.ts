@@ -60,5 +60,5 @@ export interface SmartTableSettings {
   delete?: any;
   pager?: any;
   rowClassFunction?: Function
-
+  filters?: Object
 }

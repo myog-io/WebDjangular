@@ -12,13 +12,13 @@ router.register('block', BlockViewSet, base_name='block')
 router.register('menu', MenuViewSet, base_name='menu')
 router.register('menu_item', MenuItemViewSet, base_name='menuitem')
 router.register('page', PageViewSet, base_name='page')
-router.register('page_tag', PageTagViewSet, base_name='page-tag')
-router.register('page_category', PageCategoryViewSet, base_name='page-category')
+router.register('page-tag', PageTagViewSet, base_name='page-tag')
+router.register('page-category', PageCategoryViewSet, base_name='page-category')
 
 
 urlpatterns = [
     url(r'', include(router.urls)),
-    # Blocks relationshipscls
+    # Blocks relationships
     url(
         regex=r'^block/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=BlockRelationshipView.as_view(),

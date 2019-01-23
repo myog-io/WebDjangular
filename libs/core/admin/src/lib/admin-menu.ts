@@ -11,20 +11,52 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fas fa-pencil-ruler',
     children: [
       {
+        title: 'Posts',
+        link: '/posts',
+      },
+      {
         title: 'Pages',
         link: '/pages',
       },
       {
         title: 'Blocks',
-        link: '/blocks',
+          children: [
+          {
+            title: 'Headers',
+            link: '/block/headers'
+          },
+          {
+            title: 'Layouts',
+            link: '/block/layouts'
+          },
+          {
+            title: 'Footers',
+            link: '/block/footers'
+          },
+          {
+            title: 'Widget-Holders',
+            link: '/block/widget-holders'
+          },
+          {
+            title: 'Custom',
+            link: '/block/custom'
+          }
+        ],
       },
       {
         title: 'Medias',
         link: '/media',
       },
+      // {
+      //   title: 'Forms (soon)',
+      // },
       {
-        title: 'Forms',
-        link: '/forms',
+        title: 'Tags',
+        link: '/page-tags',
+      },
+      {
+        title: 'Categories',
+        link: '/page-categories',
       },
       {
         title: 'Menus',

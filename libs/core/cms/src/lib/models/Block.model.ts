@@ -59,22 +59,6 @@ export class BlockModel extends AbstractModel {
   public toString = (): string => {
     return `${this.title} (#${this.id})`;
   }
-  public static smartTableOptions: SmartTableSettings = {
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'text',
-      },
-      title: {
-        title: 'Title',
-        type: 'text',
-      },
-      slug: {
-        title: 'Code',
-        type: 'text',
-      },
-    },
-  };
 
 }
 

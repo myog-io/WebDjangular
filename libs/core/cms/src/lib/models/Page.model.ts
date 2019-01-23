@@ -5,11 +5,15 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import {BlockHeaderModel} from "@core/cms/src/lib/models/BlockHeader.model";
+import {BlockFooterModel} from "@core/cms/src/lib/models/BlockFooter.model";
+import {BlockLayoutModel} from "@core/cms/src/lib/models/BlockLayout.model";
 
 
 enum pageDG {
   general = 'general',
-  seo = 'seo'
+  seo = 'seo',
+  options = 'options'
 }
 
 @JsonApiModelConfig({
@@ -17,7 +21,7 @@ enum pageDG {
   modelEndpointUrl: 'page',
 })
 export class PageModel extends AbstractModel {
-  public static include = 'header,footer';
+
 
   @Attribute()
   id: string;
@@ -59,22 +63,36 @@ export class PageModel extends AbstractModel {
     formType: FormGroup,
     type: 'select',
     label: 'Header',
-    wrapper_class: 'col-6',
-    model: BlockModel,
-    displayGroup: pageDG.general
+    wrapper_class: 'col-12',
+    model: BlockHeaderModel,
+    options:{ block_class: 'header'},
+    displayGroup: pageDG.options
   })
-  header: BlockModel;
+  header: BlockHeaderModel;
+
+  @BelongsTo()
+  @ExtraOptions({
+    formType: FormGroup,
+    type: 'select',
+    label: 'Layout',
+    wrapper_class: 'col-12',
+    model: BlockLayoutModel,
+    options:{ block_class: 'layout'},
+    displayGroup: pageDG.options
+  })
+  layout: BlockLayoutModel;
 
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
     type: 'select',
     label: 'Footer',
-    wrapper_class: 'col-6',
-    model: BlockModel,
-    displayGroup: pageDG.general
+    wrapper_class: 'col-12',
+    model: BlockFooterModel,
+    options:{ block_class: 'footer'},
+    displayGroup: pageDG.options
   })
-  footer: BlockModel;
+  footer: BlockFooterModel;
 
   @Attribute()
   @ExtraOptions({
@@ -131,28 +149,6 @@ export class PageModel extends AbstractModel {
   setHome() {
     this.is_home = true;
   }
-
-  public displayGroups = [
-    {
-      wrapper_class: 'col-12',
-      groups: [
-        {
-          name: pageDG.general,
-          title: '',
-        }
-      ]
-    },
-    {
-      wrapper_class: 'col-12',
-      groups: [
-        {
-          name: pageDG.seo,
-          title: 'SEO',
-        }
-      ]
-    }
-
-  ];
 
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;

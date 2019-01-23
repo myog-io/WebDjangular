@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
-import { WebAngularSmartTableDataSourceOptions } from './WebAngularSmartTableDataSourceOptions';
-import { map } from 'rxjs/operators';
-import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
-import { ModelType, JsonApiModel } from 'angular2-jsonapi';
-import { AbstractModel } from '../models';
+import {Injectable} from '@angular/core';
+import {LocalDataSource} from 'ng2-smart-table';
+import {WebAngularSmartTableDataSourceOptions} from './WebAngularSmartTableDataSourceOptions';
+import {map} from 'rxjs/operators';
+import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
+import {AbstractModel} from '../models';
 
 @Injectable()
 export class WebAngularSmartTableDataSource extends LocalDataSource {
   public conf: WebAngularSmartTableDataSourceOptions;
-  public customUrl:string = null;
+  public customUrl: string = null;
   public model: any = null;
   protected meta: any = null;
+
   constructor(
     private datastore: WebAngularDataStore,
   ) {
@@ -27,26 +27,32 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     findOptions.page = this.buildPageOptions();
     const model = this.model as AbstractModel;
     findOptions.include = this.model.include;
-    if(this.sortConf.length > 0){
+    if (this.sortConf.length > 0) {
       findOptions.ordering = this.buildSortOptions()
     }
 
     let fields = Object.keys(this.smartTableSettings.columns);
     findOptions['fields'] = fields.join(',');
 
+    if ('filters' in this.smartTableSettings) {
+       let filters = this.smartTableSettings['filters'];
+       Object.keys(filters).forEach((key) => {
+         findOptions[key] = filters[key];
+       });
+    }
+
     return this.datastore
-      .findAll(this.model, findOptions,null,this.customUrl)
+      .findAll(this.model, findOptions, null, this.customUrl)
       .pipe(
         map(res => {
-
           this.meta = res.getMeta();
           this.data = res.getModels();
-
           return this.data;
         })
       )
       .toPromise();
   }
+
   protected buildPageOptions() {
     let options = {};
 
@@ -60,6 +66,7 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
 
     return options;
   }
+
   protected buildSortOptions(): string {
     let sorting = [];
     this.sortConf.forEach((fieldConf) => {
@@ -71,6 +78,7 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     });
     return sorting.join(',');
   }
+
   buildFilterOptions() {
     let filters = {};
     for (let i = 0; i < this.filterConf.filters.length; i++) {
@@ -78,7 +86,7 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
       if (this.filterConf.filters[i].search) {
         filters[this.filterConf.filters[i].field] = this.filterConf.filters[
           i
-        ].search;
+          ].search;
       }
     }
 
