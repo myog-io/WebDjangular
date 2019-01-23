@@ -70,7 +70,7 @@ def insert_system_blocks(apps, schema_editor):
         content="""
                   <div class="row">
                     <div class="col p-0">
-                      <ng-content></ng-content>
+                      {{ content }}
                     </div>
                   </div>
                 """
@@ -84,10 +84,10 @@ def insert_system_blocks(apps, schema_editor):
         content="""
                   <div class="row">
                     <div class="col-12 col-md-8">
-                      <ng-content></ng-content>
+                      {{ content }}
                     </div>
                     <div class="col-12 col-md-4">
-                        <default_sidebar></default_sidebar>
+                        {{ default_sidebar }}
                     </div>
                   </div>
                 """
@@ -101,10 +101,10 @@ def insert_system_blocks(apps, schema_editor):
         content="""
                   <div class="row">
                     <div class="col-12 col-md-4">
-                        <default_sidebar></default_sidebar>
+                        {{ default_sidebar }}
                     </div>
                     <div class="col-12 col-md-8">
-                      <ng-content></ng-content>
+                      {{ content }}
                     </div>
                   </div>
                 """

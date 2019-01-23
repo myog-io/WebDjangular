@@ -65,7 +65,10 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
 
   private loadPagesContent(page: PageModel | ErrorResponse) {
     if (page instanceof PageModel) {
-      this.content = page.content;
+      this.content = page.getContent();
+
+
+
       this.seo.setTitleByPage(page);
       this.seo.createMetaByPage(page);
     } else if (page instanceof ErrorResponse) {

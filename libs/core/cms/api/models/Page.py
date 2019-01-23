@@ -3,7 +3,7 @@ from django.db import models
 from libs.core.cms.api.models.Block import Block
 from webdjango.models.AbstractModels import SeoModel, PermalinkModel
 from webdjango.models.TranslationModel import TranslationModel
-
+from django.core.exceptions import ObjectDoesNotExist
 
 class PageClasses:
     STATIC = 'static'
@@ -75,8 +75,8 @@ class Page(PermalinkModel, SeoModel, TranslationModel):
     header = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True)
     footer = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True)
 
-    tags = models.ManyToManyField(PageTag, related_name='pages', null=True, blank=True)
-    categories = models.ManyToManyField(PageCategory, related_name='pages', null=True, blank=True)
+    tags = models.ManyToManyField(PageTag, related_name='pages')
+    categories = models.ManyToManyField(PageCategory, related_name='pages')
 
     # POST ONLY
     post_type = models.CharField(max_length=32, choices=PostType.CHOICES, default=PostType.ARTICLE)
@@ -86,6 +86,12 @@ class Page(PermalinkModel, SeoModel, TranslationModel):
     # product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
 
     i18n_fields = ['title', 'slug', 'content']
+
+    def getLayout(self):
+        try:
+            return self.layout
+        except ObjectDoesNotExist:
+            return None
 
     def __str__(self):
         return self.title

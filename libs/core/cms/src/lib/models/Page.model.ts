@@ -21,7 +21,7 @@ enum pageDG {
   modelEndpointUrl: 'page',
 })
 export class PageModel extends AbstractModel {
-
+  public include = 'header,footer,layout';
 
   @Attribute()
   id: string;
@@ -144,6 +144,10 @@ export class PageModel extends AbstractModel {
 
   set pk(value) {
 
+  }
+
+  getContent():string {
+    return this.content;
   }
 
   setHome() {

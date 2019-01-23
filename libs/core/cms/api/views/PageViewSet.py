@@ -124,11 +124,19 @@ class PageViewSet(ModelViewSet):
                     return new_instance
         return instance
 
-    def update_block_codes(self, content, request):
+    def update_block_codes(self, content, request, layout=None):
         """
             Using Django Template Capabilites we will pre-render a little bit of the blocks to facilitate for the frontend thus reducing the number of requests
             TODO: Improvement make blocks Do the same
         """
+        # Here we update the Layout
+        new_content = None
+        if layout:
+            new_content = content;
+            content = layout.content
+            
+
+        # Here we Search for Blocks
         lexer = Lexer(content)
         tokens = lexer.tokenize()
         filter_query = []
@@ -143,6 +151,9 @@ class PageViewSet(ModelViewSet):
             ctx = {}
             for code, data in blocks:
                 ctx[code] = self.update_block_codes(data, request)
+            
+            if new_content:
+                ctx['content'] = self.update_block_codes(new_content, request)
             context = Context(ctx, autoescape=False)
             body = Template(content)
 
@@ -164,7 +175,8 @@ class PageViewSet(ModelViewSet):
         self.lookup_field = 'slug'
         self.lookup_url_kwarg = 'slug'
         instance = self.get_object()
-        instance.content = self.update_block_codes(content=instance.content, request=request)
+        
+        instance.content = self.update_block_codes(content=instance.content, request=request, layout=instance.getLayout() )
         self.send_post_get_page(instance=instance, request=request, *args)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -180,7 +192,8 @@ class PageViewSet(ModelViewSet):
         self.send_pre_get_page(request, *args)
 
         instance = self.get_object()
-        instance.content = self.update_block_codes(content=instance.content, request=request)
+        instance.content = self.update_block_codes(content=instance.content, request=request, layout=instance.getLayout() )
+        
         self.send_post_get_page(instance=instance, request=request, *args)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
