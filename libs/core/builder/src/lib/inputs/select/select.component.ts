@@ -41,7 +41,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
   constructor(private datastore: WebAngularDataStore) {
 
   }
-  get isFormGroup():boolean{
+  get isFormGroup(): boolean {
     return this.config.model && this.config.formType == FormGroup;
   }
   addTagPromise(name) {
@@ -69,14 +69,20 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
         this.loading = false;
       }
     } else if (this.config.model) {
-      
+
       if (typeof this.config.model === 'string') {
         const models = Reflect.getMetadata('JsonApiDatastoreConfig', this.datastore.constructor).models;
         if (models[this.config.model]) {
           this.config.model = models[this.config.model];
         }
       }
-      this.datastore.findAll(this.config.model, { page: { size: 50 }, include: this.config.options_include }).subscribe(data => {
+      let query_options:any = {}
+      if (this.config.options) {
+        query_options = this.config.options;
+      }
+      query_options.page = { size: 50 };
+      query_options.include = this.config.options_include;
+      this.datastore.findAll(this.config.model, query_options).subscribe(data => {
         this.models = data.getModels();
         this.options = [];
         for (let i = 0; i < this.models.length; i++) {
@@ -118,10 +124,10 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
     this.updateValue($event);
 
   }
-  compareValues(a:any,b:any){
+  compareValues(a: any, b: any) {
     return a.id === b;
   }
-  updateValue(value:any) {
+  updateValue(value: any) {
     if (value.id) {
       value = value.id;
     }
@@ -130,7 +136,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
 
       fg.populateForm(this.models.find((model) => model.id == value))
     } else {
-      
+
       this.group.get(this.config.name).setValue(value);
     }
   }
