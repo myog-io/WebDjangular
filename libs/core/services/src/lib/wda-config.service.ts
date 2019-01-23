@@ -34,7 +34,7 @@ export class WDAConfig {
     @Optional() @Inject('APP_BASE_HREF') baseHref: string, 
   ) {
     
-    if (baseHref){
+    if (baseHref) {
       this.init_url = `${baseHref}${this.init_url}`;
       this.get_home_url = `${baseHref}${this.get_home_url}`;
       this.get_page_url = `${baseHref}${this.get_page_url}`;
@@ -96,9 +96,7 @@ export class WDAConfig {
           resolve(this.core_config[name] ? this.core_config[name] : null);
         })
       }
-
     });
-
   }
 
   private setCoreConfig(data) {
