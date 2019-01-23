@@ -123,7 +123,7 @@ export class CityModel extends AbstractModel {
     options: {product_class: ProductClasses.simple},
     displayGroup: DiplayGroups.products
   })
-  addons: ProductModel;
+  products: ProductModel;
 
   @Attribute()
   created: Date;

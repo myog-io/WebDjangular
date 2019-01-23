@@ -72,6 +72,7 @@ class ProductSerializer(WebDjangoSerializer):
         'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
         'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        'addon_parent': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
     }
 
     #  product class BUNDLE
@@ -112,6 +113,15 @@ class ProductSerializer(WebDjangoSerializer):
         related_link_view_name='product-related',
         required=False,
     )
+    addon_parent = ResourceRelatedField(
+        many=True,
+        queryset=Product.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='product-relationships',
+        related_link_view_name='product-related',
+        required=False,
+    )
+    
 
     attributes = serializers.JSONField(required=False)
 

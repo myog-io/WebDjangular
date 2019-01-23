@@ -1,8 +1,8 @@
-import {Inject, Injectable} from '@angular/core';
-import {JsonApiQueryData} from "angular2-jsonapi";
-import {DOCUMENT} from '@angular/common';
-import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { Inject, Injectable } from '@angular/core';
+import { JsonApiQueryData } from "angular2-jsonapi";
+import { DOCUMENT } from '@angular/common';
+import { PageScrollInstance, PageScrollService } from 'ngx-page-scroll';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
 import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
@@ -24,8 +24,8 @@ export enum ProviderCheckoutSteps {
   providedIn: 'root',
 })
 export class ProviderCheckoutService {
-  public address:AddressModel;
-  public city:CityModel;
+  public address: AddressModel;
+  public city: CityModel;
   //private skus = {
   //  internet: ["60mb", "120mb", "180mb"],
   //  tv: ["hd-top", "hd-plus", "hd-pop", "hd-super"],
@@ -46,13 +46,13 @@ export class ProviderCheckoutService {
   //    "movel-brasil-50", "movel-brasil-100", "movel-brasil-500", "linha-extra"]
   //};
 
-  
+
 
   private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
   public current_wizard_step: number = 1;
   // TODO: Make a Core Config Dynamic
-  private plan_type_codes_internet = ['radio','fiber'];
+  private plan_type_codes_internet = ['radio', 'fiber'];
   private plan_type_codes_tv = ['tv'];
   private plan_type_codes_phone = ['phone'];
   //private plan_type_codes_addon = ['opcionais'];
@@ -74,7 +74,7 @@ export class ProviderCheckoutService {
   public telephone_plan_collapsed: boolean = false;
 
   public pre_selected_internet_sku: string = '';
-  public pre_selected_tv_sku: string =  '';
+  public pre_selected_tv_sku: string = '';
   public pre_selected_telephone_sku: string = '';
 
   public selected_internet_plan: any = false;
@@ -98,7 +98,7 @@ export class ProviderCheckoutService {
 
   public formWizardStep01: FormGroup;
   public formWizardStep01Submitted: boolean = false;
-  
+
   public condos: Observable<CondoModel[]>;
   constructor(
     private datastore: WebAngularDataStore,
@@ -108,15 +108,15 @@ export class ProviderCheckoutService {
     private formBuilder: FormBuilder,
     @Inject(DOCUMENT) private document: any
   ) {
-    
+
     this.city = this.clientUserService.clientUser.data['city'];
     this.addressFromCity(this.city);
-    
+
     this.formBeforeCheckout = this.formBuilder.group({
-      postalCode: ['', [Validators.required] ],
-      numberOfAddress: ['', [Validators.required] ],
-      condo: ['',null],
-      condoNumber: ['',null],
+      postalCode: ['', [Validators.required]],
+      numberOfAddress: ['', [Validators.required]],
+      condo: ['', null],
+      condoNumber: ['', null],
       typeOfAccess: ['', [Validators.required]],
       typeOfCustomer: ['', [Validators.required]]
     });
@@ -131,78 +131,70 @@ export class ProviderCheckoutService {
       dob: ['', [Validators.required]]
     });
   }
-  addressFromCity(city:CityModel){
-    if (!this.address){
-      this.address = new AddressModel(this.datastore,{});
+  addressFromCity(city: CityModel) {
+    if (!this.address) {
+      this.address = new AddressModel(this.datastore, {});
     }
     this.address.city = city.name;
     this.address.street_address_1 = city.street;
     this.address.street_address_3 = city.neighborhood;
     this.address.state = city.state;
     this.address.postal_code = city.postal_code;
-    if (this.condos){
+    if (this.condos) {
       this.findCondos();
     }
   }
   getCurrentCity() {
     const postalCode = this.formBeforeCheckout.get('postalCode').value;
 
-    if (postalCode.length >= 8){
+    if (postalCode.length >= 8) {
       // Search The City
       const url = `/api/provider/city/${postalCode}/postal_code/`;
       this.datastore.findRecord(
         CityModel,
         null,
         null,
-        new HttpHeaders({'Authorization':'none'}),
+        new HttpHeaders({ 'Authorization': 'none' }),
         url
-      ).subscribe((city:CityModel) => {
+      ).subscribe((city: CityModel) => {
         this.city = city;
         this.addressFromCity(this.city);
         // TODO: Create Address Baser on City
       })
     }
   }
-  public findCondos() { 
+  public findCondos() {
     this.condos = this.datastore.findAll(
       CondoModel,
-      {city__id:this.city.id},
-      new HttpHeaders({'Authorization':'none'}),
-    ).map((query:JsonApiQueryData<CondoModel>) => query.getModels())
+      { city__id: this.city.id },
+      new HttpHeaders({ 'Authorization': 'none' }),
+    ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
   }
-  checkPageLoad(){
+  checkPageLoad() {
 
   }
 
 
   loadPlans() {
     let options = {};
-    options['page'] = {number: 1, size: 100};
+    options['page'] = { number: 1, size: 100 };
+    options['include'] = ProductModel.include;
     const url = `/api/provider/city/${this.city.id}/products/`;
-    this.datastore.findAll(ProductModel, options,new HttpHeaders({'Authorization':'none'}),).subscribe((query: JsonApiQueryData<ProductModel>) => {
-      console.log(query);
-      //if (i == 0) {
-      //  this.plans[type] = query.getModels();
-      //  this.addPreSelectPlans(type);
-      //} else {
-      //  this.plans_optionals[type] = query.getModels();
-//
-//
-//
-      //  if (type === 'tv') {
-      //    let plan = this.plans_optionals.tv[this.plans_optionals.tv.findIndex(
-      //      (data) => data.sku === this.sku_extra_tv_decoder)];
-      //    this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(plan), 1);
-      //    this.selected_extra_tv_decoder = {
-      //      plan: plan,
-      //      qty: 0
-      //    }
-      //  }
-      //}
-    }, (error) => {
-      // TODO: do something
-    });
-    
+    this.datastore.findAll(ProductModel,
+      options,
+      new HttpHeaders({ 'Authorization': 'none' }),
+      url).
+      subscribe((query: JsonApiQueryData<ProductModel>) => {
+
+        const plans = query.getModels();
+        this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+        this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+        this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+        
+      }, (error) => {
+        // TODO: do something
+      });
+
     /*
     for (let i = 0; i < 2; i++) {
       // i = 0 == plan
@@ -253,15 +245,15 @@ export class ProviderCheckoutService {
   }
 
   addPreSelectPlans(type: string) {
-    if(type == 'internet' && this.pre_selected_internet_sku){
+    if (type == 'internet' && this.pre_selected_internet_sku) {
       this.selectInternetPlan(this.plans.internet.find(
         (data) => data.sku == this.pre_selected_internet_sku));
     }
-    if(type == 'tv' && this.pre_selected_tv_sku){
+    if (type == 'tv' && this.pre_selected_tv_sku) {
       this.selectTVPlan(this.plans.tv.find(
         (data) => data.sku == this.pre_selected_tv_sku));
     }
-    if(type == 'telephone' && this.pre_selected_telephone_sku){
+    if (type == 'telephone' && this.pre_selected_telephone_sku) {
       this.selectTelephonePlan(this.plans.telephone.find(
         (data) => data.sku == this.pre_selected_telephone_sku));
     }
@@ -391,16 +383,30 @@ export class ProviderCheckoutService {
     this.selected_telephone_optionals = [];
   }
 
-  selectInternetPlan(plan) {
+  selectInternetPlan(plan: ProductModel) {
     this.selected_internet_plan = plan;
+    this.plans_optionals.internet = plan.addons;
+
   }
 
-  selectTVPlan(plan) {
+  selectTVPlan(plan: ProductModel) {
     this.selected_tv_plan = plan;
+    this.plans_optionals.tv = plan.addons;
+
+    if (this.plans_optionals.tv) {
+      let decoder_plan = this.plans_optionals.tv.find((p) => p.sku === this.sku_extra_tv_decoder);
+      this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(decoder_plan), 1);
+      this.selected_extra_tv_decoder = {
+        plan: decoder_plan,
+        qty: this.selected_extra_tv_decoder ? this.selected_extra_tv_decoder.qty : 0
+      }
+    }
+
   }
 
-  selectTelephonePlan(plan) {
+  selectTelephonePlan(plan: ProductModel) {
     this.selected_telephone_plan = plan;
+    this.plans_optionals.telephone = plan.addons;
   }
 
   get priceExtraTVDecoder(): string {
@@ -466,7 +472,7 @@ export class ProviderCheckoutService {
   onBeforeCheckoutSubmit() {
     this.formBeforeCheckoutSubmitted = true;
     // TODO: checar CEP
-    
+
     if (this.formBeforeCheckout.valid) {
       this.loadPlans();
       this.nextStep();

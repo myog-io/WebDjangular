@@ -104,7 +104,6 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
 
       this.onChange(value);
     });
-    console.log(this.group)
   }
 
 

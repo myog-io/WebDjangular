@@ -16,6 +16,7 @@ enum productDG {
   pricing = 'pricing',
   media = 'media',
   addons = 'addons',
+  addon_parent = 'addon_parent',
   variants = 'variants'
 }
 
@@ -24,7 +25,7 @@ enum productDG {
   modelEndpointUrl: 'store/product',
 })
 export class ProductModel extends AbstractModel {
-  public static include = 'product_type,addons';
+  public static include = 'product_type,addons,addon_parent';
 
   @Attribute()
   id: string;
@@ -253,7 +254,18 @@ export class ProductModel extends AbstractModel {
     options: {product_class: ProductClasses.addon},
     displayGroup: productDG.addons
   })
-  addons: ProductModel;
+  addons: ProductModel[];
+
+  @HasMany()
+  @ExtraOptions({
+    type: 'checkbox',
+    formType: FormArray,
+    label: 'Product Parent',
+    model: ProductModel,
+    options: {product_class: ProductClasses.simple},
+    displayGroup: productDG.addon_parent
+  })
+  addon_parent: ProductModel[];
 
   @Attribute()
   price: number;
@@ -365,7 +377,32 @@ export class ProductModel extends AbstractModel {
         ]
       },
     },
-
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: productDG.addon_parent,
+          title: 'Add-ons Parent Link',
+        },
+      ],
+      conditional: {
+        // show only after the Product Type is selected and it is NOT an Product Addon
+        "and": [
+          {
+            '!=': [
+              {var: 'product_type.id'},
+              null
+            ]
+          },
+          {
+            '==': [
+              {var: 'product_class'},
+              ProductClasses.addon
+            ]
+          }
+        ]
+      },
+    },
     {
       wrapper_class: 'col-12',
       groups: [
