@@ -26,7 +26,7 @@ export class WDAConfig {
   public init_url = '/api/core_init/';
   public get_home_url = '/api/page/get_home/';
   public get_page_url = '/api/page/#path#/get_page';
-  
+  public include = 'header,footer,layout';
   constructor(
     private http: HttpClient,
     private datastore: WebAngularDataStore,
@@ -149,7 +149,7 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel,null, null, new HttpHeaders({Authorization:'none'}),
+      this.datastore.findRecord(PageModel,null, {include:this.include}, new HttpHeaders({Authorization:'none'}),
         this.get_home_url).subscribe(
         (page: PageModel) => {
           page.setHome();
@@ -166,7 +166,7 @@ export class WDAConfig {
     return new Promise((resolve, reject) => {
       
       this.datastore.findRecord(PageModel,
-        null, null, new HttpHeaders({Authorization:'none'}),
+        null, {include:this.include}, new HttpHeaders({Authorization:'none'}),
         this.get_page_url.replace('#path#',path.join('|'))).subscribe(
         (page: PageModel) => {
           resolve(page);
@@ -180,7 +180,7 @@ export class WDAConfig {
 
   public getErrorPage(errorCode): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, {slug: errorCode},new HttpHeaders({Authorization:'none'})).subscribe(
+      this.datastore.findAll(PageModel, {slug: errorCode,include:this.include},new HttpHeaders({Authorization:'none'})).subscribe(
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           let page: PageModel = models[0];

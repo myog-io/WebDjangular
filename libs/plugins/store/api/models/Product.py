@@ -16,6 +16,7 @@ from webdjango.utils.weight import WeightUnits, zero_weight
 from ..exceptions import InsufficientStock
 from ..utils.CatalogUtils import calculate_discounted_price
 
+
 class ProductClasses:
     SIMPLE = 'simple'
     VARIANT = 'variant'
