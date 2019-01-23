@@ -12,6 +12,7 @@ import { AddressModel } from '@core/data/src/lib/models';
 import { HttpHeaders } from '@angular/common/http';
 import { Subscription, Observable } from 'rxjs';
 import { CondoModel } from '../models/Condo.model';
+import "rxjs-compat/add/operator/map";
 
 
 export enum ProviderCheckoutSteps {
@@ -56,6 +57,7 @@ export class ProviderCheckoutService {
   private plan_type_codes_tv = ['tv'];
   private plan_type_codes_phone = ['phone'];
   //private plan_type_codes_addon = ['opcionais'];
+  public loading_plans: boolean = false;
   public plans = {
     internet: [],
     tv: [],
@@ -95,6 +97,8 @@ export class ProviderCheckoutService {
   public formBeforeCheckout: FormGroup;
   public formBeforeCheckoutSubmitted: boolean = false;
   public formBeforeCheckoutLoading: boolean = false;
+
+
 
   public formWizardStep01: FormGroup;
   public formWizardStep01Submitted: boolean = false;
@@ -176,23 +180,25 @@ export class ProviderCheckoutService {
 
 
   loadPlans() {
+
     let options = {};
     options['page'] = { number: 1, size: 100 };
     options['include'] = ProductModel.include;
     const url = `/api/provider/city/${this.city.id}/products/`;
+    this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
       new HttpHeaders({ 'Authorization': 'none' }),
       url).
       subscribe((query: JsonApiQueryData<ProductModel>) => {
-
         const plans = query.getModels();
         this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
         this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
         this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
-        
+        this.loading_plans = false;
       }, (error) => {
         // TODO: do something
+        this.loading_plans = false;
       });
 
     /*
