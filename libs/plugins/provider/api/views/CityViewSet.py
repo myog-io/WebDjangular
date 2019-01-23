@@ -60,7 +60,6 @@ class CityViewSet(ModelViewSet):
         r = requests.get('http://viacep.com.br/ws/{0}/json/'.format(postal_code))
         
         city_data = json.loads(r.text)
-        print(city_data)
         city = None
         if city_data['localidade']:
             # Distrito de Potunduva (Potunduva)
