@@ -17,7 +17,7 @@ export class ScaffoldComponent implements OnInit {
   title: string = ";D";
   loading = false;
   @ViewChild('dialog') dialogTemplate: TemplateRef<any>;
-  protected dialogRef: NbDialogRef<any>
+  protected dialogRef: NbDialogRef<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,8 +32,8 @@ export class ScaffoldComponent implements OnInit {
     this.title = this.route.data['value'].title;
     this.base_path = this.route.data['value'].path;
 
-    this.startTableInformation()
 
+    this.startTableInformation()
   }
   openDialog(element) {
     // TODO IMplement Write id number for more
@@ -53,7 +53,7 @@ export class ScaffoldComponent implements OnInit {
     if(element){
       this.datastore.deleteRecord(this.current_model, element.data.pk).subscribe(
         (r) => {
-          this.source.remove(element)
+          this.source.remove(element);
           this.close();
           this.loading = false;
         }

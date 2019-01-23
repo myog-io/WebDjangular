@@ -12,6 +12,7 @@ class BlockFilter(FilterSet):
         model = Block
         fields = {
             'id': ['in'],
+            'block_class': ['in', 'exact'],
             'title': ['contains', 'exact'],
             'slug': ['contains', 'exact'],
             'content': ['contains'],
@@ -34,6 +35,7 @@ class BlockViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = BlockFilter
     permission_classes = ()
+
 
 class BlockRelationshipView(RelationshipView):
     queryset = Block.objects.all()

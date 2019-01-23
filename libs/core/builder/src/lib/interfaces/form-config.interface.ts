@@ -51,6 +51,7 @@ export interface BuilderFormFieldConfig {
   placeholder?: string;
   validation?: ValidatorFn[];
   value?: any;
+  default?: any;
   conditionalValue?: any;
   wrapper_class?: string;
   inputType?: string;

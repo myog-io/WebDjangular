@@ -19,7 +19,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private url = null;
   private domain = null;
   //private paramSubscription;
-  private links = []
+  private links = [];
   //private bodyRef: ComponentRef<{}>;
   public completeLoadCallback = null;
 
@@ -65,7 +65,10 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
 
   private loadPagesContent(page: PageModel | ErrorResponse) {
     if (page instanceof PageModel) {
-      this.content = page.content;
+      this.content = page.getContent();
+
+
+
       this.seo.setTitleByPage(page);
       this.seo.createMetaByPage(page);
     } else if (page instanceof ErrorResponse) {
