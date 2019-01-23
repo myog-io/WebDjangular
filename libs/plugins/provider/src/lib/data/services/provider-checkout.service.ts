@@ -57,7 +57,7 @@ export class ProviderCheckoutService {
   private plan_type_codes_tv = ['tv'];
   private plan_type_codes_phone = ['phone'];
   //private plan_type_codes_addon = ['opcionais'];
-  public loading_plans: boolean = false;
+  public loading_plans: boolean = true;
   public plans = {
     internet: [],
     tv: [],
@@ -186,6 +186,7 @@ export class ProviderCheckoutService {
     options['include'] = ProductModel.include;
     const url = `/api/provider/city/${this.city.id}/products/`;
     this.loading_plans = true;
+    console.log(this.loading_plans);
     this.datastore.findAll(ProductModel,
       options,
       new HttpHeaders({ 'Authorization': 'none' }),

@@ -21,14 +21,14 @@
           }"
     >
       <div class="card-body" *ngIf="!providerCheckout.selected_internet_plan">
-        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.internet.length > 0">
-          <h3 class="plan-caption">
+        <div class="select-plans-wrapper" >
+          <h3 class="plan-caption" *ngIf="providerCheckout.plans.internet.length > 0">
             ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
           </h3>
           <plugin-provider-checkout-plan-internet>
           </plugin-provider-checkout-plan-internet>
         </div>
-        <div  class="select-plans-wrapper" *ngIf="providerCheckout.plans.internet.length === 0">
+        <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.internet.length === 0">
           <p>Sua cidade não tem plano de telefone disponível ainda.</p>
         </div>
       </div>
@@ -81,14 +81,14 @@
           }">
 
       <div class="card-body" *ngIf="!providerCheckout.selected_tv_plan">
-        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.tv.length > 0">
-          <h3 class="plan-caption">
+        <div class="select-plans-wrapper" >
+          <h3 class="plan-caption" *ngIf="providerCheckout.plans.tv.length > 0">
             Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
           </h3>
           <plugin-provider-checkout-plan-television>
           </plugin-provider-checkout-plan-television>
         </div>
-        <div  class="select-plans-wrapper "*ngIf="providerCheckout.plans.tv.length === 0">
+        <div  class="select-plans-wrapper "*ngIf="!providerCheckout.loading_plans && providerCheckout.plans.tv.length === 0">
           <p>Sua cidade não tem plano de televisão disponível ainda.</p>
         </div>
       </div>
@@ -186,12 +186,12 @@
           }">
 
       <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
-        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.tv.length > 0">
+        <div class="select-plans-wrapper">
           <h3 class="plan-caption"></h3>
           <plugin-provider-checkout-plan-telephone>
           </plugin-provider-checkout-plan-telephone>
         </div>
-        <div  class="select-plans-wrapper" *ngIf="providerCheckout.plans.telephone.length === 0">
+        <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.telephone.length === 0">
           <p>Sua cidade não tem plano de telefone disponível ainda.</p>
         </div>
       </div>

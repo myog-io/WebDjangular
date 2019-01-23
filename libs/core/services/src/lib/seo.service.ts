@@ -26,7 +26,7 @@ export class SEOService {
 
     let title: string = '';
     let site_title: string = '';
-    let title_separator: string = ''; 
+    let title_separator: string = '';
     let title_placeholder: string = '';
 
     if (this.cms_core.hasOwnProperty('site_title')) {
