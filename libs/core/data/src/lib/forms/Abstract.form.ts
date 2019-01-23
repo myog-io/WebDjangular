@@ -58,7 +58,9 @@ export class AbstractForm extends FormGroup {
           validators = this.formFields[i]['validators'];
         }
         if (this.formFields[i].type === 'jsonLogic') continue;
-        this.registerControl(propName, new FormControl(null, validators));
+        console.log("Setting element.value",element.value)
+        this.registerControl(propName, new FormControl(element.value ? element.value : null, validators));
+        
       }
     }
   }
