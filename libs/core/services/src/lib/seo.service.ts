@@ -2,6 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Meta, MetaDefinition, Title} from "@angular/platform-browser";
 import {PageModel} from "@core/cms/src/lib/models";
 import {DOCUMENT} from "@angular/common";
+import {WDAConfig} from "@core/services/src/lib/wda-config.service";
 
 
 @Injectable()
@@ -9,30 +10,49 @@ export class SEOService {
 
   private pageMetas: HTMLMetaElement[] = [];
   private linkCanonical: HTMLLinkElement = null;
+  private cms_core: Object;
 
   constructor(public meta: Meta,
               public title: Title,
+              public wdaConfig: WDAConfig,
               @Inject(DOCUMENT) public document) {
+    this.wdaConfig.getCoreConfig('cms_core').then((data) => {
+      this.cms_core = data;
+    });
   }
 
-  setTitleByPage(page: PageModel) {
-    let title: string = '';
-    let site_title: string = 'LPNET'; // TODO:  #39 WDA Config title dynamic from Core Website Configuration
-    let title_separator: string = '•'; // TODO:  #39 WDA Config choose which character is the separator, e.g.: - / | •
 
-    if (page.is_home) {
-      title = `${site_title}`;
-      if (page.seo_title) {
-        title = `${page.seo_title} ${title_separator} ${site_title}`;
-      }
+  setTitleByPage(page: PageModel) {
+
+    let title: string = '';
+    let site_title: string = '';
+    let title_separator: string = ''; 
+    let title_placeholder: string = '';
+
+    if (this.cms_core.hasOwnProperty('site_title')) {
+      site_title = this.cms_core['site_title'];
+    }
+    if (this.cms_core.hasOwnProperty('site_title_separator')) {
+      title_separator = this.cms_core['site_title_separator'];
+    }
+
+    if (page.is_home && !page.seo_title) {
+      title_placeholder = `${site_title}`;
     } else {
       if (page.seo_title) {
-        title = `${page.seo_title} ${title_separator} ${site_title}`;
+        title = page.seo_title;
       } else {
-        title = `${page.title} ${title_separator} ${site_title}`;
+        title = page.title;
+      }
+      if (this.cms_core.hasOwnProperty('site_title_placeholder')) {
+        title_placeholder = this.cms_core['site_title_placeholder'].replace('${title}', title)
+          .replace('${title_separator}', title_separator)
+          .replace('${site_title}', site_title);
+      } else {
+        title_placeholder = `${title} ${title_separator} ${site_title}`;
       }
     }
-    this.title.setTitle(title);
+    this.title.setTitle(title_placeholder);
   }
 
   createMetaByPage(page: PageModel) {
@@ -50,7 +70,7 @@ export class SEOService {
         div.innerHTML = page.content;
         let text = div.textContent || div.innerText || "";
         text = text.replace(/\s\s+/g, ' ').trim();
-        if(text.length > 180) {
+        if (text.length > 180) {
           description = `${text.slice(0, 180)}...`;
         } else {
           description = text;
@@ -58,6 +78,14 @@ export class SEOService {
       }
       this.addPageMetaTag({name: 'description', content: description});
       this.setCanonicalURL(window.location.href.split('?')[0]); // TODO: #38 get the right Path Absolute
+      this.addPageMetaTag({name: 'og:locate', content: this.wdaConfig.getCurrentLocale()});
+
+      const localeList = this.wdaConfig.getLocaleList();
+      for (let locale in localeList) {
+        if (localeList[locale] != this.wdaConfig.getCurrentLocale()) {
+          this.addPageMetaTag({name: 'og:locale:alternate', content: localeList[locale]});
+        }
+      }
 
       // Facebook
 
