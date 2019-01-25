@@ -150,15 +150,15 @@ export class CartService {
   }
 
   private setBillingAddress(address: AddressModel) {
-    this._cart.billing_address = address;
+    this.cart.billing_address = address;
   }
 
   private setShippingAddress(address: AddressModel) {
-    this._cart.shipping_address = address;
+    this.cart.shipping_address = address;
   }
 
   public getExtraData(): object {
-    return this._cart.extra_data;
+    return this.cart.extra_data;
   }
 
   public setExtraData(value: any): void {

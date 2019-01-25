@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {JsonApiQueryData} from "angular2-jsonapi";
-import {DOCUMENT} from '@angular/common';
+import {DOCUMENT, Location} from '@angular/common';
 import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
@@ -13,7 +13,7 @@ import {HttpHeaders} from '@angular/common/http';
 import {Observable, Subscriber} from 'rxjs';
 import {CondoModel} from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
-
+import {ActivatedRoute, Router} from "@angular/router";
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -125,6 +125,9 @@ export class ProviderCheckoutService {
     public clientUserService: ClientUserService,
     private pageScrollService: PageScrollService,
     private formBuilder: FormBuilder,
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public location: Location,
     @Inject(DOCUMENT) private document: any
   ) {
 
@@ -163,7 +166,7 @@ export class ProviderCheckoutService {
   loadedCart() {
     if (this.loading_cart) {
       this.loading_cart = false;
-      if(this.listener_cart_changes){
+      if (this.listener_cart_changes) {
         this.listener_cart_changes.unsubscribe();
       }
 
@@ -196,8 +199,6 @@ export class ProviderCheckoutService {
       if(this.cartService.cart.extra_data.hasOwnProperty('current_wizard_step')){
         this.current_wizard_step = this.cartService.cart.extra_data['current_wizard_step'];
       }
-
-
     }
   }
 
@@ -329,6 +330,38 @@ export class ProviderCheckoutService {
       }
     }
     */
+  }
+
+  updateUrl() {
+    let params: object = {};
+
+    if (this.selected_internet_plan) params['net'] = this.selected_internet_plan.sku;
+    if (this.selected_tv_plan) params['tv'] = this.selected_tv_plan.sku;
+    if (this.selected_telephone_plan) params['phone'] = this.selected_telephone_plan.sku;
+    if (this.selected_extra_tv_decoder && this.selected_extra_tv_decoder.qty > 0) {
+      params['tv_decoder'] = this.selected_extra_tv_decoder.qty;
+    }
+    if (this.selected_internet_optionals.length > 0) {
+      params['net_op'] = this.selected_internet_optionals.map((plan) => {
+        return plan.sku
+      }).join(',');
+    }
+    if (this.selected_tv_optionals.length > 0) {
+      params['tv_op'] = this.selected_tv_optionals.map((plan) => {
+        return plan.sku
+      }).join(',');
+    }
+    if (this.selected_telephone_optionals.length > 0) {
+      params['phone_op'] = this.selected_telephone_optionals.map((plan) => {
+        return plan.sku
+      }).join(',');
+    }
+
+    const url = this.router.createUrlTree([], {
+      relativeTo: this.activatedRoute,
+      queryParams: params
+    }).toString();
+    this.location.go(url)
   }
 
   addPreSelectPlans(type: string) {
@@ -542,10 +575,17 @@ export class ProviderCheckoutService {
   get currentStep() {
     //return ProviderCheckoutSteps.buildingPlan;
     return this.current_step;
+
   }
 
   get currentWizardStep() {
     return this.current_wizard_step
+  }
+
+  backToBuildingPlanStep() {
+    this.current_step = ProviderCheckoutSteps.buildingPlan;
+    this.current_wizard_step = 1;
+    this.updateCartStep();
   }
 
   prevStep() {
