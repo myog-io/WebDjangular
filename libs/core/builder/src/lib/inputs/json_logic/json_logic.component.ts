@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { HttpClient } from '@angular/common/http';
+import { ConsoleService } from '@ng-select/ng-select/ng-select/console.service';
 
 interface BaseLogicCondition {
   type: 'logic_condition',
@@ -57,23 +59,28 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
 
   ]
 
-  constructor(private datastore: WebAngularDataStore) {
-    const models = datastore.datastoreConfig.models;
-    for (const key in models) {
-      if (models.hasOwnProperty(key)) {
-        const model = new models[key](datastore);
-        const attributes = Reflect.getMetadata('Attribute', model)
-        for (const attr_name in attributes) {
-          if (attributes.hasOwnProperty(attr_name)) {
-            this.fields.push({
-              label: `${model.modelConfig.type}.${attr_name}`,
-              value: `${model.modelConfig.type.toLowerCase()}.${attr_name}`
-            })
-          }
-        }
-      }
-    }
+  constructor(
+    private datastore: WebAngularDataStore,
+    private http: HttpClient,
+  ) {
+    //const models = datastore.datastoreConfig.models;
+    //for (const key in models) {
+    //  if (models.hasOwnProperty(key)) {
+    //    const model = new models[key](datastore);
+    //    const attributes = Reflect.getMetadata('Attribute', model)
+    //    for (const attr_name in attributes) {
+    //      if (attributes.hasOwnProperty(attr_name)) {
+    //        this.fields.push({
+    //          label: `${model.modelConfig.type}.${attr_name}`,
+    //          value: `${model.modelConfig.type.toLowerCase()}.${attr_name}`
+    //        })
+    //      }
+    //    }
+    //  }
+    //}
+
   }
+
   set_logic_recursive(children: any[]) {
     let logics = []
     for (let i = 0; i < children.length; i++) {
@@ -103,7 +110,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
   }
   ngOnInit() {
 
-    let subscription = this.group.valueChanges.subscribe((data)=>{
+    let subscription = this.group.valueChanges.subscribe((data) => {
       if (this.group.entity && this.group.entity.id) {
         subscription.unsubscribe();
         if (this.group.entity[this.config.name]) {
@@ -115,6 +122,38 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
           };
         }
       }
+    })
+    this.get_options();
+  }
+  get_options() {
+    if (this.config.json_logic_options_url) {
+      this.http.get(this.config.json_logic_options_url).subscribe((options: any) => {
+        if (options.data) {
+          for (const key in options.data) {
+            if (options.data.hasOwnProperty(key)) {
+              const element = options.data[key];
+              for (let i = 0; i < element.length; i++) {
+                const attr = element[i];
+                this.fields.push({
+                  id: `${key}.${attr}`,
+                  name: `${key.toLowerCase()}.${attr}`
+                })
+              }
+
+            }
+          }
+        }
+      })
+    }
+  }
+  addTagPromise(name) {
+    return new Promise((resolve) => {
+
+      resolve({
+        id: name,
+        name: name,
+        valid: true
+      });
     })
   }
   updateField() {

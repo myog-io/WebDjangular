@@ -32,7 +32,7 @@ export class CartRuleModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'select',
-    label: 'Discount Type',
+    label: 'Rule Type',
     wrapper_class: 'col-6',
     placeholder: '',
     options: DiscountTypeOptions
@@ -41,13 +41,23 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    validators: [],
     type: 'text',
-    label: 'Code',
-    wrapper_class: 'col-6',
+    label: 'Code(Voucher)',
+    wrapper_class: 'col-4',
     placeholder: '',
   })
   voucher: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'switch',
+    label: 'Require Code(Voucher)?',
+    wrapper_class: 'col-2',
+  })
+  require_voucher: boolean;
+  
 
   @Attribute()
   @ExtraOptions({
@@ -95,7 +105,7 @@ export class CartRuleModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     type: 'text',
-    label: 'Discount value',
+    label: 'Value',
     wrapper_class: 'col-6',
     placeholder: '',
   })
@@ -105,6 +115,7 @@ export class CartRuleModel extends AbstractModel {
   @ExtraOptions({
     type: 'jsonLogic',
     label: 'Apply Rule only if all conditions are true',
+    json_logic_options_url: '/api/store/discount/cart-rule/discount_options/'
   })
   conditions: any;
 

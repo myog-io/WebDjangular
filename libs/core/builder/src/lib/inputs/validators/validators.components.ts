@@ -20,7 +20,7 @@ import { AbstractForm } from "@core/data/src/lib/forms";
         <div *ngIf="input.errors.pattern">
           {{config.label}} invalid.
         </div>
-        <code><pre class="code">{{input.errors | json}}</pre></code>
+        
       </div>
     </div>
   `

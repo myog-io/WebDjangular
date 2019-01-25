@@ -98,7 +98,6 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
     } else {
       this.loading = false;
       this.options = this.config.options || [];
-
     }
     if (this.config.value) {
       this.group.get(this.config.name).setValue(this.config.value);
