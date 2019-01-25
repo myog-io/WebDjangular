@@ -8,6 +8,7 @@ import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
 
 
+
 export interface CookieCart {
   token?: string;
 }
@@ -36,7 +37,7 @@ export class CartService {
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
-              console.log('cookie find cart ', this.cart.extra_data)
+              console.log('cookie find cart ', this.cart)
             }
           },
           () => {
@@ -60,31 +61,22 @@ export class CartService {
   }
 
   public updateCookie() {
-    if (this._cart.hasDirtyAttributes) {
-      this._cart.save({include: this._cart.include}).subscribe(
-        (cart: CartModel) => {
-          this._cart = cart;
-          this.updateCookie();
-        },
-        (error: ErrorResponse) => {
-          console.log('cart save error', error);
-        }
-      )
-    } else {
-      if (this._cart.token) {
-        const cartCookie: CookieCart = {
-          token: this._cart.token,
-        };
-        this.cookieService.set(this.cart_cookie_name, JSON.stringify(cartCookie), 30);
-      }
+   if (this._cart.token) {
+      const cartCookie: CookieCart = {
+        token: this._cart.token,
+      };
+      this.cookieService.set(this.cart_cookie_name, JSON.stringify(cartCookie), 30);
     }
   }
 
   public updateCart(): Promise<CartModel> {
+    
     return new Promise((resolve, reject) => {
-      this._cart.save().subscribe(
+      
+      this.cart.save().subscribe(
         (cart: CartModel) => {
           this.cart = cart;
+          this.updateCookie();
           console.log('after update:', this.cart);
           resolve(cart);
         },
@@ -147,7 +139,8 @@ export class CartService {
             else if (type === 'shipping') this.setShippingAddress(address);
             else { // TODO: raise an error
             }
-            this.updateCookie();
+            // Commenting because right after we update the Address we also update the checkout Step and Save
+            //this.updateCart();
           },
           (error: ErrorResponse) => {
             // TODO: do something
@@ -168,11 +161,18 @@ export class CartService {
     return this.cart.extra_data;
   }
 
-  public setExtraData(value): void {
+  public setExtraData(value: any): void {
+    let merged = this.cart.extra_data;
+    this.cart.extra_data = {};
+    for (const key in value) {
+      if (value.hasOwnProperty(key)) {
+        merged[key] = value[key]
+      }
+    }
+   
     this.cart.extra_data = value;
-    console.log('new value:' , value , 'assign value', this.cart.extra_data);
-    console.log('hasDirtyAttributes: ', this.cart.hasDirtyAttributes);
-    this.updateCart().then();
+   
+    this.updateCart().then((cart: CartModel)=>{});
   }
 }
 

@@ -2,6 +2,7 @@ import {
   JsonApiModelConfig,
   Attribute,
   HasMany,
+  NestedAttribute,
 
 } from 'angular2-jsonapi';
 
@@ -28,7 +29,7 @@ export class CoreConfigGroupModel extends AbstractModel {
   @Attribute()
   title: string;
 
-  @Attribute()
+  @NestedAttribute()
   value: any;
 
   @HasMany()

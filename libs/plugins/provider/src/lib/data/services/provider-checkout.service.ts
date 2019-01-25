@@ -500,6 +500,9 @@ export class ProviderCheckoutService {
 
   }
 
+  get currentWizardStep() {
+    return this.current_wizard_step
+  }
 
   backToBuildingPlanStep() {
     this.current_step = ProviderCheckoutSteps.buildingPlan;
@@ -522,6 +525,7 @@ export class ProviderCheckoutService {
 
   nextStep() {
     if (this.current_step == ProviderCheckoutSteps.beforeCheckout) {
+      this.loadPlans();
       this.current_step = ProviderCheckoutSteps.buildingPlan;
     } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
       this.current_step = ProviderCheckoutSteps.wizard;
@@ -532,10 +536,11 @@ export class ProviderCheckoutService {
   }
 
   private updateCartStep() {
-    let extra_data: object = this.cart.getExtraData();
-    extra_data['current_step'] = this.current_step.toString();
-    extra_data['current_wizard_step'] = this.current_wizard_step.toString();
-    this.cart.setExtraData(extra_data);
+    console.log(`CURENT STEP ${this.currentStep} WIZARD STEP ${this.currentWizardStep} `);
+    this.cart.setExtraData({
+      current_step: this.currentStep.toString(),
+      current_wizard_step: this.currentWizardStep.toString()
+    });
   }
 
   onBeforeCheckoutSubmit() {
@@ -556,7 +561,7 @@ export class ProviderCheckoutService {
           // typeOfCustomer
 
           // if( a porra toda valida)
-
+          
           this.cart.setAddress(address, 'billing');
           this.nextStep();
         });

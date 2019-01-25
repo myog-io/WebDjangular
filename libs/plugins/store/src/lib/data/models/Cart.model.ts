@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
 import {AbstractModel, AddressModel} from '@core/data/src/lib/models';
 import {PermissionModel, UserModel} from '@core/users/src/lib/models';
 
@@ -30,7 +30,7 @@ export class CartModel extends AbstractModel {
   @BelongsTo()
   shipping_address: AddressModel;
 
-  @Attribute()
+  @NestedAttribute()
   extra_data: any;
 
   @Attribute()
