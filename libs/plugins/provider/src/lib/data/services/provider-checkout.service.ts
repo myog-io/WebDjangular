@@ -173,6 +173,7 @@ export class ProviderCheckoutService {
 
       // Set City Information
       let cart = this.cartService.cart;
+      if (!cart.id) return;
       this.address = cart.billing_address;
       this.city.id = cart.extra_data.city_id;
       this.city.name = this.address.city;
