@@ -47,6 +47,19 @@ export class ProviderCheckoutService {
   //  telephone: ["movel-local-50", "movel-local-100", "movel-local-500",
   //    "movel-brasil-50", "movel-brasil-100", "movel-brasil-500", "linha-extra"]
   //};
+  public customer_types = {
+    new:'Não sou cliente',
+    internet_fibra:'Sou cliente Fibra',
+    internet_radio:'Sou cliente Rádio',
+  }
+  public access_types = {
+    residencial:'Residencial',
+    condominio_residencial: 'Condomínio Residencia',
+    empresarial: 'Empresarial',
+    condominio_empresarial: 'Condomínio Empresarial',
+  }
+ 
+       
 
   public loading_cart: boolean = true;
 
@@ -108,7 +121,7 @@ export class ProviderCheckoutService {
 
   constructor(
     private datastore: WebAngularDataStore,
-    public cart: CartService,
+    public cartService: CartService,
     public clientUserService: ClientUserService,
     private pageScrollService: PageScrollService,
     private formBuilder: FormBuilder,
@@ -137,10 +150,10 @@ export class ProviderCheckoutService {
       dob: ['', [Validators.required]]
     });
 
-    if (this.cart.cart) {
+    if (this.cartService.cart) {
       this.loadedCart();
     } else {
-      this.listener_cart_changes = this.cart.cart_changes.subscribe(
+      this.listener_cart_changes = this.cartService.cart_changes.subscribe(
         () => {
           this.loadedCart();
         });
@@ -154,13 +167,34 @@ export class ProviderCheckoutService {
         this.listener_cart_changes.unsubscribe();
       }
 
-      console.log('loadedCart', this.cart.cart.extra_data);
+     
+      // Set City Information
+      let cart = this.cartService.cart;
+      this.address = cart.billing_address;
+      this.city.id = cart.extra_data.city_id;
+      this.city.name = this.address.city;
 
-      if(this.cart.cart.extra_data.hasOwnProperty('current_step')){
-        this.current_step = this.cart.cart.extra_data['current_step'];
+      // Set Form Information
+      this.formBeforeCheckout.setValue({
+        postalCode: this.address.postal_code,
+        numberOfAddress: cart.extra_data.address_number || '',
+        condo: cart.extra_data.condo || '',
+        condoNumber: cart.extra_data.condo_number || '',
+        typeOfAccess: cart.extra_data.access_type || '',
+        typeOfCustomer: cart.extra_data.customer_type || '',
+      })
+      
+      
+      
+
+      if(this.cartService.cart.extra_data.hasOwnProperty('current_step')){
+        this.current_step = this.cartService.cart.extra_data['current_step'];
+        if (this.current_step == ProviderCheckoutSteps.buildingPlan){
+          this.loadPlans();
+        }
       }
-      if(this.cart.cart.extra_data.hasOwnProperty('current_wizard_step')){
-        this.current_wizard_step = this.cart.cart.extra_data['current_wizard_step'];
+      if(this.cartService.cart.extra_data.hasOwnProperty('current_wizard_step')){
+        this.current_wizard_step = this.cartService.cart.extra_data['current_wizard_step'];
       }
 
 
@@ -168,17 +202,30 @@ export class ProviderCheckoutService {
   }
 
   addressFromCity(city: CityModel) {
-    // if (!this.address) {
-    //   this.address = new AddressModel(this.datastore, {});
-    // }
-    // this.address.city = city.name;
-    // this.address.street_address_1 = city.street;
-    // this.address.street_address_3 = city.neighborhood;
-    // this.address.state = city.state;
-    // this.address.postal_code = city.postal_code;
-    // if (this.condos) {
-    //   this.findCondos();
-    // }
+    if (!this.address) {
+      this.address = new AddressModel(this.datastore, {});
+    }
+    let number = null;
+    let condo = null;
+    let condoNumber = null;
+    if (this.formBeforeCheckout){
+      number = this.formBeforeCheckout.get('numberOfAddress').value || 'N/A';
+      condo = this.formBeforeCheckout.get('condo').value || null;
+      condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
+    }
+    this.address.city = city.name;
+    this.address.street_address_1 = `${city.street}, ${number}`;
+    if(condo){
+      this.address.street_address_3 = `${condo} APTO ${condoNumber}`;  
+    }
+    this.address.street_address_3 = city.neighborhood;
+    this.address.state = city.state;
+    this.address.postal_code = city.postal_code;
+    this.address.country = 'BR';
+    this.address.country_area = 'BR';
+    if (this.condos) {
+      this.findCondos();
+    }
   }
 
   getCurrentCity() {
@@ -218,6 +265,7 @@ export class ProviderCheckoutService {
     let options = {};
     options['page'] = {number: 1, size: 100};
     options['include'] = ProductModel.include;
+    
     const url = `/api/provider/city/${this.city.id}/products/`;
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
@@ -510,52 +558,57 @@ export class ProviderCheckoutService {
     } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
       this.current_step = ProviderCheckoutSteps.beforeCheckout;
     }
-    this.updateCartStep();
+    this.updateCartExtraData();
   }
 
   nextStep() {
     if (this.current_step == ProviderCheckoutSteps.beforeCheckout) {
       this.loadPlans();
       this.current_step = ProviderCheckoutSteps.buildingPlan;
+      
     } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
       this.current_step = ProviderCheckoutSteps.wizard;
     } else {
       this.current_wizard_step++;
     }
-    this.updateCartStep();
+    this.updateCartExtraData();
   }
 
-  private updateCartStep() {
+  private updateCartExtraData() {
     console.log(`CURENT STEP ${this.currentStep} WIZARD STEP ${this.currentWizardStep} `);
-    this.cart.setExtraData({
-      current_step: this.currentStep.toString(),
-      current_wizard_step: this.currentWizardStep.toString()
-    });
+    let extra_data:any = {}
+    extra_data.current_step = this.currentStep.toString();
+    extra_data.current_wizard_step = this.currentStep.toString();
+    extra_data.address_number = this.formBeforeCheckout.get('numberOfAddress').value;
+    extra_data.condo = this.formBeforeCheckout.get('condo').value;
+    extra_data.condo_number = this.formBeforeCheckout.get('condoNumber').value;
+    extra_data.access_type = this.formBeforeCheckout.get('typeOfAccess').value;
+    extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
+    extra_data.city_id = this.city.id;
+    this.cartService.setExtraData(extra_data);
   }
 
   onBeforeCheckoutSubmit() {
     this.formBeforeCheckoutSubmitted = true;
 
     if (this.formBeforeCheckout.valid) {
-
-      this.cart.searchAddressByPostalCode(
-        this.formBeforeCheckout.get('postalCode').value, 'BR').then(
-        (address: AddressModel) => {
-          // TODO: checar CEP se é válido e se tem cobertura
-
-          // postalCode
-          // numberOfAddress
-          // condo
-          // condoNumber
-          // typeOfAccess
-          // typeOfCustomer
-
-          // if( a porra toda valida)
-          
-          this.cart.setAddress(address, 'billing');
-          this.nextStep();
-        });
+      if (this.address && this.address.id && this.city) {
+        this.setAddressAndNextSetp();
+      } else { 
+        this.address.save().subscribe((address)=> {
+          this.address = address;
+          this.setAddressAndNextSetp();
+        },
+        (error)=>{
+          console.log("error saving address ",error)
+        })
+      }   
     }
+  }
+  setAddressAndNextSetp() { 
+    this.cartService.setAddress(this.address, 'billing');
+    this.cartService.setAddress(this.address, 'shipping');
+    this.nextStep();
   }
 
   isBuildingPlanValid() {

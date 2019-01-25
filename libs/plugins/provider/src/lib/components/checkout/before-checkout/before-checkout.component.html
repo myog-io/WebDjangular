@@ -63,10 +63,10 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfAccess">
                     <option value="">Tipo de acesso</option>
-                    <option value="residencial">Residencial</option>
-                    <option value="condominio_residencial">Condomínio Residencial</option>
-                    <option value="empresarial">Empresarial</option>
-                    <option value="condominio_empresarial">Condomínio Empresarial</option>
+                    <option value="residencial">{{ providerCheckout.access_types.residencial }}</option>
+                    <option value="condominio_residencial">{{ providerCheckout.access_types.condominio_residencial }}</option>
+                    <option value="empresarial">{{ providerCheckout.access_types.empresarial }}</option>
+                    <option value="condominio_empresarial">{{ providerCheckout.access_types.condominio_empresarial }}</option>
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
                           providerCheckout.formBeforeCheckout.controls['typeOfAccess'].errors">
@@ -121,9 +121,9 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfCustomer">
                     <option value="">Já é client LPNet?</option>
-                    <option value="no">Não sou cliente</option>
-                    <option value="internet_fibra">Sou cliente Fibra</option>
-                    <option value="internet_radio">Sou cliente Rádio</option>
+                    <option value="new">{{ providerCheckout.customer_types.new }}</option>
+                    <option value="internet_fibra">{{ providerCheckout.customer_types.internet_fibra }}</option>
+                    <option value="internet_radio">{{ providerCheckout.customer_types.internet_radio }}</option>
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
                         providerCheckout.formBeforeCheckout.controls['typeOfCustomer'].errors">

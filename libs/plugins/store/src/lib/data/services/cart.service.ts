@@ -32,15 +32,16 @@ export class CartService {
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
-        this.datastore.findAll(CartModel, {token: cartCookie['token'], page: {size: 1, number: 1}}).subscribe(
+        this.datastore.findAll(CartModel, {token: cartCookie['token'], page: {size: 1, number: 1}, include:"billing_address,shipping_address"}).subscribe(
           (queryData: JsonApiQueryData<CartModel>) => {
+            
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
-              console.log('cookie find cart ', this.cart)
             }
           },
-          () => {
+          (error:any) => {
+            console.log(error);
             // TODO: do something
           })
       }
@@ -77,7 +78,6 @@ export class CartService {
         (cart: CartModel) => {
           this.cart = cart;
           this.updateCookie();
-          console.log('after update:', this.cart);
           resolve(cart);
         },
         (error: ErrorResponse) => {
@@ -162,16 +162,7 @@ export class CartService {
   }
 
   public setExtraData(value: any): void {
-    let merged = this.cart.extra_data;
-    this.cart.extra_data = {};
-    for (const key in value) {
-      if (value.hasOwnProperty(key)) {
-        merged[key] = value[key]
-      }
-    }
-   
-    this.cart.extra_data = value;
-   
+    this.cart.extra_data = Object.assign(this.cart.extra_data,value);
     this.updateCart().then((cart: CartModel)=>{});
   }
 }

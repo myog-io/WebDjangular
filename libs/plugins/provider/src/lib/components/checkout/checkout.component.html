@@ -40,12 +40,12 @@
               <div class="row">
                 <p class="mb-0 col-12 col-lg-6">
                   <b>Endereço da assinatura:</b><br>
-                  R. Sete de Setembro, 500, apto 110 - Jardim Morumbi <br>
-                  São Paulo, SP 18683-000
+                  <span [innerHtml]="providerCheckout.address.full_label"></span>
+                  
                 </p>
                 <p class="mb-0 col-12 col-lg-3">
-                  <b>Acesso:</b> Residencial <br>
-                  <b> Não sou client </b>
+                  <b>Acesso:</b> {{  providerCheckout.access_types[providerCheckout.cartService?.cart?.extra_data?.access_type] }} <br>
+                  <b>  {{ providerCheckout.customer_types[providerCheckout.cartService?.cart?.extra_data?.customer_type] }}  </b>
                 </p>
                 <p class="mb-0 col-12 col-lg-3 pt-2 pt-lg-0">
                   <button class="float-left float-lg-right btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"

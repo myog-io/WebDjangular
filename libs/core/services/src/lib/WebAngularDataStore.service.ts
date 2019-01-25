@@ -3,7 +3,7 @@ import { DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel
 import { Observable } from 'rxjs';
 import { UserModel, GroupModel, PermissionModel } from '@core/users/src/lib/models';
 import { PageModel, BlockModel, MenuItemModel, MenuModel } from '@core/cms/src/lib/models';
-import { ContentTypeModel, CoreConfigGroupModel, CoreConfigInputModel, CoreConfigModel, AbstractModel } from '@core/data/src/lib/models';
+import { ContentTypeModel, CoreConfigGroupModel, CoreConfigInputModel, CoreConfigModel, AbstractModel, AddressModel } from '@core/data/src/lib/models';
 import { CityModel, StreetModel, ResellerModel, CondoModel, ChannelModel } from '@plugins/provider/src/lib/data';
 import { PostalCodeRangeModel } from '@plugins/provider/src/lib/data/models/PostalCodeRangeModel';
 import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
@@ -55,6 +55,7 @@ const config: DatastoreConfig = {
   baseUrl: '/api',
   //TODO: Load all This Dynamic
   models: {
+    Address: AddressModel,
     User: UserModel,
     Group: GroupModel,
     Page: PageModel,

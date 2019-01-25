@@ -82,7 +82,7 @@ class CityViewSet(ModelViewSet):
 
         serializer = self.get_serializer(city)
         data = serializer.data
-        
+        print(city_data)
         if city_data['bairro']:
             data['neighborhood'] = city_data['bairro']
         if city_data['logradouro']:
@@ -91,6 +91,7 @@ class CityViewSet(ModelViewSet):
             data['state'] = city_data['uf']
         if city_data['cep']:
             data['postal_code'] = city_data['cep']
+        print(data)
         return Response(data)
 
 

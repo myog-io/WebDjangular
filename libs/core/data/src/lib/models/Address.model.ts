@@ -55,6 +55,26 @@ export class AddressModel extends AbstractModel {
 
   set pk(value) {
   }
+
+  get label_line_one():string{
+    return `${this.street_address_1} - ${this.street_address_3}`;
+  }
+  get label_line_two():string{
+    return `${this.street_address_2}`;
+  }
+
+  get label_line_three():string {
+    return `${this.city}, ${this.state} ${this.postal_code}`;
+  }
+  get full_label():string{
+    let label = `${this.label_line_one}`;
+    if (this.street_address_2) {
+      label += `<br>${this.label_line_two}`;
+    }
+    label += `<br>${this.label_line_three}`;
+    return label;
+  }
+
 }
 
 export class AddressConverter implements PropertyConverter {
