@@ -1,4 +1,4 @@
-import {Attribute, HasMany, JsonApiModelConfig,} from 'angular2-jsonapi';
+import {Attribute, HasMany, JsonApiModelConfig, NestedAttribute,} from 'angular2-jsonapi';
 import {GroupModel} from './Group.model';
 import {PermissionModel} from './Permission.model';
 import { AbstractModel } from '@core/data/src/lib/models';
@@ -100,7 +100,7 @@ export class UserModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  @Attribute()
+  @NestedAttribute()
   data: any = {};
 
   @HasMany()

@@ -2,6 +2,7 @@ import {
   JsonApiModelConfig,
   Attribute,
   BelongsTo,
+  NestedAttribute,
 
 } from 'angular2-jsonapi';
 
@@ -32,16 +33,16 @@ export class CoreConfigInputModel extends AbstractModel {
   @Attribute()
   label: string;
 
-  @Attribute()
+  @NestedAttribute()
   select_options: any;
 
-  @Attribute()
+  @NestedAttribute()
   select_model: any;
 
   @Attribute()
   placeholder: string;
 
-  @Attribute()
+  @NestedAttribute()
   validation: any;
 
   @Attribute()
@@ -53,7 +54,7 @@ export class CoreConfigInputModel extends AbstractModel {
   @Attribute()
   value: string;
 
-  @Attribute()
+  @NestedAttribute()
   conditional: any;
 
   @BelongsTo()

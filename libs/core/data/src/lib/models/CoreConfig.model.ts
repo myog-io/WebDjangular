@@ -2,7 +2,8 @@ import {
   JsonApiModelConfig,
   Attribute,
   HasMany,
-  BelongsTo
+  BelongsTo,
+  NestedAttribute
 } from 'angular2-jsonapi';
 import { AbstractModel } from './Abstract.model';
 import { CoreWebsiteModel } from './CoreWebsite.model';
@@ -17,7 +18,7 @@ export class CoreConfigModel extends AbstractModel {
   @Attribute()
   slug: string;
 
-  @Attribute()
+  @NestedAttribute()
   value: any;
 
   @Attribute()

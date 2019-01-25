@@ -496,6 +496,9 @@ export class ProviderCheckoutService {
     return this.current_step;
   }
 
+  get currentWizardStep() {
+    return this.current_wizard_step
+  }
 
   prevStep() {
     if (this.current_step == ProviderCheckoutSteps.wizard) {
@@ -512,6 +515,7 @@ export class ProviderCheckoutService {
 
   nextStep() {
     if (this.current_step == ProviderCheckoutSteps.beforeCheckout) {
+      this.loadPlans();
       this.current_step = ProviderCheckoutSteps.buildingPlan;
     } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
       this.current_step = ProviderCheckoutSteps.wizard;
@@ -522,9 +526,10 @@ export class ProviderCheckoutService {
   }
 
   private updateCartStep() {
+    console.log(`CURENT STEP ${this.currentStep} WIZARD STEP ${this.currentWizardStep} `);
     this.cart.setExtraData({
-      current_step: this.current_step.toString(),
-      current_wizard_step: this.current_wizard_step.toString()
+      current_step: this.currentStep.toString(),
+      current_wizard_step: this.currentWizardStep.toString()
     });
   }
 
@@ -546,7 +551,7 @@ export class ProviderCheckoutService {
           // typeOfCustomer
 
           // if( a porra toda valida)
-
+          
           this.cart.setAddress(address, 'billing');
           this.nextStep();
         });

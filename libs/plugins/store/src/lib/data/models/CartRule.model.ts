@@ -1,4 +1,4 @@
-import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
+import { Attribute, JsonApiModelConfig, NestedAttribute } from 'angular2-jsonapi';
 import { Validators } from "@angular/forms";
 import { DiscountTypeOptions } from '../interfaces/Discount.interface';
 import { AbstractModel } from '@core/data/src/lib/models';
@@ -111,7 +111,7 @@ export class CartRuleModel extends AbstractModel {
   })
   value: string;
 
-  @Attribute()
+  @NestedAttribute()
   @ExtraOptions({
     type: 'jsonLogic',
     label: 'Apply Rule only if all conditions are true',

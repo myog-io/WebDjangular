@@ -1,4 +1,4 @@
-import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
+import { Attribute, JsonApiModelConfig, NestedAttribute } from 'angular2-jsonapi';
 import { Validators } from "@angular/forms";
 import { DiscountTypeOptions } from '../interfaces/Discount.interface';
 import { AbstractModel } from '@core/data/src/lib/models';
@@ -79,7 +79,7 @@ export class CatalogRuleModel extends AbstractModel {
   })
   is_active: boolean;
 
-  @Attribute()
+  @NestedAttribute()
   @ExtraOptions({
     validators: [],
     type: 'jsonLogic',
