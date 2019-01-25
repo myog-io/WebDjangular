@@ -84,6 +84,7 @@ export class CatalogRuleModel extends AbstractModel {
     validators: [],
     type: 'jsonLogic',
     label: 'Apply Rule only if all conditions are true',
+    json_logic_options_url: '/api/store/discount/catalog-rule/discount_options/'
   })
   conditions: any;
 

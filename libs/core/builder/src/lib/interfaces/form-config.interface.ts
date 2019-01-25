@@ -69,6 +69,7 @@ export interface BuilderFormFieldConfig {
   sort?: number;
   displayGroup?: string;
   copyOptions?: BuilderFormCopyArray
+  json_logic_options_url?: string;
 }
 
 export interface BuilderFormField {

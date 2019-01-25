@@ -59,8 +59,8 @@ class Cart(BaseModel):
         """
         Return True if any of the items requires shipping.
         """
-        # TODO: return any(line.is_shipping_required() for line in self)
-        return False
+        return any(line.is_shipping_required() for line in self.items.objects.all())
+        
 
     @property
     def get_shipping_price(self):
@@ -120,13 +120,11 @@ class CartItem(models.Model):
     #     total = 0
     #     return total
     #
-    # @property
-    # def is_shipping_required(self):
-    #     """
-    #     Return True if any of the items requires shipping.
-    #     """
-    #     # TODO: self.product.is_shipping_required()
-    #     return False
-    #
+    @property
+    def is_shipping_required(self):
+        """
+        Return True if any of the items requires shipping.
+        """
+        return self.product.is_shipping_required()
 
 

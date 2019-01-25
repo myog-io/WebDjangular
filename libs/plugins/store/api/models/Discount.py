@@ -16,14 +16,16 @@ from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
 
 
-class DiscountValueType:
+class RuleValueType:
     FIXED = 'fixed'
     PERCENTAGE = 'percentage'
     TO_VALUE = 'to_value'
+    FEE= 'fee'
 
     CHOICES = [
         (FIXED, defaults.DEFAULT_CURRENCY),
-        (PERCENTAGE, '%')
+        (PERCENTAGE, '%'),
+        (FEE, defaults.DEFAULT_CURRENCY)
     ]
 
 
@@ -38,12 +40,13 @@ class CartRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     conditions = JSONField(default=None, blank=True, null=True)
     rule_type = models.CharField(max_length=10,
-                                 choices=DiscountValueType.CHOICES,
-                                 default=DiscountValueType.FIXED)
+                                 choices=RuleValueType.CHOICES,
+                                 default=RuleValueType.FIXED)
     value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                                 decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
 
     voucher = models.CharField(max_length=12, unique=True, db_index=True)
+    require_voucher = models.BooleanField(default=False)
 
     usage_limit = models.PositiveIntegerField(null=True, blank=True)
     used = models.PositiveIntegerField(default=0, editable=False)
@@ -71,8 +74,8 @@ class CatalogRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255)
     conditions = JSONField(default=None, blank=True, null=True)
     rule_type = models.CharField(max_length=10,
-                                 choices=DiscountValueType.CHOICES,
-                                 default=DiscountValueType.FIXED)
+                                 choices=RuleValueType.CHOICES,
+                                 default=RuleValueType.FIXED)
     value = models.DecimalField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                                 decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                 default=0)
@@ -86,9 +89,9 @@ class CatalogRule(ActiveModel, BaseModel):
         ordering = ['-pk']
 
     def get_discount(self):
-        if self.rule_type == DiscountValueType.FIXED:
+        if self.rule_type == RuleValueType.FIXED:
             discount_amount = Money(self.value, defaults.DEFAULT_CURRENCY)
             return partial(fixed_discount, discount=discount_amount)
-        if self.rule_type == DiscountValueType.PERCENTAGE:
+        if self.rule_type == RuleValueType.PERCENTAGE:
             return partial(percentage_discount, percentage=self.value)
         raise NotImplementedError('Unknown discount type')
