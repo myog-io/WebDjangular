@@ -55,7 +55,7 @@ ul.wizard {
 
         line-height: 14px;
         display: inline-flex;
-
+        cursor: pointer;
 
         @include media-breakpoint-up(md) {
           line-height: 1.7rem;

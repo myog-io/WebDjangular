@@ -1,19 +1,19 @@
-import {Inject, Injectable} from '@angular/core';
-import {JsonApiQueryData} from "angular2-jsonapi";
-import {DOCUMENT, Location} from '@angular/common';
-import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
-import {CartService} from '@plugins/store/src/lib/data/services/cart.service';
-import {ProductModel} from '@plugins/store/src/lib/data/models/Product.model';
-import {CityModel} from '../models/City.model';
-import {ClientUserService} from '@core/services/src/lib/client-user.service';
-import {AddressModel} from '@core/data/src/lib/models';
-import {HttpHeaders} from '@angular/common/http';
-import {Observable, Subscriber} from 'rxjs';
-import {CondoModel} from '../models/Condo.model';
+import { Inject, Injectable } from '@angular/core';
+import { JsonApiQueryData } from "angular2-jsonapi";
+import { DOCUMENT, Location } from '@angular/common';
+import { PageScrollInstance, PageScrollService } from 'ngx-page-scroll';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { CityModel } from '../models/City.model';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { AddressModel } from '@core/data/src/lib/models';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable, Subscriber } from 'rxjs';
+import { CondoModel } from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
-import {ActivatedRoute, Router} from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -48,18 +48,18 @@ export class ProviderCheckoutService {
   //    "movel-brasil-50", "movel-brasil-100", "movel-brasil-500", "linha-extra"]
   //};
   public customer_types = {
-    new:'Não sou cliente',
-    internet_fibra:'Sou cliente Fibra',
-    internet_radio:'Sou cliente Rádio',
+    new: 'Não sou cliente',
+    internet_fibra: 'Sou cliente Fibra',
+    internet_radio: 'Sou cliente Rádio',
   }
   public access_types = {
-    residencial:'Residencial',
+    residencial: 'Residencial',
     condominio_residencial: 'Condomínio Residencia',
     empresarial: 'Empresarial',
     condominio_empresarial: 'Condomínio Empresarial',
   }
- 
-       
+
+
 
   public loading_cart: boolean = true;
 
@@ -144,7 +144,7 @@ export class ProviderCheckoutService {
     });
 
     this.formWizardStep01 = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(2)] ],
       email: ['', [Validators.required, Validators.email]],
       mobile: ['', [Validators.required, Validators.minLength(11)]],
       telephone: ['', [Validators.minLength(10)]],
@@ -170,7 +170,7 @@ export class ProviderCheckoutService {
         this.listener_cart_changes.unsubscribe();
       }
 
-     
+
       // Set City Information
       let cart = this.cartService.cart;
       this.address = cart.billing_address;
@@ -186,38 +186,39 @@ export class ProviderCheckoutService {
         typeOfAccess: cart.extra_data.access_type || '',
         typeOfCustomer: cart.extra_data.customer_type || '',
       })
-      
-      
-      
 
-      if(this.cartService.cart.extra_data.hasOwnProperty('current_step')){
+
+
+
+      if (this.cartService.cart.extra_data.hasOwnProperty('current_step')) {
         this.current_step = this.cartService.cart.extra_data['current_step'];
-        if (this.current_step == ProviderCheckoutSteps.buildingPlan){
+        if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
           this.loadPlans();
         }
       }
-      if(this.cartService.cart.extra_data.hasOwnProperty('current_wizard_step')){
+      if (this.cartService.cart.extra_data.hasOwnProperty('current_wizard_step')) {
         this.current_wizard_step = this.cartService.cart.extra_data['current_wizard_step'];
       }
     }
   }
 
   addressFromCity(city: CityModel) {
+    if (!city) return null;
     if (!this.address) {
       this.address = new AddressModel(this.datastore, {});
     }
     let number = null;
     let condo = null;
     let condoNumber = null;
-    if (this.formBeforeCheckout){
+    if (this.formBeforeCheckout) {
       number = this.formBeforeCheckout.get('numberOfAddress').value || 'N/A';
       condo = this.formBeforeCheckout.get('condo').value || null;
       condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
     }
     this.address.city = city.name;
     this.address.street_address_1 = `${city.street}, ${number}`;
-    if(condo){
-      this.address.street_address_3 = `${condo} APTO ${condoNumber}`;  
+    if (condo) {
+      this.address.street_address_3 = `${condo} APTO ${condoNumber}`;
     }
     this.address.street_address_3 = city.neighborhood;
     this.address.state = city.state;
@@ -239,7 +240,7 @@ export class ProviderCheckoutService {
         CityModel,
         null,
         null,
-        new HttpHeaders({'Authorization': 'none'}),
+        new HttpHeaders({ 'Authorization': 'none' }),
         url
       ).subscribe((city: CityModel) => {
         this.city = city;
@@ -252,8 +253,8 @@ export class ProviderCheckoutService {
   public findCondos() {
     this.condos = this.datastore.findAll(
       CondoModel,
-      {city__id: this.city.id},
-      new HttpHeaders({'Authorization': 'none'}),
+      { city__id: this.city.id },
+      new HttpHeaders({ 'Authorization': 'none' }),
     ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
   }
 
@@ -264,24 +265,24 @@ export class ProviderCheckoutService {
 
   loadPlans() {
     let options = {};
-    options['page'] = {number: 1, size: 100};
+    options['page'] = { number: 1, size: 100 };
     options['include'] = ProductModel.include;
-    
+
     const url = `/api/provider/city/${this.city.id}/products/`;
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
-      new HttpHeaders({'Authorization': 'none'}),
+      new HttpHeaders({ 'Authorization': 'none' }),
       url).subscribe((query: JsonApiQueryData<ProductModel>) => {
-      const plans = query.getModels();
-      this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
-      this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
-      this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
-      this.loading_plans = false;
-    }, (error) => {
-      // TODO: do something
-      this.loading_plans = false;
-    });
+        const plans = query.getModels();
+        this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+        this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+        this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+        this.loading_plans = false;
+      }, (error) => {
+        // TODO: do something
+        this.loading_plans = false;
+      });
 
     /*
     for (let i = 0; i < 2; i++) {
@@ -582,9 +583,18 @@ export class ProviderCheckoutService {
     return this.current_wizard_step
   }
 
+  setWizardStep(number:number){
+    // TOOD If Can!
+    this.current_wizard_step = number;
+  }
   backToBuildingPlanStep() {
     this.current_step = ProviderCheckoutSteps.buildingPlan;
     this.current_wizard_step = 1;
+    
+    if (this.plans.internet.length <= 0 || this.plans.telephone.length <= 0 || this.plans.tv.length <= 0) {
+      console.log()
+      this.loadPlans();
+    }
     this.updateCartExtraData();
   }
 
@@ -593,9 +603,11 @@ export class ProviderCheckoutService {
       if (this.current_wizard_step > 1) {
         this.current_wizard_step--;
       } else {
-        this.current_step = ProviderCheckoutSteps.buildingPlan;
+
+        this.backToBuildingPlanStep();
       }
     } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
+
       this.current_step = ProviderCheckoutSteps.beforeCheckout;
     }
     this.updateCartExtraData();
@@ -605,7 +617,7 @@ export class ProviderCheckoutService {
     if (this.current_step == ProviderCheckoutSteps.beforeCheckout) {
       this.loadPlans();
       this.current_step = ProviderCheckoutSteps.buildingPlan;
-      
+
     } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
       this.current_step = ProviderCheckoutSteps.wizard;
     } else {
@@ -616,7 +628,7 @@ export class ProviderCheckoutService {
 
   private updateCartExtraData() {
     console.log(`CURENT STEP ${this.currentStep} WIZARD STEP ${this.currentWizardStep} `);
-    let extra_data:any = {}
+    let extra_data: any = {}
     extra_data.current_step = this.currentStep.toString();
     extra_data.current_wizard_step = this.currentStep.toString();
     extra_data.address_number = this.formBeforeCheckout.get('numberOfAddress').value;
@@ -634,18 +646,18 @@ export class ProviderCheckoutService {
     if (this.formBeforeCheckout.valid) {
       if (this.address && this.address.id && this.city) {
         this.setAddressAndNextSetp();
-      } else { 
-        this.address.save().subscribe((address)=> {
+      } else {
+        this.address.save().subscribe((address) => {
           this.address = address;
           this.setAddressAndNextSetp();
         },
-        (error)=>{
-          console.log("error saving address ",error)
-        })
-      }   
+          (error) => {
+            console.log("error saving address ", error)
+          })
+      }
     }
   }
-  setAddressAndNextSetp() { 
+  setAddressAndNextSetp() {
     this.cartService.setAddress(this.address, 'billing');
     this.cartService.setAddress(this.address, 'shipping');
     this.nextStep();

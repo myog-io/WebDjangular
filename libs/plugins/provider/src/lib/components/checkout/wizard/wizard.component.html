@@ -9,21 +9,21 @@
       <ul class="wizard">
 
         <li class="step-tab step-1" [ngClass]="{'active': providerCheckout.current_wizard_step == 1}">
-          <a routerLink="">
+          <a (click)="providerCheckout.setWizardStep(1)">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Dados pessoais</span>
           </a>
         </li>
 
         <li class="step-tab step-2" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
-          <a routerLink="">
+          <a (click)="providerCheckout.setWizardStep(2)">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Pagamento</span>
           </a>
         </li>
 
         <li class="step-tab step-3" [ngClass]="{'active': providerCheckout.current_wizard_step == 3}">
-          <a routerLink="">
+          <a (click)="providerCheckout.setWizardStep(3)">
             <span class="icon"><i class="fas fa-check"></i></span>
             <span class="label "></span>
           </a>
@@ -84,14 +84,7 @@
                     <td>Taxa de Adesão</td>
                     <td>Grátis</td>
                   </tr>
-                  <tr>
-                    <td>Valor do 1º ao 3º mês</td>
-                    <td>R$ 297,50</td>
-                  </tr>
-                  <tr>
-                    <td>Valor a partir do 4º mês</td>
-                    <td>R$ 297,50</td>
-                  </tr>
+                 
 
 
                   </tbody>

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { ClientUserService } from '@core/services/src/lib/client-user.service';
 import { CityModel } from '@plugins/provider/src/lib/data';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,8 @@ import { CityModel } from '@plugins/provider/src/lib/data';
 export class ThemeProviderfyModalChoosecityComponent {
 
   form: FormGroup;
-  cities: any;
+  city_list: CityModel[];
+  cities: Observable<CityModel[]>;
   loading = true;
   placeholder = "Onde você está?"
 
@@ -27,25 +29,19 @@ export class ThemeProviderfyModalChoosecityComponent {
       city: ['', Validators.required]
     });
 
-    this.getCities().then(data => {
-      this.cities = data;
-    });
+    this.getCities();
 
   }
 
-  getCities(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.datastore.findAll(CityModel, {ordering:'name',page:{size:100}}).subscribe(
-        (response: JsonApiQueryData<CityModel>) => {
-          let cities = response.getModels();
-          resolve(cities);
-          this.loading = false;
-        },
-        (error: any) => {
-          reject(error);
-        }
-      )
-    });
+  getCities(): void {
+  
+    this.cities = this.datastore.findAll(CityModel, {ordering:'name',fields:"id,name",page:{size:100}}).map(
+      (query, index) => {
+        this.loading = false;
+        this.city_list = query.getModels();
+        return this.city_list;
+      }
+    )
   }
 
   selectChange($event){
@@ -56,8 +52,8 @@ export class ThemeProviderfyModalChoosecityComponent {
 
   onSubmit() {
     //this.activeModal.close();
-
-    const cityModel = this.cities.find(city=>city.id===this.form.get('city').value);
+    const city_id = this.form.get('city').value;
+    const cityModel = this.city_list.find(city=>city.id===city_id);
     this.clientUserService.clientUser.data['city'] = {
       id: cityModel.id,
       name: cityModel.name

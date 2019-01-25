@@ -1,20 +1,17 @@
-
-
 <div *ngIf="providerCheckout.loading_cart">
   <div class="container">
-      <div class="row">
-        <div class="col my-5">
-          <div class="loader mx-auto text-center"></div>
-        </div>
+    <div class="row">
+      <div class="col my-5">
+        <div class="loader mx-auto text-center"></div>
       </div>
+    </div>
   </div>
 
 </div>
 
 <div *ngIf="!providerCheckout.loading_cart">
 
-  <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.beforeCheckout"
-    style="background:#F8F8F8;">
+  <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.beforeCheckout" style="background:#F8F8F8;">
     <div class="container">
       <div class="row">
         <plugin-provider-checkout-before-checkout>
@@ -23,8 +20,7 @@
     </div>
   </section>
 
-  <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.buildingPlan"
-    style="background:#F8F8F8;">
+  <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.buildingPlan" style="background:#F8F8F8;">
 
     <div class="container">
 
@@ -38,21 +34,22 @@
           <div class="card">
             <div class="card-body py-1">
               <div class="row">
-                <p class="mb-0 col-12 col-lg-6">
-                  <b>Endereço da assinatura:</b><br>
-                  <span [innerHtml]="providerCheckout.address.full_label"></span>
-                  
-                </p>
-                <p class="mb-0 col-12 col-lg-3">
-                  <b>Acesso:</b> {{  providerCheckout.access_types[providerCheckout.cartService?.cart?.extra_data?.access_type] }} <br>
-                  <b>  {{ providerCheckout.customer_types[providerCheckout.cartService?.cart?.extra_data?.customer_type] }}  </b>
-                </p>
                 <p class="mb-0 col-12 col-lg-3 pt-2 pt-lg-0">
-                  <button class="float-left float-lg-right btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+                  <button class="float-left float-lg-left btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase text-center"
                     (click)="providerCheckout.prevStep()">
                     Alterar
                   </button>
                 </p>
+                <p class="mb-0 col-12 col-lg-6">
+                  <b>Endereço da assinatura:</b><br>
+                  <span [innerHtml]="providerCheckout.address.full_label"></span>
+
+                </p>
+                <p class="mb-0 col-12 col-lg-3">
+                  <b>Acesso:</b> {{ providerCheckout.access_types[providerCheckout.cartService?.cart?.extra_data?.access_type] }} <br>
+                  <b> {{ providerCheckout.customer_types[providerCheckout.cartService?.cart?.extra_data?.customer_type]}} </b>
+                </p>
+
               </div>
             </div>
           </div>
@@ -65,8 +62,7 @@
   </section>
 
 
-  <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.wizard"
-    style="background:#FFFFFF;">
+  <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.wizard" style="background:#FFFFFF;">
     <div class="container">
       <div class="row">
         <plugin-provider-checkout-wizard></plugin-provider-checkout-wizard>

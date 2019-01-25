@@ -7,7 +7,7 @@
     <div class="form-group">
       <ng-select class="form-control" formControlName="city" (change)="selectChange($event)" [multiple]="false"
         [loading]="loading" [placeholder]="placeholder" [clearable]="false">
-        <ng-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ng-option>
+        <ng-option *ngFor="let city of cities | async" [value]="city.id">{{ city.name }}</ng-option>
       </ng-select>
 
     </div>

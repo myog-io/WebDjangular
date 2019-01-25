@@ -20,6 +20,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PluginProviderCheckoutPlanTelephoneOptionalComponent} from "./plans/telephone/optional/optional.component";
 import {PluginProviderCheckoutBeforeCheckoutComponent} from "./before-checkout/before-checkout.component";
 import {NgxMaskModule} from "ngx-mask";
+import { PluginProviderCheckoutErrorComponent } from "./checkout-form-error.component";
 
 
 
@@ -37,7 +38,8 @@ const COMPONENTS = [
   PluginProviderCheckoutWizardComponent,
   PluginProviderCheckoutWizardStep01Component,
   PluginProviderCheckoutWizardStep02Component,
-  PluginProviderCheckoutWizardStep03Component
+  PluginProviderCheckoutWizardStep03Component,
+  PluginProviderCheckoutErrorComponent
 ];
 
 @NgModule({
