@@ -585,7 +585,7 @@ export class ProviderCheckoutService {
   backToBuildingPlanStep() {
     this.current_step = ProviderCheckoutSteps.buildingPlan;
     this.current_wizard_step = 1;
-    this.updateCartStep();
+    this.updateCartExtraData();
   }
 
   prevStep() {
