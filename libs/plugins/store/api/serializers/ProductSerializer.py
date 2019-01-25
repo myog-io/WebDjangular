@@ -122,7 +122,6 @@ class ProductSerializer(WebDjangoSerializer):
         required=False,
     )
     
-
     attributes = serializers.JSONField(required=False)
 
     product_type = ResourceRelatedField(

@@ -31,7 +31,7 @@ class Cart(BaseModel):
     total_quantity = models.PositiveIntegerField(default=0)
     status = models.CharField(
         max_length=16, choices=CartStatus.CHOICES, default=CartStatus.ACTIVE)
-
+    extra_data = JSONField(blank=True)
     billing_address = models.ForeignKey(
         Address, related_name='cart_billing_address', on_delete=models.CASCADE, blank=True, null=True)
     shipping_address = models.ForeignKey(
@@ -100,27 +100,33 @@ class Cart(BaseModel):
 
 
 class CartItem(models.Model):
+    cart = models.ForeignKey(
+        'Cart', related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(
         Product, on_delete=None, related_name='product')
     quantity = models.PositiveIntegerField(default=1)
     data = JSONField(blank=True)
-    cart = models.ForeignKey(
-        'Cart', related_name='items', on_delete=models.CASCADE)
 
-    @property
-    def get_total(self, discounts=None, taxes=None):
-        """
-        Return the total price of this item.
-        """
-        # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
-        #total = self.quantity * self.product.get_final_price()
-        total = 0
-        return total
+    class Meta:
+        ordering = ['-pk']
 
-    @property
-    def is_shipping_required(self):
-        """
-        Return True if any of the items requires shipping.
-        """
-        # TODO: self.product.is_shipping_required()
-        return False
+    # @property
+    # def get_total(self, discounts=None, taxes=None):
+    #     """
+    #     Return the total price of this item.
+    #     """
+    #     # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
+    #     #total = self.quantity * self.product.get_final_price()
+    #     total = 0
+    #     return total
+    #
+    # @property
+    # def is_shipping_required(self):
+    #     """
+    #     Return True if any of the items requires shipping.
+    #     """
+    #     # TODO: self.product.is_shipping_required()
+    #     return False
+    #
+
+

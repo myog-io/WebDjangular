@@ -1,4 +1,7 @@
-from .views.CartViewSet import CartViewSet
+from django.conf.urls import include, url
+from rest_framework.routers import DefaultRouter
+
+from .views.CartViewSet import CartViewSet, CartRelationshipView, CartItemViewSet
 from .views.DiscountViewSet import CartRuleViewSet, CatalogRuleViewSet
 from .views.OrderViewSet import OrderViewSet
 from .views.PaymentViewSet import PaymentViewSet
@@ -6,12 +9,10 @@ from .views.ProductViewSet import ProductAttributeRelationshipView, \
     ProductAttributeViewSet, ProductCategoryViewSet, ProductRelationshipView, \
     ProductTypeRelationshipView, ProductTypeViewSet, ProductViewSet
 from .views.ShippingViewSet import ShippingMethodViewSet
-from django.conf.urls import include, url
-from rest_framework.routers import DefaultRouter
-
 
 router = DefaultRouter()
 router.register('cart', CartViewSet, base_name='cart')
+router.register('cart-item', CartItemViewSet, base_name='cart-item')
 router.register('category', ProductCategoryViewSet, base_name='category')
 router.register('discount/catalog-rule', CatalogRuleViewSet,
                 base_name='discount/catalog-rule')
@@ -27,8 +28,8 @@ router.register('product-attribute', ProductAttributeViewSet,
 router.register('shipping-method', ShippingMethodViewSet,
                 base_name='shipping-method')
 
-
 relationshipPatterns = [
+    # Product
     url(
         regex=r'^product/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=ProductRelationshipView.as_view(),
@@ -38,6 +39,7 @@ relationshipPatterns = [
         ProductViewSet.as_view({'get': 'retrieve_related'}),
         name='product-related'
     ),
+
     # Product Type
     url(
         regex=r'^product-type/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
@@ -48,6 +50,7 @@ relationshipPatterns = [
         ProductTypeViewSet.as_view({'get': 'retrieve_related'}),
         name='product-type-related'
     ),
+
     # Product Type Attributes (data)
     url(
         regex=r'^product-attribute/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
@@ -58,6 +61,16 @@ relationshipPatterns = [
         ProductAttributeViewSet.as_view({'get': 'retrieve_related'}),
         name='product-attribute-related'
     ),
+
+    # Cart
+    url(regex=r'^cart/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=CartRelationshipView.as_view(),
+        name='cart-relationships'
+    ),
+    url(r'^cart/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        CartViewSet.as_view({'get': 'retrieve_related'}),
+        name='cart-related'
+    ),
 ]
 
 urlpatterns = [
@@ -65,4 +78,4 @@ urlpatterns = [
     url(r'store/', include(relationshipPatterns)),
 ]
 
-router=DefaultRouter()
+router = DefaultRouter()

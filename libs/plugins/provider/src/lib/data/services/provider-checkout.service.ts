@@ -1,17 +1,17 @@
-import { Inject, Injectable } from '@angular/core';
-import { JsonApiQueryData } from "angular2-jsonapi";
-import { DOCUMENT } from '@angular/common';
-import { PageScrollInstance, PageScrollService } from 'ngx-page-scroll';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
-import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
-import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
-import { CityModel } from '../models/City.model';
-import { ClientUserService } from '@core/services/src/lib/client-user.service';
-import { AddressModel } from '@core/data/src/lib/models';
-import { HttpHeaders } from '@angular/common/http';
-import { Subscription, Observable } from 'rxjs';
-import { CondoModel } from '../models/Condo.model';
+import {Inject, Injectable} from '@angular/core';
+import {JsonApiQueryData} from "angular2-jsonapi";
+import {DOCUMENT} from '@angular/common';
+import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
+import {CartService} from '@plugins/store/src/lib/data/services/cart.service';
+import {ProductModel} from '@plugins/store/src/lib/data/models/Product.model';
+import {CityModel} from '../models/City.model';
+import {ClientUserService} from '@core/services/src/lib/client-user.service';
+import {AddressModel} from '@core/data/src/lib/models';
+import {HttpHeaders} from '@angular/common/http';
+import {Observable, Subscriber} from 'rxjs';
+import {CondoModel} from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
 
 
@@ -27,6 +27,7 @@ export enum ProviderCheckoutSteps {
 export class ProviderCheckoutService {
   public address: AddressModel;
   public city: CityModel;
+
   //private skus = {
   //  internet: ["60mb", "120mb", "180mb"],
   //  tv: ["hd-top", "hd-plus", "hd-pop", "hd-super"],
@@ -47,7 +48,7 @@ export class ProviderCheckoutService {
   //    "movel-brasil-50", "movel-brasil-100", "movel-brasil-500", "linha-extra"]
   //};
 
-
+  public loading_cart: boolean = true;
 
   private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
@@ -83,6 +84,7 @@ export class ProviderCheckoutService {
   public selected_tv_plan: any = false;
   public selected_telephone_plan: any = false;
 
+  public listener_cart_changes: Subscriber<any> = null;
 
   public selected_extra_tv_decoder = {
     plan: null,
@@ -99,14 +101,14 @@ export class ProviderCheckoutService {
   public formBeforeCheckoutLoading: boolean = false;
 
 
-
   public formWizardStep01: FormGroup;
   public formWizardStep01Submitted: boolean = false;
 
   public condos: Observable<CondoModel[]>;
+
   constructor(
     private datastore: WebAngularDataStore,
-    private cartService: CartService,
+    public cart: CartService,
     public clientUserService: ClientUserService,
     private pageScrollService: PageScrollService,
     private formBuilder: FormBuilder,
@@ -134,20 +136,51 @@ export class ProviderCheckoutService {
       rg: ['', [Validators.required]],
       dob: ['', [Validators.required]]
     });
+
+    if (this.cart.cart) {
+      this.loadedCart();
+    } else {
+      this.listener_cart_changes = this.cart.cart_changes.subscribe(
+        () => {
+          this.loadedCart();
+        });
+    }
   }
+
+  loadedCart() {
+    if (this.loading_cart) {
+      this.loading_cart = false;
+      if(this.listener_cart_changes){
+        this.listener_cart_changes.unsubscribe();
+      }
+
+      console.log('loadedCart', this.cart.cart.extra_data);
+
+      if(this.cart.cart.extra_data.hasOwnProperty('current_step')){
+        this.current_step = this.cart.cart.extra_data['current_step'];
+      }
+      if(this.cart.cart.extra_data.hasOwnProperty('current_wizard_step')){
+        this.current_wizard_step = this.cart.cart.extra_data['current_wizard_step'];
+      }
+
+
+    }
+  }
+
   addressFromCity(city: CityModel) {
-    if (!this.address) {
-      this.address = new AddressModel(this.datastore, {});
-    }
-    this.address.city = city.name;
-    this.address.street_address_1 = city.street;
-    this.address.street_address_3 = city.neighborhood;
-    this.address.state = city.state;
-    this.address.postal_code = city.postal_code;
-    if (this.condos) {
-      this.findCondos();
-    }
+    // if (!this.address) {
+    //   this.address = new AddressModel(this.datastore, {});
+    // }
+    // this.address.city = city.name;
+    // this.address.street_address_1 = city.street;
+    // this.address.street_address_3 = city.neighborhood;
+    // this.address.state = city.state;
+    // this.address.postal_code = city.postal_code;
+    // if (this.condos) {
+    //   this.findCondos();
+    // }
   }
+
   getCurrentCity() {
     const postalCode = this.formBeforeCheckout.get('postalCode').value;
 
@@ -158,7 +191,7 @@ export class ProviderCheckoutService {
         CityModel,
         null,
         null,
-        new HttpHeaders({ 'Authorization': 'none' }),
+        new HttpHeaders({'Authorization': 'none'}),
         url
       ).subscribe((city: CityModel) => {
         this.city = city;
@@ -167,40 +200,39 @@ export class ProviderCheckoutService {
       })
     }
   }
+
   public findCondos() {
     this.condos = this.datastore.findAll(
       CondoModel,
-      { city__id: this.city.id },
-      new HttpHeaders({ 'Authorization': 'none' }),
+      {city__id: this.city.id},
+      new HttpHeaders({'Authorization': 'none'}),
     ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
   }
+
   checkPageLoad() {
 
   }
 
 
   loadPlans() {
-
     let options = {};
-    options['page'] = { number: 1, size: 100 };
+    options['page'] = {number: 1, size: 100};
     options['include'] = ProductModel.include;
     const url = `/api/provider/city/${this.city.id}/products/`;
     this.loading_plans = true;
-    console.log(this.loading_plans);
     this.datastore.findAll(ProductModel,
       options,
-      new HttpHeaders({ 'Authorization': 'none' }),
-      url).
-      subscribe((query: JsonApiQueryData<ProductModel>) => {
-        const plans = query.getModels();
-        this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
-        this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
-        this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
-        this.loading_plans = false;
-      }, (error) => {
-        // TODO: do something
-        this.loading_plans = false;
-      });
+      new HttpHeaders({'Authorization': 'none'}),
+      url).subscribe((query: JsonApiQueryData<ProductModel>) => {
+      const plans = query.getModels();
+      this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+      this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+      this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+      this.loading_plans = false;
+    }, (error) => {
+      // TODO: do something
+      this.loading_plans = false;
+    });
 
     /*
     for (let i = 0; i < 2; i++) {
@@ -266,7 +298,6 @@ export class ProviderCheckoutService {
     }
   }
 
-
   toggleCollapse($event, plan) {
     if (plan == 'internet') {
       this.internet_plan_collapsed ? this.closeTabInternetPlan() : this.openTabInternetPlan();
@@ -330,7 +361,6 @@ export class ProviderCheckoutService {
   closeTabTelephonePlan() {
     this.telephone_plan_collapsed = false;
   }
-
 
   deselectInternetPlan() {
     this.selected_internet_plan = false;
@@ -466,6 +496,20 @@ export class ProviderCheckoutService {
     return this.current_step;
   }
 
+
+  prevStep() {
+    if (this.current_step == ProviderCheckoutSteps.wizard) {
+      if (this.current_wizard_step > 1) {
+        this.current_wizard_step--;
+      } else {
+        this.current_step = ProviderCheckoutSteps.buildingPlan;
+      }
+    } else if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
+      this.current_step = ProviderCheckoutSteps.beforeCheckout;
+    }
+    this.updateCartStep();
+  }
+
   nextStep() {
     if (this.current_step == ProviderCheckoutSteps.beforeCheckout) {
       this.current_step = ProviderCheckoutSteps.buildingPlan;
@@ -474,16 +518,38 @@ export class ProviderCheckoutService {
     } else {
       this.current_wizard_step++;
     }
+    this.updateCartStep();
+  }
+
+  private updateCartStep() {
+    this.cart.setExtraData({
+      current_step: this.current_step.toString(),
+      current_wizard_step: this.current_wizard_step.toString()
+    });
   }
 
   onBeforeCheckoutSubmit() {
     this.formBeforeCheckoutSubmitted = true;
-    // TODO: checar CEP
 
     if (this.formBeforeCheckout.valid) {
-      this.loadPlans();
-      this.nextStep();
 
+      this.cart.searchAddressByPostalCode(
+        this.formBeforeCheckout.get('postalCode').value, 'BR').then(
+        (address: AddressModel) => {
+          // TODO: checar CEP se é válido e se tem cobertura
+
+          // postalCode
+          // numberOfAddress
+          // condo
+          // condoNumber
+          // typeOfAccess
+          // typeOfCustomer
+
+          // if( a porra toda valida)
+
+          this.cart.setAddress(address, 'billing');
+          this.nextStep();
+        });
     }
   }
 

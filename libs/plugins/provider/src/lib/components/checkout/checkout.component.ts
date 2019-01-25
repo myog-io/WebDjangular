@@ -31,6 +31,7 @@ export class PluginProviderCheckoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.providerCheckout.loadPlans();
   }
 
 }

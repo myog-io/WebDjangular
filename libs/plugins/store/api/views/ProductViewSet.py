@@ -12,6 +12,7 @@ from ..models.Product import Product, ProductCategory, ProductType
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
     ProductSerializer, ProductTypeSerializer
 
+
 class ProductAttributeFilter(FilterSet):
     class Meta:
         model = ProductAttribute
@@ -40,8 +41,10 @@ class ProductAttributeViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
+
 class ProductAttributeRelationshipView(RelationshipView):
     queryset = ProductAttribute.objects
+
 
 class ProductTypeFilter(FilterSet):
     class Meta:
@@ -71,8 +74,10 @@ class ProductTypeViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
+
 class ProductTypeRelationshipView(RelationshipView):
     queryset = ProductType.objects
+
 
 class ProductCategoryFilter(FilterSet):
     class Meta:

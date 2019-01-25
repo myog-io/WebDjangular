@@ -17,6 +17,7 @@ import { PluginProviderCityListComponent } from './components/city-list/city-lis
 import { PluginProviderCityCoverageComponent } from './components/city-coverage/city-coverage.component';
 import { AgmCoreModule } from '@agm/core';
 import { RouterModule } from '@angular/router';
+import {CartService} from "@plugins/store/src/lib/data/services/cart.service";
 
 
 
@@ -41,6 +42,7 @@ const COMPONENTS = [
 ];
 
 const SERVICES = [
+  CartService,
   ProviderCheckoutService,
 
 ];

@@ -1,59 +1,67 @@
-import {
-    JsonApiModelConfig,
-    Attribute,
-    HasMany,
-    BelongsTo
-  } from 'angular2-jsonapi';
-  
-  import { AbstractModel } from './Abstract.model';
-  import { PermissionModel } from '@core/users/src/lib/models';
-  
-  @JsonApiModelConfig({
-    type: 'core_address'
-  })
-  export class AddressModel extends AbstractModel {
-    @Attribute()
-    id: string;
-    
-    @Attribute()
-    first_name: string;
+import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
 
-    @Attribute()
-    last_name: string;
+import {AbstractModel} from './Abstract.model';
+import { PropertyConverter } from 'angular2-jsonapi';
 
-    @Attribute()
-    company_name: string;
 
-    @Attribute()
-    street_address_1: string;
+@JsonApiModelConfig({
+  type: 'Address',
+  modelEndpointUrl: 'address',
+})
+export class AddressModel extends AbstractModel {
 
-    @Attribute()
-    street_address_2: string;
+  @Attribute()
+  id: string;
 
-    @Attribute()
-    city: string;
+  @Attribute()
+  first_name: string;
 
-    @Attribute()
-    state: string;
+  @Attribute()
+  last_name: string;
 
-    @Attribute()
-    postal_code: string;
+  @Attribute()
+  company_name: string;
 
-    @Attribute()
-    country: any;
+  @Attribute()
+  street_address_1: string;
 
-    @Attribute()
-    country_area: string;
+  @Attribute()
+  street_address_2: string;
 
-    @Attribute()
-    phone: string;
-  
-    get pk() {
-      return this.id;
-    }
-  
-    set pk(value) {}
+  @Attribute()
+  street_address_3: string;
 
-    
+  @Attribute()
+  city: string;
+
+  @Attribute()
+  state: string;
+
+  @Attribute()
+  postal_code: string;
+
+  @Attribute()
+  country: any;
+
+  @Attribute()
+  country_area: string;
+
+  @Attribute()
+  phone: string;
+
+  get pk() {
+    return this.id;
   }
-  
+
+  set pk(value) {
+  }
+}
+
+export class AddressConverter implements PropertyConverter {
+  mask(value: any): any {
+    return value;
+  }
+  unmask(value: any): any {
+    return value;
+  }
+}

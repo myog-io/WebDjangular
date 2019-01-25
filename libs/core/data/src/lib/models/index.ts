@@ -1,4 +1,5 @@
 export { AddressModel } from './Address.model';
+export { AddressConverter } from './Address.model'
 export { CoreConfigGroupModel } from './CoreConfigGroup.model';
 export { CoreConfigModel } from './CoreConfig.model';
 export { CoreConfigInputModel } from './CoreConfigInput.model';
