@@ -162,11 +162,6 @@ export class ProviderCheckoutService {
       if (this.cart.cart.extra_data.hasOwnProperty('current_wizard_step')) {
         this.current_wizard_step = this.cart.cart.extra_data['current_wizard_step'];
       }
-
-      // HARDCORE TEST
-      this.current_step = ProviderCheckoutSteps.wizard;
-      this.current_wizard_step = 2
-
     }
   }
 
