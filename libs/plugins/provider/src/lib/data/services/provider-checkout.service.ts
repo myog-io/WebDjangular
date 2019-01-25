@@ -150,19 +150,22 @@ export class ProviderCheckoutService {
   loadedCart() {
     if (this.loading_cart) {
       this.loading_cart = false;
-      if(this.listener_cart_changes){
+      if (this.listener_cart_changes) {
         this.listener_cart_changes.unsubscribe();
       }
 
       console.log('loadedCart', this.cart.cart.extra_data);
 
-      if(this.cart.cart.extra_data.hasOwnProperty('current_step')){
+      if (this.cart.cart.extra_data.hasOwnProperty('current_step')) {
         this.current_step = this.cart.cart.extra_data['current_step'];
       }
-      if(this.cart.cart.extra_data.hasOwnProperty('current_wizard_step')){
+      if (this.cart.cart.extra_data.hasOwnProperty('current_wizard_step')) {
         this.current_wizard_step = this.cart.cart.extra_data['current_wizard_step'];
       }
 
+      // HARDCORE TEST
+      this.current_step = ProviderCheckoutSteps.wizard;
+      this.current_wizard_step = 2
 
     }
   }
@@ -494,8 +497,15 @@ export class ProviderCheckoutService {
   get currentStep() {
     //return ProviderCheckoutSteps.buildingPlan;
     return this.current_step;
+
   }
 
+
+  backToBuildingPlanStep() {
+    this.current_step = ProviderCheckoutSteps.buildingPlan;
+    this.current_wizard_step = 1;
+    this.updateCartStep();
+  }
 
   prevStep() {
     if (this.current_step == ProviderCheckoutSteps.wizard) {
@@ -522,10 +532,10 @@ export class ProviderCheckoutService {
   }
 
   private updateCartStep() {
-    this.cart.setExtraData({
-      current_step: this.current_step.toString(),
-      current_wizard_step: this.current_wizard_step.toString()
-    });
+    let extra_data: object = this.cart.getExtraData();
+    extra_data['current_step'] = this.current_step.toString();
+    extra_data['current_wizard_step'] = this.current_wizard_step.toString();
+    this.cart.setExtraData(extra_data);
   }
 
   onBeforeCheckoutSubmit() {

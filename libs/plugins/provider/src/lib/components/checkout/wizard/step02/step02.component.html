@@ -1,98 +1,86 @@
 <div class="step-item">
   <div class="row mt-4">
-    <div class="col-12 col-md-6">
-      <h5 class="text-primary mb-3">ENDEREÇO DE INSTALAÇÃO</h5>
-
+    <div class="col-12 col-md-8 col-lg-6 mx-auto">
       <div class="row">
-        <div class="col-12 col-md-12">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>CEP</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-8">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Cidade</label>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Estado</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-12">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Cidade</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Número</label>
-          </div>
-        </div>
-
-        <div class="col-12 col-md-8">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Complemento</label>
-          </div>
+        <div class="col-12">
+          <h5 class="text-primary mb-3">FORMA DE PAGAMENTO</h5>
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
-          <p class="text-primary">Para que a instalação ocorra com sucesso é muito
-            importante que os dados do seu endereço estejam
-            completos. Ex.: bloco, apartamento, casa, quadra e etc.</p>
+          <h6>Como quer receber a fatura?</h6>
+        </div>
+        <div class="col-12">
+          <div class="custom-control custom-radio mb-1">
+            <input type="radio" id="paymentTypeLetter" name="paymentType" class="custom-control-input" value="letter">
+            <label class="custom-control-label" for="paymentTypeLetter">Por Correios</label>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body py-1">
+                  <div class="row">
+                    <p class="mb-0 col-12">
+                      R. Sete de Setembro, 500, apto 110 - Jardim Morumbi <br>
+                      São Paulo, SP 18683-000
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="custom-control custom-radio mt-2 mb-1">
+            <input type="radio" id="paymentTypeEmail" name="paymentType" class="custom-control-input" value="email">
+            <label class="custom-control-label" for="paymentTypeEmail">Por Email
+              <small>(R$5,00 de desconto)</small>
+            </label>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body py-1">
+                  <div class="row">
+                    <p class="mb-0 col-12">
+                      paulinho@gmail.com
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-2">
+
+              <p class="text-primary">
+                <b>IMPORTANTE:</b> Você não receberá faturas por correio.
+                Este e-mail será utilizado para enviar qualquer
+                informação da LPNet. Por favor verifique se nossos
+                emails chegarão corretamente em sua caixa de entrada.
+                Se não chegaram, verifique sua caixa de spam.
+              </p>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12 col-lg-6">
+          <button class="btn btn-primary btn-block" (click)="providerCheckout.confirmCheckout()">
+            Confirmar assinatura
+          </button>
+        </div>
+        <div class="col-12 col-lg-6">
+          <p>
+            Ao prosseguir, você confirma sua intenção de assinar
+            o plano selecionado e concorda com os nossos termos de uso.
+          </p>
         </div>
       </div>
 
     </div>
-
-    <div class="col-12 col-md-6">
-      <h5 class="text-primary mb-3">FORMA DE PAGAMENTO</h5>
-    </div>
   </div>
-
-  <div class="row mt-3">
-    <div class="col-12 col-md-6">
-      <button class="btn btn-primary btn-block" (click)="providerCheckout.confirmCheckout()">
-        Confirmar assinatura
-      </button>
-    </div>
-    <div class="col-12 col-md-6">
-      <p>
-        Ao prosseguir, você confirma sua intenção de assinar
-        o plano selecionado e concorda com os nossos termos de uso.
-      </p>
-    </div>
-  </div>
-
 </div>
+
 

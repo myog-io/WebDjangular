@@ -207,6 +207,8 @@ label {
   -webkit-transition: 0.2s ease all;
 }
 
+
+
 /* active state */
 
 input:focus, textarea:focus {
@@ -220,6 +222,14 @@ textarea:focus ~ label, textarea:valid ~ label {
   color: $primary;
   border-color: transparent;
 }
+
+.custom-control-label {
+  position: static;
+  pointer-events: auto;
+  cursor: pointer;
+  color:#8ea5b0 !important;
+}
+
 
 .btn.disabled, .btn:disabled {
   opacity: 0.25;

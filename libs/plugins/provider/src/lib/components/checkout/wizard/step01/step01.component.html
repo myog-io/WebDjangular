@@ -1,12 +1,12 @@
 <div class="step-item">
   <div class="row mt-4">
-    <div class="col">
+    <div class="col-12 col-md-6">
       <h5 class="text-primary mb-3">DADOS PESSOAIS</h5>
       <form [formGroup]="providerCheckout.formWizardStep01"
         (ngSubmit)="providerCheckout.onWizardStep01Submit()">
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="name"/>
               <span class="highlight"></span>
@@ -26,7 +26,13 @@
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
+            <p class="text-primary">
+              Este e-mail será utilizado para enviar a confirmação
+              de assinatura e combinar a instalação.
+            </p>
+          </div>
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="email"/>
               <span class="highlight"></span>
@@ -50,16 +56,10 @@
             </div>
 
           </div>
-          <div class="col-12 col-md-6">
-            <p class="text-primary">
-              Este e-mail será utilizado para enviar a confirmação
-              de assinatura e combinar a instalação.
-            </p>
-          </div>
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="mobile" mask="(00) 00000-0000"/>
               <span class="highlight"></span>
@@ -84,7 +84,7 @@
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="telephone" mask="(00) 0000-0000"/>
               <span class="highlight"></span>
@@ -97,7 +97,7 @@
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="cpf" mask="000.000.000-00"/>
               <span class="highlight"></span>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="rg" mask="00.000.000-0"/>
               <span class="highlight"></span>
@@ -135,7 +135,12 @@
         </div>
 
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12">
+            <p class="text-primary">
+              Você precisa ser maior de 18 anos.
+            </p>
+          </div>
+          <div class="col-12">
             <div class="form-group">
               <input type="text" required formControlName="dob" mask="00/00/0000"/>
               <span class="highlight"></span>
@@ -153,11 +158,6 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
-            <p class="text-primary">
-              Você precisa ser maior de 18 anos.
-            </p>
-          </div>
         </div>
 
 
@@ -169,19 +169,95 @@
           </div>
         </div>
 
-
-        <div class="row mt-3">
-          <div class="col-12 col-md-3">
-            <button class="btn btn-primary btn-block" (click)="providerCheckout.nextStep();">
-              Continuar
-            </button>
-
-          </div>
-          <div class="col-12 col-md-6">
-            <p>Próximos passos: <br class="d-none d-md-block"> endereço e pagamento.</p>
-          </div>
-        </div>
       </form>
     </div>
+
+    <div class="col-12 col-md-6">
+      <h5 class="text-primary mb-3">ENDEREÇO DE INSTALAÇÃO</h5>
+
+      <div class="row">
+        <div class="col-12 col-md-12">
+          <div class="form-group">
+            <input type="text" required/>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>CEP</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="form-group">
+            <input type="text" required/>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Cidade</label>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <input type="text" required/>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Estado</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-12">
+          <div class="form-group">
+            <input type="text" required/>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Cidade</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <input type="text" required/>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Número</label>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-8">
+          <div class="form-group">
+            <input type="text" required/>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Complemento</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <p class="text-primary">Para que a instalação ocorra com sucesso é muito
+            importante que os dados do seu endereço estejam
+            completos. Ex.: bloco, apartamento, casa, quadra e etc.</p>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-12 col-md-3">
+          <button class="btn btn-primary btn-block" (click)="providerCheckout.nextStep();">
+            Continuar
+          </button>
+
+        </div>
+        <div class="col-12 col-md-6">
+          <p>Próximos passos: <br class="d-none d-md-block"> forma de pagamento.</p>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>

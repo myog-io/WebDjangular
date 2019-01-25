@@ -18,7 +18,7 @@
         <li class="step-tab step-2" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
           <a routerLink="">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
-            <span class="label">Endereço / Pagamento</span>
+            <span class="label">Pagamento</span>
           </a>
         </li>
 
@@ -58,8 +58,8 @@
               </ul>
 
               <div class="">
-                <button class="float-left float-lg-right btn btn-outline-light pl-3 pr-3 btn-round text-uppercase"
-                  (click)="providerCheckout.prevStep()">
+                <button class="float-left btn btn-outline-light ml-0 ml-md-2 pl-2 pr-2 btn-sm btn-round text-uppercase"
+                  (click)="providerCheckout.backToBuildingPlanStep()">
                   Alterar plano
                 </button>
               </div>

@@ -82,7 +82,7 @@ export class CartService {
 
   public updateCart(): Promise<CartModel> {
     return new Promise((resolve, reject) => {
-      this.cart.save().subscribe(
+      this._cart.save().subscribe(
         (cart: CartModel) => {
           this.cart = cart;
           console.log('after update:', this.cart);
@@ -157,26 +157,22 @@ export class CartService {
   }
 
   private setBillingAddress(address: AddressModel) {
-    this._cart.billing_address = address;
+    this.cart.billing_address = address;
   }
 
   private setShippingAddress(address: AddressModel) {
-    this._cart.shipping_address = address;
+    this.cart.shipping_address = address;
   }
 
   public getExtraData(): object {
-    return this._cart.extra_data;
+    return this.cart.extra_data;
   }
 
-  public setExtraData(value: {}): void {
-    this._cart.extra_data = Object.assign(value, this.cart.extra_data);
-
-    console.log(this.cart.extra_data);
-    console.log(this.cart);
-
-    this.updateCart().then((cart: CartModel)=>{
-
-    });
+  public setExtraData(value): void {
+    this.cart.extra_data = value;
+    console.log('new value:' , value , 'assign value', this.cart.extra_data);
+    console.log('hasDirtyAttributes: ', this.cart.hasDirtyAttributes);
+    this.updateCart().then();
   }
 }
 
