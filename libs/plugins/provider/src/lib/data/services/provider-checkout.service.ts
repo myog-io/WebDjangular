@@ -116,7 +116,7 @@ export class ProviderCheckoutService {
 
   public formWizardStep01: FormGroup;
   public formWizardStep01Submitted: boolean = false;
-
+  
   public condos: Observable<CondoModel[]>;
 
   constructor(
@@ -150,8 +150,10 @@ export class ProviderCheckoutService {
       telephone: ['', [Validators.minLength(10)]],
       cpf: ['', [Validators.required]],
       rg: ['', [Validators.required]],
-      dob: ['', [Validators.required]]
+      dob: ['', [Validators.required]],
+      
     });
+
 
     if (this.cartService.cart) {
       this.loadedCart();
