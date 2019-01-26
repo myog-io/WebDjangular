@@ -11,6 +11,7 @@ import { ProductTypeModel } from '@plugins/store/src/lib/data/models/ProductType
 import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/ProductAttribute.model';
 import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
 import { HttpClient } from '@angular/common/http';
+import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model';
 
 
 
@@ -72,6 +73,7 @@ const config: DatastoreConfig = {
     Condo: CondoModel, // Provider
     Channel: ChannelModel, // Provider
     Product: ProductModel, // Store
+    ProductCategory: CategoryModel, // Store
     ProductType: ProductTypeModel, // Store
     ProductAttribute: ProductAttributeModel, // Store
     ProductAttributeOption: ProductAttributeOptionModel, // Store

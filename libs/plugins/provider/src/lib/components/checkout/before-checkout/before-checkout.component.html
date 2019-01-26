@@ -142,6 +142,7 @@
                 <button class="btn btn-primary btn-block p-2" [disabled]="providerCheckout.formBeforeCheckoutLoading || !providerCheckout.formBeforeCheckout.valid"
                   *ngIf="providerCheckout?.city?.id;else invalid_city">
                   CONTINUAR ASSINATURA EM {{providerCheckout?.city?.name.toUpperCase()}}
+                  <i class="fas fa-spinner fa-pulse" *ngIf="providerCheckout.formBeforeCheckoutLoading"></i>
                 </button>
                 <ng-template #invalid_city><p class="text-center" >Desculpe, não temos atendemos a cidade de {{providerCheckout?.city?.name}}</p></ng-template>
               </div>

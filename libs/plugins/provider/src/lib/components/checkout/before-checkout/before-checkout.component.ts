@@ -12,7 +12,7 @@ import { FormControl, AbstractControl, Validators } from '@angular/forms';
   styleUrls: ['./before-checkout.component.scss'],
 })
 export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, OnDestroy {
-
+  
   providerCheckout: ProviderCheckoutService;
   subCondo: Subscription;
   subPostalCode: Subscription;
@@ -41,7 +41,10 @@ export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, On
       }
     })
     this.subPostalCode = this.providerCheckout.formBeforeCheckout.get('postalCode').valueChanges.subscribe((PostalCode:string) => {
-      this.providerCheckout.getCurrentCity();
+      
+      this.providerCheckout.getCurrentCity().then((city)=>{
+
+      });
     })
   }
   cleanAndRemoveValudation(control:AbstractControl){

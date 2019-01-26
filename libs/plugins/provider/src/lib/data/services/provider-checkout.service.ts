@@ -1,20 +1,20 @@
-import {Inject, Injectable} from '@angular/core';
-import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
-import {DOCUMENT, Location} from '@angular/common';
-import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
-import {CartService} from '@plugins/store/src/lib/data/services/cart.service';
-import {ProductModel} from '@plugins/store/src/lib/data/models/Product.model';
-import {CityModel} from '../models/City.model';
-import {ClientUserService} from '@core/services/src/lib/client-user.service';
-import {AddressModel} from '@core/data/src/lib/models';
-import {HttpHeaders} from '@angular/common/http';
-import {Observable, Subscriber} from 'rxjs';
-import {CondoModel} from '../models/Condo.model';
+import { Inject, Injectable } from '@angular/core';
+import { ErrorResponse, JsonApiQueryData } from "angular2-jsonapi";
+import { DOCUMENT, Location } from '@angular/common';
+import { PageScrollInstance, PageScrollService } from 'ngx-page-scroll';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { CityModel } from '../models/City.model';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { AddressModel } from '@core/data/src/lib/models';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable, Subscriber } from 'rxjs';
+import { CondoModel } from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
-import {ActivatedRoute, Router} from "@angular/router";
-import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CartItemModel } from "@plugins/store/src/lib/data/models/CartItem.model";
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -61,7 +61,7 @@ export class ProviderCheckoutService {
     condominio_empresarial: 'Condomínio Empresarial',
   }
 
-
+  
   public loading_cart: boolean = true;
 
   private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
@@ -199,13 +199,14 @@ export class ProviderCheckoutService {
       if (this.listener_cart_changes) {
         this.listener_cart_changes.unsubscribe();
       }
-
+      
       // Set City Information
       let cart = this.cartService.cart;
       if (!cart.id) return;
       this.address = cart.billing_address;
       if (this.address) {
         this.city.id = cart.extra_data.city_id;
+
         this.city.name = this.address.city;
 
         // Set Form Information
@@ -217,6 +218,7 @@ export class ProviderCheckoutService {
           typeOfAccess: cart.extra_data.access_type || '',
           typeOfCustomer: cart.extra_data.customer_type || '',
         });
+
       }
 
       if (this.cartService.cart.extra_data.hasOwnProperty('current_step')) {
@@ -259,31 +261,35 @@ export class ProviderCheckoutService {
     }
   }
 
-  getCurrentCity() {
-    const postalCode = this.formBeforeCheckout.get('postalCode').value;
+  getCurrentCity(): Promise<CityModel> {
 
-    if (postalCode.length >= 8) {
-      // Search The City
-      const url = `/api/provider/city/${postalCode}/postal_code/`;
-      this.datastore.findRecord(
-        CityModel,
-        null,
-        null,
-        new HttpHeaders({'Authorization': 'none'}),
-        url
-      ).subscribe((city: CityModel) => {
-        this.city = city;
-        this.addressFromCity(this.city);
-        // TODO: Create Address Baser on City
-      })
-    }
+    return new Promise((resolve, reject) => {
+      const postalCode = this.formBeforeCheckout.get('postalCode').value;
+
+      if (postalCode.length >= 8) {
+        // Search The City
+        const url = `/api/provider/city/${postalCode}/postal_code/`;
+        this.datastore.findRecord(
+          CityModel,
+          null,
+          null,
+          new HttpHeaders({ 'Authorization': 'none' }),
+          url
+        ).subscribe((city: CityModel) => {
+          this.city = city;
+          this.addressFromCity(this.city);
+          resolve(this.city);
+          // TODO: Create Address Baser on City
+        })
+      }
+    });
   }
 
   public findCondos() {
     this.condos = this.datastore.findAll(
       CondoModel,
-      {city__id: this.city.id},
-      new HttpHeaders({'Authorization': 'none'}),
+      { city__id: this.city.id },
+      new HttpHeaders({ 'Authorization': 'none' }),
     ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
   }
 
@@ -294,27 +300,27 @@ export class ProviderCheckoutService {
 
   loadPlans() {
     let options = {};
-    options['page'] = {number: 1, size: 100};
+    options['page'] = { number: 1, size: 100 };
     options['include'] = ProductModel.include;
 
     const url = `/api/provider/city/${this.city.id}/products/`;
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
-      new HttpHeaders({'Authorization': 'none'}),
+      new HttpHeaders({ 'Authorization': 'none' }),
       url).subscribe((query: JsonApiQueryData<ProductModel>) => {
-      const plans = query.getModels();
-      this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
-      this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
-      this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
-      this.loading_plans = false;
-      this.preSelectedPlans();
+        const plans = query.getModels();
+        this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+        this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+        this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+        this.loading_plans = false;
+        this.preSelectedPlans();
 
 
-    }, (error) => {
-      // TODO: do something
-      this.loading_plans = false;
-    });
+      }, (error) => {
+        // TODO: do something
+        this.loading_plans = false;
+      });
 
     /*
     for (let i = 0; i < 2; i++) {
@@ -558,7 +564,7 @@ export class ProviderCheckoutService {
 
   selectInternetPlan(plan: ProductModel) {
     this.selectingInternetPlan = true;
-    this.cartService.addToCart({product: plan}).then(
+    this.cartService.addToCart({ product: plan }).then(
       (cartItem: CartItemModel) => {
         this.selectingInternetPlan = false;
         this.selected_internet_plan = plan;
@@ -570,7 +576,7 @@ export class ProviderCheckoutService {
 
   selectTVPlan(plan: ProductModel) {
     this.selectingTVPlan = true;
-    this.cartService.addToCart({product: plan}).then(
+    this.cartService.addToCart({ product: plan }).then(
       (cartItem: CartItemModel) => {
         this.selectingTVPlan = false;
         this.selected_tv_plan = plan;
@@ -590,7 +596,7 @@ export class ProviderCheckoutService {
 
   selectTelephonePlan(plan: ProductModel) {
     this.selectingTelephonePlan = true;
-    this.cartService.addToCart({product: plan}).then(
+    this.cartService.addToCart({ product: plan }).then(
       (cartItem: CartItemModel) => {
         this.selectingTelephonePlan = false;
         this.selected_telephone_plan = plan;
@@ -665,7 +671,7 @@ export class ProviderCheckoutService {
     this.current_wizard_step = 1;
 
     if (this.plans.internet.length <= 0 || this.plans.telephone.length <= 0 || this.plans.tv.length <= 0) {
-      console.log()
+
       this.loadPlans();
     }
     this.updateCartExtraData();
@@ -715,27 +721,44 @@ export class ProviderCheckoutService {
   }
 
   onBeforeCheckoutSubmit() {
-    this.formBeforeCheckoutSubmitted = true;
-
+    this.formBeforeCheckoutLoading = true;
     if (this.formBeforeCheckout.valid) {
-      if (this.address && this.address.id && this.city) {
-        this.setAddressAndNextSetp();
-      } else {
-        this.address.save().subscribe((address) => {
-            this.address = address;
+      if (!(this.city instanceof CityModel)) {
+        this.getCurrentCity().then((city: CityModel) => {
+          this.saveAddress().then((addres: AddressModel) => {
             this.setAddressAndNextSetp();
-          },
-          (error) => {
-            console.log("error saving address ", error)
-          })
+           
+          });
+        })
+
+      } else {
+        this.addressFromCity(this.city);
+        this.saveAddress().then((addres: AddressModel) => {
+          this.setAddressAndNextSetp();
+          
+        });
       }
     }
   }
+  saveAddress(): Promise<AddressModel> {
+    return new Promise((resolve, reject) => {
+      this.address.save().subscribe((address) => {
+        this.address = address;
+        resolve(this.address);
 
+      },
+        (error) => {
+          console.log("error saving address ", error)
+          reject(error);
+        })
+    })
+  }
   setAddressAndNextSetp() {
     this.cartService.setBillingAddress(this.address);
     this.cartService.setShippingAddress(this.address);
     this.nextStep();
+    this.formBeforeCheckoutSubmitted = true;
+    this.formBeforeCheckoutLoading = false;
   }
 
   isBuildingPlanValid() {
