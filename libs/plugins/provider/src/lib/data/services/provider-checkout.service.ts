@@ -89,9 +89,14 @@ export class ProviderCheckoutService {
   public tv_plan_collapsed: boolean = false;
   public telephone_plan_collapsed: boolean = false;
 
-  public pre_selected_internet_sku: string = '';
-  public pre_selected_tv_sku: string = '';
-  public pre_selected_telephone_sku: string = '';
+  public pre_select_plans = {
+    internet: null,
+    internet_optionals: [],
+    tv: [],
+    tv_optionals:[],
+    telephone: null,
+    telephone_optionals:[]
+  };
 
   public selected_internet_plan: any = false;
   public selected_tv_plan: any = false;
@@ -163,6 +168,23 @@ export class ProviderCheckoutService {
           this.loadedCart();
         });
     }
+
+    this.activatedRoute.queryParams.subscribe(
+      (params => {
+        if(params.hasOwnProperty('net')) this.pre_select_plans.internet = params['net'];
+        if(params.hasOwnProperty('net_op'))
+          this.pre_select_plans.internet_optionals = params['net_op'].slipt(',');
+
+        if(params.hasOwnProperty('phone')) this.pre_select_plans.telephone = params['phone'];
+        if(params.hasOwnProperty('phone_op'))
+          this.pre_select_plans.telephone_optionals = params['phone_op'].slipt(',');
+
+        if(params.hasOwnProperty('tv')) this.pre_select_plans.tv = params['tv'];
+        if(params.hasOwnProperty('tv_op'))
+          this.pre_select_plans.tv_optionals = params['tv_op'].slipt(',');
+      })
+    );
+
   }
 
   loadedCart() {
@@ -277,15 +299,18 @@ export class ProviderCheckoutService {
       options,
       new HttpHeaders({ 'Authorization': 'none' }),
       url).subscribe((query: JsonApiQueryData<ProductModel>) => {
-        const plans = query.getModels();
-        this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
-        this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
-        this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
-        this.loading_plans = false;
-      }, (error) => {
-        // TODO: do something
-        this.loading_plans = false;
-      });
+      const plans = query.getModels();
+      this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+      this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+      this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+      this.loading_plans = false;
+      this.preSelectedPlans();
+
+
+    }, (error) => {
+      // TODO: do something
+      this.loading_plans = false;
+    });
 
     /*
     for (let i = 0; i < 2; i++) {
@@ -336,6 +361,40 @@ export class ProviderCheckoutService {
     */
   }
 
+  preSelectedPlans() {
+    console.log(this.plans.internet.find(
+        (data) => data.sku == this.pre_select_plans.internet))
+    if(this.pre_select_plans.internet) {
+      this.selectInternetPlan(this.plans.internet.find(
+        (data) => data.sku == this.pre_select_plans.internet));
+    }
+
+    if(this.pre_select_plans.tv) {
+      this.selectInternetPlan(this.plans.tv.find(
+        (data) => data.sku == this.pre_select_plans.tv));
+    }
+    if(this.pre_select_plans.telephone) {
+      this.selectInternetPlan(this.plans.internet.find(
+        (data) => data.sku == this.pre_select_plans.telephone));
+    }
+
+  }
+
+  addPreSelectPlans(type: string) {
+    //// (type == 'internet' && this.pre_selected_internet_sku) {
+    //  this.selectInternetPlan(this.plans.internet.find(
+    //    (data) => data.sku == this.pre_selected_internet_sku));
+    //}
+    //if (type == 'tv' && this.pre_selected_tv_sku) {
+    //  this.selectTVPlan(this.plans.tv.find(
+    //    (data) => data.sku == this.pre_selected_tv_sku));
+    //}
+    //if (type == 'telephone' && this.pre_selected_telephone_sku) {
+    //  this.selectTelephonePlan(this.plans.telephone.find(
+    //    (data) => data.sku == this.pre_selected_telephone_sku));
+    //}
+  }
+
   updateUrl() {
     let params: object = {};
 
@@ -368,20 +427,7 @@ export class ProviderCheckoutService {
     this.location.go(url)
   }
 
-  addPreSelectPlans(type: string) {
-    if (type == 'internet' && this.pre_selected_internet_sku) {
-      this.selectInternetPlan(this.plans.internet.find(
-        (data) => data.sku == this.pre_selected_internet_sku));
-    }
-    if (type == 'tv' && this.pre_selected_tv_sku) {
-      this.selectTVPlan(this.plans.tv.find(
-        (data) => data.sku == this.pre_selected_tv_sku));
-    }
-    if (type == 'telephone' && this.pre_selected_telephone_sku) {
-      this.selectTelephonePlan(this.plans.telephone.find(
-        (data) => data.sku == this.pre_selected_telephone_sku));
-    }
-  }
+
 
   toggleCollapse($event, plan) {
     if (plan == 'internet') {
