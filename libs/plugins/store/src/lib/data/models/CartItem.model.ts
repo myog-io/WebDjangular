@@ -14,7 +14,7 @@ export class CartItemModel extends AbstractModel {
   @Attribute()
   id: string = null;
 
-  @BelongsTo()
+  @BelongsTo({key: 'Cart'})
   cart: CartModel = null;
 
   @BelongsTo()

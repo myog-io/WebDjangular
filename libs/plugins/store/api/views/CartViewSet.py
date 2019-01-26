@@ -66,6 +66,5 @@ class CartItemViewSet(ModelViewSet):
         serializer.save()
 
 
-
 class CartItemRelationshipView(RelationshipView):
     queryset = CartItem.objects
