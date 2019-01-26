@@ -53,6 +53,7 @@ export class ProviderCheckoutService {
     internet_fibra: 'Sou cliente Fibra',
     internet_radio: 'Sou cliente Rádio',
   }
+
   public access_types = {
     residencial: 'Residencial',
     condominio_residencial: 'Condomínio Residencia',
@@ -88,6 +89,11 @@ export class ProviderCheckoutService {
   public internet_plan_collapsed: boolean = false;
   public tv_plan_collapsed: boolean = false;
   public telephone_plan_collapsed: boolean = false;
+
+  public selectingInternetPlan: boolean = false;
+  public selectingTVPlan: boolean = false;
+  public selectingTelephonePlan: boolean = false;
+
 
   public pre_select_plans = {
     internet: null,
@@ -360,24 +366,24 @@ export class ProviderCheckoutService {
   }
 
   preSelectedPlans() {
-  //    if (this.pre_select_plans.internet) {
-  //      this.selectInternetPlan(this.plans.internet.find(
-  //        (data) => data.sku == this.pre_select_plans.internet));
-  //      if(this.selected_internet_plan) {
-  //        if(this.pre_select_plans.internet_optionals) {
-  //
-  //        }
-  //      }
-  //    }
-  //
-  //    if (this.pre_select_plans.tv) {
-  //      this.selectTVPlan(this.plans.tv.find(
-  //        (data) => data.sku == this.pre_select_plans.tv));
-  //    }
-  //    if (this.pre_select_plans.telephone) {
-  //      this.selectTelephonePlan(this.plans.internet.find(
-  //        (data) => data.sku == this.pre_select_plans.telephone));
-  //    }
+    //    if (this.pre_select_plans.internet) {
+    //      this.selectInternetPlan(this.plans.internet.find(
+    //        (data) => data.sku == this.pre_select_plans.internet));
+    //      if(this.selected_internet_plan) {
+    //        if(this.pre_select_plans.internet_optionals) {
+    //
+    //        }
+    //      }
+    //    }
+    //
+    //    if (this.pre_select_plans.tv) {
+    //      this.selectTVPlan(this.plans.tv.find(
+    //        (data) => data.sku == this.pre_select_plans.tv));
+    //    }
+    //    if (this.pre_select_plans.telephone) {
+    //      this.selectTelephonePlan(this.plans.internet.find(
+    //        (data) => data.sku == this.pre_select_plans.telephone));
+    //    }
   }
 
   addPreSelectPlans(type: string) {
@@ -551,34 +557,47 @@ export class ProviderCheckoutService {
   }
 
   selectInternetPlan(plan: ProductModel) {
-
+    this.selectingInternetPlan = true;
     this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
-      this.selected_internet_plan = plan;
-      this.plans_optionals.internet = plan.addons;
-    }, (error: ErrorResponse) => {
-
-    });
+        this.selectingInternetPlan = false;
+        this.selected_internet_plan = plan;
+        this.plans_optionals.internet = plan.addons;
+      }, (error: ErrorResponse) => {
+        this.selectingInternetPlan = false;
+      });
   }
 
   selectTVPlan(plan: ProductModel) {
-    this.selected_tv_plan = plan;
-    this.plans_optionals.tv = plan.addons;
-
-    if (this.plans_optionals.tv) {
-      let decoder_plan = this.plans_optionals.tv.find((p) => p.sku === this.sku_extra_tv_decoder);
-      this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(decoder_plan), 1);
-      this.selected_extra_tv_decoder = {
-        plan: decoder_plan,
-        qty: this.selected_extra_tv_decoder ? this.selected_extra_tv_decoder.qty : 0
-      }
-    }
-
+    this.selectingTVPlan = true;
+    this.cartService.addToCart({product: plan}).then(
+      (cartItem: CartItemModel) => {
+        this.selectingTVPlan = false;
+        this.selected_tv_plan = plan;
+        this.plans_optionals.tv = plan.addons;
+        if (this.plans_optionals.tv) {
+          let decoder_plan = this.plans_optionals.tv.find((p) => p.sku === this.sku_extra_tv_decoder);
+          this.plans_optionals.tv.splice(this.plans_optionals.tv.indexOf(decoder_plan), 1);
+          this.selected_extra_tv_decoder = {
+            plan: decoder_plan,
+            qty: this.selected_extra_tv_decoder ? this.selected_extra_tv_decoder.qty : 0
+          }
+        }
+      }, (error: ErrorResponse) => {
+        this.selectingTVPlan = false;
+      });
   }
 
   selectTelephonePlan(plan: ProductModel) {
-    this.selected_telephone_plan = plan;
-    this.plans_optionals.telephone = plan.addons;
+    this.selectingTelephonePlan = true;
+    this.cartService.addToCart({product: plan}).then(
+      (cartItem: CartItemModel) => {
+        this.selectingTelephonePlan = false;
+        this.selected_telephone_plan = plan;
+        this.plans_optionals.telephone = plan.addons;
+      }, (error: ErrorResponse) => {
+        this.selectingTelephonePlan = false;
+      });
   }
 
   get priceExtraTVDecoder(): string {
