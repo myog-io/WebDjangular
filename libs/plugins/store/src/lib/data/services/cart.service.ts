@@ -99,14 +99,12 @@ export class CartService {
         quantity: qty,
         data: data
       });
-
       cartItem.product = product;
       cartItem.cart = this.cart;
 
       cartItem.save({include: CartItemModel.include}).subscribe(
         (cartItem: CartItemModel) => {
           this.cart = cartItem.cart;
-          console.log(this.cart)
           resolve(cartItem);
         },
         (error: ErrorResponse) => {

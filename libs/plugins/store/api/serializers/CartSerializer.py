@@ -14,14 +14,17 @@ class CartItemSerializer(WebDjangoSerializer):
         queryset=Cart.objects,
         required=True,
         related_link_url_kwarg='pk',
-        self_link_view_name='cart-item-relationships'
+        self_link_view_name='cart-item-relationships',
+        related_link_view_name='cart-item-related',
+
     )
     product = ResourceRelatedField(
         many=False,
         queryset=Product.objects,
         required=True,
         related_link_url_kwarg='pk',
-        self_link_view_name='cart-item-relationships'
+        self_link_view_name='cart-item-relationships',
+        related_link_view_name='cart-item-related',
     )
     quantity = serializers.IntegerField(required=False)
     data = serializers.JSONField(required=False)
@@ -75,7 +78,7 @@ class CartSerializer(WebDjangoSerializer):
     included_serializers = {
         'shipping_address': 'webdjango.serializers.AddressSerializer.AddressSerializer',
         'billing_address': 'webdjango.serializers.AddressSerializer.AddressSerializer',
-        'items': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
+        'items': 'libs.plugins.store.api.serializers.CartSerializer.CartItemSerializer',
         'user': 'libs.core.users.api.serializers.UserSerializer.UserSerializer',
     }
 
