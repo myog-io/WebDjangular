@@ -700,8 +700,8 @@ export class ProviderCheckoutService {
   }
 
   private updateCartExtraData() {
-    console.log(`CURENT STEP ${this.currentStep} WIZARD STEP ${this.currentWizardStep} `);
-    let extra_data: any = {}
+
+    let extra_data: any = {};
     extra_data.current_step = this.currentStep.toString();
     extra_data.current_wizard_step = this.currentStep.toString();
     extra_data.address_number = this.formBeforeCheckout.get('numberOfAddress').value;
@@ -711,6 +711,7 @@ export class ProviderCheckoutService {
     extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
     extra_data.city_id = this.city.id;
     this.cartService.setExtraData(extra_data);
+    this.cartService.updateCart().then();
   }
 
   onBeforeCheckoutSubmit() {
@@ -732,8 +733,8 @@ export class ProviderCheckoutService {
   }
 
   setAddressAndNextSetp() {
-    this.cartService.setAddress(this.address, 'billing');
-    this.cartService.setAddress(this.address, 'shipping');
+    this.cartService.setBillingAddress(this.address);
+    this.cartService.setShippingAddress(this.address);
     this.nextStep();
   }
 

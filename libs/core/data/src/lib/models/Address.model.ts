@@ -59,6 +59,7 @@ export class AddressModel extends AbstractModel {
   get label_line_one():string{
     return `${this.street_address_1} - ${this.street_address_3}`;
   }
+
   get label_line_two():string{
     return `${this.street_address_2}`;
   }
