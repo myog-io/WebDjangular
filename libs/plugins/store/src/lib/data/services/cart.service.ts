@@ -108,14 +108,10 @@ export class CartService {
 
       cartItem.save({include: CartItemModel.include}).subscribe(
         (cartItem: CartItemModel) => {
-          setTimeout(() => {
-            resolve(cartItem);
-          }, 3000);
+          resolve(cartItem);
         },
         (error: ErrorResponse) => {
-          setTimeout(() => {
-            reject(error);
-          }, 3000);
+          reject(error);
         });
     });
   }
