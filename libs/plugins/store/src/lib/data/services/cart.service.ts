@@ -28,8 +28,6 @@ export class CartService {
               private cookieService: CookieService,
               private datastore: WebAngularDataStore) {
 
-    cookieService.delete(this.cart_cookie_name);
-
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
@@ -79,8 +77,9 @@ export class CartService {
   public updateCart(): Promise<CartModel> {
 
     return new Promise((resolve, reject) => {
-
-      this.cart.save().subscribe(
+      this.cart.save({
+        include: CartModel.include
+      }).subscribe(
         (cart: CartModel) => {
           this.cart = cart;
           this.updateCookie();
@@ -152,30 +151,12 @@ export class CartService {
     });
   }
 
-  public setAddress(address: AddressModel, type: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      if (address.hasDirtyAttributes) {
-        address.save().subscribe(
-          (address: AddressModel) => {
-            if (type === 'billing') this.setBillingAddress(address);
-            else if (type === 'shipping') this.setShippingAddress(address);
-            else { // TODO: raise an error
-            }
-            // Commenting because right after we update the Address we also update the checkout Step and Save
-            //this.updateCart();
-          },
-          (error: ErrorResponse) => {
-            // TODO: do something
-          });
-      }
-    });
-  }
 
-  private setBillingAddress(address: AddressModel) {
+  public setBillingAddress(address: AddressModel) {
     this.cart.billing_address = address;
   }
 
-  private setShippingAddress(address: AddressModel) {
+  public setShippingAddress(address: AddressModel) {
     this.cart.shipping_address = address;
   }
 
@@ -185,8 +166,7 @@ export class CartService {
 
   public setExtraData(value: any): void {
     this.cart.extra_data = Object.assign(this.cart.extra_data, value);
-    this.updateCart().then((cart: CartModel) => {
-    });
   }
+
 }
 
