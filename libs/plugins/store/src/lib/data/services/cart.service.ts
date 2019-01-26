@@ -94,9 +94,7 @@ export class CartService {
 
   public addToCart(parameters: { product: ProductModel, qty?: number, data?: object }): Promise<CartItemModel> {
     let {product, qty = 1, data = {}} = parameters;
-
-    // TODO: Check if product is already there and just increase the qty
-
+    
     return new Promise((resolve, reject) => {
       let cartItem: CartItemModel = this.datastore.createRecord(CartItemModel, {
         quantity: qty,
@@ -108,12 +106,15 @@ export class CartService {
 
       cartItem.save({include: CartItemModel.include}).subscribe(
         (cartItem: CartItemModel) => {
+          this.cart = cartItem.cart;
+          console.log(this.cart)
           resolve(cartItem);
         },
         (error: ErrorResponse) => {
           reject(error);
         });
     });
+  
   }
 
   public clearCart(): Promise<any> {

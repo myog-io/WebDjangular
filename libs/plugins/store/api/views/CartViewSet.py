@@ -29,36 +29,6 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
-    #  @action(methods=['POST'], detail=False, url_path='add_to_cart')
-    #  def add_to_cart(self, request, *args, **kwargs):
-    #
-    #      cart = CartUtils.get_or_create_cart(request)
-    #
-    #      self.serializer_class = CartItemSerializer
-    #
-    #      serializer = CartItemSerializer(data=request.data)
-    #      serializer.is_valid(raise_exception=True)
-    #
-    #      cart = CartUtils.add_item_to_cart(cart, serializer.data)
-    #
-    #      # TODO: Check if the product exists
-    #      # TODO: Check if the product is already added on the cart, if it is:
-    #       increase the qty otherwise: just proceed it
-    #      # TODO: Check if the product qty is available
-    #      # TODO: Do the Cart Rules
-    #
-    #      return Response({"cart": cart})
-    #      # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    #
-    #  @action(methods=['POST'], detail=False, url_path='remove_from_cart')
-    #  def remove_from_cart(self, request, *args, **kwargs):
-    #      # TODO: Check if cart exists
-    #      # TODO: Check the token
-    #      # TODO: Check if the Cart Item exists
-    #      # TODO: Delete it
-    #      # TODO: Do the Cart Rules
-    #      return Response({})
-
 
 class CartRelationshipView(RelationshipView):
     queryset = Cart.objects
@@ -80,6 +50,22 @@ class CartItemViewSet(ModelViewSet):
     ordering_fields = '__all__'
     search_fields = ('product',)
     permission_classes = ()
+
+    def perform_create(self, serializer):
+        validated_data = serializer.validated_data
+        # Checking if not adding Duplicated to the Cart
+        if validated_data['cart']:
+            cart = validated_data['cart']
+            if cart.items.count() > 0:
+                for item in cart.items.all():
+                    if item.product.id is validated_data['product'].id:
+                        serializer.instance = item
+                        serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
+                        self.perform_update(serializer)
+                        return
+        serializer.save()
+
+
 
 class CartItemRelationshipView(RelationshipView):
     queryset = CartItem.objects
