@@ -6,7 +6,7 @@ import {AddressModel} from "@core/data/src/lib/models";
 import {CookieService} from "ngx-cookie-service";
 import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
-
+import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
 
 
 export interface CookieCart {
@@ -28,19 +28,25 @@ export class CartService {
               private cookieService: CookieService,
               private datastore: WebAngularDataStore) {
 
+    cookieService.delete(this.cart_cookie_name);
+
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
-        this.datastore.findAll(CartModel, {token: cartCookie['token'], page: {size: 1, number: 1}, include:"billing_address,shipping_address"}).subscribe(
+        this.datastore.findAll(CartModel, {
+          token: cartCookie['token'],
+          page: {size: 1, number: 1},
+          include: "billing_address,shipping_address"
+        }).subscribe(
           (queryData: JsonApiQueryData<CartModel>) => {
-            
+
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
             }
           },
-          (error:any) => {
+          (error: any) => {
             console.log(error);
             // TODO: do something
           })
@@ -62,7 +68,7 @@ export class CartService {
   }
 
   public updateCookie() {
-   if (this._cart.token) {
+    if (this._cart.token) {
       const cartCookie: CookieCart = {
         token: this._cart.token,
       };
@@ -71,9 +77,9 @@ export class CartService {
   }
 
   public updateCart(): Promise<CartModel> {
-    
+
     return new Promise((resolve, reject) => {
-      
+
       this.cart.save().subscribe(
         (cart: CartModel) => {
           this.cart = cart;
@@ -86,13 +92,30 @@ export class CartService {
     });
   }
 
-  public addToCart() {
+  public addToCart(parameters: { product: ProductModel, qty?: number, data?: object }): Promise<CartItemModel> {
+    let {product, qty = 1, data = {}} = parameters;
 
-    let cartItem: CartItemModel;
+    // TODO: Check if product is already there and just increase the qty
 
-    //his.cart = datastore.createRecord(CartModel, {});
+    return new Promise((resolve, reject) => {
+      let cartItem: CartItemModel = this.datastore.createRecord(CartItemModel, {
+        quantity: qty,
+        data: data
+      });
 
+      cartItem.product = product;
+      cartItem.cart = this.cart;
 
+      cartItem.save({include: CartItemModel.include}).subscribe(
+      (cartItem: CartItemModel) => {
+        setTimeout(()=>{
+          resolve(cartItem);
+        },3000);
+      },
+      (error: ErrorResponse) => {
+        reject(error);
+      });
+    });
   }
 
   public clearCart(): Promise<any> {
@@ -162,8 +185,9 @@ export class CartService {
   }
 
   public setExtraData(value: any): void {
-    this.cart.extra_data = Object.assign(this.cart.extra_data,value);
-    this.updateCart().then((cart: CartModel)=>{});
+    this.cart.extra_data = Object.assign(this.cart.extra_data, value);
+    this.updateCart().then((cart: CartModel) => {
+    });
   }
 }
 

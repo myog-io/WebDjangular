@@ -1,6 +1,7 @@
-import {Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
 import {AbstractModel, AddressModel} from '@core/data/src/lib/models';
 import {PermissionModel, UserModel} from '@core/users/src/lib/models';
+import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
 
 @JsonApiModelConfig({
   type: 'Cart',
@@ -32,6 +33,9 @@ export class CartModel extends AbstractModel {
 
   @NestedAttribute()
   extra_data: any;
+
+  @HasMany()
+  items: CartItemModel[];
 
   @Attribute()
   created: Date;

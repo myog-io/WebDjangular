@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
 import {AbstractModel, AddressModel} from '@core/data/src/lib/models';
 import {PermissionModel, UserModel} from '@core/users/src/lib/models';
 import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
@@ -9,7 +9,7 @@ import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
   modelEndpointUrl: 'store/cart-item',
 })
 export class CartItemModel extends AbstractModel {
-  public static include = '';
+  public static include = 'cart,product';
 
   @Attribute()
   id: string = null;
@@ -23,7 +23,7 @@ export class CartItemModel extends AbstractModel {
   @Attribute()
   quantity: number = 1;
 
-  @Attribute()
+  @NestedAttribute()
   data: object = {};
 
   @Attribute()

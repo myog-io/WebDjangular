@@ -80,3 +80,6 @@ class CartItemViewSet(ModelViewSet):
     ordering_fields = '__all__'
     search_fields = ('product',)
     permission_classes = ()
+
+class CartItemRelationshipView(RelationshipView):
+    queryset = CartItem.objects

@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
-from .views.CartViewSet import CartViewSet, CartRelationshipView, CartItemViewSet
+from .views.CartViewSet import CartViewSet, CartRelationshipView, CartItemViewSet, CartItemRelationshipView
 from .views.DiscountViewSet import CartRuleViewSet, CatalogRuleViewSet
 from .views.OrderViewSet import OrderViewSet
 from .views.PaymentViewSet import PaymentViewSet
@@ -70,6 +70,16 @@ relationshipPatterns = [
     url(r'^cart/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         CartViewSet.as_view({'get': 'retrieve_related'}),
         name='cart-related'
+    ),
+
+    # Cart Item
+    url(regex=r'^cart-item/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=CartItemRelationshipView.as_view(),
+        name='cart-item-relationships'
+    ),
+    url(r'^cart-item/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        CartItemViewSet.as_view({'get': 'retrieve_related'}),
+        name='cart-item-related'
     ),
 ]
 

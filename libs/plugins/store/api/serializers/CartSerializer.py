@@ -9,6 +9,13 @@ from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 
 
 class CartItemSerializer(WebDjangoSerializer):
+    cart = ResourceRelatedField(
+        many=False,
+        queryset=Cart.objects,
+        required=True,
+        related_link_url_kwarg='pk',
+        self_link_view_name='cart-item-relationships'
+    )
     product = ResourceRelatedField(
         many=False,
         queryset=Product.objects,
@@ -18,6 +25,11 @@ class CartItemSerializer(WebDjangoSerializer):
     )
     quantity = serializers.IntegerField(required=False)
     data = serializers.JSONField(required=False)
+
+    included_serializers = {
+        'product': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        'cart': 'libs.plugins.store.api.serializers.CartSerializer.CartSerializer',
+    }
 
     class Meta:
         model = CartItem
