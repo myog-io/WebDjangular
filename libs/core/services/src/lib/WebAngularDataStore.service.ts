@@ -12,6 +12,8 @@ import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/Produc
 import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
 import { HttpClient } from '@angular/common/http';
 import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model';
+import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
+import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 
 
 
@@ -77,6 +79,8 @@ const config: DatastoreConfig = {
     ProductType: ProductTypeModel, // Store
     ProductAttribute: ProductAttributeModel, // Store
     ProductAttributeOption: ProductAttributeOptionModel, // Store
+    CartItem: CartItemModel, // Store
+    Cart: CartModel, // Store
     MenuItem: MenuItemModel,
     Menu: MenuModel,
   },

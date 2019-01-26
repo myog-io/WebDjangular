@@ -34,8 +34,8 @@ export class CartModel extends AbstractModel {
   @NestedAttribute()
   extra_data: any;
 
-  //@HasMany()
-  //items: CartItemModel[];
+  @HasMany()
+  items: CartItemModel[];
 
   @Attribute()
   created: Date;
