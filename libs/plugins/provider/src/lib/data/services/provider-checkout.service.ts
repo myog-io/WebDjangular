@@ -125,8 +125,7 @@ export class ProviderCheckoutService {
   public formBeforeCheckoutLoading: boolean = false;
 
 
-  public formWizardStep01: FormGroup;
-  public formWizardStep01Submitted: boolean = false;
+
 
   public condos: Observable<CondoModel[]>;
 
@@ -154,16 +153,7 @@ export class ProviderCheckoutService {
       typeOfCustomer: ['', [Validators.required]]
     });
 
-    this.formWizardStep01 = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.minLength(11)]],
-      telephone: ['', [Validators.minLength(10)]],
-      cpf: ['', [Validators.required]],
-      rg: ['', [Validators.required]],
-      dob: ['', [Validators.required]],
 
-    });
 
 
     if (this.cartService.cart) {
@@ -209,14 +199,13 @@ export class ProviderCheckoutService {
       this.address = cart.billing_address;
       if (this.address) {
         this.city.id = cart.extra_data.city_id;
-
         this.city.name = this.address.city;
 
         // Set Form Information
         this.formBeforeCheckout.setValue({
           postalCode: this.address.postal_code,
-          numberOfAddress: cart.extra_data.address_number || '',
           condo: cart.extra_data.condo || '',
+          numberOfAddress: this.address.number,
           condoNumber: cart.extra_data.condo_number || '',
           typeOfAccess: cart.extra_data.access_type || '',
           typeOfCustomer: cart.extra_data.customer_type || '',
@@ -365,7 +354,8 @@ export class ProviderCheckoutService {
       condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
     }
     this.address.city = city.name;
-    this.address.street_address_1 = `${city.street}, ${number}`;
+    this.address.number = number;
+    this.address.street_address_1 = `${city.street}`;
     if (condo) {
       this.address.street_address_3 = `${condo} APTO ${condoNumber}`;
     }
@@ -843,7 +833,6 @@ export class ProviderCheckoutService {
     let extra_data: any = {};
     extra_data.current_step = this.currentStep.toString();
     extra_data.current_wizard_step = this.currentStep.toString();
-    extra_data.address_number = this.formBeforeCheckout.get('numberOfAddress').value;
     extra_data.condo = this.formBeforeCheckout.get('condo').value;
     extra_data.condo_number = this.formBeforeCheckout.get('condoNumber').value;
     extra_data.access_type = this.formBeforeCheckout.get('typeOfAccess').value;
@@ -906,7 +895,7 @@ export class ProviderCheckoutService {
   }
 
   onWizardStep01Submit() {
-
+    this.nextStep();
   }
 
   confirmCheckout() {
