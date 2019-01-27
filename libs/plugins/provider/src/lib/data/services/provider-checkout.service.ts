@@ -97,6 +97,7 @@ export class ProviderCheckoutService {
 
 
   public pre_select_plans = {
+    has_pre_selected_plans: false,
     internet: null,
     internet_optionals: [],
     tv: [],
@@ -126,8 +127,6 @@ export class ProviderCheckoutService {
   public formBeforeCheckoutLoading: boolean = false;
 
 
-
-
   public condos: Observable<CondoModel[]>;
 
   constructor(
@@ -155,8 +154,6 @@ export class ProviderCheckoutService {
     });
 
 
-
-
     if (this.cartService.cart) {
       this.loadedCart();
     } else {
@@ -166,23 +163,41 @@ export class ProviderCheckoutService {
         });
     }
 
-    this.activatedRoute.queryParams.subscribe(
-      (params => {
-        if (params.hasOwnProperty('net')) this.pre_select_plans.internet = params['net'];
-        //if (params.hasOwnProperty('net_op'))
-        //  this.pre_select_plans.internet_optionals = params['net_op'].slipt(',');
-
-        if (params.hasOwnProperty('phone')) this.pre_select_plans.telephone = params['phone'];
-        //if (params.hasOwnProperty('phone_op'))
-        //  this.pre_select_plans.telephone_optionals = params['phone_op'].slipt(',');
-
-        if (params.hasOwnProperty('tv')) this.pre_select_plans.tv = params['tv'];
-        //if (params.hasOwnProperty('tv_op'))
-        //  this.pre_select_plans.tv_optionals = params['tv_op'].slipt(',');
+    this.activatedRoute.queryParams.subscribe((params => {
+        this.checkPreSelectedPlans(params);
       })
     );
-
   }
+
+  checkPreSelectedPlans(params) {
+    if (params.hasOwnProperty('net')) {
+      this.pre_select_plans.internet = params['net'];
+      this.pre_select_plans.has_pre_selected_plans = true;
+    }
+    if (params.hasOwnProperty('net_op')) {
+      this.pre_select_plans.internet_optionals = params['net_op'].slipt(',');
+      this.pre_select_plans.has_pre_selected_plans = true;
+    }
+
+    if (params.hasOwnProperty('phone')) {
+      this.pre_select_plans.telephone = params['phone'];
+      this.pre_select_plans.has_pre_selected_plans = true;
+    }
+    if (params.hasOwnProperty('phone_op')) {
+      this.pre_select_plans.telephone_optionals = params['phone_op'].slipt(',');
+      this.pre_select_plans.has_pre_selected_plans = true;
+    }
+
+    if (params.hasOwnProperty('tv')) {
+      this.pre_select_plans.tv = params['tv'];
+      this.pre_select_plans.has_pre_selected_plans = true;
+    }
+    if (params.hasOwnProperty('tv_op')) {
+      this.pre_select_plans.tv_optionals = params['tv_op'].slipt(',');
+      this.pre_select_plans.has_pre_selected_plans = true;
+    }
+  }
+
   arrayRemove(arr, value) {
     return arr.filter((ele) => ele !== value);
   }
@@ -362,7 +377,42 @@ export class ProviderCheckoutService {
       });
       
     }
+    if (this.selected_tv_optionals.length > 0) {
+      url_params['tv_op'] = this.selected_tv_optionals.map((cartItem: CartItemModel) => {
+        return cartItem.product.sku
+      }).join(',');
+    }
+    if (this.selected_telephone_optionals.length > 0) {
+      url_params['phone_op'] = this.selected_telephone_optionals.map((cartItem: CartItemModel) => {
+        return cartItem.product.sku
+      }).join(',');
+    }
 
+    //const url = this.router.createUrlTree([], {
+    //  relativeTo: this.activatedRoute,
+    //  queryParams: url_params
+    //}).toString();
+    //this.location.go(url);
+  }
+
+  addPreSelectedPlans() {
+    if (this.pre_select_plans.internet) {
+      this.selectInternetPlan(this.plans.internet.find(
+        (data) => data.sku == this.pre_select_plans.internet));
+      if (this.selected_internet_plan) {
+        if (this.pre_select_plans.internet_optionals) {
+
+        }
+      }
+    }
+    if (this.pre_select_plans.tv) {
+      this.selectTVPlan(this.plans.tv.find(
+        (data) => data.sku == this.pre_select_plans.tv));
+    }
+    if (this.pre_select_plans.telephone) {
+      this.selectTelephonePlan(this.plans.telephone.find(
+        (data) => data.sku == this.pre_select_plans.telephone));
+    }
   }
 
   addressFromCity(city: CityModel) {
@@ -449,52 +499,11 @@ export class ProviderCheckoutService {
         this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
         this.loading_plans = false;
 
-
-        this.updateSelectedItems()
-
-        this.preSelectedPlans();
-
-
+        this.updateSelectedItems();
       }, (error) => {
         // TODO: do something
         this.loading_plans = false;
       });
-  }
-
-  preSelectedPlans() {
-    //    if (this.pre_select_plans.internet) {
-    //      this.selectInternetPlan(this.plans.internet.find(
-    //        (data) => data.sku == this.pre_select_plans.internet));
-    //      if(this.selected_internet_plan) {
-    //        if(this.pre_select_plans.internet_optionals) {
-    //
-    //        }
-    //      }
-    //    }
-    //
-    //    if (this.pre_select_plans.tv) {
-    //      this.selectTVPlan(this.plans.tv.find(
-    //        (data) => data.sku == this.pre_select_plans.tv));
-    //    }
-    //    if (this.pre_select_plans.telephone) {
-    //      this.selectTelephonePlan(this.plans.internet.find(
-    //        (data) => data.sku == this.pre_select_plans.telephone));
-    //    }
-  }
-
-  addPreSelectPlans(type: string) {
-    //// (type == 'internet' && this.pre_selected_internet_sku) {
-    //  this.selectInternetPlan(this.plans.internet.find(
-    //    (data) => data.sku == this.pre_selected_internet_sku));
-    //}
-    //if (type == 'tv' && this.pre_selected_tv_sku) {
-    //  this.selectTVPlan(this.plans.tv.find(
-    //    (data) => data.sku == this.pre_selected_tv_sku));
-    //}
-    //if (type == 'telephone' && this.pre_selected_telephone_sku) {
-    //  this.selectTelephonePlan(this.plans.telephone.find(
-    //    (data) => data.sku == this.pre_selected_telephone_sku));
-    //}
   }
 
   toggleCollapse($event, plan) {
