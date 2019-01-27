@@ -143,6 +143,9 @@ export class CartService {
         let promise = new Promise((resolve, reject) => {
           this.datastore.deleteRecord(CartItemModel, item.id).subscribe(
             (response) => {
+              this.cart.items = this.cart.items.filter((ele) => {
+                return ele != item;
+              });
               resolve(response);
             },
             (error) => {
@@ -153,7 +156,9 @@ export class CartService {
       });
       Promise.all(promises).then(
         (values) => {
-          resolve(values);
+          this.updateCart().then(()=>{
+            resolve(values);
+          })
         },
         (error) => {
           reject(error)

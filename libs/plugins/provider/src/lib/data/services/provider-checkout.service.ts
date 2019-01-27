@@ -247,8 +247,9 @@ export class ProviderCheckoutService {
     })
 
   }
+
   checkDisabledByCategories(cart) {
-    let categories_ids = {}
+    let categories_ids = {};
     for (let i = 0; i < cart.items.length; i++) {
       const item = cart.items[i];
       if (item.product) {
@@ -286,19 +287,33 @@ export class ProviderCheckoutService {
     let url_params: object = {};
     let promises = [];
     let items = this.cartService.cart.items;
-    if (items) {
+
+    if(this.pre_select_plans.has_pre_selected_plans) {
+
+      if(items){
+        this.cartService.clearCartItems().then(()=>{
+          this.addPreSelectedPlans();
+        })
+      } else {
+        this.addPreSelectedPlans();
+      }
+    } else if (items) {
       // TODO: Improve This Function
       let optionals = items.filter((item) => item.product && item.product.product_type.code);
       /* Searching For Internet Plans on Cart */
-      this.selected_internet_plan = items.find((item) => item.product && this.plan_type_codes_internet.indexOf(item.product.product_type.code) !== -1);
+      this.selected_internet_plan = items.find((item) => item.product &&
+        this.plan_type_codes_internet.indexOf(item.product.product_type.code) !== -1);
       if (this.selected_internet_plan) {
         url_params['net'] = this.selected_internet_plan.product.sku;
         promises.push(
           new Promise((resolve, reject) => {
-            this.selected_internet_plan.product.load_addons(this.datastore, { include: `product_type,categories` }).subscribe((query: JsonApiQueryData<ProductModel>) => {
-              this.plans_optionals.internet = query.getModels();
-              this.selected_internet_optionals = optionals.filter((item) => this.plans_optionals.internet.find((plan) => plan.sku == item.product.sku));
-              
+            this.selected_internet_plan.product.load_addons(this.datastore,
+              { include: `product_type,categories` }).subscribe(
+                (query: JsonApiQueryData<ProductModel>) => {
+                  this.plans_optionals.internet = query.getModels();
+                  this.selected_internet_optionals = optionals.filter(
+                    (item) => this.plans_optionals.internet.find(
+                      (plan) => plan.sku == item.product.sku));
               resolve(true);
             }, (error) => {
               reject(error);

@@ -56,7 +56,7 @@ class CartItemViewSet(ModelViewSet):
         # Checking if not adding Duplicated to the Cart
         if validated_data['cart']:
             cart = validated_data['cart']
-            item = cart_has_product(cart,validated_data['product'].id)
+            item = cart_has_product(cart, validated_data['product'].id)
             if item:
                 serializer.instance = item
                 serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
