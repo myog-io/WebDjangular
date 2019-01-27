@@ -27,7 +27,6 @@ export class CartService {
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private datastore: WebAngularDataStore) {
-    //cookieService.delete(this.cart_cookie_name);
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
@@ -42,7 +41,6 @@ export class CartService {
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
-             
             }
           },
           (error: any) => {

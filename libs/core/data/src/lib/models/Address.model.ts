@@ -23,6 +23,9 @@ export class AddressModel extends AbstractModel {
   company_name: string;
 
   @Attribute()
+  number: string;
+
+  @Attribute()
   street_address_1: string;
 
   @Attribute()
@@ -57,7 +60,7 @@ export class AddressModel extends AbstractModel {
   }
 
   get label_line_one():string{
-    return `${this.street_address_1} - ${this.street_address_3}`;
+    return `${this.street_address_1}, ${this.number} - ${this.street_address_3}`;
   }
 
   get label_line_two():string{
@@ -68,7 +71,7 @@ export class AddressModel extends AbstractModel {
     return `${this.city}, ${this.state} ${this.postal_code}`;
   }
   get full_label():string{
-    let label = `${this.label_line_one}`;
+    let label = `${this.label_line_one}` ;
     if (this.street_address_2) {
       label += `<br>${this.label_line_two}`;
     }
