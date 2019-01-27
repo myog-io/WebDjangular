@@ -27,7 +27,7 @@ export class CartService {
   constructor(private http: HttpClient,
               private cookieService: CookieService,
               private datastore: WebAngularDataStore) {
-
+    //cookieService.delete(this.cart_cookie_name);
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
@@ -35,10 +35,10 @@ export class CartService {
         this.datastore.findAll(CartModel, {
           token: cartCookie['token'],
           page: {size: 1, number: 1},
-          include: "billing_address,shipping_address,items"
+          include: ["billing_address", "shipping_address",
+            "items", "items.product", "items.product.product_type"].join(',')
         }).subscribe(
           (queryData: JsonApiQueryData<CartModel>) => {
-
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
@@ -46,7 +46,6 @@ export class CartService {
             }
           },
           (error: any) => {
-            console.log(error);
             // TODO: do something
           })
       }
@@ -94,7 +93,7 @@ export class CartService {
 
   public addToCart(parameters: { product: ProductModel, qty?: number, data?: object }): Promise<CartItemModel> {
     let {product, qty = 1, data = {}} = parameters;
-    
+
     return new Promise((resolve, reject) => {
       let cartItem: CartItemModel = this.datastore.createRecord(CartItemModel, {
         quantity: qty,
@@ -103,7 +102,7 @@ export class CartService {
       cartItem.product = product;
       cartItem.cart = this.cart;
 
-      cartItem.save({include: CartItemModel.include}).subscribe(
+      cartItem.save({include: `${CartItemModel.include},product.addons`}).subscribe(
         (cartItem: CartItemModel) => {
           this.cart = cartItem.cart;
           resolve(cartItem);
@@ -112,7 +111,18 @@ export class CartService {
           reject(error);
         });
     });
-  
+  }
+
+  public removeFromCart(cartItem: CartItemModel): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
+        (response) => {
+          resolve();
+        },
+        (error: ErrorResponse) => {
+          reject();
+        })
+    });
   }
 
   public clearCart(): Promise<any> {

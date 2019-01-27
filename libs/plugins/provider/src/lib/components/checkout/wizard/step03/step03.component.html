@@ -6,13 +6,13 @@
       <h5 class="text-primary">INFORMAÇÕES SOBRE SUA ASSINATURA</h5>
 
       <p *ngIf="providerCheckout.selected_internet_plan">
-        Internet - <b>{{ providerCheckout.selected_internet_plan.name }}</b>
+        Internet - <b>{{ providerCheckout.selected_internet_plan.product.name }}</b>
       </p>
       <p *ngIf="providerCheckout.selected_tv_plan">
-        TV - <b>{{ providerCheckout.selected_tv_plan.name }}</b>
+        TV - <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
       </p>
       <p *ngIf="providerCheckout.selected_telephone_plan">
-        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.name }}</b>
+        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
       </p>
 
       <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">

@@ -13,13 +13,13 @@
 </div>
 <div class="col-12 col-lg-3 actions-wrapper align-self-center">
   <button type="button" class="btn btn-outline-primary btn-round text-uppercase"
-    *ngIf="!providerCheckout.selected_telephone_optionals.includes(plan)"
+    *ngIf="!providerCheckout.checkCartItemTelephoneOptional(plan)"
     (click)="providerCheckout.addTelephoneOptional(plan)">
     Adicionar
   </button>
 
   <button type="button" class="btn btn-outline-danger btn-round text-uppercase"
-    *ngIf="providerCheckout.selected_telephone_optionals.includes(plan)"
+    *ngIf="providerCheckout.checkCartItemTelephoneOptional(plan)"
     (click)="providerCheckout.removeTelephoneOptional(plan)">
     Remover
   </button>

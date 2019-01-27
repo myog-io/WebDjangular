@@ -17,13 +17,13 @@
     <div class="actions-wrapper">
 
       <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
-        *ngIf="!providerCheckout.selected_tv_optionals.includes(plan)"
+        *ngIf="!providerCheckout.checkCartItemTVOptional(plan)"
         (click)="providerCheckout.addTVOptional(plan)">
         Adicionar
       </button>
 
       <button type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
-        *ngIf="providerCheckout.selected_tv_optionals.includes(plan)"
+        *ngIf="providerCheckout.checkCartItemTVOptional(plan)"
         (click)="providerCheckout.removeTVOptional(plan)">
         Remover
       </button>

@@ -35,22 +35,22 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <ul class="items-wrapper pb-3">
-                <li class="item" *ngIf="providerCheckout.selected_internet_plan.name">
-                  {{ providerCheckout.selected_internet_plan.name }}
+                <li class="item" *ngIf="providerCheckout.selected_internet_plan">
+                  {{ providerCheckout.selected_internet_plan.product.name }}
                 </li>
                 <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
                   + {{ plan_optional.name }}
                 </li>
 
-                <li class="item" *ngIf="providerCheckout.selected_tv_plan.name">
-                  {{ providerCheckout.selected_tv_plan.name }}
+                <li class="item" *ngIf="providerCheckout.selected_tv_plan">
+                  {{ providerCheckout.selected_tv_plan.product.name }}
                 </li>
                 <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
                   + {{ plan_optional.name }}
                 </li>
 
-                <li class="item" *ngIf="providerCheckout.selected_telephone_plan.name">
-                  {{ providerCheckout.selected_telephone_plan.name }}
+                <li class="item" *ngIf="providerCheckout.selected_telephone_plan">
+                  {{ providerCheckout.selected_telephone_plan.product.name }}
                 </li>
                 <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
                   + {{ plan_optional.name }}
