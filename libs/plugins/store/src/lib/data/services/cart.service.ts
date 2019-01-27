@@ -80,7 +80,7 @@ export class CartService {
 
     return new Promise((resolve, reject) => {
       this.cart.save({
-        include: CartModel.include
+        include: `${CartModel.include},items.product,items.product.categories`
       }).subscribe(
         (cart: CartModel) => {
           this.cart = cart;
@@ -104,9 +104,10 @@ export class CartService {
       cartItem.product = product;
       cartItem.cart = this.cart;
 
-      cartItem.save({include: `${CartItemModel.include},product.addons,cart.items,cart.items.product,cart.items.product.categories`}).subscribe(
+      cartItem.save({include: `${CartItemModel.include},product.addons.categories`}).subscribe(
         (cartItem: CartItemModel) => {
-          this.cart = cartItem.cart;
+          
+          this.updateCart().then(()=>{});
           resolve(cartItem);
         },
         (error: ErrorResponse) => {
@@ -119,6 +120,10 @@ export class CartService {
     return new Promise((resolve, reject) => {
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
         (response) => {
+          this.cart.items = this.cart.items.filter(function(ele){
+            return ele != cartItem;
+          });
+          this.updateCart().then(()=>{});
           resolve();
         },
         (error: ErrorResponse) => {
