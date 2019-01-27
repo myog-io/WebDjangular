@@ -27,9 +27,17 @@
         <b>{{ plan_optional.name }}</b>
       </p>
 
-      <p>Taxa de Instalação: <b>Grátis </b></p>
-      <p>Taxa de Adesão: <b>Grátis </b></p>
-      
+
+      <p *ngFor="let fee of providerCheckout.getFees()">
+        {{ fee.data?.name }}:
+        <b *ngIf="fee.data?.price > 0">
+          R${{ fee.data?.price }}
+        </b>
+        <b *ngIf="fee.data?.price == 0">
+          GRÁTIS
+        </b>
+      </p>
+
       <p>Pagamento: <b>Boleto por email </b></p>
       <p>Email p/ envio do boleto: <b>fulano@edge.com.br </b></p>
 

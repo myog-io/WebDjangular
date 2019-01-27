@@ -969,4 +969,8 @@ export class ProviderCheckoutService {
   }
 
 
+  getFees() {
+    return this.cartService.cart.items.filter((data) => !data.product )
+  }
+
 }
