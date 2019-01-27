@@ -56,7 +56,8 @@ function getDirtyAttributes(attributesMetadata: any): { string: any } {
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
-  //TODO: Load all This Dynamic
+  // TODO: Load all This Dynamic
+  // INCLUDES GOES HERE
   models: {
     Address: AddressModel,
     User: UserModel,

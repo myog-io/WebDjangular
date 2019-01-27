@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ProviderCheckoutService} from "../../../../../data/services/provider-checkout.service";
+import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
 
 @Component({
   selector: 'plugin-provider-checkout-plan-television-optional',
@@ -9,7 +10,7 @@ import {ProviderCheckoutService} from "../../../../../data/services/provider-che
 })
 export class PluginProviderCheckoutPlanTelevisionOptionalComponent {
 
-  @Input() plan;
+  @Input() plan: ProductModel;
 
   constructor( public providerCheckout: ProviderCheckoutService) {
 

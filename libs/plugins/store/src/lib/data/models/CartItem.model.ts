@@ -12,25 +12,25 @@ export class CartItemModel extends AbstractModel {
   public static include = 'cart,product';
 
   @Attribute()
-  id: string = null;
-
-  @BelongsTo({key: 'Cart'})
-  cart: CartModel = null;
+  id: string;
 
   @BelongsTo()
-  product: ProductModel = null;
+  cart: CartModel;
+
+  @BelongsTo()
+  product: ProductModel;
 
   @Attribute()
-  quantity: number = 1;
+  quantity: number;
 
   @NestedAttribute()
-  data: object = {};
+  data: object;
 
   @Attribute()
-  created: Date = null;
+  created: Date;
 
   @Attribute()
-  updated: Date = null;
+  updated: Date;
 
   permissions: PermissionModel[];
 
