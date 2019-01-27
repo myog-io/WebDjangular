@@ -112,7 +112,6 @@ def get_var(data, var_name, not_found=None):
     else:
         return data
 
-
 def missing(data, *args):
     """Implements the missing operator for finding missing variables."""
     not_found = object()
@@ -140,7 +139,6 @@ def missing_some(data, min_required, args):
             if found >= min_required:
                 return []
     return ret
-
 
 operations = {
     "==": soft_equals,
@@ -197,8 +195,30 @@ def jsonLogic(tests, data=None):
         return missing(data, *values)
     if operator == 'missing_some':
         return missing_some(data, *values)
+    if operator == 'filter': 
+        scopedData = jsonLogic(values[0], data)
+        scopedLogic = tests[operator][1]
+        if not scopedData or not isinstance(scopedData, list):
+            return []
+        return list(filter(lambda datum: jsonLogic(scopedLogic,datum) is True, scopedData))
+    if operator == 'map':
+        scopedData = jsonLogic(values[0], data)
+        scopedLogic = tests[operator][1]
+        if not scopedData or not isinstance(scopedData, list):
+            return []
+        return list(map(lambda datum: jsonLogic(scopedLogic,datum) is True, scopedData))
+    if operator == 'reduce':
+        scopedData = jsonLogic(values[0], data)
+        scopedLogic = tests[operator][1]
+        if not scopedData or not isinstance(scopedData, list):
+            return []
+        return list(reduce(lambda datum: jsonLogic(scopedLogic,datum) is True, scopedData))
+    if operator == 'some':
+        filtered = jsonLogic({'filter': tests[operator]}, data)
+        return len(filtered) > 0
+            
 
     if operator not in operations:
-        raise ValueError("Unrecognized operation %s" % operator)
+        raise ValueError("Unrecognized operation:'%s'" % operator)
 
     return operations[operator](*values)

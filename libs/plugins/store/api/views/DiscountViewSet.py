@@ -62,17 +62,25 @@ class CartRuleViewSet(ModelViewSet):
     @action(methods=['GET'], detail=False)
     def discount_options(self, request, *args, **kwargs):
         '''
-            Return List of availabe Discount Options for The Catalog Rules
+            Return List of availabe Discount Options for The Cart Rules
         '''
         data = {}
-        data['product'] = get_fields_flat(CartItem)
-        data['category'] = get_fields_flat(ProductCategory)
         data['cart'] = get_fields_flat(Cart)
-        
         data['billing_address'] = get_fields_flat(Address)
         data['shipping_address'] = data['billing_address']
         return Response(data)
 
+    @action(methods=['GET'], detail=False)
+    def discount_options_items(self, request, *args, **kwargs):
+        '''
+            Return List of availabe Discount Options for The Cart Rules on Itens
+        '''
+        data = {}
+        data['product'] = get_fields_flat(Product)
+        data['category'] = get_fields_flat(ProductCategory)
+        return Response(data)
+
+    
 
 class CatalogRuleFilter(FilterSet):
     class Meta:

@@ -6,8 +6,8 @@ from libs.plugins.store.api.models.Product import Product
 from webdjango.models.Address import Address
 from libs.core.users.api.models.User import User
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
-
-
+from libs.plugins.store.api import defaults
+from .MoneySerializer import MoneyField
 class CartItemSerializer(WebDjangoSerializer):
     cart = ResourceRelatedField(
         many=False,
@@ -21,14 +21,25 @@ class CartItemSerializer(WebDjangoSerializer):
     product = ResourceRelatedField(
         many=False,
         queryset=Product.objects,
-        required=True,
+        required=False,
         related_link_url_kwarg='pk',
         self_link_view_name='cart-item-relationships',
         related_link_view_name='cart-item-related',
     )
     quantity = serializers.IntegerField(required=False)
     data = serializers.JSONField(required=False)
-
+    base_price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    discount = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    total = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    
+    is_shipping_required = serializers.BooleanField(read_only=True)
+    name = serializers.CharField(read_only=True)
+    sku = serializers.CharField(read_only=True)
     included_serializers = {
         'product': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'cart': 'libs.plugins.store.api.serializers.CartSerializer.CartSerializer',

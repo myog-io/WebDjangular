@@ -65,7 +65,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'discount',
+        path: 'rules',
         children: [
           {
             path: 'cart-rules',
@@ -73,7 +73,7 @@ const routes: Routes = [
             data: {
               model: CartRuleModel,
               title: 'Cart Rules',
-              path: 'store/discount/cart-rules'
+              path: 'store/rules/cart-rules'
             }
           },
           {
@@ -82,7 +82,7 @@ const routes: Routes = [
             data: {
               model: CatalogRuleModel,
               title: 'Catalog Rules',
-              path: 'store/discount/catalog-rules'
+              path: 'store/rules/catalog-rules'
             },
           },
         ],

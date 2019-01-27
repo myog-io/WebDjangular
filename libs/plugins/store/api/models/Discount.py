@@ -5,7 +5,7 @@ from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
 from functools import partial
 from prices import Money, fixed_discount, percentage_discount
-from functools import partial
+
 
 from django.db import models
 from django.utils import timezone
@@ -14,18 +14,18 @@ from prices import Money, fixed_discount, percentage_discount
 
 from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
-
+from prices import Money
 
 class RuleValueType:
     FIXED = 'fixed'
     PERCENTAGE = 'percentage'
     TO_VALUE = 'to_value'
-    FEE= 'fee'
+    
 
     CHOICES = [
         (FIXED, defaults.DEFAULT_CURRENCY),
         (PERCENTAGE, '%'),
-        (FEE, defaults.DEFAULT_CURRENCY)
+   
     ]
 
 
@@ -39,6 +39,7 @@ class CartRuleQueryset(models.QuerySet):
 class CartRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
     conditions = JSONField(default=None, blank=True, null=True)
+    item_conditions = JSONField(default=None, blank=True, null=True)
     rule_type = models.CharField(max_length=10,
                                  choices=RuleValueType.CHOICES,
                                  default=RuleValueType.FIXED)
@@ -61,6 +62,7 @@ class CartRule(ActiveModel, BaseModel):
     class Meta:
         ordering = ['-pk']
 
+   
 
 class CatalogRuleQueryset(models.QuerySet):
     def active(self):

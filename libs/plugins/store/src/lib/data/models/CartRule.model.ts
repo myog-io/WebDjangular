@@ -104,6 +104,15 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
+    type: 'switch',
+    label: 'Is active',
+    wrapper_class: 'col-3',
+    value: true,
+  })
+  is_active: boolean;
+  
+  @Attribute()
+  @ExtraOptions({
     type: 'text',
     label: 'Value',
     wrapper_class: 'col-6',
@@ -114,10 +123,18 @@ export class CartRuleModel extends AbstractModel {
   @NestedAttribute()
   @ExtraOptions({
     type: 'jsonLogic',
-    label: 'Apply Rule only if all conditions are true',
+    label: 'Apply the rule only if the following conditions are met (leave blank for all products)',
     json_logic_options_url: '/api/store/discount/cart-rule/discount_options/'
   })
   conditions: any;
+
+  @NestedAttribute()
+  @ExtraOptions({
+    type: 'jsonLogic',
+    label: 'Apply the rule only to cart items that meet the following conditions (leave blank for all items)',
+    json_logic_options_url: '/api/store/discount/cart-rule/discount_options_items/'
+  })
+  item_conditions: any;
 
   @Attribute()
   created: Date;
@@ -137,7 +154,7 @@ export class CartRuleModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-      type: {
+      rule_type: {
         title: 'Type',
         type: 'text',
       },
@@ -145,7 +162,7 @@ export class CartRuleModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      code: {
+      voucher: {
         title: 'Code',
         type: 'text',
       },

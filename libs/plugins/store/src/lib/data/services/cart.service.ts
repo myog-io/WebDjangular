@@ -42,6 +42,7 @@ export class CartService {
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
+             
             }
           },
           (error: any) => {

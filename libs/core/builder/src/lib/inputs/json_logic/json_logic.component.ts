@@ -45,8 +45,9 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
 
   public operators = [
     { label: 'ALL of Conditions (AND)', value: 'AND' },
-    { label: 'ANY of the Conditions (OR)', value: 'OR' }
+    { label: 'ANY of the Conditions (OR)', value: 'OR' },
   ]
+  // TODO: We Have to Work with the 'some'  Operator and Others for the ARRAYS
   public conditions = [
     { label: 'Is Equal(==)', value: '==' },
     { label: 'Is Not Equal(!=)', value: '!=' },
@@ -63,7 +64,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     private datastore: WebAngularDataStore,
     private http: HttpClient,
   ) {
-    //const models = datastore.datastoreConfig.models;
+    const models = datastore.datastoreConfig.models;
     //for (const key in models) {
     //  if (models.hasOwnProperty(key)) {
     //    const model = new models[key](datastore);
@@ -71,8 +72,8 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     //    for (const attr_name in attributes) {
     //      if (attributes.hasOwnProperty(attr_name)) {
     //        this.fields.push({
-    //          label: `${model.modelConfig.type}.${attr_name}`,
-    //          value: `${model.modelConfig.type.toLowerCase()}.${attr_name}`
+    //          id: `${model.modelConfig.type}.${attr_name}`,
+    //          name: `${model.modelConfig.type.toLowerCase()}.${attr_name}`
     //        })
     //      }
     //    }
@@ -82,69 +83,92 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
   }
 
   set_logic_recursive(children: any[]) {
-    let logics = []
-    for (let i = 0; i < children.length; i++) {
-      for (const key in children[i]) {
-        if (children[i].hasOwnProperty(key)) {
-          const element = children[i][key];
-          if (key == "OR" || key == "AND") {
-            logics.push({
-              type: 'logic_group',
-              operator: key,
-              children: this.set_logic_recursive(element)
-            });
-          } else {
-            logics.push({
-              type: 'logic_condition',
-              condition: key,
-              value: element[1],
-              variable: element[0]['var'],
-            });
+    let logics = [];
+    if (children) {
+      for (let i = 0; i < children.length; i++) {
+        for (const key in children[i]) {
+          if (children[i].hasOwnProperty(key)) {
+            const element = children[i][key];
+            if (key == "OR" || key == "AND") {
+              logics.push({
+                type: 'logic_group',
+                operator: key,
+                children: this.set_logic_recursive(element)
+              });
+            } else {
+              logics.push({
+                type: 'logic_condition',
+                condition: key,
+                value: element[1],
+                variable: element[0]['var'],
+              });
 
+            }
           }
         }
       }
-
     }
     return logics;
   }
   ngOnInit() {
 
-    let subscription = this.group.valueChanges.subscribe((data) => {
-      if (this.group.entity && this.group.entity.id) {
-        subscription.unsubscribe();
-        if (this.group.entity[this.config.name]) {
-          let key = Object.keys(this.group.entity[this.config.name])[0]
-          this.logic_group = {
-            type: 'logic_group',
-            operator: key,
-            children: this.set_logic_recursive(this.group.entity[this.config.name][key])
-          };
-        }
-      }
-    })
-    this.get_options();
-  }
-  get_options() {
     if (this.config.json_logic_options_url) {
-      this.http.get(this.config.json_logic_options_url).subscribe((options: any) => {
-        if (options.data) {
-          for (const key in options.data) {
-            if (options.data.hasOwnProperty(key)) {
-              const element = options.data[key];
-              for (let i = 0; i < element.length; i++) {
-                const attr = element[i];
-                this.fields.push({
-                  id: `${key}.${attr}`,
-                  name: `${key.toLowerCase()}.${attr}`
-                })
+      this.get_options().then((data) => {
+        this.set_starting_logic();
+      });
+    } else {
+      this.set_starting_logic();
+    }
+  }
+  set_starting_logic() {
+    if (this.group.entity && this.group.entity.id) {
+      this.start_loading();
+    } else {
+      let subscription = this.group.valueChanges.subscribe((data) => {
+        subscription.unsubscribe();
+        this.start_loading();
+      });
+    }
+  }
+  start_loading() {
+    if (this.group.entity && this.group.entity.id) {
+      if (this.group.entity[this.config.name]) {
+        let key = Object.keys(this.group.entity[this.config.name])[0]
+        this.logic_group = {
+          type: 'logic_group',
+          operator: key,
+          children: this.set_logic_recursive(this.group.entity[this.config.name][key])
+        };
+      }
+    }
+  }
+  get_options(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.config.json_logic_options_url).subscribe(
+        (options: any) => {
+          if (options.data) {
+            for (const key in options.data) {
+              if (options.data.hasOwnProperty(key)) {
+                const element = options.data[key];
+                for (let i = 0; i < element.length; i++) {
+                  const attr = element[i];
+                  this.fields.push({
+                    id: `${key}.${attr}`,
+                    name: `${key.toLowerCase()}.${attr}`
+                  })
+                }
               }
-
             }
           }
+          resolve(true);
+        }, (error) => {
+          reject(error);
         }
-      })
-    }
+      );
+    });
+
+
+
   }
   addTagPromise(name) {
     return new Promise((resolve) => {

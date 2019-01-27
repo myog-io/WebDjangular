@@ -9,7 +9,7 @@ from uuid import UUID, uuid1
 from libs.plugins.store.api.models.Cart import Cart, CartItem
 from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer
 from libs.plugins.store.api.utils import CartUtils
-
+from ..utils.CartUtils import cart_has_product
 
 class CartViewSet(ModelViewSet):
     """
@@ -56,13 +56,12 @@ class CartItemViewSet(ModelViewSet):
         # Checking if not adding Duplicated to the Cart
         if validated_data['cart']:
             cart = validated_data['cart']
-            if cart.items.count() > 0:
-                for item in cart.items.all():
-                    if item.product.id is validated_data['product'].id:
-                        serializer.instance = item
-                        serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
-                        self.perform_update(serializer)
-                        return
+            item = cart_has_product(cart,validated_data['product'].id)
+            if item:
+                serializer.instance = item
+                serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
+                self.perform_update(serializer)
+                return
         serializer.save()
 
 

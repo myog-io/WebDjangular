@@ -50,7 +50,7 @@
 <ng-template #nodeOperator let-child="child" let-parent="parent">
   <div class="form-inline p-2">
 
-    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="min-width:30%" class="form-control input-sm" bindLabel="name" [addTag]="addTagPromise" [items]="fields" >
+    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="min-width:30%" class="form-control input-sm" bindLabel="name" bindValue="id" [addTag]="addTagPromise" [items]="fields" >
       
       <ng-template ng-tag-tmp let-search="searchTerm">
           <b>New condition</b>: {{search}}
