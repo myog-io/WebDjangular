@@ -216,7 +216,8 @@ input:focus, textarea:focus {
 }
 
 input:focus ~ label, input:valid ~ label,
-textarea:focus ~ label, textarea:valid ~ label {
+textarea:focus ~ label, textarea:valid ~ label,
+input:read-only ~ label{
   bottom: -$input-fs*2;
   @include responsive-font-size($input-fs*0.95);
   color: $primary;
