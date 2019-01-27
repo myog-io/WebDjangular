@@ -1,16 +1,17 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
-import { Validators } from '@angular/forms';
+import { Validators, FormArray } from '@angular/forms';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { ProductModel } from './Product.model';
 
 @JsonApiModelConfig({
   type: 'ProductCategory',
   modelEndpointUrl: 'store/category',
 })
 export class CategoryModel extends AbstractModel {
-  public static include = null;
+  public static include = 'products';
 
   @Attribute()
   id: string;
@@ -44,6 +45,15 @@ export class CategoryModel extends AbstractModel {
     placeholder: 'Enter Page Title',
   })
   description: string;
+
+  @HasMany()
+  @ExtraOptions({
+    type: 'checkbox',
+    formType: FormArray,
+    label: 'Product Parent',
+    model: ProductModel,    
+  })
+  products: ProductModel[];
 
   @Attribute()
   created: Date;

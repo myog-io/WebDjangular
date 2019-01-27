@@ -7,7 +7,7 @@ from .views.OrderViewSet import OrderViewSet
 from .views.PaymentViewSet import PaymentViewSet
 from .views.ProductViewSet import ProductAttributeRelationshipView, \
     ProductAttributeViewSet, ProductCategoryViewSet, ProductRelationshipView, \
-    ProductTypeRelationshipView, ProductTypeViewSet, ProductViewSet
+    ProductTypeRelationshipView, ProductTypeViewSet, ProductViewSet, ProductCategoryRelationshipView
 from .views.ShippingViewSet import ShippingMethodViewSet
 
 router = DefaultRouter()
@@ -38,6 +38,16 @@ relationshipPatterns = [
     url(r'^product/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         ProductViewSet.as_view({'get': 'retrieve_related'}),
         name='product-related'
+    ),
+    # Product
+    url(
+        regex=r'^category/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=ProductCategoryRelationshipView.as_view(),
+        name='product-category-relationships'
+    ),
+    url(r'^category/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        ProductCategoryViewSet.as_view({'get': 'retrieve_related'}),
+        name='product-category-related'
     ),
 
     # Product Type
