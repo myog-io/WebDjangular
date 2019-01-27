@@ -14,7 +14,7 @@
 <div class="col-12 col-lg-3 actions-wrapper align-self-center">
   <button type="button" class="btn btn-outline-primary btn-round text-uppercase"
     *ngIf="!providerCheckout.checkCartItemTelephoneOptional(plan)"
-    (click)="providerCheckout.addTelephoneOptional(plan)">
+    (click)="providerCheckout.addTelephoneOptional(plan)" [disabled]="plan.disabled">
     Adicionar
   </button>
 

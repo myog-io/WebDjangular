@@ -25,7 +25,7 @@ enum productDG {
   modelEndpointUrl: 'store/product',
 })
 export class ProductModel extends AbstractModel {
-  public static include = 'product_type,addons,addon_parent';
+  public static include = 'product_type,addons,addon_parent,categories';
 
   @Attribute()
   id: string;
@@ -266,6 +266,12 @@ export class ProductModel extends AbstractModel {
     displayGroup: productDG.addon_parent
   })
   addon_parent: ProductModel[];
+
+  @HasMany()
+  categories: any;
+
+  @Attribute()
+  disabled: boolean;
 
   @Attribute()
   price: number;

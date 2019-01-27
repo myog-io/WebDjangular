@@ -36,7 +36,9 @@ export class CartService {
           token: cartCookie['token'],
           page: {size: 1, number: 1},
           include: ["billing_address", "shipping_address",
-            "items", "items.product", "items.product.product_type"].join(',')
+            "items", "items.product", "items.product.product_type",
+            "items.product.categories"
+          ].join(',')
         }).subscribe(
           (queryData: JsonApiQueryData<CartModel>) => {
             const carts = queryData.getModels();
@@ -102,7 +104,7 @@ export class CartService {
       cartItem.product = product;
       cartItem.cart = this.cart;
 
-      cartItem.save({include: `${CartItemModel.include},product.addons`}).subscribe(
+      cartItem.save({include: `${CartItemModel.include},product.addons,cart.items,cart.items.product,cart.items.product.categories`}).subscribe(
         (cartItem: CartItemModel) => {
           this.cart = cartItem.cart;
           resolve(cartItem);
