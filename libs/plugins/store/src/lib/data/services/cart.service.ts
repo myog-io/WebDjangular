@@ -42,7 +42,7 @@ export class CartService {
           (queryData: JsonApiQueryData<CartModel>) => {
             const carts = queryData.getModels();
             if (carts.length > 0) {
-              this.cart = carts[0];
+              this.cart = carts[0]
             }
           },
           (error: any) => {
@@ -104,8 +104,9 @@ export class CartService {
 
       cartItem.save({include: `${CartItemModel.include},product.addons.categories`}).subscribe(
         (cartItem: CartItemModel) => {
-          
-          this.updateCart().then(()=>{});
+
+          this.updateCart().then(() => {
+          });
           resolve(cartItem);
         },
         (error: ErrorResponse) => {
@@ -118,15 +119,42 @@ export class CartService {
     return new Promise((resolve, reject) => {
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
         (response) => {
-          this.cart.items = this.cart.items.filter(function(ele){
+          this.cart.items = this.cart.items.filter(function (ele) {
             return ele != cartItem;
           });
-          this.updateCart().then(()=>{});
+          this.updateCart().then(() => {
+          });
           resolve();
         },
         (error: ErrorResponse) => {
           reject();
         })
+    });
+  }
+
+  public clearCartItems(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let promises = [];
+      this.cart.items.forEach((item) => {
+        let promise = new Promise((resolve, reject) => {
+          this.datastore.deleteRecord(CartItemModel, item.id).subscribe(
+            (response) => {
+              resolve(response);
+            },
+            (error) => {
+              reject(error);
+            });
+        });
+        promises.push(promise)
+      });
+      Promise.all(promises).then(
+        (values) => {
+          resolve(values);
+        },
+        (error) => {
+          reject(error)
+        }
+      )
     });
   }
 
