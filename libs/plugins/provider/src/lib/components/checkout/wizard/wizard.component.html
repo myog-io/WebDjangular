@@ -76,17 +76,15 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Taxa de Instalação</td>
-                    <td>Grátis</td>
-                  </tr>
-                  <tr>
-                    <td>Taxa de Adesão</td>
-                    <td>Grátis</td>
-                  </tr>
-                 
-
-
+                    <tr *ngFor="let fee of providerCheckout.getFees()">
+                      <td>{{ fee.data?.name }}</td>
+                      <td *ngIf="fee.data?.price > 0">
+                        R${{ fee.data?.price }}
+                      </td>
+                      <td *ngIf="fee.data?.price == 0">
+                        GRÁTIS
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
