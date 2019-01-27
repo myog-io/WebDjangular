@@ -38,6 +38,24 @@ export class CartModel extends AbstractModel {
   items: CartItemModel[];
 
   @Attribute()
+  total: number;
+
+  @Attribute()
+  subtotal: number;
+
+  @Attribute()
+  fees: number;
+
+  @Attribute()
+  shipping_price: number;
+  
+  @Attribute()
+  taxes: number;
+
+  @Attribute()
+  is_shipping_required: boolean;
+
+  @Attribute()
   created: Date;
 
   @Attribute()

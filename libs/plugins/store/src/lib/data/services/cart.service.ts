@@ -102,11 +102,16 @@ export class CartService {
       cartItem.product = product;
       cartItem.cart = this.cart;
 
-      cartItem.save({include: `${CartItemModel.include},product.addons.categories`}).subscribe(
+      cartItem.save({include: `product`}).subscribe(
         (cartItem: CartItemModel) => {
+          cartItem.product.load_addons(this.datastore,{include: `product_type,categories`})
+          .subscribe((query:JsonApiQueryData<ProductModel>)=>{
+            cartItem.product.addons = query.getModels();
+            this.updateCart().then(()=>{});
+            resolve(cartItem);
+          } )
+
           
-          this.updateCart().then(()=>{});
-          resolve(cartItem);
         },
         (error: ErrorResponse) => {
           reject(error);

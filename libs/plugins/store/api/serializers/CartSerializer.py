@@ -92,6 +92,17 @@ class CartSerializer(WebDjangoSerializer):
         'items': 'libs.plugins.store.api.serializers.CartSerializer.CartItemSerializer',
         'user': 'libs.core.users.api.serializers.UserSerializer.UserSerializer',
     }
+    is_shipping_required = serializers.BooleanField(read_only=True)
+    shipping_price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    taxes = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    fees = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    subtotal = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
+    total = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES,read_only=True)
 
     class Meta:
         model = Cart

@@ -63,7 +63,7 @@ class Cart(BaseModel):
         """
         Return True if any of the items requires shipping.
         """
-        return any(line.is_shipping_required() for line in self.items.all())
+        return any(line.is_shipping_required for line in self.items.all())
         
 
     @property
@@ -76,12 +76,17 @@ class Cart(BaseModel):
         return ZERO_MONEY
 
     @property
+    def fees(self):
+        fees = (line.total if line.total > ZERO_MONEY else ZERO_MONEY for line in self.items.filter(product=None).all())
+        return sum(fees, ZERO_MONEY)
+
+    @property
     def subtotal(self):
         """
         Return the subtotal of the cart.
         """
         # TODO: get the subtotal (sum of the items * qty )
-        subtotals = (line.total for line in self.items.all())
+        subtotals = (line.total for line in self.items.exclude(product=None).all())
         return sum(subtotals, ZERO_MONEY)
         
 
@@ -92,7 +97,7 @@ class Cart(BaseModel):
         :return:
         """
         # TODO: get the subtotal + shippiment cost + taxes
-        return self.subtotal + self.shipping_price + self.taxes
+        return self.subtotal + self.shipping_price + self.taxes + self.fees
         
 
     @property

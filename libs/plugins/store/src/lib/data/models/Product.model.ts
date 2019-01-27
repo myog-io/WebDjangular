@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, JsonApiQueryData} from 'angular2-jsonapi';
 import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from './ProductType.model';
 import {FormArray, FormGroup, Validators} from '@angular/forms';
@@ -6,6 +6,8 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { Observable } from 'rxjs';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 enum productDG {
   type = 'product-type',
@@ -463,5 +465,10 @@ export class ProductModel extends AbstractModel {
     },
   };
 
+  public load_addons(dataStore:WebAngularDataStore,options = null, header = null): Observable<JsonApiQueryData<ProductModel>> {
+    const url = `/api/store/product/${this.id}/addons/`;
+   
+    return dataStore.findAll(ProductModel,options,header,url);
+  }
 
 }

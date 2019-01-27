@@ -84,7 +84,7 @@
     "angular-tree-component": "7.2.0",
     "angular-ui-tree": "^2.22.6",
     "angular2-chartjs": "0.4.1",
-    "angular2-jsonapi": "^6.1.2",
+    "angular2-jsonapi": "7.0.0-beta",
     "angular2-toaster": "^6.1.0",
     "bootstrap": "4.0.0",
     "chart.js": "^2.7.3",
