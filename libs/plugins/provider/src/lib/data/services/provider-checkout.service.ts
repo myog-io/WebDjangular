@@ -450,6 +450,10 @@ export class ProviderCheckoutService {
         });
       }
     }
+    const url = this.router.createUrlTree([], {
+      relativeTo: this.activatedRoute,
+    }).toString();
+    this.location.go(url);
   }
 
   addressFromCity(city: CityModel) {
