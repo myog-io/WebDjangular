@@ -1,9 +1,9 @@
 import sys
-
+import traceback
 from ..models.Discount import CatalogRule
 from webdjango.utils.JsonLogic import jsonLogic
 
-import traceback
+
 
 
 def apply_catalog_rule(price, rule):

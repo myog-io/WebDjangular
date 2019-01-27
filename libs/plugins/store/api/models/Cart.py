@@ -7,7 +7,11 @@ from libs.core.users.api.models.User import User
 from libs.plugins.store.api.models.Product import Product
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Address import Address
-
+from ..serializers.MoneySerializer import MoneyField
+from libs.plugins.store.api import defaults
+from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
+from prices import Money
+money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
 
 class CartStatus:
     ABANDONED = 'abandoned'
@@ -37,11 +41,11 @@ class Cart(BaseModel):
     shipping_address = models.ForeignKey(
         Address, related_name='cart_shipping_address', on_delete=models.CASCADE, blank=True, null=True)
 
-    # shipping_method = models.ForeignKey(ShippingMethod,
+    #shipping_method = models.ForeignKey(ShippingMethod,
     #                                    blank=True, null=True, related_name='carts',
     #                                    on_delete=models.SET_NULL)
 
-    #  note = models.TextField(blank=True, default='')
+    note = models.TextField(blank=True, default='')
 
     #  discount_amount = MoneyField(currency=defaults.DEFAULT_CURRENCY,
     #                             max_digits=defaults.DEFAULT_MAX_DIGITS,
@@ -59,32 +63,37 @@ class Cart(BaseModel):
         """
         Return True if any of the items requires shipping.
         """
-        return any(line.is_shipping_required() for line in self.items.objects.all())
+        return any(line.is_shipping_required() for line in self.items.all())
         
 
     @property
-    def get_shipping_price(self):
+    def shipping_price(self):
         # TODO: get shipping price based on shipping method selected
-        return False
+        return ZERO_MONEY
 
     @property
-    def get_subtotal(self, discounts=None, taxes=None):
+    def taxes(self):
+        return ZERO_MONEY
+
+    @property
+    def subtotal(self):
         """
         Return the subtotal of the cart.
         """
         # TODO: get the subtotal (sum of the items * qty )
-        # subtotals = (line.get_total(discounts, taxes) for line in self)
-        # return sum(subtotals, ZERO_TAXED_MONEY)
-        return False
+        subtotals = (line.total for line in self.items.all())
+        return sum(subtotals, ZERO_MONEY)
+        
 
     @property
-    def get_total(self):
+    def total(self):
         """
         Return the Total
         :return:
         """
         # TODO: get the subtotal + shippiment cost + taxes
-        return False
+        return self.subtotal + self.shipping_price + self.taxes
+        
 
     @property
     def get_total_weight(self):
@@ -103,28 +112,59 @@ class CartItem(models.Model):
     cart = models.ForeignKey(
         'Cart', related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(
-        Product, on_delete=None, related_name='product')
+        Product, on_delete=None, related_name='product', null=True)
     quantity = models.PositiveIntegerField(default=1)
     data = JSONField(blank=True)
 
     class Meta:
         ordering = ['-pk']
+    
+    @property
+    def name(self):
+        if self.product:
+            return self.product.name
+        return self.data['name']
 
-    # @property
-    # def get_total(self, discounts=None, taxes=None):
-    #     """
-    #     Return the total price of this item.
-    #     """
-    #     # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
-    #     #total = self.quantity * self.product.get_final_price()
-    #     total = 0
-    #     return total
-    #
+    @property
+    def base_price(self):
+        if self.product:
+            return self.product.price
+        return Money(self.data['price'], defaults.DEFAULT_CURRENCY)
+    @property
+    def price(self):
+        price = self.base_price
+        if 'discount_rules' in self.data:
+            for discount_code in self.data['discount_rules']:
+                if discount_code in self.data['discount_rules']:
+                    price = price + Money(self.data['discount_rules'][discount_code], defaults.DEFAULT_CURRENCY)
+        # Let's Check the Rules
+        return price
+
+    @property
+    def discount(self):
+        return self.price - self.base_price
+
+    @property
+    def total(self):
+        """
+        Return the total price of this item.
+        """
+        # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
+        total = self.quantity * self.price
+        return total
+    
     @property
     def is_shipping_required(self):
         """
         Return True if any of the items requires shipping.
         """
-        return self.product.is_shipping_required()
+        return self.product.is_shipping_required
+
+    @property
+    def sku(self):
+        if self.product:
+            return self.product.sku
+        return self.data['voucher']
+        
 
 

@@ -35,13 +35,14 @@ export class CartService {
         this.datastore.findAll(CartModel, {
           token: cartCookie['token'],
           page: {size: 1, number: 1},
-          include: "billing_address,shipping_address"
+          include: "billing_address,shipping_address,items"
         }).subscribe(
           (queryData: JsonApiQueryData<CartModel>) => {
 
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0];
+             
             }
           },
           (error: any) => {

@@ -96,15 +96,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/store/orders',
       },
       {
-        title: 'Discounts',
+        title: 'Store Rules',
         children: [
           {
             title: 'Catalog Rules',
-            link: '/store/discount/catalog-rules',
+            link: '/store/rules/catalog-rules',
           },
           {
             title: 'Cart Rules',
-            link: '/store/discount/cart-rules',
+            link: '/store/rules/cart-rules',
           },
         ]
       },

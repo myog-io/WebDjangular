@@ -27,11 +27,33 @@ export class CartItemModel extends AbstractModel {
   data: object = {};
 
   @Attribute()
+  base_price: number;
+
+  @Attribute()
+  price: number;
+
+  @Attribute()
+  discount: number;
+
+  @Attribute()
+  total: number;
+
+  @Attribute()
+  is_shipping_required: boolean;
+
+  @Attribute()
+  name: string;
+
+  @Attribute()
+  sku: string;
+  
+  @Attribute()
   created: Date = null;
 
   @Attribute()
   updated: Date = null;
 
+  
   permissions: PermissionModel[];
 
   get pk() {
