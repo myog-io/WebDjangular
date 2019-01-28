@@ -26,7 +26,7 @@ class EmailCoreConfig():
     EMAIL_CONFIG_GROUP_SLUG = 'email_config'
     EMAIL_CONFIG_GROUP = CoreConfigGroup(
         id=EMAIL_CONFIG_GROUP_SLUG,
-        title="Email Configuration",
+        title="Email",
         order=5
     )
 

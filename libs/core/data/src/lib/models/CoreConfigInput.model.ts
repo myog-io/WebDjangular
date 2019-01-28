@@ -52,7 +52,7 @@ export class CoreConfigInputModel extends AbstractModel {
   group: string;
 
   @Attribute()
-  value: string;
+  value: any;
 
   @NestedAttribute()
   conditional: any;
