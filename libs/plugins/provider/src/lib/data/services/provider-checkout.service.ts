@@ -165,8 +165,8 @@ export class ProviderCheckoutService {
     }
 
     this.activatedRoute.queryParams.subscribe((params => {
-        this.checkPreSelectedPlans(params);
-      })
+      this.checkPreSelectedPlans(params);
+    })
     );
   }
 
@@ -176,7 +176,7 @@ export class ProviderCheckoutService {
       this.pre_select_plans.has_pre_selected_plans = true;
     }
     if (params.hasOwnProperty('net_op')) {
-      this.pre_select_plans.internet_optionals = params['net_op'].slipt(',');
+      this.pre_select_plans.internet_optionals = params['net_op'].split(',');
       this.pre_select_plans.has_pre_selected_plans = true;
     }
 
@@ -185,7 +185,7 @@ export class ProviderCheckoutService {
       this.pre_select_plans.has_pre_selected_plans = true;
     }
     if (params.hasOwnProperty('phone_op')) {
-      this.pre_select_plans.telephone_optionals = params['phone_op'].slipt(',');
+      this.pre_select_plans.telephone_optionals = params['phone_op'].split(',');
       this.pre_select_plans.has_pre_selected_plans = true;
     }
 
@@ -194,7 +194,7 @@ export class ProviderCheckoutService {
       this.pre_select_plans.has_pre_selected_plans = true;
     }
     if (params.hasOwnProperty('tv_op')) {
-      this.pre_select_plans.tv_optionals = params['tv_op'].slipt(',');
+      this.pre_select_plans.tv_optionals = params['tv_op'].split(',');
       this.pre_select_plans.has_pre_selected_plans = true;
     }
   }
@@ -310,16 +310,16 @@ export class ProviderCheckoutService {
         promises.push(
           new Promise((resolve, reject) => {
             this.selected_internet_plan.product.load_addons(this.datastore,
-              {include: `product_type,categories`}).subscribe(
-              (query: JsonApiQueryData<ProductModel>) => {
-                this.plans_optionals.internet = query.getModels();
-                this.selected_internet_optionals = optionals.filter(
-                  (item) => this.plans_optionals.internet.find(
-                    (plan) => plan.sku == item.product.sku));
-                resolve(true);
-              }, (error) => {
-                reject(error);
-              });
+              { include: `product_type,categories` }).subscribe(
+                (query: JsonApiQueryData<ProductModel>) => {
+                  this.plans_optionals.internet = query.getModels();
+                  this.selected_internet_optionals = optionals.filter(
+                    (item) => this.plans_optionals.internet.find(
+                      (plan) => plan.sku == item.product.sku));
+                  resolve(true);
+                }, (error) => {
+                  reject(error);
+                });
           })
         );
       }
@@ -420,23 +420,49 @@ export class ProviderCheckoutService {
   }
 
   addPreSelectedPlans() {
+    // Adding Pre Selected Internet Plans to Cart and it's addons
     if (this.pre_select_plans.internet) {
-      this.selectInternetPlan(this.plans.internet.find(
-        (data) => data.sku == this.pre_select_plans.internet));
-      if (this.selected_internet_plan) {
-        if (this.pre_select_plans.internet_optionals) {
-
-        }
+      let internet_plan = this.plans.internet.find((data) => data.sku === this.pre_select_plans.internet)
+      if (internet_plan) {
+        this.selectInternetPlan(internet_plan).then((cartItem)=>{
+          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.internet_optionals.indexOf(data.sku) !== -1 ) 
+          for (let i = 0; i < optionals.length; i++) {
+            const element = optionals[i];
+            this.addInternetOptional(element);
+          }
+        });
       }
     }
+    // Adding Pre Selectect Tv Plans To cart and it's addons
     if (this.pre_select_plans.tv) {
-      this.selectTVPlan(this.plans.tv.find(
-        (data) => data.sku == this.pre_select_plans.tv));
+      let tv_plan = this.plans.tv.find((data) => data.sku == this.pre_select_plans.tv)
+      if (tv_plan) {
+        this.selectTVPlan(tv_plan).then((cartItem) => {
+          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.tv_optionals.indexOf(data.sku) !== -1 )
+          for (let i = 0; i < optionals.length; i++) {
+            const element = optionals[i];
+            this.addTVOptional(element);
+          }
+        });
+      }
     }
+    // Adding Pre Selectect Phone Plans To cart and it's addons
     if (this.pre_select_plans.telephone) {
-      this.selectTelephonePlan(this.plans.telephone.find(
-        (data) => data.sku == this.pre_select_plans.telephone));
+      let tv_phone = this.plans.telephone.find((data) => data.sku == this.pre_select_plans.telephone);
+      if (tv_phone) {
+        this.selectTelephonePlan(tv_phone).then((cartItem) => {
+          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.telephone_optionals.indexOf(data.sku) !== -1 )
+          for (let i = 0; i < optionals.length; i++) {
+            const element = optionals[i];
+            this.addTelephoneOptional(element);
+          }
+        });
+      }
     }
+    const url = this.router.createUrlTree([], {
+      relativeTo: this.activatedRoute,
+    }).toString();
+    this.location.go(url);
   }
 
   addressFromCity(city: CityModel) {
@@ -594,51 +620,65 @@ export class ProviderCheckoutService {
     this.telephone_plan_collapsed = false;
   }
 
-  selectInternetPlan(plan: ProductModel) {
-    this.selectingInternetPlan = true;
-    this.cartService.addToCart({product: plan}).then(
-      (cartItem: CartItemModel) => {
-        this.selectingInternetPlan = false;
-        this.selected_internet_plan = cartItem;
-        this.plans_optionals.internet = cartItem.product.addons;
-      }, (error: ErrorResponse) => {
-        this.selectingInternetPlan = false;
-      });
+  selectInternetPlan(plan: ProductModel): Promise<CartItemModel> {
+    return new Promise((resolve, reject) => {
+      this.selectingInternetPlan = true;
+      this.cartService.addToCart({ product: plan }).then(
+        (cartItem: CartItemModel) => {
+          this.selectingInternetPlan = false;
+          this.selected_internet_plan = cartItem;
+          this.plans_optionals.internet = cartItem.product.addons;
+          resolve(cartItem);
+        }, (error: ErrorResponse) => {
+          this.selectingInternetPlan = false;
+          reject(error);
+        });
+    })
+
   }
 
-  selectTVPlan(plan: ProductModel) {
-    this.selectingTVPlan = true;
-    this.cartService.addToCart({product: plan}).then(
-      (cartItem: CartItemModel) => {
-        this.selectingTVPlan = false;
-        this.selected_tv_plan = cartItem;
-        this.plans_optionals.tv = cartItem.product.addons;
-        if (this.plans_optionals.tv) {
-          let decoder_plan = this.plans_optionals.tv.find((p) => p.sku === this.sku_extra_tv_decoder);
+  selectTVPlan(plan: ProductModel): Promise<CartItemModel> {
+    return new Promise((resolve, reject) => {
+      this.selectingTVPlan = true;
+      this.cartService.addToCart({ product: plan }).then(
+        (cartItem: CartItemModel) => {
 
-          this.plans_optionals.tv = this.arrayRemove(this.plans_optionals.tv, decoder_plan);
+          this.selectingTVPlan = false;
+
+          this.selected_tv_plan = cartItem;
+          this.plans_optionals.tv = cartItem.product.addons;
+          if (this.plans_optionals.tv) {
+            let decoder_plan = this.plans_optionals.tv.find((p) => p.sku === this.sku_extra_tv_decoder);
+
+            this.plans_optionals.tv = this.arrayRemove(this.plans_optionals.tv, decoder_plan);
 
           this.selected_extra_tv_decoder = {
             plan: decoder_plan,
             qty: 0,
             cartItem: null
           }
-        }
-      }, (error: ErrorResponse) => {
-        this.selectingTVPlan = false;
-      });
+          resolve(cartItem);
+        }, (error: ErrorResponse) => {
+          this.selectingTVPlan = false;
+          reject(error)
+        });
+    });
   }
 
-  selectTelephonePlan(plan: ProductModel) {
-    this.selectingTelephonePlan = true;
-    this.cartService.addToCart({product: plan}).then(
-      (cartItem: CartItemModel) => {
-        this.selectingTelephonePlan = false;
-        this.selected_telephone_plan = cartItem;
-        this.plans_optionals.telephone = cartItem.product.addons;
-      }, (error: ErrorResponse) => {
-        this.selectingTelephonePlan = false;
-      });
+  selectTelephonePlan(plan: ProductModel): Promise<CartItemModel>  {
+    return new Promise((resolve, reject) => {
+      this.selectingTelephonePlan = true;
+      this.cartService.addToCart({ product: plan }).then(
+        (cartItem: CartItemModel) => {
+          this.selectingTelephonePlan = false;
+          this.selected_telephone_plan = cartItem;
+          this.plans_optionals.telephone = cartItem.product.addons;
+          resolve(cartItem)
+        }, (error: ErrorResponse) => {
+          this.selectingTelephonePlan = false;
+          reject(error)
+        });
+    });
   }
 
   deselectInternetPlan() {

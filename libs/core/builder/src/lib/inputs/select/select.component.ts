@@ -76,7 +76,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
           this.config.model = models[this.config.model];
         }
       }
-      let query_options:any = {}
+      let query_options:any = {};
       if (this.config.options) {
         query_options = this.config.options;
       }
@@ -123,6 +123,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
 
   }
   compareValues(a: any, b: any) {
+    console.log(a,b)
     return a.id === b;
   }
   updateValue(value: any) {
