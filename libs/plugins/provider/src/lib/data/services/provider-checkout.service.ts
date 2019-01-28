@@ -127,6 +127,7 @@ export class ProviderCheckoutService {
   public formBeforeCheckoutSubmitted: boolean = false;
   public formBeforeCheckoutLoading: boolean = false;
 
+  public copying:boolean = false;
 
   public condos: Observable<CondoModel[]>;
 
@@ -154,7 +155,6 @@ export class ProviderCheckoutService {
       typeOfCustomer: ['', [Validators.required]]
     });
 
-
     if (this.cartService.cart) {
       this.loadedCart();
     } else {
@@ -165,12 +165,20 @@ export class ProviderCheckoutService {
     }
 
     this.activatedRoute.queryParams.subscribe((params => {
-      this.checkPreSelectedPlans(params);
-    })
+        this.checkPreSelectedPlans(params);
+      })
     );
   }
 
   checkPreSelectedPlans(params) {
+    if (params.hasOwnProperty('token')) {
+      const url:string = this.router.createUrlTree([], {
+        relativeTo: this.activatedRoute,
+        queryParams: {}
+      }).toString();
+      this.location.go(url);
+      this.cartService.setCartToken(params['token']);
+    }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
       this.pre_select_plans.has_pre_selected_plans = true;
@@ -310,16 +318,16 @@ export class ProviderCheckoutService {
         promises.push(
           new Promise((resolve, reject) => {
             this.selected_internet_plan.product.load_addons(this.datastore,
-              { include: `product_type,categories` }).subscribe(
-                (query: JsonApiQueryData<ProductModel>) => {
-                  this.plans_optionals.internet = query.getModels();
-                  this.selected_internet_optionals = optionals.filter(
-                    (item) => this.plans_optionals.internet.find(
-                      (plan) => plan.sku == item.product.sku));
-                  resolve(true);
-                }, (error) => {
-                  reject(error);
-                });
+              {include: `product_type,categories`}).subscribe(
+              (query: JsonApiQueryData<ProductModel>) => {
+                this.plans_optionals.internet = query.getModels();
+                this.selected_internet_optionals = optionals.filter(
+                  (item) => this.plans_optionals.internet.find(
+                    (plan) => plan.sku == item.product.sku));
+                resolve(true);
+              }, (error) => {
+                reject(error);
+              });
           })
         );
       }
@@ -344,8 +352,8 @@ export class ProviderCheckoutService {
 
               this.selected_extra_tv_decoder = {
                 plan: decoder_plan,
-                qty: decoder_plan_cart_item? decoder_plan_cart_item.quantity : 0,
-                cartItem: decoder_plan_cart_item? decoder_plan_cart_item : null
+                qty: decoder_plan_cart_item ? decoder_plan_cart_item.quantity : 0,
+                cartItem: decoder_plan_cart_item ? decoder_plan_cart_item : null
               };
 
               resolve(true);
@@ -424,8 +432,8 @@ export class ProviderCheckoutService {
     if (this.pre_select_plans.internet) {
       let internet_plan = this.plans.internet.find((data) => data.sku === this.pre_select_plans.internet)
       if (internet_plan) {
-        this.selectInternetPlan(internet_plan).then((cartItem)=>{
-          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.internet_optionals.indexOf(data.sku) !== -1 ) 
+        this.selectInternetPlan(internet_plan).then((cartItem) => {
+          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.internet_optionals.indexOf(data.sku) !== -1)
           for (let i = 0; i < optionals.length; i++) {
             const element = optionals[i];
             this.addInternetOptional(element);
@@ -438,7 +446,7 @@ export class ProviderCheckoutService {
       let tv_plan = this.plans.tv.find((data) => data.sku == this.pre_select_plans.tv)
       if (tv_plan) {
         this.selectTVPlan(tv_plan).then((cartItem) => {
-          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.tv_optionals.indexOf(data.sku) !== -1 )
+          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.tv_optionals.indexOf(data.sku) !== -1)
           for (let i = 0; i < optionals.length; i++) {
             const element = optionals[i];
             this.addTVOptional(element);
@@ -451,7 +459,7 @@ export class ProviderCheckoutService {
       let tv_phone = this.plans.telephone.find((data) => data.sku == this.pre_select_plans.telephone);
       if (tv_phone) {
         this.selectTelephonePlan(tv_phone).then((cartItem) => {
-          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.telephone_optionals.indexOf(data.sku) !== -1 )
+          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.telephone_optionals.indexOf(data.sku) !== -1)
           for (let i = 0; i < optionals.length; i++) {
             const element = optionals[i];
             this.addTelephoneOptional(element);
@@ -623,7 +631,7 @@ export class ProviderCheckoutService {
   selectInternetPlan(plan: ProductModel): Promise<CartItemModel> {
     return new Promise((resolve, reject) => {
       this.selectingInternetPlan = true;
-      this.cartService.addToCart({ product: plan }).then(
+      this.cartService.addToCart({product: plan}).then(
         (cartItem: CartItemModel) => {
           this.selectingInternetPlan = false;
           this.selected_internet_plan = cartItem;
@@ -640,7 +648,7 @@ export class ProviderCheckoutService {
   selectTVPlan(plan: ProductModel): Promise<CartItemModel> {
     return new Promise((resolve, reject) => {
       this.selectingTVPlan = true;
-      this.cartService.addToCart({ product: plan }).then(
+      this.cartService.addToCart({product: plan}).then(
         (cartItem: CartItemModel) => {
 
           this.selectingTVPlan = false;
@@ -660,17 +668,17 @@ export class ProviderCheckoutService {
             resolve(cartItem);
           }
         },
-          (error: ErrorResponse) => {
-            this.selectingTVPlan = false;
-            reject(error)
-          });
+        (error: ErrorResponse) => {
+          this.selectingTVPlan = false;
+          reject(error)
+        });
     });
   }
 
-  selectTelephonePlan(plan: ProductModel): Promise<CartItemModel>  {
+  selectTelephonePlan(plan: ProductModel): Promise<CartItemModel> {
     return new Promise((resolve, reject) => {
       this.selectingTelephonePlan = true;
-      this.cartService.addToCart({ product: plan }).then(
+      this.cartService.addToCart({product: plan}).then(
         (cartItem: CartItemModel) => {
           this.selectingTelephonePlan = false;
           this.selected_telephone_plan = cartItem;
@@ -847,20 +855,20 @@ export class ProviderCheckoutService {
         this.selected_extra_tv_decoder.cartItem = cartItem;
         this.selected_extra_tv_decoder.qty = cartItem.quantity;
       }, (error: ErrorResponse) => {
-    });
+      });
   }
 
   updateTVDecoderQty(event) {
     let new_qty = event.target.value;
-    if(new_qty == 0){
+    if (new_qty == 0) {
       this.removeExtraTVDecoder();
     } else {
       this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
       this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
-        (cartItem:CartItemModel)=>{
+        (cartItem: CartItemModel) => {
           this.selected_extra_tv_decoder.cartItem = cartItem;
           this.selected_extra_tv_decoder.qty = cartItem.quantity;
-      })
+        })
     }
   }
 
@@ -871,7 +879,7 @@ export class ProviderCheckoutService {
           this.selected_extra_tv_decoder.cartItem = null;
           this.selected_extra_tv_decoder.qty = 0;
         }, (error: ErrorResponse) => {
-      });
+        });
     }
   }
 
@@ -1013,4 +1021,25 @@ export class ProviderCheckoutService {
     return this.cartService.cart.items.filter((data) => !data.product)
   }
 
+  getTokenFullURL() {
+    const url:string = window.location.origin + this.router.createUrlTree([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {token: this.cartService.cart.token}
+    }).toString();
+    return url;
+  }
+
+  onCopyTokenFullURL(event){
+    this.copyInputMessage(document.getElementById('token-full-url'));
+  }
+
+  copyInputMessage(inputElement){
+    this.copying = true;
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+    setTimeout(()=>{
+      this.copying = false;
+    },3000 )
+  }
 }

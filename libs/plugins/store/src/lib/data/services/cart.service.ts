@@ -1,12 +1,12 @@
-import { EventEmitter, Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
-import { CartModel } from "@plugins/store/src/lib/data/models/Cart.model";
-import { AddressModel } from "@core/data/src/lib/models";
-import { CookieService } from "ngx-cookie-service";
-import { ErrorResponse, JsonApiQueryData } from "angular2-jsonapi";
-import { CartItemModel } from "@plugins/store/src/lib/data/models/CartItem.model";
-import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
+import {EventEmitter, Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {WebAngularDataStore} from "@core/services/src/lib/WebAngularDataStore.service";
+import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
+import {AddressModel} from "@core/data/src/lib/models";
+import {CookieService} from "ngx-cookie-service";
+import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
+import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
+import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
 
 
 export interface CookieCart {
@@ -25,15 +25,15 @@ export class CartService {
   public cart_changes: EventEmitter<null> = new EventEmitter();
 
   constructor(private http: HttpClient,
-    private cookieService: CookieService,
-    private datastore: WebAngularDataStore) {
+              private cookieService: CookieService,
+              private datastore: WebAngularDataStore) {
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
         this.datastore.findAll(CartModel, {
           token: cartCookie['token'],
-          page: { size: 1, number: 1 },
+          page: {size: 1, number: 1},
           include: ["billing_address", "shipping_address",
             "items", "items.product", "items.product.product_type",
             "items.product.categories"
@@ -65,6 +65,15 @@ export class CartService {
     this.cart_changes.emit();
   }
 
+  public setCartToken(token: string) {
+    const cartCookie: CookieCart = {
+      token: token,
+    };
+    this.cookieService.set(this.cart_cookie_name, JSON.stringify(cartCookie), 30);
+    // TODO: maybe improve, maybe not
+    location.reload()
+  }
+
   public updateCookie() {
     if (this._cart.token) {
       const cartCookie: CookieCart = {
@@ -92,7 +101,7 @@ export class CartService {
   }
 
   public addToCart(parameters: { product: ProductModel, qty?: number, data?: object }): Promise<CartItemModel> {
-    let { product, qty = 1, data = {} } = parameters;
+    let {product, qty = 1, data = {}} = parameters;
     return new Promise((resolve, reject) => {
       if (product) {
         let cartItem: CartItemModel = this.datastore.createRecord(CartItemModel, {
@@ -102,12 +111,13 @@ export class CartService {
         cartItem.product = product;
         cartItem.cart = this.cart;
 
-        cartItem.save({ include: `product` }).subscribe(
+        cartItem.save({include: `product`}).subscribe(
           (cartItem: CartItemModel) => {
-            cartItem.product.load_addons(this.datastore, { include: `product_type,categories` })
+            cartItem.product.load_addons(this.datastore, {include: `product_type,categories`})
               .subscribe((query: JsonApiQueryData<ProductModel>) => {
                 cartItem.product.addons = query.getModels();
-                this.updateCart().then(() => { });
+                this.updateCart().then(() => {
+                });
                 resolve(cartItem);
               })
 
@@ -116,7 +126,7 @@ export class CartService {
           (error: ErrorResponse) => {
             reject(error);
           });
-      }else{
+      } else {
         reject("Missing product parameter")
       }
     });
@@ -124,7 +134,7 @@ export class CartService {
 
   public updateCartItem(cartItem: CartItemModel): Promise<CartItemModel> {
     return new Promise((reject, resolver) => {
-      cartItem.save().subscribe((cartItem:CartItemModel) => {
+      cartItem.save().subscribe((cartItem: CartItemModel) => {
           console.log(this.cart.items)
 
         },

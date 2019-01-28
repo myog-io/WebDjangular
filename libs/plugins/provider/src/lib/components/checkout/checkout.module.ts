@@ -15,13 +15,14 @@ import {PluginProviderCheckoutWizardComponent} from "./wizard/wizard.component";
 import {PluginProviderCheckoutWizardStep01Component} from "./wizard/step01/step01.component";
 import {PluginProviderCheckoutWizardStep02Component} from "./wizard/step02/step02.component";
 import {PluginProviderCheckoutWizardStep03Component} from "./wizard/step03/step03.component";
-import {NbCardModule } from "@nebular/theme";
+import {NbCardModule, NbTooltipDirective, NbTooltipModule} from "@nebular/theme";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PluginProviderCheckoutPlanTelephoneOptionalComponent} from "./plans/telephone/optional/optional.component";
 import {PluginProviderCheckoutBeforeCheckoutComponent} from "./before-checkout/before-checkout.component";
 import {NgxMaskModule} from "ngx-mask";
 import { PluginProviderCheckoutErrorComponent } from "./checkout-form-error.component";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import {NbTooltipComponent} from "@nebular/theme/components/tooltip/tooltip.component";
 
 
 
@@ -40,7 +41,7 @@ const COMPONENTS = [
   PluginProviderCheckoutWizardStep01Component,
   PluginProviderCheckoutWizardStep02Component,
   PluginProviderCheckoutWizardStep03Component,
-  PluginProviderCheckoutErrorComponent
+  PluginProviderCheckoutErrorComponent,
 ];
 
 @NgModule({
@@ -48,6 +49,7 @@ const COMPONENTS = [
     //BrowserModule,
     CommonModule,
     NbCardModule,
+    NbTooltipModule,
     FormsModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
