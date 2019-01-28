@@ -122,6 +122,19 @@ export class CartService {
     });
   }
 
+  public updateCartItem(cartItem: CartItemModel): Promise<CartItemModel> {
+    return new Promise((reject, resolver) => {
+      cartItem.save().subscribe((cartItem:CartItemModel) => {
+          console.log(this.cart.items)
+
+        },
+        () => {
+
+        })
+
+    });
+  }
+
   public removeFromCart(cartItem: CartItemModel): Promise<void> {
     return new Promise((resolve, reject) => {
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(

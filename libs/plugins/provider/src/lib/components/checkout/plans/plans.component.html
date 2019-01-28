@@ -118,7 +118,8 @@
               <span class="title"> Adquirir pontos extra? </span>
             </h4>
             <div class="form-group">
-              <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty">
+              <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty"
+                (change)="providerCheckout.updateTVDecoderQty($event);">
                 <option value="0">Nenhum ponto adicional</option>
                 <option value="1">1 ponto adicional</option>
                 <option value="2">2 pontos adicionais</option>
@@ -132,9 +133,9 @@
             </span>
           </div>
           <div class="col-lg-3 actions-wrapper align-self-center">
-            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
+            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 0"
               type="button" class="btn btn-outline-primary btn-round text-uppercase"
-              (click)="providerCheckout.addExtraTVDecoder()">
+              (click)="providerCheckout.addExtraTVDecoder(1)">
               Adicionar
             </button>
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"

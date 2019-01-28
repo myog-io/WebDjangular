@@ -7,12 +7,12 @@
   display: block;
 }
 
-#user-info-wrapper .card{
+#user-info-wrapper .card {
   border: transparent;
 }
 
 section {
-  padding-top:20px;
+  padding-top: 20px;
   padding-bottom: 20px;
 
   @include media-breakpoint-up(md) {
@@ -21,6 +21,10 @@ section {
   }
 }
 
+.back-button-wrap {
+  display: flex;
+  align-items: center;
+}
 
 
 

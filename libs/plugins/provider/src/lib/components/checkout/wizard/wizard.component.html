@@ -7,21 +7,18 @@
   <div class="row">
     <div class="col-md-12">
       <ul class="wizard">
-
         <li class="step-tab step-1" [ngClass]="{'active': providerCheckout.current_wizard_step == 1}">
           <a (click)="providerCheckout.setWizardStep(1)">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Dados pessoais</span>
           </a>
         </li>
-
         <li class="step-tab step-2" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
           <a (click)="providerCheckout.setWizardStep(2)">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Pagamento</span>
           </a>
         </li>
-
         <li class="step-tab step-3" [ngClass]="{'active': providerCheckout.current_wizard_step == 3}">
           <a (click)="providerCheckout.setWizardStep(3)">
             <span class="icon"><i class="fas fa-check"></i></span>
@@ -57,11 +54,11 @@
                 </li>
               </ul>
 
-              <div class="">
-                <button class="float-left btn btn-outline-light ml-0 ml-md-2 pl-2 pr-2 btn-sm btn-round text-uppercase"
+              <div class="links-wrapper">
+                <a class="float-left text-uppercase"
                   (click)="providerCheckout.backToBuildingPlanStep()">
                   Alterar plano
-                </button>
+                </a>
               </div>
 
             </div>
