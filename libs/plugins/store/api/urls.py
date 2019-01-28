@@ -1,7 +1,8 @@
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
-from .views.CartViewSet import CartViewSet, CartRelationshipView, CartItemViewSet, CartItemRelationshipView
+from .views.CartViewSet import CartViewSet, CartRelationshipView, CartItemViewSet, CartItemRelationshipView, \
+CartTermViewSet, CartTermRelationshipView
 from .views.DiscountViewSet import CartRuleViewSet, CatalogRuleViewSet
 from .views.OrderViewSet import OrderViewSet
 from .views.PaymentViewSet import PaymentViewSet
@@ -13,6 +14,7 @@ from .views.ShippingViewSet import ShippingMethodViewSet
 router = DefaultRouter()
 router.register('cart', CartViewSet, base_name='cart')
 router.register('cart-item', CartItemViewSet, base_name='cart-item')
+router.register('cart-term', CartTermViewSet, base_name='cart-term')
 router.register('category', ProductCategoryViewSet, base_name='category')
 router.register('discount/catalog-rule', CatalogRuleViewSet,
                 base_name='discount/catalog-rule')
@@ -90,6 +92,16 @@ relationshipPatterns = [
     url(r'^cart-item/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         CartItemViewSet.as_view({'get': 'retrieve_related'}),
         name='cart-item-related'
+    ),
+
+    # Cart Term
+    url(regex=r'^cart-term/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=CartTermRelationshipView.as_view(),
+        name='cart-term-relationships'
+    ),
+    url(r'^cart-term/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        CartTermViewSet.as_view({'get': 'retrieve_related'}),
+        name='cart-term-related'
     ),
 ]
 

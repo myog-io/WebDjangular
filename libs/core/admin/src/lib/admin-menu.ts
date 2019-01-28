@@ -106,6 +106,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: 'Cart Rules',
             link: '/store/rules/cart-rules',
           },
+          {
+            title: 'Cart Terms',
+            link: '/store/rules/cart-terms',
+          },
         ]
       },
       {

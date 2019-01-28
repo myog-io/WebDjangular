@@ -1,13 +1,31 @@
 from rest_framework_json_api import serializers
 from rest_framework_json_api.relations import ResourceRelatedField
 
-from libs.plugins.store.api.models.Cart import Cart, CartItem
+from libs.plugins.store.api.models.Cart import Cart, CartItem, CartTerm
 from libs.plugins.store.api.models.Product import Product
 from webdjango.models.Address import Address
 from libs.core.users.api.models.User import User
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from libs.plugins.store.api import defaults
 from .MoneySerializer import MoneyField
+
+class CartTermSerializer(WebDjangoSerializer):
+    products = ResourceRelatedField(
+        many=True,
+        queryset=Product.objects,
+        required=False,
+        related_link_url_kwarg='pk',
+        self_link_view_name='cart-term-relationships',
+        related_link_view_name='cart-term-related',
+    )
+    included_serializers = {
+        'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+    }
+    class Meta:
+        model = CartTerm
+        fields = '__all__'
+
+
 class CartItemSerializer(WebDjangoSerializer):
     cart = ResourceRelatedField(
         many=False,
@@ -84,12 +102,22 @@ class CartSerializer(WebDjangoSerializer):
         related_link_view_name='cart-related',
         required=False
     )
+
+    terms = ResourceRelatedField(
+        many=False,
+        queryset=CartTerm.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='cart-relationships',
+        related_link_view_name='cart-related',
+        required=False
+    )
     extra_data = serializers.JSONField(required=False)
 
     included_serializers = {
         'shipping_address': 'webdjango.serializers.AddressSerializer.AddressSerializer',
         'billing_address': 'webdjango.serializers.AddressSerializer.AddressSerializer',
         'items': 'libs.plugins.store.api.serializers.CartSerializer.CartItemSerializer',
+        'terms': 'libs.plugins.store.api.serializers.CartSerializer.CartTermSerializer',
         'user': 'libs.core.users.api.serializers.UserSerializer.UserSerializer',
     }
     is_shipping_required = serializers.BooleanField(read_only=True)

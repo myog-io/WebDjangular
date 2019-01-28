@@ -23,6 +23,16 @@ class CartStatus:
     ]
 
 
+class CartTerm(BaseModel):
+    all_carts = models.BooleanField(default=None)
+    products = models.ManyToManyField(Product, related_name='terms')
+    enabled = models.BooleanField(default=True)
+    content = models.TextField()
+    position = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['-position']
+
 class Cart(BaseModel):
     """
     """
@@ -41,6 +51,7 @@ class Cart(BaseModel):
     shipping_address = models.ForeignKey(
         Address, related_name='cart_shipping_address', on_delete=models.CASCADE, blank=True, null=True)
 
+    terms = models.ManyToManyField(CartTerm, related_name='carts')
     #shipping_method = models.ForeignKey(ShippingMethod,
     #                                    blank=True, null=True, related_name='carts',
     #                                    on_delete=models.SET_NULL)
@@ -113,7 +124,7 @@ class Cart(BaseModel):
         return 0
 
 
-class CartItem(models.Model):
+class CartItem(BaseModel):
     cart = models.ForeignKey(
         'Cart', related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(
@@ -171,5 +182,4 @@ class CartItem(models.Model):
             return self.product.sku
         return self.data['voucher']
         
-
 

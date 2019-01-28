@@ -9,6 +9,7 @@ import { ProductTypeModel } from "../data/models/ProductType.model";
 import { ProductModel } from "../data/models/Product.model";
 import { ProductAttributeModel } from "../data/models/ProductAttribute.model";
 import { ScaffoldModule } from "@core/builder/src/lib/scaffold/scaffold.module";
+import { CartTermModel } from "../data/models/CartTerm.model";
 
 const routes: Routes = [
   {
@@ -83,6 +84,15 @@ const routes: Routes = [
               model: CatalogRuleModel,
               title: 'Catalog Rules',
               path: 'store/rules/catalog-rules'
+            },
+          },
+          {
+            path: 'cart-terms',
+            loadChildren: () => ScaffoldModule,
+            data: {
+              model: CartTermModel,
+              title: 'Cart Terms',
+              path: 'store/rules/cart-terms'
             },
           },
         ],

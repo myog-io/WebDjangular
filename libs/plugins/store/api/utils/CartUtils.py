@@ -6,7 +6,7 @@ import traceback
 from uuid import UUID, uuid1
 from datetime import date, timedelta
 
-from ..models.Cart import Cart, CartItem, CartStatus
+from ..models.Cart import Cart, CartItem, CartStatus, CartTerm
 from ..models.Discount import CartRule, RuleValueType
 from rest_framework.serializers import DecimalField
 from libs.plugins.store.api import defaults
@@ -14,6 +14,7 @@ from ..serializers.MoneySerializer import MoneyField
 from webdjango.utils.JsonLogic import jsonLogic
 from ..serializers.CartSerializer import CartItemSerializer, CartSerializer
 from webdjango.serializers.AddressSerializer import AddressSerializer
+from django.db.models import Q
 
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
 
@@ -76,7 +77,7 @@ def apply_cart_rule(cart, rule):
 
 
 def apply_all_cart_rules(cart):
-    if not cart.id: return
+    
     rules = CartRule.objects.active().all()
     for rule in rules:
         if rule.conditions and len(rule.conditions) > 0:
@@ -100,6 +101,16 @@ def apply_all_cart_rules(cart):
         else:
             apply_cart_rule(cart, rule)
             # apply rule
+
+    return cart
+
+def apply_cart_terms(cart):
+    # Search for Terms that Should be applied to all carts
+    terms_list = [o.id for o in cart.terms.all()]
+    terms = CartTerm.objects.filter(enabled=True,products__in=[item.product for item in cart.items.all()]).exclude(id__in=terms_list) | CartTerm.objects.filter(all_carts=True,enabled=True).exclude(id__in=terms_list)
+    if terms:
+        cart.terms.add(*terms.all())
+    # Loop The itens and check if any product has
 
     return cart
 
