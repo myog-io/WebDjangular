@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderCheckoutService} from "../../../data/services/provider-checkout.service";
-import {Validators} from "@angular/forms";
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PluginProviderDialogComponent } from '../../dialog.component';
+
+
 
 @Component({
     selector: 'plugin-provider-checkout-summary',
@@ -12,10 +15,30 @@ export class PluginProviderCheckoutSummaryComponent implements OnInit {
 
     providerCheckout: ProviderCheckoutService;
 
-    constructor(providerCheckout: ProviderCheckoutService) {
+    constructor(
+        providerCheckout: ProviderCheckoutService,
+        //protected dialogRef: NbDialogRef<any>,
+        //private dialogService: NbDialogService,
+        private _modalService: NgbModal,
+        
+    ) {
       this.providerCheckout = providerCheckout;
     }
 
     ngOnInit() {
+    }
+
+    submit() {
+        if (
+            this.providerCheckout.cartService.cart.extra_data.customer_type === 'new' &&
+            !this.providerCheckout.selected_internet_plan
+        ){
+            let modalRef = this._modalService.open(PluginProviderDialogComponent,{size:'sm',centered:true})
+            modalRef.componentInstance.title = "Escolher plano de Internet"
+            modalRef.componentInstance.body = `A Escolha de um plano de internet é obrigatória para novos clientes, por favor escolha seu plano.`
+            
+        }else{
+            this.providerCheckout.onBuildingPlanSubmit();
+        }
     }
 }

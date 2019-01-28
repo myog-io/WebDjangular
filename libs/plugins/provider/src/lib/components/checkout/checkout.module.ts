@@ -21,6 +21,7 @@ import {PluginProviderCheckoutPlanTelephoneOptionalComponent} from "./plans/tele
 import {PluginProviderCheckoutBeforeCheckoutComponent} from "./before-checkout/before-checkout.component";
 import {NgxMaskModule} from "ngx-mask";
 import { PluginProviderCheckoutErrorComponent } from "./checkout-form-error.component";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import {NbTooltipComponent} from "@nebular/theme/components/tooltip/tooltip.component";
 
 
@@ -52,6 +53,7 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
+    NgbModalModule
   ],
   exports: [
     ...COMPONENTS,
