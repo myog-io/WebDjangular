@@ -10,7 +10,7 @@ class ProviderConfig():
     CONFIG_GROUP_SLUG = 'provider'
     GROUP = CoreConfigGroup(
         id=CONFIG_GROUP_SLUG,
-        title="Privder Configuration",
+        title="Provider",
         order=6
     )
 

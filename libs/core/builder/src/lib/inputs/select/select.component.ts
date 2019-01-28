@@ -12,7 +12,7 @@ import { config } from 'ngx-mask';
   template: `
     <div class="form-group form-select" [formGroup]="isFormGroup ? group.get(config.name) : group" >
       <label>{{ config.label }}</label>
-      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" bindLabel="name"
+      <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" bindLabel="name" bindValue="id"
                  [formControlName]="isFormGroup ? 'id' : config.name" [multiple]="config.multiple" [addTag]="addTagPromise"
                  [loading]="loading" [placeholder]="placeholder" [items]="options" [compareWith]="compareValues">
           <ng-template ng-tag-tmp let-search="searchTerm" *ngIf="config.addTags">
@@ -100,6 +100,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
       this.options = this.config.options || [];
     }
     if (this.config.value) {
+      
       this.group.get(this.config.name).setValue(this.config.value);
       this.onChange(this.config.value);
     }
@@ -123,20 +124,14 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
 
   }
   compareValues(a: any, b: any) {
-    console.log(a,b)
     return a.id === b;
   }
   updateValue(value: any) {
-    if (value.id) {
-      value = value.id;
-    }
+    
     if (this.config.formType == FormGroup) {
       const fg = this.group.get(this.config.name) as AbstractForm;
 
       fg.populateForm(this.models.find((model) => model.id == value))
-    } else {
-
-      this.group.get(this.config.name).setValue(value);
     }
   }
 

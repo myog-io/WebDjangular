@@ -10,7 +10,7 @@ class CMSCoreConfig:
     GOOGLE_MAPS_API_KEY = 'google_maps_api_key'
     GROUP = CoreConfigGroup(
         id=GROUP_SLUG,
-        title="Core Website Configuration",
+        title="Core Website",
         order=0
     )
     INPUTS = [
@@ -39,6 +39,7 @@ class CMSCoreConfig:
             validation=None,
             wrapper_class="col-6",
             group=GROUP_SLUG,
+            select_options={ 'block_class': 'header'},
         ),
         CoreConfigInput(
             id=DEFAULT_FOOTER,
@@ -51,6 +52,7 @@ class CMSCoreConfig:
             placeholder="Select your Default Footer",
             validation=None,
             wrapper_class="col-6",
+            select_options={ 'block_class': 'footer'},
             group=GROUP_SLUG,
         ),
         CoreConfigInput(
