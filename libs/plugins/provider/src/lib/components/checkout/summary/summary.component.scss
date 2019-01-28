@@ -108,6 +108,9 @@ table {
           position: relative;
 
           .price-wrapper {
+            display: flex;
+            align-items: center;
+
             color: #00b9bd;
             font-family: "Boston", Arial, Helvetica, sans-serif;
             @include responsive-font-size( 19px);
@@ -131,10 +134,15 @@ table {
               border: 0;
               position: absolute;
               @include responsive-font-size( 22px);
-              top: -2px;
               right: 0;
               padding: 0;
               cursor: pointer;
+            }
+
+            .strikethrough{
+              text-decoration: line-through;
+              font-weight: $fw-medium;
+              @include responsive-font-size( 16px);
             }
           }
 

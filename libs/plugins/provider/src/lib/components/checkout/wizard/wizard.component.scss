@@ -178,6 +178,7 @@ ul.wizard {
       }
 
       a {
+        cursor:pointer;
         font-family: "Boston", Arial, Helvetica, sans-serif;
         @include responsive-font-size( 11px);
         font-weight: 600;

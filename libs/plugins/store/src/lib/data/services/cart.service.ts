@@ -101,21 +101,32 @@ export class CartService {
       });
       cartItem.product = product;
       cartItem.cart = this.cart;
-
       cartItem.save({include: `product`}).subscribe(
         (cartItem: CartItemModel) => {
-          cartItem.product.load_addons(this.datastore,{include: `product_type,categories`})
-          .subscribe((query:JsonApiQueryData<ProductModel>)=>{
-            cartItem.product.addons = query.getModels();
-            this.updateCart().then(()=>{});
-            resolve(cartItem);
-          } )
-
-          
+          cartItem.product.load_addons(this.datastore, {include: `product_type,categories`})
+            .subscribe((query: JsonApiQueryData<ProductModel>) => {
+              cartItem.product.addons = query.getModels();
+              this.updateCart().then(() => {
+              });
+              resolve(cartItem);
+            })
         },
         (error: ErrorResponse) => {
           reject(error);
         });
+    });
+  }
+
+  public updateCartItem(cartItem: CartItemModel): Promise<CartItemModel> {
+    return new Promise((reject, resolver) => {
+      cartItem.save().subscribe((cartItem:CartItemModel) => {
+          console.log(this.cart.items)
+
+        },
+        () => {
+
+        })
+
     });
   }
 
@@ -156,7 +167,7 @@ export class CartService {
       });
       Promise.all(promises).then(
         (values) => {
-          this.updateCart().then(()=>{
+          this.updateCart().then(() => {
             resolve(values);
           })
         },

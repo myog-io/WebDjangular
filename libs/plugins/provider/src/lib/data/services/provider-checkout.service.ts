@@ -1,20 +1,20 @@
-import { Inject, Injectable } from '@angular/core';
-import { ErrorResponse, JsonApiQueryData } from "angular2-jsonapi";
-import { DOCUMENT, Location } from '@angular/common';
-import { PageScrollInstance, PageScrollService } from 'ngx-page-scroll';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
-import { CartService } from '@plugins/store/src/lib/data/services/cart.service';
-import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
-import { CityModel } from '../models/City.model';
-import { ClientUserService } from '@core/services/src/lib/client-user.service';
-import { AddressModel } from '@core/data/src/lib/models';
-import { HttpHeaders } from '@angular/common/http';
-import { Observable, Subscriber } from 'rxjs';
-import { CondoModel } from '../models/Condo.model';
+import {Inject, Injectable} from '@angular/core';
+import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
+import {DOCUMENT, Location} from '@angular/common';
+import {PageScrollInstance, PageScrollService} from 'ngx-page-scroll';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
+import {CartService} from '@plugins/store/src/lib/data/services/cart.service';
+import {ProductModel} from '@plugins/store/src/lib/data/models/Product.model';
+import {CityModel} from '../models/City.model';
+import {ClientUserService} from '@core/services/src/lib/client-user.service';
+import {AddressModel} from '@core/data/src/lib/models';
+import {HttpHeaders} from '@angular/common/http';
+import {Observable, Subscriber} from 'rxjs';
+import {CondoModel} from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
-import { ActivatedRoute, Router } from "@angular/router";
-import { CartItemModel } from "@plugins/store/src/lib/data/models/CartItem.model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -114,7 +114,8 @@ export class ProviderCheckoutService {
 
   public selected_extra_tv_decoder = {
     plan: null,
-    qty: 0
+    qty: 0,
+    cartItem: null,
   };
 
 
@@ -232,7 +233,8 @@ export class ProviderCheckoutService {
 
       if (this.cartService.cart.extra_data.hasOwnProperty('current_step')) {
         this.current_step = this.cartService.cart.extra_data['current_step'];
-        if (this.current_step == ProviderCheckoutSteps.buildingPlan) {
+        if (this.current_step == ProviderCheckoutSteps.buildingPlan ||
+          this.current_step == ProviderCheckoutSteps.wizard) {
           this.loadPlans();
         }
       }
@@ -288,10 +290,10 @@ export class ProviderCheckoutService {
     let promises = [];
     let items = this.cartService.cart.items;
 
-    if(this.pre_select_plans.has_pre_selected_plans) {
+    if (this.pre_select_plans.has_pre_selected_plans) {
 
-      if(items){
-        this.cartService.clearCartItems().then(()=>{
+      if (items) {
+        this.cartService.clearCartItems().then(() => {
           this.addPreSelectedPlans();
         })
       } else {
@@ -308,16 +310,16 @@ export class ProviderCheckoutService {
         promises.push(
           new Promise((resolve, reject) => {
             this.selected_internet_plan.product.load_addons(this.datastore,
-              { include: `product_type,categories` }).subscribe(
-                (query: JsonApiQueryData<ProductModel>) => {
-                  this.plans_optionals.internet = query.getModels();
-                  this.selected_internet_optionals = optionals.filter(
-                    (item) => this.plans_optionals.internet.find(
-                      (plan) => plan.sku == item.product.sku));
-              resolve(true);
-            }, (error) => {
-              reject(error);
-            });
+              {include: `product_type,categories`}).subscribe(
+              (query: JsonApiQueryData<ProductModel>) => {
+                this.plans_optionals.internet = query.getModels();
+                this.selected_internet_optionals = optionals.filter(
+                  (item) => this.plans_optionals.internet.find(
+                    (plan) => plan.sku == item.product.sku));
+                resolve(true);
+              }, (error) => {
+                reject(error);
+              });
           })
         );
       }
@@ -327,18 +329,25 @@ export class ProviderCheckoutService {
         url_params['tv'] = this.selected_tv_plan.product.sku;
         promises.push(
           new Promise((resolve, reject) => {
-            this.selected_tv_plan.product.load_addons(this.datastore, { include: `product_type,categories` }).subscribe((query: JsonApiQueryData<ProductModel>) => {
+            this.selected_tv_plan.product.load_addons(this.datastore, {include: `product_type,categories`}).subscribe((query: JsonApiQueryData<ProductModel>) => {
               this.plans_optionals.tv = query.getModels();
               this.selected_tv_optionals = optionals.filter((item) => this.plans_optionals.tv.find((plan) => plan.sku == item.product.sku));
+
               // Loading Decoder
               let decoder_plan = this.plans_optionals.tv.find((p) => p.sku === this.sku_extra_tv_decoder);
 
               this.plans_optionals.tv = this.arrayRemove(this.plans_optionals.tv, decoder_plan);
 
+              let decoder_plan_cart_item: CartItemModel = this.selected_tv_optionals.find((item) => (item.sku == this.sku_extra_tv_decoder));
+              this.selected_tv_optionals = this.arrayRemove(this.selected_tv_optionals, decoder_plan_cart_item);
+
+
               this.selected_extra_tv_decoder = {
                 plan: decoder_plan,
-                qty: this.selected_extra_tv_decoder ? this.selected_extra_tv_decoder.qty : 0
-              }
+                qty: decoder_plan_cart_item? decoder_plan_cart_item.quantity : 0,
+                cartItem: decoder_plan_cart_item? decoder_plan_cart_item : null
+              };
+
               resolve(true);
             }, (error) => {
               reject(error);
@@ -353,7 +362,7 @@ export class ProviderCheckoutService {
         url_params['phone'] = this.selected_telephone_plan.product.sku;
         promises.push(
           new Promise((resolve, reject) => {
-            this.selected_telephone_plan.product.load_addons(this.datastore, { include: `product_type,categories` }).subscribe((query: JsonApiQueryData<ProductModel>) => {
+            this.selected_telephone_plan.product.load_addons(this.datastore, {include: `product_type,categories`}).subscribe((query: JsonApiQueryData<ProductModel>) => {
               this.plans_optionals.telephone = query.getModels();
               this.selected_telephone_optionals = optionals.filter((item) => this.plans_optionals.telephone.find((plan) => plan.sku == item.product.sku));
               resolve(true);
@@ -390,7 +399,7 @@ export class ProviderCheckoutService {
         //this.location.go(url);
         this.checkDisabledByCategories(this.cartService.cart);
       });
-      
+
     }
     if (this.selected_tv_optionals.length > 0) {
       url_params['tv_op'] = this.selected_tv_optionals.map((cartItem: CartItemModel) => {
@@ -471,7 +480,7 @@ export class ProviderCheckoutService {
           CityModel,
           null,
           null,
-          new HttpHeaders({ 'Authorization': 'none' }),
+          new HttpHeaders({'Authorization': 'none'}),
           url
         ).subscribe((city: CityModel) => {
           this.city = city;
@@ -486,8 +495,8 @@ export class ProviderCheckoutService {
   public findCondos() {
     this.condos = this.datastore.findAll(
       CondoModel,
-      { city__id: this.city.id },
-      new HttpHeaders({ 'Authorization': 'none' }),
+      {city__id: this.city.id},
+      new HttpHeaders({'Authorization': 'none'}),
     ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
   }
 
@@ -498,7 +507,7 @@ export class ProviderCheckoutService {
 
   loadPlans() {
     let options = {};
-    options['page'] = { number: 1, size: 100 };
+    options['page'] = {number: 1, size: 100};
     //options['include'] = `${ProductModel.include}`;
     options['include'] = `product_type`;
 
@@ -506,19 +515,19 @@ export class ProviderCheckoutService {
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
-      new HttpHeaders({ 'Authorization': 'none' }),
+      new HttpHeaders({'Authorization': 'none'}),
       url).subscribe((query: JsonApiQueryData<ProductModel>) => {
-        const plans = query.getModels();
-        this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
-        this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
-        this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
-        this.loading_plans = false;
+      const plans = query.getModels();
+      this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+      this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+      this.plans.tv = plans.filter((pm) => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+      this.loading_plans = false;
 
-        this.updateSelectedItems();
-      }, (error) => {
-        // TODO: do something
-        this.loading_plans = false;
-      });
+      this.updateSelectedItems();
+    }, (error) => {
+      // TODO: do something
+      this.loading_plans = false;
+    });
   }
 
   toggleCollapse($event, plan) {
@@ -587,7 +596,7 @@ export class ProviderCheckoutService {
 
   selectInternetPlan(plan: ProductModel) {
     this.selectingInternetPlan = true;
-    this.cartService.addToCart({ product: plan }).then(
+    this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selectingInternetPlan = false;
         this.selected_internet_plan = cartItem;
@@ -599,7 +608,7 @@ export class ProviderCheckoutService {
 
   selectTVPlan(plan: ProductModel) {
     this.selectingTVPlan = true;
-    this.cartService.addToCart({ product: plan }).then(
+    this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selectingTVPlan = false;
         this.selected_tv_plan = cartItem;
@@ -611,7 +620,8 @@ export class ProviderCheckoutService {
 
           this.selected_extra_tv_decoder = {
             plan: decoder_plan,
-            qty: this.selected_extra_tv_decoder ? this.selected_extra_tv_decoder.qty : 0
+            qty: 0,
+            cartItem: null
           }
         }
       }, (error: ErrorResponse) => {
@@ -621,7 +631,7 @@ export class ProviderCheckoutService {
 
   selectTelephonePlan(plan: ProductModel) {
     this.selectingTelephonePlan = true;
-    this.cartService.addToCart({ product: plan }).then(
+    this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selectingTelephonePlan = false;
         this.selected_telephone_plan = cartItem;
@@ -672,7 +682,7 @@ export class ProviderCheckoutService {
 
 
   addInternetOptional(plan) {
-    this.cartService.addToCart({ product: plan }).then(
+    this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selected_internet_optionals.push(cartItem);
       }, (error: ErrorResponse) => {
@@ -681,7 +691,7 @@ export class ProviderCheckoutService {
   }
 
   addTVOptional(plan) {
-    this.cartService.addToCart({ product: plan }).then(
+    this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selected_tv_optionals.push(cartItem);
       }, (error: ErrorResponse) => {
@@ -690,7 +700,7 @@ export class ProviderCheckoutService {
   }
 
   addTelephoneOptional(plan) {
-    this.cartService.addToCart({ product: plan }).then(
+    this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selected_telephone_optionals.push(cartItem);
       }, (error: ErrorResponse) => {
@@ -780,18 +790,47 @@ export class ProviderCheckoutService {
 
   get priceExtraTVDecoder(): string {
     let price: number = 0;
-    if (this.selected_extra_tv_decoder.plan) {
-      price = this.selected_extra_tv_decoder.plan.pricing_list * this.selected_extra_tv_decoder.qty;
+    if (this.selected_extra_tv_decoder.plan && this.selected_extra_tv_decoder.cartItem) {
+      price = this.selected_extra_tv_decoder.plan.pricing_list * this.selected_extra_tv_decoder.cartItem.quantity;
     }
     return price.toFixed(2);
   }
 
-  addExtraTVDecoder() {
-    this.selected_extra_tv_decoder.qty += 1;
+  addExtraTVDecoder(qty) {
+    this.cartService.addToCart({
+      product: this.selected_extra_tv_decoder.plan,
+      qty: (qty)
+    }).then(
+      (cartItem: CartItemModel) => {
+        this.selected_extra_tv_decoder.cartItem = cartItem;
+        this.selected_extra_tv_decoder.qty = cartItem.quantity;
+      }, (error: ErrorResponse) => {
+    });
+  }
+
+  updateTVDecoderQty(event) {
+    let new_qty = event.target.value;
+    if(new_qty == 0){
+      this.removeExtraTVDecoder();
+    } else {
+      this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
+      this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
+        (cartItem:CartItemModel)=>{
+          this.selected_extra_tv_decoder.cartItem = cartItem;
+          this.selected_extra_tv_decoder.qty = cartItem.quantity;
+      })
+    }
   }
 
   removeExtraTVDecoder() {
-    this.selected_extra_tv_decoder.qty = 0;
+    if (this.selected_extra_tv_decoder.cartItem) {
+      this.cartService.removeFromCart(this.selected_extra_tv_decoder.cartItem).then(
+        () => {
+          this.selected_extra_tv_decoder.cartItem = null;
+          this.selected_extra_tv_decoder.qty = 0;
+        }, (error: ErrorResponse) => {
+      });
+    }
   }
 
   get subtotal() {
@@ -810,8 +849,8 @@ export class ProviderCheckoutService {
   }
 
   setWizardStep(number: number) {
-    // TOOD If Can!
     this.current_wizard_step = number;
+    this.updateCartExtraData();
   }
 
   backToBuildingPlanStep() {
@@ -857,7 +896,7 @@ export class ProviderCheckoutService {
 
     let extra_data: any = {};
     extra_data.current_step = this.currentStep.toString();
-    extra_data.current_wizard_step = this.currentStep.toString();
+    extra_data.current_wizard_step = this.current_wizard_step.toString();
     extra_data.condo = this.formBeforeCheckout.get('condo').value;
     extra_data.condo_number = this.formBeforeCheckout.get('condoNumber').value;
     extra_data.access_type = this.formBeforeCheckout.get('typeOfAccess').value;
@@ -890,10 +929,10 @@ export class ProviderCheckoutService {
   saveAddress(): Promise<AddressModel> {
     return new Promise((resolve, reject) => {
       this.address.save().subscribe((address) => {
-        this.address = address;
-        resolve(this.address);
+          this.address = address;
+          resolve(this.address);
 
-      },
+        },
         (error) => {
           console.log("error saving address ", error)
           reject(error);
@@ -929,7 +968,7 @@ export class ProviderCheckoutService {
 
 
   getFees() {
-    return this.cartService.cart.items.filter((data) => !data.product )
+    return this.cartService.cart.items.filter((data) => !data.product)
   }
 
 }
