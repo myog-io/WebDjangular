@@ -6,10 +6,32 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from uuid import UUID, uuid1
-from libs.plugins.store.api.models.Cart import Cart, CartItem
-from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer
+from libs.plugins.store.api.models.Cart import Cart, CartItem, CartTerm
+from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
 from libs.plugins.store.api.utils import CartUtils
 from ..utils.CartUtils import cart_has_product
+
+class CartTermViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Product
+    Retrieve a list of Products
+    Retrieve a specific Products
+    Update Products
+    Deleting Products
+    """
+    serializer_class = CartTermSerializer
+    queryset = CartTerm.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    # filter_class = CartFilter
+    search_fields = ('content',)
+    permission_classes = ()
+
+
+class CartTermRelationshipView(RelationshipView):
+    queryset = CartTerm.objects
 
 class CartViewSet(ModelViewSet):
     """
