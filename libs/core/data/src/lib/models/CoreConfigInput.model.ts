@@ -83,6 +83,7 @@ export class CoreConfigInputModel extends AbstractModel {
       inputType: this.input_type,
       display: true,
       conditional: this.conditional,
+      multiple: this.input_type === 'multiple', 
     };
   }
 }
