@@ -652,16 +652,18 @@ export class ProviderCheckoutService {
 
             this.plans_optionals.tv = this.arrayRemove(this.plans_optionals.tv, decoder_plan);
 
-          this.selected_extra_tv_decoder = {
-            plan: decoder_plan,
-            qty: 0,
-            cartItem: null
+            this.selected_extra_tv_decoder = {
+              plan: decoder_plan,
+              qty: 0,
+              cartItem: null
+            };
+            resolve(cartItem);
           }
-          resolve(cartItem);
-        }, (error: ErrorResponse) => {
-          this.selectingTVPlan = false;
-          reject(error)
-        });
+        },
+          (error: ErrorResponse) => {
+            this.selectingTVPlan = false;
+            reject(error)
+          });
     });
   }
 
