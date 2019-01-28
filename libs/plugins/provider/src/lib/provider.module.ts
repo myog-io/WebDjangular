@@ -18,6 +18,7 @@ import { PluginProviderCityCoverageComponent } from './components/city-coverage/
 import { AgmCoreModule } from '@agm/core';
 import { RouterModule } from '@angular/router';
 import {CartService} from "@plugins/store/src/lib/data/services/cart.service";
+import { PluginProviderDialogComponent } from './components/dialog.component';
 
 
 
@@ -38,7 +39,8 @@ const COMPONENTS = [
   PluginProviderPricingTelephoneVerticalComponent,
   PluginProviderPricingTvVerticalComponent,
   PluginProviderError404Component,
-  PluginProviderError500Component
+  PluginProviderError500Component,
+  PluginProviderDialogComponent
 ];
 
 const SERVICES = [
