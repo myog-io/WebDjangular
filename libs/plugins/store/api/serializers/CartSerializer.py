@@ -18,8 +18,17 @@ class CartTermSerializer(WebDjangoSerializer):
         self_link_view_name='cart-term-relationships',
         related_link_view_name='cart-term-related',
     )
+    carts = ResourceRelatedField(
+        many=True,
+        queryset=Cart.objects,
+        required=False,
+        related_link_url_kwarg='pk',
+        self_link_view_name='cart-term-relationships',
+        related_link_view_name='cart-term-related',
+    )
     included_serializers = {
         'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        'carts': 'libs.plugins.store.api.serializers.CartSerializer.CartSerializer',
     }
     class Meta:
         model = CartTerm

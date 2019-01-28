@@ -32,6 +32,7 @@ class CartTermViewSet(ModelViewSet):
 
 class CartTermRelationshipView(RelationshipView):
     queryset = CartTerm.objects
+    
 
 class CartViewSet(ModelViewSet):
     """

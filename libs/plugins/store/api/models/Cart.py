@@ -25,7 +25,7 @@ class CartStatus:
 
 class CartTerm(BaseModel):
     all_carts = models.BooleanField(default=None)
-    products = models.ManyToManyField(Product, related_name='terms')
+    products = models.ManyToManyField('Product', related_name='terms', blank=True)
     enabled = models.BooleanField(default=True)
     content = models.TextField()
     position = models.PositiveSmallIntegerField(default=0)
@@ -51,7 +51,7 @@ class Cart(BaseModel):
     shipping_address = models.ForeignKey(
         Address, related_name='cart_shipping_address', on_delete=models.CASCADE, blank=True, null=True)
 
-    terms = models.ManyToManyField(CartTerm, related_name='carts')
+    terms = models.ManyToManyField('CartTerm', related_name='carts', blank=True)
     #shipping_method = models.ForeignKey(ShippingMethod,
     #                                    blank=True, null=True, related_name='carts',
     #                                    on_delete=models.SET_NULL)
@@ -65,6 +65,12 @@ class Cart(BaseModel):
     #  discount_name = models.CharField(max_length=255, blank=True, null=True)
 
     #  voucher_code = models.CharField(max_length=12, blank=True, null=True)
+    
+    def __iter__(self):
+        return iter(self.lines.all())
+
+    def __len__(self):
+        return self.lines.count()
 
     class Meta:
         ordering = ['-pk']
@@ -90,6 +96,10 @@ class Cart(BaseModel):
     def fees(self):
         fees = (line.total if line.total > ZERO_MONEY else ZERO_MONEY for line in self.items.filter(product=None).all())
         return sum(fees, ZERO_MONEY)
+
+    def discount(self):
+        descounts = (line.total if line.total < ZERO_MONEY else ZERO_MONEY for line in self)
+        return sum(discount)
 
     @property
     def subtotal(self):

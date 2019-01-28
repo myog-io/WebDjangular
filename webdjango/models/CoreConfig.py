@@ -64,12 +64,12 @@ class CoreConfigInput(AbstractCoreConfigModel):
     FIELD_TYPE_SELECT = 'select'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
 
-    CONFIG_FIELD_TYPES = {
+    CONFIG_FIELD_TYPES = [
         (FIELD_TYPE_BUTTON, 'Button'),
         (FIELD_TYPE_TEXT, 'Text'),
         (FIELD_TYPE_SELECT, 'Select'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
-    }
+    ]
     field_type = models.CharField(default=None, choices=CONFIG_FIELD_TYPES)
     input_type = models.CharField(default=None)
     order = models.IntegerField(default=0)

@@ -9,8 +9,10 @@ from libs.plugins.store.api.models.Payment import ChargeStatus
 from libs.core.users.api.models.User import User
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Address import Address
-
+from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
+from prices import Money
 from enum import Enum
+from libs.plugins.store.api import defaults
 
 
 class OrderStatus:
@@ -151,11 +153,12 @@ class OrderLine(BaseModel):
 
 
 class OrderEvent(BaseModel):
-    type = models.CharField(max_length=255, choices=OrderEventTypes.CHOICES)
-    data = JSONField(blank=True, )  # TODO  make it an embedded model
-
+    event_type = models.CharField(max_length=255, choices=OrderEventTypes.CHOICES)
+    data = JSONField(blank=True)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='+')
+    order = models.ForeignKey('Order', related_name='events', on_delete=models.CASCADE)
     class Meta:
-        abstract = True
+        ordering = ('date', )
 
 
 class OrderQueryset(models.QuerySet):
@@ -191,17 +194,50 @@ class OrderQueryset(models.QuerySet):
         qs = qs.exclude(status={OrderStatus.DRAFT, OrderStatus.CANCELED})
         return qs.distinct()
 
-
 class Order(BaseModel):
-    order_num = models.CharField(max_length=36, blank=False, null=False, editable=False)
+    order_num = models.CharField(max_length=100, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='order')
-    user_email = models.EmailField(blank=True, default='')
-
-    # shipping_method =
-
-    # billing_address = models.EmbeddedModelField(model_container=Address, blank=True)
-    # shipping_address = models.EmbeddedModelField(model_container=Address, blank=True)
+    user_email = models.EmailField(blank=True, default='', editable=False)
+    extra_data = JSONField(blank=True)
+    security_data = JSONField(blank=True)
+    extra_payment_data = JSONField(blank=True)
+    billing_address = JSONField(blank=True,editable=False)
+    shipping_address = JSONField(blank=True,editable=False)
+    terms = JSONField(blank=True,editable=False)
+    # shipping_method = models.ForeignKey(
+    #     ShippingMethod, blank=True, null=True, related_name='orders',
+    #     on_delete=models.SET_NULL)
+    shipping_price_net = MoneyField(
+        currency=defaults.DEFAULT_CURRENCY,
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        default=ZERO_MONEY, editable=False)
+    shipping_price_gross = MoneyField(
+        currency=defaults.DEFAULT_CURRENCY,
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        default=ZERO_MONEY, editable=False)
+    shipping_price = TaxedMoneyField(
+        net_field='shipping_price_net', gross_field='shipping_price_gross')
+    shipping_method_name = models.CharField(
+        max_length=255, null=True, default=None, blank=True, editable=False)
+    token = models.CharField(max_length=36, unique=True, blank=True)
+    total_net = MoneyField(
+        currency=defaults.DEFAULT_CURRENCY,
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        default=ZERO_MONEY)
+    total_gross = MoneyField(
+        currency=defaults.DEFAULT_CURRENCY,
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        default=ZERO_MONEY)
+    total = TaxedMoneyField(net_field='total_net', gross_field='total_gross')
+    discount_amount = MoneyField(currency=defaults.DEFAULT_CURRENCY,
+                                 max_digits=defaults.DEFAULT_MAX_DIGITS,
+                                 decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+                                 default=ZERO_MONEY)
 
     # TODO: idk... maybe a better way to store those fields instead of "flat"
     class Meta:
