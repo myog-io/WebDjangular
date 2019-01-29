@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { WebAngularDataStore } from '@webdjangular/core/services';
 import { PluginProviderAbstractPricingComponent } from '../abstract-pricing.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
   selector: 'plugin-provider-plan-pricing-internet-vertical',

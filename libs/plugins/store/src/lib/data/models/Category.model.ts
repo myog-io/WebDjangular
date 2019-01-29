@@ -1,19 +1,17 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
-
-import {ExtraOptions} from '@webdjangular/core/decorator';
-import {Validators} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import {Attribute, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { Validators, FormArray } from '@angular/forms';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { ProductModel } from './Product.model';
 
 @JsonApiModelConfig({
   type: 'ProductCategory',
   modelEndpointUrl: 'store/category',
 })
 export class CategoryModel extends AbstractModel {
-  public static include = null;
+  public static include = 'products';
 
   @Attribute()
   id: string;
@@ -41,12 +39,21 @@ export class CategoryModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'ckeditor',
+    type: 'codeEditor',
     label: 'Description',
     wrapper_class: 'col-12',
     placeholder: 'Enter Page Title',
   })
   description: string;
+
+  @HasMany()
+  @ExtraOptions({
+    type: 'checkbox',
+    formType: FormArray,
+    label: 'Product Parent',
+    model: ProductModel,    
+  })
+  products: ProductModel[];
 
   @Attribute()
   created: Date;

@@ -1,25 +1,21 @@
-import {Injectable} from '@angular/core';
-import {DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel,} from 'angular2-jsonapi';
+import { Injectable, Optional, Inject } from '@angular/core';
+import { DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel, ModelType, ModelConfig, } from 'angular2-jsonapi';
+import { Observable } from 'rxjs';
+import { UserModel, GroupModel, PermissionModel } from '@core/users/src/lib/models';
+import { PageModel, BlockModel, MenuItemModel, MenuModel } from '@core/cms/src/lib/models';
+import { ContentTypeModel, CoreConfigGroupModel, CoreConfigInputModel, CoreConfigModel, AbstractModel, AddressModel } from '@core/data/src/lib/models';
+import { CityModel, StreetModel, ResellerModel, CondoModel, ChannelModel } from '@plugins/provider/src/lib/data';
+import { PostalCodeRangeModel } from '@plugins/provider/src/lib/data/models/PostalCodeRangeModel';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { ProductTypeModel } from '@plugins/store/src/lib/data/models/ProductType.model';
+import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/ProductAttribute.model';
+import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
+import { HttpClient } from '@angular/common/http';
+import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model';
+import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
+import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 
 
-import {GroupModel, PermissionModel, UserModel} from '@webdjangular/core/users-models';
-import {BlockModel, PageModel} from '@webdjangular/core/cms-models';
-import {AbstractModel, ContentTypeModel} from '@webdjangular/core/data-models';
-import {CoreConfigGroupModel} from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
-import {CoreConfigInputModel} from 'libs/core/data/src/lib/models/CoreConfigInput.model';
-import {CoreConfigModel} from 'libs/core/data/src/lib/models/CoreConfig.model';
-import {CityModel, StreetModel} from '@webdjangular/plugins/provider-data';
-import {ProductModel} from 'libs/plugins/store/src/lib/data/models/Product.model';
-import {ProductTypeModel} from 'libs/plugins/store/src/lib/data/models/ProductType.model';
-import {Observable} from 'rxjs';
-import {ResellerModel} from 'libs/plugins/provider/src/lib/data/models/Reseller.model';
-import {CondoModel} from 'libs/plugins/provider/src/lib/data/models/Condo.model';
-import {ChannelModel} from 'libs/plugins/provider/src/lib/data/models/Channel.model';
-import {ProductAttributeModel} from 'libs/plugins/store/src/lib/data/models/ProductAttribute.model';
-import {ProductAttributeOptionModel} from 'libs/plugins/store/src/lib/data/models/ProductAttributeOption.model';
-import {PostalCodeRangeModel} from 'libs/plugins/provider/src/lib/data/models/PostalCodeRangeModel';
-import {MenuModel} from 'libs/core/cms/src/lib/models/Menu.model';
-import {MenuItemModel} from 'libs/core/cms/src/lib/models/MenuItem.model';
 
 // tslint:disable-next-line:variable-name
 
@@ -60,8 +56,10 @@ function getDirtyAttributes(attributesMetadata: any): { string: any } {
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
-  //TODO: Load all This Dynamic
+  // TODO: Load all This Dynamic
+  // INCLUDES GOES HERE
   models: {
+    Address: AddressModel,
     User: UserModel,
     Group: GroupModel,
     Page: PageModel,
@@ -78,9 +76,12 @@ const config: DatastoreConfig = {
     Condo: CondoModel, // Provider
     Channel: ChannelModel, // Provider
     Product: ProductModel, // Store
+    ProductCategory: CategoryModel, // Store
     ProductType: ProductTypeModel, // Store
     ProductAttribute: ProductAttributeModel, // Store
     ProductAttributeOption: ProductAttributeOptionModel, // Store
+    CartItem: CartItemModel, // Store
+    Cart: CartModel, // Store
     MenuItem: MenuItemModel,
     Menu: MenuModel,
   },
@@ -92,6 +93,17 @@ const config: DatastoreConfig = {
 @Injectable()
 @JsonApiDatastoreConfig(config)
 export class WebAngularDataStore extends JsonApiDatastore {
+
+  constructor(
+    protected http: HttpClient,
+    @Optional() @Inject('APP_BASE_HREF') baseHref: string,
+  ) {
+    super(http);
+    if (baseHref && this.datastoreConfig.baseUrl.search(baseHref) === -1) {
+      this.datastoreConfig.baseUrl = `${baseHref}${this.datastoreConfig.baseUrl}`;
+    }
+  }
+
   protected getRelationships(data: any): any {
     let relationships: any;
     for (const key in data) {
@@ -170,7 +182,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
         let body: any = {
           data: null // TODO: Improve this
         };
-        this.http.patch(url, body, {headers: this.buildHttpHeaders()}).subscribe(
+        this.http.patch(url, body, { headers: this.buildHttpHeaders() }).subscribe(
           (r) => {
             if (i + 1 == hasManyFields.length) {
               observe.complete();
@@ -181,5 +193,29 @@ export class WebAngularDataStore extends JsonApiDatastore {
       }
     });
   }
+
+  //protected buildUrl<T extends JsonApiModel>(
+  //  modelType: ModelType<T>,
+  //  params?: any,
+  //  id?: string,
+  //  customUrl?: string
+  //): string {
+  //  // TODO: use HttpParams instead of appending a string to the url
+  //  const queryParams: string = this.toQueryString(params);
+//
+  //  if (customUrl) {
+  //    return queryParams ? `${customUrl}?${queryParams}` : customUrl;
+  //  }
+//
+  //  const modelConfig: ModelConfig = Reflect.getMetadata('JsonApiModelConfig', modelType);
+//
+  //  const baseUrl = modelConfig.baseUrl || this.datastoreConfig.baseUrl;
+  //  const apiVersion = modelConfig.apiVersion || this.datastoreConfig.apiVersion;
+  //  const modelEndpointUrl: string = modelConfig.modelEndpointUrl || modelConfig.type;
+//
+  //  const url: string = [baseUrl, apiVersion, modelEndpointUrl, id].filter((x) => x).join('/');
+//
+  //  return queryParams ? `${url}?${queryParams}` : url;
+  //}
 
 }

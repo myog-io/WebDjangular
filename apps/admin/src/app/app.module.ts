@@ -1,4 +1,3 @@
-import { APP_BASE_HREF } from "@angular/common";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgModule, APP_INITIALIZER } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -6,12 +5,14 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { CoreAdminModule } from "@webdjangular/core/admin";
-import { WDAConfig, CoreServicesModule } from "@webdjangular/core/services";
-import { AppHttpInterceptor } from "@webdjangular/core/interceptors";
-import { ThemeModule } from "@webdjangular/core/admin-theme";
+
 import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
 import { CookieService } from "ngx-cookie-service";
+import { WDAConfig } from "@core/services/src/lib/wda-config.service";
+import { ThemeModule } from "@core/admin/src/lib/@theme";
+import { CoreAdminModule } from "@core/admin/src/lib/core-admin.module";
+import { AppHttpInterceptor } from "@core/interceptors/src/lib/apphttp.interceptor";
+import { CoreAuthModule } from "@core/auth/src/lib/core-auth.module";
 
 
 export function wda_init(wdaconfig: WDAConfig) {
@@ -25,6 +26,7 @@ export function wda_init(wdaconfig: WDAConfig) {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    CoreAuthModule,
     AppRoutingModule,
     //CoreServicesModule.forRoot(), // Not Sure if we should do here or note
     NgbModule.forRoot(),
@@ -42,7 +44,6 @@ export function wda_init(wdaconfig: WDAConfig) {
   providers: [
     CookieService,
     WDAConfig,
-    { provide: APP_BASE_HREF, useValue: "/" },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,

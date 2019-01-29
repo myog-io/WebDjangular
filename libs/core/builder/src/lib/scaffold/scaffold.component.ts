@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-
-import { WebAngularDataStore } from '@webdjangular/core/services';
-import { WebAngularSmartTableDataSource } from "@webdjangular/core/data";
 import { NbDialogService, NbDialogRef } from "@nebular/theme";
+import { WebAngularSmartTableDataSource, WebAngularSmartTableDataSourceOptions } from "@core/data/src/lib/data-store";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
 
 
 @Component({
@@ -18,7 +17,7 @@ export class ScaffoldComponent implements OnInit {
   title: string = ";D";
   loading = false;
   @ViewChild('dialog') dialogTemplate: TemplateRef<any>;
-  protected dialogRef: NbDialogRef<any>
+  protected dialogRef: NbDialogRef<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +32,8 @@ export class ScaffoldComponent implements OnInit {
     this.title = this.route.data['value'].title;
     this.base_path = this.route.data['value'].path;
 
-    this.startTableInformation()
 
+    this.startTableInformation()
   }
   openDialog(element) {
     // TODO IMplement Write id number for more
@@ -54,7 +53,7 @@ export class ScaffoldComponent implements OnInit {
     if(element){
       this.datastore.deleteRecord(this.current_model, element.data.pk).subscribe(
         (r) => {
-          this.source.remove(element)
+          this.source.remove(element);
           this.close();
           this.loading = false;
         }
@@ -65,7 +64,9 @@ export class ScaffoldComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-    this.source = new WebAngularSmartTableDataSource(this.datastore, this.current_model, {
+    this.source = new WebAngularSmartTableDataSource(this.datastore);
+    this.source.model = this.current_model;
+    this.source.conf = new WebAngularSmartTableDataSourceOptions({
       smartTableSettings: this.current_model.smartTableOptions,
       onEditButtonClick: ($event) => {
         this.router.navigate([this.base_path, 'edit', $event.data.pk]);

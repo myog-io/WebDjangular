@@ -1,11 +1,11 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { ScaffoldModule } from "@webdjangular/core/builder";
 import { CityModel } from "../data";
 import { PageRedirectModel } from "../data/models/PageRedirect.model";
 import { CondoModel } from "../data/models/Condo.model";
 import { ResellerModel } from "../data/models/Reseller.model";
 import { ChannelModel } from "../data/models/Channel.model";
+import { ScaffoldModule } from "@core/builder/src/lib/scaffold/scaffold.module";
 
 const routes: Routes = [
   {

@@ -2,16 +2,19 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/client",
-    "types": []
+    "types": [],
   },
   "exclude": [
     "src/test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "../../libs/core/**/*.spec.ts",
+    "../../libs/themes/**/*.spec.ts",
+    "../../libs/plugins/**/*.spec.ts"
   ],
   "include": [
     "**/*.ts",
-    "../../libs/core/dynamic-page-loader/src/index.ts",
-    "../../libs/themes/clean/src/index.ts",
-    "../../libs/themes/providerfy/src/index.ts"
+    "../../libs/core/**/*.ts",
+    "../../libs/themes/**/*.ts",
+    "../../libs/plugins/**/*.ts"
   ]
 }

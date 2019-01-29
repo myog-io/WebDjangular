@@ -1,12 +1,12 @@
 import {Attribute, JsonApiModelConfig, BelongsTo, HasMany} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
 import {ProductAttributeTypeValues, ProductClasses} from "../interfaces/Product.interface";
 import {ProductAttributeOptionModel} from "./ProductAttributeOption.model";
-import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+
 
 
 @JsonApiModelConfig({

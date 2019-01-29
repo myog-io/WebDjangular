@@ -1,6 +1,6 @@
-<ngb-carousel *ngIf="images" [showNavigationArrows]="arrows" [showNavigationIndicators]="indicators" [pauseOnHover]="pauseOnHover"
+<ngb-carousel *ngIf="image_array" [showNavigationArrows]="arrows" [showNavigationIndicators]="indicators" [pauseOnHover]="pauseOnHover"
   [interval]="interval">
-  <ng-template ngbSlide *ngFor="let image of images" draggable="true" [id]="image?.id" >
+  <ng-template ngbSlide *ngFor="let image of image_array" draggable="true" [id]="image?.id" >
     <div class="slide-container" *ngIf="image?.template" [class.cursor-pointer]="image?.url" (click)="action(image)">
       <ng-container [ngTemplateOutlet]="image?.template"></ng-container>
     </div>
@@ -21,6 +21,4 @@
       <p>{{ image.description }}</p>
     </div>
   </ng-template>
-
-
 </ngb-carousel>

@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {PluginProviderAbstractPricingComponent} from '../abstract-pricing.component';
-import {WebAngularDataStore} from '@webdjangular/core/services';
+
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ThemeProviderfyModalChannelsComponent} from "../../../../../../../../themes/providerfy/src/lib/components/modal/channels/channels.component";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { ThemeProviderfyModalChannelsComponent } from '@themes/providerfy/src/lib/components/modal/channels/channels.component';
 
 @Component({
   selector: 'plugin-provider-plan-pricing-tv-vertical',

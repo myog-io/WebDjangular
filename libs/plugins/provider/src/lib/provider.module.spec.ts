@@ -4,11 +4,11 @@ import { PluginProviderModule } from './provider.module';
 describe('PluginProviderModule', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ProviderModule]
+      imports: [PluginProviderModule]
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(ProviderModule).toBeDefined();
+    expect(PluginProviderModule).toBeDefined();
   });
 });

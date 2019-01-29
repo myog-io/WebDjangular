@@ -3,10 +3,10 @@ import { NbAccessChecker } from '@nebular/security'
 
 import { MENU_ITEMS } from './admin-menu';
 
-import { RoleProvider, WebAngularDataStore } from '@webdjangular/core/services';
-import { CoreConfigModel } from 'libs/core/data/src/lib/models/CoreConfig.model';
 import { CoreConfigGroupModel } from 'libs/core/data/src/lib/models/CoreConfigGroup.model';
 import { JsonApiQueryData } from 'angular2-jsonapi';
+import { RoleProvider } from '@core/services/src/lib/role-provider.service';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
 @Component({

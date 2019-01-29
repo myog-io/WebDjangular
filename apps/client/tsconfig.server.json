@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/client-server",
+    "baseUrl": "../../",
+    "types": [],
+    "module": "commonjs",
+  },
+  "angularCompilerOptions": {
+    "entryModule": "src/app/app.server.module#AppServerModule"
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts",
+    "../../libs/core/**/*.spec.ts",
+    "../../libs/themes/**/*.spec.ts",
+    "../../libs/plugins/**/*.spec.ts"
+  ],
+  "include": [
+    "**/*.ts",
+    "../../libs/core/**/*.ts",
+    "../../libs/themes/**/*.ts",
+    "../../libs/plugins/**/*.ts"
+  ]
+}

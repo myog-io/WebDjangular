@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ThemeProviderfyComponent} from "../../../providerfy.component";
+import {Component, OnInit, PLATFORM_ID, Inject} from '@angular/core';
+
 import {ThemeProviderfyModalChoosecityComponent} from "../../modal/choosecity/choosecity.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {CookieService} from "ngx-cookie-service";
-import {ClientUserService} from "@webdjangular/core/services";
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { isPlatformBrowser } from '@angular/common';
+
 
 @Component({
   selector: 'theme-providerfy-top-header',
@@ -11,14 +12,17 @@ import {ClientUserService} from "@webdjangular/core/services";
   styleUrls: ['./top-header.component.scss']
 })
 export class ThemeProviderfyTopHeaderComponent implements OnInit {
+  testBrowser: boolean;
+  city_name: string;
+  plan_type: string;
+  plan_type_default: string = 'personal';
 
-  private city_name: string;
-  private plan_type: string;
-  private plan_type_default: string = 'personal';
-
-  constructor(private modalService: NgbModal,
-              private clientUserService: ClientUserService) {
-
+  constructor(
+    private modalService: NgbModal,
+    private clientUserService: ClientUserService,
+    @Inject(PLATFORM_ID) platformId: string
+  ) {
+    this.testBrowser = isPlatformBrowser(platformId);
     if (this.clientUserService.clientUser.data.hasOwnProperty('city')) {
       this.city_name = this.clientUserService.clientUser.data['city']['name'];
     } else {
@@ -38,15 +42,17 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
   }
 
   openModalChooseCity() {
-    this.modalService.open(ThemeProviderfyModalChoosecityComponent, {
-      centered: true,
-      backdropClass: 'backdrop-choosecity',
-      windowClass: 'choosecity',
-      keyboard: false, // ESC can NOT close the model
-      beforeDismiss: () => {
-        return false;
-      }
-    });
+    if( this.testBrowser ){
+      this.modalService.open(ThemeProviderfyModalChoosecityComponent, {
+        centered: true,
+        backdropClass: 'backdrop-choosecity',
+        windowClass: 'choosecity',
+        keyboard: false, // ESC can NOT close the model
+        beforeDismiss: () => {
+          return false;
+        }
+      });
+    }
   }
 
   onChangePlanType(value: string) {

@@ -1,20 +1,27 @@
 import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
 import { BlockModel } from './Block.model';
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import {Validators, FormGroup} from "@angular/forms";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import {BlockHeaderModel} from "@core/cms/src/lib/models/BlockHeader.model";
+import {BlockFooterModel} from "@core/cms/src/lib/models/BlockFooter.model";
+import {BlockLayoutModel} from "@core/cms/src/lib/models/BlockLayout.model";
 
+
+enum pageDG {
+  general = 'general',
+  seo = 'seo',
+  options = 'options'
+}
 
 @JsonApiModelConfig({
   type: 'Page',
   modelEndpointUrl: 'page',
 })
 export class PageModel extends AbstractModel {
-  public static include = 'header,footer';
+  public include = 'header,footer,layout';
 
   @Attribute()
   id: string;
@@ -26,6 +33,7 @@ export class PageModel extends AbstractModel {
     label: 'Page Title',
     wrapper_class: 'col-12',
     placeholder: 'Enter the Page Title',
+    displayGroup: pageDG.general
   })
   title: string;
 
@@ -36,6 +44,7 @@ export class PageModel extends AbstractModel {
     label: 'Page URL',
     wrapper_class: 'col-12',
     placeholder: 'Enter the Page Url (slug)',
+    displayGroup: pageDG.general
   })
   slug: string;
 
@@ -44,7 +53,8 @@ export class PageModel extends AbstractModel {
     validators: [Validators.required],
     type: 'codeEditor',
     label: 'Page Content',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-12',
+    displayGroup: pageDG.general
   })
   content: string;
 
@@ -53,26 +63,78 @@ export class PageModel extends AbstractModel {
     formType: FormGroup,
     type: 'select',
     label: 'Header',
-    wrapper_class: 'col-6',
-    model: BlockModel,
+    wrapper_class: 'col-12',
+    model: BlockHeaderModel,
+    options:{ block_class: 'header'},
+    displayGroup: pageDG.options
   })
-  header: BlockModel;
+  header: BlockHeaderModel;
+
+  @BelongsTo()
+  @ExtraOptions({
+    formType: FormGroup,
+    type: 'select',
+    label: 'Layout',
+    wrapper_class: 'col-12',
+    model: BlockLayoutModel,
+    options:{ block_class: 'layout'},
+    displayGroup: pageDG.options
+  })
+  layout: BlockLayoutModel;
 
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
     type: 'select',
     label: 'Footer',
-    wrapper_class: 'col-6',
-    model: BlockModel,
+    wrapper_class: 'col-12',
+    model: BlockFooterModel,
+    options:{ block_class: 'footer'},
+    displayGroup: pageDG.options
   })
-  footer: BlockModel;
+  footer: BlockFooterModel;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'switch',
+    label: 'Searchable',
+    wrapper_class: 'col-12',
+    value: true,
+    placeholder: '',
+    displayGroup: pageDG.seo
+  })
+  is_searchable: boolean;
+
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Title',
+    wrapper_class: 'col-12',
+    placeholder: '',
+    displayGroup: pageDG.seo
+  })
+  seo_title: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Description',
+    wrapper_class: 'col-12',
+    placeholder: '',
+    displayGroup: pageDG.seo
+  })
+  seo_description: string;
 
   @Attribute()
   created: Date;
 
   @Attribute()
   updated: Date;
+
+  is_home: boolean = false;
 
   permissions: PermissionModel[];
 
@@ -82,6 +144,14 @@ export class PageModel extends AbstractModel {
 
   set pk(value) {
 
+  }
+
+  getContent():string {
+    return this.content;
+  }
+
+  setHome() {
+    this.is_home = true;
   }
 
   public toString = (): string => {

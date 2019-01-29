@@ -9,10 +9,17 @@ import { PermissionGuard } from './permission-guard.service';
 import { AuthGuard } from './auth-guard.service';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
 import { WDAConfig } from './wda-config.service';
-import { throwIfAlreadyLoaded } from '@webdjangular/core/shared';
 import { NbAuthModule, NbPasswordAuthStrategy, NbAuthJWTToken, NbPasswordAuthStrategyOptions } from '@nebular/auth';
 import { ClientUserService } from './client-user.service';
+import { throwIfAlreadyLoaded } from '@core/shared/src/lib/module-import-guard';
+import {ServerResponse} from "@core/services/src/lib/server-response.service";
+import {SEOService} from "@core/services/src/lib/seo.service";
 
+export function jwtTokenGetter(module: string, res: any, options: NbAuthJWTToken) {
+  if (typeof res.body['data'] !== 'undefined') {
+    return res.body['data']['token'];
+  }
+}
 
 const SERVICES = [
   LayoutService,
@@ -22,6 +29,8 @@ const SERVICES = [
   RoleProvider,
   PermissionGuard,
   AuthGuard,
+  ServerResponse,
+  SEOService,
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {
@@ -46,11 +55,7 @@ const SERVICES = [
         token: {
           key: 'data.token',
           class: NbAuthJWTToken,
-          getter: (module: string, res: any, options: NbPasswordAuthStrategyOptions) => {
-            if (typeof res.body['data'] !== 'undefined') {
-              return res.body['data']['token'];
-            }
-          },
+          getter: jwtTokenGetter,
         }
       }),
     ],

@@ -1,10 +1,10 @@
-import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import { Attribute, JsonApiModelConfig, NestedAttribute } from 'angular2-jsonapi';
 import { Validators } from "@angular/forms";
-import { SmartTableSettings } from "@webdjangular/core/data";
 import { DiscountTypeOptions } from '../interfaces/Discount.interface';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'CartRule',
@@ -32,7 +32,7 @@ export class CartRuleModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'select',
-    label: 'Discount Type',
+    label: 'Rule Type',
     wrapper_class: 'col-6',
     placeholder: '',
     options: DiscountTypeOptions
@@ -41,13 +41,23 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    validators: [],
     type: 'text',
-    label: 'Code',
-    wrapper_class: 'col-6',
+    label: 'Code(Voucher)',
+    wrapper_class: 'col-4',
     placeholder: '',
   })
   voucher: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'switch',
+    label: 'Require Code(Voucher)?',
+    wrapper_class: 'col-2',
+  })
+  require_voucher: boolean;
+  
 
   @Attribute()
   @ExtraOptions({
@@ -94,19 +104,37 @@ export class CartRuleModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
+    type: 'switch',
+    label: 'Is active',
+    wrapper_class: 'col-3',
+    value: true,
+  })
+  is_active: boolean;
+  
+  @Attribute()
+  @ExtraOptions({
     type: 'text',
-    label: 'Discount value',
+    label: 'Value',
     wrapper_class: 'col-6',
     placeholder: '',
   })
   value: string;
 
-  @Attribute()
+  @NestedAttribute()
   @ExtraOptions({
     type: 'jsonLogic',
-    label: 'Apply Rule only if all conditions are true',
+    label: 'Apply the rule only if the following conditions are met (leave blank for all products)',
+    json_logic_options_url: '/api/store/discount/cart-rule/discount_options/'
   })
   conditions: any;
+
+  @NestedAttribute()
+  @ExtraOptions({
+    type: 'jsonLogic',
+    label: 'Apply the rule only to cart items that meet the following conditions (leave blank for all items)',
+    json_logic_options_url: '/api/store/discount/cart-rule/discount_options_items/'
+  })
+  item_conditions: any;
 
   @Attribute()
   created: Date;
@@ -126,7 +154,7 @@ export class CartRuleModel extends AbstractModel {
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-      type: {
+      rule_type: {
         title: 'Type',
         type: 'text',
       },
@@ -134,7 +162,7 @@ export class CartRuleModel extends AbstractModel {
         title: 'Name',
         type: 'text',
       },
-      code: {
+      voucher: {
         title: 'Code',
         type: 'text',
       },

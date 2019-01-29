@@ -1,10 +1,9 @@
 import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {AbstractModel} from "@webdjangular/core/data-models";
 import {NumberRangeModel} from "./NumberRangeModel";
-
-import {SmartTableSettings} from "@webdjangular/core/data";
-import {ExtraOptions} from "@webdjangular/core/decorator";
 import {FormArray, Validators} from "@angular/forms";
+import { AbstractModel } from "@core/data/src/lib/models";
+import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
+import { SmartTableSettings } from "@core/data/src/lib/data-store";
 
 
 @JsonApiModelConfig({

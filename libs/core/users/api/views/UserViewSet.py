@@ -1,9 +1,11 @@
+from django.contrib.auth import get_user_model
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import action, permission_classes
+from rest_framework.decorators import action, permission_classes, api_view
+from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, \
     ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT, \
     HTTP_400_BAD_REQUEST
@@ -21,6 +23,7 @@ from libs.core.users.api.serializers.SetPasswordSerializer import SetPasswordSer
 from libs.core.users.api.serializers.UserSerializer import UserSerializer
 from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
+
 class UserFilter(FilterSet):
     class Meta:
         model = User
@@ -31,7 +34,8 @@ class UserFilter(FilterSet):
         }
 
 
-class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet, DestroyModelMixin):
+class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
+                  UpdateModelMixin, GenericViewSet, DestroyModelMixin):
     """
     Handles:
     Creating an User - Sign Up
@@ -45,9 +49,16 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     permission_classes = (AuthenticatedViewsetPermission, )
-    search_fields = ('first_name', 'last_name', 'email', 'username') # Search field is for the Search Filter ?search=
+    search_fields = ('first_name', 'last_name', 'email', 'username')  # Search field is for the Search Filter ?search=
     filter_class = UserFilter
 
+    def get_permissions(self):
+        # TODO: improve
+        if self.action == 'sign_up':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     @action(methods=['post'], detail=False, url_path='forget-password')
     def forget_password(self, request):
@@ -62,7 +73,6 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
             return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
         serializer.save()
         return Response(status=HTTP_201_CREATED)
-
 
     @action(methods=['post'], detail=False, url_path='set-password')
     def set_password(self, request):
@@ -89,3 +99,31 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateMo
         forget_password.delete()
         serializer.save()
         return Response(status=HTTP_204_NO_CONTENT)
+
+    @action(methods=['post'], detail=False, url_path='sign-up')
+    def sign_up(self, request, *args, **kwargs):
+        """
+        Create non-staff users
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        request.data['is_staff'] = False
+        request.data['is_tfa_enabled'] = False
+        request.data['is_email_verified'] = False
+        request.data['is_mobile_verified'] = False
+
+        if request.data['email']:
+            request.data['email'] = request.data['email'].lower()
+        serializer = self.get_serializer(data=request.data)
+
+        if not serializer.is_valid():
+            raise ValidationError(serializer.errors)
+        serializer.save()
+
+        return Response(serializer.data, status=HTTP_201_CREATED)
+
+
+

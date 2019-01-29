@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BuilderFormField, BuilderFormFieldConfig, BuilderFormDisplayGroups } from '../../interfaces/form-config.interface';
-import { FormArray, Validators, FormGroup, FormControl } from '@angular/forms';
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AbstractForm } from '@core/data/src/lib/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
   selector: 'wda-form-formbuilder',

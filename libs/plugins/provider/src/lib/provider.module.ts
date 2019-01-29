@@ -15,9 +15,10 @@ import { PluginProviderError500Component } from './components/errors/500/500.com
 import { ProviderCheckoutService } from "./data/services/provider-checkout.service";
 import { PluginProviderCityListComponent } from './components/city-list/city-list.component';
 import { PluginProviderCityCoverageComponent } from './components/city-coverage/city-coverage.component';
-import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
-import { GoogleMapsLazyConfig } from '@webdjangular/core/cms';
+import { AgmCoreModule } from '@agm/core';
 import { RouterModule } from '@angular/router';
+import {CartService} from "@plugins/store/src/lib/data/services/cart.service";
+import { PluginProviderDialogComponent } from './components/dialog.component';
 
 
 
@@ -38,10 +39,12 @@ const COMPONENTS = [
   PluginProviderPricingTelephoneVerticalComponent,
   PluginProviderPricingTvVerticalComponent,
   PluginProviderError404Component,
-  PluginProviderError500Component
+  PluginProviderError500Component,
+  PluginProviderDialogComponent
 ];
 
 const SERVICES = [
+  CartService,
   ProviderCheckoutService,
 
 ];
@@ -57,6 +60,7 @@ const SERVICES = [
     ...MODULES
 
   ],
+  entryComponents: [...COMPONENTS],
   declarations: [...COMPONENTS],
   providers: [...SERVICES]
 })

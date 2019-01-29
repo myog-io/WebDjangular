@@ -50,14 +50,15 @@
 <ng-template #nodeOperator let-child="child" let-parent="parent">
   <div class="form-inline p-2">
 
-    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="width:30%" class="form-control input-sm">
-      <ng-option *ngFor="let option of fields" value="{{option.value}}">
-        {{option.label}}
-      </ng-option>
+    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="min-width:30%" class="form-control input-sm" bindLabel="name" bindValue="id" [addTag]="addTagPromise" [items]="fields" >
+      
+      <ng-template ng-tag-tmp let-search="searchTerm">
+          <b>New condition</b>: {{search}}
+      </ng-template>
     </ng-select>
 
 
-    <nb-select class="ml-2" placeholder="Select Condition" (selectedChange)="updateField()"  [(ngModel)]="child.condition" status="info" size="xsmall">
+    <nb-select class="ml-2" placeholder="Select Condition" (selectedChange)="updateField()"  style="min-width:25%"  [(ngModel)]="child.condition" status="info" size="xsmall">
       <nb-option *ngFor="let option of conditions" value="{{option.value}}">
         {{option.label}}
       </nb-option>

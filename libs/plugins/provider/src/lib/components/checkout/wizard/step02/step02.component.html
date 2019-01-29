@@ -1,98 +1,156 @@
 <div class="step-item">
-  <div class="row mt-4">
-    <div class="col-12 col-md-6">
-      <h5 class="text-primary mb-3">ENDEREÇO DE INSTALAÇÃO</h5>
+  <form [formGroup]="formWizardStep02" (ngSubmit)="onSubmit()">
+    <div class="row mt-4">
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="text-primary mb-3">FORMA DE PAGAMENTO</h5>
+          </div>
+        </div>
 
-      <div class="row">
-        <div class="col-12 col-md-12">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>CEP</label>
+        <div class="row">
+          <div class="col-12">
+            <h6>Fidelidade</h6>
+
+            <div class="form-group">
+              <select class="form-control">
+                <option value="0">sem fidelidade</option>
+                <option value="1">1 ano</option>
+                <option value="2">2 anos</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-12">
+            <h6>Como quer receber a fatura?</h6>
+          </div>
+          <div class="col-12">
+            <div class="custom-control custom-radio mb-1">
+              <input type="radio" id="paymentTypeLetter"
+                     formControlName="paymentType"
+                     name="paymentType" class="custom-control-input" value="letter">
+              <label class="custom-control-label" for="paymentTypeLetter">Por Correios</label>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body py-1">
+                    <div class="row">
+                      <p class="mb-0 col-12">
+                        {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
+                        {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
+                        <span *ngIf="providerCheckout.address.street_address_2">
+                          - {{ providerCheckout.address.street_address_2 }}
+                        </span> <br>
+                        {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
+                        {{ providerCheckout.address.postal_code }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="custom-control custom-radio mt-2 mb-1">
+              <input type="radio" id="paymentTypeEmail"
+                     formControlName="paymentType"
+                     name="paymentType" class="custom-control-input" value="email">
+              <label class="custom-control-label" for="paymentTypeEmail">Por Email
+                <small>(R$5,00 de desconto)</small>
+              </label>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body py-1">
+                    <div class="row">
+                      <p class="mb-0 col-12">
+                        {{ providerCheckout.cartService.cart.email }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <p class="text-primary" *ngIf="formWizardStep02.get('paymentType').value == 'email'">
+                  <b>IMPORTANTE:</b> Você não receberá faturas por correio.
+                  Este e-mail será utilizado para enviar qualquer
+                  informação da LPNet. Por favor verifique se nossos
+                  emails chegarão corretamente em sua caixa de entrada.
+                  Se não chegaram, verifique sua caixa de spam.
+                </p>
+
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-12 col-md-8">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Cidade</label>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="col-12">
+            <h5 class="text-primary mb-3">TERMOS DE USO</h5>
           </div>
         </div>
 
-        <div class="col-12 col-md-4">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Estado</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-12">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Cidade</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Número</label>
+        <div class="row">
+          <div class="col-12">
+            <div class="custom-control custom-checkbox mt-2 mb-1"  *ngFor="let term of terms">
+              <input type="checkbox" class="custom-control-input"
+                [formControlName]="'term-'+term.id"
+                [id]="'term-'+term.id">
+              <label class="custom-control-label" [for]="'term-'+term.id" >
+                <span [innerHTML]="term.content"></span>
+              </label>
+            </div>
+            <p>
+              O não cumprimento do prazo de Fidelização acarretará na perda da Bonificação
+              e como base de cálculo rescisório será utilizado o valor integral do Serviço de Instalação.
+            </p>
+            <hr class="my-2">
           </div>
         </div>
 
-        <div class="col-12 col-md-8">
-          <div class="form-group">
-            <input type="text" required/>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Complemento</label>
+        <div class="row mt-1">
+
+          <div class="col-12">
+            <button class="btn btn-primary btn-block btn-large" [disabled]="!formWizardStep02.valid">
+              Confirmar assinatura
+            </button>
+          </div>
+          <div class="col-10 mt-2 mx-auto">
+            <p>
+              Ao prosseguir, você confirma sua intenção de assinar
+              o plano selecionado e concorda com os nossos termos de uso.
+            </p>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-12">
-          <p class="text-primary">Para que a instalação ocorra com sucesso é muito
-            importante que os dados do seu endereço estejam
-            completos. Ex.: bloco, apartamento, casa, quadra e etc.</p>
+        <div class="row mt-3">
+          <div class="col-9">
+            <div class="form-group">
+              <input type="text" readonly id="token-full-url"
+                [value]="providerCheckout.getTokenFullURL()" />
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Link do carrinho</label>
+            </div>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary btn-sm btn-block" (click)="providerCheckout.onCopyTokenFullURL()" >
+              <i class="far fa-copy"></i>
+              <span *ngIf="!providerCheckout.copying"> Copiar </span>
+              <span *ngIf="providerCheckout.copying"> Copiado </span>
+            </button>
+          </div>
         </div>
       </div>
 
     </div>
-
-    <div class="col-12 col-md-6">
-      <h5 class="text-primary mb-3">FORMA DE PAGAMENTO</h5>
-    </div>
-  </div>
-
-  <div class="row mt-3">
-    <div class="col-12 col-md-6">
-      <button class="btn btn-primary btn-block" (click)="providerCheckout.confirmCheckout()">
-        Confirmar assinatura
-      </button>
-    </div>
-    <div class="col-12 col-md-6">
-      <p>
-        Ao prosseguir, você confirma sua intenção de assinar
-        o plano selecionado e concorda com os nossos termos de uso.
-      </p>
-    </div>
-  </div>
-
+  </form>
 </div>
+
 

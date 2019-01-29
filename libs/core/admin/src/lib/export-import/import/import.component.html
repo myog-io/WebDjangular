@@ -3,7 +3,7 @@
     Import
   </nb-card-header>
 </nb-card>
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
   <nb-card size="large">
 
     <nb-card-body>
@@ -21,7 +21,8 @@
     </nb-card-body>
     <nb-card-footer>
       <div class="form-group">
-        <button nbButton status="success" [disabled]="loading || formGroup.invalid || formGroup.prestine" size="medium"
+        
+        <button nbButton status="success" [disabled]="loading || formGroup.invalid " size="medium"
           [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="medium" nbSpinnerMessage="Loading...">
           Start Import
         </button>

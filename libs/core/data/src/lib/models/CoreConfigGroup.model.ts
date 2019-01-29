@@ -2,16 +2,18 @@ import {
   JsonApiModelConfig,
   Attribute,
   HasMany,
+  NestedAttribute,
 
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
-import { PermissionModel } from '@webdjangular/core/users-models';
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import { CoreConfigInputModel } from './CoreConfigInput.model';
 import { FormControl } from '@angular/forms';
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
-import { JsonLogic } from 'libs/core/builder/src/lib/builder-jsonlogic';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { JsonLogic } from '@core/builder/src/lib/builder-jsonlogic';
+import { BuilderFormFieldConfig } from '@core/builder/src/lib/interfaces/form-config.interface';
+
 
 
 @JsonApiModelConfig({
@@ -27,7 +29,7 @@ export class CoreConfigGroupModel extends AbstractModel {
   @Attribute()
   title: string;
 
-  @Attribute()
+  @NestedAttribute()
   value: any;
 
   @HasMany()

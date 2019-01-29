@@ -12,6 +12,7 @@ export class PluginProviderCheckoutWizardComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
 }

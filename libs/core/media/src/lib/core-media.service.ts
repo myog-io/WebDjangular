@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { NbAuthService } from '@nebular/auth';
-import { FileUploaderService, UploaderLinksOptions, UploaderServiceOptions, FileUploaderOptions, FileItem } from '@webdjangular/core/chunk-file-upload';
+
 import { HttpClient } from '@angular/common/http';
+import { FileUploaderService, UploaderLinksOptions, UploaderServiceOptions } from '@core/chunk-file-upload/src/lib/file-uploader.service';
+import { FileItem } from '@core/chunk-file-upload/src/lib/file-item.class';
+import { FileUploaderOptions } from '@core/chunk-file-upload/src/lib/file-uploader.class';
 
 //import { AbstractService } from './abstract.service';
 @Injectable()

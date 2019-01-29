@@ -2,6 +2,7 @@
 
 .sticky-top{
   top:65px;
+  z-index: 888 !important;
 }
 
 @include nb-install-component() {

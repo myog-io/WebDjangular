@@ -6,7 +6,8 @@ from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
 from rest_framework_json_api.views import RelationshipView
-
+from .CityViewSet import CityFilter
+from ..models.City import City
 
 class CondoFilter(FilterSet):
     class Meta:
@@ -14,6 +15,8 @@ class CondoFilter(FilterSet):
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],
+            'city__name': ['contains', 'exact'],
+            'city__id': ['in', 'exact'],
         }
 
 

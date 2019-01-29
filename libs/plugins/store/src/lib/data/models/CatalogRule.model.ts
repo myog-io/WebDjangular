@@ -1,10 +1,10 @@
-import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { PermissionModel } from '@webdjangular/core/users-models';
-import { ExtraOptions } from '@webdjangular/core/decorator';
+import { Attribute, JsonApiModelConfig, NestedAttribute } from 'angular2-jsonapi';
 import { Validators } from "@angular/forms";
-import { SmartTableSettings } from "@webdjangular/core/data";
 import { DiscountTypeOptions } from '../interfaces/Discount.interface';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'CatalogRule',
@@ -79,11 +79,12 @@ export class CatalogRuleModel extends AbstractModel {
   })
   is_active: boolean;
 
-  @Attribute()
+  @NestedAttribute()
   @ExtraOptions({
     validators: [],
     type: 'jsonLogic',
     label: 'Apply Rule only if all conditions are true',
+    json_logic_options_url: '/api/store/discount/catalog-rule/discount_options/'
   })
   conditions: any;
 

@@ -1,5 +1,6 @@
 export const DiscountTypeOptions = [
-  {label: "Fixed Discount", value: 'fixed'},
-  {label: "Discount percentage", value: 'percentage'},
+  {name: "Fixed Ammount", id: 'fixed'},
+  {name: "Percentage Ammount", id: 'percentage'},
+  
   //{label: "Fixed Ammount", value: 'to_value'},
 ]

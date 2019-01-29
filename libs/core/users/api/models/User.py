@@ -1,25 +1,31 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.db.models import Q
+from django_mysql.models import JSONField
 
 from webdjango.models.AbstractModels import BaseModel
+from webdjango.models.Address import Address
 from .UserManager import UserManager
 
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     """
     The User model
+    This model is also used to create customers, the customers not necessarely need to have an valid EMAIL Address
+    But they can't login on the admin as well
     """
 
     class Meta:
         ordering = ['-created']
         db_table = 'users'
+        unique_together = ('email', 'is_email_verified')
 
     first_name = models.CharField(max_length=60)
     middle_name = models.CharField(max_length=60, default=None, blank=True, null=True)
     last_name = models.CharField(max_length=60)
-    username = models.CharField(max_length=60, unique=True, default=None, blank=True, null=False)
-    email = models.EmailField(max_length=255, unique=True)
+    username = models.CharField(max_length=60, unique=True)
+    email = models.EmailField(max_length=255, unique=False)
     mobile = models.CharField(max_length=64, null=True, blank=True, default=None)
     password = models.CharField(max_length=255, null=True)
     is_tfa_enabled = models.BooleanField(default=False, blank=True)
@@ -27,7 +33,14 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     is_mobile_verified = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     is_staff = models.BooleanField(default=False, blank=True)
-
+    dob = models.DateField(default=None, blank=True, null=True)
+    extra_data = JSONField(blank=True)
+    default_shipping_address = models.ForeignKey(
+        Address, related_name='+', null=True, blank=True,
+        on_delete=models.SET_NULL)
+    default_billing_address = models.ForeignKey(
+        Address, related_name='+', null=True, blank=True,
+        on_delete=models.SET_NULL)
     # default_shipping_address =
     # default_billing_address =
 
@@ -43,11 +56,14 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     @property
     def full_name(self):
-        """
-        Use to get the user full name.
-        :return: string
-        """
-        return self.first_name + ' ' + self.middle_name + ' ' + self.last_name
+        if self.first_name or self.last_name:
+            return ('%s %s' % (self.first_name, self.last_name)).strip()
+        if self.default_billing_address:
+            first_name = self.default_billing_address.first_name
+            last_name = self.default_billing_address.last_name
+            if first_name or last_name:
+                return ('%s %s' % (first_name, last_name)).strip()
+        return self.email
 
     @property
     def name(self):
@@ -56,6 +72,13 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         :return: string
         """
         return self.first_name + ' ' + self.last_name
+
+    def customers(self):
+        return self.get_queryset().filter(
+            Q(is_staff=False) | (Q(is_staff=True) & Q(orders__isnull=False)))
+
+    def staff(self):
+        return self.get_queryset().filter(is_staff=True)
 
     def __str__(self):
         """

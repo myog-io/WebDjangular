@@ -7,24 +7,29 @@ import { Router } from '@angular/router';
   templateUrl: './gallery.component.html',
 })
 export class CoreCmsGalleryComponent implements OnInit {
-  @Input() arrows: boolean = null;
+  @Input() arrows: boolean = false;
   @Input() indicators: boolean = null;
-  @Input() images: any[];
+  @Input() images: string;
   @Input() pauseOnHover = true;
   @Input() interval = 5000;
+  image_array: any[];
   constructor(private router: Router) {
 
   }
 
   ngOnInit() {
-
-    if (this.arrows === null) {
-      this.arrows = this.images.length > 1;
-    }
-    if (this.indicators === null) {
-      this.indicators = this.images.length > 1;
+    
+    this.image_array = JSON.parse(this.images);
+    if (this.image_array){
+      if (this.arrows === null) {
+        this.arrows = this.image_array.length > 1;
+      }
+      if (this.indicators === null) {
+        this.indicators = this.image_array.length > 1;
+      }
     }
     //this.indicators = true;
+
   }
 
   action(image: any) {

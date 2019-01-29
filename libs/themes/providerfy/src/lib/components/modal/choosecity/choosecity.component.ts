@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
-import {CityModel} from "@webdjangular/plugins/provider-data";
 import {JsonApiQueryData} from "angular2-jsonapi";
 import {HttpClient} from "@angular/common/http";
-import {WebAngularDataStore} from "@webdjangular/core/services";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {ClientUserService} from "@webdjangular/core/services";
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { CityModel } from '@plugins/provider/src/lib/data';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'webdjangular-choosecity',
@@ -15,10 +16,11 @@ import {ClientUserService} from "@webdjangular/core/services";
 })
 export class ThemeProviderfyModalChoosecityComponent {
 
-  private form: FormGroup;
-  private cities: any;
-  public loading = true;
-  public placeholder = "Onde você está?"
+  form: FormGroup;
+  city_list: CityModel[];
+  cities: Observable<CityModel[]>;
+  loading = true;
+  placeholder = "Onde você está?"
 
   constructor(public activeModal: NgbActiveModal, private http: HttpClient, private datastore: WebAngularDataStore,
               private formBuilder: FormBuilder, private clientUserService: ClientUserService ) {
@@ -27,42 +29,40 @@ export class ThemeProviderfyModalChoosecityComponent {
       city: ['', Validators.required]
     });
 
-    this.getCities().then(data => {
-      this.cities = data;
-    });
+    this.getCities();
 
   }
 
-  public getCities(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.datastore.findAll(CityModel, {ordering:'name',page:{size:100}}).subscribe(
-        (response: JsonApiQueryData<CityModel>) => {
-          let cities = response.getModels();
-          resolve(cities);
-          this.loading = false;
-        },
-        (error: any) => {
-          reject(error);
-        }
-      )
-    });
+  getCities(): void {
+  
+    this.cities = this.datastore.findAll(CityModel, {ordering:'name',fields:"id,name",page:{size:100}}).map(
+      (query, index) => {
+        this.loading = false;
+        this.city_list = query.getModels();
+        return this.city_list;
+      }
+    )
   }
+
   selectChange($event){
     if($event){
       this.placeholder = '';
     }
   }
+
   onSubmit() {
     //this.activeModal.close();
-
-    const cityModel = this.cities.find(city=>city.id===this.form.get('city').value);
+    const city_id = this.form.get('city').value;
+    const cityModel = this.city_list.find(city=>city.id===city_id);
     this.clientUserService.clientUser.data['city'] = {
       id: cityModel.id,
       name: cityModel.name
     };
     this.clientUserService.updateCookie();
     // TODO: remake it with a better way
-    window.location.reload();
+    if (typeof window !== 'undefined') {
+      window.location.reload(); // Error window on server need to do a IF?
+    }
   }
 
 }

@@ -2,14 +2,13 @@ import {
   JsonApiModelConfig,
   Attribute,
   HasMany,
-  BelongsTo
+  BelongsTo,
+  NestedAttribute
 } from 'angular2-jsonapi';
-
 import { AbstractModel } from './Abstract.model';
-import { PermissionModel } from '@webdjangular/core/users-models';
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import { CoreWebsiteModel } from './CoreWebsite.model';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
 
 @JsonApiModelConfig({
   type: 'core_config'
@@ -19,7 +18,7 @@ export class CoreConfigModel extends AbstractModel {
   @Attribute()
   slug: string;
 
-  @Attribute()
+  @NestedAttribute()
   value: any;
 
   @Attribute()

@@ -1,8 +1,9 @@
 import {Component, ElementRef, Inject, Input, OnInit, Renderer2} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {WebAngularDataStore} from "@webdjangular/core/services";
 import {JsonApiQueryData} from "angular2-jsonapi";
-import {ChannelModel} from '@webdjangular/plugins/provider-data';
+import { ChannelModel } from '@plugins/provider/src/lib/data';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+
 
 @Component({
   selector: 'webdjangular-channels',

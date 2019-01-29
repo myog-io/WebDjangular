@@ -54,9 +54,9 @@ export class WebAngularSmartTableDataSourceOptions {
   dataKey: string;
   model: JsonApiModel;
   smartTableSettings: any;
-  onEditButtonClick;
-  onDeleteButtonClick;
-  onCreateButtonClick;
+  onEditButtonClick:any;
+  onDeleteButtonClick:any;
+  onCreateButtonClick:any;
 
   constructor({
     endPoint = '',
@@ -69,9 +69,9 @@ export class WebAngularSmartTableDataSourceOptions {
     dataKey = '',
     model = null,
     smartTableSettings = {},
-    onEditButtonClick = '',
-    onDeleteButtonClick = '',
-    onCreateButtonClick = ''
+    onEditButtonClick = null,
+    onDeleteButtonClick = null,
+    onCreateButtonClick = null
   } = {}) {
     this.endPoint = endPoint ? endPoint : '';
 

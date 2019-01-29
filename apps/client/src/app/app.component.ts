@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { WDAConfig, AnalyticsService } from '@webdjangular/core/services';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+import { AnalyticsService } from '@core/services/src/lib/analytics.service';
 
 
 @Component({
-  selector: 'wda-root',
+  selector: 'root',
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {

@@ -16,6 +16,7 @@ from webdjango.utils.weight import WeightUnits, zero_weight
 from ..exceptions import InsufficientStock
 from ..utils.CatalogUtils import calculate_discounted_price
 
+
 class ProductClasses:
     SIMPLE = 'simple'
     VARIANT = 'variant'
@@ -148,10 +149,7 @@ class BaseProduct(ActiveModel, TranslationModel):
         # TODO: Check Based on Selected Children
         return self.pricing_sale or self.pricing_list
 
-    @property
-    def is_shipping_required(self) -> bool:
-        # TODO: Based on the Product Class
-        return True
+   
 
     @property
     def is_in_stock(self) -> bool:
@@ -180,3 +178,7 @@ class Product(BaseProduct):
 
     class Meta:
         ordering = ['-created']
+        
+    @property
+    def is_shipping_required(self) -> bool:
+        return self.product_type.is_shipping_required

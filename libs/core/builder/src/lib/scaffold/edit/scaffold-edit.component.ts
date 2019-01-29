@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { WebAngularDataStore } from '@webdjangular/core/services';
-
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { NbToastrService } from '@nebular/theme';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { AbstractForm } from '@core/data/src/lib/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
 @Component({

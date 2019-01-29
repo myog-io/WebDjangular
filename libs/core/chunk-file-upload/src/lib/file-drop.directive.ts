@@ -39,7 +39,7 @@ export class FileDropDirective {
 	}
 
 	@HostListener('dragover', ['$event'])
-	public onDragOver(event: any): void {
+	public onDragOver(event: DragEvent): void {
 		let transfer = this._getTransfer(event);
 		if (!this._haveFiles(transfer.types)) {
 			return;
@@ -51,7 +51,7 @@ export class FileDropDirective {
 	}
 
 	@HostListener('dragleave', ['$event'])
-	public onDragLeave(event: any): any {
+	public onDragLeave(event: DragEvent): any {
 		if ((this as any).element) {
 			if (event.currentTarget === (this as any).element[0]) {
 				return;
@@ -86,10 +86,12 @@ export class FileDropDirective {
 	}
 	ngOnInit() {
 		if(this.fullScreen) {
-			window.addEventListener('dragenter', function(e: any) {
-				e.preventDefault();
-				this.fileOver.emit(true);
-			}.bind(this));
+			if (typeof window !== 'undefined') {
+				window.addEventListener('dragenter', function(e: any) {
+					e.preventDefault();
+					this.fileOver.emit(true);
+				}.bind(this));
+			}
 		}
         
     }

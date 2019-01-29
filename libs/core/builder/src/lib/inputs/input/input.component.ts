@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-input',
@@ -9,7 +9,7 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
   <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
     <input
-    [type]="config.inputType ? config.inputType : text"
+    [type]="config.inputType ? config.inputType : 'text'"
     class="form-control"
     [attr.placeholder]="config.placeholder"
     [formControlName]="config.name">

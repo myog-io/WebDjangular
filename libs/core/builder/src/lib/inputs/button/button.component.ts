@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig, BuilderFormField } from '../../interfaces/form-config.interface';
+import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-button',

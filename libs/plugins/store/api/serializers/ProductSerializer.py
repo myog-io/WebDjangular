@@ -46,7 +46,17 @@ class ProductCategorySerializer(WebDjangoSerializer):
     name = serializers.CharField()
     slug = serializers.SlugField()
     description = serializers.CharField()
-
+    products = ResourceRelatedField(
+        many=True,
+        queryset=Product.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='product-category-relationships',
+        related_link_view_name='product-category-related',
+        required=False,
+    )
+    included_serializers = {
+        'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+    }
     class Meta:
         model = ProductCategory
         fields = '__all__'
@@ -72,6 +82,7 @@ class ProductSerializer(WebDjangoSerializer):
         'addons': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'categories': 'libs.plugins.store.api.serializers.ProductSerializer.ProductCategorySerializer',
         'bundle_products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+        'addon_parent': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
     }
 
     #  product class BUNDLE
@@ -112,7 +123,15 @@ class ProductSerializer(WebDjangoSerializer):
         related_link_view_name='product-related',
         required=False,
     )
-
+    addon_parent = ResourceRelatedField(
+        many=True,
+        queryset=Product.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='product-relationships',
+        related_link_view_name='product-related',
+        required=False,
+    )
+    
     attributes = serializers.JSONField(required=False)
 
     product_type = ResourceRelatedField(

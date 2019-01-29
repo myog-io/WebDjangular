@@ -2,11 +2,11 @@
   <div class="channel-cover"
     [ngStyle]="{'background-image': 'url(' + plan.data?.thumbnail + ')'}"></div>
   <div class="card-body pt-0">
-    <div class="row">
+    <!--<div class="row">
       <div class="col col-xs-12 channels-wrapper">
         <a href="#" class="">8 canais</a>
       </div>
-    </div>
+    </div>-->
     <div class="price-wrapper row">
       <div class="col col-xs-12 channels-wrapper">
         <span class="currency-unit">R$ </span>
@@ -15,15 +15,16 @@
       </div>
     </div>
     <div class="actions-wrapper">
-
+      
       <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
-        *ngIf="!providerCheckout.selected_tv_optionals.includes(plan)"
-        (click)="providerCheckout.addTVOptional(plan)">
+        *ngIf="!providerCheckout.checkCartItemTVOptional(plan)"
+        (click)="providerCheckout.addTVOptional(plan)" [disabled]="plan.disabled">
+        
         Adicionar
       </button>
 
       <button type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
-        *ngIf="providerCheckout.selected_tv_optionals.includes(plan)"
+        *ngIf="providerCheckout.checkCartItemTVOptional(plan)"
         (click)="providerCheckout.removeTVOptional(plan)">
         Remover
       </button>

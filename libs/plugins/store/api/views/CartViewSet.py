@@ -4,11 +4,40 @@ from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework_json_api.views import ModelViewSet
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from uuid import UUID, uuid1
-from libs.plugins.store.api.models.Cart import Cart
-from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer
-from libs.plugins.store.api.utils import CartUtils
+from ..models.Cart import Cart, CartItem, CartTerm
+from ..models.Order import OrderEventTypes
+from ..serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
+from ..serializers.OrderSerializer import OrderSerializer
+from ..utils import CartUtils
+from ..utils.CartUtils import cart_has_product, create_order
+
+from rest_framework import status
+from rest_framework.exceptions import ValidationError
+
+class CartTermViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Cart Terms
+    Retrieve a list of Cart Terms
+    Retrieve a specific Cart Term
+    Update Cart Terms
+    Deleting Cart Terms
+    """
+    serializer_class = CartTermSerializer
+    queryset = CartTerm.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    # filter_class = CartFilter
+    search_fields = ('content',)
+    permission_classes = ()
+
+
+class CartTermRelationshipView(RelationshipView):
+    queryset = CartTerm.objects
+    
 
 
 class CartViewSet(ModelViewSet):
@@ -29,39 +58,69 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
-    @action(methods=['POST'], detail=False, url_path='add_to_cart')
-    def add_to_cart(self, request, *args, **kwargs):
+    @action(methods=['GET'], detail=True, url_path='complete_order')
+    def complete_order(self, request, *args, **kwargs):
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        cart = self.get_object()
+        
+        order = create_order(cart, request)
+        if not order:
+            raise ValidationError('Please Review your Cart')
+        cart.delete()
+        order.events.create(type=OrderEventTypes.PLACED)
+        send_order_confirmation.delay(order.pk)
+        order.events.create(
+            type=OrderEventTypes.EMAIL_SENT.value,
+            parameters={
+                'email': order.get_user_current_email(),
+                'email_type': OrderEventsEmails.ORDER
+            })
 
-        cart = CartUtils.get_or_create_cart(request)
 
-        self.serializer_class = CartItemSerializer
-
-        serializer = CartItemSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer = OrderSerializer(order)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
-        cart = CartUtils.add_item_to_cart(cart, serializer.data)
+class CartRelationshipView(RelationshipView):
+    queryset = Cart.objects
 
 
+class CartItemViewSet(ModelViewSet):
+    """
+    Handles:
+    Creating Cart Items
+    Retrieve a list of Cart Items
+    Retrieve a specific Cart Item
+    Update Cart Items
+    Deleting Cart Items
+    """
+    serializer_class = CartItemSerializer
+    queryset = CartItem.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    ordering_fields = '__all__'
+    search_fields = ('product',)
+    permission_classes = ()
+
+    def perform_create(self, serializer):
+        validated_data = serializer.validated_data
+        # Checking if not adding Duplicated to the Cart
+        if validated_data['cart']:
+            cart = validated_data['cart']
+            item = cart_has_product(cart, validated_data['product'].id)
+            if item:
+                serializer.instance = item
+                serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
+                self.perform_update(serializer)
+                return
+        serializer.save()
 
 
-
-
-
-
-        # TODO: Check if the product exists
-        # TODO: Check if the product is already added on the cart, if it is: increase the qty otherwise: just proceed it
-        # TODO: Check if the product qty is available
-        # TODO: Do the Cart Rules
-
-        return Response({"cart": cart})
-        # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    @action(methods=['POST'], detail=False, url_path='remove_from_cart')
-    def remove_from_cart(self, request, *args, **kwargs):
-        # TODO: Check if cart exists
-        # TODO: Check the token
-        # TODO: Check if the Cart Item exists
-        # TODO: Delete it
-        # TODO: Do the Cart Rules
-        return Response({})
+class CartItemRelationshipView(RelationshipView):
+    queryset = CartItem.objects

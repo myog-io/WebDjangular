@@ -1,13 +1,17 @@
 import { Input, OnInit } from "@angular/core";
 import { ProductModel } from "libs/plugins/store/src/lib/data/models/Product.model";
-import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { JsonApiQueryData, Attribute } from "angular2-jsonapi";
 import { Subject } from "rxjs";
-import { AbstractModel } from "@webdjangular/core/data-models";
-
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
 export class PluginProviderAbstractPricingComponent implements OnInit {
-
+  @Input() title: string;
+  @Input() title_id: string;
+  @Input() titleColor: string;
+  @Input() headline: string;
+  @Input() background: string;
+  @Input() discount: number;
+  
   @Input() skus: string;
   @Input() ids: string;
   @Input() class = "col-12 col-md-6 p-0 m-0";

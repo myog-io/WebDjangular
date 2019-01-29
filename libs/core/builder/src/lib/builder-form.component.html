@@ -7,7 +7,7 @@
         <nb-card-body>
           <div class="row">
             <div class="col-8">
-              <h3><span class="small" *ngIf="show_breadcrumb">breakcrumb_here / </span>
+              <h3><span class="small" *ngIf="show_breadcrumb">/ </span>
                 {{ before_title }} <b>{{ title }}</b>
               </h3>
             </div>
@@ -30,7 +30,7 @@
       </nb-card>
     </div>
   </div>
-  <div class="row" *ngIf="!formLoading;else loading_holder">
+  <div class="row" *ngIf="!formLoading;">
     <ng-container *ngFor="let item of displayGroups">
       <div [class]="item.wrapper_class" *ngIf="item.display">
         <ng-container *ngFor="let dg of item.groups">

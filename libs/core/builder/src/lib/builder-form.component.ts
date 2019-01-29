@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormFieldConfig, BuilderFormConfig, BuilderFormGroupConfig, BuilderFormDisplayGroups } from './interfaces/form-config.interface';
 import { FormGroup } from '@angular/forms';
 import { JsonLogic } from './builder-jsonlogic';

@@ -2,13 +2,14 @@ import {
   JsonApiModelConfig,
   Attribute,
   BelongsTo,
+  NestedAttribute,
 
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
-import { PermissionModel } from '@webdjangular/core/users-models';
 import { CoreConfigModel } from './CoreConfig.model';
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { BuilderFormFieldConfig } from '@core/builder/src/lib/interfaces/form-config.interface';
 
 @JsonApiModelConfig({
   type: 'core_config_input'
@@ -32,16 +33,16 @@ export class CoreConfigInputModel extends AbstractModel {
   @Attribute()
   label: string;
 
-  @Attribute()
+  @NestedAttribute()
   select_options: any;
 
-  @Attribute()
+  @NestedAttribute()
   select_model: any;
 
   @Attribute()
   placeholder: string;
 
-  @Attribute()
+  @NestedAttribute()
   validation: any;
 
   @Attribute()
@@ -51,9 +52,9 @@ export class CoreConfigInputModel extends AbstractModel {
   group: string;
 
   @Attribute()
-  value: string;
+  value: any;
 
-  @Attribute()
+  @NestedAttribute()
   conditional: any;
 
   @BelongsTo()
@@ -82,6 +83,7 @@ export class CoreConfigInputModel extends AbstractModel {
       inputType: this.input_type,
       display: true,
       conditional: this.conditional,
+      multiple: this.input_type === 'multiple', 
     };
   }
 }

@@ -11,8 +11,6 @@ import { ThemeProviderfyHeaderMenuComponent } from "./components/header/menu/men
 import { ThemeProviderfyFooterComponent } from "./components/footer/footer.component";
 import { ThemeProviderfyBottomFooterComponent } from "./components/footer/bottom-footer/bottom-footer.component";
 import { ThemeProviderfySignatureFooterComponent } from "./components/footer/signature-footer/signature-footer.component";
-import { CoreDynamicPageLoaderModule } from '@webdjangular/core/dynamic-page-loader';
-import { CoreDynamicComponentLoaderModule } from '@webdjangular/core/dynamic-component-loader';
 import { ThemeProviderfyModalWecallyouComponent } from './components/modal/wecallyou/wecallyou.component';
 import { ThemeProviderfyModalChoosecityComponent } from "./components/modal/choosecity/choosecity.component";
 import { ThemeProviderfyModalAdultContentComponent } from "./components/modal/adult-content/adult-content.component";
@@ -30,8 +28,24 @@ import { ThemeProviderfyModalChannelsComponent } from "./components/modal/channe
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgSelectModule } from '@ng-select/ng-select';
 import {NgxMaskModule} from "ngx-mask";
+import { CoreDynamicPageLoaderModule } from '@core/dynamic-page-loader/src/lib/core-dynamic-page-loader.module';
+
+import {LayoutComponent} from "@themes/providerfy/src/lib/components/layout/layout.component";
+import { LayoutFullContentComponent } from "@themes/providerfy/src/lib/components/layout/full-content/full-content.component";
+import { LayoutRightSidebarComponent } from "@themes/providerfy/src/lib/components/layout/right-sidebar/right-sidebar.component";
+import { LayoutLeftSidebarComponent } from "@themes/providerfy/src/lib/components/layout/left-sidebar/left-sidebar.component";
+
+
+const LAYOUTS = [
+  LayoutComponent,
+  LayoutFullContentComponent,
+  LayoutRightSidebarComponent,
+  LayoutLeftSidebarComponent,
+];
+
 
 const COMPONENTS = [
+  ...LAYOUTS,
   ThemeProviderfyComponent,
   ThemeProviderfyHeaderComponent,
   ThemeProviderfyTopHeaderComponent,
@@ -72,13 +86,13 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    CoreDynamicComponentLoaderModule.forRoot(),
     NgSelectModule,
+    CoreDynamicPageLoaderModule,
     NgxMaskModule.forRoot(),
     RouterModule.forChild([
       // TODO: remove the redirect to the page (remove these errors from routes as well) and make the error showing inside the page that gave the error.
       { path: '**', pathMatch: 'full', component: ThemeProviderfyComponent }
-
+      
     ])
   ],
   exports: [...COMPONENTS],
@@ -101,7 +115,7 @@ const COMPONENTS = [
 
   ]
 })
-export class ThemeProviderfyModule extends CoreDynamicPageLoaderModule {
+export class ThemeProviderfyModule {
 }
 
 

@@ -1,11 +1,11 @@
 import { Validators, FormBuilder } from "@angular/forms";
 import { OnDestroy, OnInit, Component, ChangeDetectorRef } from "@angular/core";
 import { Subscription } from "rxjs";
-import { WebAngularDataStore } from "@webdjangular/core/services";
 import { NbToastrService } from "@nebular/theme";
-import { AbstractModel } from "@webdjangular/core/data-models";
-import { MediaModel } from "libs/core/media/src/lib/models/Media.model";
 import { JsonApiQueryData } from "angular2-jsonapi";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
+import { AbstractModel } from "@core/data/src/lib/models";
+import { MediaModel } from "@core/media/src/lib/models/Media.model";
 
 @Component({
   selector: 'wda-import-json',
@@ -50,13 +50,14 @@ export class AdminImportComponent implements OnInit, OnDestroy {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsText(file);
-
       reader.onload = () => {
         this.formGroup.patchValue({
           file: reader.result
         });
+        
         try {
           this.data = JSON.parse(reader.result as string);
+          
         } catch (error) {
           this.toaster.danger(`Error Invalid File, Details: ${error}`, `Error!`, { duration: 5000 });
         }

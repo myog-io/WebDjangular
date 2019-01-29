@@ -7,21 +7,19 @@ import {
 import { Injectable, Injector, Inject } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, skip } from 'rxjs/operators';
 
 import { NbAuthService } from '@nebular/auth';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
-
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return this.authService.getToken().pipe(
       switchMap(function(token) {
-
         const suffix = request.url;
         let url = '/';
 
@@ -60,7 +58,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (request.headers.get('Content-Type') == null) {
           newHeaders['Content-Type'] = 'application/vnd.api+json';
         }
-        if (token.isValid()) {
+        if (token.isValid() && request.headers.get('Authorization') !== 'none') {
           newHeaders['Authorization'] = 'Bearer ' + token.getValue();
           var req = request.clone({
             url: url,

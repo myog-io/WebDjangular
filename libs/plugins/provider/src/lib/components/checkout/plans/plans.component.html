@@ -21,23 +21,26 @@
           }"
     >
       <div class="card-body" *ngIf="!providerCheckout.selected_internet_plan">
-        <div class="select-plans-wrapper">
-          <h3 class="plan-caption">
+        <div class="select-plans-wrapper" >
+          <h3 class="plan-caption" *ngIf="providerCheckout.plans.internet.length > 0">
             ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
           </h3>
           <plugin-provider-checkout-plan-internet>
           </plugin-provider-checkout-plan-internet>
         </div>
+        <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.internet.length === 0">
+          <p>Sua cidade não tem plano de telefone disponível ainda.</p>
+        </div>
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
         <div class="row selected-plan-wrapper">
           <div class="col-12 col-lg-5 align-self-center">
-            <h2>{{ providerCheckout.selected_internet_plan.name }}</h2>
+            <h2>{{ providerCheckout.selected_internet_plan.product.name }}</h2>
           </div>
           <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
+              <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.product.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
@@ -78,24 +81,27 @@
           }">
 
       <div class="card-body" *ngIf="!providerCheckout.selected_tv_plan">
-        <div class="select-plans-wrapper">
-          <h3 class="plan-caption">
+        <div class="select-plans-wrapper" >
+          <h3 class="plan-caption" *ngIf="providerCheckout.plans.tv.length > 0">
             Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
           </h3>
           <plugin-provider-checkout-plan-television>
           </plugin-provider-checkout-plan-television>
+        </div>
+        <div  class="select-plans-wrapper "*ngIf="!providerCheckout.loading_plans && providerCheckout.plans.tv.length === 0">
+          <p>Sua cidade não tem plano de televisão disponível ainda.</p>
         </div>
       </div>
 
       <div class="card-body" *ngIf="providerCheckout.selected_tv_plan">
         <div class="row selected-plan-wrapper">
           <div class="col-12 col-lg-5 align-self-center">
-            <h2>{{ providerCheckout.selected_tv_plan.name }}</h2>
+            <h2>{{ providerCheckout.selected_tv_plan.product.name }}</h2>
           </div>
           <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
+              <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.product.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
@@ -105,14 +111,15 @@
             </button>
           </div>
         </div>
-        <div class="row extra-tv-decoder">
+        <div class="row extra-tv-decoder" *ngIf="providerCheckout.selected_extra_tv_decoder.plan">
           <div class="col-12 col-lg-6">
             <h4>
               <span class="icon icon-extra-decoder"></span>
               <span class="title"> Adquirir pontos extra? </span>
             </h4>
             <div class="form-group">
-              <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty">
+              <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty"
+                (change)="providerCheckout.updateTVDecoderQty($event);">
                 <option value="0">Nenhum ponto adicional</option>
                 <option value="1">1 ponto adicional</option>
                 <option value="2">2 pontos adicionais</option>
@@ -126,22 +133,19 @@
             </span>
           </div>
           <div class="col-lg-3 actions-wrapper align-self-center">
-
-            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty === 0"
+            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 0"
               type="button" class="btn btn-outline-primary btn-round text-uppercase"
-              (click)="providerCheckout.addExtraTVDecoder()">
+              (click)="providerCheckout.addExtraTVDecoder(1)">
               Adicionar
             </button>
-
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
               type="button" class="btn btn-outline-danger btn-round text-uppercase"
               (click)="providerCheckout.removeExtraTVDecoder()">
               Remover
             </button>
-
           </div>
         </div>
-        <div class="select-television-optional-plan-wrapper">
+        <div class="select-television-optional-plan-wrapper" *ngIf="providerCheckout.plans_optionals.tv.length > 0">
           <h4>
             <span class="icon icon-squares"></span>
             <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
@@ -158,7 +162,7 @@
 
 
   <div class="card telephone plan-select-wrapper">
-    <div class="card-header  d-flex justify-content-center  plan-panel"
+    <div class="card-header  d-flex justify-content-center plan-panel"
          id="ProviderCheckoutTabPlanTelephone"
       (click)="providerCheckout.toggleCollapse($event, 'telephone')"
       [ngClass]="{
@@ -185,17 +189,20 @@
           <plugin-provider-checkout-plan-telephone>
           </plugin-provider-checkout-plan-telephone>
         </div>
+        <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.telephone.length === 0">
+          <p>Sua cidade não tem plano de telefone disponível ainda.</p>
+        </div>
       </div>
 
       <div class="card-body" *ngIf="providerCheckout.selected_telephone_plan">
         <div class="row selected-plan-wrapper">
           <div class="col-12 col-lg-5 align-self-center">
-            <h2>{{ providerCheckout.selected_telephone_plan.name }}</h2>
+            <h2>{{ providerCheckout.selected_telephone_plan.product.name }}</h2>
           </div>
           <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
+              <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.product.pricing_list }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>

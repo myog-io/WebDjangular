@@ -1,13 +1,13 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
-import {PermissionModel} from '@webdjangular/core/users-models';
-
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, JsonApiQueryData} from 'angular2-jsonapi';
 import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from './ProductType.model';
-import {SmartTableSettings} from '@webdjangular/core/data';
-import {ExtraOptions} from '@webdjangular/core/decorator';
 import {FormArray, FormGroup, Validators} from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { Observable } from 'rxjs';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 enum productDG {
   type = 'product-type',
@@ -18,6 +18,7 @@ enum productDG {
   pricing = 'pricing',
   media = 'media',
   addons = 'addons',
+  addon_parent = 'addon_parent',
   variants = 'variants'
 }
 
@@ -26,7 +27,7 @@ enum productDG {
   modelEndpointUrl: 'store/product',
 })
 export class ProductModel extends AbstractModel {
-  public static include = 'product_type,addons';
+  public static include = 'product_type,addons,addon_parent,categories';
 
   @Attribute()
   id: string;
@@ -255,7 +256,24 @@ export class ProductModel extends AbstractModel {
     options: {product_class: ProductClasses.addon},
     displayGroup: productDG.addons
   })
-  addons: ProductModel;
+  addons: ProductModel[];
+
+  @HasMany()
+  @ExtraOptions({
+    type: 'checkbox',
+    formType: FormArray,
+    label: 'Product Parent',
+    model: ProductModel,
+    options: {product_class: ProductClasses.simple},
+    displayGroup: productDG.addon_parent
+  })
+  addon_parent: ProductModel[];
+
+  @HasMany()
+  categories: any;
+
+  @Attribute()
+  disabled: boolean;
 
   @Attribute()
   price: number;
@@ -367,7 +385,32 @@ export class ProductModel extends AbstractModel {
         ]
       },
     },
-
+    {
+      wrapper_class: 'col-12',
+      groups: [
+        {
+          name: productDG.addon_parent,
+          title: 'Add-ons Parent Link',
+        },
+      ],
+      conditional: {
+        // show only after the Product Type is selected and it is NOT an Product Addon
+        "and": [
+          {
+            '!=': [
+              {var: 'product_type.id'},
+              null
+            ]
+          },
+          {
+            '==': [
+              {var: 'product_class'},
+              ProductClasses.addon
+            ]
+          }
+        ]
+      },
+    },
     {
       wrapper_class: 'col-12',
       groups: [
@@ -422,5 +465,10 @@ export class ProductModel extends AbstractModel {
     },
   };
 
+  public load_addons(dataStore:WebAngularDataStore,options = null, header = null): Observable<JsonApiQueryData<ProductModel>> {
+    const url = `/api/store/product/${this.id}/addons/`;
+   
+    return dataStore.findAll(ProductModel,options,header,url);
+  }
 
 }

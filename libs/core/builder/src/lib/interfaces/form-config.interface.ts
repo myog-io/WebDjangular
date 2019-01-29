@@ -51,6 +51,7 @@ export interface BuilderFormFieldConfig {
   placeholder?: string;
   validation?: ValidatorFn[];
   value?: any;
+  default?: any;
   conditionalValue?: any;
   wrapper_class?: string;
   inputType?: string;
@@ -68,6 +69,7 @@ export interface BuilderFormFieldConfig {
   sort?: number;
   displayGroup?: string;
   copyOptions?: BuilderFormCopyArray
+  json_logic_options_url?: string;
 }
 
 export interface BuilderFormField {

@@ -1,8 +1,8 @@
 from rest_framework_json_api.relations import ResourceRelatedField
-
+from rest_framework_json_api import serializers
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from ..models.City import City, Street, PostalCodeRange, NumberRange
-
+from libs.plugins.store.api.models.Product import Product
 
 class PostalCodeRangeSerializer(WebDjangoSerializer):
     included_serializers = {
@@ -60,7 +60,8 @@ class StreetSerializer(WebDjangoSerializer):
 class CitySerializer(WebDjangoSerializer):
     included_serializers = {
         'streets': StreetSerializer,
-        'postal_codes': PostalCodeRangeSerializer
+        'postal_codes': PostalCodeRangeSerializer,
+        'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer'
     }
 
     postal_codes = ResourceRelatedField(
@@ -81,6 +82,19 @@ class CitySerializer(WebDjangoSerializer):
         required=False,
     )
 
+    products = ResourceRelatedField(
+        many=True,
+        queryset=Product.objects,
+        related_link_url_kwarg='pk',
+        self_link_view_name='city-relationships',
+        related_link_view_name='city-related',
+        required=False,
+    )
+
+    neighborhood = serializers.CharField(required=False,read_only=True)
+    street = serializers.CharField(required=False,read_only=True)
+    state = serializers.CharField(required=False,read_only=True)
+    postal_code = serializers.CharField(required=False,read_only=True)
     class Meta:
         model = City
         fields = '__all__'

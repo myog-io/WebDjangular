@@ -4,13 +4,10 @@ import {
   HasMany,
   BelongsTo
 } from 'angular2-jsonapi';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SafeUrl } from '@angular/platform-browser';
 
-import { PermissionModel } from '@webdjangular/core/users-models';
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
-import { AbstractModel } from '@webdjangular/core/data-models';
-import { MediaForm } from '../forms/Media.form';
-import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
 
 @JsonApiModelConfig({
   type: 'media'
@@ -21,8 +18,7 @@ export class MediaModel extends AbstractModel {
   }
 
 
-  public static formClassRef = MediaForm;
-
+  
   @Attribute()
   id: string;
 

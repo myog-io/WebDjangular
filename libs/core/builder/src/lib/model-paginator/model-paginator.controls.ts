@@ -1,4 +1,4 @@
-import { JsonApiModel, JsonApiQueryData } from 'angular2-jsonapi';
+import {JsonApiModel, JsonApiQueryData} from 'angular2-jsonapi';
 
 export class ModelPaginatorControls {
 
@@ -28,7 +28,7 @@ export class ModelPaginatorControls {
     query_options.page = {
       size: this.pageSize,
       number: this.currentPage,
-    }
+    };
 
     if (typeof this.options['useDatastore'] !== 'undefined') {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
@@ -72,7 +72,7 @@ export class ModelPaginatorControls {
     let start_i = 0;
     const max = 7;
     const left = 4;
-    if(this.currentPage > left){
+    if (this.currentPage > left) {
       start_i = this.currentPage - left;
     }
 

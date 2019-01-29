@@ -1,8 +1,10 @@
 from django.db import models
 from django_mysql.models import JSONField
-from webdjango.signals.CoreSignals import config_group_register, config_register
+
 from webdjango.models.Core import CoreConfig
-from json.encoder import JSONEncoder
+from webdjango.signals.CoreSignals import config_group_register, config_register
+
+
 # TODO: Implement Permissions based on Groups
 
 class AbstractCoreConfigModel(models.Model):
@@ -47,29 +49,27 @@ class CoreConfigGroup(AbstractCoreConfigModel):
     class Meta:
         abstract = True
 
-
     def __str__(self):
         return self.id
 
 
 class CoreConfigInput(AbstractCoreConfigModel):
-    '''
-    This is responsable for the Fields and how they will be interpreted in the frontend application
+    """
+    This is responsible for the Fields and how they will be interpreted in the frontend application
     If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
-    '''
+    """
+
     FIELD_TYPE_BUTTON = 'button'
     FIELD_TYPE_TEXT = 'text'
     FIELD_TYPE_SELECT = 'select'
-    FIELD_TYPE_CKEDITOR = 'ckeditor'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
 
-    CONFIG_FIELD_TYPES = {
+    CONFIG_FIELD_TYPES = [
         (FIELD_TYPE_BUTTON, 'Button'),
         (FIELD_TYPE_TEXT, 'Text'),
         (FIELD_TYPE_SELECT, 'Select'),
-        (FIELD_TYPE_CKEDITOR, 'CkEditor'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
-    }
+    ]
     field_type = models.CharField(default=None, choices=CONFIG_FIELD_TYPES)
     input_type = models.CharField(default=None)
     order = models.IntegerField(default=0)
@@ -107,7 +107,6 @@ class CoreConfigInput(AbstractCoreConfigModel):
 
     class Meta:
         abstract = True
-
 
     def __str__(self):
         return self.id

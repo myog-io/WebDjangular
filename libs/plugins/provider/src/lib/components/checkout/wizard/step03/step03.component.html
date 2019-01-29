@@ -6,13 +6,13 @@
       <h5 class="text-primary">INFORMAÇÕES SOBRE SUA ASSINATURA</h5>
 
       <p *ngIf="providerCheckout.selected_internet_plan">
-        Internet - <b>{{ providerCheckout.selected_internet_plan.name }}</b>
+        Internet - <b>{{ providerCheckout.selected_internet_plan.product.name }}</b>
       </p>
       <p *ngIf="providerCheckout.selected_tv_plan">
-        TV - <b>{{ providerCheckout.selected_tv_plan.name }}</b>
+        TV - <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
       </p>
       <p *ngIf="providerCheckout.selected_telephone_plan">
-        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.name }}</b>
+        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
       </p>
 
       <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
@@ -27,10 +27,17 @@
         <b>{{ plan_optional.name }}</b>
       </p>
 
-      <p>Taxa de Instalação: <b>Grátis </b></p>
-      <p>Taxa de Adesão: <b>Grátis </b></p>
-      <p>Valor do 1º ao 3º mês:<b> R$ 231,20 </b></p>
-      <p>Valor a partir do 4º mês: <b>R$ 254,80 </b></p>
+
+      <p *ngFor="let fee of providerCheckout.getFees()">
+        {{ fee.data?.name }}:
+        <b *ngIf="fee.data?.price > 0">
+          R${{ fee.data?.price }}
+        </b>
+        <b *ngIf="fee.data?.price == 0">
+          GRÁTIS
+        </b>
+      </p>
+
       <p>Pagamento: <b>Boleto por email </b></p>
       <p>Email p/ envio do boleto: <b>fulano@edge.com.br </b></p>
 

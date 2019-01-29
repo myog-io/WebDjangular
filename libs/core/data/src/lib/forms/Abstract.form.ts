@@ -1,11 +1,8 @@
 import { JsonApiModel } from 'angular2-jsonapi';
-
 import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
-import { WebAngularDataStore } from '@webdjangular/core/services';
-import { BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
 import { AbstractModel } from '../models';
+import { BuilderFormFieldConfig, BuilderFormDisplayGroups } from '@core/builder/src/lib/interfaces/form-config.interface';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 export class AbstractForm extends FormGroup {
 
@@ -37,31 +34,34 @@ export class AbstractForm extends FormGroup {
   /**
    * Generates form
    */
-  public generateForm() {
+  public generateForm(ignore_validation = false, ignore_recursion=false) {
     for (let i = 0; i < this.formFields.length; i++) {
       const element = this.formFields[i];
       const propName = element.name
       if (this.formFields[i].formType == FormArray) {
-
-        this.registerControl(propName, new FormArray([], []));
+        if(ignore_recursion === false){
+          this.registerControl(propName, new FormArray([], []));
+        }
       } else if (this.formFields[i].formType == FormGroup) {
-        // If we Have Copy Options the form_group component will handle its creations
-        if (this.formFields[i].model && !this.formFields[i].copyOptions) {
-          let entity = new this.formFields[i].model(this.datastore)
-          const fb = entity.getForm()
-          fb.generateForm();
-          this.registerControl(propName, fb);
-        } else {
-          this.registerControl(propName, new FormGroup({}));
+        if(ignore_recursion === false){
+          // If we Have Copy Options the form_group component will handle its creations
+          if (this.formFields[i].model && !this.formFields[i].copyOptions) {
+            let entity = new this.formFields[i].model(this.datastore)
+            const fb = entity.getForm()
+            fb.generateForm(ignore_validation);
+            this.registerControl(propName, fb);
+          } else {
+            this.registerControl(propName, new FormGroup({}));
+          }
         }
       } else {
         let validators = [];
 
-        if (typeof this.formFields[i]['validators'] !== 'undefined') {
+        if (typeof this.formFields[i]['validators'] !== 'undefined' && ignore_validation === false) {
           validators = this.formFields[i]['validators'];
         }
         if (this.formFields[i].type === 'jsonLogic') continue;
-        this.registerControl(propName, new FormControl(null, validators));
+        this.registerControl(propName, new FormControl(element.value ? element.value : null, validators));
       }
     }
   }
@@ -70,7 +70,7 @@ export class AbstractForm extends FormGroup {
    * Populates form
    * @param [entity]
    */
-  public populateForm(entity: JsonApiModel | any = null) {
+  public populateForm(entity: JsonApiModel | any = null, ignore_recursion = false) {
     if (!entity) return false;
     this.entity = entity;
     for (let i = 0; i < this.formFields.length; i++) {
@@ -79,13 +79,17 @@ export class AbstractForm extends FormGroup {
       // From Array
       if (this.formFields[i].formType == FormArray && typeof entity[propName] !== 'undefined') {
         for (let i = 0; i < entity[propName].length; i++) {
-          this.pushToFormArrayAttribute(propName, entity[propName][i]);
+          if (ignore_recursion === false){
+            this.pushToFormArrayAttribute(propName, entity[propName][i]);
+          }
         }
       } else {
         if (this.formFields[i].formType == FormGroup && typeof entity[propName] !== 'undefined') {
-          let fg = this.get(propName) as AbstractForm;
-          if(fg.populateForm){
-            fg.populateForm(entity[propName]);
+          if (ignore_recursion === false){
+            let fg = this.get(propName) as AbstractForm;
+            if(fg.populateForm){
+              fg.populateForm(entity[propName]);
+            }
           }
         } else if (typeof entity[propName] !== 'undefined' && this.get(propName)) {
           this.get(propName).setValue(entity[propName], { emitEvent: true });
@@ -205,8 +209,8 @@ export class AbstractForm extends FormGroup {
       let field = this.getFormFieldByName(formKey);
       let entity = new field.model();
       let fb = entity.getForm();
-      fb.generateForm();
-      fb.populateForm(toRelateEntity);
+      fb.generateForm(true,true);
+      fb.populateForm(toRelateEntity,true);
       control.push(fb);
     }
   }
@@ -230,8 +234,8 @@ export class AbstractForm extends FormGroup {
       } else {
         f = entityToPush.getForm();
       }
-      f.generateForm();
-      f.populateForm(entityToPush);
+      f.generateForm(true,true);
+      f.populateForm(entityToPush,true);
       fa.push(f);
 
     }

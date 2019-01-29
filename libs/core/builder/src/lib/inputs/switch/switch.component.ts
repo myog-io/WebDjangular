@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AbstractForm } from '@webdjangular/core/data-forms';
 import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
 import { Subscription } from 'rxjs';
+import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-switch',
@@ -47,7 +47,8 @@ export class BuilderFormSwitcherComponent implements BuilderFormField, OnInit, O
     this.second_label = typeof(this.config.switch_second_label) != "undefined" ? this.config.switch_second_label : this.second_label;
     this.vertical = typeof(this.config.switch_vertical) != "undefined" ? this.config.switch_vertical : this.vertical;
     this.value = typeof(this.config.value) != "undefined" ? this.config.value: this.value;
-    this.group.get(this.config.name).setValue(this.value);
+    //this.group.get(this.config.name).setValue(this.value);
+    this.value = this.group.get(this.config.name).value;
     this.sub = this.group.get(this.config.name).valueChanges.subscribe((val)=>{
       this.value = val;
     })

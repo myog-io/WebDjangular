@@ -89,7 +89,6 @@ export class AbstractModel extends JsonApiModel {
             child.internalDatastore = this.service;
             const relationships: any = this.service.getRelationships(child);
             const belongsTo = child.belongsTo;
-            console.log(belongsTo)
             if (belongsTo) {
               for (let j = 0; j < belongsTo.length; j++) {
                 if (belongsTo[j].relationship === this.modelConfig.type) {
@@ -101,21 +100,23 @@ export class AbstractModel extends JsonApiModel {
             }
             child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
             if (child.hasDirtyAttributes && save) {
-              let promise = new Promise((resolve, reject) => {
+              // WE SHOULD ONLY SAVE ALL IF IT'S A BELONGS TO (ONE TO MANY RELATIONSHIP)
+              //let promise = new Promise((resolve, reject) => {
                 // Maybe Use SaveALL and do it Recursive?
-                child.save().subscribe(
-                  (response) => {
-                    if (response.id) {
-                      child_to_remove.splice(child_to_remove.findIndex((data) => data.id === response.id && data.modelConfig.type === response.modelConfig.type), 1);
-                    }
-                    resolve(response);
-                  },
-                  (error) => {
-                    reject(error);
-                  }
-                )
-              })
-              promises.push(promise)
+                
+                //child.save().subscribe(
+                //  (response) => {
+                //    if (response.id) {
+                //      child_to_remove.splice(child_to_remove.findIndex((data) => data.id === response.id && data.modelConfig.type === response.modelConfig.type), 1);
+                //    }
+                //    resolve(response);
+                //  },
+                //  (error) => {
+                //    reject(error);
+                //  }
+                //)
+              //})
+              //promises.push(promise)
 
             }
 

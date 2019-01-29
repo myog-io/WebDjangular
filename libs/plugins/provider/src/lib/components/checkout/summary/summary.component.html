@@ -23,8 +23,8 @@
             <span *ngIf="!providerCheckout.selected_internet_plan">
               INTERNET
             </span>
-            <span *ngIf="providerCheckout.selected_internet_plan.name">
-              {{ providerCheckout.selected_internet_plan.name }}
+            <span *ngIf="providerCheckout.selected_internet_plan">
+              {{ providerCheckout.selected_internet_plan.product.name }}
             </span>
           </td>
           <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_internet_plan">
@@ -35,7 +35,16 @@
           <td class="summary-action align-middle" *ngIf="providerCheckout.selected_internet_plan">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ providerCheckout.selected_internet_plan.pricing_list }}</span>
+              <span>
+                <span class="price float-right strikethrough">
+                  <span *ngIf="providerCheckout.selected_internet_plan.discount < 0">
+                    {{ providerCheckout.selected_internet_plan.base_price }}
+                  </span>
+                </span>
+                <span class="price float-right">
+                  {{ providerCheckout.selected_internet_plan.total }}
+                </span>
+              </span>
               <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectInternetPlan()">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
               </button>
@@ -45,18 +54,28 @@
 
 
         <tr
-          class="summary-item selected optionals" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
-          <td class="icon-wrapper align-middle ">
-            <span *ngIf="plan_optional.data.checkout_icon"   [class]="'icon ' + plan_optional?.data?.checkout_icon"></span>
-            <span *ngIf="!plan_optional.data.checkout_icon" class="fa fa-globe"></span>
+          class="summary-item selected optionals"
+          *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+          <td class="icon-wrapper align-middle">
+            <span *ngIf="plan_optional.product.data.checkout_icon" [class]="'icon ' + plan_optional.product?.data?.checkout_icon"></span>
+            <span *ngIf="!plan_optional.product.data.checkout_icon" class="fa fa-globe"></span>
           </td>
           <td class="align-middle title">
-            {{ plan_optional.name }}
+            {{ plan_optional.product.name }}
           </td>
           <td class="summary-action align-middle">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ plan_optional.pricing_list }}</span>
+              <span>
+                <span class="price float-right strikethrough">
+                  <span *ngIf="plan_optional.discount < 0">
+                    {{ plan_optional.base_price }}
+                  </span>
+                </span>
+                <span class="price float-right">
+                  {{ plan_optional.total }}
+                </span>
+              </span>
               <button type="button" class="remove" aria-label="Close"
                 (click)="providerCheckout.removeInternetOptional(plan_optional)">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
@@ -75,8 +94,8 @@
             <span *ngIf="!providerCheckout.selected_tv_plan">
               TV
             </span>
-            <span *ngIf="providerCheckout.selected_tv_plan.name">
-              {{ providerCheckout.selected_tv_plan.name }}
+            <span *ngIf="providerCheckout.selected_tv_plan">
+              {{ providerCheckout.selected_tv_plan.product.name }}
             </span>
           </td>
           <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_tv_plan">
@@ -87,7 +106,16 @@
           <td class="summary-action align-middle" *ngIf="providerCheckout.selected_tv_plan">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ providerCheckout.selected_tv_plan.pricing_list }}</span>
+              <span>
+                <span class="price float-right strikethrough">
+                  <span *ngIf="providerCheckout.selected_tv_plan.discount < 0">
+                    {{ providerCheckout.selected_tv_plan.base_price }}
+                  </span>
+                </span>
+                <span class="price float-right">
+                  {{ providerCheckout.selected_tv_plan.total }}
+                </span>
+              </span>
               <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectTVPlan()">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
               </button>
@@ -102,17 +130,23 @@
           <td class="align-middle title">
             {{ providerCheckout.selected_extra_tv_decoder.qty }}
             <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 1">
-             PONTO ADICIONAL
+              PONTO ADICIONAL
             </span>
             <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 1">
-             PONTOS ADICIONAIS
+              PONTOS ADICIONAIS
             </span>
           </td>
           <td class="summary-action align-middle">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right" [innerHTML]="providerCheckout.priceExtraTVDecoder">
-
+              <span>
+                <span class="price float-right strikethrough">
+                  <span>
+                  </span>
+                </span>
+                <span class="price float-right" [innerHTML]="providerCheckout.priceExtraTVDecoder">
+                  {{ providerCheckout.selected_tv_plan.total }}
+                </span>
               </span>
               <button type="button" class="remove" aria-label="Close"
                 (click)="providerCheckout.removeExtraTVDecoder()">
@@ -128,12 +162,21 @@
             <span class="icon icon-squares"></span>
           </td>
           <td class="align-middle title">
-            {{ plan_optional.name }}
+            {{ plan_optional.product.name }}
           </td>
           <td class="summary-action align-middle">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ plan_optional.pricing_list }}</span>
+              <span>
+                <span class="price float-right strikethrough">
+                  <span *ngIf="plan_optional.discount < 0">
+                    {{ plan_optional.base_price }}
+                  </span>
+                </span>
+                <span class="price float-right">
+                  {{ plan_optional.total }}
+                </span>
+              </span>
               <button type="button" class="remove" aria-label="Close"
                 (click)="providerCheckout.removeTVOptional(plan_optional)">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
@@ -153,8 +196,8 @@
             <span *ngIf="!providerCheckout.selected_telephone_plan">
               TELEFONE
             </span>
-            <span *ngIf="providerCheckout.selected_telephone_plan.name">
-              {{ providerCheckout.selected_telephone_plan.name }}
+            <span *ngIf="providerCheckout.selected_telephone_plan">
+              {{ providerCheckout.selected_telephone_plan.product.name }}
             </span>
           </td>
           <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_telephone_plan">
@@ -165,7 +208,16 @@
           <td class="summary-action align-middle" *ngIf="providerCheckout.selected_telephone_plan">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ providerCheckout.selected_telephone_plan.pricing_list }}</span>
+              <span>
+                <span class="price float-right strikethrough">
+                  <span *ngIf="providerCheckout.selected_telephone_plan.discount < 0">
+                    {{ providerCheckout.selected_telephone_plan.base_price }}
+                  </span>
+                </span>
+                <span class="price float-right">
+                  {{ providerCheckout.selected_telephone_plan.total }}
+                </span>
+              </span>
               <button type="button" class="remove"
                       aria-label="Close" (click)="providerCheckout.deselectTelephonePlan()">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
@@ -179,12 +231,21 @@
             <i class="fas fa-2x fa-globe"></i>
           </td>
           <td class="align-middle title">
-            {{ plan_optional.name }}
+            {{ plan_optional.product.name }}
           </td>
           <td class="summary-action align-middle">
             <div class="price-wrapper">
               <span class="currency-unit float-left">R$</span>
-              <span class="price float-right">{{ plan_optional.pricing_list }}</span>
+              <span>
+                <span class="price float-right strikethrough">
+                  <span *ngIf="plan_optional.discount < 0">
+                    {{ plan_optional.base_price }}
+                  </span>
+                </span>
+                <span class="price float-right">
+                  {{ plan_optional.total }}
+                </span>
+              </span>
               <button type="button" class="remove" aria-label="Close"
                 (click)="providerCheckout.removeTelephoneOptional(plan_optional)">
                 <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
@@ -203,9 +264,7 @@
           </td>
         </tr>
         </tbody>
-
       </table>
-
     </div>
 
     <div class="summary-info-wrapper ">
@@ -213,30 +272,26 @@
         <div class="col table-responsive">
           <table class="table">
             <tbody>
-            <tr>
-              <td>Taxa de Instalação</td>
-              <td>Grátis</td>
-            </tr>
-            <tr>
-              <td>Taxa de Adesão</td>
-              <td>Grátis</td>
-            </tr>
-            <tr>
-              <td>Valor do 1º ao 3º mês</td>
-              <td>R$ 297,50</td>
-            </tr>
-            <tr>
-              <td>Valor a partir do 4º mês</td>
-              <td>R$ 297,50</td>
+            <tr *ngFor="let fee of providerCheckout.getFees()">
+              <td>{{ fee.data?.name }}</td>
+              <td *ngIf="fee.data?.price > 0">
+                R${{ fee.data?.price }}
+              </td>
+              <td *ngIf="fee.data?.price == 0">
+                GRÁTIS
+              </td>
             </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="row">
+        <!--
+        TODO:
         <div class="col text-center mt-2">
           <a href="#" class="btn-summary-details"> DETALHES DA OFERTA </a>
         </div>
+        -->
       </div>
 
     </div>
@@ -246,7 +301,7 @@
         <div class="col text-center">
           <button type="submit" class="btn btn-primary btn-lg"
             [disabled]="!providerCheckout.isBuildingPlanValid()"
-            (click)="providerCheckout.onBuildingPlanSubmit();">
+            (click)="submit();">
             FINALIZAR ASSINATURA
           </button>
         </div>

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderCheckoutService, ProviderCheckoutSteps} from "../../data/services/provider-checkout.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'plugin-provider-checkout',
@@ -11,9 +12,11 @@ export class PluginProviderCheckoutComponent implements OnInit {
   public providerCheckoutSteps = ProviderCheckoutSteps;
 
   constructor(public providerCheckout: ProviderCheckoutService) {
+
   }
 
   ngOnInit() {
+    
   }
 
 }

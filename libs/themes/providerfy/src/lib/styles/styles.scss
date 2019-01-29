@@ -207,6 +207,8 @@ label {
   -webkit-transition: 0.2s ease all;
 }
 
+
+
 /* active state */
 
 input:focus, textarea:focus {
@@ -214,12 +216,21 @@ input:focus, textarea:focus {
 }
 
 input:focus ~ label, input:valid ~ label,
-textarea:focus ~ label, textarea:valid ~ label {
+textarea:focus ~ label, textarea:valid ~ label,
+input:read-only ~ label{
   bottom: -$input-fs*2;
   @include responsive-font-size($input-fs*0.95);
   color: $primary;
   border-color: transparent;
 }
+
+.custom-control-label {
+  position: static;
+  pointer-events: auto;
+  cursor: pointer;
+  color:#8ea5b0 !important;
+}
+
 
 .btn.disabled, .btn:disabled {
   opacity: 0.25;
@@ -814,4 +825,25 @@ input:focus ~ .highlight {
   left: auto;
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
+}
+
+
+.loader {
+  border-radius: 50%;
+  border-top: 10px solid $primary;
+  border-bottom: 10px solid #000;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

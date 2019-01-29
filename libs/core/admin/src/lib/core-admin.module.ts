@@ -1,8 +1,8 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbAuthModule } from '@nebular/auth';
-import { throwIfAlreadyLoaded } from '@webdjangular/core/shared';
-import { CoreServicesModule } from '@webdjangular/core/services';
+import { CoreServicesModule } from '@core/services/src/lib/core-services.module';
+import { throwIfAlreadyLoaded } from '@core/shared/src/lib/module-import-guard';
 
 export const NB_CORE_PROVIDERS = [
   ...CoreServicesModule.forRoot().providers,

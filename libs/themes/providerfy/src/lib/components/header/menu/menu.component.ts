@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {ThemeProviderfyModalWecallyouComponent} from "../../modal/wecallyou/wecallyou.component";
-import {ThemeProviderfyModalChannelsComponent} from "../../modal/channels/channels.component";
 import {CookieService} from 'ngx-cookie-service';
-import {ClientUserService} from "@webdjangular/core/services";
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { ThemeProviderfyModalWecallyouComponent } from '../../modal/wecallyou/wecallyou.component';
 
 
 @Component({

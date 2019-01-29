@@ -6,13 +6,11 @@ import {
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
-import { PermissionModel } from '@webdjangular/core/users-models';
-
-
-import { ExtraOptions } from '@webdjangular/core/decorator';
 import { AuthorModel } from './Author.model';
-import {SmartTableSettings} from "@webdjangular/core/data";
 import {Validators} from "@angular/forms";
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { PermissionModel } from '@core/users/src/lib/models';
+import { SmartTableSettings } from '../data-store';
 
 @JsonApiModelConfig({
   type: 'core_plugin'

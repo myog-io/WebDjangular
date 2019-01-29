@@ -1,7 +1,8 @@
 import {Attribute, BelongsTo, JsonApiModelConfig} from "angular2-jsonapi";
-import {AbstractModel} from "@webdjangular/core/data-models";
-import {ExtraOptions} from "@webdjangular/core/decorator";
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { AbstractModel } from "@core/data/src/lib/models";
+import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
+import { SmartTableSettings } from "@core/data/src/lib/data-store";
+
 
 export interface NumberRangeInterface {
   start: number;

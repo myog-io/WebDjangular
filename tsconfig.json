@@ -1,8 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
+    "module": "es2015",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -11,103 +12,20 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
-      "dom"
+      "es2018",
+      "dom",
+      "dom.iterable"
     ],
     "baseUrl": ".",
     "paths": {
-      "@webdjangular/core/users": [
-        "libs/core/users/src/index.ts"
+      "@core/*": [
+        "libs/core/*"
       ],
-      "@webdjangular/core/users-models": [
-        "libs/core/users/src/lib/models/index.ts"
+      "@plugins/*": [
+        "libs/plugins/*"
       ],
-      "@webdjangular/core/users-forms": [
-        "libs/core/users/src/lib/models/index.ts"
-      ],
-      "@webdjangular/core/cms": [
-        "libs/core/cms/src/index.ts"
-      ],
-      "@webdjangular/core/cms-models": [
-        "libs/core/cms/src/lib/models/index.ts"
-      ],
-      "@webdjangular/core/cms-forms": [
-        "libs/core/cms/src/lib/forms/index.ts"
-      ],
-      "@webdjangular/themes/cleanog": [
-        "libs/themes/cleanog/src/index.ts"
-      ],
-      "@webdjangular/core/forms": [
-        "libs/core/forms/src/index.ts"
-      ],
-      "@webdjangular/core/forms-models": [
-        "libs/core/forms/src/lib/models/index.ts"
-      ],
-      "@webdjangular/core/shared": [
-        "libs/core/shared/src/index.ts"
-      ],
-      "@webdjangular/core/services": [
-        "libs/core/services/src/index.ts"
-      ],
-      "@webdjangular/core/decorator": [
-        "libs/core/decorator/src/index.ts"
-      ],
-      "@webdjangular/core/interceptors": [
-        "libs/core/interceptors/src/index.ts"
-      ],
-      "@webdjangular/core/interfaces": [
-        "libs/core/interfaces/src/index.ts"
-      ],
-      "@webdjangular/core/auth": [
-        "libs/core/auth/src/index.ts"
-      ],
-      "@webdjangular/core/data": [
-        "libs/core/data/src/index.ts"
-      ],
-      "@webdjangular/core/data-models": [
-        "libs/core/data/src/lib/models/index.ts"
-      ],
-      "@webdjangular/core/data-forms": [
-        "libs/core/data/src/lib/forms/index.ts"
-      ],
-      "@webdjangular/core/admin": [
-        "libs/core/admin/src/index.ts"
-      ],
-      "@webdjangular/core/admin-theme": [
-        "libs/core/admin/src/lib/@theme/index.ts"
-      ],
-      "@webdjangular/core/dynamic-page-loader": [
-        "libs/core/dynamic-page-loader/src/index.ts"
-      ],
-      "@webdjangular/themes/clean": [
-        "libs/themes/clean/src/index.ts"
-      ],
-      "@webdjangular/core/dynamic-component-loader": [
-        "libs/core/dynamic-component-loader/src/index.ts"
-      ],
-      "@webdjangular/plugins/provider": [
-        "libs/plugins/provider/src/index.ts"
-      ],
-      "@webdjangular/plugins/provider-admin": [
-        "libs/plugins/provider/src/lib/admin/index.ts"
-      ],
-      "@webdjangular/plugins/provider-data": [
-        "libs/plugins/provider/src/lib/data/index.ts"
-      ],
-      "@webdjangular/themes/providerfy": [
-        "libs/themes/providerfy/src/index.ts"
-      ],
-      "@webdjangular/core/media": [
-        "libs/core/media/src/index.ts"
-      ],
-      "@webdjangular/core/chunk-file-upload": [
-        "libs/core/chunk-file-upload/src/index.ts"
-      ],
-      "@webdjangular/core/builder": [
-        "libs/core/builder/src/index.ts"
-      ],
-      "@webdjangular/plugins/store": [
-        "libs/plugins/store/src/index.ts"
+      "@themes/*": [
+        "libs/themes/*"
       ]
     }
   },

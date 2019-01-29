@@ -6,12 +6,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { NB_AUTH_OPTIONS } from '@nebular/auth';
+import { NB_AUTH_OPTIONS, NbTokenService } from '@nebular/auth';
 import { getDeepFromObject } from '../helpers';
 import { NbAuthService } from '@nebular/auth';
-import { NbAuthResult, NbTokenService } from '@nebular/auth';
 
-import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'webdjangular-logout',

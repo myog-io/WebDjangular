@@ -1,11 +1,9 @@
-import {Attribute, HasMany, JsonApiModelConfig,} from 'angular2-jsonapi';
-
-import {AbstractModel} from '@webdjangular/core/data-models';
+import {Attribute, HasMany, JsonApiModelConfig, NestedAttribute,} from 'angular2-jsonapi';
 import {GroupModel} from './Group.model';
-
-import {ExtraOptions} from '@webdjangular/core/decorator';
 import {PermissionModel} from './Permission.model';
-import {SmartTableSettings} from "@webdjangular/core/data";
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 
 @JsonApiModelConfig({
@@ -94,6 +92,9 @@ export class UserModel extends AbstractModel {
   is_staff: boolean;
 
   @Attribute()
+  extra_data: object;
+
+  @Attribute()
   last_login: Date;
 
   @Attribute()
@@ -102,7 +103,7 @@ export class UserModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  @Attribute()
+  @NestedAttribute()
   data: any = {};
 
   @HasMany()

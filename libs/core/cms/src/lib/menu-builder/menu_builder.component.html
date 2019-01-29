@@ -1,59 +1,68 @@
 <div class="row">
-    <div class="col-12">
-        <nb-card>
-            <nb-card-header>Menu Editor</nb-card-header>
-        </nb-card>
-    </div><!--col-->
+  <div class="col-12">
+    <nb-card>
+      <nb-card-header>Menu Editor</nb-card-header>
+    </nb-card>
+  </div><!--col-->
 </div><!--row-->
 
 <div class="row">
-    <div class="col-6">
-        <nb-card>
-            <nb-accordion>
-                <nb-accordion-item>
-                    <nb-accordion-item-header>
-                        Pages
-                    </nb-accordion-item-header>
-                    <nb-accordion-item-body>
-                        A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-                        Originally, nebula was a name for any diffuse astronomical object,
-                        including galaxies beyond the Milky Way.
-                    </nb-accordion-item-body>
-                </nb-accordion-item>
+  <div class="col-6">
+    <nb-card>
+      <nb-accordion>
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Pages
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
+            Originally, nebula was a name for any diffuse astronomical object,
+            including galaxies beyond the Milky Way.
+          </nb-accordion-item-body>
+        </nb-accordion-item>
 
-                <nb-accordion-item>
-                    <nb-accordion-item-header>
-                        Custom
-                    </nb-accordion-item-header>
-                    <nb-accordion-item-body>
-                        <wda-form [displayGroups]="menuItemForm.displayGroups"
-                            [inceptionForm]="true"
-                            (onSubmit)="createMenuItem($event)" (relationshipUpdated)="relationshipUpdated($event)"
-                            [group]="menuItemForm" [loading]="loading" [save_continue]="saveAndContinue"
-                            [before_title]="before_title" [title]="title" [formLoading]="formLoading">
-                        </wda-form>
-                    </nb-accordion-item-body>
-                </nb-accordion-item>
-            </nb-accordion>
-        </nb-card>
-    </div><!--col--> 
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Custom
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <!--
+            <wda-form [displayGroups]="menuItemForm.displayGroups"
+                [inceptionForm]="true"
+                (onSubmit)="createMenuItem($event)" (relationshipUpdated)="relationshipUpdated($event)"
+                [group]="menuItemForm" [loading]="loading" [save_continue]="saveAndContinue"
+                [before_title]="before_title" [title]="title" [formLoading]="formLoading">
+            </wda-form>
+            -->
+            <wda-form [displayGroups]="menuItemForm.displayGroups"
+              [inceptionForm]="true"
+              [group]="menuItemForm"
+              [formLoading]="formLoading"
+              (onSubmit)="createMenuItem($event)"
+            >
+            </wda-form>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </nb-card>
+  </div><!--col-->
 
-    <div class="col-6">
-        <div class="col-12 col-md-6 col-lg-12">
-            <nb-accordion cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                <nb-accordion-item *ngFor="let menuItem of menu?.menu_item" cdkDrag>
-                    <nb-accordion-item-header>
-                        {{ menuItem.name }}
-                    </nb-accordion-item-header>
-                    <nb-accordion-item-body>
-                        A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-                        Originally, nebula was a name for any diffuse astronomical object,
-                        including galaxies beyond the Milky Way.
-                    </nb-accordion-item-body>
-                </nb-accordion-item>
-                <hr>
-            </nb-accordion>
-        </div><!--col-->
+  <div class="col-6">
+    <div class="col-12 col-md-6 col-lg-12">
+      <nb-accordion cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <nb-accordion-item *ngFor="let menuItem of menu?.menu_item" cdkDrag>
+          <nb-accordion-item-header>
+            {{ menuItem.name }}
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
+            Originally, nebula was a name for any diffuse astronomical object,
+            including galaxies beyond the Milky Way.
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+        <hr>
+      </nb-accordion>
     </div><!--col-->
+  </div><!--col-->
 
 </div><!--row-->

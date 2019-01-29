@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { WebAngularDataStore } from '@webdjangular/core/services';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+
 
 @Component({
   selector: 'plugin-provider-coverage',

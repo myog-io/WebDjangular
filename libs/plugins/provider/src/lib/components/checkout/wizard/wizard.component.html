@@ -7,23 +7,20 @@
   <div class="row">
     <div class="col-md-12">
       <ul class="wizard">
-
         <li class="step-tab step-1" [ngClass]="{'active': providerCheckout.current_wizard_step == 1}">
-          <a routerLink="">
+          <a (click)="providerCheckout.setWizardStep(1)">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
             <span class="label">Dados pessoais</span>
           </a>
         </li>
-
         <li class="step-tab step-2" [ngClass]="{'active': providerCheckout.current_wizard_step == 2}">
-          <a routerLink="">
+          <a (click)="providerCheckout.setWizardStep(2)">
             <span class="icon"><i class="fas fa-arrow-right"></i></span>
-            <span class="label">Endereço / Pagamento</span>
+            <span class="label">Pagamento</span>
           </a>
         </li>
-
         <li class="step-tab step-3" [ngClass]="{'active': providerCheckout.current_wizard_step == 3}">
-          <a routerLink="">
+          <a (click)="providerCheckout.setWizardStep(3)">
             <span class="icon"><i class="fas fa-check"></i></span>
             <span class="label "></span>
           </a>
@@ -35,22 +32,22 @@
           <div class="row">
             <div class="col-12 col-md-6">
               <ul class="items-wrapper pb-3">
-                <li class="item" *ngIf="providerCheckout.selected_internet_plan.name">
-                  {{ providerCheckout.selected_internet_plan.name }}
+                <li class="item" *ngIf="providerCheckout.selected_internet_plan">
+                  {{ providerCheckout.selected_internet_plan.product.name }}
                 </li>
                 <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
                   + {{ plan_optional.name }}
                 </li>
 
-                <li class="item" *ngIf="providerCheckout.selected_tv_plan.name">
-                  {{ providerCheckout.selected_tv_plan.name }}
+                <li class="item" *ngIf="providerCheckout.selected_tv_plan">
+                  {{ providerCheckout.selected_tv_plan.product.name }}
                 </li>
                 <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
                   + {{ plan_optional.name }}
                 </li>
 
-                <li class="item" *ngIf="providerCheckout.selected_telephone_plan.name">
-                  {{ providerCheckout.selected_telephone_plan.name }}
+                <li class="item" *ngIf="providerCheckout.selected_telephone_plan">
+                  {{ providerCheckout.selected_telephone_plan.product.name }}
                 </li>
                 <li class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
                   + {{ plan_optional.name }}
@@ -58,8 +55,10 @@
               </ul>
 
               <div class="links-wrapper">
-                <a routerLink=""> Consulte o(s) contrato(s)</a>
-                <a routerLink=""> Condições da oferta</a>
+                <a class="float-left text-uppercase"
+                  (click)="providerCheckout.backToBuildingPlanStep()">
+                  Alterar plano
+                </a>
               </div>
 
             </div>
@@ -74,24 +73,15 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>Taxa de Instalação</td>
-                    <td>Grátis</td>
-                  </tr>
-                  <tr>
-                    <td>Taxa de Adesão</td>
-                    <td>Grátis</td>
-                  </tr>
-                  <tr>
-                    <td>Valor do 1º ao 3º mês</td>
-                    <td>R$ 297,50</td>
-                  </tr>
-                  <tr>
-                    <td>Valor a partir do 4º mês</td>
-                    <td>R$ 297,50</td>
-                  </tr>
-
-
+                    <tr *ngFor="let fee of providerCheckout.getFees()">
+                      <td>{{ fee.data?.name }}</td>
+                      <td *ngIf="fee.data?.price > 0">
+                        R${{ fee.data?.price }}
+                      </td>
+                      <td *ngIf="fee.data?.price == 0">
+                        GRÁTIS
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

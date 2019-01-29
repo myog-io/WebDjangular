@@ -1,7 +1,4 @@
-import {FormControl, Validators, FormGroup} from '@angular/forms';
-
-import {AbstractForm} from '@webdjangular/core/data-forms';
-import { BuilderFormFieldConfig } from '@webdjangular/core/builder';
+import { AbstractForm } from "@core/data/src/lib/forms";
 
 export class FormForm extends AbstractForm {
   /*

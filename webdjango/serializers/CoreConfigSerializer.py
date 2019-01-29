@@ -18,7 +18,7 @@ class CoreConfigInputSerializer(serializers.Serializer):
     validation = serializers.JSONField(read_only=True)
     wrapper_class = serializers.CharField(read_only=True)
     group = serializers.SlugField(read_only=True)
-    value = serializers.CharField(read_only=True)
+    value = serializers.JSONField(read_only=True)
     conditional = serializers.JSONField(read_only=True)
 
 

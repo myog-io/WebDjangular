@@ -11,20 +11,52 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fas fa-pencil-ruler',
     children: [
       {
+        title: 'Posts',
+        link: '/posts',
+      },
+      {
         title: 'Pages',
         link: '/pages',
       },
       {
         title: 'Blocks',
-        link: '/blocks',
+          children: [
+          {
+            title: 'Headers',
+            link: '/block/headers'
+          },
+          {
+            title: 'Layouts',
+            link: '/block/layouts'
+          },
+          {
+            title: 'Footers',
+            link: '/block/footers'
+          },
+          {
+            title: 'Widget-Holders',
+            link: '/block/widget-holders'
+          },
+          {
+            title: 'Custom',
+            link: '/block/custom'
+          }
+        ],
       },
       {
         title: 'Medias',
         link: '/media',
       },
+      // {
+      //   title: 'Forms (soon)',
+      // },
       {
-        title: 'Forms',
-        link: '/forms',
+        title: 'Tags',
+        link: '/page-tags',
+      },
+      {
+        title: 'Categories',
+        link: '/page-categories',
       },
       {
         title: 'Menus',
@@ -64,15 +96,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/store/orders',
       },
       {
-        title: 'Discounts',
+        title: 'Store Rules',
         children: [
           {
             title: 'Catalog Rules',
-            link: '/store/discount/catalog-rules',
+            link: '/store/rules/catalog-rules',
           },
           {
             title: 'Cart Rules',
-            link: '/store/discount/cart-rules',
+            link: '/store/rules/cart-rules',
+          },
+          {
+            title: 'Cart Terms',
+            link: '/store/rules/cart-terms',
           },
         ]
       },
