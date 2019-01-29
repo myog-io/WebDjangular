@@ -24,7 +24,7 @@
 
       <button type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
         *ngIf="providerCheckout.checkCartItemTVOptional(plan)"
-        (click)="providerCheckout.removeTVOptional(plan)">
+        (click)="providerCheckout.removeTVOptional(plan)" [disabled]="providerCheckout.selectingTVPlan">
         Remover
       </button>
 

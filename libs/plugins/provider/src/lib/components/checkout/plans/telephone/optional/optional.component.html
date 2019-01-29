@@ -20,7 +20,9 @@
 
   <button type="button" class="btn btn-outline-danger btn-round text-uppercase"
     *ngIf="providerCheckout.checkCartItemTelephoneOptional(plan)"
-    (click)="providerCheckout.removeTelephoneOptional(plan)">
+    (click)="providerCheckout.removeTelephoneOptional(plan)"
+    [disabled]="providerCheckout.selectingTelephonePlan"
+  >
     Remover
   </button>
 

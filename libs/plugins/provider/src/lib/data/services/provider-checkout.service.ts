@@ -878,14 +878,17 @@ export class ProviderCheckoutService {
   }
 
   addExtraTVDecoder(qty) {
+    this.selectingTVPlan = true;
     this.cartService.addToCart({
       product: this.selected_extra_tv_decoder.plan,
       qty: (qty)
     }).then(
       (cartItem: CartItemModel) => {
+        this.selectingTVPlan = false;
         this.selected_extra_tv_decoder.cartItem = cartItem;
         this.selected_extra_tv_decoder.qty = cartItem.quantity;
       }, (error: ErrorResponse) => {
+        this.selectingTVPlan = false;
       });
   }
 
@@ -894,22 +897,35 @@ export class ProviderCheckoutService {
     if (new_qty == 0) {
       this.removeExtraTVDecoder();
     } else {
-      this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
-      this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
-        (cartItem: CartItemModel) => {
-          this.selected_extra_tv_decoder.cartItem = cartItem;
-          this.selected_extra_tv_decoder.qty = cartItem.quantity;
-        })
+      if (this.selected_extra_tv_decoder.cartItem) {
+        this.selectingTVPlan = true;
+        this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
+        this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
+          (cartItem: CartItemModel) => {
+            this.selected_extra_tv_decoder.cartItem = cartItem;
+            this.selected_extra_tv_decoder.qty = cartItem.quantity;
+            this.selectingTVPlan = false;
+          },(error)=>{
+            this.selectingTVPlan = false;
+          }
+        );
+      } else {
+        // Don't have on cart we need to create
+        this.addExtraTVDecoder(1);
+      }
     }
   }
 
   removeExtraTVDecoder() {
     if (this.selected_extra_tv_decoder.cartItem) {
+      this.selectingTVPlan = true;
       this.cartService.removeFromCart(this.selected_extra_tv_decoder.cartItem).then(
         () => {
+          this.selectingTVPlan = false;
           this.selected_extra_tv_decoder.cartItem = null;
           this.selected_extra_tv_decoder.qty = 0;
         }, (error: ErrorResponse) => {
+          this.selectingTVPlan = false;
         });
     }
   }
