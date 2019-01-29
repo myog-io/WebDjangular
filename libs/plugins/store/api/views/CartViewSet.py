@@ -9,7 +9,7 @@ from uuid import UUID, uuid1
 from libs.plugins.store.api.models.Cart import Cart, CartItem, CartTerm
 from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
 from libs.plugins.store.api.utils import CartUtils
-from ..utils.CartUtils import cart_has_product
+from ..utils.CartUtils import cart_has_product, create_order
 
 class CartTermViewSet(ModelViewSet):
     """
@@ -51,6 +51,7 @@ class CartViewSet(ModelViewSet):
     # filter_class = CartFilter
     search_fields = ('name',)
     permission_classes = ()
+
 
 
 class CartRelationshipView(RelationshipView):

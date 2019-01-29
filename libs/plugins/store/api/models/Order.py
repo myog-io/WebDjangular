@@ -139,13 +139,19 @@ class OrderLine(BaseModel):
     quantity = models.IntegerField(default=1)
     quantity_fulfilled = models.IntegerField(default=0)
 
-    unit_price_gross = MoneyField(currency=defaults.DEFAULT_CURRENCY,
-                                  max_digits=defaults.DEFAULT_MAX_DIGITS,
-                                  decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
-    unit_price_net = MoneyField(currency=defaults.DEFAULT_CURRENCY,
-                                max_digits=defaults.DEFAULT_MAX_DIGITS,
-                                decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
-    unit_price = TaxedMoneyField(net_field='unit_price_net', gross_field='unit_price_gross')
+    unit_cost = MoneyField(
+        'cost', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
+    unit_base_price = MoneyField(
+        'list', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES)
+    unit_price = MoneyField(
+        'sale', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
+    total = MoneyField(
+        'total', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True  
+    )
     tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.0'))
 
     class Meta:
@@ -208,37 +214,38 @@ class Order(BaseModel):
     # shipping_method = models.ForeignKey(
     #     ShippingMethod, blank=True, null=True, related_name='orders',
     #     on_delete=models.SET_NULL)
-    shipping_price_net = MoneyField(
+    shipping_price = MoneyField(
         currency=defaults.DEFAULT_CURRENCY,
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-        default=ZERO_MONEY, editable=False)
-    shipping_price_gross = MoneyField(
-        currency=defaults.DEFAULT_CURRENCY,
-        max_digits=defaults.DEFAULT_MAX_DIGITS,
-        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-        default=ZERO_MONEY, editable=False)
-    shipping_price = TaxedMoneyField(
-        net_field='shipping_price_net', gross_field='shipping_price_gross')
+        blank=True, null=True, editable=False)
+    
     shipping_method_name = models.CharField(
         max_length=255, null=True, default=None, blank=True, editable=False)
     token = models.CharField(max_length=36, unique=True, blank=True)
-    total_net = MoneyField(
+
+    taxes = MoneyField(
         currency=defaults.DEFAULT_CURRENCY,
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-        default=ZERO_MONEY)
-    total_gross = MoneyField(
+        blank=True, null=True, editable=False)
+
+    sub_total = MoneyField(
         currency=defaults.DEFAULT_CURRENCY,
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-        default=ZERO_MONEY)
-    total = TaxedMoneyField(net_field='total_net', gross_field='total_gross')
+        blank=True, null=True, editable=False)
+    total = MoneyField(
+        currency=defaults.DEFAULT_CURRENCY,
+        max_digits=defaults.DEFAULT_MAX_DIGITS,
+        decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
+        blank=True, null=True, editable=False)
+  
     discount_amount = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                                  max_digits=defaults.DEFAULT_MAX_DIGITS,
                                  decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
-                                 default=ZERO_MONEY)
-
+                                 blank=True, null=True, editable=False)
+    customer_note = models.TextField(blank=True, default='')
     # TODO: idk... maybe a better way to store those fields instead of "flat"
     class Meta:
         ordering = ['-created']

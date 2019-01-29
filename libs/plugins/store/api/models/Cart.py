@@ -122,7 +122,7 @@ class Cart(BaseModel):
         
 
     @property
-    def get_total_weight(self):
+    def total_weight(self):
         """
         Return the total weight
         :return:
@@ -165,6 +165,12 @@ class CartItem(BaseModel):
                     price = price + Money(self.data['discount_rules'][discount_code], defaults.DEFAULT_CURRENCY)
         # Let's Check the Rules
         return price
+
+    @property
+    def cost(self):
+        if self.product:
+            return self.product.cost
+        return ZERO_MONEY
 
     @property
     def discount(self):

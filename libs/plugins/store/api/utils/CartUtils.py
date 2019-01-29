@@ -11,14 +11,15 @@ from ..models.Discount import CartRule, RuleValueType
 from rest_framework.serializers import DecimalField
 from libs.plugins.store.api import defaults
 from ..serializers.MoneySerializer import MoneyField
-from webdjango.utils.JsonLogic import jsonLogic
-from ..serializers.CartSerializer import CartItemSerializer, CartSerializer
+from ..serializers.CartSerializer import CartItemSerializer, CartSerializer, CartTermSerializer
 from webdjango.serializers.AddressSerializer import AddressSerializer
 from webdjango.models.Address import AddressType, Address
+from webdjango.utils.JsonLogic import jsonLogic
+
 from django.db.models import Q
 from django.db import transaction
 from .DiscountUtils import increase_voucher_usage
-
+from rest_framework.exceptions import ValidationError
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
 
 def get_rule_ammount(price, rule):
@@ -266,8 +267,8 @@ def _process_shipping_data_for_order(cart, taxes):
         'shipping_address': AddressSerializer(cart.billing_address).data,
         #'shipping_method': cart.shipping_method,
         #'shipping_method_name': smart_text(cart.shipping_method),
-        #'shipping_price': cart.get_shipping_price(taxes),
-        #'weight': cart.get_total_weight()
+        'shipping_price': cart.shipping_price,
+        'weight': cart.total_weight
     }
     
 
@@ -281,6 +282,7 @@ def _process_user_data_for_order(cart, request):
     return {
         'user': cart.user,
         'user_email': cart.user.email,
+        'customer_note': cart.note,
         'billing_address': AddressSerializer(billing_address).data,
         'security_data': {
             'HTTP_USER_AGENT':request.META.get('HTTP_USER_AGENT'),
@@ -288,20 +290,43 @@ def _process_user_data_for_order(cart, request):
         }
     }
 
+def _process_terms_data_for_order(cart):
+    return {
+        'terms': CartTermSerializer(cart.terms,many=True).data
+    }
+    
+def add_item_to_order(order, item):
+    """Add total_quantity of variant to order.
+    Returns an order line the variant was added to.
+    By default, raises InsufficientStock exception if  quantity could not be
+    fulfilled. 
+    """
+    line = order.lines.create(
+        product_name=item.name,
+        product_sku=item.sku,
+        is_shipping_required=item.is_shipping_required,
+        quantity=item.quantity,
+        quantity_fulfilled=0,
+        unit_cost=item.cost,
+        unit_base_price=item.base_price,
+        unit_price=item.price,
+        total=item.total,
+        tax_rate=Decimal('0.0'), # TODO: Get Correct Tax Rate
+    )
+    # TODO: Alocate Stock
+    #if item.product and item.product.track_inventory:
+       # allocate_stock(variant, quantity)
+    return line
 
-def _fill_order_with_cart_data(order, cart, discounts, taxes):
+
+def _fill_order_with_cart_data(order, cart):
     """Fill an order with data (variants, note) from cart."""
-    from ..order.utils import add_variant_to_order
-
     for line in cart:
-        add_variant_to_order(
-            order, line.variant, line.quantity, discounts, taxes)
+        add_item_to_order(order, line)
 
-    cart.payments.update(order=order)
+    # TODO: Run Payment Rotine and We will only allow Cart Creation if the Payment Routine goes Good?!
+    # cart.payments.update(order=order) 
 
-    if cart.note:
-        order.customer_note = cart.note
-        order.save(update_fields=['customer_note'])
 
 
 @transaction.atomic
@@ -320,16 +345,20 @@ def create_order(cart, request):
         except NotApplicable:
             return None
 
-        order_data.update(_process_shipping_data_for_order(cart, taxes))
+        order_data.update(_process_shipping_data_for_order(cart))
         order_data.update(_process_user_data_for_order(cart, request))
+        order_data.update(_process_terms_data_for_order(cart))
         order_data.update({
-            'total': cart.get_total(discounts, taxes)
+            'total': cart.total,
+            'sub_total': cart.sub_total,
+            'taxes': cart.taxes
         })
 
         order = Order.objects.create(**order_data)
 
-        _fill_order_with_cart_data(order, cart, discounts, taxes)
+        _fill_order_with_cart_data(order, cart)
         return order
+    return None
 
 
 def is_fully_paid(cart: Cart):
