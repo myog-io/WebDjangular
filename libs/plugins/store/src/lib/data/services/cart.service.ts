@@ -215,10 +215,10 @@ export class CartService {
 
   public clearCart(): Promise<any> {
     return new Promise((resolve, reject) => {
+      this.cookieService.delete(this.cart_cookie_name);
       if (this._cart.id) {
         this.datastore.deleteRecord(CartModel, this._cart.id).subscribe(
           (response) => {
-            this.cookieService.delete(this.cart_cookie_name);
             resolve(response);
           },
           (error: ErrorResponse) => {
@@ -227,24 +227,6 @@ export class CartService {
       } else {
         reject("Cart does not exists");
       }
-    });
-  }
-
-  public searchAddressByPostalCode(postal_code: string, country: string): Promise<AddressModel> {
-    // fake search xD
-    return new Promise((resolve, reject) => {
-
-      let address: AddressModel = this.datastore.createRecord(AddressModel, {
-        street_address_1: 'R. Sete de Setembro',
-        street_address_2: '',
-        street_address_3: 'Jardim Morumbi',
-        postal_code: postal_code,
-        state: 'São Paulo',
-        city: 'Lençõis Paulista',
-        country: 'BR',
-        country_area: 'BR'
-      });
-      resolve(address);
     });
   }
 
