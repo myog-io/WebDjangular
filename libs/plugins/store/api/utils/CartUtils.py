@@ -160,7 +160,7 @@ def contains_unavailable_products(cart):
 
     # TODO: check if cart contains any unavailable item
     # try:
-    #     for item in cart.items:
+    #     for item in cart.items.all():
     #         item.check_quantity(item.quantity)
     # except InsufficientStock:
     #     return True
@@ -174,7 +174,7 @@ def remove_unavailable_products(cart):
     :return: return the quantity of items removed
     """
 
-    for item in cart.items:
+    for item in cart.items.all():
         pass
         # TODO: if cart contains any unavailable item, decrease the quantity until it is available, otherwise remove it
     return 0
@@ -211,8 +211,8 @@ def get_user_cart(user):
 
 def add_item_to_cart(cart, cart_item):
 
-    if len(cart.items) > 0:
-        for item in cart.items:
+    if cart.items.count() > 0:
+        for item in cart.items.all():
             pass
     else:
 
@@ -249,7 +249,7 @@ def _get_order_number(cart):
 
 def _process_voucher_data_for_order(cart):
     # The Vouchers are automatic added to the Cart as Cart Lines, so we can search for them this way!
-    for item in cart:
+    for item in cart.items.all():
         if 'discount_rules' in item.data:
 
             for key in item.data:
@@ -340,7 +340,7 @@ def add_item_to_order(order, item):
 
 def _fill_order_with_cart_data(order, cart):
     """Fill an order with data (variants, note) from cart."""
-    for line in cart:
+    for line in cart.items.all():
         add_item_to_order(order, line)
 
     # TODO: Run Payment Rotine and We will only allow Cart Creation if the Payment Routine goes Good?!
@@ -376,7 +376,7 @@ def create_order(cart, request):
 
 def ready_to_place_order(cart: Cart):
     if cart.is_shipping_required:
-        if cart.len() <= 0:
+        if cart.items.count() <= 0:
             raise ValidationError('No itens in cart')
         if not cart.shipping_method:
             raise ValidationError('Shipping method is not set')

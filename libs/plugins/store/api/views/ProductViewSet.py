@@ -14,6 +14,7 @@ from ..serializers.ProductSerializer import ProductCategorySerializer, \
     ProductSerializer, ProductTypeSerializer
 from libs.plugins.provider.api.models.City import City
 from libs.plugins.provider.api.models.PlanType import PlanType
+from libs.plugins.provider.api.models.Condo import Condo
 
 class ProductAttributeFilter(WebDjangoFilterSet):
     class Meta:
@@ -115,9 +116,8 @@ class ProductCategoryRelationshipView(RelationshipView):
 
 
 class ProductFilter(WebDjangoFilterSet):
-    # TODO: This Should Be Dynamic, using signals
-    city = ModelChoiceFilter(queryset=City.objects.all())
-    plan_types = ModelChoiceFilter(queryset=PlanType.objects.all())
+   
+    
     product_class_neq = CharFilter(field_name='product_class', exclude=True)
     class Meta:
         model = Product
@@ -128,6 +128,10 @@ class ProductFilter(WebDjangoFilterSet):
             'description': ['contains'],
             'product_class': ['contains', 'exact'],
             'product_class_neq': ['in', 'exact'],
+             # TODO: This Should Be Dynamic, using signals
+            'condos__id': ['in', 'exact'],
+            'plan_types__id': ['in', 'exact'],
+            'city__id': ['in', 'exact'],
         }
 
 

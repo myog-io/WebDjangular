@@ -89,6 +89,12 @@ export class ProviderCheckoutService {
   set plan_type(pt: PlanTypeModel){
     this._plan_type = pt;
   }
+  get condo(): CondoModel {
+    return this._condo;
+  }
+  set condo(cn:CondoModel) {
+    this._condo = cn;  
+  }
 
   public internet_plan_collapsed: boolean = false;
   public tv_plan_collapsed: boolean = false;
@@ -132,7 +138,7 @@ export class ProviderCheckoutService {
 
   public copying:boolean = false;
 
-  public condos: Observable<CondoModel[]>;
+  private _condo: CondoModel;
 
   constructor(
     private datastore: WebAngularDataStore,
@@ -251,7 +257,18 @@ export class ProviderCheckoutService {
             } else {
               this.datastore.findRecord(PlanTypeModel,this.cartService.cart.extra_data.plan_type_id ).subscribe((plan_type)=>{
                 this.plan_type = plan_type;
-                this.loadPlans();
+                if (this.cartService.cart.extra_data.hasOwnProperty('condo')){
+                  this.datastore.findRecord(CondoModel,this.cartService.cart.extra_data.condo,{fields:'name,id'}).subscribe(
+                    (condo)=>{
+                      this.condo = condo;
+                      this.loadPlans();
+                    }, (error)=>{
+                      this.loadPlans();
+                    }
+                  )
+                } else {
+                  this.loadPlans();
+                }
               })
             }
             
@@ -268,7 +285,7 @@ export class ProviderCheckoutService {
     })
 
   }
-
+  
   checkDisabledByCategories(cart) {
     let categories_ids = {};
     for (let i = 0; i < cart.items.length; i++) {
@@ -495,25 +512,25 @@ export class ProviderCheckoutService {
     let number = null;
     let condo = null;
     let condoNumber = null;
-    if (this.formBeforeCheckout) {
+    if (this.formBeforeCheckout){
       number = this.formBeforeCheckout.get('numberOfAddress').value || 'N/A';
-      condo = this.formBeforeCheckout.get('condo').value || null;
-      condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
+      if (this.condo) {
+        condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
+        this.address.street_address_3 = `${this.condo.name} APTO ${condoNumber}`;
+      }
     }
+    
     this.address.city = city.name;
     this.address.number = number;
     this.address.street_address_1 = `${city.street}`;
-    if (condo) {
-      this.address.street_address_3 = `${condo} APTO ${condoNumber}`;
-    }
     this.address.street_address_3 = city.neighborhood;
     this.address.state = city.state;
     this.address.postal_code = city.postal_code;
     this.address.country = 'BR';
     this.address.country_area = 'BR';
-    if (this.condos) {
-      this.findCondos();
-    }
+    //if (this.condos) {
+    //  this.findCondos();
+    //}
   }
 
   getCurrentCity(): Promise<CityModel> {
@@ -540,27 +557,20 @@ export class ProviderCheckoutService {
     });
   }
 
-  public findCondos() {
-    this.condos = this.datastore.findAll(
-      CondoModel,
-      {city__id: this.city.id},
-      new HttpHeaders({'Authorization': 'none'}),
-    ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
-  }
-
-  checkPageLoad() {
-
-  }
-
-
+  
   loadPlans() {
     let options = {};
     options['page'] = {number: 1, size: 100};
     //options['include'] = `${ProductModel.include}`;
     options['include'] = `product_type`;
-    options['plan_types'] = this.plan_type.id;
-    options['city'] = this.city.id;
-    console.log("TRYING TO LOAD",options['plan_type_id'])
+    options['plan_types__id'] = this.plan_type.id;
+    
+    if (this.condo){
+      options['condos__id'] = this.condo.id;
+    }else{
+      options['city__id'] = this.city.id;
+    }
+    console.log("TRYING TO LOAD",options)
     //const url = `/api/provider/city/${this.city.id}/products/`;
     
 

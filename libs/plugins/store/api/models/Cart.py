@@ -70,12 +70,6 @@ class Cart(BaseModel):
 
     #  voucher_code = models.CharField(max_length=12, blank=True, null=True)
 
-    def __iter__(self):
-        return iter(self.items.all())
-
-    def __len__(self):
-        return self.items.count()
-
     class Meta:
         ordering = ['-pk']
 

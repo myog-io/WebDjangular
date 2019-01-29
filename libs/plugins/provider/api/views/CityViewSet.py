@@ -20,6 +20,7 @@ import json
 
 class CityFilter(WebDjangoFilterSet):
     products = ModelChoiceFilter(queryset=Product.objects.all())
+
     class Meta:
         model = City
         fields = {
@@ -27,7 +28,7 @@ class CityFilter(WebDjangoFilterSet):
             'name': ['contains', 'exact'],
             'short_name': ['contains', 'exact'],
             'code': ['contains', 'exact'],
-            
+
         }
 
 
@@ -43,7 +44,8 @@ class CityViewSet(ModelViewSet):
     serializer_class = CitySerializer
     queryset = City.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CityFilter
     search_fields = ('name',)
@@ -61,28 +63,32 @@ class CityViewSet(ModelViewSet):
         # For now we will only search on viacep.com and cross reference with our information
 
         postal_code = self.kwargs['pk']
-        r = requests.get('http://viacep.com.br/ws/{0}/json/'.format(postal_code))
-        
+        r = requests.get(
+            'http://viacep.com.br/ws/{0}/json/'.format(postal_code))
+
         city_data = json.loads(r.text)
+        if 'erro' in city_data:
+            raise exceptions.NotFound("Cep Não encontrado ou invalido")
         city = None
         if city_data['localidade']:
             # Distrito de Potunduva (Potunduva)
             if city_data['bairro'] and city_data['bairro'].lower().find('Distrito') is not -1:
                 city = City.objects.filter(name=city_data['bairro']).first()
-            
+
             if not city:
                 # City not found let's search by name
-                city = City.objects.filter(name=city_data['localidade']).first()
+                city = City.objects.filter(
+                    name=city_data['localidade']).first()
         else:
             # Vamos utlizar a Cidade do Cookie Como Padrão o CEP não retornou uma CIdade Valida
             # PS: Isso pode dar merda mas vamos deixar o cliente arrumar a ciadade dele no final do formulario
             # city = $this->getCidadeByName(self::getCity());
             if getClientUserCookie():
-                city = City.objects.get(getClientUserCookie()['data']['city']['id'])
+                city = City.objects.get(getClientUserCookie()[
+                                        'data']['city']['id'])
 
-        
         if not city:
-            raise exceptions.NotFound("City not Found");
+            raise exceptions.NotFound("Não temos cobertura na cidade relacionada aesse cep")
 
         serializer = self.get_serializer(city)
         data = serializer.data
@@ -94,14 +100,15 @@ class CityViewSet(ModelViewSet):
             data['state'] = city_data['uf']
         if city_data['cep']:
             data['postal_code'] = city_data['cep']
-       
+
         return Response(data)
 
 
 class CityRelationshipView(RelationshipView):
     queryset = City.objects
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
+
 
 class PostalCodeRangeFilter(WebDjangoFilterSet):
     class Meta:
@@ -125,7 +132,8 @@ class PostalCodeRangeViewSet(ModelViewSet):
     serializer_class = PostalCodeRangeSerializer
     queryset = PostalCodeRange.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PostalCodeRangeFilter
     search_fields = ('start', 'end',)
@@ -158,7 +166,8 @@ class StreetViewSet(ModelViewSet):
     serializer_class = StreetSerializer
     queryset = Street.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = StreetFilter
     search_fields = ('name', 'short_name',)
@@ -191,7 +200,8 @@ class NumberRangeViewSet(ModelViewSet):
     serializer_class = NumberRangeSerializer
     queryset = NumberRange.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = NumberRangeFilter
     search_fields = ('name', 'short_name',)
@@ -200,5 +210,3 @@ class NumberRangeViewSet(ModelViewSet):
 
 class NumberRangeRelationshipView(RelationshipView):
     queryset = NumberRange.objects
-
-

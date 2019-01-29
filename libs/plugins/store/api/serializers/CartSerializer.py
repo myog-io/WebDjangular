@@ -85,7 +85,8 @@ class CartSerializer(WebDjangoSerializer):
         queryset=CartItem.objects,
         required=False,
         related_link_url_kwarg='pk',
-        self_link_view_name='cart-relationships'
+        self_link_view_name='cart-relationships',
+        related_link_view_name='cart-related',
     )
 
     billing_address = ResourceRelatedField(
@@ -111,7 +112,7 @@ class CartSerializer(WebDjangoSerializer):
         related_link_url_kwarg='pk',
         self_link_view_name='cart-relationships',
         related_link_view_name='cart-related',
-        required=False
+        required=False,
     )
 
     terms = ResourceRelatedField(
@@ -120,7 +121,7 @@ class CartSerializer(WebDjangoSerializer):
         related_link_url_kwarg='pk',
         self_link_view_name='cart-relationships',
         related_link_view_name='cart-related',
-        required=False
+        required=False,
     )
     extra_data = serializers.JSONField(required=False)
 

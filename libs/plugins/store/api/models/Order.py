@@ -258,9 +258,7 @@ class Order(BaseModel):
     class Meta:
         ordering = ['-created']
 
-    def __iter__(self):
-        return iter(self.lines.all())
-
+    
     def is_fully_paid(self):
         total_paid = self._total_paid()
         return total_paid.gross >= self.total.gross

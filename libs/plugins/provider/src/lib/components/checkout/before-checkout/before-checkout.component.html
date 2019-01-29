@@ -81,7 +81,7 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="condo">
                     <option value="">Condominio</option>
-                    <option *ngFor="let condo of providerCheckout.condos | async" [value]="condo.name">{{condo.name}}</option>
+                    <option *ngFor="let condo of condos" [value]="condo.id">{{condo.name}}</option>
 
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
