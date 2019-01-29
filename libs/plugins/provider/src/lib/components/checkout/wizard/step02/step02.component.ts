@@ -30,6 +30,10 @@ export class PluginProviderCheckoutWizardStep02Component implements OnInit {
     this.providerCheckout.cartService.getCardTerms().then((terms:CartTermModel[])=>{
       this.terms = terms;
       this.terms.forEach((term) => {
+
+        term.content = term.content.replace("{{user.first_name}}",
+          this.providerCheckout.address.first_name);
+
         this.formWizardStep02.addControl( `term-${term.id}`,
           this.formBuilder.control('', [Validators.requiredTrue]));
       });

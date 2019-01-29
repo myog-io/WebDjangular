@@ -18,6 +18,9 @@ export class CartModel extends AbstractModel {
   user: UserModel;
 
   @Attribute()
+  email: string;
+
+  @Attribute()
   token: string;
 
   @Attribute()

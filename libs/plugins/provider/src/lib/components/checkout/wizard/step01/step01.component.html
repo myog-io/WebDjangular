@@ -131,9 +131,7 @@
         <div class="row">
           <div class="col-12 col-md-12">
             <div class="form-group">
-              <input type="text" name="postal_code" formControlName="postal_code"
-                     readonly [value]="providerCheckout.address.postal_code"
-                     class="ng-touched ng-dirty ng-valid"/>
+              <input type="text" name="postal_code" formControlName="postal_code" readonly />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>CEP</label>
@@ -144,9 +142,7 @@
         <div class="row">
           <div class="col-12 col-md-8">
             <div class="form-group">
-              <input type="text" name="city" readonly formControlName="city"
-                [value]="providerCheckout.address.city"
-                     class="ng-touched ng-dirty ng-valid"/>
+              <input type="text" name="city" readonly formControlName="city" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Cidade</label>
@@ -155,9 +151,7 @@
 
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="text" name="state" readonly formControlName="state"
-                [value]="providerCheckout.address.state"
-                     class="ng-touched ng-dirty ng-valid"/>
+              <input type="text" name="state" readonly formControlName="state" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Estado</label>
@@ -168,8 +162,7 @@
         <div class="row">
           <div class="col-12 col-md-12">
             <div class="form-group">
-              <input type="text" name="street_address_1" formControlName="street_address_1"
-                     [value]="providerCheckout.address.street_address_1" />
+              <input type="text" name="street_address_1" formControlName="street_address_1" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Endereço</label>
@@ -180,8 +173,7 @@
         <div class="row">
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="text" name="number" formControlName="number"
-                     [value]="providerCheckout.address.number"/>
+              <input type="text" name="number" formControlName="number"/>
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Número</label>
@@ -190,8 +182,7 @@
 
           <div class="col-12 col-md-8">
             <div class="form-group">
-              <input type="text" name="street_address_2" formControlName="number"
-                  [value]="providerCheckout.address.street_address_2"/>
+              <input type="text" name="street_address_2" formControlName="street_address_2"/>
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Complemento</label>
@@ -209,8 +200,10 @@
 
         <div class="row mt-3">
           <div class="col-12 col-md-6">
-            <button class="btn btn-primary btn-block" type="submit" [disabled]="!formWizardStep01.valid">
-              Continuar
+            <button class="btn btn-primary btn-block" type="submit"
+              [disabled]="!formWizardStep01.valid || formWizardStep01Submitted">
+              <span *ngIf="!formWizardStep01Submitted">Continuar</span>
+              <span *ngIf="formWizardStep01Submitted"><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
             </button>
           </div>
           <div class="col-12 col-md-6">

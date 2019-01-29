@@ -38,10 +38,10 @@ class CartTerm(BaseModel):
 class Cart(BaseModel):
     """
     """
-
-    # When user is null, it is a guest (not logged in user)
     user = models.ForeignKey(User, on_delete=None,
                              blank=True, null=True, related_name='user')
+    # When user is null, the email means it is a guest (not logged in user)
+    email = models.CharField(max_length=64, null=True, default=None)
 
     token = models.UUIDField(default=uuid4, editable=False)
     total_quantity = models.PositiveIntegerField(default=0)
