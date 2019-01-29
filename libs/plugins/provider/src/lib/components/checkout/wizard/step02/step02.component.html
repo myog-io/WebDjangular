@@ -13,7 +13,7 @@
             <h6>Fidelidade</h6>
 
             <div class="form-group">
-              <select class="form-control">
+              <select class="form-control" formControlName="contractTime">
                 <option value="0">sem fidelidade</option>
                 <option value="1">1 ano</option>
                 <option value="2">2 anos</option>
@@ -117,8 +117,10 @@
         <div class="row mt-1">
 
           <div class="col-12">
-            <button class="btn btn-primary btn-block btn-large" [disabled]="!formWizardStep02.valid">
-              Confirmar assinatura
+            <button class="btn btn-primary btn-block btn-large"
+              [disabled]="!formWizardStep02.valid || formWizardStep02Submitted ">
+              <span *ngIf="!formWizardStep02Submitted">Confirmar assinatura</span>
+              <span *ngIf="formWizardStep02Submitted"><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
             </button>
           </div>
           <div class="col-10 mt-2 mx-auto">
