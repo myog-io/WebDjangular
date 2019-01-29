@@ -145,7 +145,7 @@
                   </span>
                 </span>
                 <span class="price float-right" [innerHTML]="providerCheckout.priceExtraTVDecoder">
-                  {{ providerCheckout.selected_tv_plan.total }}
+                  
                 </span>
               </span>
               <button type="button" class="remove" aria-label="Close"
@@ -273,11 +273,11 @@
           <table class="table">
             <tbody>
             <tr *ngFor="let fee of providerCheckout.getFees()">
-              <td>{{ fee.data?.name }}</td>
-              <td *ngIf="fee.data?.price > 0">
-                R${{ fee.data?.price }}
+              <td>{{ fee?.name }}</td>
+              <td *ngIf="fee?.price != 0">
+                R${{ fee?.price }}
               </td>
-              <td *ngIf="fee.data?.price == 0">
+              <td *ngIf="fee?.price == 0">
                 GRÁTIS
               </td>
             </tr>
@@ -308,6 +308,11 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col text-center my-2">
+          <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details"> Limpar carrinho </a>
+        </div>
+    </div>
 
   </div>
 </div>

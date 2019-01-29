@@ -7,6 +7,7 @@ from libs.plugins.provider.api.views.CityViewSet import PostalCodeRangeViewSet, 
 from libs.plugins.provider.api.views.CondoViewSet import CondoRelationshipView
 from libs.plugins.provider.api.views.ResellerViewSet import ResellerRelationshipView
 from .views.ChannelViewSet import ChannelViewSet, ChannelRelationshipView
+from .views.PlanTypeViewSet import PlanTypeViewSet, PlanTypeRelationshipView
 from .views.CityViewSet import CityViewSet
 from .views.CondoViewSet import CondoViewSet
 from .views.PageRedirectViewSet import PageRedirectViewSet, PageRedirectRelationshipView
@@ -22,6 +23,7 @@ router.register('page-redirect', PageRedirectViewSet,
 router.register('channel', ChannelViewSet, base_name='channel')
 router.register('condo', CondoViewSet, base_name='condo')
 router.register('reseller', ResellerViewSet, base_name='reseller')
+router.register('plan-type', PlanTypeViewSet, base_name='plan-type')
 
 relationshipPatterns = [
     # Page Redirect relationships
@@ -87,6 +89,14 @@ relationshipPatterns = [
     url(regex=r'^reseller/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
         view=ResellerViewSet.as_view({'get': 'retrieve_related'}),
         name='reseller-related'),
+
+    # Plan Type relationships
+    url(regex=r'^plan-type/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=PlanTypeRelationshipView.as_view(),
+        name='plan-type-relationships'),
+    url(regex=r'^plan-type/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        view=PlanTypeViewSet.as_view({'get': 'retrieve_related'}),
+        name='plan-type-related'),
 ]
 urlpatterns = [
     url(r'provider/', include(router.urls)),

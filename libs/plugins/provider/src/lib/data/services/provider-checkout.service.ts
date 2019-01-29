@@ -17,6 +17,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
 import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
 import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
+import { PlanTypeModel } from '../models/PlanType.model';
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -56,12 +57,7 @@ export class ProviderCheckoutService {
     internet_radio: 'Sou cliente Rádio',
   };
 
-  public access_types = {
-    residencial: 'Residencial',
-    condominio_residencial: 'Condomínio Residencial',
-    empresarial: 'Empresarial',
-    condominio_empresarial: 'Condomínio Empresarial',
-  };
+  private _plan_type:PlanTypeModel;
 
 
   public loading_cart: boolean = true;
@@ -87,7 +83,18 @@ export class ProviderCheckoutService {
     tv: [],
     telephone: []
   };
-
+  get plan_type(): PlanTypeModel{
+    return this._plan_type;
+  }
+  set plan_type(pt: PlanTypeModel){
+    this._plan_type = pt;
+  }
+  get condo(): CondoModel {
+    return this._condo;
+  }
+  set condo(cn:CondoModel) {
+    this._condo = cn;  
+  }
 
   public internet_plan_collapsed: boolean = false;
   public tv_plan_collapsed: boolean = false;
@@ -131,7 +138,7 @@ export class ProviderCheckoutService {
 
   public copying:boolean = false;
 
-  public condos: Observable<CondoModel[]>;
+  private _condo: CondoModel;
 
   constructor(
     private datastore: WebAngularDataStore,
@@ -172,6 +179,24 @@ export class ProviderCheckoutService {
     );
   }
 
+  restartProviderCheckout() {
+    console.log("RESTART STARTS");
+    this.cartService.clearCart().then(
+      (res)=>{
+        // TODO: maybe improve, maybe not
+        location.reload();
+        // console.log('restart cart deleted',res );
+        // this.current_step = ProviderCheckoutSteps.beforeCheckout;
+        // this.current_wizard_step = 1;
+        // this.formBeforeCheckoutSubmitted = false;
+//
+        // this.formBeforeCheckout.reset();
+        // console.log(this.formBeforeCheckout.get('typeOfAccess').errors);
+      }, (error) => {
+       // console.log('restart cart error: ', error)
+      })
+  }
+
   checkPreSelectedPlans(params) {
     if (params.hasOwnProperty('token')) {
       const url:string = this.router.createUrlTree([], {
@@ -179,7 +204,7 @@ export class ProviderCheckoutService {
         queryParams: {}
       }).toString();
       this.location.go(url);
-      this.cartService.setCartToken(params['token']);
+      this.cartService.setCartToken(params['token'],params['city_id']);
     }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
@@ -234,7 +259,7 @@ export class ProviderCheckoutService {
           condo: cart.extra_data.condo || '',
           numberOfAddress: this.address.number,
           condoNumber: cart.extra_data.condo_number || '',
-          typeOfAccess: cart.extra_data.access_type || '',
+          typeOfAccess: cart.extra_data.plan_type_id || '',
           typeOfCustomer: cart.extra_data.customer_type || '',
         });
       }
@@ -245,7 +270,26 @@ export class ProviderCheckoutService {
         this.current_step = this.cartService.cart.extra_data['current_step'];
         if (this.current_step == ProviderCheckoutSteps.buildingPlan ||
           this.current_step == ProviderCheckoutSteps.wizard) {
-          this.loadPlans();
+            if (this.plan_type){
+              this.loadPlans();
+            } else {
+              this.datastore.findRecord(PlanTypeModel,this.cartService.cart.extra_data.plan_type_id ).subscribe((plan_type)=>{
+                this.plan_type = plan_type;
+                if (this.cartService.cart.extra_data.hasOwnProperty('condo')){
+                  this.datastore.findRecord(CondoModel,this.cartService.cart.extra_data.condo,{fields:'name,id'}).subscribe(
+                    (condo)=>{
+                      this.condo = condo;
+                      this.loadPlans();
+                    }, (error)=>{
+                      this.loadPlans();
+                    }
+                  )
+                } else {
+                  this.loadPlans();
+                }
+              })
+            }
+            
         }
       }
       if (this.cartService.cart.extra_data.hasOwnProperty('current_wizard_step')) {
@@ -259,7 +303,7 @@ export class ProviderCheckoutService {
     })
 
   }
-
+  
   checkDisabledByCategories(cart) {
     let categories_ids = {};
     for (let i = 0; i < cart.items.length; i++) {
@@ -293,6 +337,9 @@ export class ProviderCheckoutService {
         }
       }
     }
+    this.selectingTelephonePlan = false;
+    this.selectingTVPlan = false;
+    this.selectingInternetPlan = false;
   }
 
   updateSelectedItems() {
@@ -483,25 +530,25 @@ export class ProviderCheckoutService {
     let number = null;
     let condo = null;
     let condoNumber = null;
-    if (this.formBeforeCheckout) {
+    if (this.formBeforeCheckout){
       number = this.formBeforeCheckout.get('numberOfAddress').value || 'N/A';
-      condo = this.formBeforeCheckout.get('condo').value || null;
-      condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
+      if (this.condo) {
+        condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
+        this.address.street_address_3 = `${this.condo.name} APTO ${condoNumber}`;
+      }
     }
+    
     this.address.city = city.name;
     this.address.number = number;
     this.address.street_address_1 = `${city.street}`;
-    if (condo) {
-      this.address.street_address_3 = `${condo} APTO ${condoNumber}`;
-    }
     this.address.street_address_3 = city.neighborhood;
     this.address.state = city.state;
     this.address.postal_code = city.postal_code;
     this.address.country = 'BR';
     this.address.country_area = 'BR';
-    if (this.condos) {
-      this.findCondos();
-    }
+    //if (this.condos) {
+    //  this.findCondos();
+    //}
   }
 
   getCurrentCity(): Promise<CityModel> {
@@ -528,31 +575,26 @@ export class ProviderCheckoutService {
     });
   }
 
-  public findCondos() {
-    this.condos = this.datastore.findAll(
-      CondoModel,
-      {city__id: this.city.id},
-      new HttpHeaders({'Authorization': 'none'}),
-    ).map((query: JsonApiQueryData<CondoModel>) => query.getModels())
-  }
-
-  checkPageLoad() {
-
-  }
-
-
+  
   loadPlans() {
     let options = {};
     options['page'] = {number: 1, size: 100};
     //options['include'] = `${ProductModel.include}`;
     options['include'] = `product_type`;
-
-    const url = `/api/provider/city/${this.city.id}/products/`;
+    options['plan_types__id'] = this.plan_type.id;
+    
+    if (this.condo){
+      options['condos__id'] = this.condo.id;
+    }else{
+      options['city__id'] = this.city.id;
+    }
+    //const url = `/api/provider/city/${this.city.id}/products/`;
+    
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
       new HttpHeaders({'Authorization': 'none'}),
-      url).subscribe((query: JsonApiQueryData<ProductModel>) => {
+      null).subscribe((query: JsonApiQueryData<ProductModel>) => {
       const plans = query.getModels();
       this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
       this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
@@ -695,7 +737,7 @@ export class ProviderCheckoutService {
 
   deselectInternetPlan() {
     this.selectingInternetPlan = true;
-    this.cartService.removeFromCart(this.selected_internet_plan).then(
+    this.cartService.removeFromCart(this.selected_internet_plan, false).then(
       () => {
         this.selectingInternetPlan = false;
         this.selected_internet_plan = null;
@@ -708,7 +750,7 @@ export class ProviderCheckoutService {
 
   deselectTVPlan() {
     this.selectingTVPlan = true;
-    this.cartService.removeFromCart(this.selected_tv_plan).then(
+    this.cartService.removeFromCart(this.selected_tv_plan, false).then(
       () => {
         this.selectingTVPlan = false;
         this.selected_tv_plan = null;
@@ -721,7 +763,7 @@ export class ProviderCheckoutService {
 
   deselectTelephonePlan() {
     this.selectingTelephonePlan = true;
-    this.cartService.removeFromCart(this.selected_telephone_plan).then(
+    this.cartService.removeFromCart(this.selected_telephone_plan, false).then(
       () => {
         this.selectingTelephonePlan = false;
         this.selected_telephone_plan = null;
@@ -734,24 +776,25 @@ export class ProviderCheckoutService {
 
 
   addInternetOptional(plan) {
+    this.selectingInternetPlan = true;
     this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selected_internet_optionals.push(cartItem);
       }, (error: ErrorResponse) => {
-
       });
   }
 
   addTVOptional(plan) {
+    this.selectingTVPlan = true;
     this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selected_tv_optionals.push(cartItem);
       }, (error: ErrorResponse) => {
-
       });
   }
 
   addTelephoneOptional(plan) {
+    this.selectingTelephonePlan = true;
     this.cartService.addToCart({product: plan}).then(
       (cartItem: CartItemModel) => {
         this.selected_telephone_optionals.push(cartItem);
@@ -778,12 +821,20 @@ export class ProviderCheckoutService {
       }, (error: ErrorResponse) => {
       });
   }
-
-  removeAllInternetOptionals() {
-    while (this.selected_internet_optionals.length) {
-      let op = this.selected_internet_optionals.pop();
-      this.cartService.removeFromCart(op).then();
+  removeAllPlansFromType(type_list:CartItemModel[]){
+    let promises: Promise<boolean>[] = [];
+    while (type_list.length) {
+      let op = type_list.pop();
+      promises.push(
+        this.cartService.removeFromCart(op,false)
+      );
     }
+    Promise.all(promises).then((responses)=>{
+      this.cartService.updateCart();
+    })
+  }
+  removeAllInternetOptionals() {
+    this.removeAllPlansFromType(this.selected_internet_optionals);
   }
 
   checkCartItemTVOptional(plan) {
@@ -806,10 +857,7 @@ export class ProviderCheckoutService {
   }
 
   removeAllTVOptionals() {
-    while (this.selected_tv_optionals.length) {
-      let op = this.selected_tv_optionals.pop();
-      this.cartService.removeFromCart(op).then();
-    }
+    this.removeAllPlansFromType(this.selected_tv_optionals);
     this.removeExtraTVDecoder();
   }
 
@@ -833,10 +881,7 @@ export class ProviderCheckoutService {
   }
 
   removeAllTelephoneOptionals() {
-    while (this.selected_telephone_optionals.length) {
-      let op = this.selected_telephone_optionals.pop();
-      this.cartService.removeFromCart(op).then();
-    }
+    this.removeAllPlansFromType(this.selected_telephone_optionals);
   }
 
 
@@ -849,14 +894,17 @@ export class ProviderCheckoutService {
   }
 
   addExtraTVDecoder(qty) {
+    this.selectingTVPlan = true;
     this.cartService.addToCart({
       product: this.selected_extra_tv_decoder.plan,
       qty: (qty)
     }).then(
       (cartItem: CartItemModel) => {
+        this.selectingTVPlan = false;
         this.selected_extra_tv_decoder.cartItem = cartItem;
         this.selected_extra_tv_decoder.qty = cartItem.quantity;
       }, (error: ErrorResponse) => {
+        this.selectingTVPlan = false;
       });
   }
 
@@ -865,22 +913,35 @@ export class ProviderCheckoutService {
     if (new_qty == 0) {
       this.removeExtraTVDecoder();
     } else {
-      this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
-      this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
-        (cartItem: CartItemModel) => {
-          this.selected_extra_tv_decoder.cartItem = cartItem;
-          this.selected_extra_tv_decoder.qty = cartItem.quantity;
-        })
+      if (this.selected_extra_tv_decoder.cartItem) {
+        this.selectingTVPlan = true;
+        this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
+        this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
+          (cartItem: CartItemModel) => {
+            this.selected_extra_tv_decoder.cartItem = cartItem;
+            this.selected_extra_tv_decoder.qty = cartItem.quantity;
+            this.selectingTVPlan = false;
+          },(error)=>{
+            this.selectingTVPlan = false;
+          }
+        );
+      } else {
+        // Don't have on cart we need to create
+        this.addExtraTVDecoder(new_qty);
+      }
     }
   }
 
   removeExtraTVDecoder() {
     if (this.selected_extra_tv_decoder.cartItem) {
+      this.selectingTVPlan = true;
       this.cartService.removeFromCart(this.selected_extra_tv_decoder.cartItem).then(
         () => {
+          this.selectingTVPlan = false;
           this.selected_extra_tv_decoder.cartItem = null;
           this.selected_extra_tv_decoder.qty = 0;
         }, (error: ErrorResponse) => {
+          this.selectingTVPlan = false;
         });
     }
   }
@@ -901,9 +962,12 @@ export class ProviderCheckoutService {
   }
 
   setWizardStep(number: number) {
-    this.current_wizard_step = number;
-    this.updateCartExtraData();
+    if(this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
+      this.current_wizard_step = number;
+      this.updateCartExtraData();
+    }
   }
+
 
   backToBuildingPlanStep() {
     this.current_step = ProviderCheckoutSteps.buildingPlan;
@@ -951,7 +1015,7 @@ export class ProviderCheckoutService {
     extra_data.current_wizard_step = this.current_wizard_step.toString();
     extra_data.condo = this.formBeforeCheckout.get('condo').value;
     extra_data.condo_number = this.formBeforeCheckout.get('condoNumber').value;
-    extra_data.access_type = this.formBeforeCheckout.get('typeOfAccess').value;
+    extra_data.plan_type_id = this.formBeforeCheckout.get('typeOfAccess').value;
     extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
     extra_data.city_id = this.city.id;
     this.cartService.setExtraData(extra_data);
@@ -1015,7 +1079,7 @@ export class ProviderCheckoutService {
   }
 
   onWizardStep02Submit() {
-    console.log( "=D");
+    this.nextStep();
   }
 
   confirmCheckout() {
@@ -1033,7 +1097,7 @@ export class ProviderCheckoutService {
   }
 
   getTerms() {
-    this.cartService.getCardTerms().then((terms: CartTermModel)=>{
+    this.cartService.getCartTerms().then((terms: CartTermModel)=>{
       return terms;
     })
   }
@@ -1041,7 +1105,7 @@ export class ProviderCheckoutService {
   getTokenFullURL() {
     const url:string = window.location.origin + this.router.createUrlTree([], {
       relativeTo: this.activatedRoute,
-      queryParams: {token: this.cartService.cart.token}
+      queryParams: {token: this.cartService.cart.token, city_id: this.cartService.cart.extra_data.city_id}
     }).toString();
     return url;
   }

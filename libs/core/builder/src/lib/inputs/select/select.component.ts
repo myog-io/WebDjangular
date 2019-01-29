@@ -100,14 +100,12 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
       this.options = this.config.options || [];
     }
     if (this.config.value) {
-      
       this.group.get(this.config.name).setValue(this.config.value);
       this.onChange(this.config.value);
     }
     let sub: Subscription;
     sub = this.group.get(this.config.name).valueChanges.subscribe((value) => {
       if (sub) sub.unsubscribe();
-
       this.onChange(value);
     });
   }

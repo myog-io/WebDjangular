@@ -1,6 +1,6 @@
 from ..signals import post_get_page, pre_get_page
 from ..configs import CMSCoreConfig
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from ..models.Page import Page, PageTag, PageCategory
 from ..models.Block import Block
@@ -16,7 +16,7 @@ from django.template.base import Lexer
 from webdjango.configs import CONFIG_HOME_PAGE
 
 
-class PageTagFilter(FilterSet):
+class PageTagFilter(WebDjangoFilterSet):
     class Meta:
         model = PageTag
         fields = {
@@ -45,7 +45,7 @@ class PageTagViewSet(ModelViewSet):
     permission_classes = ()
 
 
-class PageCategoryFilter(FilterSet):
+class PageCategoryFilter(WebDjangoFilterSet):
     class Meta:
         model = PageCategory
         fields = {
@@ -74,7 +74,7 @@ class PageCategoryViewSet(ModelViewSet):
     permission_classes = ()
 
 
-class PageFilter(FilterSet):
+class PageFilter(WebDjangoFilterSet):
     class Meta:
         model = Page
         fields = {

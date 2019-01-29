@@ -7,27 +7,26 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
 from rest_framework_json_api.views import RelationshipView
 
-from ..models.Channel import Channel
-from ..serializers.ChannelSerializer import ChannelSerializer
+from ..models.PlanType import PlanType
+from ..serializers.PlanTypeSerializer import PlanTypeSerializer
 from ....store.api.models.Product import Product
 
 
-class ChannelFilter(WebDjangoFilterSet):
+class PlanTypeFilter(WebDjangoFilterSet):
     products = ModelMultipleChoiceFilter(
-        queryset=Product.objects.all(),
+        queryset=PlanType.objects.all(),
         widget=forms.CheckboxSelectMultiple
     )
 
     class Meta:
-        model = Channel
+        model = PlanType
         fields = {
             'id': ['in'],
             'name': ['in', 'contains', 'exact'],
-            'number': ['in']
         }
 
 
-class ChannelViewSet(ModelViewSet):
+class PlanTypeViewSet(ModelViewSet):
     """
     Handles:
     Creating Cities
@@ -36,15 +35,16 @@ class ChannelViewSet(ModelViewSet):
     Update City
     Deleting Cities
     """
-    serializer_class = ChannelSerializer
-    queryset = Channel.objects.all()
+    serializer_class = PlanTypeSerializer
+    queryset = PlanType.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    filter_class = ChannelFilter
+    filter_class = PlanTypeFilter
     search_fields = ('name',)
     permission_classes = ()
 
 
-class ChannelRelationshipView(RelationshipView):
-    queryset = Channel.objects
+class PlanTypeRelationshipView(RelationshipView):
+    queryset = PlanType.objects

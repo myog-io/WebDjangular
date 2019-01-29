@@ -27,6 +27,11 @@ body {
   font-family: $primary-ff;
 }
 
+
+a{
+  cursor: pointer;
+}
+
 a:hover {
   text-decoration: none;
 }

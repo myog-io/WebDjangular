@@ -11,7 +11,8 @@ from ..serializers.MoneySerializer import MoneyField
 from libs.plugins.store.api import defaults
 from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
 from prices import Money
-money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
+money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
+                              decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
 
 
 class CartStatus:
@@ -26,7 +27,8 @@ class CartStatus:
 
 class CartTerm(BaseModel):
     all_carts = models.BooleanField(default=None)
-    products = models.ManyToManyField('Product', related_name='terms', blank=True)
+    products = models.ManyToManyField(
+        'Product', related_name='terms', blank=True)
     enabled = models.BooleanField(default=True)
     content = models.TextField()
     position = models.PositiveSmallIntegerField(default=0)
@@ -52,9 +54,9 @@ class Cart(BaseModel):
         Address, related_name='cart_billing_address', on_delete=models.CASCADE, blank=True, null=True)
     shipping_address = models.ForeignKey(
         Address, related_name='cart_shipping_address', on_delete=models.CASCADE, blank=True, null=True)
-    user_email = models.EmailField(blank=True, default='', editable=False)
-    terms = models.ManyToManyField('CartTerm', related_name='carts', blank=True)
-    #shipping_method = models.ForeignKey(ShippingMethod,
+    terms = models.ManyToManyField(
+        'CartTerm', related_name='carts', blank=True)
+    # shipping_method = models.ForeignKey(ShippingMethod,
     #                                    blank=True, null=True, related_name='carts',
     #                                    on_delete=models.SET_NULL)
 
@@ -67,12 +69,6 @@ class Cart(BaseModel):
     #  discount_name = models.CharField(max_length=255, blank=True, null=True)
 
     #  voucher_code = models.CharField(max_length=12, blank=True, null=True)
-    
-    def __iter__(self):
-        return iter(self.items.all())
-
-    def __len__(self):
-        return self.items.count()
 
     class Meta:
         ordering = ['-pk']
@@ -83,7 +79,6 @@ class Cart(BaseModel):
         Return True if any of the items requires shipping.
         """
         return any(line.is_shipping_required for line in self.items.all())
-        
 
     @property
     def shipping_price(self):
@@ -96,11 +91,13 @@ class Cart(BaseModel):
 
     @property
     def fees(self):
-        fees = (line.total if line.total > ZERO_MONEY else ZERO_MONEY for line in self.items.filter(product=None).all())
+        fees = (line.total if line.total >
+                ZERO_MONEY else ZERO_MONEY for line in self.items.filter(product=None).all())
         return sum(fees, ZERO_MONEY)
 
     def discount(self):
-        discounts = (line.total if line.total < ZERO_MONEY else ZERO_MONEY for line in self)
+        discounts = (line.total if line.total <
+                     ZERO_MONEY else ZERO_MONEY for line in self)
         return sum(discounts, ZERO_MONEY)
 
     @property
@@ -109,9 +106,9 @@ class Cart(BaseModel):
         Return the subtotal of the cart.
         """
         # TODO: get the subtotal (sum of the items * qty )
-        subtotals = (line.total for line in self.items.exclude(product=None).all())
+        subtotals = (line.total for line in self.items.exclude(
+            product=None).all())
         return sum(subtotals, ZERO_MONEY)
-        
 
     @property
     def total(self):
@@ -121,7 +118,6 @@ class Cart(BaseModel):
         """
         # TODO: get the subtotal + shippiment cost + taxes
         return self.subtotal + self.shipping_price + self.taxes + self.fees
-        
 
     @property
     def total_weight(self):
@@ -146,7 +142,7 @@ class CartItem(BaseModel):
 
     class Meta:
         ordering = ['-pk']
-    
+
     @property
     def name(self):
         if self.product:
@@ -158,13 +154,16 @@ class CartItem(BaseModel):
         if self.product:
             return self.product.price
         return Money(self.data['price'], defaults.DEFAULT_CURRENCY)
+
     @property
     def price(self):
         price = self.base_price
         if 'discount_rules' in self.data:
             for discount_code in self.data['discount_rules']:
                 if discount_code in self.data['discount_rules']:
-                    price = price + Money(self.data['discount_rules'][discount_code], defaults.DEFAULT_CURRENCY)
+                    price = price + \
+                        Money(self.data['discount_rules']
+                              [discount_code], defaults.DEFAULT_CURRENCY)
         # Let's Check the Rules
         return price
 
@@ -186,7 +185,7 @@ class CartItem(BaseModel):
         # TODO: get the product final price (after the rules/discounts) and multiple by the quantity
         total = self.quantity * self.price
         return total
-    
+
     @property
     def is_shipping_required(self):
         """
@@ -195,12 +194,9 @@ class CartItem(BaseModel):
         if self.product:
             return self.product.is_shipping_required
         return False
-            
 
     @property
     def sku(self):
         if self.product:
             return self.product.sku
         return self.data['voucher']
-        
-

@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from ..models.Shipping import ShippingMethod
 from ..serializers.ShippingSerializer import ShippingMethodSerializer
@@ -7,7 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
 
 
-class ShippingMethodFilter(FilterSet):
+class ShippingMethodFilter(WebDjangoFilterSet):
     class Meta:
         model = ShippingMethod
         fields = {

@@ -1,7 +1,8 @@
 from ..models.Product import Product, ProductCategory, ProductType, ProductAttribute
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
     ProductSerializer, ProductTypeSerializer, ProductAttributeSerializer
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
+from django_filters.filters import CharFilter, ModelChoiceFilter
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -11,9 +12,11 @@ from rest_framework_json_api.views import RelationshipView
 from ..models.Product import Product, ProductCategory, ProductType
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
     ProductSerializer, ProductTypeSerializer
+from libs.plugins.provider.api.models.City import City
+from libs.plugins.provider.api.models.PlanType import PlanType
+from libs.plugins.provider.api.models.Condo import Condo
 
-
-class ProductAttributeFilter(FilterSet):
+class ProductAttributeFilter(WebDjangoFilterSet):
     class Meta:
         model = ProductAttribute
         fields = {
@@ -46,7 +49,7 @@ class ProductAttributeRelationshipView(RelationshipView):
     queryset = ProductAttribute.objects
 
 
-class ProductTypeFilter(FilterSet):
+class ProductTypeFilter(WebDjangoFilterSet):
     class Meta:
         model = ProductType
         fields = {
@@ -79,7 +82,7 @@ class ProductTypeRelationshipView(RelationshipView):
     queryset = ProductType.objects
 
 
-class ProductCategoryFilter(FilterSet):
+class ProductCategoryFilter(WebDjangoFilterSet):
     class Meta:
         model = ProductCategory
         fields = {
@@ -112,7 +115,10 @@ class ProductCategoryRelationshipView(RelationshipView):
     queryset = ProductCategory.objects
 
 
-class ProductFilter(FilterSet):
+class ProductFilter(WebDjangoFilterSet):
+   
+    
+    product_class_neq = CharFilter(field_name='product_class', exclude=True)
     class Meta:
         model = Product
         fields = {
@@ -121,6 +127,11 @@ class ProductFilter(FilterSet):
             'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
             'product_class': ['contains', 'exact'],
+            'product_class_neq': ['in', 'exact'],
+             # TODO: This Should Be Dynamic, using signals
+            'condos__id': ['in', 'exact'],
+            'plan_types__id': ['in', 'exact'],
+            'city__id': ['in', 'exact'],
         }
 
 

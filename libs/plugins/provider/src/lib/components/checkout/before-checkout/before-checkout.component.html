@@ -63,10 +63,7 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfAccess">
                     <option value="">Tipo de acesso</option>
-                    <option value="residencial">{{ providerCheckout.access_types.residencial }}</option>
-                    <option value="condominio_residencial">{{ providerCheckout.access_types.condominio_residencial }}</option>
-                    <option value="empresarial">{{ providerCheckout.access_types.empresarial }}</option>
-                    <option value="condominio_empresarial">{{ providerCheckout.access_types.condominio_empresarial }}</option>
+                    <option *ngFor="let plan_type of plan_types | async" [value]="plan_type.id">{{plan_type.name}}</option>
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
                           providerCheckout.formBeforeCheckout.controls['typeOfAccess'].errors">
@@ -84,7 +81,7 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="condo">
                     <option value="">Condominio</option>
-                    <option *ngFor="let condo of providerCheckout.condos | async" [value]="condo.name">{{condo.name}}</option>
+                    <option *ngFor="let condo of condos" [value]="condo.id">{{condo.name}}</option>
 
                   </select>
                   <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&

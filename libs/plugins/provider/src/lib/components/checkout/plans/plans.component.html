@@ -29,7 +29,7 @@
           </plugin-provider-checkout-plan-internet>
         </div>
         <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.internet.length === 0">
-          <p>Sua cidade não tem plano de telefone disponível ainda.</p>
+          <p>Sua cidade ou condomínio não tem  plano de telefone disponível ainda.</p>
         </div>
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
@@ -89,7 +89,7 @@
           </plugin-provider-checkout-plan-television>
         </div>
         <div  class="select-plans-wrapper "*ngIf="!providerCheckout.loading_plans && providerCheckout.plans.tv.length === 0">
-          <p>Sua cidade não tem plano de televisão disponível ainda.</p>
+          <p>Sua cidade ou condomínio não tem  plano de televisão disponível ainda.</p>
         </div>
       </div>
 
@@ -119,7 +119,7 @@
             </h4>
             <div class="form-group">
               <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty"
-                (change)="providerCheckout.updateTVDecoderQty($event);">
+                (change)="providerCheckout.updateTVDecoderQty($event);" [disabled]="providerCheckout.selectingTVPlan">
                 <option value="0">Nenhum ponto adicional</option>
                 <option value="1">1 ponto adicional</option>
                 <option value="2">2 pontos adicionais</option>
@@ -135,8 +135,8 @@
           <div class="col-lg-3 actions-wrapper align-self-center">
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 0"
               type="button" class="btn btn-outline-primary btn-round text-uppercase"
-              (click)="providerCheckout.addExtraTVDecoder(1)">
-              Adicionar
+              (click)="providerCheckout.addExtraTVDecoder(1)" [disabled]="providerCheckout.selectingTVPlan">
+              Adicionar <i class="fa fa-spinner fa-pulse" *ngIf="providerCheckout.selectingTVPlan"></i>
             </button>
             <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
               type="button" class="btn btn-outline-danger btn-round text-uppercase"
@@ -190,7 +190,7 @@
           </plugin-provider-checkout-plan-telephone>
         </div>
         <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.telephone.length === 0">
-          <p>Sua cidade não tem plano de telefone disponível ainda.</p>
+          <p>Sua cidade ou condomínio não tem  plano de telefone disponível ainda.</p>
         </div>
       </div>
 

@@ -18,14 +18,13 @@
       
       <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
         *ngIf="!providerCheckout.checkCartItemTVOptional(plan)"
-        (click)="providerCheckout.addTVOptional(plan)" [disabled]="plan.disabled">
-        
-        Adicionar
+        (click)="providerCheckout.addTVOptional(plan)" [disabled]="plan.disabled || providerCheckout.selectingTVPlan">
+        Adicionar <i class="fa fa-spinner fa-pulse" *ngIf="providerCheckout.selectingTVPlan"></i>
       </button>
 
       <button type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
         *ngIf="providerCheckout.checkCartItemTVOptional(plan)"
-        (click)="providerCheckout.removeTVOptional(plan)">
+        (click)="providerCheckout.removeTVOptional(plan)" [disabled]="providerCheckout.selectingTVPlan">
         Remover
       </button>
 

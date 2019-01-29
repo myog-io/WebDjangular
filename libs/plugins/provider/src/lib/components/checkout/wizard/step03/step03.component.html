@@ -15,31 +15,60 @@
         TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
       </p>
 
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
-        <b>{{ plan_optional.name }}</b>
+      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+        <b> {{ plan_optional.name }}</b>
+      </p>
+
+      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
+        <b> {{ plan_optional.name }}</b>
+      </p>
+
+      <p class="subitem" *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
+        <b> {{ providerCheckout.selected_extra_tv_decoder.qty }}x
+          {{ providerCheckout.selected_extra_tv_decoder.plan.name }}
+        </b>
       </p>
 
       <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
-        <b>{{ plan_optional.name }}</b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
-        <b>{{ plan_optional.name }}</b>
+        <b> {{ plan_optional.name }}</b>
       </p>
 
 
       <p *ngFor="let fee of providerCheckout.getFees()">
-        {{ fee.data?.name }}:
-        <b *ngIf="fee.data?.price > 0">
-          R${{ fee.data?.price }}
+        {{ fee?.name }}:
+        <b *ngIf="fee?.price != 0">
+          R${{ fee?.price }}
         </b>
-        <b *ngIf="fee.data?.price == 0">
+        <b *ngIf="fee?.price == 0">
           GRÁTIS
         </b>
       </p>
 
-      <p>Pagamento: <b>Boleto por email </b></p>
-      <p>Email p/ envio do boleto: <b>fulano@edge.com.br </b></p>
+      <p  *ngIf="this.cart.extra_data['paymentType'] == 'email'">
+        Pagamento: <b>Por Email </b>
+      </p>
+      <p *ngIf="this.cart.extra_data['paymentType'] == 'email'">
+        Email p/ envio do boleto: <b>{{ providerCheckout.cartService.cart.email }} </b>
+      </p>
+
+      <p  *ngIf="this.cart.extra_data['paymentType'] == 'letter'">
+        Pagamento: <b>Por Correios </b>
+      </p>
+      <p *ngIf="this.cart.extra_data['paymentType'] == 'letter'" >
+        Endereço p/ envio da fatura:
+        <span class="d-block pl-3">
+          <b>
+          {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
+          {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
+          <span *ngIf="providerCheckout.address.street_address_2">
+            - {{ providerCheckout.address.street_address_2 }}
+          </span> <br>
+          {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
+          {{ providerCheckout.address.postal_code }}
+          </b>
+        </span>
+      </p>
+
 
       <h5 class="text-primary mt-3">AGENDAMENTO DA INSTALAÇÃO</h5>
 

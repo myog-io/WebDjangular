@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from ..models.Order import Order
 from ..models.Cart import Cart
@@ -13,7 +13,7 @@ from rest_framework.exceptions import NotFound
 
 
 
-class OrderFilter(FilterSet):
+class OrderFilter(WebDjangoFilterSet):
     class Meta:
         model = Order
         fields = {

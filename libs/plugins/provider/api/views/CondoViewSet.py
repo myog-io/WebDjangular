@@ -1,6 +1,6 @@
 from ..models.Condo import Condo
 from ..serializers.CondoSerializer import CondoSerializer
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -9,7 +9,7 @@ from rest_framework_json_api.views import RelationshipView
 from .CityViewSet import CityFilter
 from ..models.City import City
 
-class CondoFilter(FilterSet):
+class CondoFilter(WebDjangoFilterSet):
     class Meta:
         model = Condo
         fields = {

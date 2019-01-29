@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from ..models.Address import Address
 from ..serializers.AddressSerializer import AddressSerializer
@@ -7,7 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
 
 
-class AddressFilter(FilterSet):
+class AddressFilter(WebDjangoFilterSet):
     class Meta:
         model = Address
         fields = {

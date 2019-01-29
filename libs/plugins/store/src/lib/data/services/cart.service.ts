@@ -1,14 +1,16 @@
-import {EventEmitter, Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {WebAngularDataStore} from "@core/services/src/lib/WebAngularDataStore.service";
-import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
-import {AddressModel} from "@core/data/src/lib/models";
-import {CookieService} from "ngx-cookie-service";
-import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
-import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
-import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
-import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
-import {UserModel} from "@core/users/src/lib/models";
+import { EventEmitter, Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
+import { CartModel } from "@plugins/store/src/lib/data/models/Cart.model";
+import { AddressModel } from "@core/data/src/lib/models";
+import { CookieService } from "ngx-cookie-service";
+import { ErrorResponse, JsonApiQueryData } from "angular2-jsonapi";
+import { CartItemModel } from "@plugins/store/src/lib/data/models/CartItem.model";
+import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
+import { CartTermModel } from "@plugins/store/src/lib/data/models/CartTerm.model";
+import { UserModel } from "@core/users/src/lib/models";
+import { ClientUserService } from "@core/services/src/lib/client-user.service";
+import { CityModel } from "@plugins/provider/src/lib/data";
 
 
 export interface CookieCart {
@@ -27,15 +29,17 @@ export class CartService {
   public cart_changes: EventEmitter<null> = new EventEmitter();
 
   constructor(private http: HttpClient,
-              private cookieService: CookieService,
-              private datastore: WebAngularDataStore) {
+    private cookieService: CookieService,
+    private datastore: WebAngularDataStore,
+    private clientUserService: ClientUserService,
+  ) {
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
         this.datastore.findAll(CartModel, {
           token: cartCookie['token'],
-          page: {size: 1, number: 1},
+          page: { size: 1, number: 1 },
           include: ["billing_address", "shipping_address",
             "items", "items.product", "items.product.product_type",
             "items.product.categories", "user"
@@ -49,7 +53,8 @@ export class CartService {
           },
           (error: any) => {
             // TODO: do something
-          })
+          }
+        );
       }
     } else {
       this.cart = datastore.createRecord(CartModel, {
@@ -67,13 +72,21 @@ export class CartService {
     this.cart_changes.emit();
   }
 
-  public setCartToken(token: string) {
+  public setCartToken(token: string, city_id: string) {
     const cartCookie: CookieCart = {
       token: token,
     };
     this.cookieService.set(this.cart_cookie_name, JSON.stringify(cartCookie), 30);
-    // TODO: maybe improve, maybe not
-    location.reload()
+    this.datastore.findRecord(CityModel, city_id,{fields:'id,name'}).subscribe((city) => {
+      this.clientUserService.clientUser.data['city'] = {
+        id: city.id,
+        name: city.name
+      };
+      this.clientUserService.updateCookie();
+      location.reload()
+    })
+    
+  
   }
 
   public updateCookie() {
@@ -101,16 +114,16 @@ export class CartService {
     });
   }
 
-  public getCardTerms(): Promise<any> {
+  public getCartTerms(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.datastore.findAll(CartTermModel, {
-        id: this._cart.id,
+        carts: this.cart.id,
         fields: ["id", "content"].join(',')
       }).subscribe((query: JsonApiQueryData<CartTermModel>) => {
-          let terms = query.getModels();
-          //// this.cart.terms = terms;
-          resolve(terms);
-        },
+        let terms = query.getModels();
+        //// this.cart.terms = terms;
+        resolve(terms);
+      },
         (error: ErrorResponse) => {
           // TODO: do something
         })
@@ -118,7 +131,7 @@ export class CartService {
   }
 
   public addToCart(parameters: { product: ProductModel, qty?: number, data?: object }): Promise<CartItemModel> {
-    let {product, qty = 1, data = {}} = parameters;
+    let { product, qty = 1, data = {} } = parameters;
     return new Promise((resolve, reject) => {
       if (product) {
         let cartItem: CartItemModel = this.datastore.createRecord(CartItemModel, {
@@ -128,9 +141,9 @@ export class CartService {
         cartItem.product = product;
         cartItem.cart = this.cart;
 
-        cartItem.save({include: `product`}).subscribe(
+        cartItem.save({ include: `product` }).subscribe(
           (cartItem: CartItemModel) => {
-            cartItem.product.load_addons(this.datastore, {include: `product_type,categories`})
+            cartItem.product.load_addons(this.datastore, { include: `product_type,categories` })
               .subscribe((query: JsonApiQueryData<ProductModel>) => {
                 cartItem.product.addons = query.getModels();
                 this.updateCart().then(() => {
@@ -152,9 +165,9 @@ export class CartService {
   public updateCartItem(cartItem: CartItemModel): Promise<CartItemModel> {
     return new Promise((reject, resolver) => {
       cartItem.save().subscribe((cartItem: CartItemModel) => {
-          console.log(this.cart.items)
+        console.log(this.cart.items)
 
-        },
+      },
         () => {
 
         })
@@ -162,19 +175,21 @@ export class CartService {
     });
   }
 
-  public removeFromCart(cartItem: CartItemModel): Promise<void> {
+  public removeFromCart(cartItem: CartItemModel, updateCart = true): Promise<boolean> {
     return new Promise((resolve, reject) => {
+      this.cart.items = this.cart.items.filter(function (ele) {
+        return ele != cartItem;
+      });
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
         (response) => {
-          this.cart.items = this.cart.items.filter(function (ele) {
-            return ele != cartItem;
-          });
-          this.updateCart().then(() => {
-          });
-          resolve();
+          if (updateCart) {
+            this.updateCart().then(() => {
+            });
+          }
+          resolve(true);
         },
         (error: ErrorResponse) => {
-          reject();
+          reject(false);
         })
     });
   }
@@ -183,12 +198,13 @@ export class CartService {
     return new Promise((resolve, reject) => {
       let promises = [];
       this.cart.items.forEach((item) => {
+        this.cart.items = this.cart.items.filter((ele) => {
+          return ele != item;
+        });
         let promise = new Promise((resolve, reject) => {
           this.datastore.deleteRecord(CartItemModel, item.id).subscribe(
             (response) => {
-              this.cart.items = this.cart.items.filter((ele) => {
-                return ele != item;
-              });
+
               resolve(response);
             },
             (error) => {
@@ -212,10 +228,10 @@ export class CartService {
 
   public clearCart(): Promise<any> {
     return new Promise((resolve, reject) => {
+      this.cookieService.delete(this.cart_cookie_name);
       if (this._cart.id) {
         this.datastore.deleteRecord(CartModel, this._cart.id).subscribe(
           (response) => {
-            this.cookieService.delete(this.cart_cookie_name);
             resolve(response);
           },
           (error: ErrorResponse) => {
@@ -224,24 +240,6 @@ export class CartService {
       } else {
         reject("Cart does not exists");
       }
-    });
-  }
-
-  public searchAddressByPostalCode(postal_code: string, country: string): Promise<AddressModel> {
-    // fake search xD
-    return new Promise((resolve, reject) => {
-
-      let address: AddressModel = this.datastore.createRecord(AddressModel, {
-        street_address_1: 'R. Sete de Setembro',
-        street_address_2: '',
-        street_address_3: 'Jardim Morumbi',
-        postal_code: postal_code,
-        state: 'São Paulo',
-        city: 'Lençõis Paulista',
-        country: 'BR',
-        country_area: 'BR'
-      });
-      resolve(address);
     });
   }
 

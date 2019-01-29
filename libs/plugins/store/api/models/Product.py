@@ -65,8 +65,11 @@ class ProductAttribute(TranslationModel):
     i18n_fields = ['name']
     is_variant = models.BooleanField(default=False)
     required = models.BooleanField(default=False)
-    class_type = models.CharField(max_length=32, choices=CoreConfigInput.CONFIG_FIELD_TYPES,
-                                  default=CoreConfigInput.FIELD_TYPE_TEXT)
+    class_type = models.CharField(
+                    max_length=32,
+                    choices=CoreConfigInput.CONFIG_FIELD_TYPES,
+                    default=CoreConfigInput.FIELD_TYPE_TEXT
+                )
 
     class Meta:
         ordering = ['-created']
@@ -74,7 +77,10 @@ class ProductAttribute(TranslationModel):
 
 class ProductType(BaseModel):
     product_class = models.CharField(
-        max_length=32, choices=ProductClasses.CHOICES, default=ProductClasses.SIMPLE)
+                        max_length=32,
+                        choices=ProductClasses.CHOICES,
+                        default=ProductClasses.SIMPLE
+                    )
     name = models.CharField(max_length=128)
     code = models.SlugField(max_length=64, unique=True)
     has_variants = models.BooleanField(default=True)
@@ -111,7 +117,7 @@ class BaseProduct(ActiveModel, TranslationModel):
     pricing_sale = MoneyField(
         'sale', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
-
+    
     weight = MeasurementField(measurement=Weight,
                               unit_choices=WeightUnits.CHOICES,
                               default=zero_weight, blank=True, null=True)
@@ -149,8 +155,6 @@ class BaseProduct(ActiveModel, TranslationModel):
         # TODO: Check Based on Selected Children
         return self.pricing_sale or self.pricing_list
 
-   
-
     @property
     def is_in_stock(self) -> bool:
         return self.quantity_available > 0
@@ -178,7 +182,7 @@ class Product(BaseProduct):
 
     class Meta:
         ordering = ['-created']
-        
+
     @property
     def is_shipping_required(self) -> bool:
         return self.product_type.is_shipping_required

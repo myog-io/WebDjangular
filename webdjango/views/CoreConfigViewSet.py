@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import filters
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework.decorators import action
