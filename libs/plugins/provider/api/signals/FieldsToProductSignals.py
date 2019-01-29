@@ -21,6 +21,7 @@ def includeFieldToSerialzier(sender, serializer, *args, **kwargs):
     # TODO: Improve based on Query Parameter Fields???
     if sender.included_serializers:
         sender.included_serializers['channels'] = 'libs.plugins.provider.api.serializers.ChannelSerializer.ChannelSerializer'
+        sender.included_serializers['plan_types'] = 'libs.plugins.provider.api.serializers.PlanTypeSerializer.PlanTypeSerializer'
     serializer.fields['channel_count'] = serializers.IntegerField(read_only=True)
     serializer.fields['channel_hd_count'] = serializers.IntegerField(read_only=True)
 

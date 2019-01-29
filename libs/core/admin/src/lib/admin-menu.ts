@@ -166,6 +166,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
             {label: 'provider', action: 'view_reseller'}
           ]
         }
+      },
+      {
+        title: 'Plan Types',
+        link: '/provider/plan-type',
+        data: {
+          permission: [
+            {label: 'provider', action: 'view_plantype'}
+          ]
+        }
       }
     ]
   },

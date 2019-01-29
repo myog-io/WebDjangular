@@ -6,6 +6,7 @@ import { CondoModel } from "../data/models/Condo.model";
 import { ResellerModel } from "../data/models/Reseller.model";
 import { ChannelModel } from "../data/models/Channel.model";
 import { ScaffoldModule } from "@core/builder/src/lib/scaffold/scaffold.module";
+import { PlanTypeModel } from "../data/models/PlanType.model";
 
 const routes: Routes = [
   {
@@ -36,6 +37,15 @@ const routes: Routes = [
           model: CondoModel,
           title: 'Condos',
           path: 'provider/condo'
+        }
+      },
+      {
+        path: 'plan-type',
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: PlanTypeModel,
+          title: 'Plan Types',
+          path: 'provider/plan-type'
         }
       },
       {

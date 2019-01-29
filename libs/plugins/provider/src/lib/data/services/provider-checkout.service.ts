@@ -548,6 +548,8 @@ export class ProviderCheckoutService {
     options['include'] = `product_type`;
 
     const url = `/api/provider/city/${this.city.id}/products/`;
+    
+
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,

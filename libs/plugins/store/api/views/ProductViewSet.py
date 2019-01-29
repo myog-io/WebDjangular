@@ -2,6 +2,7 @@ from ..models.Product import Product, ProductCategory, ProductType, ProductAttri
 from ..serializers.ProductSerializer import ProductCategorySerializer, \
     ProductSerializer, ProductTypeSerializer, ProductAttributeSerializer
 from django_filters.filterset import FilterSet
+from django_filters.filters import CharFilter
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -113,6 +114,7 @@ class ProductCategoryRelationshipView(RelationshipView):
 
 
 class ProductFilter(FilterSet):
+    product_class_neq = CharFilter(field_name='product_class', exclude=True)
     class Meta:
         model = Product
         fields = {
@@ -121,6 +123,7 @@ class ProductFilter(FilterSet):
             'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
             'product_class': ['contains', 'exact'],
+            'product_class_neq': ['in', 'exact']
         }
 
 
