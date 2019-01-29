@@ -903,9 +903,12 @@ export class ProviderCheckoutService {
   }
 
   setWizardStep(number: number) {
-    this.current_wizard_step = number;
-    this.updateCartExtraData();
+    if(this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
+      this.current_wizard_step = number;
+      this.updateCartExtraData();
+    }
   }
+
 
   backToBuildingPlanStep() {
     this.current_step = ProviderCheckoutSteps.buildingPlan;
@@ -1017,7 +1020,7 @@ export class ProviderCheckoutService {
   }
 
   onWizardStep02Submit() {
-    console.log( "=D");
+    this.nextStep();
   }
 
   confirmCheckout() {
