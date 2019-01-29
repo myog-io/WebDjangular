@@ -35,11 +35,11 @@
 
 
       <p *ngFor="let fee of providerCheckout.getFees()">
-        {{ fee.data?.name }}:
-        <b *ngIf="fee.data?.price != 0">
-          R${{ fee.data?.price }}
+        {{ fee?.name }}:
+        <b *ngIf="fee?.price != 0">
+          R${{ fee?.price }}
         </b>
-        <b *ngIf="fee.data?.price == 0">
+        <b *ngIf="fee?.price == 0">
           GRÁTIS
         </b>
       </p>

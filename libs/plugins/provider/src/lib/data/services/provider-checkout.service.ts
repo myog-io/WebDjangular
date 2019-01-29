@@ -570,10 +570,8 @@ export class ProviderCheckoutService {
     }else{
       options['city__id'] = this.city.id;
     }
-    console.log("TRYING TO LOAD",options)
     //const url = `/api/provider/city/${this.city.id}/products/`;
     
-
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
@@ -911,7 +909,7 @@ export class ProviderCheckoutService {
         );
       } else {
         // Don't have on cart we need to create
-        this.addExtraTVDecoder(1);
+        this.addExtraTVDecoder(new_qty);
       }
     }
   }

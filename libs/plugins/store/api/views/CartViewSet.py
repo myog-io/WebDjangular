@@ -11,7 +11,7 @@ from ..models.Cart import Cart, CartItem, CartTerm
 from ..models.Order import OrderEventTypes
 from ..serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
 from ..serializers.OrderSerializer import OrderSerializer
-from ..utils.CartUtils import cart_has_product, create_order
+from ..utils.CartUtils import cart_has_product, create_order, apply_all_cart_rules, apply_cart_terms
 from webdjango.filters import WebDjangoFilterSet
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
@@ -74,6 +74,10 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
+    def apply_rules(self, instance):
+        apply_all_cart_rules(instance)
+        apply_cart_terms(instance)
+
     @action(methods=['GET'], detail=True, url_path='complete_order')
     def complete_order(self, request, *args, **kwargs):
         assert 'pk' in self.kwargs, (
@@ -102,6 +106,46 @@ class CartViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+
+    def create(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        self.apply_rules(instance)
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        self.apply_rules(instance)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+        
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+        # Run Rules
+        self.apply_rules(instance)
+        # Get Instance again
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+        
 
 class CartRelationshipView(RelationshipView):
     queryset = Cart.objects

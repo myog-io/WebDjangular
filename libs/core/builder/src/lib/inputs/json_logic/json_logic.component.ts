@@ -96,13 +96,20 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
                 children: this.set_logic_recursive(element)
               });
             } else {
+              let variable = element[0]['var'];
+              if(this.fields.indexOf(variable) === -1){
+                this.fields.push({
+                  id: `${variable}`,
+                  name: `${variable}`
+                })
+                this.addTagPromise(variable).then()  
+              }
               logics.push({
                 type: 'logic_condition',
                 condition: key,
                 value: element[1],
-                variable: element[0]['var'],
+                variable: variable,
               });
-
             }
           }
         }
