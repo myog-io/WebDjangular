@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from ..models.Discount import CartRule, CatalogRule
 from ..models.Product import ProductCategory, Product, ProductType
@@ -31,7 +31,7 @@ def iter_fields(model, prefix=None):
         #    for f in iter_fields(rel, name):
         #        yield f
 
-class CartRuleFilter(FilterSet):
+class CartRuleFilter(WebDjangoFilterSet):
     class Meta:
         model = CartRule
         fields = {
@@ -82,7 +82,7 @@ class CartRuleViewSet(ModelViewSet):
 
     
 
-class CatalogRuleFilter(FilterSet):
+class CatalogRuleFilter(WebDjangoFilterSet):
     class Meta:
         model = CatalogRule
         fields = {

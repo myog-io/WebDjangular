@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
@@ -13,7 +13,7 @@ from webdjango.serializers.CoreSerializer import AuthorSerializer, \
 from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 
-class WebsiteFilter(FilterSet):
+class WebsiteFilter(WebDjangoFilterSet):
     class Meta:
         model = Website
         fields = {
@@ -37,7 +37,7 @@ class WebsiteViewSet(ModelViewSet):
     permission_classes = (AuthenticatedViewsetPermission,)
 
 
-class CoreConfigFilter(FilterSet):
+class CoreConfigFilter(WebDjangoFilterSet):
     class Meta:
         model = CoreConfig
         fields = {
@@ -68,7 +68,7 @@ class CoreConfigViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
         return obj
 
 
-class AuthorFilter(FilterSet):
+class AuthorFilter(WebDjangoFilterSet):
     class Meta:
         model = Author
         fields = {
@@ -93,7 +93,7 @@ class AuthorViewSet(ModelViewSet):
     filter_class = AuthorFilter
 
 
-class PluginFilter(FilterSet):
+class PluginFilter(WebDjangoFilterSet):
     class Meta:
         model = Plugin
         fields = {
@@ -125,7 +125,7 @@ class PluginViewSet(ModelViewSet):
         return super(PluginViewSet, self).list(request, args, **kwargs)
 
 
-class ThemeFilter(FilterSet):
+class ThemeFilter(WebDjangoFilterSet):
     class Meta:
         model = Theme
         fields = {

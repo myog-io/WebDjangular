@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from libs.core.cms.api.models.Block import Block
 from libs.core.cms.api.serializers.BlockSerializer import BlockSerializer
@@ -7,7 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 
-class BlockFilter(FilterSet):
+class BlockFilter(WebDjangoFilterSet):
     class Meta:
         model = Block
         fields = {

@@ -27,7 +27,7 @@ export class PluginProviderCheckoutWizardStep02Component implements OnInit {
     //this.config.forEach(control => group.addControl(control.name, this.fb.control()));
     // group;
 
-    this.providerCheckout.cartService.getCardTerms().then((terms:CartTermModel[])=>{
+    this.providerCheckout.cartService.getCartTerms().then((terms:CartTermModel[])=>{
       this.terms = terms;
       this.terms.forEach((term) => {
 

@@ -101,10 +101,10 @@ export class CartService {
     });
   }
 
-  public getCardTerms(): Promise<any> {
+  public getCartTerms(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.datastore.findAll(CartTermModel, {
-        id: this._cart.id,
+        carts: this.cart.id,
         fields: ["id", "content"].join(',')
       }).subscribe((query: JsonApiQueryData<CartTermModel>) => {
           let terms = query.getModels();
@@ -162,19 +162,21 @@ export class CartService {
     });
   }
 
-  public removeFromCart(cartItem: CartItemModel): Promise<void> {
+  public removeFromCart(cartItem: CartItemModel, updateCart=true): Promise<boolean> {
     return new Promise((resolve, reject) => {
+      this.cart.items = this.cart.items.filter(function (ele) {
+        return ele != cartItem;
+      });
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
         (response) => {
-          this.cart.items = this.cart.items.filter(function (ele) {
-            return ele != cartItem;
-          });
-          this.updateCart().then(() => {
-          });
-          resolve();
+          if (updateCart){
+            this.updateCart().then(() => {
+            });
+          }
+          resolve(true);
         },
         (error: ErrorResponse) => {
-          reject();
+          reject(false);
         })
     });
   }
@@ -183,12 +185,13 @@ export class CartService {
     return new Promise((resolve, reject) => {
       let promises = [];
       this.cart.items.forEach((item) => {
+        this.cart.items = this.cart.items.filter((ele) => {
+          return ele != item;
+        });
         let promise = new Promise((resolve, reject) => {
           this.datastore.deleteRecord(CartItemModel, item.id).subscribe(
             (response) => {
-              this.cart.items = this.cart.items.filter((ele) => {
-                return ele != item;
-              });
+              
               resolve(response);
             },
             (error) => {

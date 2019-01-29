@@ -13,7 +13,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from django_filters.rest_framework import DjangoFilterBackend
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 
 from libs.core.users.api.models import User
 from libs.core.users.api.permissions.UpdateOwnUser import UpdateOwnUser
@@ -24,7 +24,7 @@ from libs.core.users.api.serializers.UserSerializer import UserSerializer
 from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 
-class UserFilter(FilterSet):
+class UserFilter(WebDjangoFilterSet):
     class Meta:
         model = User
         fields = {

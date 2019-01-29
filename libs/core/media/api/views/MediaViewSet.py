@@ -6,7 +6,7 @@ from django.core.files.uploadedfile import UploadedFile
 from django.core.validators import URLValidator
 from django.http import JsonResponse, StreamingHttpResponse
 from django_filters.rest_framework.backends import DjangoFilterBackend
-from django_filters.rest_framework.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from libs.core.media.api.models.Media import Media
 from libs.core.media.api.serializers.MediaSerializer import MediaSerializer
 from rest_framework import filters, permissions, status
@@ -21,7 +21,7 @@ from urllib.parse import urlparse
 from urllib.request import urlopen, urlretrieve
 
 
-class MediaFilter(FilterSet):
+class MediaFilter(WebDjangoFilterSet):
     class Meta:
         model = Media
         fields = {

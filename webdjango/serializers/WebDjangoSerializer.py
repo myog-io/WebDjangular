@@ -1,7 +1,7 @@
 from django.utils.functional import empty
 from rest_framework_json_api import serializers
 # from rest_framework import serializers
-from ..signals.SerializerSignals import pre_init_serializer, post_init_serializer
+from ..signals.WebDjangoSignals import pre_init_serializer, post_init_serializer
 from drf_queryfields import QueryFieldsMixin
 
 

@@ -1,4 +1,5 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
+from django_filters.filters import ModelChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -6,24 +7,27 @@ from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import exceptions
-from libs.plugins.provider.api.models.City import PostalCodeRange, Street, NumberRange
-from libs.plugins.provider.api.serializers.CitySerializer import PostalCodeRangeSerializer, StreetSerializer, \
-    NumberRangeSerializer
+from ..models.City import PostalCodeRange, Street, NumberRange
+from ..serializers.CitySerializer import PostalCodeRangeSerializer,\
+    StreetSerializer,  NumberRangeSerializer
 from ..models.City import City
 from ..serializers.CitySerializer import CitySerializer
 from ..utils import getClientUserCookie
+from libs.plugins.store.api.models.Product import Product
 import requests
 import json
 
 
-class CityFilter(FilterSet):
+class CityFilter(WebDjangoFilterSet):
+    products = ModelChoiceFilter(queryset=Product.objects.all())
     class Meta:
         model = City
         fields = {
             'id': ['in', 'exact'],
             'name': ['contains', 'exact'],
             'short_name': ['contains', 'exact'],
-            'code': ['contains', 'exact']
+            'code': ['contains', 'exact'],
+            
         }
 
 
@@ -90,15 +94,16 @@ class CityViewSet(ModelViewSet):
             data['state'] = city_data['uf']
         if city_data['cep']:
             data['postal_code'] = city_data['cep']
-        
+       
         return Response(data)
 
 
 class CityRelationshipView(RelationshipView):
     queryset = City.objects
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    
 
-
-class PostalCodeRangeFilter(FilterSet):
+class PostalCodeRangeFilter(WebDjangoFilterSet):
     class Meta:
         model = PostalCodeRange
         fields = {
@@ -131,7 +136,7 @@ class PostalCodeRangeRelationshipView(RelationshipView):
     queryset = PostalCodeRange.objects
 
 
-class StreetFilter(FilterSet):
+class StreetFilter(WebDjangoFilterSet):
     class Meta:
         model = Street
         fields = {
@@ -164,7 +169,7 @@ class StreetRelationshipView(RelationshipView):
     queryset = Street.objects
 
 
-class NumberRangeFilter(FilterSet):
+class NumberRangeFilter(WebDjangoFilterSet):
     class Meta:
         model = NumberRange
         fields = {

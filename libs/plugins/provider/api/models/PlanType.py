@@ -13,4 +13,4 @@ class PlanType(BaseModel):
 
     class Meta:
         db_table = 'provider_plan_type'
-        ordering = ['-created']
+        ordering = ['position']

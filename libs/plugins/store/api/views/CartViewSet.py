@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.filters import ModelChoiceFilter
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
@@ -10,11 +11,26 @@ from ..models.Cart import Cart, CartItem, CartTerm
 from ..models.Order import OrderEventTypes
 from ..serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
 from ..serializers.OrderSerializer import OrderSerializer
-from ..utils import CartUtils
 from ..utils.CartUtils import cart_has_product, create_order
-
+from webdjango.filters import WebDjangoFilterSet
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
+
+
+class CartTermFilter(WebDjangoFilterSet):
+    carts = ModelChoiceFilter(queryset=Cart.objects)
+    
+    class Meta:
+        model = CartTerm
+        fields = {
+            'id': ['in'],
+            'all_carts': ['exact'],
+            'enabled': ['exact'],
+            'content': ['exact','contains'],
+            'position': ['exact'],
+            'content': ['contains'],
+        }
+
 
 class CartTermViewSet(ModelViewSet):
     """
@@ -30,7 +46,7 @@ class CartTermViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    # filter_class = CartFilter
+    filter_class = CartTermFilter
     search_fields = ('content',)
     permission_classes = ()
 
@@ -120,6 +136,17 @@ class CartItemViewSet(ModelViewSet):
                 self.perform_update(serializer)
                 return
         serializer.save()
+
+    def perform_destroy(self, item):
+        ##  Let's Check if theres any terms in the cart that need to be removed
+        if item.cart and item.product:
+            term = item.cart.terms.filter(products=item.product).first()
+            if term:
+                item.cart.terms.remove(term)
+                
+
+        item.delete()
+
 
 
 class CartItemRelationshipView(RelationshipView):

@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -9,7 +9,7 @@ from rest_framework_json_api.views import ModelViewSet
 from libs.core.forms.api.models.Form import Form
 from libs.core.forms.api.serializers.FormSerializer import FormSerializer
 
-class FormFilter(FilterSet):
+class FormFilter(WebDjangoFilterSet):
     class Meta:
         model = Form
         fields = {

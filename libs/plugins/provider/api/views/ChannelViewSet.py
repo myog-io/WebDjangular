@@ -1,5 +1,6 @@
 from django import forms
-from django_filters.filterset import FilterSet, ModelMultipleChoiceFilter
+from webdjango.filters import WebDjangoFilterSet
+from django_filters.filters import ModelMultipleChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -11,7 +12,7 @@ from ..serializers.ChannelSerializer import ChannelSerializer
 from ....store.api.models.Product import Product
 
 
-class ChannelFilter(FilterSet):
+class ChannelFilter(WebDjangoFilterSet):
     products = ModelMultipleChoiceFilter(
         queryset=Product.objects.all(),
         widget=forms.CheckboxSelectMultiple

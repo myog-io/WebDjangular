@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
@@ -9,7 +9,7 @@ from ..models.PageRedirect import PageRedirect
 from ..serializers.PageRedirectSerializer import PageRedirectSerializer
 
 
-class PageRedirectFilter(FilterSet):
+class PageRedirectFilter(WebDjangoFilterSet):
     class Meta:
         model = PageRedirect
         fields = {
