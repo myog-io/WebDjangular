@@ -41,7 +41,8 @@ relationshipPatterns = [
         ProductViewSet.as_view({'get': 'retrieve_related'}),
         name='product-related'
     ),
-    # Product
+
+    # Product Category
     url(
         regex=r'^category/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=ProductCategoryRelationshipView.as_view(),

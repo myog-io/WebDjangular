@@ -16,8 +16,6 @@ export class CartTermModel extends AbstractModel {
 
   @Attribute()
   id: string;
-
-  
   
   @Attribute()
   @ExtraOptions({

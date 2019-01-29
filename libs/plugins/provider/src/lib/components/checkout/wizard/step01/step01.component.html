@@ -169,7 +169,6 @@
           <div class="col-12 col-md-12">
             <div class="form-group">
               <input type="text" name="street_address_1" formControlName="street_address_1"
-                     [readonly]="providerCheckout.address.street_address_1.length > 0"
                      [value]="providerCheckout.address.street_address_1" />
               <span class="highlight"></span>
               <span class="bar"></span>
@@ -182,7 +181,6 @@
           <div class="col-12 col-md-4">
             <div class="form-group">
               <input type="text" name="number" formControlName="number"
-                     [readonly]="providerCheckout.address.number.length > 0"
                      [value]="providerCheckout.address.number"/>
               <span class="highlight"></span>
               <span class="bar"></span>
@@ -192,7 +190,8 @@
 
           <div class="col-12 col-md-8">
             <div class="form-group">
-              <input type="text" name="street_address_2" formControlName="number"/>
+              <input type="text" name="street_address_2" formControlName="number"
+                  [value]="providerCheckout.address.street_address_2"/>
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Complemento</label>

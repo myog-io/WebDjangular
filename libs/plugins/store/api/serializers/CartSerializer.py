@@ -9,6 +9,7 @@ from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from libs.plugins.store.api import defaults
 from .MoneySerializer import MoneyField
 
+
 class CartTermSerializer(WebDjangoSerializer):
     products = ResourceRelatedField(
         many=True,
@@ -30,6 +31,7 @@ class CartTermSerializer(WebDjangoSerializer):
         'products': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
         'carts': 'libs.plugins.store.api.serializers.CartSerializer.CartSerializer',
     }
+
     class Meta:
         model = CartTerm
         fields = '__all__'

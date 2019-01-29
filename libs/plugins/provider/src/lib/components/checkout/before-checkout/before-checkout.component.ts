@@ -28,30 +28,37 @@ export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, On
 
   ngOnInit() {
     this.subCondo = this.providerCheckout.formBeforeCheckout.get('typeOfAccess').valueChanges.subscribe((type:string) => {
-      if (type == 'condominio_empresarial' || type == 'condominio_residencial') { 
-        this.show_condos = true;
-        this.providerCheckout.findCondos();
-        this.addValidation(this.providerCheckout.formBeforeCheckout.get('condo'));
-        this.addValidation(this.providerCheckout.formBeforeCheckout.get('condoNumber'));
-      }else{
-        this.show_condos = false;
-        this.providerCheckout.condos = of(null);
-        this.cleanAndRemoveValudation(this.providerCheckout.formBeforeCheckout.get('condo'));
-        this.cleanAndRemoveValudation(this.providerCheckout.formBeforeCheckout.get('condoNumber'));
-      }
-    })
+      this.checkCondos(type);
+    });
     this.subPostalCode = this.providerCheckout.formBeforeCheckout.get('postalCode').valueChanges.subscribe((PostalCode:string) => {
       
       this.providerCheckout.getCurrentCity().then((city)=>{
 
       });
-    })
+    });
+    this.checkCondos(this.providerCheckout.formBeforeCheckout.get('typeOfAccess').value);
   }
+
+  checkCondos(type) {
+    if (type == 'condominio_empresarial' || type == 'condominio_residencial') {
+      this.show_condos = true;
+      this.providerCheckout.findCondos();
+      this.addValidation(this.providerCheckout.formBeforeCheckout.get('condo'));
+      this.addValidation(this.providerCheckout.formBeforeCheckout.get('condoNumber'));
+    }else{
+      this.show_condos = false;
+      this.providerCheckout.condos = of(null);
+      this.cleanAndRemoveValudation(this.providerCheckout.formBeforeCheckout.get('condo'));
+      this.cleanAndRemoveValudation(this.providerCheckout.formBeforeCheckout.get('condoNumber'));
+    }
+  }
+
   cleanAndRemoveValudation(control:AbstractControl){
     control.clearValidators();
     control.setValue('');
     control.updateValueAndValidity();
   }
+
   addValidation(control:AbstractControl) {
     control.setValidators([Validators.required]);
     control.updateValueAndValidity();

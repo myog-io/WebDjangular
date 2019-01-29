@@ -7,6 +7,8 @@ import {CookieService} from "ngx-cookie-service";
 import {ErrorResponse, JsonApiQueryData} from "angular2-jsonapi";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
 import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
+import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
+import {UserModel} from "@core/users/src/lib/models";
 
 
 export interface CookieCart {
@@ -84,7 +86,6 @@ export class CartService {
   }
 
   public updateCart(): Promise<CartModel> {
-
     return new Promise((resolve, reject) => {
       this.cart.save({
         include: `${CartModel.include},items.product,items.product.categories`
@@ -97,6 +98,22 @@ export class CartService {
         (error: ErrorResponse) => {
           reject(error);
         });
+    });
+  }
+
+  public getCardTerms(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.datastore.findAll(CartTermModel, {
+        id: this._cart.id,
+        fields: ["id", "content"].join(',')
+      }).subscribe((query: JsonApiQueryData<CartTermModel>) => {
+          let terms = query.getModels();
+          //// this.cart.terms = terms;
+          resolve(terms);
+        },
+        (error: ErrorResponse) => {
+          // TODO: do something
+        })
     });
   }
 
@@ -228,6 +245,11 @@ export class CartService {
     });
   }
 
+  public createGuestUser(): Promise<UserModel> {
+    return new Promise((resolve, reject) => {
+      
+    })
+  }
 
   public setBillingAddress(address: AddressModel) {
     this.cart.billing_address = address;
