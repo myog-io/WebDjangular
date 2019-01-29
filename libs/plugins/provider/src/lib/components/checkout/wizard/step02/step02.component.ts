@@ -26,7 +26,7 @@ export class PluginProviderCheckoutWizardStep02Component implements OnInit, OnDe
 
     this.cart = this.providerCheckout.cartService.cart;
     let paymentType: string = '';
-    let contractTime: string = '0';
+    let contractTime: string = '2';
 
     if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
     if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime = this.cart.extra_data['contractTime'];
