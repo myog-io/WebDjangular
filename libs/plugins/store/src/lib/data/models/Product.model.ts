@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, JsonApiQueryData} from 'angular2-jsonapi';
+import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, JsonApiQueryData, NestedAttribute} from 'angular2-jsonapi';
 import {ProductClasses} from '../interfaces/Product.interface';
 import {ProductTypeModel} from './ProductType.model';
 import {FormArray, FormGroup, Validators} from '@angular/forms';
@@ -127,7 +127,7 @@ export class ProductModel extends AbstractModel {
   track_inventory: string;
 
 
-  @Attribute()
+  @NestedAttribute()
   @ExtraOptions({
     formType: FormGroup,
     type: 'formGroup',
@@ -138,7 +138,7 @@ export class ProductModel extends AbstractModel {
       field: 'data',
     }
   })
-  data: object[];
+  data: any;
 
   @Attribute()
   @ExtraOptions({

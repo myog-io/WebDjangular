@@ -20,7 +20,7 @@ import { MapTypeStyle } from "@agm/core";
 })
 export class CoreCmsMapsComponent implements OnInit {
   // TODO: Improve
-  @Input() pins: object[] = [];
+  @Input() pins: any[] = [];
   @Input() zoom = 7.5;
   @Input() color: string;
   lat: number;

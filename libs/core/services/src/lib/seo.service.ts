@@ -10,7 +10,7 @@ export class SEOService {
 
   private pageMetas: HTMLMetaElement[] = [];
   private linkCanonical: HTMLLinkElement = null;
-  private cms_core: Object;
+  private cms_core: any;
 
   constructor(public meta: Meta,
               public title: Title,

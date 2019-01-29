@@ -79,7 +79,7 @@ export class ProductAttributeModel extends AbstractModel {
 
 
   @HasMany({key:'ProductType'})
-  product_type_set: object[];
+  product_type_set: any[];
 
   permissions: PermissionModel[];
 

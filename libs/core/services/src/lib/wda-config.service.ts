@@ -15,12 +15,12 @@ import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.intercept
 })
 export class WDAConfig {
 
-  private locale_list: object;
+  private locale_list: any;
   private locale_active: string;
-  private plugins: object;
-  private core_config: object;
+  private plugins: any;
+  private core_config: any;
   private theme: Theme;
-  private data: object;
+  private data: any;
   private loading = false;
   private compleLoading: any = null
   public init_url = '/api/core_init/';
