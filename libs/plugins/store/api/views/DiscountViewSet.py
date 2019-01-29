@@ -77,6 +77,8 @@ class CartRuleViewSet(ModelViewSet):
         '''
         data = {}
         data['product'] = get_fields_flat(Product)
+        data['item'] = get_fields_flat(CartItem)
+        data['product_type'] = get_fields_flat(ProductType)
         data['category'] = get_fields_flat(ProductCategory)
         return Response(data)
 

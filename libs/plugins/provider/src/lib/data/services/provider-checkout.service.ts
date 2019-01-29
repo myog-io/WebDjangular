@@ -207,7 +207,7 @@ export class ProviderCheckoutService {
         queryParams: {}
       }).toString();
       this.location.go(url);
-      this.cartService.setCartToken(params['token']);
+      this.cartService.setCartToken(params['token'],params['city_id']);
     }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
@@ -596,10 +596,8 @@ export class ProviderCheckoutService {
     } else {
       options['city__id'] = this.city.id;
     }
-    console.log("TRYING TO LOAD", options)
     //const url = `/api/provider/city/${this.city.id}/products/`;
-
-
+    
     this.loading_plans = true;
     this.datastore.findAll(ProductModel,
       options,
@@ -906,14 +904,17 @@ export class ProviderCheckoutService {
   }
 
   addExtraTVDecoder(qty) {
+    this.selectingTVPlan = true;
     this.cartService.addToCart({
       product: this.selected_extra_tv_decoder.plan,
       qty: (qty)
     }).then(
       (cartItem: CartItemModel) => {
+        this.selectingTVPlan = false;
         this.selected_extra_tv_decoder.cartItem = cartItem;
         this.selected_extra_tv_decoder.qty = cartItem.quantity;
       }, (error: ErrorResponse) => {
+        this.selectingTVPlan = false;
       });
   }
 
@@ -922,22 +923,35 @@ export class ProviderCheckoutService {
     if (new_qty == 0) {
       this.removeExtraTVDecoder();
     } else {
-      this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
-      this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
-        (cartItem: CartItemModel) => {
-          this.selected_extra_tv_decoder.cartItem = cartItem;
-          this.selected_extra_tv_decoder.qty = cartItem.quantity;
-        })
+      if (this.selected_extra_tv_decoder.cartItem) {
+        this.selectingTVPlan = true;
+        this.selected_extra_tv_decoder.cartItem.quantity = new_qty;
+        this.cartService.updateCartItem(this.selected_extra_tv_decoder.cartItem).then(
+          (cartItem: CartItemModel) => {
+            this.selected_extra_tv_decoder.cartItem = cartItem;
+            this.selected_extra_tv_decoder.qty = cartItem.quantity;
+            this.selectingTVPlan = false;
+          },(error)=>{
+            this.selectingTVPlan = false;
+          }
+        );
+      } else {
+        // Don't have on cart we need to create
+        this.addExtraTVDecoder(new_qty);
+      }
     }
   }
 
   removeExtraTVDecoder() {
     if (this.selected_extra_tv_decoder.cartItem) {
+      this.selectingTVPlan = true;
       this.cartService.removeFromCart(this.selected_extra_tv_decoder.cartItem).then(
         () => {
+          this.selectingTVPlan = false;
           this.selected_extra_tv_decoder.cartItem = null;
           this.selected_extra_tv_decoder.qty = 0;
         }, (error: ErrorResponse) => {
+          this.selectingTVPlan = false;
         });
     }
   }
@@ -1101,7 +1115,7 @@ export class ProviderCheckoutService {
   getTokenFullURL() {
     const url: string = window.location.origin + this.router.createUrlTree([], {
       relativeTo: this.activatedRoute,
-      queryParams: {token: this.cartService.cart.token}
+      queryParams: {token: this.cartService.cart.token, city_id: this.cartService.cart.extra_data.city_id}
     }).toString();
     return url;
   }

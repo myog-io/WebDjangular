@@ -74,11 +74,11 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let fee of providerCheckout.getFees()">
-                      <td>{{ fee.data?.name }}</td>
-                      <td *ngIf="fee.data?.price != 0">
-                        R${{ fee.data?.price }}
+                      <td>{{ fee?.name }}</td>
+                      <td *ngIf="fee?.price != 0">
+                        R${{ fee?.price }}
                       </td>
-                      <td *ngIf="fee.data?.price == 0">
+                      <td *ngIf="fee?.price == 0">
                         GRÁTIS
                       </td>
                     </tr>

@@ -3,26 +3,30 @@ Cart related utility methods.
 """
 import sys
 import traceback
-from uuid import UUID, uuid1
 from datetime import date, timedelta
+from uuid import UUID, uuid1
 
-from ..models.Cart import Cart, CartItem, CartStatus, CartTerm
-from ..models.Order import Order
-from ..models.Discount import CartRule, RuleValueType
+from django.db import transaction
+from django.db.models import Q
+from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import DecimalField
+
 from libs.plugins.store.api import defaults
-from ..serializers.MoneySerializer import MoneyField
-from ..serializers.CartSerializer import CartItemSerializer, \
-    CartSerializer, CartTermSerializer
+from webdjango.models.Address import Address, AddressType
 from webdjango.serializers.AddressSerializer import AddressSerializer
-from webdjango.models.Address import AddressType, Address
 from webdjango.utils.JsonLogic import jsonLogic
 
-
-from django.db.models import Q
-from django.db import transaction
+from ..models.Cart import Cart, CartItem, CartStatus, CartTerm
+from ..models.Discount import CartRule, RuleValueType
+from ..models.Order import Order
+from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
+                                          CartTermSerializer)
+from ..serializers.MoneySerializer import MoneyField
+from ..serializers.ProductSerializer import (ProductCategorySerializer,
+                                             ProductSerializer,
+                                             ProductTypeSerializer)
 from .DiscountUtils import increase_voucher_usage
-from rest_framework.exceptions import ValidationError
+
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                               read_only=True)
@@ -32,7 +36,7 @@ def get_rule_ammount(price, rule):
     if rule.rule_type == RuleValueType.FIXED:
         value = rule.value
     if rule.rule_type == RuleValueType.PERCENTAGE:
-        factor = Decimal(rule.value) / 100
+        factor = rule.value / 100
         value = factor * price
     if not value:
         raise NotImplementedError('Unknown rule type')
@@ -51,24 +55,38 @@ def apply_cart_rule(cart, rule):
     # If the value is < 0, is a Discount, first we check if the discount is for specific items or we make the discount on all the cart
     if rule.item_conditions and len(rule.item_conditions) > 0:
         # Let's Give Discount only to the Itens That Meet This Conditions
-        for product in cart.items.all():
+        rule_does_not_apply = []
+        for item in cart.items.all():
             data = {}
-            serializer = CartItemSerializer(product)
-            data['product'] = serializer.data
-            # TODO: ADD PRODUCT CATEGORY AS WELL
+            data['item'] = CartItemSerializer(item).data
+            if item.product:
+                data['product'] = ProductSerializer(item.product).data
+                data['product_type'] = ProductTypeSerializer(
+                    item.product.product_type
+                ).data
+                if item.product.categories.count() > 0:
+                    data['category'] = ProductCategorySerializer(
+                        item.product.categories, many=True
+                    ).data
             try:
                 if jsonLogic(rule.item_conditions, data):
-                    if 'discount_rules' in product.data:
+                    if 'discount_rules' in item.data:
                         # TODO: Do we have to update every time? or Just Overhead?
-                        if rule.voucher not in product.data['discount_rules']:
-                            product.data['discount_rules'][rule.voucher] = money_serializer.to_representation(
-                                get_rule_ammount(product.base_price, rule))
-                            product.save()
+                        if rule.voucher not in item.data['discount_rules']:
+                            item.data['discount_rules'][rule.voucher] = money_serializer.to_representation(
+                                get_rule_ammount(item.base_price, rule))
+                            item.save()
                     else:
-                        product.data['discount_rules'] = {
-                            rule.voucher: money_serializer.to_representation(get_rule_ammount(product.base_price, rule))
+                        item.data['discount_rules'] = {
+                            rule.voucher: money_serializer.to_representation(get_rule_ammount(item.base_price, rule))
                         }
-                        product.save()
+                        item.save()
+                else:
+                    if 'discount_rules' in item.data:
+                        if rule.voucher in item.data['discount_rules']:
+                            # We Need to remove this rule from this product
+                            del item.data['discount_rules'][rule.voucher]
+                            item.save()
             except:
                 traceback.print_tb(sys.exc_info()[2])
                 raise
@@ -86,8 +104,21 @@ def apply_cart_rule(cart, rule):
             })
 
 
-def apply_all_cart_rules(cart):
+def clean_cart_rule(cart, rule):
+    for item in cart.items.all():
+        if 'discount_rules' in item.data:
+            if rule.voucher in item.data['discount_rules']:
+                # This case the line has the rule, so we can only remove the rule
+                del item.data['discount_rules'][rule.voucher]
+                item.save()
+        else:
+            item = cart_has_product(cart, rule.voucher)
+            if item:
+                # This case the line is the rule, so we can remove it
+                item.delete()
 
+
+def apply_all_cart_rules(cart):
     rules = CartRule.objects.active().all()
     for rule in rules:
         if rule.conditions and len(rule.conditions) > 0:
@@ -106,6 +137,8 @@ def apply_all_cart_rules(cart):
             try:
                 if jsonLogic(rule.conditions, data):
                     base_price = apply_cart_rule(cart, rule)
+                else:
+                    clean_cart_rule(cart, rule)
             except:
                 traceback.print_tb(sys.exc_info()[2])
                 raise
@@ -124,7 +157,7 @@ def apply_cart_terms(cart):
         id__in=terms_list) | CartTerm.objects.filter(all_carts=True, enabled=True).exclude(id__in=terms_list)
     if terms:
         cart.terms.add(*terms.all())
-    
+
     return cart
 
 

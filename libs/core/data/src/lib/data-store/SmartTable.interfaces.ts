@@ -26,7 +26,7 @@ export interface SmartTableColumnSettings {
   renderComponent?: any;
   onComponentInitFunction?: Function;
   editor?: SmartTableEditor;
-  filter?: Object;
+  filter?: any;
   valuePrepareFunction?: Function;
   sort?: boolean; // Enable/Disabled
   sortDirection?: 'asc' | 'desc';

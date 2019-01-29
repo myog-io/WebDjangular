@@ -13,7 +13,7 @@
             <h6>Fidelidade</h6>
             <div class="form-group">
               <select class="form-control" formControlName="contractTime">
-                <option value="0">sem fidelidade</option>
+                <option value="0">Sem Fidelidade</option>
                 <option value="1">1 ano</option>
                 <option value="2">2 anos</option>
               </select>
@@ -139,7 +139,7 @@
             </div>
           </div>
           <div class="col-3">
-            <button class="btn btn-primary btn-sm btn-block" (click)="providerCheckout.onCopyTokenFullURL()" >
+            <button class="btn btn-primary btn-sm btn-block" (click)="providerCheckout.onCopyTokenFullURL($event)" >
               <i class="far fa-copy"></i>
               <span *ngIf="!providerCheckout.copying"> Copiar </span>
               <span *ngIf="providerCheckout.copying"> Copiado </span>

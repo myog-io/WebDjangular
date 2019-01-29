@@ -1,12 +1,12 @@
 <div class="col-12 col-lg-6">
   <h4>
     <span class="icon-wrapper">
-      <span *ngIf="plan.data.checkout_icon"   [class]="'icon ' + plan?.data?.checkout_icon"></span>
-      <span *ngIf="!plan.data.checkout_icon" class="fa fa-globe"></span>
+      <span *ngIf="plan?.data?.checkout_icon"   [class]="'icon ' + plan?.data?.checkout_icon"></span>
+      <span *ngIf="!plan?.data?.checkout_icon" class="fa fa-globe"></span>
     </span>
     <span class="title"> {{ plan.name }} </span>
   </h4>
-  <p [innerHTML]="plan.data.short_description ? plan.data.short_description : plan.description">
+  <p [innerHTML]="plan?.data?.short_description ? plan?.data?.short_description : plan?.description">
   </p>
 </div>
 <div class="col-12 col-lg-3 price-wrapper align-self-center">
@@ -16,12 +16,14 @@
 <div class="col-12 col-lg-3 actions-wrapper align-self-center">
   <button type="button" class="btn btn-outline-primary btn-round text-uppercase"
     *ngIf="!providerCheckout.checkCartItemInternetOptional(plan)"
-    (click)="providerCheckout.addInternetOptional(plan)" [disabled]="plan.disabled || selectingInternetPlan">
+    (click)="providerCheckout.addInternetOptional(plan)" [disabled]="plan.disabled || providerCheckout.selectingInternetPlan">
     Adicionar <i class="fa fa-spinner fa-pulse" *ngIf="providerCheckout.selectingInternetPlan"></i>
   </button>
   <button type="button" class="btn btn-outline-danger btn-round text-uppercase"
     *ngIf="providerCheckout.checkCartItemInternetOptional(plan)"
-    (click)="providerCheckout.removeInternetOptional(plan)">
+    (click)="providerCheckout.removeInternetOptional(plan)"
+    [disabled]="providerCheckout.selectingInternetPlan"
+  >
     Remover
   </button>
 </div>
