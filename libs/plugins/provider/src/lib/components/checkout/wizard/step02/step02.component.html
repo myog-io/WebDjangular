@@ -40,8 +40,13 @@
                   <div class="card-body py-1">
                     <div class="row">
                       <p class="mb-0 col-12">
-                        R. Sete de Setembro, 500, apto 110 - Jardim Morumbi <br>
-                        São Paulo, SP 18683-000
+                        {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
+                        {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
+                        <span *ngIf="providerCheckout.address.street_address_2">
+                          - {{ providerCheckout.address.street_address_2 }}
+                        </span> <br>
+                        {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
+                        {{ providerCheckout.address.postal_code }}
                       </p>
                     </div>
                   </div>
@@ -63,7 +68,7 @@
                   <div class="card-body py-1">
                     <div class="row">
                       <p class="mb-0 col-12">
-                        paulinho@gmail.com
+                        {{ providerCheckout.cartService.cart.email }}
                       </p>
                     </div>
                   </div>

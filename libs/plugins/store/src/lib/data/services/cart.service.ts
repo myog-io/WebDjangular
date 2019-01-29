@@ -245,21 +245,6 @@ export class CartService {
     });
   }
 
-  public createOrUpdateGuestUser(user: UserModel): Promise<UserModel> {
-    return new Promise((resolve, reject) => {
-      user.save(null, null, '/api/user/sign-up').subscribe((user: UserModel) => {
-          this.cart.user = user;
-          this.updateCart().then(() => {
-            resolve(user);
-          });
-        },
-        (error: ErrorResponse) => {
-          reject(user);
-        }
-      );
-    })
-  }
-
   public setBillingAddress(address: AddressModel) {
     this.cart.billing_address = address;
   }
