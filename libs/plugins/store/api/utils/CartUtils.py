@@ -7,6 +7,7 @@ from uuid import UUID, uuid1
 from datetime import date, timedelta
 
 from ..models.Cart import Cart, CartItem, CartStatus, CartTerm
+from ..models.Order import Order
 from ..models.Discount import CartRule, RuleValueType
 from rest_framework.serializers import DecimalField
 from libs.plugins.store.api import defaults
@@ -15,6 +16,7 @@ from ..serializers.CartSerializer import CartItemSerializer, CartSerializer, Car
 from webdjango.serializers.AddressSerializer import AddressSerializer
 from webdjango.models.Address import AddressType, Address
 from webdjango.utils.JsonLogic import jsonLogic
+
 
 from django.db.models import Q
 from django.db import transaction
@@ -225,36 +227,38 @@ def store_user_address(user, address, address_type):
             user.save(update_fields=['default_shipping_address'])
 
 
-def _get_oder_number(cart):
+def _get_order_number (cart):
     import datetime
     now = datetime.datetime.now()
     last_order = Order.objects.all().order_by('id').last()
-    if not last_order:
-        last_id = 1
-    else:
+    if last_order:
         last_id = last_order.id
-    return '{0}{1}{2}-{3}-{4}'.format(now.year, now.month, now.day, cart.user.id, last_id)
+    else:
+        last_id = 1
+    return '{0}{1}{2}-{3}-{4}'.format(now.year, now.month, now.day, cart.id, last_id)
 
 def _process_voucher_data_for_order(cart):
     # The Vouchers are automatic added to the Cart as Cart Lines, so we can search for them this way!
     for item in cart:
         if 'discount_rules' in item.data:
-            for key, value in item.data:
-                voucher = CartRule.get(voucher=key)
+            
+            for key in item.data:
+                voucher = CartRule.objects.filter(voucher=key).first()
                 if voucher:
                     increase_voucher_usage(voucher)
         elif 'voucher' in item.data:
-            voucher = CartRule.get(voucher=item.data['voucher'])
+            voucher = CartRule.objects.filter(voucher=item.data['voucher']).first()
             if voucher:
                 increase_voucher_usage(voucher)
+   
     return {
         'order_num': _get_order_number(cart),
-        'discount_amount': cart.discount,
+        'discount_amount': cart.discount(),
     }
 
-def _process_shipping_data_for_order(cart, taxes):
+def _process_shipping_data_for_order(cart):
     """Fetch, process and return shipping data from cart."""
-    if not cart.is_shipping_required():
+    if not cart.is_shipping_required:
         return {}
 
     shipping_address = cart.shipping_address
@@ -281,9 +285,10 @@ def _process_user_data_for_order(cart, request):
         
     return {
         'user': cart.user,
-        'user_email': cart.user.email,
+        'user_email': cart.user.email if cart.user else cart.user_email,
         'customer_note': cart.note,
         'billing_address': AddressSerializer(billing_address).data,
+        'extra_data': cart.extra_data,
         'security_data': {
             'HTTP_USER_AGENT':request.META.get('HTTP_USER_AGENT'),
             'REMOTE_ADDR':request.META.get('REMOTE_ADDR')
@@ -310,8 +315,7 @@ def add_item_to_order(order, item):
         unit_cost=item.cost,
         unit_base_price=item.base_price,
         unit_price=item.price,
-        total=item.total,
-        tax_rate=Decimal('0.0'), # TODO: Get Correct Tax Rate
+        tax_rate='0.0', # TODO: Get Correct Tax Rate
     )
     # TODO: Alocate Stock
     #if item.product and item.product.track_inventory:
@@ -340,53 +344,43 @@ def create_order(cart, request):
     which language to use when sending email.
     """
     if ready_to_place_order(cart):
-        try:
-            order_data = _process_voucher_data_for_order(cart)
-        except NotApplicable:
-            return None
-
+        print("STEP 1")
+        order_data = _process_voucher_data_for_order(cart)
+        print("STEP 2",order_data)
         order_data.update(_process_shipping_data_for_order(cart))
+        print("STEP 3",order_data)
         order_data.update(_process_user_data_for_order(cart, request))
+        print("STEP 4",order_data)
         order_data.update(_process_terms_data_for_order(cart))
+        print("STEP 5",order_data)
         order_data.update({
             'total': cart.total,
-            'sub_total': cart.sub_total,
+            'subtotal': cart.subtotal,
             'taxes': cart.taxes
+            
         })
-
+        print("STEP 6",order_data)
         order = Order.objects.create(**order_data)
 
         _fill_order_with_cart_data(order, cart)
         return order
-    return None
+    
 
 
-def is_fully_paid(cart: Cart):
-    payments = cart.payments.filter(is_active=True)
-    total_paid = sum(
-        [p.total for p in payments])
-    return total_paid >= cart.get_total().gross.amount
-
-
-def ready_to_place_order(cart: Cart, taxes, discounts):
-    if cart.is_shipping_required():
+def ready_to_place_order(cart: Cart):
+    if cart.is_shipping_required:
+        print(count(cart))
+        if count(cart) <= 0:
+            raise ValidationError('No itens in cart')
         if not cart.shipping_method:
-            return False, pgettext_lazy(
-                'order placement_error', 'Shipping method is not set')
+            raise ValidationError('Shipping method is not set')
         if not cart.shipping_address:
-            return False, pgettext_lazy(
-                'order placement error', 'Shipping address is not set')
-        if not is_valid_shipping_method(cart):
-            return False, pgettext_lazy(
-                'order placement error',
-                'Shipping method is not valid for your shipping address')
+            raise ValidationError('Shipping address is not set')
+        #if not is_valid_shipping_method(cart):
+        #    raise ValidationError('Shipping method is not valid for your shipping address')
         if not cart.billing_address:
-            return False, pgettext_lazy(
-                'order placement error', 'Billing address is not set')
-    if not is_fully_paid(cart):
-        return False, pgettext_lazy(
-            'order placement error', 'Checkout is not fully paid')
-    return True, None
+            raise ValidationError('Billing address is not set')
+    return True
 
 
 

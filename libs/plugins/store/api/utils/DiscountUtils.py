@@ -1,4 +1,5 @@
 
+from django.db.models import F
 
 def increase_voucher_usage(voucher):
     """Increase voucher uses by 1."""

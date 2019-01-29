@@ -6,11 +6,15 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from uuid import UUID, uuid1
-from libs.plugins.store.api.models.Cart import Cart, CartItem, CartTerm
-from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
-from libs.plugins.store.api.utils import CartUtils
+from ..models.Cart import Cart, CartItem, CartTerm
+from ..models.Order import OrderEventTypes
+from ..serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
+from ..serializers.OrderSerializer import OrderSerializer
+from ..utils import CartUtils
 from ..utils.CartUtils import cart_has_product, create_order
 
+from rest_framework import status
+from rest_framework.exceptions import ValidationError
 
 class CartTermViewSet(ModelViewSet):
     """
@@ -54,6 +58,33 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     permission_classes = ()
 
+    @action(methods=['GET'], detail=True, url_path='complete_order')
+    def complete_order(self, request, *args, **kwargs):
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        cart = self.get_object()
+        
+        order = create_order(cart, request)
+        if not order:
+            raise ValidationError('Please Review your Cart')
+        cart.delete()
+        order.events.create(type=OrderEventTypes.PLACED)
+        send_order_confirmation.delay(order.pk)
+        order.events.create(
+            type=OrderEventTypes.EMAIL_SENT.value,
+            parameters={
+                'email': order.get_user_current_email(),
+                'email_type': OrderEventsEmails.ORDER
+            })
+
+
+        serializer = OrderSerializer(order)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class CartRelationshipView(RelationshipView):

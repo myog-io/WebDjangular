@@ -9,8 +9,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
-from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import NotFound
+
 
 
 class OrderFilter(FilterSet):
@@ -46,17 +46,7 @@ class OrderViewSet(ModelViewSet):
     Create a model instance.
     """
     def create(self, request, *args, **kwargs):
-        print(request.data)
-        assert 'cart_id' in request.data, (
-            'Expected view %s to be called with post argument '
-            'named "cart_id" fix the attribute sent to the correctly.' %
-            (self.__class__.__name__, 'pk')
-        )
-        cart = get_object_or_404(Cart,pk=request.data['cart_id'])
-        order = create_order(cart)
-        serializer = self.get_serializer(order)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+       raise NotFound("Cant Create Order Manually")
 
     def perform_create(self, serializer):
         serializer.save()

@@ -33,7 +33,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     is_mobile_verified = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     is_staff = models.BooleanField(default=False, blank=True)
-    dob = models.DateField(default=None, blank=True)
+    dob = models.DateField(default=None, blank=True, null=True)
     extra_data = JSONField(blank=True)
     default_shipping_address = models.ForeignKey(
         Address, related_name='+', null=True, blank=True,
