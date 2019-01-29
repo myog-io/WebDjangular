@@ -46,13 +46,13 @@ class OrderViewSet(ModelViewSet):
     Create a model instance.
     """
     def create(self, request, *args, **kwargs):
-        assert 'cart_id' in self.request, (
+        print(request.data)
+        assert 'cart_id' in request.data, (
             'Expected view %s to be called with post argument '
             'named "cart_id" fix the attribute sent to the correctly.' %
             (self.__class__.__name__, 'pk')
         )
-        self.request['cart_id']
-        cart = get_object_or_404(Cart,pk=self.request['cart_id'])
+        cart = get_object_or_404(Cart,pk=request.data['cart_id'])
         order = create_order(cart)
         serializer = self.get_serializer(order)
         headers = self.get_success_headers(serializer.data)
