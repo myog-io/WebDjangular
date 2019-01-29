@@ -142,7 +142,7 @@
             </div>
           </div>
           <div class="col-3">
-            <button class="btn btn-primary btn-sm btn-block" (click)="providerCheckout.onCopyTokenFullURL()" >
+            <button class="btn btn-primary btn-sm btn-block" (click)="providerCheckout.onCopyTokenFullURL($event)" >
               <i class="far fa-copy"></i>
               <span *ngIf="!providerCheckout.copying"> Copiar </span>
               <span *ngIf="providerCheckout.copying"> Copiado </span>

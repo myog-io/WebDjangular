@@ -23,7 +23,7 @@ export class FormModel extends AbstractModel {
   slug: string;
 
   @Attribute()
-  content: object;
+  content: any;
 
   @Attribute()
   created: Date;

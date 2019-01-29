@@ -11,6 +11,6 @@ export class ProviderProductModel extends ProductModel{
 
   @HasMany({key:'Channel'})
   @Attribute()
-  channels: object[]
+  channels: any[]
 
 }
