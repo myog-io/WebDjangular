@@ -52,7 +52,7 @@ class Cart(BaseModel):
         Address, related_name='cart_billing_address', on_delete=models.CASCADE, blank=True, null=True)
     shipping_address = models.ForeignKey(
         Address, related_name='cart_shipping_address', on_delete=models.CASCADE, blank=True, null=True)
-
+    user_email = models.EmailField(blank=True, default='', editable=False)
     terms = models.ManyToManyField('CartTerm', related_name='carts', blank=True)
     #shipping_method = models.ForeignKey(ShippingMethod,
     #                                    blank=True, null=True, related_name='carts',
@@ -100,8 +100,8 @@ class Cart(BaseModel):
         return sum(fees, ZERO_MONEY)
 
     def discount(self):
-        descounts = (line.total if line.total < ZERO_MONEY else ZERO_MONEY for line in self)
-        return sum(discount)
+        discounts = (line.total if line.total < ZERO_MONEY else ZERO_MONEY for line in self)
+        return sum(discounts, ZERO_MONEY)
 
     @property
     def subtotal(self):
@@ -192,7 +192,10 @@ class CartItem(BaseModel):
         """
         Return True if any of the items requires shipping.
         """
-        return self.product.is_shipping_required
+        if self.product:
+            return self.product.is_shipping_required
+        return False
+            
 
     @property
     def sku(self):

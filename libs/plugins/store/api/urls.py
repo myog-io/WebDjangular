@@ -31,6 +31,8 @@ router.register('shipping-method', ShippingMethodViewSet,
                 base_name='shipping-method')
 
 relationshipPatterns = [
+   
+
     # Product
     url(
         regex=r'^product/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
