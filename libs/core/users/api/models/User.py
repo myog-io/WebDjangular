@@ -1,7 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
-
 from django.db import models
+from django.db.models import Q
+from django_mysql.models import JSONField
 
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Address import Address
@@ -32,6 +33,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     is_mobile_verified = models.BooleanField(default=False, blank=True)
     is_active = models.BooleanField(default=True, blank=True)
     is_staff = models.BooleanField(default=False, blank=True)
+    dob = models.DateField(default=None, blank=True)
+    extra_data = JSONField(blank=True)
     default_shipping_address = models.ForeignKey(
         Address, related_name='+', null=True, blank=True,
         on_delete=models.SET_NULL)
@@ -49,8 +52,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     A list of fields required when creating an user via `createsuperuser`
     USERNAME_FIELD and password are already required
     """
-    REQUIRED_FIELDS = ['first_name', 'last_name','email']
-    
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+
     @property
     def full_name(self):
         if self.first_name or self.last_name:
@@ -76,7 +79,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     def staff(self):
         return self.get_queryset().filter(is_staff=True)
-
 
     def __str__(self):
         """

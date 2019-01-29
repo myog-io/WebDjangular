@@ -1,10 +1,10 @@
 from ..models.User import User
 from django.contrib.auth.models import Group
 from django.db import models
-from rest_framework.serializers import ValidationError
+from rest_framework.serializers import ValidationError, JSONField
 from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
-
+from rest_framework_json_api import serializers
 
 class UserSerializer(WebDjangoSerializer):
     """
@@ -19,8 +19,10 @@ class UserSerializer(WebDjangoSerializer):
         many=True,
         related_link_view_name='group-getuserlist',
         related_link_url_kwarg='user_pk',
-        self_link_view_name='user-relationships'
+        self_link_view_name='user-relationships',
+        required=False
     )
+    extra_data = JSONField(required=False)
 
     class Meta:
         model = User

@@ -38,7 +38,7 @@ export class CartService {
           page: {size: 1, number: 1},
           include: ["billing_address", "shipping_address",
             "items", "items.product", "items.product.product_type",
-            "items.product.categories"
+            "items.product.categories", "user"
           ].join(',')
         }).subscribe(
           (queryData: JsonApiQueryData<CartModel>) => {
@@ -245,9 +245,18 @@ export class CartService {
     });
   }
 
-  public createGuestUser(): Promise<UserModel> {
+  public createOrUpdateGuestUser(user: UserModel): Promise<UserModel> {
     return new Promise((resolve, reject) => {
-      
+      user.save(null, null, '/api/user/sign-up').subscribe((user: UserModel) => {
+          this.cart.user = user;
+          this.updateCart().then(() => {
+            resolve(user);
+          });
+        },
+        (error: ErrorResponse) => {
+          reject(user);
+        }
+      );
     })
   }
 

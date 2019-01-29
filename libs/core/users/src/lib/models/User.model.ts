@@ -92,6 +92,9 @@ export class UserModel extends AbstractModel {
   is_staff: boolean;
 
   @Attribute()
+  extra_data: object;
+
+  @Attribute()
   last_login: Date;
 
   @Attribute()
