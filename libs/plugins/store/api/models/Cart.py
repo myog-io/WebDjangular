@@ -13,6 +13,7 @@ from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
 from prices import Money
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS, decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
 
+
 class CartStatus:
     ABANDONED = 'abandoned'
     ACTIVE = 'active'
@@ -31,7 +32,8 @@ class CartTerm(BaseModel):
     position = models.PositiveSmallIntegerField(default=0)
 
     class Meta:
-        ordering = ['-position']
+        ordering = ['position']
+
 
 class Cart(BaseModel):
     """

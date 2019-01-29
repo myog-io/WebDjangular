@@ -11,14 +11,15 @@ from libs.plugins.store.api.serializers.CartSerializer import CartSerializer, Ca
 from libs.plugins.store.api.utils import CartUtils
 from ..utils.CartUtils import cart_has_product
 
+
 class CartTermViewSet(ModelViewSet):
     """
     Handles:
-    Creating Product
-    Retrieve a list of Products
-    Retrieve a specific Products
-    Update Products
-    Deleting Products
+    Creating Cart Terms
+    Retrieve a list of Cart Terms
+    Retrieve a specific Cart Term
+    Update Cart Terms
+    Deleting Cart Terms
     """
     serializer_class = CartTermSerializer
     queryset = CartTerm.objects.all()
@@ -33,6 +34,7 @@ class CartTermViewSet(ModelViewSet):
 class CartTermRelationshipView(RelationshipView):
     queryset = CartTerm.objects
     
+
 
 class CartViewSet(ModelViewSet):
     """

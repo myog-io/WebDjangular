@@ -15,6 +15,8 @@ import {CondoModel} from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
+import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
+import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -56,7 +58,7 @@ export class ProviderCheckoutService {
 
   public access_types = {
     residencial: 'Residencial',
-    condominio_residencial: 'Condomínio Residencia',
+    condominio_residencial: 'Condomínio Residencial',
     empresarial: 'Empresarial',
     condominio_empresarial: 'Condomínio Empresarial',
   };
@@ -961,14 +963,14 @@ export class ProviderCheckoutService {
     if (this.formBeforeCheckout.valid) {
       if (!(this.city instanceof CityModel)) {
         this.getCurrentCity().then((city: CityModel) => {
-          this.saveAddress().then((addres: AddressModel) => {
+          this.saveAddress().then((address: AddressModel) => {
             this.setAddressAndNextSetp();
           });
         })
 
       } else {
         this.addressFromCity(this.city);
-        this.saveAddress().then((addres: AddressModel) => {
+        this.saveAddress().then((address: AddressModel) => {
           this.setAddressAndNextSetp();
 
         });
@@ -984,7 +986,7 @@ export class ProviderCheckoutService {
 
         },
         (error) => {
-          console.log("error saving address ", error)
+          console.log("error saving address ", error);
           reject(error);
         })
     })
@@ -1012,13 +1014,28 @@ export class ProviderCheckoutService {
     this.nextStep();
   }
 
+  onWizardStep02Submit() {
+    console.log( "=D");
+  }
+
   confirmCheckout() {
     this.nextStep();
   }
 
 
   getFees() {
-    return this.cartService.cart.items.filter((data) => !data.product)
+    if(this.cartService.cart) {
+      if(this.cartService.cart.items) {
+        return this.cartService.cart.items.filter((data) => !data.product)
+      }
+    }
+    return [];
+  }
+
+  getTerms() {
+    this.cartService.getCardTerms().then((terms: CartTermModel)=>{
+      return terms;
+    })
   }
 
   getTokenFullURL() {

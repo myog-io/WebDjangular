@@ -2,6 +2,7 @@ import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, NestedAttribute} from
 import {AbstractModel, AddressModel} from '@core/data/src/lib/models';
 import {PermissionModel, UserModel} from '@core/users/src/lib/models';
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
+import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
 
 @JsonApiModelConfig({
   type: 'Cart',
@@ -51,6 +52,9 @@ export class CartModel extends AbstractModel {
   
   @Attribute()
   taxes: number;
+
+  @HasMany()
+  terms: CartTermModel[];
 
   @Attribute()
   is_shipping_required: boolean;

@@ -157,8 +157,9 @@ class OrderEvent(BaseModel):
     data = JSONField(blank=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='+')
     order = models.ForeignKey('Order', related_name='events', on_delete=models.CASCADE)
+
     class Meta:
-        ordering = ('date', )
+        ordering = ('created', )
 
 
 class OrderQueryset(models.QuerySet):
