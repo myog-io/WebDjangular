@@ -51,10 +51,10 @@
         Email p/ envio do boleto: <b>{{ providerCheckout.cartService.cart.email }} </b>
       </p>
 
-      <p  *ngIf="this.cart.extra_data['paymentType'] == 'letter'">
+      <p  *ngIf="this.cart.extra_data['paymentType'] == 'mail'">
         Pagamento: <b>Por Correios </b>
       </p>
-      <p *ngIf="this.cart.extra_data['paymentType'] == 'letter'" >
+      <p *ngIf="this.cart.extra_data['paymentType'] == 'mail'" >
         Endereço p/ envio da fatura:
         <span class="d-block pl-3">
           <b>

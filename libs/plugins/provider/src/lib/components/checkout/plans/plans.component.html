@@ -21,8 +21,8 @@
           }"
     >
       <div class="card-body" *ngIf="!providerCheckout.selected_internet_plan">
-        <div class="select-plans-wrapper" >
-          <h3 class="plan-caption" *ngIf="providerCheckout.plans.internet.length > 0">
+        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.internet.length > 0" >
+          <h3 class="plan-caption" >
             ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
           </h3>
           <plugin-provider-checkout-plan-internet>
@@ -81,8 +81,8 @@
           }">
 
       <div class="card-body" *ngIf="!providerCheckout.selected_tv_plan">
-        <div class="select-plans-wrapper" >
-          <h3 class="plan-caption" *ngIf="providerCheckout.plans.tv.length > 0">
+        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.tv.length > 0" >
+          <h3 class="plan-caption" >
             Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
           </h3>
           <plugin-provider-checkout-plan-television>
@@ -184,7 +184,7 @@
           }">
 
       <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
-        <div class="select-plans-wrapper">
+        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.telephone.length > 0">
           <h3 class="plan-caption"></h3>
           <plugin-provider-checkout-plan-telephone>
           </plugin-provider-checkout-plan-telephone>
