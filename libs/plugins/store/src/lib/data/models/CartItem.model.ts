@@ -24,7 +24,7 @@ export class CartItemModel extends AbstractModel {
   quantity: number;
 
   @NestedAttribute()
-  data: object;
+  data: any;
 
   @Attribute()
   base_price: number;
