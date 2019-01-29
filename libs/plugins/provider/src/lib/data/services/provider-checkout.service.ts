@@ -179,6 +179,24 @@ export class ProviderCheckoutService {
     );
   }
 
+  restartProviderCheckout() {
+    console.log("RESTART STARTS");
+    this.cartService.clearCart().then(
+      (res)=>{
+        // TODO: maybe improve, maybe not
+        location.reload();
+        // console.log('restart cart deleted',res );
+        // this.current_step = ProviderCheckoutSteps.beforeCheckout;
+        // this.current_wizard_step = 1;
+        // this.formBeforeCheckoutSubmitted = false;
+//
+        // this.formBeforeCheckout.reset();
+        // console.log(this.formBeforeCheckout.get('typeOfAccess').errors);
+      }, (error) => {
+       // console.log('restart cart error: ', error)
+      })
+  }
+
   checkPreSelectedPlans(params) {
     if (params.hasOwnProperty('token')) {
       const url:string = this.router.createUrlTree([], {

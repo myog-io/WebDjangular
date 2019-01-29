@@ -114,7 +114,6 @@ class CartSerializer(WebDjangoSerializer):
         related_link_view_name='cart-related',
         required=False,
     )
-
     terms = ResourceRelatedField(
         many=False,
         queryset=CartTerm.objects,

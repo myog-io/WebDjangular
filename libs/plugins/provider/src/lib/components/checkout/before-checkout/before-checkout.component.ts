@@ -24,6 +24,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, On
   show_condos = false;
   plan_types: Observable<PlanTypeModel[]>;
   plan_types_list: PlanTypeModel[];
+
   constructor(
     providerCheckout: ProviderCheckoutService,
     private datastore: WebAngularDataStore,
