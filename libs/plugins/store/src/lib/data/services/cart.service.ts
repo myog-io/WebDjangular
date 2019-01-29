@@ -9,6 +9,8 @@ import { CartItemModel } from "@plugins/store/src/lib/data/models/CartItem.model
 import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
 import { CartTermModel } from "@plugins/store/src/lib/data/models/CartTerm.model";
 import { UserModel } from "@core/users/src/lib/models";
+import { ClientUserService } from "@core/services/src/lib/client-user.service";
+import { CityModel } from "@plugins/provider/src/lib/data";
 
 
 export interface CookieCart {
@@ -28,7 +30,9 @@ export class CartService {
 
   constructor(private http: HttpClient,
     private cookieService: CookieService,
-    private datastore: WebAngularDataStore) {
+    private datastore: WebAngularDataStore,
+    private clientUserService: ClientUserService,
+  ) {
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
@@ -49,7 +53,8 @@ export class CartService {
           },
           (error: any) => {
             // TODO: do something
-          })
+          }
+        );
       }
     } else {
       this.cart = datastore.createRecord(CartModel, {
@@ -67,13 +72,21 @@ export class CartService {
     this.cart_changes.emit();
   }
 
-  public setCartToken(token: string) {
+  public setCartToken(token: string, city_id: string) {
     const cartCookie: CookieCart = {
       token: token,
     };
     this.cookieService.set(this.cart_cookie_name, JSON.stringify(cartCookie), 30);
-    // TODO: maybe improve, maybe not
-    location.reload()
+    this.datastore.findRecord(CityModel, city_id,{fields:'id,name'}).subscribe((city) => {
+      this.clientUserService.clientUser.data['city'] = {
+        id: city.id,
+        name: city.name
+      };
+      this.clientUserService.updateCookie();
+      location.reload()
+    })
+    
+  
   }
 
   public updateCookie() {

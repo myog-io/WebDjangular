@@ -58,7 +58,6 @@ def apply_cart_rule(cart, rule):
         rule_does_not_apply = []
         for item in cart.items.all():
             data = {}
-            
             data['item'] = CartItemSerializer(item).data
             if item.product:
                 data['product'] = ProductSerializer(item.product).data
@@ -69,9 +68,7 @@ def apply_cart_rule(cart, rule):
                     data['category'] = ProductCategorySerializer(
                         item.product.categories, many=True
                     ).data
-            
             try:
-                print(rule.item_conditions)
                 if jsonLogic(rule.item_conditions, data):
                     if 'discount_rules' in item.data:
                         # TODO: Do we have to update every time? or Just Overhead?
@@ -106,6 +103,7 @@ def apply_cart_rule(cart, rule):
                 'rule_id':  rule.id,
             })
 
+
 def clean_cart_rule(cart, rule):
     for item in cart.items.all():
         if 'discount_rules' in item.data:
@@ -118,6 +116,7 @@ def clean_cart_rule(cart, rule):
             if item:
                 # This case the line is the rule, so we can remove it
                 item.delete()
+
 
 def apply_all_cart_rules(cart):
     rules = CartRule.objects.active().all()
@@ -139,7 +138,7 @@ def apply_all_cart_rules(cart):
                 if jsonLogic(rule.conditions, data):
                     base_price = apply_cart_rule(cart, rule)
                 else:
-                    clean_cart_rule(cart,rule)
+                    clean_cart_rule(cart, rule)
             except:
                 traceback.print_tb(sys.exc_info()[2])
                 raise
@@ -158,7 +157,7 @@ def apply_cart_terms(cart):
         id__in=terms_list) | CartTerm.objects.filter(all_carts=True, enabled=True).exclude(id__in=terms_list)
     if terms:
         cart.terms.add(*terms.all())
-    
+
     return cart
 
 

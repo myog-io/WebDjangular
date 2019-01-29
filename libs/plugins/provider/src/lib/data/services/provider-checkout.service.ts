@@ -186,7 +186,7 @@ export class ProviderCheckoutService {
         queryParams: {}
       }).toString();
       this.location.go(url);
-      this.cartService.setCartToken(params['token']);
+      this.cartService.setCartToken(params['token'],params['city_id']);
     }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
@@ -1087,7 +1087,7 @@ export class ProviderCheckoutService {
   getTokenFullURL() {
     const url:string = window.location.origin + this.router.createUrlTree([], {
       relativeTo: this.activatedRoute,
-      queryParams: {token: this.cartService.cart.token}
+      queryParams: {token: this.cartService.cart.token, city_id: this.cartService.cart.extra_data.city_id}
     }).toString();
     return url;
   }
