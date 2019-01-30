@@ -60,7 +60,7 @@ export class ProviderCheckoutService {
 
 
   public loading_cart: boolean = true;
-
+  public updating_cart: boolean = false;
 
   private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
@@ -842,7 +842,10 @@ export class ProviderCheckoutService {
       );
     }
     Promise.all(promises).then((responses) => {
-      this.cartService.updateCart();
+      this.updating_cart = true;
+      this.cartService.updateCart().then(()=>{
+        this.updating_cart = false;
+      });
     })
   }
 
@@ -1037,7 +1040,11 @@ export class ProviderCheckoutService {
     extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
     extra_data.city_id = this.city.id;
     this.cartService.setExtraData(extra_data);
-    this.cartService.updateCart().then();
+
+    this.updating_cart = true;
+      this.cartService.updateCart().then(()=>{
+        this.updating_cart = false;
+      });
   }
 
   onBeforeCheckoutSubmit() {
@@ -1065,7 +1072,6 @@ export class ProviderCheckoutService {
       this.address.save().subscribe((address) => {
           this.address = address;
           resolve(this.address);
-
         },
         (error) => {
           console.log("error saving address ", error);

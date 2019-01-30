@@ -24,7 +24,7 @@ ul.wizard {
     a {
       color: #d9e2e5;
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      @include responsive-font-size( 14px);
+      @include responsive-font-size(14px);
       font-weight: 700;
       text-transform: uppercase;
       display: block;
@@ -36,7 +36,7 @@ ul.wizard {
         color: #fff;
         background: #d9e2e5;
         border-radius: 50%;
-        @include responsive-font-size( 18px);
+        @include responsive-font-size(18px);
         font-weight: 300;
         width: 30px;
         height: 30px;
@@ -63,7 +63,7 @@ ul.wizard {
       }
     }
 
-    &.step-2{
+    &.step-2 {
       flex-basis: 35px;
 
       @include media-breakpoint-up(lg) {
@@ -152,7 +152,7 @@ ul.wizard {
       .item {
         color: #fff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 18px);
+        @include responsive-font-size(18px);
         line-height: 22px;
         font-weight: 700;
         text-transform: uppercase;
@@ -161,7 +161,7 @@ ul.wizard {
       .subitem {
         color: #fff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 14px);
+        @include responsive-font-size(14px);
         line-height: 16px;
         font-weight: 400;
         text-transform: uppercase;
@@ -178,9 +178,9 @@ ul.wizard {
       }
 
       a {
-        cursor:pointer;
+        cursor: pointer;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 11px);
+        @include responsive-font-size(11px);
         font-weight: 600;
         color: #fff;
         text-decoration: underline;
@@ -190,7 +190,7 @@ ul.wizard {
         display: block;
 
         @include media-breakpoint-up(lg) {
-          display:inline;
+          display: inline;
         }
       }
     }
@@ -198,11 +198,11 @@ ul.wizard {
 
   .info-wrapper {
 
-     margin-top: map-get($spacers, 2);
+    margin-top: map-get($spacers, 2);
 
-     @include media-breakpoint-up(md){
-       margin-top:0;
-     }
+    @include media-breakpoint-up(md) {
+      margin-top: 0;
+    }
 
     .table-responsive {
       background: #a5b6bd;
@@ -247,7 +247,7 @@ ul.wizard {
         td {
           border: 0;
           font-family: "Boston", Arial, Helvetica, sans-serif;
-          @include responsive-font-size( 17px);
+          @include responsive-font-size(17px);
           font-weight: 700;
           padding-top: 10px;
           padding-bottom: 10px;
@@ -258,7 +258,7 @@ ul.wizard {
         td {
           border: 0;
           font-family: "Open Sans", Helvetica, sans-serif;
-          @include responsive-font-size( 13px);
+          @include responsive-font-size(13px);
           font-weight: 400;
         }
 
@@ -273,4 +273,20 @@ ul.wizard {
   }
 }
 
+.loading {
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
 
+  span{
+    color:#fff;
+    font-size: 26px;
+    display: block;
+    margin: auto;
+  }
+}
