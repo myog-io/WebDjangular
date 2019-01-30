@@ -3,6 +3,7 @@ from django.db import models
 from django_mysql.models import JSONField
 from django.urls import reverse
 
+
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

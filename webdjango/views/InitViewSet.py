@@ -7,6 +7,7 @@ from webdjango.models.Core import Plugin, Theme, CoreConfig
 from webdjango.serializers.CoreSerializer import PluginSerializer, ThemeSerializer, CoreConfigSerializer
 from webdjango.models.CoreConfig import CoreConfigGroup
 
+from django.core import serializers
 
 class InitViewSet(viewsets.GenericViewSet):
     """
@@ -70,7 +71,11 @@ class InitViewSet(viewsets.GenericViewSet):
             'locale_active': 'pt-br',
             'plugins': [],
             'theme': None,
-            'core_config': core_config_data
+            'core_config': core_config_data,
+            "website": {
+                "domain": request.website.domain,
+                "protocol": request.website.protocol
+            }
         }
         if pluginsSerializer:
             response['plugins'] = pluginsSerializer.data

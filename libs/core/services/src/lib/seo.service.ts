@@ -20,7 +20,6 @@ export class SEOService {
               @Inject(DOCUMENT) public document) {
     this.wdaConfig.getCoreConfig('cms_core').then((data) => {
       this.cms_core = data;
-      console.log(this.cms_core);
       this.setFavicon();
     });
 
@@ -95,7 +94,9 @@ export class SEOService {
       this.addPageMetaTag({name: 'MobileOptimized', content: "320"});
 
       this.addPageMetaTag({name: 'description', content: description});
-      this.setCanonicalURL(window.location.href.split('?')[0]); // TODO: #38 get the right Path Absolute
+      this.addPageMetaTag({name: 'og:description', content: description});
+
+      this.setCanonicalURL(page.slug); // TODO: #38 get the right Path Absolute
       this.addPageMetaTag({name: 'og:locate', content: this.wdaConfig.getCurrentLocale()});
 
       const localeList = this.wdaConfig.getLocaleList();
@@ -128,7 +129,8 @@ export class SEOService {
     }
   }
 
-  private setCanonicalURL(url) {
+  private setCanonicalURL(slug: string) {
+    const url: string = this.wdaConfig.getBaseWebsiteURL() + slug;
     if (this.linkCanonical === null) {
       this.linkCanonical = document.createElement('link');
       this.linkCanonical.setAttribute('rel', 'canonical');
