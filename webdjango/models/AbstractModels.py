@@ -1,7 +1,7 @@
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django_mysql.models import JSONField
-
+from django.urls import reverse
 
 class BaseModel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -20,11 +20,8 @@ class PermalinkModel(models.Model):
         return self.get_absolute_url()
 
     def get_absolute_url(self):
-        #TODO:
-        #return reverse(
-        #    'product:category',
-        #    kwargs={'slug': self.slug, 'category_id': self.id})
-        return "TODO_URL"
+        return '/'+self.slug
+    #  return reverse('cms', args=(self.slug,))
 
     class Meta:
         abstract = True
