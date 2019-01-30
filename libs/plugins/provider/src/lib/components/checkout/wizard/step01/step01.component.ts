@@ -78,6 +78,63 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       street_address_2: [street_address_2],
       street_address_3: [street_address_3],
     });
+
+    if (this.providerCheckout.plan_type.is_business) {
+      let company_name: string = '';
+      let cnpj: string = '';
+      let state_registration: string = '';
+
+      if (this.providerCheckout.address.company_name) company_name = this.providerCheckout.address.company_name;
+
+      if (this.cart.extra_data.hasOwnProperty('cnpj'))
+        cnpj = this.cart.extra_data['cnpj'];
+      if (this.cart.extra_data.hasOwnProperty('state_registration'))
+        state_registration = this.cart.extra_data['state_registration'];
+
+      this.formWizardStep01.addControl('company_name',
+        this.formBuilder.control(company_name, [Validators.required]));
+      this.formWizardStep01.addControl('cnpj',
+        this.formBuilder.control(cnpj, [Validators.required]));
+      this.formWizardStep01.addControl('state_registration',
+        this.formBuilder.control(state_registration, []));
+    }
+
+    if (this.providerCheckout.selected_telephone_plan) {
+      let portability_number: string = '';
+      let portability_provider: string = '';
+
+      if (this.cart.extra_data.hasOwnProperty('portability_number'))
+        portability_number = this.cart.extra_data['portability_number'];
+      if (this.cart.extra_data.hasOwnProperty('portability_provider'))
+        portability_provider = this.cart.extra_data['portability_provider'];
+
+      this.formWizardStep01.addControl('portability_number',
+        this.formBuilder.control(portability_number, []));
+      this.formWizardStep01.addControl('portability_provider',
+        this.formBuilder.control(portability_provider, []));
+
+      this.formWizardStep01.get('portability_number').valueChanges.subscribe(
+        (value) => {
+          if (value) {
+            this.formWizardStep01.get('portability_provider').setValidators([Validators.required]);
+          } else {
+            this.formWizardStep01.get('portability_provider').setValidators([]);
+          }
+          this.formWizardStep01.get('portability_provider').updateValueAndValidity({emitEvent: false});
+        }
+      );
+      this.formWizardStep01.get('portability_provider').valueChanges.subscribe(
+        (value) => {
+          if (value) {
+            this.formWizardStep01.get('portability_number').setValidators([Validators.required]);
+          } else {
+            this.formWizardStep01.get('portability_number').setValidators([]);
+          }
+          this.formWizardStep01.get('portability_number').updateValueAndValidity({emitEvent: false});
+        }
+      );
+
+    }
   }
 
   onSubmit() {
@@ -94,8 +151,6 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       this.providerCheckout.address.street_address_2 = this.formWizardStep01.get('street_address_2').value;
       this.providerCheckout.address.street_address_3 = this.formWizardStep01.get('street_address_3').value;
 
-      this.providerCheckout.saveAddress().then();
-
       this.cart.email = this.formWizardStep01.get('email').value;
       let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
       cart_extra_data['cpf'] = this.formWizardStep01.get('cpf').value;
@@ -103,11 +158,24 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       cart_extra_data['mobile'] = this.formWizardStep01.get('mobile').value;
       cart_extra_data['telephone'] = this.formWizardStep01.get('telephone').value;
       cart_extra_data['dob'] = this.formWizardStep01.get('dob').value;
+
+      if (this.providerCheckout.plan_type.is_business) {
+        this.providerCheckout.address.company_name = this.formWizardStep01.get('company_name').value;
+        cart_extra_data['cnpj'] = this.formWizardStep01.get('cnpj').value;
+        cart_extra_data['state_registration'] = this.formWizardStep01.get('state_registration').value;
+      }
+
+      if (this.providerCheckout.selected_telephone_plan) {
+        cart_extra_data['portability_number'] = this.formWizardStep01.get('portability_number').value;
+        cart_extra_data['portability_provider'] = this.formWizardStep01.get('portability_provider').value;
+      }
+
+      this.providerCheckout.saveAddress().then();
       this.providerCheckout.cartService.setExtraData(cart_extra_data);
       this.providerCheckout.cartService.updateCart().then((cart: CartModel) => {
         this.providerCheckout.onWizardStep01Submit()
       }, () => {
-         this.formWizardStep01Submitted = false;
+        this.formWizardStep01Submitted = false;
       })
     }
   }

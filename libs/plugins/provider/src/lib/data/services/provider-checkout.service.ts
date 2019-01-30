@@ -10,14 +10,13 @@ import {CityModel} from '../models/City.model';
 import {ClientUserService} from '@core/services/src/lib/client-user.service';
 import {AddressModel} from '@core/data/src/lib/models';
 import {HttpHeaders} from '@angular/common/http';
-import {Observable, Subscriber} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {CondoModel} from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
-import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
 import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
-import { PlanTypeModel } from '../models/PlanType.model';
+import {PlanTypeModel} from '../models/PlanType.model';
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -57,10 +56,11 @@ export class ProviderCheckoutService {
     internet_radio: 'Sou cliente Rádio',
   };
 
-  private _plan_type:PlanTypeModel;
+  private _plan_type: PlanTypeModel;
 
 
   public loading_cart: boolean = true;
+
 
   private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.beforeCheckout;
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
@@ -83,17 +83,21 @@ export class ProviderCheckoutService {
     tv: [],
     telephone: []
   };
-  get plan_type(): PlanTypeModel{
+
+  get plan_type(): PlanTypeModel {
     return this._plan_type;
   }
-  set plan_type(pt: PlanTypeModel){
+
+  set plan_type(pt: PlanTypeModel) {
     this._plan_type = pt;
   }
+
   get condo(): CondoModel {
     return this._condo;
   }
-  set condo(cn:CondoModel) {
-    this._condo = cn;  
+
+  set condo(cn: CondoModel) {
+    this._condo = cn;
   }
 
   public internet_plan_collapsed: boolean = false;
@@ -119,7 +123,7 @@ export class ProviderCheckoutService {
   public selected_tv_plan: CartItemModel = null;
   public selected_telephone_plan: CartItemModel = null;
 
-  public listener_cart_changes: Subscriber<any> = null;
+  public listener_cart_changes: Subscription = null;
 
   public selected_extra_tv_decoder = {
     plan: null,
@@ -136,7 +140,7 @@ export class ProviderCheckoutService {
   public formBeforeCheckoutSubmitted: boolean = false;
   public formBeforeCheckoutLoading: boolean = false;
 
-  public copying:boolean = false;
+  public copying: boolean = false;
 
   private _condo: CondoModel;
 
@@ -180,9 +184,8 @@ export class ProviderCheckoutService {
   }
 
   restartProviderCheckout() {
-    console.log("RESTART STARTS");
     this.cartService.clearCart().then(
-      (res)=>{
+      (res) => {
         // TODO: maybe improve, maybe not
         location.reload();
         // console.log('restart cart deleted',res );
@@ -193,13 +196,13 @@ export class ProviderCheckoutService {
         // this.formBeforeCheckout.reset();
         // console.log(this.formBeforeCheckout.get('typeOfAccess').errors);
       }, (error) => {
-       // console.log('restart cart error: ', error)
+        // console.log('restart cart error: ', error)
       })
   }
 
   checkPreSelectedPlans(params) {
     if (params.hasOwnProperty('token')) {
-      const url:string = this.router.createUrlTree([], {
+      const url: string = this.router.createUrlTree([], {
         relativeTo: this.activatedRoute,
         queryParams: {}
       }).toString();
@@ -240,14 +243,16 @@ export class ProviderCheckoutService {
 
   loadedCart() {
     if (this.loading_cart) {
-      this.loading_cart = false;
       if (this.listener_cart_changes) {
         this.listener_cart_changes.unsubscribe();
       }
 
       // Set City Information
       let cart = this.cartService.cart;
-      if (!cart.id) return;
+      if (!cart.id) {
+        this.loading_cart = false;
+        return;
+      }
       this.address = cart.billing_address;
       if (this.address) {
         this.city.id = cart.extra_data.city_id;
@@ -264,38 +269,40 @@ export class ProviderCheckoutService {
         });
       }
 
-      //this.updateSelectedItems();
+      this.updateSelectedItems();
 
       if (this.cartService.cart.extra_data.hasOwnProperty('current_step')) {
+         this.current_step = this.cartService.cart.extra_data['current_step'];
+         if (this.current_step == ProviderCheckoutSteps.buildingPlan ||
+           this.current_step == ProviderCheckoutSteps.wizard) {
+           if (this.plan_type) {
+             this.loadPlans();
+           } else {
+             this.datastore.findRecord(PlanTypeModel, this.cartService.cart.extra_data.plan_type_id).subscribe((plan_type) => {
+               this.plan_type = plan_type;
+               if (this.cartService.cart.extra_data.hasOwnProperty('condo')) {
+                 this.datastore.findRecord(CondoModel, this.cartService.cart.extra_data.condo, {fields: 'name,id'}).subscribe(
+                   (condo) => {
+                     this.condo = condo;
+                     this.loadPlans();
+                   }, (error) => {
+                     this.loadPlans();
+                   }
+                 )
+               } else {
+                 this.loadPlans();
+               }
+             })
+           }
+         }
+       }
+      if (this.cartService.cart.extra_data.hasOwnProperty('current_step')) {
         this.current_step = this.cartService.cart.extra_data['current_step'];
-        if (this.current_step == ProviderCheckoutSteps.buildingPlan ||
-          this.current_step == ProviderCheckoutSteps.wizard) {
-            if (this.plan_type){
-              this.loadPlans();
-            } else {
-              this.datastore.findRecord(PlanTypeModel,this.cartService.cart.extra_data.plan_type_id ).subscribe((plan_type)=>{
-                this.plan_type = plan_type;
-                if (this.cartService.cart.extra_data.hasOwnProperty('condo')){
-                  this.datastore.findRecord(CondoModel,this.cartService.cart.extra_data.condo,{fields:'name,id'}).subscribe(
-                    (condo)=>{
-                      this.condo = condo;
-                      this.loadPlans();
-                    }, (error)=>{
-                      this.loadPlans();
-                    }
-                  )
-                } else {
-                  this.loadPlans();
-                }
-              })
-            }
-            
-        }
       }
       if (this.cartService.cart.extra_data.hasOwnProperty('current_wizard_step')) {
         this.current_wizard_step = this.cartService.cart.extra_data['current_wizard_step'];
       }
-
+      this.loading_cart = false;
     }
     this.cartService.cart_changes.subscribe(() => {
 
@@ -303,7 +310,7 @@ export class ProviderCheckoutService {
     })
 
   }
-  
+
   checkDisabledByCategories(cart) {
     let categories_ids = {};
     for (let i = 0; i < cart.items.length; i++) {
@@ -479,10 +486,11 @@ export class ProviderCheckoutService {
   addPreSelectedPlans() {
     // Adding Pre Selected Internet Plans to Cart and it's addons
     if (this.pre_select_plans.internet) {
-      let internet_plan = this.plans.internet.find((data) => data.sku === this.pre_select_plans.internet)
+      let internet_plan = this.plans.internet.find((data) => data.sku === this.pre_select_plans.internet);
       if (internet_plan) {
         this.selectInternetPlan(internet_plan).then((cartItem) => {
-          let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.internet_optionals.indexOf(data.sku) !== -1)
+          let optionals = this.plans_optionals.internet.filter(
+            (data) => this.pre_select_plans.internet_optionals.indexOf(data.sku) !== -1);
           for (let i = 0; i < optionals.length; i++) {
             const element = optionals[i];
             this.addInternetOptional(element);
@@ -492,7 +500,7 @@ export class ProviderCheckoutService {
     }
     // Adding Pre Selectect Tv Plans To cart and it's addons
     if (this.pre_select_plans.tv) {
-      let tv_plan = this.plans.tv.find((data) => data.sku == this.pre_select_plans.tv)
+      let tv_plan = this.plans.tv.find((data) => data.sku == this.pre_select_plans.tv);
       if (tv_plan) {
         this.selectTVPlan(tv_plan).then((cartItem) => {
           let optionals = this.plans_optionals.internet.filter((data) => this.pre_select_plans.tv_optionals.indexOf(data.sku) !== -1)
@@ -530,14 +538,14 @@ export class ProviderCheckoutService {
     let number = null;
     let condo = null;
     let condoNumber = null;
-    if (this.formBeforeCheckout){
+    if (this.formBeforeCheckout) {
       number = this.formBeforeCheckout.get('numberOfAddress').value || 'N/A';
       if (this.condo) {
         condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
         this.address.street_address_3 = `${this.condo.name} APTO ${condoNumber}`;
       }
     }
-    
+
     this.address.city = city.name;
     this.address.number = number;
     this.address.street_address_1 = `${city.street}`;
@@ -575,17 +583,17 @@ export class ProviderCheckoutService {
     });
   }
 
-  
+
   loadPlans() {
     let options = {};
     options['page'] = {number: 1, size: 100};
     //options['include'] = `${ProductModel.include}`;
     options['include'] = `product_type`;
     options['plan_types__id'] = this.plan_type.id;
-    
-    if (this.condo){
+
+    if (this.condo) {
       options['condos__id'] = this.condo.id;
-    }else{
+    } else {
       options['city__id'] = this.city.id;
     }
     //const url = `/api/provider/city/${this.city.id}/products/`;
@@ -821,18 +829,20 @@ export class ProviderCheckoutService {
       }, (error: ErrorResponse) => {
       });
   }
-  removeAllPlansFromType(type_list:CartItemModel[]){
+
+  removeAllPlansFromType(type_list: CartItemModel[]) {
     let promises: Promise<boolean>[] = [];
     while (type_list.length) {
       let op = type_list.pop();
       promises.push(
-        this.cartService.removeFromCart(op,false)
+        this.cartService.removeFromCart(op, false)
       );
     }
-    Promise.all(promises).then((responses)=>{
+    Promise.all(promises).then((responses) => {
       this.cartService.updateCart();
     })
   }
+
   removeAllInternetOptionals() {
     this.removeAllPlansFromType(this.selected_internet_optionals);
   }
@@ -962,7 +972,7 @@ export class ProviderCheckoutService {
   }
 
   setWizardStep(number: number) {
-    if(this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
+    if (this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
       this.current_wizard_step = number;
       this.updateCartExtraData();
     }
@@ -1088,8 +1098,8 @@ export class ProviderCheckoutService {
 
 
   getFees() {
-    if(this.cartService.cart) {
-      if(this.cartService.cart.items) {
+    if (this.cartService.cart) {
+      if (this.cartService.cart.items) {
         return this.cartService.cart.items.filter((data) => !data.product)
       }
     }
@@ -1097,30 +1107,44 @@ export class ProviderCheckoutService {
   }
 
   getTerms() {
-    this.cartService.getCartTerms().then((terms: CartTermModel)=>{
+    this.cartService.getCartTerms().then((terms: CartTermModel) => {
       return terms;
     })
   }
 
   getTokenFullURL() {
-    const url:string = window.location.origin + this.router.createUrlTree([], {
+    const url: string = window.location.origin + this.router.createUrlTree([], {
       relativeTo: this.activatedRoute,
       queryParams: {token: this.cartService.cart.token, city_id: this.cartService.cart.extra_data.city_id}
     }).toString();
     return url;
   }
 
-  onCopyTokenFullURL(event){
+  onCopyTokenFullURL(event) {
     this.copyInputMessage(document.getElementById('token-full-url'));
   }
 
-  copyInputMessage(inputElement){
+  copyInputMessage(inputElement) {
     this.copying = true;
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
-    setTimeout(()=>{
+    setTimeout(() => {
       this.copying = false;
-    },3000 )
+    }, 3000)
   }
+
+  showLoadingCart(): boolean {
+    if(!this.loading_cart){
+      if(this.current_step == ProviderCheckoutSteps.beforeCheckout ) {
+        return false;
+      } else if(this.current_step == ProviderCheckoutSteps.buildingPlan ||
+                this.current_step == ProviderCheckoutSteps.wizard) {
+        if(!this.loading_plans) return false;
+      }
+    }
+    return true;
+  }
+
 }
+

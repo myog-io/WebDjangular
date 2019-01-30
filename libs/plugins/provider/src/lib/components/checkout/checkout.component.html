@@ -1,4 +1,4 @@
-<div *ngIf="providerCheckout.loading_cart">
+<div *ngIf="providerCheckout.showLoadingCart()">
   <div class="container">
     <div class="row">
       <div class="col my-5">
@@ -9,7 +9,7 @@
 
 </div>
 
-<div *ngIf="!providerCheckout.loading_cart">
+<div *ngIf="!providerCheckout.showLoadingCart()">
 
   <section *ngIf="providerCheckout.currentStep == providerCheckoutSteps.beforeCheckout" style="background:#F8F8F8;">
     <div class="container">
