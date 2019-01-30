@@ -91,6 +91,9 @@ export class SEOService {
           description = text;
         }
       }
+      this.addPageMetaTag({name: 'HandheldFriendly', content: "True"});
+      this.addPageMetaTag({name: 'MobileOptimized', content: "320"});
+
       this.addPageMetaTag({name: 'description', content: description});
       this.setCanonicalURL(window.location.href.split('?')[0]); // TODO: #38 get the right Path Absolute
       this.addPageMetaTag({name: 'og:locate', content: this.wdaConfig.getCurrentLocale()});
