@@ -20,7 +20,13 @@ enum pageDG {
 export class PagePostModel extends PageModel {
   public static include = 'header,layout,footer';
 
-  title = 'post';
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'hidden',
+    value: 'post'
+  })
+  page_class;
 
   public displayGroups = [
     {
