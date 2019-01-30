@@ -48,7 +48,7 @@ export class PageStaticModel extends PageModel {
       groups: [
         {
           name: pageDG.options,
-          title: 'Options',
+          title: 'Page Options',
         }
       ]
     }
