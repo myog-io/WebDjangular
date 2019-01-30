@@ -84,6 +84,9 @@ export class ProviderCheckoutService {
     telephone: []
   };
 
+  public default_contract_time: string = '2'; //in years
+  public default_payment_type: string = 'email'; // email or mail
+
   get plan_type(): PlanTypeModel {
     return this._plan_type;
   }
@@ -1019,8 +1022,13 @@ export class ProviderCheckoutService {
   }
 
   private updateCartExtraData() {
-
     let extra_data: any = {};
+    if(this.cartService.getExtraData()) {
+      extra_data = this.cartService.getExtraData();
+    }
+    if(!extra_data.hasOwnProperty('contractTime')) extra_data.contractTime = this.default_contract_time;
+    if(!extra_data.hasOwnProperty('paymentType')) extra_data.paymentType = this.default_payment_type;
+
     extra_data.current_step = this.currentStep.toString();
     extra_data.current_wizard_step = this.current_wizard_step.toString();
     extra_data.condo = this.formBeforeCheckout.get('condo').value;
