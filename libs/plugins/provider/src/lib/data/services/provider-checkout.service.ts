@@ -10,7 +10,7 @@ import {CityModel} from '../models/City.model';
 import {ClientUserService} from '@core/services/src/lib/client-user.service';
 import {AddressModel} from '@core/data/src/lib/models';
 import {HttpHeaders} from '@angular/common/http';
-import {Subscriber} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {CondoModel} from '../models/Condo.model';
 import "rxjs-compat/add/operator/map";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -123,7 +123,7 @@ export class ProviderCheckoutService {
   public selected_tv_plan: CartItemModel = null;
   public selected_telephone_plan: CartItemModel = null;
 
-  public listener_cart_changes: Subscriber<any> = null;
+  public listener_cart_changes: Subscription = null;
 
   public selected_extra_tv_decoder = {
     plan: null,
