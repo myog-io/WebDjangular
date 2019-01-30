@@ -18,10 +18,10 @@ class AbstractCoreConfigModel(models.Model):
 
 
 class CoreConfigGroup(AbstractCoreConfigModel):
-    '''
+    """
     This is the Agroupment inside the Admin Panel that will devide the Groups of Each Core Configuration
     If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
-    '''
+    """
     order = models.IntegerField(default=0)
     title = models.CharField(default=None)
 

@@ -16,13 +16,13 @@ class Website(BaseModel):
     """
     Configuration for Future MultiSite
     """
-    domain = models.URLField(unique=True)
+    domain = models.CharField(max_length=64, unique=True)
     code = models.SlugField(validators=[validate_slug], unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def getCurrentWebsite():
+    def get_current_website():
         try:
             return Website.objects.first()
         except:
@@ -56,7 +56,7 @@ class CoreConfig(BaseModel):
             #TODO: Make This Recursive?!
             slug_path = slug.split('.')
             if not website:
-                website = Website.getCurrentWebsite()
+                website = Website.get_current_website()
 
             config = CoreConfig.objects.filter(
                 slug=slug_path[0], website=website).first()
@@ -75,7 +75,7 @@ class CoreConfig(BaseModel):
         #TODO: Make This Recursive?!
         slug_path = slug.split('.')
         if not website:
-            website = Website.getCurrentWebsite()
+            website = Website.get_current_website()
 
         config = CoreConfig.objects.filter(
                     slug=slug_path[0], website=website).first()

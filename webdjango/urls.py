@@ -10,7 +10,7 @@ from django.contrib.staticfiles.views import serve
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from webdjango.sitemaps import PageSitemap, PostSitemap
+from webdjango.sitemaps import PageSitemap, PostSitemap, index as sitemap_index, sitemap as sitemap_section
 from webdjango.views.AddressViewSet import AddressViewSet
 from webdjango.views.CoreConfigViewSet import CoreConfigGroupViewSet, \
     CoreConfigInputViewSet
@@ -65,10 +65,10 @@ urlpatterns = [
 
     # url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('sitemap.xml',
-         cache_page(86400)(sitemaps_views.index),
+         sitemap_index,
          {'sitemaps': sitemaps, 'sitemap_url_name': 'sitemaps'}),
     path('sitemap-<section>.xml',
-         cache_page(86400)(sitemaps_views.sitemap),
+         sitemap_section,
          {'sitemaps': sitemaps}, name='sitemaps'),
 
     # url(r'^admin', TemplateView.as_view(template_name="/static/admin/index.html")),
