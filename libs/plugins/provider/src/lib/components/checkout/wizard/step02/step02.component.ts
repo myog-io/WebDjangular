@@ -54,8 +54,9 @@ export class PluginProviderCheckoutWizardStep02Component implements OnInit, OnDe
       (value)=>{
         let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
         cart_extra_data['paymentType'] = this.formWizardStep02.get('paymentType').value;
+        this.providerCheckout.updating_cart = true;
         this.providerCheckout.cartService.updateCart().then((cart: CartModel) => {
-
+          this.providerCheckout.updating_cart = false;
         }, () => {
 
         })
@@ -64,8 +65,9 @@ export class PluginProviderCheckoutWizardStep02Component implements OnInit, OnDe
       (value)=>{
         let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
         cart_extra_data['contractTime'] = this.formWizardStep02.get('contractTime').value;
+        this.providerCheckout.updating_cart = true;
         this.providerCheckout.cartService.updateCart().then((cart: CartModel) => {
-
+          this.providerCheckout.updating_cart = false;
         }, () => {
 
         })

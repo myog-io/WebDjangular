@@ -5,20 +5,15 @@
       <ng-container [ngTemplateOutlet]="image?.template"></ng-container>
     </div>
     <picture [class.cursor-pointer]="image?.url" (click)="action(image)">
-      <source media="(max-width: 799px)" [srcset]="image?.small">
-      <source [srcset]="image?.big">
-      <!--[if IE 9]><video style="display: none;"><![endif]-->
-
-      <source media="(min-width: 36em)" [srcset]="image?.big + ' 1024w, ' + image?.medium + ' 640w, '+ image?.small + ' 320w'"
-        sizes="33.3vw" />
-      <!--[if IE 9]></video><![endif]-->
-
+      <source *ngIf="image.small" [srcset]="image.small" media="(max-width: {{ widthS }})">
+      <source *ngIf="image.medium" [srcset]="image.medium" media="(max-width: {{ widthM }})">
+      <source *ngIf="image.big" [srcset]="image.big" media="(min-width: {{ widthL }})">
       <img [src]="image?.big" [alt]="image?.alt" [style.width]="'100%'">
     </picture>
-
     <div class="carousel-caption" *ngIf="image.title || image.description">
       <h3>{{ image.title }}</h3>
       <p>{{ image.description }}</p>
     </div>
   </ng-template>
 </ngb-carousel>
+

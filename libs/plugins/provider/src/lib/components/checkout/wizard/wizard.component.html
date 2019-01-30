@@ -84,6 +84,9 @@
                     </tr>
                   </tbody>
                 </table>
+                <div *ngIf="providerCheckout.updating_cart" class="loading">
+                  <span><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
+                </div>
               </div>
             </div>
           </div>

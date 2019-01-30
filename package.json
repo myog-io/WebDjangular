@@ -36,7 +36,7 @@
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
     "build:ssr:prod": "npm run build:client-and-server-bundles:production && npm run compile:server",
     "build:client-and-server-bundles:prod": "ng build --prod && ng run client:server:production",
-    "build-all:prod": "npm run build:prod && ng run client:server:production && npm run compile:server",
+    "build-all:prod": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build client && npm run build:admin && ng run client:server:production && npm run compile:server",
     "build-and-serve:prod": "npm run build-all:prod && npm run serve:ssr",
     "build-all": "ng build && ng build:admin && ng run client:server && npm run compile:server",
     "build-and-serve": "npm run build-all && npm run serve:ssr",
