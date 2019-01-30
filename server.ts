@@ -22,7 +22,6 @@ enableProdMode();
 
 // Express server
 const app = express();
-const adminApp = express();
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
@@ -47,47 +46,13 @@ global['localStorage'] = localStorage;
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main');
 
-// Universal express-engine for the Admin
-adminApp.engine('html', (_, options, callback) => {
-  let serverUrl = options.req.protocol + '://' + options.req.get('host');
-  renderModuleFactory(AppServerModuleNgFactory, {
-    // Our index.html
-    document: adminTemplate,
-    url: options.req.url,
-    extraProviders: [
-      provideModuleMap(LAZY_MODULE_MAP),
-      {
-        provide: 'APP_BASE_HREF',
-        useValue: serverUrl
-      },
-      {
-        provide: NgModuleFactoryLoader,
-        useClass: ModuleMapNgFactoryLoader,
-        deps: [
-          Compiler,
-          MODULE_MAP
-        ],
-      },
-      <ValueProvider>{
-        provide: REQUEST,
-        useValue: options.req
-      },
-      <ValueProvider>{
-        provide: RESPONSE,
-        useValue: options.req.res,
-      },
-    ]
-  }).then(html => {
-    callback(null, html);
-  });
-});
-
 // Our Universal express-engine For the APP(found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', (_, options, callback) => {
   let serverUrl = options.req.protocol + '://' + options.req.get('host');
+  let current_template = template
   renderModuleFactory(AppServerModuleNgFactory, {
     // Our index.html
-    document: template,
+    document: current_template,
     url: options.req.url,
     extraProviders: [
       provideModuleMap(LAZY_MODULE_MAP),
@@ -116,15 +81,19 @@ app.engine('html', (_, options, callback) => {
     callback(null, html);
   });
 });
-
+var admin = express();
 
 app.set('view engine', 'html');
-adminApp.set('view engine', 'html');
+admin.set('view engine', 'html');
 //app.set('views', DIST_FOLDER);
 app.set('views', clientAppServer());
-adminApp.set('views', clientAppServer());
+admin.set('views',adminAppServer());
 
-//app.use(cors());
+admin.get('**', express.static(adminAppServer()));
+// All regular routes use the Universal engine
+admin.get('*', (req, res) => {
+  res.sendFile(adminAppServer('index.html'))
+});
 
 // Example Express Rest API endpoint, Proxying to Django
 const api_url = 'http://127.0.0.1:8000';
@@ -150,17 +119,8 @@ app.use('/files/**', proxy(api_url, {
     return req.originalUrl;
   }
 }));
-/* ADMIN PART */
-adminApp.get('*.*', express.static(adminAppServer()));
 
-// All regular routes use the Universal engine
-adminApp.get('*', (req, res) => {
-  res.render(adminAppServer('index.html'), {req});
-});
-
-app.use('/admin', adminApp);
-
-
+app.use('/admin', admin)
 /* CLIENT PART */
 app.get('*.*', express.static(clientAppServer()));
 
