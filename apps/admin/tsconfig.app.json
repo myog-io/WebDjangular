@@ -6,10 +6,15 @@
   },
   "exclude": [
     "src/test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "../../libs/core/**/*.spec.ts",
+    "../../libs/themes/**/*.spec.ts",
+    "../../libs/plugins/**/*.spec.ts"
   ],
   "include": [
     "**/*.ts",
-    "../../../libs/core/admin/*"
+    "../../libs/core/**/*.ts",
+    "../../libs/themes/**/*.ts",
+    "../../libs/plugins/**/*.ts"
   ]
 }
