@@ -128,15 +128,7 @@ adminApp.set('views', clientAppServer());
 
 // Example Express Rest API endpoint, Proxying to Django
 const api_url = 'http://127.0.0.1:8000';
-/* ADMIN PART */
-adminApp.get('*.*', express.static(adminAppServer()));
 
-// All regular routes use the Universal engine
-adminApp.get('*', (req, res) => {
-  res.render(adminAppServer('index.html'), {req});
-});
-
-app.use('/admin', adminApp);
 // TODO: Make URL Dynamic!
 app.use('/api/**', proxy(api_url, {
   proxyReqPathResolver: function (req) {
@@ -158,7 +150,15 @@ app.use('/files/**', proxy(api_url, {
     return req.originalUrl;
   }
 }));
+/* ADMIN PART */
+adminApp.get('*.*', express.static(adminAppServer()));
 
+// All regular routes use the Universal engine
+adminApp.get('*', (req, res) => {
+  res.render(adminAppServer('index.html'), {req});
+});
+
+app.use('/admin', adminApp);
 
 
 /* CLIENT PART */
