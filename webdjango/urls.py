@@ -1,26 +1,23 @@
 """
 WebDjangular URL Configuration
 """
-import webdjango.signals.CoreSignals
-import webdjango.signals.EmailConfigRegisterSignals
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
-from django.contrib import admin
+from django.contrib.sitemaps import views as sitemaps_views
+# settings.ANGULAR_CLIENT_APP_DIR, settings.ANGULAR_ADMIN_APP_DIR
 from django.contrib.staticfiles.views import serve
 from django.urls import path
-from django.views.generic import RedirectView, TemplateView
-
-from rest_framework.permissions import AllowAny
 from rest_framework.routers import DefaultRouter
+
+from webdjango.sitemaps import PageSitemap, PostSitemap
 from webdjango.views.AddressViewSet import AddressViewSet
 from webdjango.views.CoreConfigViewSet import CoreConfigGroupViewSet, \
     CoreConfigInputViewSet
 from webdjango.views.CoreViewSet import AuthorViewSet, CoreConfigViewSet, \
     PluginViewSet, ThemeViewSet, WebsiteViewSet
 from webdjango.views.InitViewSet import InitViewSet
-import os
-#settings.ANGULAR_CLIENT_APP_DIR, settings.ANGULAR_ADMIN_APP_DIR
+from django.views.decorators.cache import cache_page
 
 '''
 schema_view = get_schema_view(
@@ -51,20 +48,33 @@ router.register(r'core_config_group', CoreConfigGroupViewSet,
                 base_name='core_config_group')
 router.register(r'address', AddressViewSet, base_name='address')
 
+sitemaps = {
+    'page': PageSitemap(),
+    'post': PostSitemap()
+}
+
 urlpatterns = [
-   
+
     url(r'^api/', include(router.urls)),
 
     url(r'^api/', include('libs.core.users.api.urls')),
-    url(r'^api/', include('libs.core.cms.api.urls')),
+    url(r'^api/', include('libs.core.cms.api.urls'), name='cms'),
     url(r'^api/', include('libs.core.media.api.urls')),
     url(r'^api/', include('libs.plugins.provider.api.urls')),
     url(r'^api/', include('libs.plugins.store.api.urls')),
 
-    #url(r'^admin', TemplateView.as_view(template_name="/static/admin/index.html")),
-    url(r'^admin', serve, kwargs={'path':  'admin/index.html'}),
-    url(r'^', serve, kwargs={'path':  'client/index.html'}),
+    # url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('sitemap.xml',
+         cache_page(86400)(sitemaps_views.index),
+         {'sitemaps': sitemaps, 'sitemap_url_name': 'sitemaps'}),
+    path('sitemap-<section>.xml',
+         cache_page(86400)(sitemaps_views.sitemap),
+         {'sitemaps': sitemaps}, name='sitemaps'),
 
-
+    # url(r'^admin', TemplateView.as_view(template_name="/static/admin/index.html")),
+    url(r'^admin', serve, kwargs={'path': 'admin/index.html'}),
+    url(r'^', serve, kwargs={'path': 'client/index.html'}),
 ]
-urlpatterns = static('/admin/', document_root='static/admin/') + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static('/client_app/', document_root='static/client') + urlpatterns
+urlpatterns = static('/admin/', document_root='static/admin/') + static(settings.MEDIA_URL,
+                                                                        document_root=settings.MEDIA_ROOT) + static(
+    '/client_app/', document_root='static/client') + urlpatterns
