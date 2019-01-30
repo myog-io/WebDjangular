@@ -10,7 +10,9 @@ export class SEOService {
 
   private pageMetas: HTMLMetaElement[] = [];
   private linkCanonical: HTMLLinkElement = null;
+  private linkFavicon: HTMLLinkElement = null;
   private cms_core: any;
+
 
   constructor(public meta: Meta,
               public title: Title,
@@ -18,7 +20,20 @@ export class SEOService {
               @Inject(DOCUMENT) public document) {
     this.wdaConfig.getCoreConfig('cms_core').then((data) => {
       this.cms_core = data;
+      console.log(this.cms_core);
+      this.setFavicon();
     });
+
+  }
+
+  setFavicon() {
+    if (this.linkFavicon === null) {
+      this.linkFavicon = document.createElement('link');
+      this.linkFavicon.setAttribute('href', this.cms_core.favicon);
+      this.linkFavicon.setAttribute('type', 'image/x-icon');
+      this.linkFavicon.setAttribute('rel' , 'shortcut icon');
+      document.head.appendChild(this.linkFavicon);
+    }
   }
 
 
