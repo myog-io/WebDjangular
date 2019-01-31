@@ -53,7 +53,18 @@ class CartTermViewSet(ModelViewSet):
 
 class CartTermRelationshipView(RelationshipView):
     queryset = CartTerm.objects
-    
+
+
+class CartFilter(WebDjangoFilterSet):
+
+    class Meta:
+        model = Cart
+        fields = {
+            'id': ['in'],
+            'email': ['contains', 'exact'],
+            'token': ['exact'],
+            'status': ['exact']
+        }
 
 class CartViewSet(ModelViewSet):
     """
@@ -69,7 +80,7 @@ class CartViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    # filter_class = CartFilter
+    filter_class = CartFilter
     search_fields = ('name',)
     permission_classes = ()
 
@@ -91,10 +102,10 @@ class CartViewSet(ModelViewSet):
         if not order:
             raise ValidationError('Please Review your Cart')
         cart.delete()
-        order.events.create(type=OrderEventTypes.PLACED)
-        #send_order_confirmation.delay(order.pk)
-        #order.events.create(
-        #    type=OrderEventTypes.EMAIL_SENT.value,
+        order.events.create(event_type=OrderEventTypes.PLACED)
+        # send_order_confirmation.delay(order.pk)
+        # order.events.create(
+        #    event_type=OrderEventTypes.EMAIL_SENT.value,
         #    parameters={
         #        'email': order.get_user_current_email(),
         #        'email_type': OrderEventsEmails.ORDER

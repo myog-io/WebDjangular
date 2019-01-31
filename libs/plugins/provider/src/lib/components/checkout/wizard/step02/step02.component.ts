@@ -81,7 +81,11 @@ export class PluginProviderCheckoutWizardStep02Component implements OnInit, OnDe
   onSubmit() {
     this.formWizardStep02Submitted = true;
     if (this.formWizardStep02.valid) {
-      this.providerCheckout.onWizardStep02Submit()
+      this.providerCheckout.onWizardStep02Submit().then(()=>{
+        this.formWizardStep02Submitted = false;
+      }, () => {
+        this.formWizardStep02Submitted = false;
+      })
     }
   }
 
