@@ -11,11 +11,9 @@ import {join} from 'path';
 import 'localstorage-polyfill';
 import {REQUEST, RESPONSE} from "@nguniversal/express-engine/tokens";
 import {renderModuleFactory} from "@angular/platform-server";
-import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
-var bodyParser = require('body-parser');
-var cors = require('cors');
+//var cors = require('cors');
 var proxy = require('express-http-proxy');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
@@ -23,8 +21,7 @@ enableProdMode();
 
 // Express server
 const app = express();
-// Increaasing Payload Size
-app.use(bodyParser.raw({limit:'5mb'}));
+
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
@@ -101,6 +98,7 @@ const api_url = 'http://127.0.0.1:8000';
 
 // TODO: Make URL Dynamic!
 app.use('/api/**', proxy(api_url, {
+  limit: '5mb',
   proxyReqPathResolver: function (req) {
     return req.originalUrl;
   }
