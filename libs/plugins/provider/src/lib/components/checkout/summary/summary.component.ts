@@ -27,7 +27,7 @@ export class PluginProviderCheckoutSummaryComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log("HERE",this.custom_block)
+       
     }
 
     submit() {
