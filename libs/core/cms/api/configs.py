@@ -133,7 +133,7 @@ class CMSCoreConfig:
             disabled=False,
             label="Custom Style",
             validation=None,
-            wrapper_class="col-6",
+            wrapper_class="col-12",
             group=GROUP_SLUG,
         ),
         CoreConfigInput(
@@ -145,7 +145,7 @@ class CMSCoreConfig:
             disabled=False,
             label="Custom Script",
             validation=None,
-            wrapper_class="col-6",
+            wrapper_class="col-12",
             group=GROUP_SLUG,
         )
     ]

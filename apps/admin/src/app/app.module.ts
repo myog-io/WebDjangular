@@ -8,16 +8,13 @@ import { AppComponent } from "./app.component";
 
 import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
 import { CookieService } from "ngx-cookie-service";
-import { WDAConfig } from "@core/services/src/lib/wda-config.service";
 import { ThemeModule } from "@core/admin/src/lib/@theme";
 import { CoreAdminModule } from "@core/admin/src/lib/core-admin.module";
 import { AppHttpInterceptor } from "@core/interceptors/src/lib/apphttp.interceptor";
 import { CoreAuthModule } from "@core/auth/src/lib/core-auth.module";
 
 
-export function wda_init(wdaconfig: WDAConfig) {
-  return () => wdaconfig.WDAInit();
-}
+
 
 
 @NgModule({
@@ -43,13 +40,11 @@ export function wda_init(wdaconfig: WDAConfig) {
   bootstrap: [AppComponent],
   providers: [
     CookieService,
-    WDAConfig,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppHttpInterceptor,
       multi: true
-    },
-    {provide: APP_INITIALIZER, useFactory:wda_init, deps:[WDAConfig], multi:true }
+    }
   ]
 })
 export class AppModule { }

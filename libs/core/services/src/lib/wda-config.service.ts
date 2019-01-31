@@ -57,8 +57,6 @@ export class WDAConfig {
           (data: any) => {
             console.log(data);
             this.populateWDAConfig(data.data);
-            this.applyCustomStyle();
-            this.applyCustomScript();
             this.data = data.data;
             this.loading = false;
             if (this.compleLoading) {
@@ -130,7 +128,7 @@ export class WDAConfig {
     //return "../../../themes/" + this.theme.slug + "/" + this.theme.slug + ".module#" + this.theme.angular_module;
   }
 
-  private applyCustomStyle() {
+  public applyCustomStyle() {
     let custom_style: string = '';
     if (this.core_config.hasOwnProperty('cms_core')) {
       if (this.core_config['cms_core']['custom_style']) {
@@ -139,13 +137,12 @@ export class WDAConfig {
     }
     if (custom_style) {
       let style: HTMLStyleElement = document.createElement('style');
-      style.innerText = custom_style;
-      console.log('style tag', style);
-      document.body.appendChild(style);
+      style.innerHTML = custom_style;  // TODO: minify .replace(/\t?\n?\s?/gi, '');
+      document.head.appendChild(style);
     }
   }
 
-  private applyCustomScript() {
+  public applyCustomScript() {
     let custom_script: string = '';
     if (this.core_config.hasOwnProperty('cms_core')) {
       if (this.core_config['cms_core']['custom_script']) {
@@ -154,8 +151,8 @@ export class WDAConfig {
     }
     if (custom_script) {
       let script: HTMLScriptElement = document.createElement('script');
-      script.innerText = custom_script;
-      console.log('script tag', script);
+      script.innerHTML = custom_script; // TODO: minify .replace(/\t?\n?\s?/gi, '');
+      console.log(script);
       document.body.appendChild(script);
     }
   }
