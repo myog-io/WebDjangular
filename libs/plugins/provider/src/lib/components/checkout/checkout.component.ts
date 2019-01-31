@@ -13,14 +13,15 @@ import { HttpHeaders } from '@angular/common/http';
 export class PluginProviderCheckoutComponent implements OnInit {
 
   @Input() cutom_block_id: string;
-  public custom_block: BlockModel
+  @Input() reseller: boolean = false;
+  public custom_block: BlockModel;
   public providerCheckoutSteps = ProviderCheckoutSteps;
 
   constructor(
     public providerCheckout: ProviderCheckoutService,
     private datastore: WebAngularDataStore,
   ) {
-
+    this.providerCheckout.has_reseller = true;
   }
 
   ngOnInit() {

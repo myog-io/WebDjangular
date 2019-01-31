@@ -54,7 +54,7 @@ const routes: Routes = [
         data: {
           model: ResellerModel,
           title: 'Resellers',
-          path: 'provider/page-redirect'
+          path: 'provider/reseller'
         }
       },
       {

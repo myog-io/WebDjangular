@@ -151,7 +151,6 @@ export class WDAConfig {
     if (custom_script) {
       let script: HTMLScriptElement = document.createElement('script');
       script.innerHTML = custom_script; // TODO: minify .replace(/\t?\n?\s?/gi, '');
-      console.log(script);
       document.body.appendChild(script);
     }
   }
