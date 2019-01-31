@@ -39,7 +39,7 @@ class CMSCoreConfig:
             validation=None,
             wrapper_class="col-6",
             group=GROUP_SLUG,
-            select_options={'block_class': 'header'},
+            options={'block_class': 'header'},
         ),
         CoreConfigInput(
             id=DEFAULT_FOOTER,
@@ -52,7 +52,7 @@ class CMSCoreConfig:
             placeholder="Select your Default Footer",
             validation=None,
             wrapper_class="col-6",
-            select_options={'block_class': 'footer'},
+            options={'block_class': 'footer'},
             group=GROUP_SLUG,
         ),
         CoreConfigInput(
@@ -62,7 +62,7 @@ class CMSCoreConfig:
             order=0,
             disabled=False,
             label="Default Language",
-            select_options=LANGUAGES,
+            options=LANGUAGES,
             placeholder="Select your Default Website Language",
             validation=None,
             wrapper_class="col-12",

@@ -34,7 +34,7 @@ export class CoreConfigInputModel extends AbstractModel {
   label: string;
 
   @NestedAttribute()
-  select_options: any;
+  options: any;
 
   @NestedAttribute()
   select_model: any;
@@ -73,7 +73,7 @@ export class CoreConfigInputModel extends AbstractModel {
       disabled: this.disabled,
       label: this.label,
       name: this.id,
-      options: this.select_options,
+      options: this.options,
       model: this.select_model,
       placeholder: this.placeholder,
       type: this.field_type,
