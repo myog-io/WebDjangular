@@ -14,6 +14,7 @@ import {renderModuleFactory} from "@angular/platform-server";
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 
+var bodyParser = require('body-parser');
 var cors = require('cors');
 var proxy = require('express-http-proxy');
 
@@ -22,6 +23,8 @@ enableProdMode();
 
 // Express server
 const app = express();
+// Increaasing Payload Size
+app.use(bodyParser.raw({limit:'5mb'}));
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
