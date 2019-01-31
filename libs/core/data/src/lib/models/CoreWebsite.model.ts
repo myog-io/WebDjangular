@@ -20,8 +20,23 @@ export class CoreWebsiteModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
+    type: 'select',
+    label: 'Protocol',
+    wrapper_class: 'col-4',
+    value: 'http',
+    options: [
+      {id:'http', name: 'HTTP'},
+      {id:'https', name: 'HTTPS'},
+    ]
+  })
+  protocol: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
     type: 'text',
     label: 'Domain',
+    wrapper_class: 'col-8',
     placeholder: 'Enter the Website Domain'
   })
   domain: string;
@@ -35,6 +50,8 @@ export class CoreWebsiteModel extends AbstractModel {
   })
   code: string;
 
+ 
+  
   @Attribute()
   created: Date;
 
@@ -53,6 +70,10 @@ export class CoreWebsiteModel extends AbstractModel {
 
    public static smartTableOptions: SmartTableSettings = {
     columns: {
+      protocol: {
+        title: 'Protocolo',
+        type: 'text'
+      },
       domain: {
         title: 'Domain',
         type: 'text'
