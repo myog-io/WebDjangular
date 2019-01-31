@@ -18,12 +18,11 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 export class AppComponent implements OnInit {
 
   constructor(private wdaconfig: WDAConfig,
-    private router: Router,
-    private analytics: AnalyticsService, ) {
+    private router: Router ) {
 
   }
 
   ngOnInit(): void {
-    this.analytics.trackPageViews();
+
   }
 }

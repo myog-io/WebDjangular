@@ -74,6 +74,7 @@ export class WDAConfig {
   }
 
   private populateWDAConfig(data: any) {
+    console.log(data);
     if (data.theme) {
       this.setTheme(data.theme);
     }

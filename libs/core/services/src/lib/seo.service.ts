@@ -22,7 +22,6 @@ export class SEOService {
       this.cms_core = data;
       this.setFavicon();
     });
-
   }
 
   setFavicon() {
