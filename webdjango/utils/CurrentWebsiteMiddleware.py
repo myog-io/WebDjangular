@@ -10,7 +10,7 @@ def get_website(request):
         if website:
             request._cached_website = website
         else:
-            request._cached_website = Website.getCurrentWebsite()
+            request._cached_website = Website.get_current_website()
 
     return request._cached_website
 

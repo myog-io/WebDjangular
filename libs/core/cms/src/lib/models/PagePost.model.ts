@@ -9,7 +9,8 @@ import { PageModel } from "@core/cms/src/lib/models/Page.model";
 
 enum pageDG {
   general = 'general',
-  seo = 'seo'
+  seo = 'seo',
+  options = 'options'
 }
 
 @JsonApiModelConfig({
@@ -18,6 +19,14 @@ enum pageDG {
 })
 export class PagePostModel extends PageModel {
   public static include = 'header,layout,footer';
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'hidden',
+    value: 'post'
+  })
+  page_class;
 
   public displayGroups = [
     {
@@ -35,6 +44,15 @@ export class PagePostModel extends PageModel {
         {
           name: pageDG.seo,
           title: 'SEO',
+        }
+      ]
+    },
+    {
+      wrapper_class: 'col-4',
+      groups: [
+        {
+          name: pageDG.options,
+          title: 'Page Options',
         }
       ]
     }

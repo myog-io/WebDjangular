@@ -3,6 +3,8 @@ DEFAULT_HEADER = 'default_header'
 DEFAULT_FOOTER = 'default_footer'
 DEFAULT_I18N = 'default_i18n'
 
+FAVICON = 'favicon'
+
 # SEO
 DEFAULT_SITE_TITLE = 'site_title'
 DEFAULT_TITLE_SEPARATOR = 'site_title_separator'

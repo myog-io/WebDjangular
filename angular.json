@@ -20,8 +20,6 @@
             "tsConfig": "apps/client/tsconfig.app.json",
             "assets": [
               "apps/client/src/assets",
-              "apps/client/src/favicon.ico",
-              "apps/client/src/favicon.png",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -123,8 +121,6 @@
             ],
             "assets": [
               "apps/client/src/assets",
-              "apps/client/src/favicon.ico",
-              "apps/client/src/favicon.png",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -216,8 +212,6 @@
             "tsConfig": "apps/admin/tsconfig.app.json",
             "assets": [
               "apps/admin/src/assets",
-              "apps/admin/src/favicon.ico",
-              "apps/admin/src/favicon.png",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
@@ -323,8 +317,6 @@
             ],
             "assets": [
               "apps/admin/src/assets",
-              "apps/admin/src/favicon.ico",
-              "apps/admin/src/favicon.png",
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",

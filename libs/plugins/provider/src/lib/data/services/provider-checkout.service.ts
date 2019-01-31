@@ -1021,7 +1021,9 @@ export class ProviderCheckoutService {
     } else {
       this.current_wizard_step++;
     }
-    this.updateCartExtraData();
+    if(this.current_wizard_step < 3){
+      this.updateCartExtraData();
+    }
   }
 
   private updateCartExtraData() {
@@ -1102,14 +1104,17 @@ export class ProviderCheckoutService {
     this.nextStep();
   }
 
-  onWizardStep02Submit() {
-    this.nextStep();
-  }
+  onWizardStep02Submit(): Promise<any> {
+    return new Promise( (resolve, reject) => {
+      this.cartService.completeCart().then(()=>{
+        this.nextStep();
+        resolve();
+      }, () => {
+        reject();
+      });
+    });
 
-  confirmCheckout() {
-    this.nextStep();
   }
-
 
   getFees() {
     if (this.cartService.cart) {

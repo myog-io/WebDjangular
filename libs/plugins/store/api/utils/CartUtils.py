@@ -399,7 +399,6 @@ def create_order(cart, request):
             'total': cart.total,
             'subtotal': cart.subtotal,
             'taxes': cart.taxes
-
         })
         order = Order.objects.create(**order_data)
 

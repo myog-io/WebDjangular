@@ -230,7 +230,6 @@ class Order(BaseModel):
     
     shipping_method_name = models.CharField(
         max_length=255, null=True, default=None, blank=True, editable=False)
-    token = models.CharField(max_length=36, unique=True, blank=True)
 
     taxes = MoneyField(
         currency=defaults.DEFAULT_CURRENCY,

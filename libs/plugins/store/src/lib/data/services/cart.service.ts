@@ -11,6 +11,8 @@ import { CartTermModel } from "@plugins/store/src/lib/data/models/CartTerm.model
 import { UserModel } from "@core/users/src/lib/models";
 import { ClientUserService } from "@core/services/src/lib/client-user.service";
 import { CityModel } from "@plugins/provider/src/lib/data";
+import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
+import Order = jasmine.Order;
 
 
 export interface CookieCart {
@@ -38,7 +40,7 @@ export class CartService {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
         this.datastore.findAll(CartModel, {
-          token: cartCookie['token'],
+          token__exact: cartCookie['token'],
           page: { size: 1, number: 1 },
           include: ["billing_address", "shipping_address",
             "items", "items.product", "items.product.product_type",
@@ -85,8 +87,8 @@ export class CartService {
       this.clientUserService.updateCookie();
       location.reload()
     })
-    
-  
+
+
   }
 
   public updateCookie() {
@@ -146,12 +148,11 @@ export class CartService {
             cartItem.product.load_addons(this.datastore, { include: `product_type,categories` })
               .subscribe((query: JsonApiQueryData<ProductModel>) => {
                 cartItem.product.addons = query.getModels();
-                this.updateCart().then(() => {
+                  this.updateCart().then(() => {
                 });
                 resolve(cartItem);
-              })
-
-
+              }
+            )
           },
           (error: ErrorResponse) => {
             reject(error);
@@ -162,8 +163,25 @@ export class CartService {
     });
   }
 
+  public completeCart(): Promise<OrderModel> {
+    return new Promise( (resolve, reject) => {
+      this.datastore.findRecord(OrderModel, null,
+        null, null, `api/store/cart/${this.cart.id}/complete_order/`).subscribe(
+          (order) =>
+          {
+            this.cookieService.delete(this.cart_cookie_name);
+            resolve(order);
+          },
+          (error: ErrorResponse) => {
+            reject(error);
+          }
+        );
+
+    });
+  }
+
   public updateCartItem(cartItem: CartItemModel): Promise<CartItemModel> {
-    return new Promise((reject, resolver) => {
+    return new Promise((resolve, reject) => {
       cartItem.save().subscribe((cartItem: CartItemModel) => {
         console.log(this.cart.items)
 

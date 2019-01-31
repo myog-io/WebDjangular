@@ -22,7 +22,8 @@ export class WDAConfig {
   private theme: Theme;
   private data: any;
   private loading = false;
-  private compleLoading: any = null
+  private compleLoading: any = null;
+  private website: object;
   public init_url = '/api/core_init/';
   public get_home_url = '/api/page/get_home/';
   public get_page_url = '/api/page/#path#/get_page';
@@ -85,6 +86,13 @@ export class WDAConfig {
     if (data.core_config) {
       this.setCoreConfig(data.core_config);
     }
+    if(data.website) {
+      this.setWebsiteConfig(data.website);
+    }
+  }
+
+  public getBaseWebsiteURL() {
+    return `${this.website['protocol']}://${this.website['domain']}\/`;
   }
 
   public getCoreConfig(name: string): Promise<any> {
@@ -102,6 +110,11 @@ export class WDAConfig {
   private setCoreConfig(data) {
     this.core_config = data
   }
+
+  private setWebsiteConfig(data) {
+    this.website = data;
+  }
+
 
   public getTheme() {
     return this.theme;

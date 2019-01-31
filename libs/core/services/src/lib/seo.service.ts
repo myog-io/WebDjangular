@@ -10,7 +10,9 @@ export class SEOService {
 
   private pageMetas: HTMLMetaElement[] = [];
   private linkCanonical: HTMLLinkElement = null;
+  private linkFavicon: HTMLLinkElement = null;
   private cms_core: any;
+
 
   constructor(public meta: Meta,
               public title: Title,
@@ -18,7 +20,19 @@ export class SEOService {
               @Inject(DOCUMENT) public document) {
     this.wdaConfig.getCoreConfig('cms_core').then((data) => {
       this.cms_core = data;
+      this.setFavicon();
     });
+
+  }
+
+  setFavicon() {
+    if (this.linkFavicon === null) {
+      this.linkFavicon = document.createElement('link');
+      this.linkFavicon.setAttribute('href', this.cms_core.favicon);
+      this.linkFavicon.setAttribute('type', 'image/x-icon');
+      this.linkFavicon.setAttribute('rel' , 'shortcut icon');
+      document.head.appendChild(this.linkFavicon);
+    }
   }
 
 
@@ -76,8 +90,13 @@ export class SEOService {
           description = text;
         }
       }
+      this.addPageMetaTag({name: 'HandheldFriendly', content: "True"});
+      this.addPageMetaTag({name: 'MobileOptimized', content: "320"});
+
       this.addPageMetaTag({name: 'description', content: description});
-      this.setCanonicalURL(window.location.href.split('?')[0]); // TODO: #38 get the right Path Absolute
+      this.addPageMetaTag({name: 'og:description', content: description});
+
+      this.setCanonicalURL(page.slug); // TODO: #38 get the right Path Absolute
       this.addPageMetaTag({name: 'og:locate', content: this.wdaConfig.getCurrentLocale()});
 
       const localeList = this.wdaConfig.getLocaleList();
@@ -110,7 +129,8 @@ export class SEOService {
     }
   }
 
-  private setCanonicalURL(url) {
+  private setCanonicalURL(slug: string) {
+    const url: string = this.wdaConfig.getBaseWebsiteURL() + slug;
     if (this.linkCanonical === null) {
       this.linkCanonical = document.createElement('link');
       this.linkCanonical.setAttribute('rel', 'canonical');

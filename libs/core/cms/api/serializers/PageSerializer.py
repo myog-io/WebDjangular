@@ -35,7 +35,6 @@ class PageSerializer(WebDjangoSerializer):
     header = ResourceRelatedField(
         many=False,
         queryset=Block.objects,
-
         related_link_url_kwarg='pk',
         self_link_view_name='page-relationships'
     )
@@ -51,6 +50,8 @@ class PageSerializer(WebDjangoSerializer):
         related_link_url_kwarg='pk',
         self_link_view_name='page-relationships'
     )
+    tags = PageTagSerializer(many=True, required=False)
+    categories = PageCategorySerializer(many=True, required=False)
 
     included_serializers = {
         'header': 'libs.core.cms.api.serializers.BlockSerializer.BlockSerializer',

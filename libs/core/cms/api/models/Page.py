@@ -1,9 +1,10 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 from libs.core.cms.api.models.Block import Block
 from webdjango.models.AbstractModels import SeoModel, PermalinkModel
 from webdjango.models.TranslationModel import TranslationModel
-from django.core.exceptions import ObjectDoesNotExist
+
 
 class PageClasses:
     STATIC = 'static'
@@ -71,9 +72,12 @@ class Page(PermalinkModel, SeoModel, TranslationModel):
     title = models.CharField(max_length=255)
 
     content = models.TextField()
-    layout = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='layout', default=None, blank=True, null=True)
-    header = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers', default=None, blank=True, null=True)
-    footer = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers', default=None, blank=True, null=True)
+    layout = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='layout',
+                               default=None, blank=True, null=True)
+    header = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='headers',
+                               default=None, blank=True, null=True)
+    footer = models.ForeignKey(Block, on_delete=models.PROTECT, related_name='footers',
+                               default=None, blank=True, null=True)
 
     tags = models.ManyToManyField(PageTag, related_name='pages')
     categories = models.ManyToManyField(PageCategory, related_name='pages')

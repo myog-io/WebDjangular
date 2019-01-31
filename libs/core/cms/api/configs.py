@@ -1,7 +1,7 @@
 from django.conf.global_settings import LANGUAGES
 
 from webdjango.configs import CONFIG_HOME_PAGE, DEFAULT_FOOTER, DEFAULT_HEADER, DEFAULT_I18N, DEFAULT_SITE_TITLE, \
-    DEFAULT_TITLE_SEPARATOR, DEFAULT_TITLE_PLACEHOLDER
+    DEFAULT_TITLE_SEPARATOR, DEFAULT_TITLE_PLACEHOLDER, FAVICON
 from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput
 
 
@@ -108,6 +108,17 @@ class CMSCoreConfig:
             order=14,
             disabled=False,
             label="Site Title Placeholder",
+            validation=None,
+            wrapper_class="col-12",
+            group=GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=FAVICON,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="text",
+            order=15,
+            disabled=False,
+            label="Favicon",
             validation=None,
             wrapper_class="col-12",
             group=GROUP_SLUG,

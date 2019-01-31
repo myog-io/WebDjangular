@@ -97,7 +97,7 @@ class Cart(BaseModel):
 
     def discount(self):
         discounts = (line.total if line.total <
-                     ZERO_MONEY else ZERO_MONEY for line in self)
+                     ZERO_MONEY else ZERO_MONEY for line in self.items.all())
         return sum(discounts, ZERO_MONEY)
 
     @property
