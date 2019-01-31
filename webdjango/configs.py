@@ -3,6 +3,9 @@ DEFAULT_HEADER = 'default_header'
 DEFAULT_FOOTER = 'default_footer'
 DEFAULT_I18N = 'default_i18n'
 
+CUSTOM_STYLE = 'custom_style'
+CUSTOM_SCRIPT = 'custom_script'
+
 FAVICON = 'favicon'
 
 # SEO
