@@ -55,7 +55,6 @@ export class WDAConfig {
         // Ading Authorization None to Header to skip JWT AUTH on Public Requests
         this.http.get(this.init_url, {headers: {Authorization: 'none'}}).subscribe(
           (data: any) => {
-            console.log(data);
             this.populateWDAConfig(data.data);
             this.data = data.data;
             this.loading = false;

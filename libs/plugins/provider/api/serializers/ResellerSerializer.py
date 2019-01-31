@@ -4,6 +4,7 @@ from rest_framework_json_api.relations import ResourceRelatedField
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from libs.plugins.store.api.models.Order import Order
 
+
 class ResellerSerializer(WebDjangoSerializer):
     included_serializers = {
         'orders': 'libs.plugins.store.api.serializers.OrderSerializer.OrderSerializer',
