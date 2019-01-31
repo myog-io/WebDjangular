@@ -6,6 +6,8 @@ from ..models.PageRedirect import PageRedirect
 from ..utils import getClientUserCookie
 import json
 import urllib
+
+
 @receiver(pre_get_page)
 def redirect(sender, request, *args, **kwargs):
     if getClientUserCookie(request):
