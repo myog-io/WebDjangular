@@ -75,7 +75,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
     order = models.IntegerField(default=0)
     disabled = models.BooleanField(default=False)
     label = models.CharField(default=None)
-    select_options = JSONField(default=None)
+    options = JSONField(default=None)
     select_model = models.CharField(default=None)
     placeholder = models.CharField(default=None)
     validation = JSONField(default=None)
