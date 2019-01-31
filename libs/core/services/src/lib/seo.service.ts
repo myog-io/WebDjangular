@@ -34,7 +34,6 @@ export class SEOService {
     }
   }
 
-
   setTitleByPage(page: PageModel) {
 
     let title: string = '';
