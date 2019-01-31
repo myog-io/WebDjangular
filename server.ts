@@ -84,13 +84,11 @@ app.engine('html', (_, options, callback) => {
 var admin = express();
 
 app.set('view engine', 'html');
-admin.set('view engine', 'html');
-//app.set('views', DIST_FOLDER);
 app.set('views', clientAppServer());
+// Adding Serving Files static, we don't need any other way
+admin.set('view engine', 'html');
 admin.set('views',adminAppServer());
-
 admin.get('**', express.static(adminAppServer()));
-// All regular routes use the Universal engine
 admin.get('*', (req, res) => {
   res.sendFile(adminAppServer('index.html'))
 });
