@@ -13,7 +13,6 @@ import { ClientUserService } from "@core/services/src/lib/client-user.service";
 import { CityModel } from "@plugins/provider/src/lib/data";
 import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
 
-
 export interface CookieCart {
   token?: string;
 }
