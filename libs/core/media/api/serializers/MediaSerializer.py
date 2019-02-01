@@ -1,6 +1,6 @@
 from libs.core.media.api.models.Media import Media
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
-
+from webdjango.serializers.fields import FileField
 
 class MediaSerializer(WebDjangoSerializer):
     """
@@ -10,6 +10,7 @@ class MediaSerializer(WebDjangoSerializer):
         model = Media
         fields = '__all__'
 
+    file = FileField(max_length=None, allow_empty_file=False, use_url=False)
 
     def create(self, validated_data):
         # if total_chunks exists that is a chunked upload
