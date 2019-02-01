@@ -4,22 +4,45 @@
 
       <div class="row justify-content-md-center">
         <div class="col col-md-12">
-          <div class="row">
+          <div class="row" *ngIf="!providerCheckout.has_reseller">
             <div class="col pb-2">
               <span class="icon icon-pin"></span>
             </div>
           </div>
-          <h4 class="text-center text-black">ONDE VOCÊ ESTÁ?</h4>
+          <h4 class="text-center text-black" *ngIf="!providerCheckout.has_reseller">ONDE VOCÊ ESTÁ?</h4>
+          <h4 class="text-center text-black" *ngIf="providerCheckout.has_reseller">Página de assinatura para
+            <b>REVENDEDORES</b><br>
+          </h4>
           <p class="text-center subtitle mx-auto">
             Digite seu CEP e número de sua residência para
             consultar a disponibilidade dos nossos serviços.
           </p>
-
         </div>
       </div>
       <div class="row justify-content-md-center">
         <div class="col col-md-12">
-          <form [formGroup]="providerCheckout.formBeforeCheckout" (ngSubmit)="providerCheckout.onBeforeCheckoutSubmit()">
+          <form [formGroup]="providerCheckout.formBeforeCheckout"
+            (ngSubmit)="providerCheckout.onBeforeCheckoutSubmit()">
+             <div class="row" *ngIf="providerCheckout.has_reseller">
+              <div class="col">
+                <div class="form-group">
+                  <select class="form-control" formControlName="reseller">
+                    <option value="">Revendedor</option>
+                    <option *ngFor="let reseller of resellers | async" [value]="reseller.id">
+                      {{reseller.name}} <{{reseller.email}}>
+                    </option>
+                  </select>
+                  <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
+                          providerCheckout.formBeforeCheckout.controls['reseller'].errors">
+                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['reseller'].errors['required']"
+                      class="alert alert-danger" role="alert">
+                      Selecione um revendedor
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div class="row">
               <div class="col-12 col-md-6">

@@ -146,6 +146,7 @@ export class ProviderCheckoutService {
   public copying: boolean = false;
 
   private _condo: CondoModel;
+  public has_reseller: boolean = false;
 
   constructor(
     private datastore: WebAngularDataStore,
@@ -168,7 +169,8 @@ export class ProviderCheckoutService {
       condo: ['', null],
       condoNumber: ['', null],
       typeOfAccess: ['', [Validators.required]],
-      typeOfCustomer: ['', [Validators.required]]
+      typeOfCustomer: ['', [Validators.required]],
+      reseller: ['', []]
     });
 
     if (this.cartService.cart) {
@@ -181,9 +183,11 @@ export class ProviderCheckoutService {
     }
 
     this.activatedRoute.queryParams.subscribe((params => {
-        this.checkPreSelectedPlans(params);
-      })
-    );
+      if(params.hasOwnProperty('reseller')){
+        this.has_reseller = true;
+      }
+      this.checkPreSelectedPlans(params);
+    }));
   }
 
   restartProviderCheckout() {
@@ -269,6 +273,7 @@ export class ProviderCheckoutService {
           condoNumber: cart.extra_data.condo_number || '',
           typeOfAccess: cart.extra_data.plan_type_id || '',
           typeOfCustomer: cart.extra_data.customer_type || '',
+          reseller: cart.extra_data.reseller_id || ''
         });
       }
 
@@ -1031,6 +1036,7 @@ export class ProviderCheckoutService {
     if(this.cartService.getExtraData()) {
       extra_data = this.cartService.getExtraData();
     }
+    if(this.has_reseller) extra_data.reseller_id = this.formBeforeCheckout.get('reseller').value;
     if(!extra_data.hasOwnProperty('contractTime')) extra_data.contractTime = this.default_contract_time;
     if(!extra_data.hasOwnProperty('paymentType')) extra_data.paymentType = this.default_payment_type;
 
@@ -1042,7 +1048,7 @@ export class ProviderCheckoutService {
     extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
     extra_data.city_id = this.city.id;
     this.cartService.setExtraData(extra_data);
-
+    console.log(extra_data);
     this.updating_cart = true;
       this.cartService.updateCart().then(()=>{
         this.updating_cart = false;
