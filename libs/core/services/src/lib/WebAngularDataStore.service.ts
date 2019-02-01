@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model';
 import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
+import { EmailModel } from '@core/data/src/lib/models/Email.model';
 
 
 
@@ -68,6 +69,7 @@ const config: DatastoreConfig = {
     ContentType: ContentTypeModel,
     CoreConfigGroup: CoreConfigGroupModel,
     CoreConfigInput: CoreConfigInputModel,
+    Email: EmailModel,
     CoreConfig: CoreConfigModel,
     City: CityModel, // Provider
     PostalCodeRange: PostalCodeRangeModel, // Provider
