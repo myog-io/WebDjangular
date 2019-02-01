@@ -25,6 +25,7 @@ import {BlockFooterModel} from "@core/cms/src/lib/models/BlockFooter.model";
 import {BlockLayoutModel} from "@core/cms/src/lib/models/BlockLayout.model";
 import {PageTagModel} from "@core/cms/src/lib/models/PageTag.model";
 import {PageCategoryModel} from "@core/cms/src/lib/models/PageCategory.model";
+import { EmailModel } from '@core/data/src/lib/models/Email.model';
 
 
 const routes: Routes = [
@@ -160,6 +161,15 @@ const routes: Routes = [
           model: ThemeModel,
           title: "Theme",
           path: 'core_themes'
+        }
+      },
+      {
+        path: 'core_email',
+        loadChildren: () => ScaffoldModule,
+        data: {
+          model: EmailModel,
+          title: "Email Templates",
+          path: 'core_email'
         }
       },
       {

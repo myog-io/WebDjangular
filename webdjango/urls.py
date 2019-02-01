@@ -10,13 +10,14 @@ from django.contrib.staticfiles.views import serve
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from webdjango.sitemaps import PageSitemap, PostSitemap, index as sitemap_index, sitemap as sitemap_section
-from webdjango.views.AddressViewSet import AddressViewSet
-from webdjango.views.CoreConfigViewSet import CoreConfigGroupViewSet, \
+from .sitemaps import PageSitemap, PostSitemap, index as sitemap_index, sitemap as sitemap_section
+from .views.AddressViewSet import AddressViewSet
+from .views.CoreConfigViewSet import CoreConfigGroupViewSet, \
     CoreConfigInputViewSet
-from webdjango.views.CoreViewSet import AuthorViewSet, CoreConfigViewSet, \
+from .views.CoreViewSet import AuthorViewSet, CoreConfigViewSet, \
     PluginViewSet, ThemeViewSet, WebsiteViewSet
-from webdjango.views.InitViewSet import InitViewSet
+from .views.EmailViewSet import EmailViewSet
+from .views.InitViewSet import InitViewSet
 from django.views.decorators.cache import cache_page
 
 '''
@@ -36,6 +37,7 @@ schema_view = get_schema_view(
 '''
 
 router = DefaultRouter()
+router.register(r'core_email', EmailViewSet)
 router.register(r'core_author', AuthorViewSet)
 router.register(r'core_plugin', PluginViewSet)
 router.register(r'core_theme', ThemeViewSet)

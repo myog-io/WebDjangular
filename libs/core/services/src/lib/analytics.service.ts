@@ -24,8 +24,8 @@ export class AnalyticsService {
 
 
     this.wdaConfig.getCoreConfig('analytics_core').then((data) => {
-      // GOOGLE ANALYTICS
-      if(data.hasOwnProperty('ga_tracking_id') && data['ga_tracking_id'] ) {
+      
+      if(data && data.hasOwnProperty('ga_tracking_id') && data['ga_tracking_id'] ) {
         this.googleAnalytic = {
           trackingId: data['ga_tracking_id'],
           domain: data['ga_domain'] ? data['ga_domain'] : 'auto',
