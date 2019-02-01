@@ -64,6 +64,10 @@ export class CartItemModel extends AbstractModel {
 
   }
 
+  getTotal(){
+    return +this.total
+  }
+
   public toString = (): string => {
     return `${this.id}`;
   };

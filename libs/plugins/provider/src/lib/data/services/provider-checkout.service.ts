@@ -17,6 +17,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
 import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
 import {PlanTypeModel} from '../models/PlanType.model';
+import {WDAConfig} from "@core/services/src/lib/wda-config.service";
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -142,7 +143,7 @@ export class ProviderCheckoutService {
   public formBeforeCheckout: FormGroup;
   public formBeforeCheckoutSubmitted: boolean = false;
   public formBeforeCheckoutLoading: boolean = false;
-
+  public providerConfig = null;
   public copying: boolean = false;
 
   private _condo: CondoModel;
@@ -157,8 +158,12 @@ export class ProviderCheckoutService {
     public router: Router,
     public activatedRoute: ActivatedRoute,
     public location: Location,
+    public wdaConfig: WDAConfig,
     @Inject(DOCUMENT) private document: any
   ) {
+    this.wdaConfig.getCoreConfig('provider').then((data)=>{
+      this.providerConfig = data;
+    });
 
     this.city = this.clientUserService.clientUser.data['city'];
     this.addressFromCity(this.city);
