@@ -1,13 +1,13 @@
-import {Inject, Injectable, Optional} from '@angular/core'
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Inject, Injectable, Optional } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
-import {UrlSegment} from '@angular/router';
-import {WebAngularDataStore} from './WebAngularDataStore.service';
-import {JsonApiQueryData} from 'angular2-jsonapi';
-import {ClientUserService} from './client-user.service';
-import {Theme} from '@core/interfaces/src/lib/theme';
-import {PageModel} from '@core/cms/src/lib/models';
+import { UrlSegment } from '@angular/router';
+import { WebAngularDataStore } from './WebAngularDataStore.service';
+import { JsonApiQueryData } from 'angular2-jsonapi';
+import { ClientUserService } from './client-user.service';
+import { Theme } from '@core/interfaces/src/lib/theme';
+import { PageModel } from '@core/cms/src/lib/models';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,7 @@ export class WDAConfig {
       } else {
         this.loading = true;
         // Ading Authorization None to Header to skip JWT AUTH on Public Requests
-        this.http.get(this.init_url, {headers: {Authorization: 'none'}}).subscribe(
+        this.http.get(this.init_url, { headers: { Authorization: 'none' } }).subscribe(
           (data: any) => {
             this.populateWDAConfig(data.data);
             this.data = data.data;
@@ -129,29 +129,33 @@ export class WDAConfig {
 
   public applyCustomStyle() {
     let custom_style: string = '';
-    if (this.core_config.hasOwnProperty('cms_core')) {
-      if (this.core_config['cms_core']['custom_style']) {
-        custom_style = this.core_config['cms_core']['custom_style'];
+    if (this.core_config && document) {
+      if (this.core_config.hasOwnProperty('cms_core')) {
+        if (this.core_config['cms_core']['custom_style']) {
+          custom_style = this.core_config['cms_core']['custom_style'];
+        }
       }
-    }
-    if (custom_style) {
-      let style: HTMLStyleElement = document.createElement('style');
-      style.innerHTML = custom_style;  // TODO: minify .replace(/\t?\n?\s?/gi, '');
-      document.head.appendChild(style);
+      if (custom_style) {
+        let style: HTMLStyleElement = document.createElement('style');
+        style.innerHTML = custom_style;  // TODO: minify .replace(/\t?\n?\s?/gi, '');
+        document.head.appendChild(style);
+      }
     }
   }
 
   public applyCustomScript() {
     let custom_script: string = '';
-    if (this.core_config.hasOwnProperty('cms_core')) {
-      if (this.core_config['cms_core']['custom_script']) {
-        custom_script = this.core_config['cms_core']['custom_script'];
+    if (this.core_config && document) {
+      if (this.core_config.hasOwnProperty('cms_core')) {
+        if (this.core_config['cms_core']['custom_script']) {
+          custom_script = this.core_config['cms_core']['custom_script'];
+        }
       }
-    }
-    if (custom_script) {
-      let script: HTMLScriptElement = document.createElement('script');
-      script.innerHTML = custom_script; // TODO: minify .replace(/\t?\n?\s?/gi, '');
-      document.body.appendChild(script);
+      if (custom_script) {
+        let script: HTMLScriptElement = document.createElement('script');
+        script.innerHTML = custom_script; // TODO: minify .replace(/\t?\n?\s?/gi, '');
+        document.body.appendChild(script);
+      }
     }
   }
 
@@ -188,16 +192,16 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null, {include: this.include}, new HttpHeaders({Authorization: 'none'}),
+      this.datastore.findRecord(PageModel, null, { include: this.include }, new HttpHeaders({ Authorization: 'none' }),
         this.get_home_url).subscribe(
-        (page: PageModel) => {
-          page.setHome();
-          resolve(page);
-        },
-        (error: any) => {
-          reject(error);
-        }
-      )
+          (page: PageModel) => {
+            page.setHome();
+            resolve(page);
+          },
+          (error: any) => {
+            reject(error);
+          }
+        )
     });
   }
 
@@ -205,15 +209,15 @@ export class WDAConfig {
     return new Promise((resolve, reject) => {
 
       this.datastore.findRecord(PageModel,
-        null, {include: this.include}, new HttpHeaders({Authorization: 'none'}),
+        null, { include: this.include }, new HttpHeaders({ Authorization: 'none' }),
         this.get_page_url.replace('#path#', path.join('|'))).subscribe(
-        (page: PageModel) => {
-          resolve(page);
-        },
-        (error: any) => {
-          reject(error);
-        }
-      )
+          (page: PageModel) => {
+            resolve(page);
+          },
+          (error: any) => {
+            reject(error);
+          }
+        )
     });
   }
 
@@ -222,7 +226,7 @@ export class WDAConfig {
       this.datastore.findAll(PageModel, {
         slug: errorCode,
         include: this.include
-      }, new HttpHeaders({Authorization: 'none'})).subscribe(
+      }, new HttpHeaders({ Authorization: 'none' })).subscribe(
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           let page: PageModel = models[0];
