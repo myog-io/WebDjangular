@@ -56,7 +56,7 @@ INSTALLED_APPS += [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'webdjangular',
         'USER': 'root',
         'PASSWORD': '#######',
