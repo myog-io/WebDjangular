@@ -14,6 +14,9 @@ class StoreEmailConfig():
     NEW_ACCCOUNT = 'new_account'
     ORDER_UPDATE = 'order_update'
     ORDER_CANCELED = 'order_canceled'
+    ORDER_FULLFILMENT = 'order_fullfilment'
+    ORDER_FULLFILMENT_UPDATE = 'order_fullfilment_update'
+    PAYMENT_CONFIRMATION = 'payment_confirmation'
 
     INPUTS = [
         CoreConfigInput(
