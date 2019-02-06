@@ -36,7 +36,7 @@ class Website(BaseModel):
 
     @staticmethod
     def get_current_website(request=None):
-        if request.website:
+        if request and request.website:
             return request.website
         try:
             return Website.objects.first()
