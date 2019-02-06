@@ -14,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: 'cities',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: CityModel,
           title: 'Cities',
@@ -23,7 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'page-redirect',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PageRedirectModel,
           title: 'Redirects',
@@ -32,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'condo',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: CondoModel,
           title: 'Condos',
@@ -41,7 +41,7 @@ const routes: Routes = [
       },
       {
         path: 'plan-type',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PlanTypeModel,
           title: 'Plan Types',
@@ -50,7 +50,7 @@ const routes: Routes = [
       },
       {
         path: 'reseller',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: ResellerModel,
           title: 'Resellers',
@@ -59,7 +59,7 @@ const routes: Routes = [
       },
       {
         path: 'channel',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: ChannelModel,
           title: 'Channels',

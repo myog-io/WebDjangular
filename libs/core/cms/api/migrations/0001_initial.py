@@ -8,33 +8,13 @@ from django.db import migrations, models
 import webdjango.models.TranslationModel
 
 
-def init_migrations(apps, schema_editor):
-    from libs.core.cms.api.models.Page import Page
-    from libs.core.cms.api.models.Block import Block
-    from libs.core.cms.api.configs import CMSCoreConfig
-    from webdjango.models.Core import CoreConfig, Website
-    from webdjango.configs import CONFIG_HOME_PAGE, DEFAULT_FOOTER, DEFAULT_HEADER
-
-    website = Website.objects.create(
-        domain="http://localhost:4200/", code='default')
-
-    header = Block.objects.create(
-        title="Header", slug="header", content="<nav>Header</nav>")
-    footer = Block.objects.create(
-        title="Footer", slug="footer", content="<footer>Footer</footer>")
-
-    page = Page.objects.create(
-        title="Home", slug="Home", content="<h1>Hello World!</h1>", header=header, footer=footer)
-
-    CoreConfig.write(CMSCoreConfig.GROUP_SLUG, {
-        CONFIG_HOME_PAGE: page.pk, DEFAULT_FOOTER: footer.pk, DEFAULT_HEADER: header.pk}, website=website)
 
 
 class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('webdjango', '0002_auto_20181222_2028'),
+        ('webdjango', '0007_email'),
 
     ]
 
@@ -118,5 +98,5 @@ class Migration(migrations.Migration):
                 'ordering': ['-created'],
             },
         ),
-        migrations.RunPython(init_migrations)
+        
     ]

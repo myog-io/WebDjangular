@@ -4,18 +4,12 @@ import {NgModule} from '@angular/core';
 import {AdminComponent} from './admin.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 
-import {CoreConfigGroupModule} from './core-config-group/core-config-group.module';
 
 import {AdminImportComponent} from './export-import/import/import.component';
 import {AdminExportComponent} from './export-import/export/export.component';
-import {ScaffoldModule} from '@core/builder/src/lib/scaffold/scaffold.module';
 import {GroupModel, UserModel} from '@core/users/src/lib/models';
-import {CoreMediaModule} from '@core/media/src/lib/core-media.module';
 import {FormModel} from '@core/forms/src/lib/models';
 import {CoreWebsiteModel, PluginModel, ThemeModel} from '@core/data/src/lib/models';
-import {MenuBuilderModule} from '@core/cms/src/lib/menu-builder/menu_builder.module';
-import {PluginProviderAdminModule} from '@plugins/provider/src/lib/admin/provider-admin.module';
-import {PluginStoreAdminModule} from '@plugins/store/src/lib/admin/store-admin.module';
 import {PageStaticModel} from "@core/cms/src/lib/models/PageStatic.model";
 import {PagePostModel} from "@core/cms/src/lib/models/PagePost.model";
 import {BlockHeaderModel} from "@core/cms/src/lib/models/BlockHeader.model";
@@ -39,7 +33,7 @@ const routes: Routes = [
       },
       {
         path: 'user',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: UserModel,
           title: "Users",
@@ -48,7 +42,7 @@ const routes: Routes = [
       },
       {
         path: 'group',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: GroupModel,
           title: "Groups",
@@ -57,11 +51,11 @@ const routes: Routes = [
       },
       {
         path: 'media',
-        loadChildren: () => CoreMediaModule,
+        loadChildren: '@core/media/src/lib/core-media.module#CoreMediaModule',
       },
       {
         path: 'posts',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PagePostModel,
           title: "Post",
@@ -70,7 +64,7 @@ const routes: Routes = [
       },
       {
         path: 'pages',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PageStaticModel,
           title: "Page",
@@ -82,7 +76,7 @@ const routes: Routes = [
         children: [
           {
             path: 'headers',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: BlockHeaderModel,
               title: "Headers",
@@ -91,7 +85,7 @@ const routes: Routes = [
           },
           {
             path: 'layouts',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: BlockLayoutModel,
               title: "Layouts",
@@ -100,7 +94,7 @@ const routes: Routes = [
           },
           {
             path: 'footers',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: BlockFooterModel,
               title: "Footers",
@@ -109,7 +103,7 @@ const routes: Routes = [
           },
           {
             path: 'widget-holders',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: BlockWidgetHolderModel,
               title: "Widget-Holders",
@@ -118,7 +112,7 @@ const routes: Routes = [
           },
           {
             path: 'custom',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: BlockSimpleModel,
               title: "Custom",
@@ -129,7 +123,7 @@ const routes: Routes = [
       },
       {
         path: 'forms',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: FormModel,
           title: "Form",
@@ -138,7 +132,7 @@ const routes: Routes = [
       },
       {
         path: 'page-tags',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PageTagModel,
           title: "Tags",
@@ -147,7 +141,7 @@ const routes: Routes = [
       },
       {
         path: 'page-categories',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PageCategoryModel,
           title: "Categories",
@@ -156,7 +150,7 @@ const routes: Routes = [
       },
       {
         path: 'core_themes',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: ThemeModel,
           title: "Theme",
@@ -165,7 +159,7 @@ const routes: Routes = [
       },
       {
         path: 'core_email',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: EmailModel,
           title: "Email Templates",
@@ -174,7 +168,7 @@ const routes: Routes = [
       },
       {
         path: 'core_plugins',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PluginModel,
           title: "Plugin",
@@ -183,7 +177,7 @@ const routes: Routes = [
       },
       {
         path: 'core_websites',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: CoreWebsiteModel,
           title: 'Websites',
@@ -192,20 +186,20 @@ const routes: Routes = [
       },
       {
         path: 'menu_builder',
-        loadChildren: () => MenuBuilderModule,
+        loadChildren: '@core/cms/src/lib/menu-builder/menu_builder.module#MenuBuilderModule',
       },
 
       {
         path: '',
-        loadChildren: () => PluginProviderAdminModule,
+        loadChildren: '@plugins/provider/src/lib/admin/provider-admin.module#PluginProviderAdminModule',
       },
       {
         path: '',
-        loadChildren: () => PluginStoreAdminModule,
+        loadChildren: '@plugins/store/src/lib/admin/store-admin.module#PluginStoreAdminModule',
       },
       {
         path: 'core_config_group/:id',
-        loadChildren: () => CoreConfigGroupModule
+        loadChildren: './core-config-group/core-config-group.module#CoreConfigGroupModule'
       },
       {
         path: 'import-data',
