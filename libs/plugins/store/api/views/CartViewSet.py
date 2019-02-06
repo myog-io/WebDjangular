@@ -15,6 +15,7 @@ from ..utils.CartUtils import cart_has_product, create_order, apply_all_cart_rul
 from webdjango.filters import WebDjangoFilterSet
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
+from ..emails import send_order_confirmation
 
 
 class CartTermFilter(WebDjangoFilterSet):
@@ -103,7 +104,7 @@ class CartViewSet(ModelViewSet):
             raise ValidationError('Please Review your Cart')
         cart.delete()
         order.events.create(event_type=OrderEventTypes.PLACED)
-        # send_order_confirmation.delay(order.pk)
+        send_order_confirmation.delay(order.pk)
         # order.events.create(
         #    event_type=OrderEventTypes.EMAIL_SENT.value,
         #    parameters={

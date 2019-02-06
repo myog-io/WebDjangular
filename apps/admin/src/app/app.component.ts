@@ -1,14 +1,10 @@
 /**
  * @license
- * Copyright Akveo. All Rights Reserved.
+ * Copyright MyOG. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { Component, OnInit } from '@angular/core';
-
 import { Router } from "@angular/router";
-import { AnalyticsService } from '@core/services/src/lib/analytics.service';
-import { WDAConfig } from '@core/services/src/lib/wda-config.service';
-
 
 
 @Component({
@@ -17,13 +13,11 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private wdaconfig: WDAConfig,
-    private router: Router,
-    private analytics: AnalyticsService, ) {
+  constructor(private router: Router ) {
 
   }
 
   ngOnInit(): void {
-    this.analytics.trackPageViews();
+
   }
 }

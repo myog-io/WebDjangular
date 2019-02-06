@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {ProviderCheckoutService} from "../../../data/services/provider-checkout.service";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PluginProviderDialogComponent } from '../../dialog.component';
+import { BlockModel } from '@core/cms/src/lib/models';
 
 
 
@@ -14,7 +15,7 @@ import { PluginProviderDialogComponent } from '../../dialog.component';
 export class PluginProviderCheckoutSummaryComponent implements OnInit {
 
     providerCheckout: ProviderCheckoutService;
-
+    @Input() custom_block: BlockModel;
     constructor(
         providerCheckout: ProviderCheckoutService,
         //protected dialogRef: NbDialogRef<any>,
@@ -26,6 +27,7 @@ export class PluginProviderCheckoutSummaryComponent implements OnInit {
     }
 
     ngOnInit() {
+       
     }
 
     submit() {

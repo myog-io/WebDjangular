@@ -1,12 +1,14 @@
 from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput
 
+
 class EmailCoreConfig():
     CONFIG_EMAIL_OPTION_SMTP = 'Smtp'
     CONFIG_EMAIL_OPTION_MAILGUN = 'Mailgun'
     CONFIG_EMAIL_OPTIONS = [
-        {'value':CONFIG_EMAIL_OPTION_SMTP, 'label':'Custom SMTP'},
-        {'value':CONFIG_EMAIL_OPTION_MAILGUN, 'label':'Mailgun API'}
+        {'id': CONFIG_EMAIL_OPTION_SMTP, 'name': 'Custom SMTP'},
+        {'id': CONFIG_EMAIL_OPTION_MAILGUN, 'name': 'Mailgun API'}
     ]
+    CONFIG_EMAIL_LOGO = 'email_logo'
     CONFIG_EMAIL_TYPE = 'email_type'
 
     CONFIG_USERNAME = 'email_username'
@@ -19,8 +21,8 @@ class EmailCoreConfig():
     CONFIG_API_KEY = 'email_api_key'
     CONFIG_DOMAIN = 'email_domain'
     CONFIG_SECURITY_OPTIONS = [
-        {'value':'tls', 'label':'TLS'},
-        {'value':'ssl', 'label':'SSL'},
+        {'id': 'tls', 'name': 'TLS'},
+        {'id': 'ssl', 'name': 'SSL'},
     ]
 
     EMAIL_CONFIG_GROUP_SLUG = 'email_config'
@@ -32,16 +34,29 @@ class EmailCoreConfig():
 
     EMAIL_CONFIG_INPUTS = [
         CoreConfigInput(
+            id=CONFIG_EMAIL_LOGO,
+            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            input_type="text",
+            order=0,
+            disabled=False,
+            label="Email Default Logo",
+            options=CONFIG_EMAIL_OPTIONS,
+            placeholder="/path/to/the/logo.png",
+            validation=None,
+            wrapper_class="col-4",
+            group=EMAIL_CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
             id=CONFIG_EMAIL_TYPE,
             field_type=CoreConfigInput.FIELD_TYPE_SELECT,
             input_type="text",
             order=0,
             disabled=False,
             label="Email Type",
-            select_options=CONFIG_EMAIL_OPTIONS,
+            options=CONFIG_EMAIL_OPTIONS,
             placeholder="Email Types",
             validation=None,
-            wrapper_class="col-6",
+            wrapper_class="col-4",
             group=EMAIL_CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(
@@ -51,10 +66,10 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="Test Email To",
-            select_options=None,
+            options=None,
             placeholder="your@email_test.com",
             validation=None,
-            wrapper_class="col-6",
+            wrapper_class="col-4",
             group=EMAIL_CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(
@@ -64,7 +79,7 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="Email From",
-            select_options=None,
+            options=None,
             placeholder="email@from.com",
             validation=None,
             wrapper_class="col-6",
@@ -77,13 +92,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="SMTP Username",
-            select_options=None,
+            options=None,
             placeholder="Username",
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_SMTP]
             }
         ),
         CoreConfigInput(
@@ -93,13 +108,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="SMTP Password",
-            select_options=None,
+            options=None,
             placeholder="Password",
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_SMTP]
             }
         ),
         CoreConfigInput(
@@ -109,13 +124,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="Host",
-            select_options=None,
+            options=None,
             placeholder="smtp.yourdomain.com",
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_SMTP]
             }
         ),
         CoreConfigInput(
@@ -125,13 +140,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="SMTP Port",
-            select_options=None,
+            options=None,
             placeholder="465",
             validation=None,
             wrapper_class="col-3",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_SMTP]
             }
         ),
         CoreConfigInput(
@@ -141,13 +156,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="SMTP Security",
-            select_options=CONFIG_SECURITY_OPTIONS,
+            options=CONFIG_SECURITY_OPTIONS,
             placeholder="None",
             validation=None,
             wrapper_class="col-3",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_SMTP]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_SMTP]
             }
         ),
         CoreConfigInput(
@@ -157,13 +172,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="API Key",
-            select_options=None,
+            options=None,
             placeholder="Api Key",
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_MAILGUN]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_MAILGUN]
             }
         ),
         CoreConfigInput(
@@ -173,13 +188,13 @@ class EmailCoreConfig():
             order=0,
             disabled=False,
             label="API Domain",
-            select_options=None,
+            options=None,
             placeholder="Api Domain",
             validation=None,
             wrapper_class="col-6",
             group=EMAIL_CONFIG_GROUP_SLUG,
             conditional={
-                "==":[{'var':CONFIG_EMAIL_TYPE},CONFIG_EMAIL_OPTION_MAILGUN]
+                "==": [{'var': CONFIG_EMAIL_TYPE}, CONFIG_EMAIL_OPTION_MAILGUN]
             }
         ),
 

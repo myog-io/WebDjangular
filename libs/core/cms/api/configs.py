@@ -1,13 +1,13 @@
 from django.conf.global_settings import LANGUAGES
 
 from webdjango.configs import CONFIG_HOME_PAGE, DEFAULT_FOOTER, DEFAULT_HEADER, DEFAULT_I18N, DEFAULT_SITE_TITLE, \
-    DEFAULT_TITLE_SEPARATOR, DEFAULT_TITLE_PLACEHOLDER, FAVICON
+    DEFAULT_TITLE_SEPARATOR, DEFAULT_TITLE_PLACEHOLDER, FAVICON, GOOGLE_MAPS_API_KEY, CUSTOM_STYLE, CUSTOM_SCRIPT
 from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput
 
 
 class CMSCoreConfig:
     GROUP_SLUG = 'cms_core'
-    GOOGLE_MAPS_API_KEY = 'google_maps_api_key'
+
     GROUP = CoreConfigGroup(
         id=GROUP_SLUG,
         title="Core Website",
@@ -39,7 +39,7 @@ class CMSCoreConfig:
             validation=None,
             wrapper_class="col-6",
             group=GROUP_SLUG,
-            select_options={ 'block_class': 'header'},
+            options={'block_class': 'header'},
         ),
         CoreConfigInput(
             id=DEFAULT_FOOTER,
@@ -52,7 +52,7 @@ class CMSCoreConfig:
             placeholder="Select your Default Footer",
             validation=None,
             wrapper_class="col-6",
-            select_options={ 'block_class': 'footer'},
+            options={'block_class': 'footer'},
             group=GROUP_SLUG,
         ),
         CoreConfigInput(
@@ -62,7 +62,7 @@ class CMSCoreConfig:
             order=0,
             disabled=False,
             label="Default Language",
-            select_options=LANGUAGES,
+            options=LANGUAGES,
             placeholder="Select your Default Website Language",
             validation=None,
             wrapper_class="col-12",
@@ -115,10 +115,35 @@ class CMSCoreConfig:
         CoreConfigInput(
             id=FAVICON,
             field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+
             input_type="text",
             order=15,
             disabled=False,
             label="Favicon",
+            validation=None,
+            wrapper_class="col-12",
+            group=GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CUSTOM_STYLE,
+            field_type=CoreConfigInput.FIELD_TYPE_CODE_EDITOR,
+            options={'language': 'css'},
+            input_type="text",
+            order=16,
+            disabled=False,
+            label="Custom Style",
+            validation=None,
+            wrapper_class="col-12",
+            group=GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CUSTOM_SCRIPT,
+            field_type=CoreConfigInput.FIELD_TYPE_CODE_EDITOR,
+            options={'language': 'javascript'},
+            input_type="text",
+            order=17,
+            disabled=False,
+            label="Custom Script",
             validation=None,
             wrapper_class="col-12",
             group=GROUP_SLUG,

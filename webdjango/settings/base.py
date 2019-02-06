@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'libs.core.users.api',
     'libs.core.cms.api',
+    'libs.core.analytics.api',
     'libs.core.media.api',
     ##'libs.core.forms.api',
     'libs.plugins.store.api',

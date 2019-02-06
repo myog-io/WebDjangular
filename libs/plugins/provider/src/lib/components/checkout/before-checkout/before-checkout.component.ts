@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProviderCheckoutService } from "../../../data/services/provider-checkout.service";
-import { Subscription, of, Observable } from 'rxjs';
-import { CondoModel, CityModel } from '../../../data';
-import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
-import { FormControl, AbstractControl, Validators } from '@angular/forms';
-import { PlanTypeModel } from '../../../data/models/PlanType.model';
-import { HttpHeaders } from '@angular/common/http';
-import { JsonApiQueryData } from 'angular2-jsonapi';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ProviderCheckoutService} from "../../../data/services/provider-checkout.service";
+import {Observable, Subscription} from 'rxjs';
+import {CondoModel, ResellerModel} from '../../../data';
+import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
+import {AbstractControl, Validators} from '@angular/forms';
+import {PlanTypeModel} from '../../../data/models/PlanType.model';
+import {HttpHeaders} from '@angular/common/http';
+import {JsonApiQueryData} from 'angular2-jsonapi';
 
 
 @Component({
@@ -22,6 +22,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, On
   subPostalCode: Subscription;
   condos: CondoModel[];
   show_condos = false;
+  resellers: Observable<ResellerModel[]>;
   plan_types: Observable<PlanTypeModel[]>;
   plan_types_list: PlanTypeModel[];
 
@@ -48,15 +49,24 @@ export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, On
       });
     });
 
-
-
-    this.plan_types = this.datastore.findAll(PlanTypeModel, null, new HttpHeaders({ 'Authorization': 'none' })).map(
+    this.plan_types = this.datastore.findAll(PlanTypeModel, null, new HttpHeaders({'Authorization': 'none'})).map(
       (query) => {
         this.plan_types_list = query.getModels();
         this.checkCondos(this.plan_types_list.find((type) => type.id == this.providerCheckout.formBeforeCheckout.get('typeOfAccess').value));
         return this.plan_types_list
       }
     );
+    if (this.providerCheckout.has_reseller) {
+
+      this.providerCheckout.formBeforeCheckout.get('reseller').setValidators([Validators.required]);
+      this.providerCheckout.formBeforeCheckout.get('reseller').updateValueAndValidity({emitEvent: false});
+      this.resellers = this.datastore.findAll(ResellerModel, null,
+        new HttpHeaders({'Authorization': 'none'})).map((query: JsonApiQueryData<ResellerModel>) => {
+          return query.getModels();
+        }
+      )
+    }
+
   }
 
   checkCondos(plan_type: PlanTypeModel) {
@@ -74,13 +84,15 @@ export class PluginProviderCheckoutBeforeCheckoutComponent implements OnInit, On
       }
     }
   }
+
   public findCondos() {
     this.datastore.findAll(
       CondoModel,
-      { city__id: this.providerCheckout.city.id },
-      new HttpHeaders({ 'Authorization': 'none' }),
+      {city__id: this.providerCheckout.city.id},
+      new HttpHeaders({'Authorization': 'none'}),
     ).subscribe((query: JsonApiQueryData<CondoModel>) => this.condos = query.getModels())
   }
+
   cleanAndRemoveValudation(control: AbstractControl) {
     control.clearValidators();
     control.setValue('');

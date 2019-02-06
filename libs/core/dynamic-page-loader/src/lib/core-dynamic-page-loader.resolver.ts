@@ -18,6 +18,8 @@ export class CoreDynamicPageLoaderResolver implements Resolve<PageModel|ErrorRes
 
   constructor(public router: Router,
               public wdaConfig: WDAConfig) {
+    this.wdaConfig.applyCustomStyle();
+    this.wdaConfig.applyCustomScript();
   }
 
   resolve(route: ActivatedRouteSnapshot,

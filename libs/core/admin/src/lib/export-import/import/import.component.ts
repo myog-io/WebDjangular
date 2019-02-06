@@ -109,7 +109,8 @@ export class AdminImportComponent implements OnInit, OnDestroy {
                   resolve(true);
 
                 } else {
-                  let newMedia = this.datastore.createRecord(MediaModel, { file: data[key] });
+                  let newMedia = this.datastore.
+                  createRecord(MediaModel, { file: data[key] });
                   newMedia.save().subscribe((media: any) => {
                     entry[keys[0]] = media.safeFileUrl;
                     this.uploadedFiles[data[key]] = media.safeFileUrl;

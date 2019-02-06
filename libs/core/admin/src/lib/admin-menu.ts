@@ -183,6 +183,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fas fa-cog',
     children: [
       {
+        title: 'Emails',
+        link: '/core_email',
+        data: {
+          permission: [
+            {label: 'webdjango', action: 'view_email'},
+          ]
+        }
+      },
+      {
         title: 'Themes',
         link: '/core_themes',
         data: {

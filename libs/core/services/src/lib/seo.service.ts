@@ -22,7 +22,6 @@ export class SEOService {
       this.cms_core = data;
       this.setFavicon();
     });
-
   }
 
   setFavicon() {
@@ -34,7 +33,6 @@ export class SEOService {
       document.head.appendChild(this.linkFavicon);
     }
   }
-
 
   setTitleByPage(page: PageModel) {
 
