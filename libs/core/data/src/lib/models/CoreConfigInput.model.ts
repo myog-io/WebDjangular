@@ -54,6 +54,9 @@ export class CoreConfigInputModel extends AbstractModel {
   @Attribute()
   value: any;
 
+  @Attribute()
+  add_tags: boolean;
+
   @NestedAttribute()
   conditional: any;
 
@@ -83,7 +86,8 @@ export class CoreConfigInputModel extends AbstractModel {
       inputType: this.input_type,
       display: true,
       conditional: this.conditional,
-      multiple: this.input_type === 'multiple', 
+      multiple: this.input_type === 'multiple',
+      addTags: this.add_tags,
     };
   }
 }

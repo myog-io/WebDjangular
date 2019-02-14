@@ -9,9 +9,8 @@ from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
 from libs.plugins.store.api import defaults
-from libs.plugins.store.api.models.Product import Product
-from libs.plugins.store.api.models.Cart import CartItem
-from webdjango.models.Address import AddressType
+from webdjango.models.Core import Website
+from webdjango.models.Address import Address, AddressType
 from webdjango.serializers.AddressSerializer import AddressSerializer
 from libs.plugins.store.api.serializers.CartSerializer import CartItemSerializer
 from libs.plugins.store.api.serializers.ProductSerializer import ProductSerializer
@@ -372,6 +371,8 @@ def add_item_to_order(order, item: CartItem):
         unit_cost=item.cost,
         unit_base_price=item.base_price,
         unit_price=item.price,
+        product=item.product,
+        data=item.data,
         tax_rate='0.0',  # TODO: Get Correct Tax Rate
     )
     # TODO: Alocate Stock
@@ -407,7 +408,8 @@ def create_order(cart, request):
         order_data.update({
             'total': cart.total,
             'subtotal': cart.subtotal,
-            'taxes': cart.taxes
+            'taxes': cart.taxes,
+            'website': Website.get_current_website(request=request)
         })
         order = Order.objects.create(**order_data)
 

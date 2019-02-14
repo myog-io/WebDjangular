@@ -9,7 +9,7 @@ from webdjango.signals.CoreSignals import config_group_register, config_register
 
 class AbstractCoreConfigModel(models.Model):
     id = models.SlugField(null=False, primary_key=True)
-
+    
     class Meta:
         abstract = True
 
@@ -82,6 +82,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
     wrapper_class = models.CharField(default=None)
     group = models.SlugField(null=False)
     conditional = JSONField(default=None)
+    add_tags = models.BooleanField(default=False)
 
     @property
     def value(self):

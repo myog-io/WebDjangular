@@ -10,9 +10,15 @@ from prices import Money
 
 from libs.core.users.api.models.User import User
 from libs.plugins.store.api import defaults
+from libs.plugins.store.api.models.Product import Product
 from libs.plugins.store.api.models.Payment import ChargeStatus
 from webdjango.models.AbstractModels import BaseModel
-from ..utils.Taxes import ZERO_TAXED_MONEY
+from webdjango.models.Address import Address
+from webdjango.models.Core import Website
+from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
+from prices import Money
+from enum import Enum
+from libs.plugins.store.api import defaults
 
 
 class OrderStatus:
@@ -137,9 +143,11 @@ class OrderLine(BaseModel):
     product_sku = models.CharField(max_length=32)
     
     is_shipping_required = models.BooleanField()
-
+    product = models.ForeignKey(
+        Product, on_delete=None, related_name='order_line', null=True)
     quantity = models.IntegerField(default=1)
     quantity_fulfilled = models.IntegerField(default=0)
+    data = JSONField(blank=True)
 
     unit_cost = MoneyField(
         'cost', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
@@ -221,8 +229,8 @@ class OrderQueryset(models.QuerySet):
 class Order(BaseModel):
     order_num = models.CharField(max_length=100, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', default=None, null=True,
-                             editable=False)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', default=None, null=True, editable=False)
+    website = models.ForeignKey(Website, on_delete=models.SET , related_name='order', default=1)
     user_email = models.EmailField(blank=True, default='', editable=False)
     extra_data = JSONField(blank=True)
     security_data = JSONField(blank=True)
@@ -278,7 +286,7 @@ class Order(BaseModel):
         return total_paid.gross.amount > 0
 
     def get_user_current_email(self):
-        return self.user.email if self.user else self.user_email
+        return self.user and self.user.email or self.user_email
 
     def _total_paid(self):
         payments = self.payments.filter(
@@ -301,7 +309,9 @@ class Order(BaseModel):
         return '#%d' % (self.id,)
 
     def get_absolute_url(self):
-        return reverse('order:details', kwargs={'token': self.token})
+        # TODO: Return the correct Frontend order link
+        return "ORDER_LINK"
+        # return reverse('order:details', kwargs={'token': self.token})
 
     def get_last_payment(self):
         return max(self.payments.all(), default=None, key=attrgetter('pk'))

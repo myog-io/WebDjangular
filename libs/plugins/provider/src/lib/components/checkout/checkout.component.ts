@@ -21,14 +21,11 @@ export class PluginProviderCheckoutComponent implements OnInit {
     public providerCheckout: ProviderCheckoutService,
     private datastore: WebAngularDataStore,
   ) {
-
+    
   }
 
   ngOnInit() {
-    console.log(this.reseller);
-    console.log(this.cutom_block_id);
     this.providerCheckout.has_reseller = this.reseller;
-
     if (this.cutom_block_id) {
       this.datastore.findRecord(BlockModel, 
         this.cutom_block_id, { fields: 'content,id' }, 

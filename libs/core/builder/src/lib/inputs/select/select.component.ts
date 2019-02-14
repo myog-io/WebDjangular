@@ -45,6 +45,7 @@ export class BuilderFormSelectComponent implements BuilderFormField, OnInit {
     return this.config.model && this.config.formType == FormGroup;
   }
   addTagPromise(name) {
+    console.log(name,"HERE????");
     return new Promise((resolve) => {
       this.loading = true;
       resolve({ id: this.options.length, name: name, valid: true });
