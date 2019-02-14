@@ -12,6 +12,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import DecimalField
 
 from libs.plugins.store.api import defaults
+from libs.plugins.store.api.models.Product import Product
 from webdjango.models.Address import Address, AddressType
 from webdjango.serializers.AddressSerializer import AddressSerializer
 from webdjango.utils.JsonLogic import jsonLogic
@@ -348,16 +349,28 @@ def _process_terms_data_for_order(cart):
     }
 
 
-def add_item_to_order(order, item):
+def add_item_to_order(order, item: Product):
     """Add total_quantity of variant to order.
     Returns an order line the variant was added to.
     By default, raises InsufficientStock exception if  quantity could not be
     fulfilled.
     """
+
+    product_data = {
+        'sku': item.sku,
+        'name': item.name,
+        'description': item.description,
+        'weight': item.weight,
+        'shipping_width': item.shipping_width,
+        'shipping_height': item.shipping_height,
+        'shipping_depth': item.shipping_depth,
+        'product_class': item.product_class,
+        'product_type': item.product_type,
+        'data': item.data,
+    }
+
     line = order.lines.create(
-        product_name=item.name,
-        product_sku=item.sku,
-        is_shipping_required=item.is_shipping_required,
+        product_data=product_data,
         quantity=item.quantity,
         quantity_fulfilled=0,
         unit_cost=item.cost,

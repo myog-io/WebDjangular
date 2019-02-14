@@ -40,9 +40,11 @@ export interface SmartTableSettingsAttr {
 export interface SmartTableActions {
   columnTitle?: string;
   add?: boolean;
+  view?: boolean;
   edit?: boolean;
   delete?: boolean;
   position?: 'left' | 'right';
+  custom?: any
 }
 export interface SmartTableSettings {
   editable?: boolean;
@@ -55,8 +57,9 @@ export interface SmartTableSettings {
   noDataMessage?: string,
   attr?: SmartTableSettingsAttr,
   actions?: SmartTableActions,
-  edit?: any;
   add?: any;
+  view?: any;
+  edit?: any;
   delete?: any;
   pager?: any;
   rowClassFunction?: Function

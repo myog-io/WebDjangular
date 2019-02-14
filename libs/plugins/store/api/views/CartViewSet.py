@@ -66,6 +66,7 @@ class CartFilter(WebDjangoFilterSet):
             'status': ['exact']
         }
 
+
 class CartViewSet(ModelViewSet):
     """
     Handles:
@@ -195,7 +196,6 @@ class CartItemViewSet(ModelViewSet):
                 
 
         item.delete()
-
 
 
 class CartItemRelationshipView(RelationshipView):

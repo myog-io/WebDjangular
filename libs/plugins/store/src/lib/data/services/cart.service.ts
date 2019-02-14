@@ -33,7 +33,6 @@ export class CartService {
     private datastore: WebAngularDataStore,
     private clientUserService: ClientUserService,
   ) {
-    this.cookieService.set(this.cart_cookie_name, JSON.stringify({token: '302c5fcb-d455-4b1d-af9f-bad741854dc8'}));
 
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {

@@ -1,18 +1,18 @@
 from decimal import Decimal
-from django_mysql.models import JSONField
+from enum import Enum
+
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.timezone import now
-from django_prices.models import MoneyField, TaxedMoneyField
+from django_mysql.models import JSONField
+from django_prices.models import MoneyField
+from prices import Money
+
+from libs.core.users.api.models.User import User
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Payment import ChargeStatus
-from libs.core.users.api.models.User import User
 from webdjango.models.AbstractModels import BaseModel
-from webdjango.models.Address import Address
-from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
-from prices import Money
-from enum import Enum
-from libs.plugins.store.api import defaults
+from ..utils.Taxes import ZERO_TAXED_MONEY
 
 
 class OrderStatus:
@@ -125,15 +125,14 @@ class Fulfillment(BaseModel):
     tracking_number = models.CharField(max_length=255, default='', blank=True)
     shipping_date = models.DateTimeField(default=now, editable=False)
 
-    #fulfillment_lines = models.ArrayModelField(model_container=FulfillmentLine)
+    # fulfillment_lines = models.ArrayModelField(model_container=FulfillmentLine)
 
     class Meta:
         abstract = True
 
 
 class OrderLine(BaseModel):
-    product_name = models.CharField(max_length=256)
-    product_sku = models.CharField(max_length=32)
+    product_data = JSONField(blank=True)
     is_shipping_required = models.BooleanField()
 
     quantity = models.IntegerField(default=1)
@@ -148,22 +147,24 @@ class OrderLine(BaseModel):
     unit_price = MoneyField(
         'sale', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
-    
+
     tax_rate = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.0'))
     order = models.ForeignKey(
         'Order', related_name='lines', editable=False, on_delete=models.CASCADE)
+
     class Meta:
-        ordering = ('pk', )
+        ordering = ('pk',)
 
     def __str__(self):
         return self.product_name
-    
+
     def get_total(self):
         return self.unit_price * self.quantity
 
     @property
     def quantity_unfulfilled(self):
         return self.quantity - self.quantity_fulfilled
+
 
 class OrderEvent(BaseModel):
     event_type = models.CharField(max_length=255, choices=OrderEventTypes.CHOICES)
@@ -172,7 +173,7 @@ class OrderEvent(BaseModel):
     order = models.ForeignKey('Order', related_name='events', on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ('created', )
+        ordering = ('created',)
 
 
 class OrderQueryset(models.QuerySet):
@@ -208,17 +209,19 @@ class OrderQueryset(models.QuerySet):
         qs = qs.exclude(status={OrderStatus.DRAFT, OrderStatus.CANCELED})
         return qs.distinct()
 
+
 class Order(BaseModel):
     order_num = models.CharField(max_length=100, blank=False, null=False, editable=False)
     status = models.CharField(max_length=32, default=OrderStatus.DRAFT, choices=OrderStatus.CHOICES)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', default=None, null=True, editable=False)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='order', default=None, null=True,
+                             editable=False)
     user_email = models.EmailField(blank=True, default='', editable=False)
     extra_data = JSONField(blank=True)
     security_data = JSONField(blank=True)
     extra_payment_data = JSONField(blank=True)
-    billing_address = JSONField(blank=True,editable=False)
-    shipping_address = JSONField(blank=True,editable=False)
-    terms = JSONField(blank=True,editable=False)
+    billing_address = JSONField(blank=True, editable=False)
+    shipping_address = JSONField(blank=True, editable=False)
+    terms = JSONField(blank=True, editable=False)
     # shipping_method = models.ForeignKey(
     #     ShippingMethod, blank=True, null=True, related_name='orders',
     #     on_delete=models.SET_NULL)
@@ -227,7 +230,7 @@ class Order(BaseModel):
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
         blank=True, null=True, editable=False)
-    
+
     shipping_method_name = models.CharField(
         max_length=255, null=True, default=None, blank=True, editable=False)
 
@@ -247,17 +250,17 @@ class Order(BaseModel):
         max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
         blank=True, null=True, editable=False)
-  
+
     discount_amount = MoneyField(currency=defaults.DEFAULT_CURRENCY,
                                  max_digits=defaults.DEFAULT_MAX_DIGITS,
                                  decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
                                  blank=True, null=True, editable=False)
     customer_note = models.TextField(blank=True, default='')
+
     # TODO: idk... maybe a better way to store those fields instead of "flat"
     class Meta:
         ordering = ['-created']
 
-    
     def is_fully_paid(self):
         total_paid = self._total_paid()
         return total_paid.gross >= self.total.gross
@@ -311,7 +314,7 @@ class Order(BaseModel):
         return self.payments.filter(
             is_active=True,
             transactions__kind=TransactionKind.AUTH).filter(
-                transactions__is_success=True).exists()
+            transactions__is_success=True).exists()
 
     @property
     def quantity_fulfilled(self):
