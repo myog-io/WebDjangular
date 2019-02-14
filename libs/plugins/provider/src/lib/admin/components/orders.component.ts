@@ -31,11 +31,10 @@ export class PluginProviderAdminOrdersComponent implements OnInit {
         ).subscribe(
           (order: OrderModel) => {
             this.order = order;
-            console.log(this.order);
-            console.log(this.order.lines)
+            console.log(order);
           },
           (error: ErrorResponse) => {
-            console.log(error);
+
           }
         )
       }
@@ -45,5 +44,6 @@ export class PluginProviderAdminOrdersComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
 }

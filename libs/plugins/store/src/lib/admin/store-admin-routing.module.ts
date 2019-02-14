@@ -20,7 +20,7 @@ const routes: Routes = [
         children: [
            {
             path: 'products',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: ProductModel,
               title: 'Products',
@@ -29,7 +29,7 @@ const routes: Routes = [
           },
           {
             path: 'categories',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: CategoryModel,
               title: 'Categories',
@@ -38,7 +38,7 @@ const routes: Routes = [
           },
           {
             path: 'types',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: ProductTypeModel,
               title: 'Product Type',
@@ -47,7 +47,7 @@ const routes: Routes = [
           },
           {
             path: 'attributes',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: ProductAttributeModel,
               title: 'Product Attribute',
@@ -58,7 +58,7 @@ const routes: Routes = [
       },
       {
         path: 'orders',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: OrderModel,
           title: 'Orders',
@@ -70,7 +70,7 @@ const routes: Routes = [
         children: [
           {
             path: 'cart-rules',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: CartRuleModel,
               title: 'Cart Rules',
@@ -79,7 +79,7 @@ const routes: Routes = [
           },
           {
             path: 'catalog-rules',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: CatalogRuleModel,
               title: 'Catalog Rules',
@@ -88,7 +88,7 @@ const routes: Routes = [
           },
           {
             path: 'cart-terms',
-            loadChildren: () => ScaffoldModule,
+            loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
             data: {
               model: CartTermModel,
               title: 'Cart Terms',
@@ -99,7 +99,7 @@ const routes: Routes = [
       },
       {
         path: 'shipping-methods',
-        loadChildren: () => ScaffoldModule,
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: ShippingMethodModel,
           title: 'Shipping methods',

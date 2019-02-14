@@ -132,7 +132,10 @@ class Fulfillment(BaseModel):
 
 
 class OrderLine(BaseModel):
-    product_data = JSONField(blank=True)
+
+    product_name = models.CharField(max_length=256)
+    product_sku = models.CharField(max_length=32)
+    
     is_shipping_required = models.BooleanField()
 
     quantity = models.IntegerField(default=1)
@@ -156,7 +159,12 @@ class OrderLine(BaseModel):
         ordering = ('pk',)
 
     def __str__(self):
-        return self.product_name
+        if hasattr(self.product_data, 'name'):
+            return self.product_data['name']
+        if hasattr(self.product_data, 'sku'):
+            return self.product_data['sku']
+
+        return 'no product'
 
     def get_total(self):
         return self.unit_price * self.quantity

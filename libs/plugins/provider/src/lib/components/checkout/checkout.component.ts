@@ -13,7 +13,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class PluginProviderCheckoutComponent implements OnInit {
 
   @Input() cutom_block_id: string;
-  @Input() reseller: string;
+  @Input() reseller: boolean;
   public custom_block: BlockModel;
   public providerCheckoutSteps = ProviderCheckoutSteps;
 
@@ -26,8 +26,8 @@ export class PluginProviderCheckoutComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.reseller);
-
-    //this.providerCheckout.has_reseller = this.reseller;
+    console.log(this.cutom_block_id);
+    this.providerCheckout.has_reseller = this.reseller;
 
     if (this.cutom_block_id) {
       this.datastore.findRecord(BlockModel, 
@@ -38,6 +38,11 @@ export class PluginProviderCheckoutComponent implements OnInit {
           }
       );
     }
+  }
+
+  ngAfterViewInit() {
+    console.log(this.reseller);
+    console.log(this.cutom_block_id);
   }
 
 }

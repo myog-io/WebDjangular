@@ -15,6 +15,7 @@ from ..utils.CartUtils import cart_has_product, create_order, apply_all_cart_rul
 from webdjango.filters import WebDjangoFilterSet
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
+from ..emails import send_order_confirmation
 
 
 class CartTermFilter(WebDjangoFilterSet):
@@ -111,7 +112,6 @@ class CartViewSet(ModelViewSet):
         #        'email': order.get_user_current_email(),
         #        'email_type': OrderEventsEmails.ORDER
         #    })
-
 
         serializer = OrderSerializer(order)
         headers = self.get_success_headers(serializer.data)

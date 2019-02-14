@@ -3,21 +3,21 @@ Cart related utility methods.
 """
 import sys
 import traceback
-from datetime import date, timedelta
-from uuid import UUID, uuid1
+from uuid import UUID
 
 from django.db import transaction
-from django.db.models import Q
 from rest_framework.exceptions import ValidationError
-from rest_framework.serializers import DecimalField
 
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Product import Product
-from webdjango.models.Address import Address, AddressType
+from libs.plugins.store.api.models.Cart import CartItem
+from webdjango.models.Address import AddressType
 from webdjango.serializers.AddressSerializer import AddressSerializer
+from libs.plugins.store.api.serializers.CartSerializer import CartItemSerializer
+from libs.plugins.store.api.serializers.ProductSerializer import ProductSerializer
 from webdjango.utils.JsonLogic import jsonLogic
-
-from ..models.Cart import Cart, CartItem, CartStatus, CartTerm
+from .DiscountUtils import increase_voucher_usage
+from ..models.Cart import Cart, CartStatus, CartTerm
 from ..models.Discount import CartRule, RuleValueType
 from ..models.Order import Order
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
@@ -26,7 +26,6 @@ from ..serializers.MoneySerializer import MoneyField
 from ..serializers.ProductSerializer import (ProductCategorySerializer,
                                              ProductSerializer,
                                              ProductTypeSerializer)
-from .DiscountUtils import increase_voucher_usage
 
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
@@ -43,6 +42,7 @@ def get_rule_ammount(price, rule):
         raise NotImplementedError('Unknown rule type')
     return value
 
+
 # def get_disocunt_rule(price, rule):
 #    discount = rule.get_value()
 #    gross_after_discount = discount(price)
@@ -52,7 +52,6 @@ def get_rule_ammount(price, rule):
 
 
 def apply_cart_rule(cart, rule):
-
     # If the value is < 0, is a Discount, first we check if the discount is for specific items or we make the discount on all the cart
     if rule.item_conditions and len(rule.item_conditions) > 0:
         # Let's Give Discount only to the Itens That Meet This Conditions
@@ -101,7 +100,7 @@ def apply_cart_rule(cart, rule):
                 'voucher': rule.voucher,
                 'price': parsed_value,
                 'name': rule.name,
-                'rule_id':  rule.id,
+                'rule_id': rule.id,
             })
 
 
@@ -244,7 +243,6 @@ def get_user_cart(user):
 
 
 def add_item_to_cart(cart, cart_item):
-
     if cart.items.count() > 0:
         for item in cart.items.all():
             pass
@@ -349,28 +347,26 @@ def _process_terms_data_for_order(cart):
     }
 
 
-def add_item_to_order(order, item: Product):
+def add_item_to_order(order, item: CartItem):
     """Add total_quantity of variant to order.
     Returns an order line the variant was added to.
     By default, raises InsufficientStock exception if  quantity could not be
     fulfilled.
     """
 
-    product_data = {
-        'sku': item.sku,
-        'name': item.name,
-        'description': item.description,
-        'weight': item.weight,
-        'shipping_width': item.shipping_width,
-        'shipping_height': item.shipping_height,
-        'shipping_depth': item.shipping_depth,
-        'product_class': item.product_class,
-        'product_type': item.product_type,
-        'data': item.data,
-    }
+    #product_data =  item.product
+    #if hasattr(item, 'sku'): product_data['sku'] = item.sku
+    #if hasattr(item, 'name'): product_data['name'] = item.name
+    #if hasattr(item, 'weight'): product_data['weight'] = item.weight
+    #if hasattr(item, 'shipping_width'): product_data['shipping_width'] = item.shipping_width
+    #if hasattr(item, 'shipping_height'): product_data['shipping_height'] = item.shipping_height
+    #if hasattr(item, 'product_class'): product_data['product_class'] = item.product_class
+    #if hasattr(item, 'product_type'): product_data['product_type'] = item.product_type
+    #if hasattr(item, 'data'): product_data['data'] = item.data
 
     line = order.lines.create(
-        product_data=product_data,
+        product_data=ProductSerializer(item.product).data,
+        is_shipping_required=item.is_shipping_required,
         quantity=item.quantity,
         quantity_fulfilled=0,
         unit_cost=item.cost,

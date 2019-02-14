@@ -1,7 +1,5 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
-import { AbstractModel } from '@core/data/src/lib/models';
-import { PermissionModel } from '@core/users/src/lib/models';
-import {SmartTableColumnSettings, SmartTableSettings, SmartTableSettingsAttr} from '@core/data/src/lib/data-store';
+import {Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
+import {AbstractModel} from '@core/data/src/lib/models';
 import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
 
 
@@ -15,11 +13,8 @@ export class OrderLineModel extends AbstractModel {
   @Attribute()
   id: string;
 
-  @Attribute()
-  product_name: string;
-
-  @Attribute()
-  product_sku: string;
+  @NestedAttribute()
+  product_data: object;
 
   @Attribute()
   is_shipping_required: boolean;
@@ -60,5 +55,7 @@ export class OrderLineModel extends AbstractModel {
 
   }
 
-
+  getTotal() {
+    return this.unit_price * this.quantity
+  }
 }

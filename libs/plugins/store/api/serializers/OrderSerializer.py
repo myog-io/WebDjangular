@@ -1,3 +1,4 @@
+from rest_framework_json_api.serializers import JSONField
 from rest_framework_json_api.relations import ResourceRelatedField
 
 from libs.plugins.store.api import defaults
@@ -7,6 +8,8 @@ from .MoneySerializer import MoneyField
 
 
 class OrderLineSerializer(WebDjangoSerializer):
+    product_data = JSONField(required=False)
+
     unit_cost = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                            decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
     unit_base_price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
@@ -27,7 +30,6 @@ class OrderEventSerializer(WebDjangoSerializer):
 
 
 class OrderSerializer(WebDjangoSerializer):
-
     lines = ResourceRelatedField(
         many=True,
         queryset=OrderLine.objects,

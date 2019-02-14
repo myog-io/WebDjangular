@@ -28,16 +28,20 @@ class Website(BaseModel):
     """
     domain = models.CharField(max_length=64, unique=True)
     code = models.SlugField(validators=[validate_slug], unique=True)
-    protocol = models.CharField(max_length=12, choices=WebsiteProtocols.CHOICES, default=WebsiteProtocols.HTTP )
+    protocol = models.CharField(max_length=12,
+                                choices=WebsiteProtocols.CHOICES,
+                                default=WebsiteProtocols.HTTP)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def get_current_website():
+    def get_current_website(request=None):
+        if request and request.website:
+            return request.website
         try:
             return Website.objects.first()
         except:
-            print ("Unexpected error: {0}".format(sys.exc_info()[0]))
+            print("Unexpected error: {0}".format(sys.exc_info()[0]))
             return None
         # TODO: Logic to get the current website based on route or domain or something like this, for now i will return the first we fint
 
