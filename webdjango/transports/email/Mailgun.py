@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 
 class Mailgun(AbstractTransport):
     def __init__(self, *args, **kwargs):
-        self.api_key = kwargs[EmailCoreConfig.CONFIG_API_KEY]
-        self.domain = kwargs[EmailCoreConfig.CONFIG_DOMAIN]
-        self.sender = kwargs[EmailCoreConfig.CONFIG_SENDER]
+        self.api_key = kwargs[EmailCoreConfig.CONFIG_API_KEY.id]
+        self.domain = kwargs[EmailCoreConfig.CONFIG_DOMAIN.id]
+        self.sender = kwargs[EmailCoreConfig.CONFIG_SENDER.id]
         super(Mailgun, self).__init__(*args, **kwargs)
 
     @property

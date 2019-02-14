@@ -12,12 +12,12 @@ class Smtp(AbstractTransport):
     def __init__(self, *args, **kwargs):
         super(Smtp, self).__init__(*args, **kwargs)
 
-        self.username = kwargs[EmailCoreConfig.CONFIG_USERNAME]
-        self.password = kwargs[EmailCoreConfig.CONFIG_PWD]
-        self.sender = kwargs[EmailCoreConfig.CONFIG_SENDER]
-        self.host = kwargs[EmailCoreConfig.CONFIG_HOST]
-        self.port = kwargs[EmailCoreConfig.CONFIG_PORT]
-        self.security = kwargs[EmailCoreConfig.CONFIG_SECURITY]
+        self.username = kwargs[EmailCoreConfig.CONFIG_USERNAME.id]
+        self.password = kwargs[EmailCoreConfig.CONFIG_PWD.id]
+        self.sender = kwargs[EmailCoreConfig.CONFIG_SENDER.id]
+        self.host = kwargs[EmailCoreConfig.CONFIG_HOST.id]
+        self.port = kwargs[EmailCoreConfig.CONFIG_PORT.id]
+        self.security = kwargs[EmailCoreConfig.CONFIG_SECURITY.id]
 
     @property
     def is_tls(self):
@@ -40,8 +40,8 @@ class Smtp(AbstractTransport):
         return ['to', 'subject', 'body']
 
     def send(self, to='', subject='', body='', content_subtype='html'):
-        email = EmailMessage(subject=subject, body=body, from_email=self.sender, to=[
-                             to], connection=self.smtp_backend)
+        email = EmailMessage(subject=subject, body=body, from_email=self.sender, to=
+                             to, connection=self.smtp_backend)
         email.content_subtype = "html"  # to encode as HTML instead of text/plain
 
         if email.send():

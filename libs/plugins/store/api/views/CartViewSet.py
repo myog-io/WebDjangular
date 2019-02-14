@@ -104,13 +104,12 @@ class CartViewSet(ModelViewSet):
             raise ValidationError('Please Review your Cart')
         cart.delete()
         order.events.create(event_type=OrderEventTypes.PLACED)
-        send_order_confirmation.delay(order.pk)
-        # order.events.create(
-        #    event_type=OrderEventTypes.EMAIL_SENT.value,
-        #    parameters={
-        #        'email': order.get_user_current_email(),
-        #        'email_type': OrderEventsEmails.ORDER
-        #    })
+        send_order_confirmation(order.pk)
+        order.events.create(
+           event_type=OrderEventTypes.EMAIL_SENT,
+           data={
+               'email': order.get_user_current_email(),
+            })
 
 
         serializer = OrderSerializer(order)
@@ -193,8 +192,6 @@ class CartItemViewSet(ModelViewSet):
             term = item.cart.terms.filter(products=item.product).first()
             if term:
                 item.cart.terms.remove(term)
-                
-
         item.delete()
 
 

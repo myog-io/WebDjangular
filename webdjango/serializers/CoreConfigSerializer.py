@@ -20,7 +20,7 @@ class CoreConfigInputSerializer(serializers.Serializer):
     group = serializers.SlugField(read_only=True)
     value = serializers.JSONField(read_only=True)
     conditional = serializers.JSONField(read_only=True)
-
+    add_tags = serializers.BooleanField(read_only=True)
 
 class CoreConfigGroupSerializer(serializers.Serializer):
     """

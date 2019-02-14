@@ -159,6 +159,14 @@ class BaseProduct(ActiveModel, TranslationModel):
     def is_in_stock(self) -> bool:
         return self.quantity_available > 0
 
+    def get_absolute_url(self):
+        # TODO: Return the correct Frontend order link
+        return "ORDER_LINK"
+        # return reverse('order:details', kwargs={'token': self.token})
+    def get_first_image(self):
+        if self.images.count() > 0:
+            return self.images.first().get_absolute_url()
+        return None
 
 class Product(BaseProduct):
     product_class = models.CharField(

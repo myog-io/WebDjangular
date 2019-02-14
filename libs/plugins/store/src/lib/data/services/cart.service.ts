@@ -38,7 +38,7 @@ export class CartService {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
         this.datastore.findAll(CartModel, {
-          token__exact: cartCookie['token'],
+          token: cartCookie['token'],
           page: { size: 1, number: 1 },
           include: ["billing_address", "shipping_address",
             "items", "items.product", "items.product.product_type",
@@ -49,6 +49,11 @@ export class CartService {
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0]
+            }else{
+              this.cookieService.delete(this.cart_cookie_name);
+              this.cart = datastore.createRecord(CartModel, {
+                extra_data: {}
+              });
             }
           },
           (error: any) => {
