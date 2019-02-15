@@ -167,12 +167,7 @@ class OrderLine(BaseModel):
         ordering = ('pk',)
 
     def __str__(self):
-        if hasattr(self.product_data, 'name'):
-            return self.product_data['name']
-        if hasattr(self.product_data, 'sku'):
-            return self.product_data['sku']
-
-        return 'no product'
+        return self.product_name
 
     def get_total(self):
         return self.unit_price * self.quantity

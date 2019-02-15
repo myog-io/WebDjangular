@@ -1,6 +1,7 @@
 import {Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
 import {AbstractModel} from '@core/data/src/lib/models';
 import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
+import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
 
 
 @JsonApiModelConfig({
@@ -13,8 +14,11 @@ export class OrderLineModel extends AbstractModel {
   @Attribute()
   id: string;
 
-  @NestedAttribute()
-  product_data: object;
+  @Attribute()
+  product_name: string;
+
+  @Attribute()
+  product_sku: string;
 
   @Attribute()
   is_shipping_required: boolean;
@@ -39,6 +43,9 @@ export class OrderLineModel extends AbstractModel {
 
   @BelongsTo()
   order: OrderModel;
+
+  @BelongsTo()
+  product: ProductModel;
 
   @Attribute()
   created: Date;

@@ -1,15 +1,21 @@
-from rest_framework_json_api.serializers import JSONField
 from rest_framework_json_api.relations import ResourceRelatedField
 
 from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Order import OrderLine, OrderEvent, Order
+from libs.plugins.store.api.models.Product import Product
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from .MoneySerializer import MoneyField
 
 
 class OrderLineSerializer(WebDjangoSerializer):
-    product_data = JSONField(required=False)
-
+    product = ResourceRelatedField(
+        many=False,
+        queryset=Product.objects,
+        required=False,
+        related_link_url_kwarg='pk',
+        self_link_view_name='order-line-relationships',
+        related_link_view_name='order-line-related',
+    )
     unit_cost = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                            decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
     unit_base_price = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
@@ -18,6 +24,10 @@ class OrderLineSerializer(WebDjangoSerializer):
                             decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
     tax_rate = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                           decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
+
+    included_serializers = {
+       'product': 'libs.plugins.store.api.serializers.ProductSerializer.ProductSerializer',
+    }
 
     class Meta:
         model = OrderLine

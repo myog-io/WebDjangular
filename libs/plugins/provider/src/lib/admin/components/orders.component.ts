@@ -25,7 +25,7 @@ export class PluginProviderAdminOrdersComponent implements OnInit {
         this.datastore.findRecord(OrderModel, params['id'], {
             //fields: 'id,order_num,user_email,lines',
             include: [
-              "lines",
+              "lines", "lines.product"
             ].join(',')
           }
         ).subscribe(

@@ -16,12 +16,12 @@ from libs.plugins.store.api import defaults
 from webdjango.models.AbstractModels import ActiveModel, BaseModel
 from prices import Money
 
+
 class RuleValueType:
     FIXED = 'fixed'
     PERCENTAGE = 'percentage'
     TO_VALUE = 'to_value'
     
-
     CHOICES = [
         (FIXED, defaults.DEFAULT_CURRENCY),
         (PERCENTAGE, '%'),
@@ -35,6 +35,7 @@ class CartRuleQueryset(models.QuerySet):
         return self.filter(
             is_active=True,
             end__gte=today, start__lte=today)
+
 
 class CartRule(ActiveModel, BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
@@ -59,6 +60,7 @@ class CartRule(ActiveModel, BaseModel):
     apply_once_per_order = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     objects = CartRuleQueryset.as_manager()
+
     class Meta:
         ordering = ['-pk']
 

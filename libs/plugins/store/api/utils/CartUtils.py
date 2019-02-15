@@ -346,25 +346,17 @@ def _process_terms_data_for_order(cart):
     }
 
 
-def add_item_to_order(order, item: CartItem):
+def add_item_to_order(order, item):
     """Add total_quantity of variant to order.
     Returns an order line the variant was added to.
     By default, raises InsufficientStock exception if  quantity could not be
     fulfilled.
     """
 
-    #product_data =  item.product
-    #if hasattr(item, 'sku'): product_data['sku'] = item.sku
-    #if hasattr(item, 'name'): product_data['name'] = item.name
-    #if hasattr(item, 'weight'): product_data['weight'] = item.weight
-    #if hasattr(item, 'shipping_width'): product_data['shipping_width'] = item.shipping_width
-    #if hasattr(item, 'shipping_height'): product_data['shipping_height'] = item.shipping_height
-    #if hasattr(item, 'product_class'): product_data['product_class'] = item.product_class
-    #if hasattr(item, 'product_type'): product_data['product_type'] = item.product_type
-    #if hasattr(item, 'data'): product_data['data'] = item.data
-
     line = order.lines.create(
-        product_data=ProductSerializer(item.product).data,
+        product_name=item.name,
+        product_sku=item.sku,
+        product_id=item.product_id,
         is_shipping_required=item.is_shipping_required,
         quantity=item.quantity,
         quantity_fulfilled=0,

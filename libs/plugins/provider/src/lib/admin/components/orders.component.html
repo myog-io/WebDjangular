@@ -34,19 +34,17 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let order_line of order.lines">
-                    <td>{{ order_line.product_data?.name}} </td>
+                    <td>{{ order_line.product_name}} </td>
                     <td class="text-center">{{ order_line.quantity }}</td>
                     <td>
                       R$ <b>{{  order_line.unit_price | currency:symbol:''}}</b>
-                      <span *ngIf="order_line.product_data.sku">/mês</span>
+                      <span *ngIf="order_line.product">/mês</span>
                     </td>
                     <td>
                       R$ <b>{{  order_line.getTotal() | currency:symbol:''}}</b>
-                      <span *ngIf="order_line.product_data">/mês</span>
+                      <span *ngIf="order_line.product">/mês</span>
                     </td>
                   </tr>
-
-
                 </tbody>
                 <tfoot>
                   <tr>
