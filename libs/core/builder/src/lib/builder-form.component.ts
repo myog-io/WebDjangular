@@ -28,12 +28,15 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() sticky_top: boolean = true;
   @Input() show_breadcrumb: boolean = true;
   @Input() inceptionForm: boolean = false;
-
+  @Input() remove = false;
+  @Input() remove_label = "Remove";
+  @Input() remove_status = "danger";
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() onRemove: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
   private jsonLogic: JsonLogic = new JsonLogic();
   private subscription: Subscription;
-
+  progress = 0;
   constructor() {
 
   }
@@ -97,6 +100,19 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     $event.redirect = redirect;
     $event.data = this.group.value;
     this.onSubmit.emit($event);
+  }
+  public removeItem($event: any = {}, redirect: boolean) {
+    console.log($event)
+
+    //this.onRemove.emit($event);
+    this.progress = $event / 10;
+    if (this.progress === 100) {
+      const event = {
+        redirect: redirect,
+        data: this.group.value,
+      }
+      this.onRemove.emit(event);
+    }
   }
 
   /**

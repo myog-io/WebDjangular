@@ -26,7 +26,7 @@ class MenuItem(BaseModel):
 
     class Meta:
         db_table = 'cms_menu_item'
-        ordering = ['-created']
+        ordering = ['position']
 
 
 class Menu(BaseModel):

@@ -6,6 +6,7 @@ import { SmartTableSettings } from '../data-store';
 import { BuilderFormFieldConfig, BuilderFormDisplayGroups } from 'libs/core/builder/src/lib/interfaces/form-config.interface';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 export class AbstractModel extends JsonApiModel {
 
@@ -23,7 +24,7 @@ export class AbstractModel extends JsonApiModel {
     conditional: null,
     sort: 0
   }];
-  protected service;
+  public service: WebAngularDataStore;
 
   constructor(_datastore, data?: any) {
     super(_datastore, data);
@@ -223,5 +224,5 @@ export class AbstractModel extends JsonApiModel {
     fg.displayGroups = dg;
     return fg;
   }
-
+  
 }

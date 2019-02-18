@@ -18,16 +18,16 @@ export class MenuItemModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Menu item name',
+    label: 'Name',
     wrapper_class: 'col-12'
   })
   name: string;
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required],
+    validators: [Validators.required, Validators.pattern('^[a-z0-9-_\/]+$')],
     type: 'text',
-    label: 'Menu item URL',
+    label: 'URL',
     wrapper_class: 'col-12'
   })
   url: string;
@@ -36,7 +36,7 @@ export class MenuItemModel extends AbstractModel {
   @ExtraOptions({
     validators: [],
     type: 'text',
-    label: 'Menu item "alt" attribute',
+    label: '"alt" attribute',
     wrapper_class: 'col-12'
   })
   alt: string;
@@ -44,30 +44,31 @@ export class MenuItemModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [],
-    type: 'text',
-    label: 'Menu item "target" attribute',
+    type: 'select',
+    label: '"target" attribute',
+    options: [
+      { id: '_self', name: 'Self' },
+      { id: '_blank', name: 'Blank' },
+      { id: '_parent', name: 'Parent' },
+      { id: '_top', name: 'Top' }
+    ],
+    value: '_self',
     wrapper_class: 'col-12'
   })
   target: string;
 
 
   @Attribute()
-  @ExtraOptions({
-    validators: [],
-    type: 'text',
-    label: 'Menu item position',
-    wrapper_class: 'col-12'
-  })
-  position: string;
+  position: number;
 
-  @BelongsTo({key:'MenuItem'})
-  parent:MenuItemModel;
+  @BelongsTo()
+  parent: MenuItemModel;
 
-  @BelongsTo({key:'Menu'})
+  @BelongsTo()
   menu: any;
 
-  @HasMany({key:'MenuItem'})
-  children:MenuItemModel[];
+  @HasMany()
+  children: MenuItemModel;
 
   @Attribute()
   created: Date;
@@ -85,5 +86,32 @@ export class MenuItemModel extends AbstractModel {
 
   }
 
+  arrangeItems(){
+    this.children.sort((a,b)=> a.position - b.position);
+    for (let i = 0; i < this.children.length; i++) {
+      if (this.children[i].children.length > 0){
+        this.children[i].arrangeItems();
+      }
+    }
+  }
+
+  getList(){
+    const node:any = {}
+    node.id = this.id;
+    node.url = this.url;
+    node.name = this.name;
+    node['$$expanded'] = true;
+    node.displayGroups = this.displayGroups;
+    node.children = [];
+    this.service
+    if (this.children && this.children.length > 0) {
+      for (let i = 0; i < this.children.length; i++) {
+        const item = this.children[i];
+        node.children.push(item.getList());
+        
+      }
+    }
+    return node;
+  }
 }
 
