@@ -1,0 +1,206 @@
+<div *ngIf="order">
+  <div class="row align-self-start sticky-top">
+    <div class="col-12">
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-8">
+              <h3>
+                <span class="small"> </span>
+                View Order: # {{order.order_num}}
+              </h3>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col table-responsive">
+
+              <table class="table">
+                <thead>
+                <tr class="">
+                  <th scope="col">Planos Escolhido</th>
+                  <th scope="col" class="text-center">Quantidade</th>
+                  <th scope="col">Preço base</th>
+                  <th scope="col">Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order_line of order.lines">
+                    <td>{{ order_line.product_name}} </td>
+                    <td class="text-center">{{ order_line.quantity }}</td>
+                    <td>
+                      R$ <b>{{  order_line.unit_price | currency:symbol:''}}</b>
+                      <span *ngIf="order_line.product">/mês</span>
+                    </td>
+                    <td>
+                      R$ <b>{{  order_line.getTotal() | currency:symbol:''}}</b>
+                      <span *ngIf="order_line.product">/mês</span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th scope="col" colspan="3">TOTAL</th>
+                    <th>R$ <b>{{ order.subtotal }}</b>/mês</th>
+                  </tr>
+  <!--
+                  <tr *ngFor="let fee of providerCheckout.getFees()">
+                    <th scope="row">{{ fee?.name }}</th>
+                    <td></td>
+                    <td>
+                <span *ngIf="fee?.price != 0">
+                  R$ <b>{{ fee?.price }} </b>
+                </span>
+                      <span *ngIf="fee?.price == 0">
+                  <b>GRÁTIS</b>
+                </span>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Pagamento:
+                      <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"><b>Por Email</b></span>
+                      <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"><b>Por Correios</b></span>
+                    </td>
+                    <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'email'">
+                      <b>{{ providerCheckout.cartService.cart.email }} </b></td>
+
+                    <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'mail'">
+                      <b>
+                        {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
+                        {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
+                        <span *ngIf="providerCheckout.address.street_address_2">
+                - {{ providerCheckout.address.street_address_2 }}
+              </span> <br>
+                        {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
+                        {{ providerCheckout.address.postal_code }}
+                      </b>
+                    </td>
+                  </tr>
+                  -->
+                </tfoot>
+
+                <!--
+                <tbody>
+                <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_internet_plan">
+                  <th scope="row">Internet</th>
+                  <td><b>{{ providerCheckout.selected_internet_plan.product.name }}</b></td>
+                  <td></td>
+                </tr>
+                <tr *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+                  <th scope="row"></th>
+                  <td>{{ plan_optional.name }}</td>
+                  <td>R$ <b>{{ plan_optional.product.price }}</b>/mês</td>
+                </tr>
+
+                <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_tv_plan">
+                  <th scope="row">TV</th>
+                  <td><b>{{ providerCheckout.selected_tv_plan.product.name }}</b></td>
+                  <td></td>
+                </tr>
+                <tr *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
+                  <td></td>
+                  <td>
+                    {{ providerCheckout.selected_extra_tv_decoder.plan.name }}
+                    x{{ providerCheckout.selected_extra_tv_decoder.qty }}
+                  </td>
+                  <td>
+
+                  </td>
+                </tr>
+                <tr *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
+                  <th scope="row"></th>
+                  <td>{{ plan_optional.name }}</td>
+                  <td></td>
+                </tr>
+
+                <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_telephone_plan">
+                  <th scope="row">Telefone</th>
+                  <td><b>{{ providerCheckout.selected_tv_plan.product.name }}</b></td>
+                  <td></td>
+                </tr>
+                <tr *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
+                  <th scope="row"></th>
+                  <td>{{ plan_optional.name }}</td>
+                  <td></td>
+                </tr>
+
+                <tr *ngIf="scm_price">
+                  <th scope="row" colspan="2">Serviço de comunicação multimídia (SCM)</th>
+                  <td>R$ <b>{{ scm_price | currency:symbol:''}}</b>/mês</td>
+                </tr>
+                <tr *ngIf="sva_price">
+                  <th scope="row" colspan="2">Provedor de Serviço de Conexão a Internet - PSCI (SVA)</th>
+                  <td>R$ <b>{{ sva_price | currency:symbol:''}}</b>/mês</td>
+                </tr>
+                <tr *ngIf="seac_price">
+                  <th scope="row" colspan="2">Serviços de HDTV (SEAC)</th>
+                  <td>R$ <b>{{ seac_price | currency:symbol:''}}</b>/mês</td>
+                </tr>
+                <tr *ngIf="stfc_price">
+                  <th scope="row" colspan="2">Serviço Telefônico Fixo Comutado (STFC)</th>
+                  <td>R$ <b>{{ stfc_price | currency:symbol:''}}</b>/mês</td>
+                </tr>
+
+                </tbody>
+                <tfoot>
+                <tr class="bg-secondary text-white">
+                  <th scope="col" colspan="2">TOTAL</th>
+                  <th>R$ <b>{{ providerCheckout.cartService.cart.subtotal }}</b>/mês</th>
+                </tr>
+
+                <tr *ngFor="let fee of providerCheckout.getFees()">
+                  <th scope="row">{{ fee?.name }}</th>
+                  <td></td>
+                  <td>
+              <span *ngIf="fee?.price != 0">
+                R$ <b>{{ fee?.price }} </b>
+              </span>
+                    <span *ngIf="fee?.price == 0">
+                <b>GRÁTIS</b>
+              </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Pagamento:
+                    <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"><b>Por Email</b></span>
+                    <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"><b>Por Correios</b></span>
+                  </td>
+                  <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'email'">
+                    <b>{{ providerCheckout.cartService.cart.email }} </b></td>
+
+                  <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'mail'">
+                    <b>
+                      {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
+                      {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
+                      <span *ngIf="providerCheckout.address.street_address_2">
+              - {{ providerCheckout.address.street_address_2 }}
+            </span> <br>
+                      {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
+                      {{ providerCheckout.address.postal_code }}
+                    </b>
+                  </td>
+                </tr>
+                </tfoot>
+                -->
+              </table>
+
+            </div>
+          </div>
+
+
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+</div>

@@ -13,7 +13,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class PluginProviderCheckoutComponent implements OnInit {
 
   @Input() cutom_block_id: string;
-  @Input() reseller: boolean = false;
+  @Input() reseller: boolean;
   public custom_block: BlockModel;
   public providerCheckoutSteps = ProviderCheckoutSteps;
 
@@ -35,6 +35,11 @@ export class PluginProviderCheckoutComponent implements OnInit {
           }
       );
     }
+  }
+
+  ngAfterViewInit() {
+    console.log(this.reseller);
+    console.log(this.cutom_block_id);
   }
 
 }

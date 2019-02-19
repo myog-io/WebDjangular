@@ -1,4 +1,6 @@
 import {NbMenuItem} from '@nebular/theme';
+import {UserModel} from "@core/users/src/lib/models";
+import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -175,6 +177,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
             {label: 'provider', action: 'view_plantype'}
           ]
         }
+      },
+      {
+        title: 'Orders',
+        link: '/provider/order',
+
       }
     ]
   },

@@ -31,6 +31,7 @@ export class WebAngularSmartTableDataSourceOptions {
       confirmDelete: true
     }
   };
+
   protected static readonly ON_EDIT_BUTTON_CLICK = $event => {
     console.log('no function set for onEditButtonClick()', $event);
   };
@@ -44,7 +45,6 @@ export class WebAngularSmartTableDataSourceOptions {
   };
 
   endPoint: string;
-
   sortFieldKey: string;
   sortDirKey: string;
   pagerPageKey: string;
@@ -54,9 +54,9 @@ export class WebAngularSmartTableDataSourceOptions {
   dataKey: string;
   model: JsonApiModel;
   smartTableSettings: any;
-  onEditButtonClick:any;
-  onDeleteButtonClick:any;
-  onCreateButtonClick:any;
+  onEditButtonClick: any;
+  onDeleteButtonClick: any;
+  onCreateButtonClick: any;
 
   constructor({
     endPoint = '',

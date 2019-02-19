@@ -33,6 +33,7 @@ export class CartService {
     private datastore: WebAngularDataStore,
     private clientUserService: ClientUserService,
   ) {
+
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));

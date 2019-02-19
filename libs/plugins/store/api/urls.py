@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from .views.CartViewSet import CartViewSet, CartRelationshipView, CartItemViewSet, CartItemRelationshipView, \
 CartTermViewSet, CartTermRelationshipView
 from .views.DiscountViewSet import CartRuleViewSet, CatalogRuleViewSet
-from .views.OrderViewSet import OrderViewSet
+from .views.OrderViewSet import OrderViewSet, OrderLineViewSet, OrderRelationshipView, OrderLineRelationshipView
 from .views.PaymentViewSet import PaymentViewSet
 from .views.ProductViewSet import ProductAttributeRelationshipView, \
     ProductAttributeViewSet, ProductCategoryViewSet, ProductRelationshipView, \
@@ -22,6 +22,7 @@ router.register('discount/cart-rule', CartRuleViewSet,
                 base_name='discount/cart-rule')
 router.register('payment', PaymentViewSet, base_name='payment')
 router.register('order', OrderViewSet, base_name='order')
+router.register('order-line', OrderLineViewSet, base_name='order-line')
 router.register('product', ProductViewSet, base_name='product')
 router.register('product-type', ProductTypeViewSet, base_name='product-type')
 router.register('product-attribute', ProductAttributeViewSet,
@@ -106,6 +107,29 @@ relationshipPatterns = [
         CartTermViewSet.as_view({'get': 'retrieve_related'}),
         name='cart-term-related'
     ),
+
+    # Order
+    url(
+        regex=r'^order/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=OrderRelationshipView.as_view(),
+        name='order-relationships'
+    ),
+    url(r'^order/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        OrderViewSet.as_view({'get': 'retrieve_related'}),
+        name='order-related'
+        ),
+
+    # Order Line
+    url(
+        regex=r'^order-line/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=OrderLineRelationshipView.as_view(),
+        name='order-line-relationships'
+    ),
+    url(r'^order-line/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        OrderLineViewSet.as_view({'get': 'retrieve_related'}),
+        name='order-line-related'
+        ),
+
 ]
 
 urlpatterns = [

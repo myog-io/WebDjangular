@@ -67,6 +67,7 @@ class CartFilter(WebDjangoFilterSet):
             'status': ['exact']
         }
 
+
 class CartViewSet(ModelViewSet):
     """
     Handles:
@@ -110,7 +111,6 @@ class CartViewSet(ModelViewSet):
            data={
                'email': order.get_user_current_email(),
             })
-
 
         serializer = OrderSerializer(order)
         headers = self.get_success_headers(serializer.data)
@@ -193,7 +193,6 @@ class CartItemViewSet(ModelViewSet):
             if term:
                 item.cart.terms.remove(term)
         item.delete()
-
 
 
 class CartItemRelationshipView(RelationshipView):

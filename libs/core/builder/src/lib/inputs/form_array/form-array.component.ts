@@ -32,7 +32,7 @@ enum state {
               [source]="source"
               (create)="onCreate($event)"
               (edit)="onEdit($event)"
-              (delete)="onDelete($event)">
+              (delete)="onDelete($event)" >
             </ng2-smart-table>
             <ng-template #InceptionForm let-data>
               <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
@@ -60,6 +60,9 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
       //confirmCreate: true,
+    },
+    view: {
+      viewButtonContent: '<i class="far fa-eye"></i>',
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -284,6 +287,23 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   }
 
   /**
+   * On View Entry
+   * @param $event
+   */
+  onView($event) {
+    this.getFormConfig();
+    this.state = state.updating;
+    this.form.reset();
+    this.openWindow(`View ` + this.config.label);
+    this.element = $event.data; // Reference to find on the table latter
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      this.form.populateForm($event.data);
+    }, 350);
+  }
+
+  /**
    * On Edit Entry
    * @param $event
    */
@@ -298,8 +318,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       this.loading = false;
       this.form.populateForm($event.data);
     }, 350);
-
-
   }
 
   /**
