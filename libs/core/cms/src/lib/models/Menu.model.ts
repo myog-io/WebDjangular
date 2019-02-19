@@ -36,22 +36,15 @@ export class MenuModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [],
+    validators: [Validators.required],
     type: 'text',
     label: 'Menu Wrapper Class',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-12',
+    value: 'col-12'
   })
   wrapper_class: string;
 
   @HasMany()
-  @ExtraOptions({
-    formType: FormArray,
-    type: 'select',
-    label: 'Menu Itens',
-    wrapper_class: 'col-6',
-    model: MenuItemModel,
-    backendResourceName: 'menu_item'
-  })
   menu_item: MenuItemModel[];
 
 

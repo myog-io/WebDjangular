@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, Renderer2, ContentChild, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, Renderer2, ContentChild, ViewChild, TemplateRef } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { MenuModel } from '../models/Menu.model';
@@ -8,6 +8,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 import { Subscription } from 'rxjs';
 import { NestableSettings } from 'ngx-nestable/src/nestable.models';
 import { NestableComponent } from 'ngx-nestable';
+import { NbToastrService, NbDialogService, NbDialogRef } from '@nebular/theme';
 
 
 
@@ -21,12 +22,13 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
   public current_menu: MenuModel;
 
   public menuItemForm: AbstractForm;
-  public MenuForm: AbstractForm;
+  public menuForm: AbstractForm;
   public menu_item_forms: any;
   public formLoading = false;
   private menusSub: Subscription;
   public menus: MenuModel[] = [];
-  
+  @ViewChild('dialog') dialogTemplate: TemplateRef<any>;
+  protected dialogRef: NbDialogRef<any>;
   @ViewChild(NestableComponent) nestable: NestableComponent
   public options = { fixedDepth: false } as NestableSettings;
   public list = [];
@@ -34,14 +36,23 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
   constructor(
     private datastore: WebAngularDataStore,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private toaster: NbToastrService,
+    private dialogService: NbDialogService,
   ) {
     this.renderer.listen(this.el.nativeElement, 'listUpdated', e => {
-      console.log("List Updated")
       this.list = e.detail.list;
     });
   }
-
+  openDialog() {
+    // TODO IMplement Write id number for more
+    this.dialogRef = this.dialogService.open(this.dialogTemplate, {
+      context: {
+        title: `Delete ${this.current_menu}`,
+        body: `Please confirm that you would like to delete this ${this.current_menu}`,
+      },
+    });
+  }
   ngOnInit() {
     let menuItemEmpty = this.datastore.createRecord(MenuItemModel)
     this.menuItemForm = menuItemEmpty.getForm()
@@ -58,77 +69,137 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
   }
   changeMenu(next_menu: MenuModel) {
     if (this.current_menu !== next_menu) {
-      this.current_menu = next_menu
+      this.current_menu = next_menu;
+      this.loadCurrentMenu();
     }
   }
   removeItem($event, item_id) {
     this.formLoading = true;
     this.datastore.deleteRecord(MenuItemModel, item_id).subscribe((response) => {
       this.current_menu.menu_item.slice(this.current_menu.menu_item.findIndex((item => item.id == item_id)), 1);
-      delete this.menu_item_forms[item_id];
       this.menu_item_forms[item_id] = null;
+      delete this.menu_item_forms[item_id];
       this.formLoading = false;
     })
 
 
   }
-  createNewMenu() {
+  deleteCurrentMenu() {
+    if (this.current_menu.id) {
+      this.formLoading = true;
+      const id = this.current_menu.id;
+      this.datastore.deleteRecord(MenuModel,id).subscribe((response)=>{
+        this.formLoading = false;
+      });
+    }
+    if (this.menus.length > 0) {
+      this.menus.splice(this.menus.indexOf(this.current_menu), 1)
+      this.current_menu = this.menus[0];
+      this.loadCurrentMenu();
+    } else {
+      alert("Please Create a Menu");
+    }
+    this.dialogRef.close();
 
+  }
+  createNewMenu() {
+    this.current_menu = this.datastore.createRecord(MenuModel);
+    this.current_menu.title = "New Menu";
+    this.current_menu.menu_item = [];
+    this.menus.push(this.current_menu);
+    this.loadCurrentMenu();
   }
   saveAllPromise(): Promise<MenuItemModel>[] {
     const promises = [];
-    for (let i = 0; i < this.current_menu.menu_item.length; i++) {
-      const item = this.current_menu.menu_item[i];
-      const form = this.menu_item_forms[item.id];
-      form.updateModel(item);
-      promises.push(item.save().toPromise());
+    if (this.current_menu.menu_item) {
+      for (let i = 0; i < this.current_menu.menu_item.length; i++) {
+        const item = this.current_menu.menu_item[i];
+        const form = this.menu_item_forms[item.id];
+        if (item.parent) {
+          const parent_list = this.recursiveFindById(this.list, item.parent.id);
+          item.position = parent_list.children.findIndex((i) => i.id == item.id);
+        } else {
+          item.position = this.list.findIndex((i) => i.id == item.id);
+        }
+        form.updateModel(item);
+        promises.push(item.save({ include: 'parent,children' }).toPromise());
+      }
     }
     return promises;
   }
   saveMenu() {
     this.formLoading = true;
-    Promise.all(this.saveAllPromise()).then(
-      (menu_items) => {
-        this.current_menu.menu_item = menu_items;
+    this.menuForm.updateModel(this.current_menu);
+    this.current_menu.save().subscribe(
+      (menu) => {
+        this.current_menu = null;
+        this.current_menu = menu;
+        const promises = this.saveAllPromise();
+        if (promises.length > 0) {
+          Promise.all(this.saveAllPromise()).then(
+            (menu_items) => {
+              this.current_menu.menu_item = menu_items;
+              this.formLoading = false;
+            }
+          );
+        } else {
+          this.formLoading = false;
+        }
+      },
+      (error) => {
         this.formLoading = false;
+        if (error.errors && error.errors.length > 0) {
+          for (let i = 0; i < error.errors.length; i++) {
+            // TODO: Check pointer to see if is for an specific field and set an error inside the field
+            const element = error.errors[i];
+            this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+          }
+        } else {
+          this.toaster.danger(`Error saving the Changes`, `Error!`);
+        }
       }
-    );
+    )
+
 
   }
   retrieveEntry() {
-    this.menusSub = this.datastore.findAll(MenuModel, { include: 'menu_item,menu_item.children' }).subscribe((query) => {
+    this.menusSub = this.datastore.findAll(MenuModel).subscribe((query) => {
       this.menus = query.getModels();
       this.current_menu = this.menus[0];
-      this.menu_item_forms = {};
-      for (let i = 0; i < this.current_menu.menu_item.length; i++) {
-        
-        const menu_item = this.current_menu.menu_item[i];
-        console.log(menu_item)
-        const form = menu_item.getForm();
-        form.generateForm();
-        form.populateForm(menu_item);
-        this.menu_item_forms[menu_item.id] = form;
-      }
-      this.list = this.current_menu.getList();
-      setTimeout(() => {
-        this.nestable.expandAll();  
-      }, 300);
-      
-      console.log(this.list);
+      this.loadCurrentMenu();
+
     });
-    /*
-    this.datastore.findRecord(MenuModel, '1', {
-        include: 'menu_item'
-    }).subscribe(
-        (data: MenuModel) => {
-            this.menu = data;
-            this.form = this.menu.getForm()
-            this.form.generateForm();
-            this.formLoading = false;
-        }
-    );
-    */
   }
+
+  loadCurrentMenu() {
+    if (!this.menuForm) {
+      this.menuForm = this.current_menu.getForm();
+      this.menuForm.generateForm();
+    }
+    this.menuForm.reset();
+    this.menuForm.populateForm(this.current_menu);
+    this.list = [];
+    this.menu_item_forms = {};
+    if (this.current_menu.id) {
+      this.menusSub = this.datastore.findAll(MenuItemModel, { include: 'children,parent' }, null, `/api/menu/${this.current_menu.id}/menu_item/`).subscribe((query2) => {
+        this.current_menu.menu_item = query2.getModels();
+
+        for (let i = 0; i < this.current_menu.menu_item.length; i++) {
+          const menu_item = this.current_menu.menu_item[i];
+          const form = menu_item.getForm();
+          form.displayGroups = menu_item.displayGroups;
+          form.generateForm();
+          form.populateForm(menu_item);
+          this.menu_item_forms[menu_item.id] = form;
+        }
+        this.list = this.current_menu.getList();
+        setTimeout(() => {
+          this.nestable.expandAll();
+        }, 300);
+      });
+    }
+  }
+
   updateMenuItem($event, item_id) {
     this.formLoading = true;
     const form = this.menu_item_forms[item_id];
@@ -141,11 +212,18 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
 
   }
   createMenuItem($event) {
+    if (!this.current_menu.id) {
+      alert("Please create/save the form before adding items");
+    }
     this.formLoading = true;
 
     const new_item = this.datastore.createRecord(MenuItemModel)
     new_item.menu = this.current_menu
-    new_item.position = this.current_menu.menu_item[this.current_menu.menu_item.length - 1].position + 1;
+    if (this.current_menu.menu_item.length > 0) {
+      new_item.position = this.current_menu.menu_item[this.current_menu.menu_item.length - 1].position + 1;
+    } else {
+      new_item.position = 0;
+    }
     this.menuItemForm.updateModel(new_item);
 
     if (!this.current_menu.menu_item) this.current_menu.menu_item = [];
@@ -158,52 +236,63 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
       this.menuItemForm.reset();
       this.pushItem(item);
       this.formLoading = false;
-      
+
     });
   }
-  public pushItem(item:MenuItemModel) {
+  public pushItem(item: MenuItemModel) {
     this.list.push(item.getList());
     this.list = [...this.list];
   }
 
-  
+
   public drag(e) {
-    console.log("Drag",e);
+    //console.log("Drag", e);
   }
 
   public drop(e) {
-    console.log("DROP",e);
-    //if(e.destination){
-    //  this.nestable.expandAll();
-    //}
-    if(e.changedElementPosition){
-      const item = this.recursiveFindById(this.current_menu.menu_item, e.item.id);
-      if(e.destination){
-        item.parent = this.recursiveFindById(this.current_menu.menu_item, e.destination.id);
-        item.position = e.destination.children.findIndex((i) => i.id == e.item.id);
-      }else{
-        item.position = this.list.findIndex((i) => i.id == e.item.id);
+
+    if (e.changedElementPosition) {
+      const index = this.current_menu.menu_item.findIndex(i => i.id === e.item.id);
+      const item: MenuItemModel = this.current_menu.menu_item[index];
+      // Cleaning Parents First
+      if (item.parent) {
+        const parent = this.current_menu.menu_item.find(i => i.id === item.parent.id);
+        parent.children.splice(
+          parent.children.findIndex((i) => i.id === item.id),
+          1
+        );
+        item.parent = null;
+        this.current_menu.menu_item[index].parent = null;
       }
-      
+      // Now e set the new detinations
+      if (e.destination) {
+        const parent: MenuItemModel = this.current_menu.menu_item.find(i => i.id === e.destination.id);
+        if (!parent.children) {
+          parent.children = [];
+        }
+        parent.children.push(item);
+        item.parent = parent;
+      }
     }
   }
-  
-  private recursiveFindById(items, id){
+
+  private recursiveFindById(items, id) {
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
-      if(item.children && item.children.length > 0 && item.id !== id){
-        const found = this.recursiveFindById(item.children,id);
-        if(found){
+      if (item.id === id) {
+        return item;
+      }
+      if (item.children && item.children.length > 0 && item.id !== id) {
+        const found = this.recursiveFindById(item.children, id);
+        if (found) {
           return found;
         }
       }
-      if(item.id === id){
-        return item;
-      }
+
     }
   }
 
   public onDisclosure(e) {
-    console.log("DISCLOSURE",e);
+    console.log("DISCLOSURE", e);
   }
 }

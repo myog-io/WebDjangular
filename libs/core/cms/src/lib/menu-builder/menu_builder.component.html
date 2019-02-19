@@ -3,7 +3,9 @@
     <nb-card>
       <nb-card-header>Menu Editor
         <!-- SELECT MENU -->
-
+        <button nbButton type="button" status="danger" [disabled]="formLoading" [nbSpinnerStatus]="danger"
+          [nbSpinnerSize]="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
+          (click)="openDialog()"><i class="fas fa-trash"></i></button>
         <button nbButton type="button" status="success" [disabled]="formLoading" [nbSpinnerStatus]="success"
           [nbSpinnerSize]="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
           (click)="saveMenu()">Save</button>
@@ -30,6 +32,22 @@
 <!--row-->
 
 <div class="row">
+  <div class="col-12" *ngIf="current_menu && menuForm">
+    <nb-card>
+      <nb-accordion>
+        <nb-accordion-item>
+          <nb-accordion-item-header>
+            Edit {{ current_menu }}
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <wda-form [displayGroups]="menuForm.displayGroups" [inceptionForm]="true" [group]="menuForm"
+              [formLoading]="formLoading" (onSubmit)="saveMenuConfig($event,row.item.id)" [submit]="false">
+            </wda-form>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </nb-card>
+  </div><!-- EDIT MENU AREA-->
   <div class="col-6">
     <nb-card>
       <nb-accordion>
@@ -59,7 +77,7 @@
       </nb-accordion>
     </nb-card>
   </div>
-  <!--col-->
+  <!--col ADD NEW MENUS AREA-->
 
   <div class="col-6">
     <ngx-nestable #nestable (drag)="drag($event)" (drop)="drop($event)" (disclosure)="onDisclosure($event)"
@@ -76,8 +94,8 @@
             {{ row.item.name }} ({{row.item.url}} #{{row.item.id}})
           </div>
         </nb-accordion-item-header>
-        <nb-accordion-item-body>
-          <wda-form [displayGroups]="row.item.displayGroups" [inceptionForm]="true"
+        <nb-accordion-item-body *ngIf="menu_item_forms[row.item.id]">
+          <wda-form [displayGroups]="menu_item_forms[row.item.id].displayGroups" [inceptionForm]="true"
             [group]="menu_item_forms[row.item.id]" [formLoading]="formLoading" [remove]="true"
             (onSubmit)="updateMenuItem($event,row.item.id)" (onRemove)="removeItem($event,row.item.id)">
           </wda-form>
@@ -94,3 +112,18 @@
 
 </div>
 <!--row-->
+<ng-template #dialog let-data>
+
+  <nb-card>
+    <nb-card-header> {{ data.title }}</nb-card-header>
+    <nb-card-body>
+      {{data.body}}
+    </nb-card-body>
+    <nb-card-footer class="text-right">
+      <button nbButton [nbSpinner]="loading" status="warning" class="mr-1" (click)="deleteCurrentMenu()">
+        <i class="fa fa-trash"></i> Confirm</button>
+      <button nbButton [nbSpinner]="loading" status="info" class="ml-1" (click)="dialogRef.close()">Cancel</button>
+
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

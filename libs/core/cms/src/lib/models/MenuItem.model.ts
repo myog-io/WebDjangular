@@ -68,7 +68,7 @@ export class MenuItemModel extends AbstractModel {
   menu: any;
 
   @HasMany()
-  children: MenuItemModel;
+  children: MenuItemModel[];
 
   @Attribute()
   created: Date;
