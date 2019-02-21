@@ -37,9 +37,39 @@ export class MenuItemModel extends AbstractModel {
     validators: [],
     type: 'text',
     label: '"alt" attribute',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-6'
   })
   alt: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'CSS Class',
+    wrapper_class: 'col-6'
+  })
+  css_class: string;
+  
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: '#fragment (after link)',
+    wrapper_class: 'col-6'
+  })
+  fragment: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Icon',
+    wrapper_class: 'col-6'
+  })
+  icon: string;
+
+ 
+
 
   @Attribute()
   @ExtraOptions({
@@ -84,6 +114,12 @@ export class MenuItemModel extends AbstractModel {
 
   set pk(value) {
 
+  }
+  get class() {
+    return this.css_class;
+  }
+  set class(css_class:string) {
+    this.css_class = css_class;
   }
 
   arrangeItems(){

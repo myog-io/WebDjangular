@@ -8,22 +8,22 @@ import {
   UrlSegmentGroup,
   UrlTree
 } from "@angular/router";
-import {Injectable} from "@angular/core";
-import {WDAConfig} from "@core/services/src/lib/wda-config.service";
-import {PageModel} from "@core/cms/src/lib/models";
-import {ErrorResponse} from "angular2-jsonapi";
+import { Injectable } from "@angular/core";
+import { WDAConfig } from "@core/services/src/lib/wda-config.service";
+import { PageModel } from "@core/cms/src/lib/models";
+import { ErrorResponse } from "angular2-jsonapi";
 
 @Injectable()
-export class CoreDynamicPageLoaderResolver implements Resolve<PageModel|ErrorResponse> {
+export class CoreDynamicPageLoaderResolver implements Resolve<PageModel | ErrorResponse> {
 
   constructor(public router: Router,
-              public wdaConfig: WDAConfig) {
+    public wdaConfig: WDAConfig) {
     this.wdaConfig.applyCustomStyle();
     this.wdaConfig.applyCustomScript();
   }
 
   resolve(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot) {
+    state: RouterStateSnapshot) {
 
     const tree: UrlTree = this.router.parseUrl(state.url);
     const urlSegmentGroup: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
@@ -33,19 +33,19 @@ export class CoreDynamicPageLoaderResolver implements Resolve<PageModel|ErrorRes
       const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
 
       return this.wdaConfig.getPage(urlSegments).then((data: PageModel) => {
-          return data;
-        },
+        return data;
+      },
         (error: ErrorResponse) => {
           return error;
-        })
+        });
 
     } else {
       return this.wdaConfig.getHome().then((data: PageModel) => {
-          return data;
-        },
+        return data;
+      },
         (error: ErrorResponse) => {
           return error;
-        })
+        });
     }
 
 

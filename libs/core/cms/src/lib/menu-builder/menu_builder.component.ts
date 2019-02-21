@@ -79,6 +79,7 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
       this.current_menu.menu_item.slice(this.current_menu.menu_item.findIndex((item => item.id == item_id)), 1);
       this.menu_item_forms[item_id] = null;
       delete this.menu_item_forms[item_id];
+      this.removeFromList(this.list, item_id);
       this.formLoading = false;
     })
 
@@ -88,7 +89,7 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
     if (this.current_menu.id) {
       this.formLoading = true;
       const id = this.current_menu.id;
-      this.datastore.deleteRecord(MenuModel,id).subscribe((response)=>{
+      this.datastore.deleteRecord(MenuModel, id).subscribe((response) => {
         this.formLoading = false;
       });
     }
@@ -289,6 +290,21 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
         }
       }
 
+    }
+  }
+  private removeFromList(list, id): boolean {
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (item.id === id) {
+        this.list.splice(i, 1);
+        return true;
+      }
+      if (item.children && item.children.length > 0 && item.id !== id) {
+        const found = this.removeFromList(item.children, id);
+        if (found === true) {
+          return found;
+        }
+      }
     }
   }
 

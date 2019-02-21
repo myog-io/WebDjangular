@@ -102,8 +102,6 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     this.onSubmit.emit($event);
   }
   public removeItem($event: any = {}, redirect: boolean) {
-    console.log($event)
-
     //this.onRemove.emit($event);
     this.progress = $event / 10;
     if (this.progress === 100) {

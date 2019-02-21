@@ -1,8 +1,10 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {CookieService} from 'ngx-cookie-service';
-import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { NgbModal, NgbModalOptions } from "@ng-bootstrap/ng-bootstrap";
 import { ThemeProviderfyModalWecallyouComponent } from '../../modal/wecallyou/wecallyou.component';
+import { MenuItemModel } from '@core/cms/src/lib/models';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { Subscription, Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -21,14 +23,15 @@ export class ThemeProviderfyHeaderMenuComponent implements OnInit {
   //position
   //parent
   //menu
-
+  items: Observable<MenuItemModel[]>;
+  /*
   items: any[] = [
 
     {
       name: 'Internet',
       children: [
-        {name: 'Fibra Óptica', url: '/planos-de-internet', fragment: "fibra", icon: "icon icon-fiber"},
-        {name: 'Via Rádio', url: '/planos-de-internet', fragment: "radio", icon: "icon icon-radio"}
+        { name: 'Fibra Óptica', url: '/planos-de-internet', fragment: "fibra", icon: "icon icon-fiber" },
+        { name: 'Via Rádio', url: '/planos-de-internet', fragment: "radio", icon: "icon icon-radio" }
       ]
     },
     {
@@ -38,8 +41,8 @@ export class ThemeProviderfyHeaderMenuComponent implements OnInit {
     {
       name: 'HDTV',
       children: [
-        {name: 'Planos', url: '/planos-de-tv', icon: 'icon icon-plans'},
-        {name: 'Ponto Extra', url: '/Ponto Extra', icon: 'icon icon-extra-point'},
+        { name: 'Planos', url: '/planos-de-tv', icon: 'icon icon-plans' },
+        { name: 'Ponto Extra', url: '/Ponto Extra', icon: 'icon icon-extra-point' },
       ]
     },
     {
@@ -53,26 +56,31 @@ export class ThemeProviderfyHeaderMenuComponent implements OnInit {
     {
       name: 'Contato',
       children: [
-        {name: 'Chat Online', url: '/contato', icon: 'icon icon-chat'},
-        {name: 'Formuário de Contato', url: '/contato', icon: 'icon icon-form'},
-        {name: 'Escritórios', url: '/contato', icon: 'icon icon-offices'},
-        {name: 'Emails', url: '/contato', icon: 'icon icon-email'},
-        {name: 'Telefones', url: '/contato', icon: 'icon icon-telephone'},
+        { name: 'Chat Online', url: '/contato', icon: 'icon icon-chat' },
+        { name: 'Formuário de Contato', url: '/contato', icon: 'icon icon-form' },
+        { name: 'Escritórios', url: '/contato', icon: 'icon icon-offices' },
+        { name: 'Emails', url: '/contato', icon: 'icon icon-email' },
+        { name: 'Telefones', url: '/contato', icon: 'icon icon-telephone' },
       ]
     },
     {
       name: 'Assine Já',
       class: 'featured btn-enroll-now',
       children: [
-        {name: 'Planos', url: '/assine'},
-        {name: 'Assine Pelo Chat', url: '/assine'},
-        {name: 'Nós ligamos pra você', click: 'openModalWeCallYou()'},
+        { name: 'Planos', url: '/assine' },
+        { name: 'Assine Pelo Chat', url: '/assine' },
+        { name: 'Nós ligamos pra você', click: 'openModalWeCallYou()' },
       ]
     }
+    
   ];
-
-  constructor(private modalService: NgbModal, private cookieService: CookieService,
-              private clientUserService: ClientUserService) {
+  */
+  @Input() menu_id: string;
+  private sub: Subscription;
+  constructor(
+    private modalService: NgbModal,
+    private datastore: WebAngularDataStore,
+  ) {
 
 
   }
@@ -92,23 +100,20 @@ export class ThemeProviderfyHeaderMenuComponent implements OnInit {
 
 
   ngOnInit() {
-    const ModalTVOptions: NgbModalOptions = {
-      windowClass: 'tv-channel',
-    };
+    this.items = this.datastore.findAll(
+      MenuItemModel,
+      { include: 'children,parent', parent__isnull: true, menu: this.menu_id, page: { size: 100 } },
+      new HttpHeaders({ 'Authorizantion': 'none' }),
+    ).map(
+      (query, index) => {
+        return query.getModels();
+      }
+    )
+    //const ModalTVOptions: NgbModalOptions = {
+    //  windowClass: 'tv-channel',
+    //};
 
-    //this.modalService.open(ThemeProviderfyModalWecallyouComponent);
 
-    /////this.modalService.open(ThemeProviderfyModalAdultContentComponent);
-    /////this.modalService.open(ThemeProviderfyModalCombateComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalCrackleComponent, ModalTVOptions );
-    /////this.modalService.open(ThemeProviderfyModalHBOComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalPacoteInternacionalComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalPlayboytvComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalPremiereComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalSexpriveComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalSexyhotComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalTelecineComponent, ModalTVOptions);
-    /////this.modalService.open(ThemeProviderfyModalVenusComponent, ModalTVOptions);
   }
 }
 

@@ -112,6 +112,8 @@ const COMPONENTS = [
     ThemeProviderfyModalSexyhotComponent,
     ThemeProviderfyModalTelecineComponent,
     ThemeProviderfyModalVenusComponent,
+    ThemeProviderfyTopHeaderComponent,
+    ThemeProviderfyHeaderMenuComponent,
 
   ]
 })

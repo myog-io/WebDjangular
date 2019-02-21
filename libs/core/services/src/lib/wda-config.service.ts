@@ -8,6 +8,8 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 import { ClientUserService } from './client-user.service';
 import { Theme } from '@core/interfaces/src/lib/theme';
 import { PageModel } from '@core/cms/src/lib/models';
+import { BlockHeaderModel } from '@core/cms/src/lib/models/BlockHeader.model';
+import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +29,9 @@ export class WDAConfig {
   public get_home_url = '/api/page/get_home/';
   public get_page_url = '/api/page/#path#/get_page';
   public include = 'header,footer,layout';
+  public current_page:PageModel;
+  public current_header:BlockHeaderModel;
+  public current_footer:BlockFooterModel;
 
   constructor(
     private http: HttpClient,
@@ -196,6 +201,9 @@ export class WDAConfig {
         this.get_home_url).subscribe(
           (page: PageModel) => {
             page.setHome();
+            this.current_page = page;
+            this.current_footer = page.footer;
+            this.current_header = page.header;
             resolve(page);
           },
           (error: any) => {
@@ -207,11 +215,13 @@ export class WDAConfig {
 
   public getPage(path: UrlSegment[]): Promise<PageModel | any> {
     return new Promise((resolve, reject) => {
-
       this.datastore.findRecord(PageModel,
         null, { include: this.include }, new HttpHeaders({ Authorization: 'none' }),
         this.get_page_url.replace('#path#', path.join('|'))).subscribe(
           (page: PageModel) => {
+            this.current_page = page;
+            this.current_footer = page.footer;
+            this.current_header = page.header;
             resolve(page);
           },
           (error: any) => {
@@ -230,6 +240,9 @@ export class WDAConfig {
         (response: JsonApiQueryData<PageModel>) => {
           let models = response.getModels();
           let page: PageModel = models[0];
+          this.current_page = page;
+          this.current_footer = page.footer;
+          this.current_header = page.header;
           resolve(page);
         },
         (error: any) => {

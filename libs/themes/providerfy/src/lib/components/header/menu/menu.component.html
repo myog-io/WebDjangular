@@ -27,7 +27,7 @@
 
 <div class="collapse navbar-collapse" [ngbCollapse]="!isNavbarCollapsed" id="navbarSupportedContent">
   <ul class="navbar-nav">
-    <ng-container *ngFor="let item of items">
+    <ng-container *ngFor="let item of items | async">
       <ng-container *ngTemplateOutlet="item?.children?.length > 0 ? dropdownMenu : simpleMenu; context: {item: item}">
 
       </ng-container>
