@@ -33,7 +33,8 @@ export class FileUploaderService {
     updateEntry: '',
     createEntry: '',
     deleteEntry: '',
-  }
+  };
+
   public defaultOptions: UploaderServiceOptions = {
     createMethod: 'POST',
     updateMethod: 'POST',
@@ -46,13 +47,15 @@ export class FileUploaderService {
     contentTypeParamName: 'content_type',
     fileParamName: 'file',
     idAttribute: 'id',
-  }
+  };
+
   public additionalHeaders = {};
   protected cancelError = "UPLOAD CANCELED";
   protected uploadSubscription: any = null;
   public links: UploaderLinksOptions;
   public options: UploaderServiceOptions;
   private _uploader: FileUploader = null;
+
   constructor(
     protected http: HttpClient
   ) {

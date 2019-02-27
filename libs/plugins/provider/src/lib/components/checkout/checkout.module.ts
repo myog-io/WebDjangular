@@ -22,9 +22,15 @@ import {PluginProviderCheckoutBeforeCheckoutComponent} from "./before-checkout/b
 import {NgxMaskModule} from "ngx-mask";
 import { PluginProviderCheckoutErrorComponent } from "./checkout-form-error.component";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
-import {NbTooltipComponent} from "@nebular/theme/components/tooltip/tooltip.component";
 
+import {FilePondModule, registerPlugin as FilePondRegisterPlugin} from 'ngx-filepond';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
+FilePondRegisterPlugin(FilePondPluginImagePreview);
+FilePondRegisterPlugin(FilePondPluginFileValidateSize);
+FilePondRegisterPlugin(FilePondPluginFileValidateType);
 
 const COMPONENTS = [
   PluginProviderCheckoutComponent,
@@ -53,7 +59,8 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
-    NgbModalModule
+    NgbModalModule,
+    FilePondModule
   ],
   exports: [
     ...COMPONENTS,
