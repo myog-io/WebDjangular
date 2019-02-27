@@ -11,13 +11,17 @@ import { PluginProviderCheckoutComponent } from '@plugins/provider/src/lib/compo
 import { PluginProviderCityCoverageComponent } from '@plugins/provider/src/lib/components/city-coverage/city-coverage.component';
 import { PluginProviderPlansComponent } from '@plugins/provider/src/lib/components/plans/plans.component';
 import { PluginProviderCityListComponent } from '@plugins/provider/src/lib/components/city-list/city-list.component';
-import {PluginProviderError500Component} from "@plugins/provider/src/lib/components/errors/500/500.component";
-import {PluginProviderError404Component} from "@plugins/provider/src/lib/components/errors/404/404.component";
+import { PluginProviderError500Component } from "@plugins/provider/src/lib/components/errors/500/500.component";
+import { PluginProviderError404Component } from "@plugins/provider/src/lib/components/errors/404/404.component";
+import { ThemeProviderfyTopHeaderComponent } from '@themes/providerfy/src/lib/components/header/top-header/top-header.component';
+import { ThemeProviderfyHeaderMenuComponent } from '@themes/providerfy/src/lib/components/header/menu/menu.component';
+import { CoreCmsLinkComponent } from '@core/cms/src/lib/components/link.component';
 
 
 export const embeddedComponents = [
   CoreCmsMapsComponent,
   CoreCmsGalleryComponent,
+  CoreCmsLinkComponent,
   PluginProviderPricingInternetHorizontalComponent,
   PluginProviderPricingInternetVerticalComponent,
   PluginProviderPricingTelephoneVerticalComponent,
@@ -28,7 +32,11 @@ export const embeddedComponents = [
   PluginProviderPlansComponent,
   PluginProviderCityListComponent,
   PluginProviderError404Component,
-  PluginProviderError500Component
+  PluginProviderError500Component,
+  ThemeProviderfyTopHeaderComponent,
+  ThemeProviderfyHeaderMenuComponent,
+  
+  
 ];
 
 export class EmbeddedComponents {
@@ -38,13 +46,13 @@ export class EmbeddedComponents {
 @Component({
   selector: 'wda-content-viewer',
   template: '',
-  encapsulation:  ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class ContentViewer {
   private hostElement: HTMLElement;
   private embeddedComponentFactories: Map<string, ComponentFactory<any>> = new Map();
   private embeddedComponents: ComponentRef<any>[] = [];
-
+ 
   @Output()
   docRendered = new EventEmitter();
 
@@ -53,9 +61,10 @@ export class ContentViewer {
     elementRef: ElementRef,
     embeddedComponents: EmbeddedComponents,
     private injector: Injector,
+    
   ) {
     this.hostElement = elementRef.nativeElement;
-    embeddedComponents.components.forEach((component:any) => {
+    embeddedComponents.components.forEach((component: any) => {
       const factory = componentFactoryResolver.resolveComponentFactory(component);
       this.embeddedComponentFactories.set(factory.selector, factory);
     })
@@ -69,7 +78,7 @@ export class ContentViewer {
       this.docRendered.emit();
     }
   }
-
+  
   private build(content) {
     this.hostElement.innerHTML = content || '';
 
@@ -92,15 +101,17 @@ export class ContentViewer {
         this.embeddedComponents.push(embeddedComponent);
       })
     });
-}
+    
+    
+  }
 
-ngDoCheck() {
-  this.embeddedComponents.forEach(comp => comp.changeDetectorRef.detectChanges());
-}
+  ngDoCheck() {
+    this.embeddedComponents.forEach(comp => comp.changeDetectorRef.detectChanges());
+  }
 
-ngOnDestroy() {
-  // destroy these components else there will be memory leaks
-  this.embeddedComponents.forEach(comp => comp.destroy());
-  this.embeddedComponents.length = 0;
-}
+  ngOnDestroy() {
+    // destroy these components else there will be memory leaks
+    this.embeddedComponents.forEach(comp => comp.destroy());
+    this.embeddedComponents.length = 0;
+  }
 }

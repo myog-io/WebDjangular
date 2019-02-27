@@ -110,7 +110,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
     }
   }
 
-  protected getRelationships(data: any): any {
+  public getRelationships(data: any): any {
     let relationships: any;
     for (const key in data) {
       if (data.hasOwnProperty(key)) {

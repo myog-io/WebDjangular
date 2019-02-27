@@ -59,6 +59,8 @@ export class BlockModel extends AbstractModel {
   public toString = (): string => {
     return `${this.title} (#${this.id})`;
   }
-
+  getContent():string {
+    return this.content;
+  }
 }
 

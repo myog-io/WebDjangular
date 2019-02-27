@@ -68,7 +68,7 @@
               </ng-container>
             </div>
 
-            <div class="row" *ngIf="inceptionForm">
+            <div class="row" *ngIf="inceptionForm && submit">
               <div class="col-12 text-right">
                 <hr>
                 <ng-container *ngIf="save_continue">
@@ -78,6 +78,14 @@
                     {{ submit_continue_label }}
                   </button>
                 </ng-container>
+                <div class="progress-btn" data-progress-style="fill-back" [ngClass]="{ 'active': progress > 0 }">
+                  <button *ngIf="remove" holdable nbButton [status]="remove_status"  [size]="submit_size"
+                    [nbSpinner]="loading" [nbSpinnerStatus]="remove_status" [disabled]="loading" [nbSpinnerSize]="submit_size"
+                    nbSpinnerMessage="" (holdTime)="removeItem($event, false)" >
+                    {{ remove_label }}
+                  </button>
+                  <progress [value]="progress" max="100" class="progress"></progress>
+                </div>
                 <button nbButton [status]="submit_status" [disabled]="loading || !group.valid" [size]="submit_size"
                   [nbSpinner]="loading" [nbSpinnerStatus]="submit_status" [disabled]="loading" [nbSpinnerSize]="submit_size"
                   nbSpinnerMessage="" (click)="submitForm($event,true)">
