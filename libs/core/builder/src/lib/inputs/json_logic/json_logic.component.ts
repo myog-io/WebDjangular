@@ -3,12 +3,12 @@ import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { HttpClient } from '@angular/common/http';
-import { ConsoleService } from '@ng-select/ng-select/ng-select/console.service';
+
 
 interface BaseLogicCondition {
   type: 'logic_condition',
   condition: string,
-  value: string,
+  value: string | BaseLogicCondition,
   variable: string,
 };
 
@@ -55,6 +55,10 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     { label: 'Less than or Equal(<=)', value: '<=' },
     { label: 'Greater than(>)', value: '>' },
     { label: 'Greater than or Equal(>=)', value: '>=' },
+    { label: 'Has Item(filter)', value: 'filter' },
+  ]
+  public mc_variables = [
+    'filter'
   ]
   public fields = [
 
@@ -97,6 +101,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
               });
             } else {
               let variable = element[0]['var'];
+              
               if(this.fields.indexOf(variable) === -1){
                 this.fields.push({
                   id: `${variable}`,
@@ -107,7 +112,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
               logics.push({
                 type: 'logic_condition',
                 condition: key,
-                value: element[1],
+                value: this.mc_variables.indexOf(key) === -1 ? element[1] : this.set_logic_recursive([element[1]])[0] ,
                 variable: variable,
               });
             }
@@ -115,6 +120,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
         }
       }
     }
+    
     return logics;
   }
   ngOnInit() {
@@ -157,6 +163,10 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
             for (const key in options.data) {
               if (options.data.hasOwnProperty(key)) {
                 const element = options.data[key];
+                this.fields.push({
+                  id: `${key}`,
+                  name: `${key.toLowerCase()}`
+                });
                 for (let i = 0; i < element.length; i++) {
                   const attr = element[i];
                   this.fields.push({
@@ -197,9 +207,24 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
       const element = children[i];
       switch (element.type) {
         case 'logic_condition':
-          let condition = {}
-          condition[element.condition] = [{ 'var': element.variable }, element.value]
-          logic.push(condition)
+          
+            let condition = {}
+            let value = element.value;
+            if(this.mc_variables.indexOf(element.condition) >=0 && typeof value != "object"){
+              element.value = {
+                type: 'logic_condition',
+                condition: '',
+                value: '',
+                variable: '',
+              }
+              value = element.value;
+            }
+            condition[element.condition] = [
+              { 'var': element.variable }, 
+              this.mc_variables.indexOf(element.condition) === -1 ? element.value : this.get_logic_recursive([element.value])[0]
+            ]
+            logic.push(condition)
+          
           break;
         default:
           let group = {}
