@@ -271,9 +271,9 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
             pos = 9;
         }
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (resultado != digitos.charAt(1))
+        if (resultado != digitos.charAt(1)) {
           return {invalidCNPJ: true};
-
+        }
         return {invalidCNPJ: false};
       }
       return null;

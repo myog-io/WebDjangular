@@ -8,24 +8,24 @@ import { PluginProviderModule } from '@plugins/provider/src/lib/provider.module'
 import { CoreCmsModule } from '@core/cms/src/lib/core-cms.module';
 import { PluginProviderCheckoutModule } from '@plugins/provider/src/lib/components/checkout/checkout.module';
 
+
 const DECLARATIONS = [
   ContentViewer,
   CoreDynamicPageLoaderComponent
 
-]
+];
 //  TODO: DYNAMIC??
 const IMPORTS_FOR_DYNAMIC = [
   PluginProviderModule,
   CoreCmsModule,
   PluginProviderCheckoutModule,
-]
+];
 
 @NgModule({
   imports: [
     CommonModule,
     ...IMPORTS_FOR_DYNAMIC,
     RouterModule,
-    
   ],
   declarations: [
     //...COMMON_DIRECTIVES,

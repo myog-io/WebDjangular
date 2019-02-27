@@ -573,7 +573,6 @@ export class ProviderCheckoutService {
   }
 
   getCurrentCity(): Promise<CityModel> {
-
     return new Promise((resolve, reject) => {
       const postalCode = this.formBeforeCheckout.get('postalCode').value;
 
