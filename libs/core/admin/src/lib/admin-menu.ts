@@ -1,6 +1,4 @@
 import {NbMenuItem} from '@nebular/theme';
-import {UserModel} from "@core/users/src/lib/models";
-import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
@@ -14,34 +12,34 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Posts',
-        link: '/posts',
+        link: '/cms/posts',
       },
       {
         title: 'Pages',
-        link: '/pages',
+        link: '/cms/pages',
       },
       {
         title: 'Blocks',
           children: [
           {
             title: 'Headers',
-            link: '/block/headers'
+            link: '/cms/block/headers'
           },
           {
             title: 'Layouts',
-            link: '/block/layouts'
+            link: '/cms/block/layouts'
           },
           {
             title: 'Footers',
-            link: '/block/footers'
+            link: '/cms/block/footers'
           },
           {
             title: 'Widget-Holders',
-            link: '/block/widget-holders'
+            link: '/cms/block/widget-holders'
           },
           {
             title: 'Custom',
-            link: '/block/custom'
+            link: '/cms/block/custom'
           }
         ],
       },
@@ -49,25 +47,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Medias',
         link: '/media',
       },
-      // {
-      //   title: 'Forms (soon)',
-      // },
+     
       {
         title: 'Tags',
-        link: '/page-tags',
+        link: '/cms/page-tags',
       },
       {
         title: 'Categories',
-        link: '/page-categories',
+        link: '/cms/page-categories',
       },
       {
         title: 'Menus',
-        link: '/menu_builder',
+        link: '/cms/menu_builder',
+      },
+      {
+        title: 'Forms',
+        link: '/cms/form',
       },
       /* MENU BUILDER is the NExt */
     ]
   },
-
   {
     title: 'Store',
     icon: 'fas fa-shopping-cart',
