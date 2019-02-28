@@ -73,6 +73,7 @@ def send_order_confirmation(order_pk):
     sender.send(email_data)
     sender.send(admin_email_data)
 
+
 def send_fulfillment_confirmation(order_pk, fulfillment_pk):
     email_data = collect_data_for_fullfillment_email(
         order_pk, StoreEmailConfig.ORDER_FULLFILMENT.value, fulfillment_pk)
@@ -92,7 +93,6 @@ def send_payment_confirmation(order_pk):
         StoreEmailConfig.PAYMENT_CONFIRMATION.value
     )
     sender.send(email_data)
-
 
 
 def get_organization(order):

@@ -283,6 +283,9 @@ class Order(BaseModel):
     def get_user_current_email(self):
         return self.user and self.user.email or self.user_email
 
+    def get_lines(self):
+        return self.lines.all()
+
     def _total_paid(self):
         payments = self.payments.filter(
             charge_status=ChargeStatus.CHARGED)
