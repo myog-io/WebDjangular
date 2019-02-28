@@ -27,6 +27,7 @@ export class CartService {
   private _cart: CartModel = null;
   private cart_cookie_name: string = '_cart';
   public cart_changes: EventEmitter<null> = new EventEmitter();
+  public cart_updating: boolean = false;
 
   constructor(private http: HttpClient,
     private cookieService: CookieService,
@@ -105,6 +106,7 @@ export class CartService {
   }
 
   public updateCart(): Promise<CartModel> {
+    this.cart_updating = true;
     return new Promise((resolve, reject) => {
       this.cart.save({
         include: `${CartModel.include},items.product,items.product.categories`
@@ -115,7 +117,10 @@ export class CartService {
           resolve(cart);
         },
         (error: ErrorResponse) => {
+
           reject(error);
+        },() => {
+          this.cart_updating = false;
         });
     });
   }

@@ -834,13 +834,7 @@ input:focus ~ .highlight {
 
 
 .loader {
-  border-radius: 50%;
-  border-top: 10px solid $primary;
-  border-bottom: 10px solid #000;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+
 }
 
 @-webkit-keyframes spin {
