@@ -156,7 +156,11 @@
         font-weight: $pricing-plan-price-fw;
         font-family: $pricing-plan-price-ff;
       }
-
+      .price.strikethrough{
+        text-decoration: line-through;
+        font-weight: 500;
+        font-size: 1rem;
+      }
       .align-text-super {
         vertical-align: super;
       }
@@ -166,6 +170,11 @@
         @include responsive-font-size( 17px);
         font-weight: $fw-semibold;
         font-family: $primary-ff;
+      }
+      .plan-period.strikethrough{
+        text-decoration: line-through;
+        font-weight: 500;
+        font-size: 1rem;
       }
     }
 

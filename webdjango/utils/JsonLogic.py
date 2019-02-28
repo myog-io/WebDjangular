@@ -201,6 +201,19 @@ def jsonLogic(tests, data=None):
         if not scopedData or not isinstance(scopedData, list):
             return []
         return list(filter(lambda datum: jsonLogic(scopedLogic,datum) is True, scopedData))
+    if operator == 'contains':
+        scopedData = jsonLogic(values[0], data)
+        scopedLogic = tests[operator][1]
+        if not scopedData or not isinstance(scopedData, list):
+            return []
+        return len(list(filter(lambda datum: jsonLogic(scopedLogic,datum) is True, scopedData))) > 0
+    if operator == 'not_contains':
+        scopedData = jsonLogic(values[0], data)
+        scopedLogic = tests[operator][1]
+        if not scopedData or not isinstance(scopedData, list):
+            return []
+        return len(list(filter(lambda datum: jsonLogic(scopedLogic,datum) is True, scopedData))) <= 0
+        
     if operator == 'map':
         scopedData = jsonLogic(values[0], data)
         scopedLogic = tests[operator][1]
@@ -219,6 +232,8 @@ def jsonLogic(tests, data=None):
             
 
     if operator not in operations:
-        raise ValueError("Unrecognized operation:'%s'" % operator)
+        print("Unrecognized operation:'%s'" % operator)
+        return False
+        
 
     return operations[operator](*values)
