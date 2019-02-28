@@ -17,15 +17,17 @@ import { PluginProviderCityListComponent } from './components/city-list/city-lis
 import { PluginProviderCityCoverageComponent } from './components/city-coverage/city-coverage.component';
 import { AgmCoreModule } from '@agm/core';
 import { RouterModule } from '@angular/router';
-import {CartService} from "@plugins/store/src/lib/data/services/cart.service";
+import { CartService } from "@plugins/store/src/lib/data/services/cart.service";
 import { PluginProviderDialogComponent } from './components/dialog.component';
-
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgxMaskModule } from "ngx-mask";
 
 
 const MODULES = [
   CommonModule,
   PluginProviderCheckoutModule,
-
+  FormsModule,
+  ReactiveFormsModule,
 ];
 
 const COMPONENTS = [
@@ -53,7 +55,8 @@ const SERVICES = [
   imports: [
     ...MODULES,
     AgmCoreModule,
-    RouterModule
+    RouterModule,
+     NgxMaskModule.forRoot() // TODO: remove this from here after the Form Module is done.
   ],
   exports: [
     ...COMPONENTS,

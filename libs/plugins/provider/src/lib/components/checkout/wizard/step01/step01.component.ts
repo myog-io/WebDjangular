@@ -10,6 +10,7 @@ import * as moment from 'moment';
   templateUrl: './step01.component.html',
   styleUrls: ['./step01.component.scss']
 })
+
 export class PluginProviderCheckoutWizardStep01Component implements OnInit {
 
   public formWizardStep01: FormGroup;
@@ -72,6 +73,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       dob: [dob, [
         Validators.required, Validators.minLength(8),
         this.DateValidator(), this.Over18Validator()]],
+      file_document: ['', [Validators.required]],
       postal_code: [postal_code],
       city: [city],
       state: [state],
@@ -135,18 +137,24 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           this.formWizardStep01.get('portability_number').updateValueAndValidity({emitEvent: false});
         }
       );
-
     }
+
+
+    this.formWizardStep01.get('file_document').valueChanges.subscribe((value)=>{
+      console.log(value);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   DateValidator(): ValidatorFn {
     return (control: AbstractControl): Validators => {
       const date = control.value;
-      if(date.length < 10) {
+      if (date.length < 10) {
         return null
       }
       const m = moment(date, 'DD/MM/YYYY');
-      if(m.isValid()){
+      if (m.isValid()) {
         return {invalidDate: false};
       }
       return {invalidDate: true};
@@ -156,12 +164,12 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
   Over18Validator(): ValidatorFn {
     return (control: AbstractControl): Validators => {
       const date = control.value;
-      if(date.length < 10) {
+      if (date.length < 10) {
         return null
       }
       const birthday = moment(date, 'DD/MM/YYYY');
       const age = moment().diff(birthday, 'years');
-      if(age >= 18) {
+      if (age >= 18) {
         return {notOver18: false}
       }
       return {notOver18: true}
@@ -223,7 +231,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     return (control: AbstractControl): Validators => {
       const rg = control.value;
       if (rg) {
-        if(rg.length < 8) {
+        if (rg.length < 8) {
           return {invalidRG: true};
         }
         return {invalidRG: false};
@@ -235,7 +243,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
   CNPJValidator(): ValidatorFn {
     return (control: AbstractControl): Validators => {
       const cnpj = control.value;
-      if(cnpj) {
+      if (cnpj) {
         if (cnpj.length != 14)
           return {invalidCNPJ: true};
 
@@ -263,9 +271,9 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
             pos = 9;
         }
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-        if (resultado != digitos.charAt(1))
+        if (resultado != digitos.charAt(1)) {
           return {invalidCNPJ: true};
-
+        }
         return {invalidCNPJ: false};
       }
       return null;
@@ -313,6 +321,123 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
         this.formWizardStep01Submitted = false;
       })
     }
+  }
+
+  myPond: any;
+
+  pondOptions = {
+    name: 'my-file-pond',
+    class: 'my-filepond',
+
+    allowDrop: true,
+    allowBrowse: true,
+    allowMultiple: true,
+    multiple: false,
+    maxFiles: 1,
+
+    labelIdle: 'Arraste os documentos aqui ou clique aqui para buscá-los',
+    labelInvalidField: 'Contém arquivo inválido',
+    labelFileWaitingForSize: 'Carregando tamanho do arquivo',
+    labelFileSizeNotAvailable: 'Tamanho do arquivo indefinida',
+    labelFileLoading: 'Carregando',
+    labelFileLoadError: 'Erro ao carregar o arquivo',
+    labelFileProcessing: 'Enviando',
+    labelFileProcessingComplete: 'Envio completo',
+    labelFileProcessingAborted: 'Envio cancelado',
+    labelFileProcessingError: 'Erro durante o envio',
+    labelFileProcessingRevertError: 'Erro ao reverter',
+    labelFileRemoveError: 'Erro ao remover',
+    labelTapToCancel: 'Clique para cancelar',
+    labelTapToRetry: 'Clique para tentar de novo',
+    labelTapToUndo: 'Clique para desfazer',
+    labelButtonRemoveItem: 'Remover',
+    labelButtonAbortItemLoad: 'Abortar',
+    labelButtonRetryItemLoad: 'Tentar de novo',
+    labelButtonAbortItemProcessing: 'Cancelar',
+    labelButtonUndoItemProcessing: 'Desfazer',
+    labelButtonRetryItemProcessing: 'Tentar de novo',
+    labelButtonProcessItem: 'Enviar',
+
+
+
+    acceptedFileTypes: 'image/jpeg, image/png',
+    labelFileTypeNotAllowed: 'Arquivo inválido',
+    fileValidateTypeLabelExpectedTypes: 'Precisa ser uma imagem. JPG ou PNG', //Expects {allButLastType} or {lastType}
+
+
+
+    allowFileSizeValidation: true,
+    maxFileSize: '10MB',
+    maxTotalFileSize: '10MB',
+    labelMaxFileSizeExceeded: 'Arquivo tem que ser até 10mb',
+
+
+    allowImagePreview: true,
+    imagePreviewMinHeight: 50,
+    imagePreviewMaxHeight: 250,
+
+
+    server: {
+      url: './api/media/',
+      /*
+      process: {
+        url: '/',
+        method: 'POST',
+        withCredentials: false,
+        headers: {},
+        timeout: 700,
+      }
+      */
+      process: (fieldName, file, metadata, load, error, progress, abort) => {
+        const formData = new FormData();
+        formData.append('file', file, file.name);
+
+        const request = new XMLHttpRequest();
+        request.open('POST', 'api/media/');
+
+        // Should call the progress method to update the progress to 100% before calling load
+        // Setting computable to false switches the loading indicator to infinite mode
+        request.upload.onprogress = (e) => {
+          progress(e.lengthComputable, e.loaded, e.total);
+        };
+
+        // Should call the load method when done and pass the returned server file id
+        // this server file id is then used later on when reverting or restoring a file
+        // so your server knows which file to return without exposing that info to the client
+        request.onload = function () {
+          if (request.status >= 200 && request.status < 300) {
+            // the load method accepts either a string (id) or an object
+            load(request.responseText);
+          } else {
+            // Can call the error method if something is wrong, should exit after
+            error('oh no');
+          }
+        };
+
+        request.send(formData);
+
+        // Should expose an abort method so the request can be cancelled
+        return {
+          abort: () => {
+            // This function is entered if the user has tapped the cancel button
+            request.abort();
+
+            // Let FilePond know the request has been cancelled
+            abort();
+          }
+        };
+      }
+    }
+  };
+
+  pondFiles = [];
+
+  pondHandleInit() {
+    console.log('FilePond has initialised', this.myPond);
+  }
+
+  pondHandleAddFile(event: any) {
+
   }
 
 

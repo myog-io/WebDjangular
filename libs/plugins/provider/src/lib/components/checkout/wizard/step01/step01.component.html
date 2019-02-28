@@ -91,7 +91,7 @@
               </plugin-provider-checkout-error>
               <div class="errors-feedback"
                    *ngIf="formWizardStep01.get('cnpj').getError('invalidCNPJ') &&
-                   formWizardStep01.controls['cnpj'].touched" >
+                   formWizardStep01.controls['cnpj'].touched">
                 <div class="alert alert-danger" role="alert">
                   <span>O CNPJ não é válido.</span>
                 </div>
@@ -124,7 +124,7 @@
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['cpf']" name="CPF">
               </plugin-provider-checkout-error>
               <div class="errors-feedback" *ngIf="formWizardStep01.get('cpf').getError('invalidCPF') &&
-                   formWizardStep01.controls['cpf'].touched" >
+                   formWizardStep01.controls['cpf'].touched">
                 <div class="alert alert-danger" role="alert">
                   <span>O CPF não é válido.</span>
                 </div>
@@ -241,6 +241,28 @@
       </div>
 
       <div class="col-12 col-md-6">
+        <!--
+        <h5 class="text-primary mb-3">COMPROVANTES</h5>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div class="form-group">
+              <p>Envie uma cópia do seu CPF ou CNH no campo abaixo:</p>
+              <file-pond #myPond
+                         [options]="pondOptions"
+                         [files]="pondFiles"
+                         (oninit)="pondHandleInit()"
+                         (onaddfile)="pondHandleAddFile($event)"
+                          >
+              </file-pond>
+
+            </div>
+          </div>
+        </div>
+
+        <hr>
+        -->
+
+
         <h5 class="text-primary mb-3">ENDEREÇO DE INSTALAÇÃO</h5>
 
         <div class="row">
