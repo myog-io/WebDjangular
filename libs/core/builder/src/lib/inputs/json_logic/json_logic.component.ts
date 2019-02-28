@@ -55,10 +55,12 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     { label: 'Less than or Equal(<=)', value: '<=' },
     { label: 'Greater than(>)', value: '>' },
     { label: 'Greater than or Equal(>=)', value: '>=' },
-    { label: 'Has Item(filter)', value: 'filter' },
+    { label: 'Contains', value: 'contains' },
+    { label: 'Not Contains', value: 'not_contains' },
   ]
   public mc_variables = [
-    'filter'
+    'contains',
+    'not_contains'
   ]
   public fields = [
 
@@ -213,7 +215,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
             if(this.mc_variables.indexOf(element.condition) >=0 && typeof value != "object"){
               element.value = {
                 type: 'logic_condition',
-                condition: '',
+                condition: '==',
                 value: '',
                 variable: '',
               }

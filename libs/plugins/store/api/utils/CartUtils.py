@@ -127,6 +127,10 @@ def apply_all_cart_rules(cart):
             for product in cart.items.all():
                 serializer = CartItemSerializer(product)
                 product_data = serializer.data
+                if product.product:
+                    product_data['product_type'] =  ProductTypeSerializer(
+                        product.product.product_type
+                    ).data
                 product_data['product'] = None
                 product_data['cart'] = None
                 products.append(product_data)
@@ -142,7 +146,8 @@ def apply_all_cart_rules(cart):
                 cart.shipping_address).data
             
             try:
-                if jsonLogic(rule.conditions, data):
+                json_logic_response = jsonLogic(rule.conditions, data)
+                if json_logic_response:
                     base_price = apply_cart_rule(cart, rule)
                 else:
                     clean_cart_rule(cart, rule)

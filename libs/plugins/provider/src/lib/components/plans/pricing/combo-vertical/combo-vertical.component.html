@@ -1,7 +1,7 @@
 <div class="col-12 col-sm-6 col-md-6 col-lg-3 p-1"  *ngIf="!loading;else loading_holder">
     <div class="card mt-1 mb-1">
         <div class="card-header">
-            <h4 class="plan-title plan-internet">
+            <h4 class="plan-title plan-internet" *ngIf="net">
                 <div class="row pt-2 pb-2">
                 <div class="col-4 pt-1">
                   <span class="icon"></span>
@@ -13,7 +13,7 @@
                 </div>
               </div>
             </h4>
-            <h4 class="plan-title plan-tv">
+            <h4 class="plan-title plan-tv" *ngIf="tv">
                 <div class="row pt-2 pb-2">
                 <div class="col-4 pt-1">
                   <span class="icon"></span>
@@ -25,7 +25,7 @@
                 </div>
               </div>
             </h4>
-            <h4 class="plan-title plan-telephone">
+            <h4 class="plan-title plan-telephone" *ngIf="phone">
               <div class="row pt-2 pb-2">
                 <div class="col-4 pt-1">
                   <span class="icon"></span>

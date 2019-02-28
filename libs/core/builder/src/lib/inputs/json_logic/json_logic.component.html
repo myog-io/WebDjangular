@@ -94,12 +94,7 @@
       </ng-template>
     </ng-select>
 
-    <nb-select class="ml-2" placeholder="Select Condition" (selectedChange)="updateField()" style="min-width:15%"
-      [(ngModel)]="child.value.condition" status="info" size="xsmall">
-      <nb-option *ngFor="let option of conditions" value="{{option.value}}">
-        {{option.label}}
-      </nb-option>
-    </nb-select>
+    
     <input type="text" (change)="updateField()" [(ngModel)]="child.value.value"
       class="form-control input-sm ml-2" />
     </div>

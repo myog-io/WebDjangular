@@ -38,8 +38,8 @@ export class PluginProviderCheckoutComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.reseller);
-    console.log(this.cutom_block_id);
+    //console.log(this.reseller);
+    //console.log(this.cutom_block_id);
   }
 
 }
