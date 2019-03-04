@@ -6,7 +6,8 @@ from libs.core.cms.api.views.BlockViewSet import BlockViewSet, BlockRelationship
 from libs.core.cms.api.views.MenuItemViewSet import MenuItemViewSet, MenuItemRelationshipView
 from libs.core.cms.api.views.MenuViewSet import MenuViewSet, MenuRelationshipView
 from libs.core.cms.api.views.PageViewSet import PageViewSet, PageRelationshipView, PageTagViewSet, PageCategoryViewSet
-from libs.core.cms.api.views.FormViewSet import FormViewSet, FormSubmitionViewSet, FormRelationshipView, FormSubmitionRelationshipView
+from libs.core.cms.api.views.FormViewSet import FormViewSet, FormSubmitionViewSet, FormRelationshipView, FormSubmitionRelationshipView, \
+    FormActionViewSet, FormActionRelationshipView, FormFieldViewSet, FormFieldRelationshipView
 
 router = DefaultRouter()
 router.register('block', BlockViewSet, base_name='block')
@@ -19,10 +20,10 @@ router.register('page-category', PageCategoryViewSet,
 router.register('form', FormViewSet, base_name='form')
 router.register('form-submition', FormSubmitionViewSet,
                 base_name='form-submition')
+router.register('form-action', FormActionViewSet, base_name='form-action')
+router.register('form-field', FormFieldViewSet, base_name='form-field')
 
-
-urlpatterns = [
-    url(r'', include(router.urls)),
+relationshipPatterns = [
     # Blocks relationships
     url(
         regex=r'^block/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
@@ -82,6 +83,28 @@ urlpatterns = [
 
     # forms submition relationships
     url(
+        regex=r'^form-action/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=FormActionRelationshipView.as_view(),
+        name='form-action-relationships'
+    ),
+    url(r'^form-submition/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        FormActionViewSet.as_view({'get': 'retrieve_related'}),
+        name='form-action-related'
+        ),
+
+    # forms submition relationships
+    url(
+        regex=r'^form-field/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
+        view=FormFieldRelationshipView.as_view(),
+        name='form-field-relationships'
+    ),
+    url(r'^form-field/(?P<pk>[^/.]+)/(?P<related_field>\w+)/$',
+        FormFieldViewSet.as_view({'get': 'retrieve_related'}),
+        name='form-field-related'
+        ),
+
+    # forms submition relationships
+    url(
         regex=r'^form-submition/(?P<pk>[^/.]+)/relationships/(?P<related_field>[^/.]+)/$',
         view=FormSubmitionRelationshipView.as_view(),
         name='form-submition-relationships'
@@ -90,5 +113,9 @@ urlpatterns = [
         FormSubmitionViewSet.as_view({'get': 'retrieve_related'}),
         name='form-submition-related'
         ),
+]
+urlpatterns = [
+    url(r'cms/', include(router.urls)),
+    url(r'cms/', include(relationshipPatterns)),
 
 ]

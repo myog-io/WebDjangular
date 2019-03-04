@@ -4,7 +4,6 @@ from webdjango.models.CoreConfig import CoreConfigInput
 from webdjango.models.AbstractModels import BaseModel
 
 LABEL_POSITION_CHOISES = [
-    ('default', 'default'),
     ('above', 'above'),
     ('below', 'below'),
 ]
@@ -19,27 +18,38 @@ class FormField(BaseModel):
 
     label = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    type = models.CharField(
+    field_type = models.CharField(max_length=255,
         default=CoreConfigInput.FIELD_TYPE_TEXT, choices=CoreConfigInput.CONFIG_FIELD_TYPES)
     required = models.BooleanField(default=False)
-    default_value = models.TextField()
-    label_position = models.CharField(
-        default='text', choices=CoreConfigInput.CONFIG_FIELD_TYPES)
+    default_value = models.TextField(default=None,null=True, blank=True)
+    label_position = models.CharField(max_length=255,
+        default='above', choices=LABEL_POSITION_CHOISES)
+    element_class = models.CharField(max_length=100, default=None,null=True, blank=True)
+    wrapper_class = models.CharField(max_length=100, default=None,null=True, blank=True)
+    placeholder = models.CharField(max_length=255, default=None,null=True, blank=True)
     data = JSONField()
+    position = models.PositiveIntegerField()
+    form = models.ForeignKey(
+        'Form', on_delete=models.CASCADE, related_name='fields')
 
     class Meta:
-        abstract = True
-        
+        db_table = 'cms_form_field'
+        ordering = ['position']
 
 
 class FormAction(BaseModel):
     label = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    action_type = models.CharField(default='email', choices=ACTION_CHOISES)
+    action_type = models.CharField(
+        max_length=255, default='email', choices=ACTION_CHOISES)
     data = JSONField()
+    position = models.PositiveIntegerField()
+    form = models.ForeignKey(
+        'Form', on_delete=models.CASCADE, related_name='actions')
 
     class Meta:
-        abstract = True
+        db_table = 'cms_form_action'
+        ordering = ['position']
 
 
 class Form(BaseModel):
@@ -48,10 +58,9 @@ class Form(BaseModel):
     show_title = models.BooleanField(default=True)
     clear_complete = models.BooleanField(default=True)
     hide_complete = models.BooleanField(default=True)
-    fields = JSONField(null=True, default=None, blank=True)
-    actions = JSONField(null=True, default=None, blank=True)
 
     class Meta:
+        db_table = 'cms_form'
         ordering = ['id']
 
 class FormSubmition(BaseModel):
@@ -60,4 +69,5 @@ class FormSubmition(BaseModel):
     data = JSONField(null=False)
     
     class Meta:
+        db_table = 'cms_form_submition'
         ordering = ['id']

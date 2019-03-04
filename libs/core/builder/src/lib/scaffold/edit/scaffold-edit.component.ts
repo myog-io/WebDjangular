@@ -11,11 +11,11 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
   styleUrls: ['./scaffold-edit.component.scss'],
   template: `
 
-      <wda-form [displayGroups]="form.displayGroups"
+      <wda-form-builder [displayGroups]="form.displayGroups"
         (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)"
         [group]="form" [loading]="loading" [save_continue]="saveAndContinue"
         [before_title]="before_title" [title]="title" [formLoading]="formLoading" >
-      </wda-form>
+      </wda-form-builder>
 `,
 })
 export class ScaffoldEditComponent implements OnInit {
@@ -81,8 +81,9 @@ export class ScaffoldEditComponent implements OnInit {
       this.title = data.title;
       this.base_path = data.path;
       this.form = this.entry.getForm();
-      if (this.current_model.include) {
-        this.inlcude_args = { include: this.current_model.include };
+      
+      if (this.entry.include) {
+        this.inlcude_args = { include: this.entry.include };
       }
       this.form.generateForm();
       this.getEntry();

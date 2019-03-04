@@ -6,12 +6,16 @@ import { AgmCoreModule } from '@agm/core';
 import { CoreCmsMapsComponent } from './components/maps/maps.component';
 import { CoreCmsLinkComponent } from './components/link.component';
 import { RouterModule } from '@angular/router';
+import { CoreCmsFormComponent } from './components/form/form.component';
+import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
+
 
 const MODULES = [
   CommonModule,
   NgbCarouselModule,
   AgmCoreModule,
   RouterModule,
+  BuilderFormModule
 ];
 
 
@@ -19,6 +23,7 @@ const COMPONENTS = [
   CoreCmsGalleryComponent,
   CoreCmsMapsComponent,
   CoreCmsLinkComponent,
+  CoreCmsFormComponent,
 ];
 
 

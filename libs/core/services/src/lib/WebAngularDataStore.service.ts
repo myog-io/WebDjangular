@@ -15,13 +15,16 @@ import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model
 import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import { EmailModel } from '@core/data/src/lib/models/Email.model';
-import {OrderLineModel} from "@plugins/store/src/lib/data/models/OrderLine.model";
-import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
+import { OrderLineModel } from "@plugins/store/src/lib/data/models/OrderLine.model";
+import { OrderModel } from "@plugins/store/src/lib/data/models/Order.model";
+import { FormModel } from '@core/cms/src/lib/models/Form.model';
+import { FormActionModel } from '@core/cms/src/lib/models/FormAction.model';
+import { FormFieldModel } from '@core/cms/src/lib/models/FormField.model';
+import { FormSubmitionModel } from '@core/cms/src/lib/models/FormSubmition.model';
 
 
 
 // tslint:disable-next-line:variable-name
-
 function cleanEmptyRecursive(attribute) {
   if (attribute === '') {
     attribute = null;
@@ -62,23 +65,32 @@ const config: DatastoreConfig = {
   // TODO: Load all This Dynamic
   // HARDCODE INCLUDES GOES HERE
   models: {
-    Address: AddressModel,
-    User: UserModel,
-    Group: GroupModel,
-    Page: PageModel,
-    Block: BlockModel,
-    Permission: PermissionModel,
-    ContentType: ContentTypeModel,
-    CoreConfigGroup: CoreConfigGroupModel,
-    CoreConfigInput: CoreConfigInputModel,
-    Email: EmailModel,
-    CoreConfig: CoreConfigModel,
+    Address: AddressModel, // Core
+    User: UserModel, // User
+    Group: GroupModel, // Core
+    Email: EmailModel, //Core
+    CoreConfig: CoreConfigModel, //Core
+
+    Page: PageModel, // CMS
+    Block: BlockModel, // CMS
+    Permission: PermissionModel, // CMS
+    ContentType: ContentTypeModel, // CMS
+    CoreConfigGroup: CoreConfigGroupModel, // CMS
+    CoreConfigInput: CoreConfigInputModel, // CMS
+    Form: FormModel, // CMS
+    FormAction: FormActionModel, // CMS
+    FormField: FormFieldModel, // CMS
+    FormSubmition: FormSubmitionModel, // CMS
+    MenuItem: MenuItemModel, // CMS
+    Menu: MenuModel, // CMS
+
     City: CityModel, // Provider
     PostalCodeRange: PostalCodeRangeModel, // Provider
     Street: StreetModel, // Provider
     Reseller: ResellerModel, // Provider
     Condo: CondoModel, // Provider
     Channel: ChannelModel, // Provider
+
     Product: ProductModel, // Store
     ProductCategory: CategoryModel, // Store
     ProductType: ProductTypeModel, // Store
@@ -86,10 +98,8 @@ const config: DatastoreConfig = {
     ProductAttributeOption: ProductAttributeOptionModel, // Store
     CartItem: CartItemModel, // Store
     Cart: CartModel, // Store
-    MenuItem: MenuItemModel,
-    Menu: MenuModel,
-    Order: OrderModel,
-    OrderLine: OrderLineModel
+    Order: OrderModel, // Store
+    OrderLine: OrderLineModel // Store
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes
@@ -208,19 +218,19 @@ export class WebAngularDataStore extends JsonApiDatastore {
   //): string {
   //  // TODO: use HttpParams instead of appending a string to the url
   //  const queryParams: string = this.toQueryString(params);
-//
+  //
   //  if (customUrl) {
   //    return queryParams ? `${customUrl}?${queryParams}` : customUrl;
   //  }
-//
+  //
   //  const modelConfig: ModelConfig = Reflect.getMetadata('JsonApiModelConfig', modelType);
-//
+  //
   //  const baseUrl = modelConfig.baseUrl || this.datastoreConfig.baseUrl;
   //  const apiVersion = modelConfig.apiVersion || this.datastoreConfig.apiVersion;
   //  const modelEndpointUrl: string = modelConfig.modelEndpointUrl || modelConfig.type;
-//
+  //
   //  const url: string = [baseUrl, apiVersion, modelEndpointUrl, id].filter((x) => x).join('/');
-//
+  //
   //  return queryParams ? `${url}?${queryParams}` : url;
   //}
 

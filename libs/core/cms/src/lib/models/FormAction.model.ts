@@ -2,9 +2,14 @@ import { Attribute, BelongsTo, JsonApiModelConfig } from "angular2-jsonapi";
 import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
+import { Validators } from "@angular/forms";
 
 
 
+export const ActionChoises = [
+    {id:'email', name:'email'},
+    {id:'save', name:'save'}
+]
 
 @JsonApiModelConfig({
     type: 'FormAction',
@@ -12,7 +17,11 @@ import { SmartTableSettings } from "@core/data/src/lib/data-store";
 })
 export class FormActionModel extends AbstractModel {
     @Attribute()
+    id: string
+
+    @Attribute()
     @ExtraOptions({
+        validators: [Validators.required],
         type: 'text',
         label: 'Label',
     })
@@ -20,6 +29,7 @@ export class FormActionModel extends AbstractModel {
 
     @Attribute()
     @ExtraOptions({
+        validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
         type: 'text',
         label: 'Code',
     })
@@ -28,7 +38,16 @@ export class FormActionModel extends AbstractModel {
     @Attribute()
     @ExtraOptions({
         type: 'text',
+        inputType: 'number',
+        label: 'Position',
+    })
+    position: number;
+
+    @Attribute()
+    @ExtraOptions({
+        type: 'selection',
         label: 'Action Type',
+        options: ActionChoises,
     })
     action_type: string;
 
@@ -38,13 +57,7 @@ export class FormActionModel extends AbstractModel {
         label: 'Extra Data',
     })
     data?: any;
-    get pk() {
-        return null;
-    }
-
-    set pk(value) {
-
-    }
+    
 
     public toString = (): string => {
         return `${this.label} (${this.action_type})`;

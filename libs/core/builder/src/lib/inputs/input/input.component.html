@@ -1,0 +1,14 @@
+<div class="form-group" [formGroup]="group">
+    <label *ngIf="config.label_position != 'bellow'">{{ config.label }}</label>
+    <input [type]="config.inputType ? config.inputType : 'text'" class="form-control"
+        [attr.placeholder]="config.placeholder" [formControlName]="config.name">
+    <ng-container *ngIf="config.label_position === 'bellow'">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>{{ config.label }}</label>
+    </ng-container>
+    
+    
+    <wda-form-validators [config]="config" [input]="group.get(this.config.name)"></wda-form-validators>
+</div>
+<!--form-group-->

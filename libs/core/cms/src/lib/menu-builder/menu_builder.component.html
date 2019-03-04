@@ -40,9 +40,9 @@
             Edit {{ current_menu }}
           </nb-accordion-item-header>
           <nb-accordion-item-body>
-            <wda-form [displayGroups]="menuForm.displayGroups" [inceptionForm]="true" [group]="menuForm"
+            <wda-form-builder [displayGroups]="menuForm.displayGroups" [inceptionForm]="true" [group]="menuForm"
               [formLoading]="formLoading" (onSubmit)="saveMenuConfig($event,row.item.id)" [submit]="false">
-            </wda-form>
+            </wda-form-builder>
           </nb-accordion-item-body>
         </nb-accordion-item>
       </nb-accordion>
@@ -69,9 +69,9 @@
             Custom
           </nb-accordion-item-header>
           <nb-accordion-item-body>
-            <wda-form [displayGroups]="menuItemForm.displayGroups" [inceptionForm]="true" [group]="menuItemForm"
+            <wda-form-builder [displayGroups]="menuItemForm.displayGroups" [inceptionForm]="true" [group]="menuItemForm"
               [formLoading]="formLoading" (onSubmit)="createMenuItem($event)">
-            </wda-form>
+            </wda-form-builder>
           </nb-accordion-item-body>
         </nb-accordion-item>
       </nb-accordion>
@@ -95,10 +95,10 @@
           </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body *ngIf="menu_item_forms[row.item.id]">
-          <wda-form [displayGroups]="menu_item_forms[row.item.id].displayGroups" [inceptionForm]="true"
+          <wda-form-builder [displayGroups]="menu_item_forms[row.item.id].displayGroups" [inceptionForm]="true"
             [group]="menu_item_forms[row.item.id]" [formLoading]="formLoading" [remove]="true"
             (onSubmit)="updateMenuItem($event,row.item.id)" (onRemove)="removeItem($event,row.item.id)">
-          </wda-form>
+          </wda-form-builder>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>

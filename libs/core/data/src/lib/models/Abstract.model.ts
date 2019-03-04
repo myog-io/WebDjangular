@@ -67,10 +67,11 @@ export class AbstractModel extends JsonApiModel {
         }
       }
     }
+    
     return entities;
   }
   public saveAll(params?: any, headers?: HttpHeaders, customUrl?: string): Promise<this> {
-    // TODO MANY TO MANY RELATIONSHIP REMOVAL
+    // TODO: MANY TO MANY RELATIONSHIP REMOVAL
     const children = this.getHasManyEntities();
 
     const promises = [];
@@ -83,59 +84,58 @@ export class AbstractModel extends JsonApiModel {
           const child_to_remove = entry.getHasManyEntities();
           //const child_to_unlink = child_to_remove;
           for (let i = 0; i < children.length; i++) {
-            const child = children[i];
-            let save = true;
+            const cur_child = children[i];
+            let save = false;
             // TODO: IMPROVE THIS ONE, Every child is being marked as hasDirtyAttributes
 
-            child.internalDatastore = this.service;
-            const relationships: any = this.service.getRelationships(child);
-            const belongsTo = child.belongsTo;
+            cur_child.internalDatastore = this.service;
+
+            const belongsTo = cur_child.belongsTo;
+           
             if (belongsTo) {
               for (let j = 0; j < belongsTo.length; j++) {
                 if (belongsTo[j].relationship === this.modelConfig.type) {
-                  if (!child[belongsTo[j].propertyName] || child[belongsTo[j].propertyName].id != entry.id) {
-                    child[belongsTo[j].propertyName] = entry;
+                  if (!cur_child[belongsTo[j].propertyName] || cur_child[belongsTo[j].propertyName].id != entry.id) {
+                    cur_child[belongsTo[j].propertyName] = entry;
+                    save = true;
                   }
                 }
               }
             }
-            child_to_remove.splice(child_to_remove.findIndex((data) => data.id === child.id && data.modelConfig.type === child.modelConfig.type), 1);
-            if (child.hasDirtyAttributes && save) {
-              // WE SHOULD ONLY SAVE ALL IF IT'S A BELONGS TO (ONE TO MANY RELATIONSHIP)
-              //let promise = new Promise((resolve, reject) => {
-                // Maybe Use SaveALL and do it Recursive?
-                
-                //child.save().subscribe(
-                //  (response) => {
-                //    if (response.id) {
-                //      child_to_remove.splice(child_to_remove.findIndex((data) => data.id === response.id && data.modelConfig.type === response.modelConfig.type), 1);
-                //    }
-                //    resolve(response);
-                //  },
-                //  (error) => {
-                //    reject(error);
-                //  }
-                //)
-              //})
-              //promises.push(promise)
-
-            }
-
-          }
-          
-          // Not Working as Intended =(
-          for (let i = 0; i < child_to_remove.length; i++) {
-            const child = child_to_remove[i];
-            if (child.id) {
-              let promise = new Promise((resolve, reject) => {
-                //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
-                // If the Relationship is One to One
-                this.service.deleteRecord(child.constructor, child.id).subscribe(
+            child_to_remove.splice(child_to_remove.findIndex((data) => data.id === cur_child.id && data.modelConfig.type === cur_child.modelConfig.type), 1);
+            if (cur_child.hasDirtyAttributes && save && !cur_child.id) {
+              let promise = new Promise((resolve_save, reject_save) => {
+                cur_child.save().subscribe(
                   (response) => {
-                    resolve(response);
+                    if (response.id) {
+                      child_to_remove.splice(child_to_remove.findIndex((data) => data.id === response.id && data.modelConfig.type === response.modelConfig.type), 1);
+                    }
+                    resolve_save(response);
                   },
                   (error) => {
-                    reject(error);
+                    reject_save(error);
+                  }
+                )
+              });
+              promises.push(promise);
+              
+            };
+          }
+
+          // Not Working as Intended =(
+          for (let i = 0; i < child_to_remove.length; i++) {
+            const del_child = child_to_remove[i];
+            if (del_child.id) {
+              console.log("Deleting This Child",del_child);
+              let promise = new Promise((resolve_delete, reject_delete) => {
+                //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
+                // If the Relationship is One to One
+                this.service.deleteRecord(del_child.constructor, del_child.id).subscribe(
+                  (response) => {
+                    resolve_delete(response);
+                  },
+                  (error) => {
+                    reject_delete(error);
                   }
                 );
 
@@ -143,7 +143,7 @@ export class AbstractModel extends JsonApiModel {
               promises.push(promise)
             }
           }
-          
+
           Promise.all(promises).then(
             (values) => {
               resolve(entry);
@@ -224,5 +224,5 @@ export class AbstractModel extends JsonApiModel {
     fg.displayGroups = dg;
     return fg;
   }
-  
+
 }

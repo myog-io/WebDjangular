@@ -1,5 +1,5 @@
 import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
-import { Validators, FormArray } from '@angular/forms';
+import { Validators, FormArray, FormGroup } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
@@ -9,9 +9,11 @@ import { FormActionModel } from './FormAction.model';
 
 @JsonApiModelConfig({
   type: 'Form',
-  modelEndpointUrl: 'form',
+  modelEndpointUrl: 'cms/form',
 })
 export class FormModel extends AbstractModel {
+  public include = 'fields,actions';
+
   @Attribute()
   id: string;
 
@@ -78,13 +80,16 @@ export class FormModel extends AbstractModel {
   })
   actions: FormActionModel[]
 
-  get pk() {
-    return this.id;
+  public getFormGroup():FormGroup {
+    const fg = new FormGroup({})
+    for (let i = 0; i < this.fields.length; i++) {
+      const field = this.fields[i];
+      field.generateConfig();
+      fg.registerControl(field.code,field.formControl);  
+    }
+    return fg;
   }
 
-  set pk(value) {
-
-  }
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;
   };

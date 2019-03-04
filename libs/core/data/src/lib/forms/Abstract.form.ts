@@ -131,12 +131,10 @@ export class AbstractForm extends FormGroup {
           if (field.model) {
             const vals = this.get(propName).value;
             let entities = [];
-
             for (let i = 0; i < vals.length; i++) {
               entities.push(this.createEntity(field.model, vals[i]))
             }
             entity[propName] = entities;
-
           } else {
             entity[propName] = this.get(propName).value;
           }

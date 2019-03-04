@@ -54,6 +54,8 @@ export interface BuilderFormFieldConfig {
   default?: any;
   conditionalValue?: any;
   wrapper_class?: string;
+  element_class?: string;
+  label_position?: 'default' |'above' | 'below';
   inputType?: string;
   conditional?: any;
   display?: boolean;
