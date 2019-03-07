@@ -157,6 +157,7 @@ p.subtitle {
   margin-bottom: 45px;
 }
 
+
 input, textarea {
   width: 100%;
   font-family: $input-ff;
@@ -169,6 +170,19 @@ input, textarea {
   background: transparent;
   outline-color: $primary
 }
+
+input.form-control {
+  border-top:unset;
+  border-left: unset;
+  border-right: unset;
+  border-radius: 0;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+
 
 select.form-control {
   width: 100%;
@@ -894,4 +908,7 @@ input:focus ~ .highlight {
   box-shadow: 0 6px 20px 0 $secondary;
   pointer-events: none;
 }
+
+
+
 

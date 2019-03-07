@@ -4,8 +4,8 @@ import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-input',
-  styleUrls: ['input.component.scss'],
   templateUrl: 'input.component.html',
+  styleUrls: ['input.component.scss'],
 })
 export class BuilderFormInputComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;

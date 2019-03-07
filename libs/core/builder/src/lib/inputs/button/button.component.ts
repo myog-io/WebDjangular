@@ -6,11 +6,12 @@ import { AbstractForm } from '@core/data/src/lib/forms';
   selector: 'wda-form-button',
   styleUrls: ['button.component.scss'],
   template: `
-
-    <div
-      class="dynamic-field form-button"
-      [formGroup]="group"  >
-      <button type="submit" class="btn btn-hero-primary" [disabled]="config.disabled">{{ config.label }}</button>
+    <div class="dynamic-field form-button"
+         [formGroup]="group" >
+      <button type="submit" class="btn" [ngClass]="config.element_class" 
+              [disabled]="config.disabled">
+        {{ config.label }}
+      </button>
     </div>
   `
 })

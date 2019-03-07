@@ -1,9 +1,13 @@
-<h4 id="{{form?.code}}_title" [class]="title_class" *ngIf="form?.title">{{form?.title}}</h4>
+<h4 id="{{form?.code}}_title" [class]="title_class" *ngIf="form?.title">
+  {{form?.title}}
+</h4>
 <div class="row" *ngIf="form">
-    <ng-container *ngFor="let field of form.fields">
-        <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'">
-            <ng-container wdaBuilderFormFields [config]="field.config" [group]="formGroup"
-                (relationshipUpdated)="relationship($event)"></ng-container>
-        </div>
-    </ng-container>
+  <ng-container *ngFor="let field of form.fields">
+    <div [class]="field.wrapper_class ? field.wrapper_class : 'col-12'">
+      <ng-container wdaBuilderFormFields [config]="field.config"
+                    [group]="formGroup"
+                    (relationshipUpdated)="relationship($event)">
+      </ng-container>
+    </div>
+  </ng-container>
 </div>

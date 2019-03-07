@@ -24,22 +24,21 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
 
   }
 
-
   ngOnInit() {
-    this.sub = this.datastore.findRecord(FormModel, this.id, {include:'fields,actions'})
+    this.sub = this.datastore.findRecord(FormModel, this.id, {
+      include:'fields,actions'})
       .subscribe((form_model) => {
         this.form = form_model;
-        console.log("Form???",this.form)
         this.formGroup = this.form.getFormGroup();
       }, (error) => {
         console.log(error)
       }
     );
-
   }
+
   ngOnDestroy() {
     if (this.sub) {
-      this.sub.unsubscribe()
+      this.sub.unsubscribe();
       this.sub = null;
     }
   }
