@@ -183,6 +183,11 @@ input.form-control {
 }
 
 
+.form-control.ng-invalid.ng-touched {
+  border-color: theme-color('danger');
+}
+
+
 
 select.form-control {
   width: 100%;

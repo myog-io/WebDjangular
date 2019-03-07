@@ -9,7 +9,7 @@
 
   <span class="highlight"></span>
   <span class="bar"></span>
-  <label>
+  <label *ngIf="config.label_position == 'below'">
     {{ config.label }}
   </label>
 

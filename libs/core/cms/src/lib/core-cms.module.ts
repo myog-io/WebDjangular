@@ -8,6 +8,7 @@ import { CoreCmsLinkComponent } from './components/link.component';
 import { RouterModule } from '@angular/router';
 import { CoreCmsFormComponent } from './components/form/form.component';
 import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 
 const MODULES = [
@@ -15,7 +16,9 @@ const MODULES = [
   NgbCarouselModule,
   AgmCoreModule,
   RouterModule,
-  BuilderFormModule
+  BuilderFormModule,
+  FormsModule,
+  ReactiveFormsModule
 ];
 
 

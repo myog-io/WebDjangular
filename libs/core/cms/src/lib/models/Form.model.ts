@@ -5,6 +5,7 @@ import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { FormFieldModel } from './FormField.model';
 import { FormActionModel } from './FormAction.model';
+import {AbstractForm} from "@core/data/src/lib/forms";
 
 
 @JsonApiModelConfig({
@@ -51,7 +52,7 @@ export class FormModel extends AbstractModel {
     wrapper_class: 'col-4',
     value: true,
   })
-  clear_complete: boolean
+  clear_complete: boolean;
 
   @Attribute()
   @ExtraOptions({
@@ -60,7 +61,7 @@ export class FormModel extends AbstractModel {
     wrapper_class: 'col-4',
     value: true,
   })
-  hide_complete: boolean
+  hide_complete: boolean;
 
   @HasMany()
   @ExtraOptions({
@@ -69,7 +70,7 @@ export class FormModel extends AbstractModel {
     label: 'Fields',
     model: FormFieldModel,
   })
-  fields: FormFieldModel[]
+  fields: FormFieldModel[];
 
   @HasMany()
   @ExtraOptions({
@@ -78,14 +79,14 @@ export class FormModel extends AbstractModel {
     label: 'Actions',
     model: FormActionModel,
   })
-  actions: FormActionModel[]
+  actions: FormActionModel[];
 
   public getFormGroup():FormGroup {
-    const fg = new FormGroup({})
+    const fg = new FormGroup({});
     for (let i = 0; i < this.fields.length; i++) {
       const field = this.fields[i];
       field.generateConfig();
-      fg.registerControl(field.code,field.formControl);  
+      fg.registerControl(field.slug,field.formControl);
     }
     return fg;
   }

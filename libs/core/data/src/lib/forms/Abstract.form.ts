@@ -23,6 +23,9 @@ export class AbstractForm extends FormGroup {
     conditional: null,
     sort: 0
   }];
+  public formSubmitAttempts : number = 0;
+  public formSubmiting: Boolean = false;
+  public formSubmittedSuccess: Boolean = false;
 
   /**
    * Creates an instance of abstract form.

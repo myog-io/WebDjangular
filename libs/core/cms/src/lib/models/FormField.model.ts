@@ -194,7 +194,7 @@ export class FormFieldModel extends AbstractModel {
       //validators?: Validators[];
       //disabled?: boolean;
       label: this.label,
-      name: this.code, 
+      name: this.slug,
       //form_group_name: string;
       //model?: any;//AbstractModel;
       //options?: any;

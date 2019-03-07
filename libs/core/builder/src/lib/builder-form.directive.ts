@@ -8,7 +8,7 @@ import {
   Type,
   ViewContainerRef,
   Output,
-  EventEmitter
+  EventEmitter, SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
@@ -45,9 +45,7 @@ const components: { [type: string]: Type<BuilderFormField> } = {
 })
 export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnInit {
   @Input() config: BuilderFormFieldConfig;
-
   @Input() group: FormGroup;
-
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
 
   component: ComponentRef<BuilderFormField>;
@@ -58,11 +56,13 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
   ) {
   }
 
-  ngOnChanges() {
-    if (this.component) {
-      this.component.instance.config = this.config;
-      this.component.instance.group = this.group;
-      this.component.instance.relationshipUpdated = this.relationshipUpdated;
+  ngOnChanges(changes: SimpleChanges) {
+    if(!changes.config.isFirstChange()) {
+      if (this.component) {
+        this.component.instance.config = this.config;
+        this.component.instance.group = this.group;
+        this.component.instance.relationshipUpdated = this.relationshipUpdated;
+      }
     }
   }
 
