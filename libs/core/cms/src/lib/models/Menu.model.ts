@@ -36,22 +36,15 @@ export class MenuModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [],
+    validators: [Validators.required],
     type: 'text',
     label: 'Menu Wrapper Class',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-12',
+    value: 'col-12'
   })
   wrapper_class: string;
 
   @HasMany()
-  @ExtraOptions({
-    formType: FormArray,
-    type: 'select',
-    label: 'Menu Itens',
-    wrapper_class: 'col-6',
-    model: MenuItemModel,
-    backendResourceName: 'menu_item'
-  })
   menu_item: MenuItemModel[];
 
 
@@ -71,5 +64,27 @@ export class MenuModel extends AbstractModel {
 
   }
 
+  arrangeItems(){
+    this.menu_item.sort((a,b)=> a.position - b.position);
+    for (let i = 0; i < this.menu_item.length; i++) {
+      if (this.menu_item[i].children.length > 0){
+        this.menu_item[i].arrangeItems();
+      }
+    }
+  }
+
+  getList(){
+    const list = []
+    for (let i = 0; i < this.menu_item.length; i++) {
+      const element = this.menu_item[i];
+      if(!element.parent){
+        list.push(element.getList());
+      }
+    }
+    return list;
+  }
+  public toString = (): string => {
+    return `${this.title} (ID: ${this.id})`;
+  }
 }
 

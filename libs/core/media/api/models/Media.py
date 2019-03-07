@@ -60,6 +60,10 @@ class Media(BaseModel, DirtyFieldsMixin):
     def sendComplete(self):
         return self.total_chunks == self.current_chunk
 
+    def get_absolute_url(self):
+        # TODO: Return Correct Absolute URL
+        return "absolute_url_image";
+
     def isImage(self):
         if self.content_type:
             exploded = self.content_type.split("/")

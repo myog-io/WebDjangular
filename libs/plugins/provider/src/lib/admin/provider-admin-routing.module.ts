@@ -7,6 +7,9 @@ import { ResellerModel } from "../data/models/Reseller.model";
 import { ChannelModel } from "../data/models/Channel.model";
 import { ScaffoldModule } from "@core/builder/src/lib/scaffold/scaffold.module";
 import { PlanTypeModel } from "../data/models/PlanType.model";
+import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
+import {PluginProviderAdminOrdersComponent} from "@plugins/provider/src/lib/admin/components/orders.component";
+import {ScaffoldComponent} from "@core/builder/src/lib/scaffold/scaffold.component";
 
 const routes: Routes = [
   {
@@ -46,6 +49,24 @@ const routes: Routes = [
           model: PlanTypeModel,
           title: 'Plan Types',
           path: 'provider/plan-type'
+        }
+      },
+      {
+        path: 'order',
+        component: ScaffoldComponent,
+        data: {
+          model: OrderModel,
+          title: "Orders",
+          path: 'provider/order'
+        }
+      },
+      {
+        path: 'order/edit/:id',
+        component: PluginProviderAdminOrdersComponent,
+        data: {
+          model: OrderModel,
+          title: 'Orders',
+          path: 'provider/order'
         }
       },
       {

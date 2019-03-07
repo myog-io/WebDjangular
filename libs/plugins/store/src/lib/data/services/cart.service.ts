@@ -27,18 +27,20 @@ export class CartService {
   private _cart: CartModel = null;
   private cart_cookie_name: string = '_cart';
   public cart_changes: EventEmitter<null> = new EventEmitter();
+  public cart_updating: boolean = false;
 
   constructor(private http: HttpClient,
     private cookieService: CookieService,
     private datastore: WebAngularDataStore,
     private clientUserService: ClientUserService,
   ) {
+
     const cartExists: boolean = cookieService.check(this.cart_cookie_name);
     if (cartExists) {
       const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
       if (cartCookie['token']) {
         this.datastore.findAll(CartModel, {
-          token__exact: cartCookie['token'],
+          token: cartCookie['token'],
           page: { size: 1, number: 1 },
           include: ["billing_address", "shipping_address",
             "items", "items.product", "items.product.product_type",
@@ -49,6 +51,11 @@ export class CartService {
             const carts = queryData.getModels();
             if (carts.length > 0) {
               this.cart = carts[0]
+            }else{
+              this.cookieService.delete(this.cart_cookie_name);
+              this.cart = datastore.createRecord(CartModel, {
+                extra_data: {}
+              });
             }
           },
           (error: any) => {
@@ -99,6 +106,7 @@ export class CartService {
   }
 
   public updateCart(): Promise<CartModel> {
+    this.cart_updating = true;
     return new Promise((resolve, reject) => {
       this.cart.save({
         include: `${CartModel.include},items.product,items.product.categories`
@@ -109,7 +117,10 @@ export class CartService {
           resolve(cart);
         },
         (error: ErrorResponse) => {
+
           reject(error);
+        },() => {
+          this.cart_updating = false;
         });
     });
   }

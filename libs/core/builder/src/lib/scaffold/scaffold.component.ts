@@ -32,7 +32,6 @@ export class ScaffoldComponent implements OnInit {
     this.title = this.route.data['value'].title;
     this.base_path = this.route.data['value'].path;
 
-
     this.startTableInformation()
   }
   openDialog(element) {

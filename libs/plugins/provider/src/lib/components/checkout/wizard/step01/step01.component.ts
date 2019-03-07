@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ProviderCheckoutService} from "../../../../data/services/provider-checkout.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 import {WebAngularDataStore} from "@core/services/src/lib/WebAngularDataStore.service";
 import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
+import * as moment from 'moment';
 
 @Component({
   selector: 'plugin-provider-checkout-wizard-step01',
   templateUrl: './step01.component.html',
   styleUrls: ['./step01.component.scss']
 })
+
 export class PluginProviderCheckoutWizardStep01Component implements OnInit {
 
   public formWizardStep01: FormGroup;
@@ -66,10 +68,12 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       email: [email, [Validators.required, Validators.email]],
       mobile: [mobile, [Validators.required, Validators.minLength(11)]],
       telephone: [telephone],
-      cpf: [cpf, [Validators.required]],
-      rg: [rg, [Validators.required]],
-      dob: [dob, [Validators.required, Validators.minLength(8)]],
-
+      cpf: [cpf, [Validators.required, this.CPFValidator()]],
+      rg: [rg, [Validators.required, this.RGValidator()]],
+      dob: [dob, [
+        Validators.required, Validators.minLength(8),
+        this.DateValidator(), this.Over18Validator()]],
+      file_document: ['', [Validators.required]],
       postal_code: [postal_code],
       city: [city],
       state: [state],
@@ -94,7 +98,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       this.formWizardStep01.addControl('company_name',
         this.formBuilder.control(company_name, [Validators.required]));
       this.formWizardStep01.addControl('cnpj',
-        this.formBuilder.control(cnpj, [Validators.required]));
+        this.formBuilder.control(cnpj, [Validators.required, this.CNPJValidator()]));
       this.formWizardStep01.addControl('state_registration',
         this.formBuilder.control(state_registration, []));
     }
@@ -133,7 +137,146 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           this.formWizardStep01.get('portability_number').updateValueAndValidity({emitEvent: false});
         }
       );
+    }
 
+
+    this.formWizardStep01.get('file_document').valueChanges.subscribe((value)=>{
+      console.log(value);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  DateValidator(): ValidatorFn {
+    return (control: AbstractControl): Validators => {
+      const date = control.value;
+      if (date.length < 10) {
+        return null
+      }
+      const m = moment(date, 'DD/MM/YYYY');
+      if (m.isValid()) {
+        return {invalidDate: false};
+      }
+      return {invalidDate: true};
+    }
+  }
+
+  Over18Validator(): ValidatorFn {
+    return (control: AbstractControl): Validators => {
+      const date = control.value;
+      if (date.length < 10) {
+        return null
+      }
+      const birthday = moment(date, 'DD/MM/YYYY');
+      const age = moment().diff(birthday, 'years');
+      if (age >= 18) {
+        return {notOver18: false}
+      }
+      return {notOver18: true}
+    }
+  }
+
+  CPFValidator(): ValidatorFn {
+    return (control: AbstractControl): Validators => {
+      const cpf = control.value;
+      if (cpf) {
+        let numbers, digits, sum, i, result, equalDigits;
+        equalDigits = 1;
+
+        if (cpf.length < 11) {
+          return {invalidCPF: true};
+        }
+
+        for (i = 0; i < cpf.length - 1; i++) {
+          if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
+            equalDigits = 0;
+            break;
+          }
+        }
+
+        if (!equalDigits) {
+          numbers = cpf.substring(0, 9);
+          digits = cpf.substring(9);
+          sum = 0;
+          for (i = 10; i > 1; i--) {
+            sum += numbers.charAt(10 - i) * i;
+          }
+
+          result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+
+          if (result !== Number(digits.charAt(0))) {
+            return {invalidCPF: true};
+          }
+          numbers = cpf.substring(0, 10);
+          sum = 0;
+
+          for (i = 11; i > 1; i--) {
+            sum += numbers.charAt(11 - i) * i;
+          }
+          result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+
+          if (result !== Number(digits.charAt(1))) {
+            return {invalidCPF: true};
+          }
+          return null;
+        } else {
+          return {invalidCPF: true};
+        }
+      }
+      return null;
+    };
+  }
+
+  RGValidator(): ValidatorFn {
+    return (control: AbstractControl): Validators => {
+      const rg = control.value;
+      if (rg) {
+        if (rg.length < 8) {
+          return {invalidRG: true};
+        }
+        return {invalidRG: false};
+      }
+      return null;
+    }
+  }
+
+  CNPJValidator(): ValidatorFn {
+    return (control: AbstractControl): Validators => {
+      const cnpj = control.value;
+      if (cnpj) {
+        if (cnpj.length != 14)
+          return {invalidCNPJ: true};
+
+        let tamanho = cnpj.length - 2;
+        let numeros = cnpj.substring(0, tamanho);
+        let digitos = cnpj.substring(tamanho);
+        let soma = 0;
+        let pos = tamanho - 7;
+        for (let i = tamanho; i >= 1; i--) {
+          soma += numeros.charAt(tamanho - i) * pos--;
+          if (pos < 2)
+            pos = 9;
+        }
+        let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(0))
+          return {invalidCNPJ: true};
+
+        tamanho = tamanho + 1;
+        numeros = cnpj.substring(0, tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (let i = tamanho; i >= 1; i--) {
+          soma += numeros.charAt(tamanho - i) * pos--;
+          if (pos < 2)
+            pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(1)) {
+          return {invalidCNPJ: true};
+        }
+        return {invalidCNPJ: false};
+      }
+      return null;
     }
   }
 
@@ -179,6 +322,8 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       })
     }
   }
+
+ 
 
 
 }

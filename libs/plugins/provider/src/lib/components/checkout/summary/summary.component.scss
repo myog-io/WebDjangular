@@ -27,7 +27,7 @@ table {
 
     background: #00b9bd;
     font-family: "Boston", Arial, Helvetica, sans-serif;
-    @include responsive-font-size( 24px);
+    @include responsive-font-size(24px);
     font-weight: 900;
     color: #fff;
     text-align: center;
@@ -45,6 +45,36 @@ table {
     .summary-items-wrapper {
       margin-bottom: 20px;
 
+
+      &.cart-updating {
+
+        .table {
+          opacity: 0.5;
+        }
+
+      }
+
+
+      .loader {
+        border-radius: 15px;
+        background: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        top: 0;
+        left: 0px;
+        right: 0px;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        z-index: 9;
+
+        span{
+          color:#fff;
+          font-size: 26px;
+          display: block;
+          margin: auto;
+        }
+      }
+
       table {
         table-layout: auto;
       }
@@ -54,7 +84,7 @@ table {
         padding: 0;
 
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 14px);
+        @include responsive-font-size(14px);
         line-height: 16px;
         font-weight: 700;
         color: #899299;
@@ -64,7 +94,7 @@ table {
         border-bottom: 3px solid #fff;
 
         @include media-breakpoint-up(md) {
-          @include responsive-font-size( 17px);
+          @include responsive-font-size(17px);
           line-height: 19px;
         }
 
@@ -73,7 +103,7 @@ table {
           color: #00b9bd;
           opacity: 0.5;
           border: 0;
-          padding:10px;
+          padding: 10px;
 
           @include media-breakpoint-up(md) {
             width: 35px;
@@ -113,12 +143,12 @@ table {
 
             color: #00b9bd;
             font-family: "Boston", Arial, Helvetica, sans-serif;
-            @include responsive-font-size( 19px);
+            @include responsive-font-size(19px);
 
             position: relative;
 
             .currency-unit {
-              @include responsive-font-size( 17px);
+              @include responsive-font-size(17px);
               font-weight: 400;
             }
 
@@ -133,16 +163,16 @@ table {
               background: transparent;
               border: 0;
               position: absolute;
-              @include responsive-font-size( 22px);
+              @include responsive-font-size(22px);
               right: 0;
               padding: 0;
               cursor: pointer;
             }
 
-            .strikethrough{
+            .strikethrough {
               text-decoration: line-through;
               font-weight: $fw-medium;
-              @include responsive-font-size( 16px);
+              @include responsive-font-size(16px);
             }
           }
 
@@ -157,7 +187,7 @@ table {
             .add {
               width: 100%;
               font-family: "Boston", Arial, Helvetica, sans-serif;
-              @include responsive-font-size( 14px);
+              @include responsive-font-size(14px);
               font-weight: 600;
               color: #00b9bd;
               text-transform: uppercase;
@@ -196,7 +226,7 @@ table {
         background: #899299;
         color: #ffffff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 22px);
+        @include responsive-font-size(22px);
         font-weight: bold;
         text-align: right;
         padding-top: 20px;
@@ -209,7 +239,7 @@ table {
         background: #00b9bd;
         color: #ffffff;
         font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 22px);
+        @include responsive-font-size(22px);
         font-weight: bold;
         text-align: right;
 
@@ -234,7 +264,7 @@ table {
             border: 0;
             padding: 0 20px;
             font-family: "Open Sans", Helvetica, sans-serif;
-            @include responsive-font-size( 13px);
+            @include responsive-font-size(13px);
             line-height: 22px;
             font-weight: 400;
             color: #000;
@@ -253,7 +283,7 @@ table {
 
     .btn-summary-details {
       font-family: "Boston", Arial, Helvetica, sans-serif;
-      @include responsive-font-size( 11px);
+      @include responsive-font-size(11px);
       font-weight: 600;
       color: #899299;
       text-decoration: underline;
@@ -263,7 +293,7 @@ table {
     .summary-submit-wrapper {
       margin-bottom: map-get($spacers, 1);
 
-      @include media-breakpoint-up(md){
+      @include media-breakpoint-up(md) {
         margin-bottom: map-get($spacers, 3);
       }
 

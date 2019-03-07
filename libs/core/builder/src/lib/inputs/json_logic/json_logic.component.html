@@ -9,7 +9,8 @@
 
   <nb-alert outline="success">
     <div class="form-inline">
-      <nb-select placeholder="Select Operator" [(ngModel)]="logicGroup.operator" (selectedChange)="updateField()" outline status="success" size="xsmall">
+      <nb-select placeholder="Select Operator" [(ngModel)]="logicGroup.operator" (selectedChange)="updateField()"
+        outline status="success" size="xsmall">
         <nb-option *ngFor="let option of operators" value="{{option.value}}">
           {{option.label}}
         </nb-option>
@@ -50,28 +51,54 @@
 <ng-template #nodeOperator let-child="child" let-parent="parent">
   <div class="form-inline p-2">
 
-    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="min-width:30%" class="form-control input-sm" bindLabel="name" bindValue="id" [addTag]="addTagPromise" [items]="fields" >
-      
+    <ng-select [(ngModel)]="child.variable" (change)="updateField()" [appendTo]="'body'" style="min-width:30%"
+      class="form-control input-sm" bindLabel="name" bindValue="id" [addTag]="addTagPromise" [items]="fields">
+
       <ng-template ng-tag-tmp let-search="searchTerm">
-          <b>New condition</b>: {{search}}
+        <b>New condition</b>: {{search}}
       </ng-template>
     </ng-select>
 
 
-    <nb-select class="ml-2" placeholder="Select Condition" (selectedChange)="updateField()"  style="min-width:25%"  [(ngModel)]="child.condition" status="info" size="xsmall">
+    <nb-select class="ml-2" placeholder="Select Condition" (selectedChange)="updateField()" style="min-width:25%"
+      [(ngModel)]="child.condition" status="info" size="xsmall">
       <nb-option *ngFor="let option of conditions" value="{{option.value}}">
         {{option.label}}
       </nb-option>
     </nb-select>
 
+    <ng-container
+      *ngTemplateOutlet="mc_variables.indexOf(child.condition) === -1 ? simpleChild : complexChild; context: { child: child, parent: parent }">
+    </ng-container>
 
 
-    <input class="ml-2" type="text" (change)="updateField()" [(ngModel)]="child.value" class="form-control input-sm" />
-
-    <button nbButton class="ml-2" size="xsmall" (click)="removeCondition(parent,child)" status="danger"
-      *ngIf="parent">
+    <button nbButton class="ml-2" size="xsmall" (click)="removeCondition(parent,child)" status="danger" *ngIf="parent">
       <i class="fas fa-trash"></i>
     </button>
   </div>
 </ng-template>
+
+<ng-template #simpleChild let-child="child" let-parent="parent">
+  <input type="text" (change)="updateField()" [(ngModel)]="child.value" class="form-control input-sm ml-2" />
+</ng-template>
+
+
+<ng-template #complexChild let-child="child" let-parent="parent">
+  <div class="m2 ml-4 row" style="width:80%">
+    <ng-select [(ngModel)]="child.value.variable" (change)="updateField()" [appendTo]="'body'"
+      style="min-width:25%" class="form-control input-sm ml-2" bindLabel="name" bindValue="id"
+      [addTag]="addTagPromise" [items]="fields">
+
+      <ng-template ng-tag-tmp let-search="searchTerm">
+        <b>New condition</b>: {{search}}
+      </ng-template>
+    </ng-select>
+
+    
+    <input type="text" (change)="updateField()" [(ngModel)]="child.value.value"
+      class="form-control input-sm ml-2" />
+    </div>
+  
+</ng-template>
+
 <!-- END OF OPERATOR -->

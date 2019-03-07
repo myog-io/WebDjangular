@@ -1,4 +1,4 @@
-<div class="card sticky-top">
+<div class="card sticky-top" >
   <div class="card-header">
     <div class="row h-100">
       <div class="col align-self-center">
@@ -8,8 +8,11 @@
   </div>
   <div class="card-body">
 
-    <div class="summary-items-wrapper table-responsive">
+    <div class="summary-items-wrapper table-responsive " [ngClass]="{ 'cart-updating': this.providerCheckout.cartService.cart_updating }">
 
+      <div class="loader" *ngIf="this.providerCheckout.cartService.cart_updating">
+        <span><i class=" fas fa-spinner fa-pulse fa-5x text-white"></i></span>
+      </div>
       <table class="table ">
         <tbody>
         <tr class="summary-item " [ngClass]="{
@@ -300,7 +303,7 @@
       <div class="row">
         <div class="col text-center">
           <button type="submit" class="btn btn-primary btn-lg"
-            [disabled]="!providerCheckout.isBuildingPlanValid()"
+            [disabled]="!providerCheckout.isBuildingPlanValid() || this.providerCheckout.cartService.cart_updating"
             (click)="submit();">
             FINALIZAR ASSINATURA
           </button>

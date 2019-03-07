@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
-import { NbAuthService } from '@nebular/auth';
+import {Injectable} from '@angular/core';
+import {NbAuthService} from '@nebular/auth';
 
-import { HttpClient } from '@angular/common/http';
-import { FileUploaderService, UploaderLinksOptions, UploaderServiceOptions } from '@core/chunk-file-upload/src/lib/file-uploader.service';
-import { FileItem } from '@core/chunk-file-upload/src/lib/file-item.class';
-import { FileUploaderOptions } from '@core/chunk-file-upload/src/lib/file-uploader.class';
+import {HttpClient} from '@angular/common/http';
+import {
+  FileUploaderService,
+  UploaderLinksOptions,
+  UploaderServiceOptions
+} from '@core/chunk-file-upload/src/lib/file-uploader.service';
+import {FileItem} from '@core/chunk-file-upload/src/lib/file-item.class';
+import {FileUploaderOptions} from '@core/chunk-file-upload/src/lib/file-uploader.class';
 
 //import { AbstractService } from './abstract.service';
 @Injectable()
@@ -15,7 +19,8 @@ export class MediaService extends FileUploaderService {
     updateEntry: '/api/media/#id#/',
     createEntry: '/api/media/',
     deleteEntry: '/api/media/#id#/',
-  }
+  };
+
   public options: UploaderServiceOptions = {
     createMethod: 'POST',
     updateMethod: 'PATCH',
@@ -27,7 +32,8 @@ export class MediaService extends FileUploaderService {
     currentChunkParamName: 'current_chunk',
     fileParamName: 'file',
     idAttribute: 'id',
-  }
+  };
+
   /**
    * Creates an instance of view media service.
    * @param http
@@ -47,7 +53,7 @@ export class MediaService extends FileUploaderService {
    * @returns before upload
    */
   public onBeforeUpload(item: FileItem, options: FileUploaderOptions): Promise<any> {
-    const promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.authService.getToken().subscribe(
         (result) => {
           this.options.token = result['token'];
@@ -58,6 +64,5 @@ export class MediaService extends FileUploaderService {
         }
       );
     });
-    return promise;
   }
 }

@@ -2,4 +2,39 @@
 @import '~@nebular/auth/styles/all';
 
 @include nb-install-component() {
+    button{
+        margin-left: 0.5rem;
+    }
+    .subtitle {
+        color: nb-theme(color-fg);
+        font-family: nb-theme(font-main);
+        font-size: 1rem;
+        font-weight: nb-theme(font-weight-light);
+    }
+    nb-accordion-item-header{
+        display: block;
+    }
+    nb-accordion {
+        width: 100%;
+    }
+    
+  
+}
+:host { 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.demo-content {
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding: 0 16px;
+}
+
+.demo-white-circle {
+    background-color: white;
+    width: 56px; 
+    height: 56px;
+    border-radius: 50%;
 }

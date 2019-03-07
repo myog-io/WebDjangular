@@ -15,6 +15,8 @@ import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model
 import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import { EmailModel } from '@core/data/src/lib/models/Email.model';
+import {OrderLineModel} from "@plugins/store/src/lib/data/models/OrderLine.model";
+import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
 
 
 
@@ -58,7 +60,7 @@ function getDirtyAttributes(attributesMetadata: any): { string: any } {
 const config: DatastoreConfig = {
   baseUrl: '/api',
   // TODO: Load all This Dynamic
-  // INCLUDES GOES HERE
+  // HARDCODE INCLUDES GOES HERE
   models: {
     Address: AddressModel,
     User: UserModel,
@@ -86,6 +88,8 @@ const config: DatastoreConfig = {
     Cart: CartModel, // Store
     MenuItem: MenuItemModel,
     Menu: MenuModel,
+    Order: OrderModel,
+    OrderLine: OrderLineModel
   },
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes
@@ -106,7 +110,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
     }
   }
 
-  protected getRelationships(data: any): any {
+  public getRelationships(data: any): any {
     let relationships: any;
     for (const key in data) {
       if (data.hasOwnProperty(key)) {

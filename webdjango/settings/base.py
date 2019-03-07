@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'django.contrib.humanize',
+    'django_prices',
+
     'django_mysql',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
     'webdjango',
-
     'rest_framework_json_api',
     'django_extensions',
     'libs.core.users.api',

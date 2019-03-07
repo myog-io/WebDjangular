@@ -28,6 +28,7 @@ import { ModelPaginatorComponent } from './model-paginator/model-paginator.compo
 import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
+import { HoldableDirective } from './holdable/holdable.directive';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
@@ -46,10 +47,10 @@ const ENTRY_COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [ScaffoldFieldDirective, BuilderFormComponent, ...ENTRY_COMPONENTS],
+  declarations: [ScaffoldFieldDirective, HoldableDirective, BuilderFormComponent, ...ENTRY_COMPONENTS],
   imports: [
     CommonModule,
-    MonacoEditorModule.forRoot({baseUrl: "./assets"}),
+    MonacoEditorModule.forRoot({ baseUrl: "./assets" }),
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
@@ -68,7 +69,7 @@ const ENTRY_COMPONENTS = [
 
 
   ],
-  exports: [ScaffoldFieldDirective, BuilderFormComponent, ModelPaginatorComponent],
+  exports: [ScaffoldFieldDirective, HoldableDirective, BuilderFormComponent, ModelPaginatorComponent],
   entryComponents: [...ENTRY_COMPONENTS]
 })
 export class BuilderFormModule { }

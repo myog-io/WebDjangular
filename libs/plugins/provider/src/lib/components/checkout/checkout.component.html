@@ -2,7 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col my-5">
-        <div class="loader mx-auto text-center"></div>
+        <div class="loader mx-auto text-center">
+          <span><i class=" fas fa-spinner fa-pulse fa-5x text-primary"></i></span>
+
+        </div>
+
       </div>
     </div>
   </div>
@@ -42,14 +46,12 @@
                 </p>
                 <p class="mb-0 col-12 col-lg-6">
                   <b>Endereço da assinatura:</b><br>
-                  <span [innerHtml]="providerCheckout.address.full_label"></span>
-
+                  <span [innerHTML]="providerCheckout.address.full_label"></span>
                 </p>
                 <p class="mb-0 col-12 col-lg-3">
                   <b>Acesso:</b> {{ providerCheckout.plan_type?.name }} <br>
                   <b> {{ providerCheckout.customer_types[providerCheckout.cartService?.cart?.extra_data?.customer_type]}} </b>
                 </p>
-
               </div>
             </div>
           </div>

@@ -66,8 +66,11 @@ class CartRuleViewSet(ModelViewSet):
         '''
         data = {}
         data['cart'] = get_fields_flat(Cart)
+
         data['billing_address'] = get_fields_flat(Address)
         data['shipping_address'] = data['billing_address']
+        data['product'] = get_fields_flat(Product)
+        data['item'] = get_fields_flat(CartItem)
         return Response(data)
 
     @action(methods=['GET'], detail=False)

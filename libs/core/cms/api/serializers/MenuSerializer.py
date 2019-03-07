@@ -11,7 +11,8 @@ class MenuSerializer(WebDjangoSerializer):
         many=True,
         queryset=MenuItem.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='menu-relationships'
+        self_link_view_name='menu-relationships',
+        required=False
     )
 
     included_serializers = {
