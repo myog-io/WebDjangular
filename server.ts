@@ -34,6 +34,7 @@ const fs = require('fs');
 const template = fs.readFileSync(clientAppServer('index.html')).toString();
 const adminTemplate = fs.readFileSync(adminAppServer('index.html')).toString();
 const win = domino.createWindow(template);
+const navigator = win
 global['window'] = win;
 global['document'] = win.document;
 // Fixing ReferenceError: Event is not defined 

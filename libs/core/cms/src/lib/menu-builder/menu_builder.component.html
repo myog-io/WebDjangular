@@ -3,19 +3,19 @@
     <nb-card>
       <nb-card-header>Menu Editor
         <!-- SELECT MENU -->
-        <button nbButton type="button" status="danger" [disabled]="formLoading" [nbSpinnerStatus]="danger"
-          [nbSpinnerSize]="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
+        <button nbButton type="button" status="danger" [disabled]="formLoading" nbSpinnerStatus="danger"
+          nbSpinnerSize="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
           (click)="openDialog()"><i class="fas fa-trash"></i></button>
-        <button nbButton type="button" status="success" [disabled]="formLoading" [nbSpinnerStatus]="success"
-          [nbSpinnerSize]="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
+        <button nbButton type="button" status="success" [disabled]="formLoading" nbSpinnerStatus="success"
+          nbSpinnerSize="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
           (click)="saveMenu()">Save</button>
-        <button nbButton type="button" status="info" [disabled]="formLoading" [nbSpinnerStatus]="info"
-          [nbSpinnerSize]="large" [nbSpinner]="formLoading" type="button" class="btn btn-info btn-hero float-right"
+        <button nbButton type="button" status="info" [disabled]="formLoading" nbSpinnerStatus="info"
+          nbSpinnerSize="large" [nbSpinner]="formLoading" type="button" class="btn btn-info btn-hero float-right"
           (click)="createNewMenu()">New Menu</button>
 
         <div class="ghost-dropdown dropdown btn-hero float-right" ngbDropdown>
-          <button nbButton type="button" status="primary" [disabled]="formLoading" [nbSpinnerStatus]="primary"
-            [nbSpinnerSize]="large" [nbSpinner]="formLoading" type="button" ngbDropdownToggle class="btn btn-primary">
+          <button nbButton type="button" status="primary" [disabled]="formLoading" nbSpinnerStatus="primary"
+            nbSpinnerSize="large" [nbSpinner]="formLoading" type="button" ngbDropdownToggle class="btn btn-primary">
             {{ current_menu }}
           </button>
           <ul class="dropdown-menu" ngbDropdownMenu>

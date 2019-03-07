@@ -23,14 +23,6 @@ import {NgxMaskModule} from "ngx-mask";
 import { PluginProviderCheckoutErrorComponent } from "./checkout-form-error.component";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
-import {FilePondModule, registerPlugin as FilePondRegisterPlugin} from 'ngx-filepond';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-
-FilePondRegisterPlugin(FilePondPluginImagePreview);
-FilePondRegisterPlugin(FilePondPluginFileValidateSize);
-FilePondRegisterPlugin(FilePondPluginFileValidateType);
 
 const COMPONENTS = [
   PluginProviderCheckoutComponent,
@@ -60,7 +52,6 @@ const COMPONENTS = [
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
     NgbModalModule,
-    FilePondModule
   ],
   exports: [
     ...COMPONENTS,

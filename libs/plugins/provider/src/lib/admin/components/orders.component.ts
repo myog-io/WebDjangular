@@ -13,7 +13,7 @@ import {ErrorResponse} from "angular2-jsonapi";
 })
 export class PluginProviderAdminOrdersComponent implements OnInit {
 
-  private order: OrderModel;
+  public order: OrderModel;
 
 
   constructor(private activatedRoute: ActivatedRoute,
