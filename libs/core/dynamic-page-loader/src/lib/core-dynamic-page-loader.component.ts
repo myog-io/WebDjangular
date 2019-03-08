@@ -23,12 +23,12 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoreDynamicPageLoaderComponent implements AfterViewInit {
-  public content = '';
-  public header = '';
-  public footer = '';
-  private current_header: BlockHeaderModel;
-  private current_footer: BlockFooterModel;
-  private url = null;
+  public content:string;
+  public header:string;
+  public footer:string;
+  public current_header: BlockHeaderModel;
+  public current_footer: BlockFooterModel;
+  public url = null;
   private domain = null;
   //private paramSubscription;
   private links = [];
@@ -74,7 +74,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     this.url = document.location.protocol + '//' + this.domain;
     this.activatedRoute.data.subscribe((data: any) => {
       this.loadPagesContent(data.page);
-      this.cdr.detectChanges();
+      
     })
   }
 
@@ -107,6 +107,7 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         this.content = `<wda-error-404></wda-error-404>`;
       }
     }
+    this.cdr.detectChanges();
   }
 
 }

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'wda-form',
+  selector: 'wda-form-builder',
   styleUrls: ['builder-form.component.scss'],
   templateUrl: 'builder-form.component.html'
 })

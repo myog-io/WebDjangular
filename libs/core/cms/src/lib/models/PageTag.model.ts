@@ -9,7 +9,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'PageTag',
-  modelEndpointUrl: 'page-tag',
+  modelEndpointUrl: 'cms/page-tag',
 })
 export class PageTagModel extends AbstractModel {
 

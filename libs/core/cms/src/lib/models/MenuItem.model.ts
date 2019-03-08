@@ -7,7 +7,7 @@ import { PermissionModel } from '@core/users/src/lib/models';
 
 @JsonApiModelConfig({
   type: 'MenuItem',
-  modelEndpointUrl: 'menu_item',
+  modelEndpointUrl: 'cms/menu_item',
 })
 export class MenuItemModel extends AbstractModel {
 
@@ -83,7 +83,9 @@ export class MenuItemModel extends AbstractModel {
       { id: '_top', name: 'Top' }
     ],
     value: '_self',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-12',
+    
+    
   })
   target: string;
 

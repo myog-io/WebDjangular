@@ -23,6 +23,9 @@ export class AbstractForm extends FormGroup {
     conditional: null,
     sort: 0
   }];
+  public formSubmitAttempts : number = 0;
+  public formSubmiting: Boolean = false;
+  public formSubmittedSuccess: Boolean = false;
 
   /**
    * Creates an instance of abstract form.
@@ -131,12 +134,10 @@ export class AbstractForm extends FormGroup {
           if (field.model) {
             const vals = this.get(propName).value;
             let entities = [];
-
             for (let i = 0; i < vals.length; i++) {
               entities.push(this.createEntity(field.model, vals[i]))
             }
             entity[propName] = entities;
-
           } else {
             entity[propName] = this.get(propName).value;
           }

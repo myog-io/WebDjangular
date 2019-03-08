@@ -5,7 +5,7 @@ import {BlockModel} from "@core/cms/src/lib/models/Block.model";
 
 @JsonApiModelConfig({
   type: 'Block',
-  modelEndpointUrl: 'block',
+  modelEndpointUrl: 'cms/block',
 })
 export class BlockWidgetHolderModel extends BlockModel {
 

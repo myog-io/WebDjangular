@@ -10,7 +10,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
   styleUrls: [],
   template: `
     <div class="form-group" [formGroup]="group" *ngIf="!loading">
-      <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)" (relationshipUpdated)="relationshipUpdated($event)" [group]="this.group.get(this.config.name)" [loading]="loading" [submit]="submit"></wda-form>
+      <wda-form-builder [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)" (relationshipUpdated)="relationshipUpdated($event)" [group]="this.group.get(this.config.name)" [loading]="loading" [submit]="submit"></wda-form-builder>
     </div>
   `
 })

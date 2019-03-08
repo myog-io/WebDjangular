@@ -18,7 +18,7 @@ enum pageDG {
 
 @JsonApiModelConfig({
   type: 'Page',
-  modelEndpointUrl: 'page',
+  modelEndpointUrl: 'cms/page',
 })
 export class PageModel extends AbstractModel {
   public include = 'header,footer,layout';
