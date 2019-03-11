@@ -3,13 +3,13 @@ import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
 import { Validators } from "@angular/forms";
+import {FormModel} from "@core/cms/src/lib/models/Form.model";
 
 
 
-export const ActionChoises = [
-    {id:'email', name:'email'},
-    {id:'save', name:'save'}
-]
+export const ActionChoices = [
+    {id:'send_email', name:'Enviar email'},
+];
 
 @JsonApiModelConfig({
     type: 'FormAction',
@@ -17,7 +17,7 @@ export const ActionChoises = [
 })
 export class FormActionModel extends AbstractModel {
     @Attribute()
-    id: string
+    id: string;
 
     @Attribute()
     @ExtraOptions({
@@ -45,9 +45,9 @@ export class FormActionModel extends AbstractModel {
 
     @Attribute()
     @ExtraOptions({
-        type: 'selection',
+        type: 'select',
         label: 'Action Type',
-        options: ActionChoises,
+        options: ActionChoices,
     })
     action_type: string;
 
@@ -56,8 +56,10 @@ export class FormActionModel extends AbstractModel {
         type: 'codeEditor',
         label: 'Extra Data',
     })
-    data?: any;
-    
+    data?: string;
+
+    @BelongsTo({ key: 'Form' })
+    form: any;
 
     public toString = (): string => {
         return `${this.label} (${this.action_type})`;

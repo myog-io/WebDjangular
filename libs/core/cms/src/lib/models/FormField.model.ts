@@ -5,6 +5,7 @@ import { SmartTableSettings } from "@core/data/src/lib/data-store";
 import { Validators, FormControl } from "@angular/forms";
 import { BuilderFormFieldConfig } from "@core/builder/src/lib/interfaces/form-config.interface";
 
+
 export const LabelPostionOptions = [
   { id: 'default', name: 'default' },
   { id: 'above', name: 'above' },
@@ -58,7 +59,7 @@ export class FormFieldModel extends AbstractModel {
 
 
   @Attribute()
-  id: string
+  id: string;
 
   @Attribute()
   @ExtraOptions({
@@ -67,7 +68,7 @@ export class FormFieldModel extends AbstractModel {
     label: 'Label',
     wrapper_class: 'col-4',
   })
-  label: string
+  label: string;
 
   @Attribute()
   @ExtraOptions({
@@ -76,7 +77,7 @@ export class FormFieldModel extends AbstractModel {
     label: 'Slug',
     wrapper_class: 'col-4',
   })
-  slug: string
+  slug: string;
 
   @Attribute()
   @ExtraOptions({
@@ -84,7 +85,7 @@ export class FormFieldModel extends AbstractModel {
     label: 'Placeholder',
     wrapper_class: 'col-4',
   })
-  placeholder: string
+  placeholder: string;
 
   @Attribute()
   @ExtraOptions({
@@ -117,7 +118,7 @@ export class FormFieldModel extends AbstractModel {
     value: false,
     wrapper_class: 'col-4',
   })
-  required: boolean
+  required: boolean;
 
   
   @Attribute()
@@ -165,8 +166,7 @@ export class FormFieldModel extends AbstractModel {
     label: 'Default Value',
     wrapper_class: 'col-12',
   })
-  default_value: string
-
+  default_value: string;
 
 
   @Attribute()
@@ -174,7 +174,7 @@ export class FormFieldModel extends AbstractModel {
     type: 'codeEditor',
     label: 'Extra Data',
   })
-  data?: any
+  data?: string;
 
   @BelongsTo({ key: 'Form' })
   form: any;

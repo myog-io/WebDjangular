@@ -69,16 +69,18 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='FormSubmition',
+            name='FormSubmitted',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('data', django_mysql.models.JSONField(default=dict)),
-                ('form', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='submitions', to='cms.Form')),
+                ('form', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    related_name='forms_submitted', to='cms.Form')),
             ],
             options={
-                'db_table': 'cms_form_submition',
+                'db_table': 'cms_form_submitted',
                 'ordering': ['id'],
             },
         ),

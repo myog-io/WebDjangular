@@ -1,4 +1,4 @@
-from libs.core.cms.api.models.Form import Form, FormSubmition, FormAction, FormField
+from libs.core.cms.api.models.Form import Form, FormSubmitted, FormAction, FormField
 from webdjango.serializers.WebDjangoSerializer import WebDjangoSerializer
 from rest_framework_json_api.relations import ResourceRelatedField
 
@@ -41,9 +41,9 @@ class FormSerializer(WebDjangoSerializer):
     """
     The serializer for Pages Objects
     """
-    submitions = ResourceRelatedField(
+    forms_submitted = ResourceRelatedField(
         many=True,
-        queryset=FormSubmition.objects,
+        queryset=FormSubmitted.objects,
         related_link_url_kwarg='pk',
         self_link_view_name='form-relationships',
         required=False,
@@ -62,10 +62,9 @@ class FormSerializer(WebDjangoSerializer):
         self_link_view_name='form-relationships',
         required=False,
     )
-    
 
     included_serializers = {
-        'submitions': 'libs.core.cms.api.serializers.FormSerializer.FormSubmitionSerializer',
+        'forms_submitted': 'libs.core.cms.api.serializers.FormSerializer.FormSubmittedSerializer',
         'actions': 'libs.core.cms.api.serializers.FormSerializer.FormActionSerializer',
         'fields': 'libs.core.cms.api.serializers.FormSerializer.FormFieldSerializer',
     }
@@ -75,7 +74,7 @@ class FormSerializer(WebDjangoSerializer):
         fields = '__all__'
 
 
-class FormSubmitionSerializer(WebDjangoSerializer):
+class FormSubmittedSerializer(WebDjangoSerializer):
     """
     The serializer for Pages Objects
     """
@@ -83,7 +82,7 @@ class FormSubmitionSerializer(WebDjangoSerializer):
         many=False,
         queryset=Form.objects,
         related_link_url_kwarg='pk',
-        self_link_view_name='form-submition-relationships',
+        self_link_view_name='form-submitted-relationships',
         required=False,
     )
     
@@ -92,5 +91,5 @@ class FormSubmitionSerializer(WebDjangoSerializer):
     }
 
     class Meta: 
-        model = FormSubmition
+        model = FormSubmitted
         fields = '__all__'
