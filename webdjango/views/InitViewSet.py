@@ -1,13 +1,15 @@
+from django.core import serializers
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 
 from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.PageSerializer import PageSerializer
-from webdjango.models.Core import Plugin, Theme, CoreConfig
-from webdjango.serializers.CoreSerializer import PluginSerializer, ThemeSerializer, CoreConfigSerializer
+from webdjango.models.Core import CoreConfig, Plugin, Theme
 from webdjango.models.CoreConfig import CoreConfigGroup
+from webdjango.serializers.CoreSerializer import (CoreConfigSerializer,
+                                                  PluginSerializer,
+                                                  ThemeSerializer)
 
-from django.core import serializers
 
 class InitViewSet(viewsets.GenericViewSet):
     """
@@ -16,7 +18,6 @@ class InitViewSet(viewsets.GenericViewSet):
     """
     queryset = Page.objects.all()
     serializer_class = PageSerializer
-    permission_classes = (permissions.AllowAny,)
 
     def list(self, request, format=None):
         """

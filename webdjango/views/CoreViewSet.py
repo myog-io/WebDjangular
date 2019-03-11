@@ -10,7 +10,6 @@ from webdjango.models.Core import Author, CoreConfig, Plugin, Theme, Website
 from webdjango.serializers.CoreSerializer import AuthorSerializer, \
     CoreConfigSerializer, PluginSerializer, ThemeSerializer, \
     WebsiteSerializer
-from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 
 class WebsiteFilter(WebDjangoFilterSet):
@@ -34,7 +33,6 @@ class WebsiteViewSet(ModelViewSet):
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('domain', 'code')
     filter_class = WebsiteFilter
-    permission_classes = (AuthenticatedViewsetPermission,)
 
 
 class CoreConfigFilter(WebDjangoFilterSet):
@@ -60,7 +58,6 @@ class CoreConfigViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('website', 'slug')
     filter_class = CoreConfigFilter
-    permission_classes = (AuthenticatedViewsetPermission,)
 
     def get_object(self):
         obj = CoreConfig.read(self.kwargs['slug'])
@@ -89,7 +86,6 @@ class AuthorViewSet(ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'email', 'website')
-    permission_classes = (AuthenticatedViewsetPermission,)
     filter_class = AuthorFilter
 
 
@@ -113,8 +109,8 @@ class PluginViewSet(ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'slug')
-    permission_classes = (AuthenticatedViewsetPermission,)
     filter_class = PluginFilter
+
     """
     List a queryset.
     """
@@ -145,12 +141,12 @@ class ThemeViewSet(ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'slug')
-    permission_classes = (AuthenticatedViewsetPermission,)
     filter_class = ThemeFilter
 
     """
     List a queryset.
     """
+
     def list(self, request, *args, **kwargs):
         # Adding the Script to update all the Themes, before listing it!
         Theme.update_list()

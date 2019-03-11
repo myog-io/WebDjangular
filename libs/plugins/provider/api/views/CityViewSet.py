@@ -1,21 +1,22 @@
-from webdjango.filters import WebDjangoFilterSet
+import json
+
+import requests
 from django_filters.filters import ModelChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
+from rest_framework import exceptions, filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import exceptions
-from ..models.City import PostalCodeRange, Street, NumberRange
-from ..serializers.CitySerializer import PostalCodeRangeSerializer,\
-    StreetSerializer,  NumberRangeSerializer
-from ..models.City import City
-from ..serializers.CitySerializer import CitySerializer
-from ..utils import getClientUserCookie
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
+
 from libs.plugins.store.api.models.Product import Product
-import requests
-import json
+from webdjango.filters import WebDjangoFilterSet
+from ..models.City import City, NumberRange, PostalCodeRange, Street
+from ..serializers.CitySerializer import (CitySerializer,
+                                          NumberRangeSerializer,
+                                          PostalCodeRangeSerializer,
+                                          StreetSerializer)
+from ..utils import getClientUserCookie
 
 
 class CityFilter(WebDjangoFilterSet):
@@ -49,7 +50,6 @@ class CityViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CityFilter
     search_fields = ('name',)
-    permission_classes = ()
 
     @action(methods=['GET'], detail=True, url_path='postal_code', lookup_field='postal_code', lookup_url_kwarg='postal_code')
     def postal_code(self, request, *args, **kwargs):
@@ -88,7 +88,8 @@ class CityViewSet(ModelViewSet):
                                         'data']['city']['id'])
 
         if not city:
-            raise exceptions.NotFound("Não temos cobertura na cidade relacionada aesse cep")
+            raise exceptions.NotFound(
+                "Não temos cobertura na cidade relacionada aesse cep")
 
         serializer = self.get_serializer(city)
         data = serializer.data
@@ -137,7 +138,6 @@ class PostalCodeRangeViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = PostalCodeRangeFilter
     search_fields = ('start', 'end',)
-    permission_classes = ()
 
 
 class PostalCodeRangeRelationshipView(RelationshipView):
@@ -171,7 +171,6 @@ class StreetViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = StreetFilter
     search_fields = ('name', 'short_name',)
-    permission_classes = ()
 
 
 class StreetRelationshipView(RelationshipView):
@@ -205,7 +204,6 @@ class NumberRangeViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = NumberRangeFilter
     search_fields = ('name', 'short_name',)
-    permission_classes = ()
 
 
 class NumberRangeRelationshipView(RelationshipView):

@@ -11,7 +11,8 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if hasattr(request, 'user'):
-            if request.user.is_staff == True:
+            print("USER: ",request.user)
+            if request.user.is_staff or request.user.is_superuser:
                 return True
 
             user = request.user

@@ -6,9 +6,6 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from webdjango.filters import WebDjangoFilterSet
 from ..models.Email import Email
 from ..serializers.EmailSerializer import EmailSerializer
-from ..utils.permissions.AuthenticatedViewsetPermission import \
-    AuthenticatedViewsetPermission
-
 
 class EmailFilter(WebDjangoFilterSet):
     class Meta:
@@ -26,4 +23,3 @@ class EmailViewSet(ModelViewSet):
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('domain', 'code')
     filter_class = EmailFilter
-    permission_classes = (AuthenticatedViewsetPermission,)

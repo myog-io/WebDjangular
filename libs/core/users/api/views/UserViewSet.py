@@ -21,7 +21,6 @@ from libs.core.users.api.serializers.ForgetPasswordSerializer import ForgetPassw
 from libs.core.users.api.serializers.PermissionSerializer import PermissionSerializer
 from libs.core.users.api.serializers.SetPasswordSerializer import SetPasswordSerializer
 from libs.core.users.api.serializers.UserSerializer import UserSerializer
-from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 
 class UserFilter(WebDjangoFilterSet):
@@ -48,7 +47,6 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     authentication_classes = (JSONWebTokenAuthentication,)
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    permission_classes = (AuthenticatedViewsetPermission, )
     search_fields = ('first_name', 'last_name', 'email', 'username')  # Search field is for the Search Filter ?search=
     filter_class = UserFilter
 

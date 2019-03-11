@@ -1,20 +1,20 @@
-from ..models.Product import Product, ProductCategory, ProductType, ProductAttribute
-from ..serializers.ProductSerializer import ProductCategorySerializer, \
-    ProductSerializer, ProductTypeSerializer, ProductAttributeSerializer
-from webdjango.filters import WebDjangoFilterSet
 from django_filters.filters import CharFilter, ModelChoiceFilter
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework_json_api.views import ModelViewSet
-from rest_framework_json_api.views import RelationshipView
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
-from ..models.Product import Product, ProductCategory, ProductType
-from ..serializers.ProductSerializer import ProductCategorySerializer, \
-    ProductSerializer, ProductTypeSerializer
 from libs.plugins.provider.api.models.City import City
-from libs.plugins.provider.api.models.PlanType import PlanType
 from libs.plugins.provider.api.models.Condo import Condo
+from libs.plugins.provider.api.models.PlanType import PlanType
+from webdjango.filters import WebDjangoFilterSet
+from ..models.Product import (Product, ProductAttribute, ProductCategory,
+                              ProductType)
+from ..serializers.ProductSerializer import (ProductAttributeSerializer,
+                                             ProductCategorySerializer,
+                                             ProductSerializer,
+                                             ProductTypeSerializer)
+
 
 class ProductAttributeFilter(WebDjangoFilterSet):
     class Meta:
@@ -38,11 +38,11 @@ class ProductAttributeViewSet(ModelViewSet):
     serializer_class = ProductAttributeSerializer
     queryset = ProductAttribute.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductAttributeFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class ProductAttributeRelationshipView(RelationshipView):
@@ -71,11 +71,11 @@ class ProductTypeViewSet(ModelViewSet):
     serializer_class = ProductTypeSerializer
     queryset = ProductType.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductTypeFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class ProductTypeRelationshipView(RelationshipView):
@@ -104,11 +104,11 @@ class ProductCategoryViewSet(ModelViewSet):
     serializer_class = ProductCategorySerializer
     queryset = ProductCategory.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductCategoryFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class ProductCategoryRelationshipView(RelationshipView):
@@ -116,19 +116,19 @@ class ProductCategoryRelationshipView(RelationshipView):
 
 
 class ProductFilter(WebDjangoFilterSet):
-   
-    
+
     product_class_neq = CharFilter(field_name='product_class', exclude=True)
+
     class Meta:
         model = Product
         fields = {
-            'id': ['in','exact'],
+            'id': ['in', 'exact'],
             'name': ['contains', 'exact'],
             'sku': ['contains', 'exact', 'in'],
             'description': ['contains'],
             'product_class': ['contains', 'exact'],
             'product_class_neq': ['in', 'exact'],
-             # TODO: This Should Be Dynamic, using signals
+            # TODO: This Should Be Dynamic, using signals
             'condos__id': ['in', 'exact'],
             'plan_types__id': ['in', 'exact'],
             'city__id': ['in', 'exact'],
@@ -147,11 +147,11 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class ProductRelationshipView(RelationshipView):

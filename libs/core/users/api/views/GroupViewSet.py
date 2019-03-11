@@ -9,14 +9,13 @@ from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, \
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
 
 
 class GroupViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
     authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     search_fields = ('name', )
-    permission_classes = (AuthenticatedViewsetPermission,)
