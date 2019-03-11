@@ -1,19 +1,22 @@
-from ..signals import post_get_page, pre_get_page
-from ..configs import CMSCoreConfig
-from webdjango.filters import WebDjangoFilterSet
+from django.template import Context, Template
+from django.template.base import Lexer
 from django_filters.rest_framework import DjangoFilterBackend
-from ..models.Page import Page, PageTag, PageCategory
-from ..models.Block import Block
-from ..serializers.PageSerializer import PageSerializer, PageTagSerializer, PageCategorySerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework_json_api.views import RelationshipView, ModelViewSet
-from webdjango.models.Core import CoreConfig
-from django.template import Template, Context
-from django.template.base import Lexer
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
+
 from webdjango.configs import CONFIG_HOME_PAGE
+from webdjango.filters import WebDjangoFilterSet
+from webdjango.models.Core import CoreConfig
+
+from ..configs import CMSCoreConfig
+from ..models.Block import Block
+from ..models.Page import Page, PageCategory, PageTag
+from ..serializers.PageSerializer import (PageCategorySerializer,
+                                          PageSerializer, PageTagSerializer)
+from ..signals import post_get_page, pre_get_page
 
 
 class PageTagFilter(WebDjangoFilterSet):
@@ -38,11 +41,11 @@ class PageTagViewSet(ModelViewSet):
     serializer_class = PageTagSerializer
     queryset = PageTag.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PageTagFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class PageCategoryFilter(WebDjangoFilterSet):
@@ -67,11 +70,11 @@ class PageCategoryViewSet(ModelViewSet):
     serializer_class = PageCategorySerializer
     queryset = PageCategory.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PageCategoryFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class PageFilter(WebDjangoFilterSet):
@@ -103,7 +106,6 @@ class PageViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = PageFilter
     search_fields = ('title', 'content', 'slug')
-    permission_classes = ()
     recursive_block = 0
 
     def send_pre_get_page(self, request, *args):
@@ -132,15 +134,14 @@ class PageViewSet(ModelViewSet):
         # Here we update the Layout
         new_content = None
         if layout:
-            new_content = content;
+            new_content = content
             content = layout.content
-            
 
         # Here we Search for Blocks
         lexer = Lexer(content)
         tokens = lexer.tokenize()
         filter_query = []
-        self.recursive_block = self.recursive_block +1;
+        self.recursive_block = self.recursive_block + 1
         for token in tokens:
             if token.token_type.value == 1:
                 filter_query.append(token.contents)
@@ -151,7 +152,7 @@ class PageViewSet(ModelViewSet):
             ctx = {}
             for code, data in blocks:
                 ctx[code] = self.update_block_codes(data, request)
-            
+
             if new_content:
                 ctx['content'] = self.update_block_codes(new_content, request)
             context = Context(ctx, autoescape=False)
@@ -175,8 +176,9 @@ class PageViewSet(ModelViewSet):
         self.lookup_field = 'slug'
         self.lookup_url_kwarg = 'slug'
         instance = self.get_object()
-        
-        instance.content = self.update_block_codes(content=instance.content, request=request, layout=instance.getLayout() )
+
+        instance.content = self.update_block_codes(
+            content=instance.content, request=request, layout=instance.getLayout())
         self.send_post_get_page(instance=instance, request=request, *args)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -192,8 +194,9 @@ class PageViewSet(ModelViewSet):
         self.send_pre_get_page(request, *args)
 
         instance = self.get_object()
-        instance.content = self.update_block_codes(content=instance.content, request=request, layout=instance.getLayout() )
-        
+        instance.content = self.update_block_codes(
+            content=instance.content, request=request, layout=instance.getLayout())
+
         self.send_post_get_page(instance=instance, request=request, *args)
         serializer = self.get_serializer(instance)
         return Response(serializer.data)

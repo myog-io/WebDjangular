@@ -1,10 +1,15 @@
-from webdjango.filters import WebDjangoFilterSet
 from django_filters.rest_framework import DjangoFilterBackend
-from libs.core.cms.api.models.Form import Form, FormSubmition, FormField, FormAction
-from libs.core.cms.api.serializers.FormSerializer import FormSerializer, FormSubmitionSerializer, FormFieldSerializer, FormActionSerializer
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
+
+from libs.core.cms.api.models.Form import (Form, FormAction, FormField,
+                                           FormSubmition)
+from libs.core.cms.api.serializers.FormSerializer import (FormActionSerializer,
+                                                          FormFieldSerializer,
+                                                          FormSerializer,
+                                                          FormSubmitionSerializer)
+from webdjango.filters import WebDjangoFilterSet
 
 
 class FormFilter(WebDjangoFilterSet):
@@ -32,7 +37,6 @@ class FormViewSet(ModelViewSet):
                        filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = FormFilter
-    permission_classes = ()
 
 
 class FormRelationshipView(RelationshipView):
@@ -53,7 +57,6 @@ class FormSubmitionViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    permission_classes = ()
 
 
 class FormSubmitionRelationshipView(RelationshipView):
@@ -74,7 +77,6 @@ class FormActionViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    permission_classes = ()
 
 
 class FormActionRelationshipView(RelationshipView):
@@ -95,7 +97,6 @@ class FormFieldViewSet(ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    permission_classes = ()
 
 
 class FormFieldRelationshipView(RelationshipView):

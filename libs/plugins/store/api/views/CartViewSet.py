@@ -1,33 +1,36 @@
+from uuid import UUID, uuid1
+
 from django.http import HttpResponse
-from django_filters.rest_framework import DjangoFilterBackend
 from django_filters.filters import ModelChoiceFilter
-from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
-from uuid import UUID, uuid1
+
+from webdjango.filters import WebDjangoFilterSet
+from ..emails import send_order_confirmation
 from ..models.Cart import Cart, CartItem, CartTerm
 from ..models.Order import OrderEventTypes
-from ..serializers.CartSerializer import CartSerializer, CartItemSerializer, CartTermSerializer
+from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
+                                          CartTermSerializer)
 from ..serializers.OrderSerializer import OrderSerializer
-from ..utils.CartUtils import cart_has_product, create_order, apply_all_cart_rules, apply_cart_terms
-from webdjango.filters import WebDjangoFilterSet
-from rest_framework import status
-from rest_framework.exceptions import ValidationError
-from ..emails import send_order_confirmation
+from ..utils.CartUtils import (apply_all_cart_rules, apply_cart_terms,
+                               cart_has_product, create_order)
 
 
 class CartTermFilter(WebDjangoFilterSet):
     carts = ModelChoiceFilter(queryset=Cart.objects)
-    
+
     class Meta:
         model = CartTerm
         fields = {
             'id': ['in'],
             'all_carts': ['exact'],
             'enabled': ['exact'],
-            'content': ['exact','contains'],
+            'content': ['exact', 'contains'],
             'position': ['exact'],
             'content': ['contains'],
         }
@@ -45,11 +48,11 @@ class CartTermViewSet(ModelViewSet):
     serializer_class = CartTermSerializer
     queryset = CartTerm.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CartTermFilter
     search_fields = ('content',)
-    permission_classes = ()
 
 
 class CartTermRelationshipView(RelationshipView):
@@ -80,11 +83,11 @@ class CartViewSet(ModelViewSet):
     serializer_class = CartSerializer
     queryset = Cart.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CartFilter
     search_fields = ('name',)
-    permission_classes = ()
 
     def apply_rules(self, instance):
         apply_all_cart_rules(instance)
@@ -107,9 +110,9 @@ class CartViewSet(ModelViewSet):
         order.events.create(event_type=OrderEventTypes.PLACED)
         send_order_confirmation(order.pk)
         order.events.create(
-           event_type=OrderEventTypes.EMAIL_SENT,
-           data={
-               'email': order.get_user_current_email(),
+            event_type=OrderEventTypes.EMAIL_SENT,
+            data={
+                'email': order.get_user_current_email(),
             })
 
         serializer = OrderSerializer(order)
@@ -133,11 +136,12 @@ class CartViewSet(ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-        
+
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
@@ -150,7 +154,7 @@ class CartViewSet(ModelViewSet):
         # Get Instance again
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-        
+
 
 class CartRelationshipView(RelationshipView):
     queryset = Cart.objects
@@ -168,10 +172,10 @@ class CartItemViewSet(ModelViewSet):
     serializer_class = CartItemSerializer
     queryset = CartItem.objects.all()
     authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+    filter_backends = (filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     search_fields = ('product',)
-    permission_classes = ()
 
     def perform_create(self, serializer):
         validated_data = serializer.validated_data
@@ -187,7 +191,7 @@ class CartItemViewSet(ModelViewSet):
         serializer.save()
 
     def perform_destroy(self, item):
-        ##  Let's Check if theres any terms in the cart that need to be removed
+        # Let's Check if theres any terms in the cart that need to be removed
         if item.cart and item.product:
             term = item.cart.terms.filter(products=item.product).first()
             if term:

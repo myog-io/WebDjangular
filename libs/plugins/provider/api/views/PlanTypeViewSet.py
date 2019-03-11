@@ -1,15 +1,15 @@
 from django import forms
-from webdjango.filters import WebDjangoFilterSet
 from django_filters.filters import ModelMultipleChoiceFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.authentication import TokenAuthentication
-from rest_framework_json_api.views import ModelViewSet
-from rest_framework_json_api.views import RelationshipView
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
+from webdjango.filters import WebDjangoFilterSet
+
+from ....store.api.models.Product import Product
 from ..models.PlanType import PlanType
 from ..serializers.PlanTypeSerializer import PlanTypeSerializer
-from ....store.api.models.Product import Product
 
 
 class PlanTypeFilter(WebDjangoFilterSet):
@@ -43,7 +43,6 @@ class PlanTypeViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = PlanTypeFilter
     search_fields = ('name',)
-    permission_classes = ()
 
 
 class PlanTypeRelationshipView(RelationshipView):
