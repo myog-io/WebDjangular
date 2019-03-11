@@ -6,24 +6,24 @@ import { FormModel } from './Form.model';
 
 
 @JsonApiModelConfig({
-  type: 'FormSubmition',
-  modelEndpointUrl: 'cms/form_submition',
+  type: 'FormSubmitted',
+  modelEndpointUrl: 'cms/form-submit',
 })
-export class FormSubmitionModel extends AbstractModel {
+export class FormSubmittedModel extends AbstractModel {
   @Attribute()
-  id: string
+  id: string;
 
   @BelongsTo()
-  form: FormModel
+  form: FormModel;
 
   @Attribute()
-  data: any
+  data: any;
 
   @Attribute()
-  created: Date
+  created: Date;
 
   @Attribute()
-  updated: Date
+  updated: Date;
 
 
   public toString = (): string => {

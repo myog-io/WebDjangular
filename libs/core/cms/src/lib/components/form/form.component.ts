@@ -10,6 +10,10 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 import { FormModel } from '../../models/Form.model';
 import { FormGroup } from '@angular/forms';
 import {AbstractForm} from "@core/data/src/lib/forms";
+import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
+import {ErrorResponse} from "angular2-jsonapi";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {FormSubmittedModel} from "@core/cms/src/lib/models/FormSubmittedModel";
 /*
 <ng-container wdaBuilderFormFields [config]="field" [group]="group"
                 (relationshipUpdated)="relationship($event)"></ng-container>
@@ -29,7 +33,6 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
 
 
   constructor(private datastore: WebAngularDataStore) {
-    console.log('CoreCmsFormComponent');
   }
 
   ngOnInit() {
@@ -56,14 +59,21 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
     this.formGroup.formSubmitAttempts++;
     if(this.formGroup.valid) {
       this.formGroup.formSubmiting = true;
+      this.submitForm().then(
+        () => {
+          console.log("SUCCESS!");
+        }, () => {
+          console.log("FAILED!");
+        }
+      ).finally(() => {
+        this.formGroup.formSubmiting = false;
+      });
 
-
-      // this.formGroup.formSubmiting = true;
-/*
-public formSubmitAttempts : number = 0;
-  public formSubmiting: Boolean = false;
-  public formSubmittedSuccess: Boolean = false;
- */
+      /*
+        public formSubmitAttempts : number = 0;
+        public formSubmiting: Boolean = false;
+        public formSubmittedSuccess: Boolean = false;
+       */
 
     } else {
       Object.keys(this.formGroup.controls).forEach(field => {
@@ -82,5 +92,23 @@ public formSubmitAttempts : number = 0;
   action(image: any) {
     console.log('action');
   }
+
+
+  private submitForm(): Promise<FormSubmittedModel> {
+    return new Promise( (resolve, reject) => {
+      this.datastore.createRecord(FormSubmittedModel, {
+        form: this.form,
+        data: JSON.stringify(this.formGroup.value)
+      }).save().subscribe(
+        (formSubmitted: FormSubmittedModel) => {
+             resolve(formSubmitted);
+        }, (error: ErrorResponse) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+
 
 }

@@ -20,7 +20,7 @@ import { OrderModel } from "@plugins/store/src/lib/data/models/Order.model";
 import { FormModel } from '@core/cms/src/lib/models/Form.model';
 import { FormActionModel } from '@core/cms/src/lib/models/FormAction.model';
 import { FormFieldModel } from '@core/cms/src/lib/models/FormField.model';
-import { FormSubmitionModel } from '@core/cms/src/lib/models/FormSubmition.model';
+import { FormSubmittedModel } from '@core/cms/src/lib/models/FormSubmittedModel';
 
 
 
@@ -80,7 +80,7 @@ const config: DatastoreConfig = {
     Form: FormModel, // CMS
     FormAction: FormActionModel, // CMS
     FormField: FormFieldModel, // CMS
-    FormSubmition: FormSubmitionModel, // CMS
+    FormSubmitted: FormSubmittedModel, // CMS
     MenuItem: MenuItemModel, // CMS
     Menu: MenuModel, // CMS
 

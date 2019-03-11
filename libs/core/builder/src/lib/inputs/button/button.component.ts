@@ -29,7 +29,6 @@ export class BuilderFormButtonComponent implements BuilderFormField {
   // TODO: button can be type "button" as well, not just submit.
 
   isDisabled() {
-
     if(this.config.disabled) {
       return this.config.disabled;
     }
