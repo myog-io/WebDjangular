@@ -38,6 +38,7 @@ class ChannelViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = ChannelFilter
     search_fields = ('name',)
+    public_views = ('list', 'retrieve')
 
 
 class ChannelRelationshipView(RelationshipView):

@@ -36,6 +36,7 @@ class PlanTypeViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = PlanTypeFilter
     search_fields = ('name',)
+    public_views = ('list', 'retrieve')
 
 
 class PlanTypeRelationshipView(RelationshipView):

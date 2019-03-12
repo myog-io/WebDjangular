@@ -1,17 +1,17 @@
-
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" (click)="isNavbarCollapsed = !isNavbarCollapsed"
-  aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+  (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarColor02" aria-expanded="false"
+  aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
 </button>
 
 <ng-template #simpleMenu let-item="item">
-  <li class="nav-item pr-1 {{ item?.class }}" [routerLinkActive]="['active']">
+  <li class="nav-item {{ item?.class }}" [routerLinkActive]="['active']">
     <a class="nav-link" [routerLink]="[item?.url]" (click)="action(item)" [innerHtml]="item?.name"></a>
   </li>
 </ng-template>
 
 <ng-template #dropdownMenu let-item="item">
-  <li class="nav-item pr-1 dropdown {{ item?.class }}" [routerLinkActive]="['active']">
+  <li class="nav-item dropdown {{ item?.class }}" [routerLinkActive]="['active']">
     <div ngbDropdown class="d-inline-block" [autoClose]="true">
       <a class="nav-link" ngbDropdownToggle [innerHtml]="item?.name"></a>
       <div class="shadow-lg" ngbDropdownMenu>

@@ -65,6 +65,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
             setHeaders: newHeaders
           });
         } else {
+          if (request.headers.get('Authorization') === 'none') {
+            request.headers.delete('Authorization');
+          }
           var req = request.clone({
             url: url,
             setHeaders: newHeaders

@@ -16,6 +16,7 @@ class MenuViewSet(ModelViewSet):
     serializer_class = MenuSerializer
     queryset = Menu.objects.all()
     ordering_fields = '__all__'
+    public_views = ('list',)
 
 
 class MenuRelationshipView(RelationshipView):

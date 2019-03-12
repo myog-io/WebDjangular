@@ -4,7 +4,9 @@
 
 .navbar-nav {
   cursor: pointer;
-
+  .nav-item {
+    margin-right: 0.5rem;
+  }
   .nav-link {
     @include responsive-font-size( $header-menu-fs);
     font-family: $header-menu-ff;
@@ -13,6 +15,7 @@
     text-transform: uppercase;
   }
   .nav-item.active {
+    
     .nav-link{
       color: $primary !important;
     }
@@ -26,7 +29,11 @@
     .nav-link {
       color: $header-menu-featured-c !important;
     }
+    
 
+  }
+  .nav-item.dropdown{
+    padding-right: 0.5rem;
   }
 
   .dropdown-menu {

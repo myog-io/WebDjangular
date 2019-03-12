@@ -95,6 +95,7 @@ class PageViewSet(ModelViewSet):
     filter_class = PageFilter
     search_fields = ('title', 'content', 'slug')
     recursive_block = 0
+    public_views = ('get_home', 'get_page')
 
     def send_pre_get_page(self, request, *args):
         new_kwargs = pre_get_page.send(

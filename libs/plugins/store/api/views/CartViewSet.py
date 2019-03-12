@@ -77,6 +77,10 @@ class CartViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CartFilter
     search_fields = ('name',)
+    # TODO: Improve Security we should have some way to know who's the Cart Owner
+    # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
+    public_views = ('list', 'retrieve', 'complete_order',
+                    'create', 'update', 'partial_update', 'destroy')
 
     def apply_rules(self, instance):
         apply_all_cart_rules(instance)
@@ -84,6 +88,7 @@ class CartViewSet(ModelViewSet):
 
     @action(methods=['GET'], detail=True, url_path='complete_order')
     def complete_order(self, request, *args, **kwargs):
+        # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
         assert 'pk' in self.kwargs, (
             'Expected view %s to be called with a URL keyword argument '
             'named "%s". Fix your URL conf, or set the `.lookup_field` '
@@ -120,6 +125,7 @@ class CartViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def retrieve(self, request, *args, **kwargs):
+        # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
         instance = self.get_object()
         self.apply_rules(instance)
         instance = self.get_object()
@@ -127,6 +133,7 @@ class CartViewSet(ModelViewSet):
         return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
+        # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(
@@ -162,6 +169,8 @@ class CartItemViewSet(ModelViewSet):
     queryset = CartItem.objects.all()
     ordering_fields = '__all__'
     search_fields = ('product',)
+    public_views = ('list', 'retrieve', 'complete_order',
+                    'create', 'update', 'partial_update', 'destroy')
 
     def perform_create(self, serializer):
         validated_data = serializer.validated_data

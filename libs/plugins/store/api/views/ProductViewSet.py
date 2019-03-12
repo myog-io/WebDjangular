@@ -134,6 +134,7 @@ class ProductViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = ProductFilter
     search_fields = ('name',)
+    public_views = ('list', 'retrieve', 'retrieve_related')
 
 
 class ProductRelationshipView(RelationshipView):
