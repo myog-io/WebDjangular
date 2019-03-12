@@ -13,13 +13,13 @@ import { NbAuthService } from '@nebular/auth';
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return this.authService.getToken().pipe(
-      switchMap(function(token) {
+      switchMap(function (token) {
         const suffix = request.url;
         let url = '/';
 
@@ -39,7 +39,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         let parts = url.split('?');
         if (parts[0]) {
           // Checking if is a File... Patern .png .jpg
-          if (parts[0].search(/\.[0-9a-z]{1,5}$/i) === -1){
+          if (parts[0].search(/\.[0-9a-z]{1,5}$/i) === -1) {
             if (parts[0][parts[0].length - 1] != '/') {
               if (parts[1]) {
                 url = parts[0] + '/?' + parts[1];
@@ -58,7 +58,6 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (request.headers.get('Content-Type') == null) {
           newHeaders['Content-Type'] = 'application/vnd.api+json';
         }
-        console.log("Token valid?",token.isValid());
         if (token.isValid() && request.headers.get('Authorization') !== 'none') {
           newHeaders['Authorization'] = 'Bearer ' + token.getValue();
           var req = request.clone({
