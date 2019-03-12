@@ -134,10 +134,10 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json',
     'DEFAULT_FILTER_BACKENDS': (
-        # 'rest_framework_json_api.filters.QueryParameterValidationFilter',
         'rest_framework_json_api.filters.OrderingFilter',
         'rest_framework_json_api.django_filters.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
+        # 'rest_framework_json_api.filters.QueryParameterValidationFilter',
     ),
     'SEARCH_PARAM': 'filter[search]',
 

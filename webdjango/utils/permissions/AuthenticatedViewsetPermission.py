@@ -1,4 +1,6 @@
+from django.contrib.auth.middleware import AuthenticationMiddleware
 from rest_framework import permissions
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 class AuthenticatedViewsetPermission(permissions.BasePermission):
