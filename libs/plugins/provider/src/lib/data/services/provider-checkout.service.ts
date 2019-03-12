@@ -325,6 +325,9 @@ export class ProviderCheckoutService {
   }
 
   checkDisabledByCategories(cart) {
+    this.selectingTelephonePlan = false;
+    this.selectingTVPlan = false;
+    this.selectingInternetPlan = false;
     let categories_ids = {};
     for (let i = 0; i < cart.items.length; i++) {
       const item = cart.items[i];
@@ -357,9 +360,7 @@ export class ProviderCheckoutService {
         }
       }
     }
-    this.selectingTelephonePlan = false;
-    this.selectingTVPlan = false;
-    this.selectingInternetPlan = false;
+
   }
 
   updateSelectedItems() {
@@ -608,7 +609,7 @@ export class ProviderCheckoutService {
     } else {
       options['city__id'] = this.city.id;
     }
-    
+
     //const url = `/api/provider/city/${this.city.id}/products/`;
 
     this.loading_plans = true;
