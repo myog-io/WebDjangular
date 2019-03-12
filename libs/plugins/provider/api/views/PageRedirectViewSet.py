@@ -1,9 +1,7 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from webdjango.filters import WebDjangoFilterSet
+
 from ..models.PageRedirect import PageRedirect
 from ..serializers.PageRedirectSerializer import PageRedirectSerializer
 
@@ -30,9 +28,6 @@ class PageRedirectViewSet(ModelViewSet):
     """
     serializer_class = PageRedirectSerializer
     queryset = PageRedirect.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PageRedirectFilter
     search_fields = ('id')

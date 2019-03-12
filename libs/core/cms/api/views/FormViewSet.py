@@ -1,6 +1,3 @@
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from libs.core.cms.api.models.Form import (Form, FormAction, FormField,
@@ -32,9 +29,6 @@ class FormViewSet(ModelViewSet):
     """
     serializer_class = FormSerializer
     queryset = Form.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = FormFilter
 
@@ -54,8 +48,6 @@ class FormSubmitionViewSet(ModelViewSet):
     """
     serializer_class = FormSubmitionSerializer
     queryset = FormSubmition.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
 
 
@@ -74,8 +66,6 @@ class FormActionViewSet(ModelViewSet):
     """
     serializer_class = FormActionSerializer
     queryset = FormAction.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
 
 
@@ -94,8 +84,6 @@ class FormFieldViewSet(ModelViewSet):
     """
     serializer_class = FormFieldSerializer
     queryset = FormField.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
 
 

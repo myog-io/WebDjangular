@@ -1,8 +1,5 @@
 from django.template import Context, Template
 from django.template.base import Lexer
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
@@ -40,9 +37,6 @@ class PageTagViewSet(ModelViewSet):
     """
     serializer_class = PageTagSerializer
     queryset = PageTag.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PageTagFilter
     search_fields = ('name',)
@@ -69,9 +63,6 @@ class PageCategoryViewSet(ModelViewSet):
     """
     serializer_class = PageCategorySerializer
     queryset = PageCategory.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PageCategoryFilter
     search_fields = ('name',)
@@ -100,9 +91,6 @@ class PageViewSet(ModelViewSet):
     """
     serializer_class = PageSerializer
     queryset = Page.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PageFilter
     search_fields = ('title', 'content', 'slug')

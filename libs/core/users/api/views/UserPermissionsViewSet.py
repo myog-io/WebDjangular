@@ -1,9 +1,7 @@
 from django.contrib.auth.models import Permission
 from rest_framework.mixins import ListModelMixin
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from libs.core.users.api.models import User
 from libs.core.users.api.serializers.PermissionSerializer import \
@@ -15,8 +13,6 @@ class UserPermissionsViewSet(ListModelMixin, GenericViewSet):
     resource_name = 'user'
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    authentication_classes = (JSONWebTokenAuthentication,)
-    #permission_classes = (IsAuthenticated, AuthenticatedViewsetPermission, )
 
     def list(self, request, *args, **kwargs):
         perms = []
