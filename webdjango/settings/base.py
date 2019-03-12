@@ -2,20 +2,17 @@
 Django settings for webdjangular project.
 
 """
-
-import sys
-import os
-
 import datetime
-
+import os
 
 # sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.join("libs","core")))
 
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'files') # 'data' is my media folder
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files')  # 'data' is my media folder
 
 MEDIA_URL = '/files/'
 
@@ -23,7 +20,7 @@ THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
 
 PLUGIN_DIR = os.path.join(BASE_DIR, 'libs/plugins')
 
-ANGULAR_APP_DIR = os.path.join(os.path.join(BASE_DIR,'dist'),'apps')
+ANGULAR_APP_DIR = os.path.join(os.path.join(BASE_DIR, 'dist'), 'apps')
 
 DEBUG = False
 
@@ -52,7 +49,7 @@ INSTALLED_APPS = [
     'libs.core.cms.api',
     'libs.core.analytics.api',
     'libs.core.media.api',
-    ##'libs.core.forms.api',
+    # 'libs.core.forms.api',
     'libs.plugins.store.api',
     'libs.plugins.provider.api',
 
@@ -78,12 +75,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'webdjango.utils.CurrentWebsiteMiddleware.CurrentWebsiteMiddleware'
+    'webdjango.utils.middleware.CurrentWebsiteMiddleware'
+
+
 ]
 
 ROOT_URLCONF = 'webdjango.urls'
@@ -111,10 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'webdjango.utils.permissions.AuthenticatedViewsetPermission.AuthenticatedViewsetPermission',
-        #'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
@@ -134,7 +134,7 @@ REST_FRAMEWORK = {
     'TEST_REQUEST_RENDERER_CLASSES': ('rest_framework_json_api.renderers.JSONRenderer',),
     'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json',
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework_json_api.filters.QueryParameterValidationFilter',
+        # 'rest_framework_json_api.filters.QueryParameterValidationFilter',
         'rest_framework_json_api.filters.OrderingFilter',
         'rest_framework_json_api.django_filters.DjangoFilterBackend',
         'rest_framework.filters.SearchFilter',
@@ -143,24 +143,15 @@ REST_FRAMEWORK = {
 
 }
 
-EMAIL_BACKEND  = 'webdjango.email.WebDjangoEmailBackend'
+EMAIL_BACKEND = 'webdjango.email.WebDjangoEmailBackend'
 
 JWT_AUTH = {
-    'JWT_ENCODE_HANDLER':
-    'rest_framework_jwt.utils.jwt_encode_handler',
-
-    'JWT_DECODE_HANDLER':
-    'rest_framework_jwt.utils.jwt_decode_handler',
-
-    'JWT_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_payload_handler',
-
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
-
-    'JWT_RESPONSE_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_response_payload_handler',
-    'JWT_SECRET_KEY': '6wAp;?ffG9yh86ic,3HvfN2Ah5s3DH~s<(V)mi7#)7zai2cpfcS7Qt\m:jjGi_sW',
+    'JWT_ENCODE_HANDLER': 'rest_framework_jwt.utils.jwt_encode_handler',
+    'JWT_DECODE_HANDLER': 'rest_framework_jwt.utils.jwt_decode_handler',
+    'JWT_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_payload_handler',
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER': 'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'rest_framework_jwt.utils.jwt_response_payload_handler',
+    'JWT_SECRET_KEY': '6wAp;?ffG9yh86ic,3HvfN2Ah5s3DH~s<(V)mi7#)7zai2cpfcS7Qt\\m:jjGi_sW',
     'JWT_GET_USER_SECRET_KEY': None,
     'JWT_PUBLIC_KEY': None,
     'JWT_PRIVATE_KEY': None,
@@ -168,12 +159,11 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=300),  # 5 minutes
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=60),  # 5 minutes
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=60),
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     'JWT_AUTH_COOKIE': None,
 }

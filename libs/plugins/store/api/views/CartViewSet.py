@@ -1,16 +1,12 @@
-from uuid import UUID, uuid1
-
-from django.http import HttpResponse
 from django_filters.filters import ModelChoiceFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, status
-from rest_framework.authentication import TokenAuthentication
+from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from webdjango.filters import WebDjangoFilterSet
+
 from ..emails import send_order_confirmation
 from ..models.Cart import Cart, CartItem, CartTerm
 from ..models.Order import OrderEventTypes
@@ -32,7 +28,6 @@ class CartTermFilter(WebDjangoFilterSet):
             'enabled': ['exact'],
             'content': ['exact', 'contains'],
             'position': ['exact'],
-            'content': ['contains'],
         }
 
 
@@ -47,9 +42,6 @@ class CartTermViewSet(ModelViewSet):
     """
     serializer_class = CartTermSerializer
     queryset = CartTerm.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CartTermFilter
     search_fields = ('content',)
@@ -82,9 +74,6 @@ class CartViewSet(ModelViewSet):
     """
     serializer_class = CartSerializer
     queryset = Cart.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CartFilter
     search_fields = ('name',)
@@ -171,9 +160,6 @@ class CartItemViewSet(ModelViewSet):
     """
     serializer_class = CartItemSerializer
     queryset = CartItem.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     search_fields = ('product',)
 

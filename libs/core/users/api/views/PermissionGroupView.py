@@ -1,18 +1,12 @@
 from django.contrib.auth.models import Permission
-from django_filters.rest_framework.backends import DjangoFilterBackend
-from rest_framework import filters
 from rest_framework.mixins import ListModelMixin
 from rest_framework.viewsets import GenericViewSet
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
 from libs.core.users.api.serializers.PermissionSerializer import PermissionSerializer
 
 
 class PermissionGroupView(ListModelMixin, GenericViewSet):
     serializer_class = PermissionSerializer
     queryset = Permission.objects.all()
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
 
     def get_queryset(self):

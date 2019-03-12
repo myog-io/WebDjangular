@@ -1,11 +1,8 @@
 from webdjango.filters import WebDjangoFilterSet
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from webdjango.models.Core import Author, CoreConfig, Plugin, Theme, Website
 from webdjango.serializers.CoreSerializer import AuthorSerializer, \
     CoreConfigSerializer, PluginSerializer, ThemeSerializer, \
@@ -29,8 +26,6 @@ class WebsiteViewSet(ModelViewSet):
     resource_name = 'core_website'
     queryset = Website.objects.all()
     serializer_class = WebsiteSerializer
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('domain', 'code')
     filter_class = WebsiteFilter
 
@@ -54,8 +49,6 @@ class CoreConfigViewSet(ListModelMixin, RetrieveModelMixin, GenericViewSet):
     resource_name = 'core_config'
     queryset = CoreConfig.objects.all()
     serializer_class = CoreConfigSerializer
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('website', 'slug')
     filter_class = CoreConfigFilter
 
@@ -83,8 +76,6 @@ class AuthorViewSet(ModelViewSet):
     resource_name = 'core_author'
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'email', 'website')
     filter_class = AuthorFilter
 
@@ -106,8 +97,6 @@ class PluginViewSet(ModelViewSet):
     resource_name = 'core_plugin'
     queryset = Plugin.objects.all()
     serializer_class = PluginSerializer
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'slug')
     filter_class = PluginFilter
 
@@ -138,8 +127,6 @@ class ThemeViewSet(ModelViewSet):
     resource_name = 'core_theme'
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ('name', 'slug')
     filter_class = ThemeFilter
 

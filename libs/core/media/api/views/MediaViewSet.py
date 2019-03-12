@@ -1,18 +1,13 @@
 import os
-from base64 import encode
-from urllib.parse import urlparse
-from urllib.request import urlopen, urlretrieve
+from urllib.request import urlretrieve
 
 from django.core.exceptions import ValidationError
 from django.core.files import File
 from django.core.files.uploadedfile import UploadedFile
 from django.core.validators import URLValidator
 from django.http import JsonResponse, StreamingHttpResponse
-from django_filters.rest_framework.backends import DjangoFilterBackend
-from rest_framework import filters, permissions, status
-from rest_framework.authentication import TokenAuthentication
+from rest_framework import status
 from rest_framework.decorators import detail_route
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet
 
@@ -42,9 +37,6 @@ class MediaViewSet(ModelViewSet):
     resource_name = 'media'
     serializer_class = MediaSerializer
     queryset = Media.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = MediaFilter
     search_fields = ('id', 'alt', 'created')

@@ -1,13 +1,8 @@
-from django_filters.filters import CharFilter, ModelChoiceFilter
-from django_filters.rest_framework.backends import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
+from django_filters.filters import CharFilter
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
-from libs.plugins.provider.api.models.City import City
-from libs.plugins.provider.api.models.Condo import Condo
-from libs.plugins.provider.api.models.PlanType import PlanType
 from webdjango.filters import WebDjangoFilterSet
+
 from ..models.Product import (Product, ProductAttribute, ProductCategory,
                               ProductType)
 from ..serializers.ProductSerializer import (ProductAttributeSerializer,
@@ -37,9 +32,6 @@ class ProductAttributeViewSet(ModelViewSet):
     """
     serializer_class = ProductAttributeSerializer
     queryset = ProductAttribute.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductAttributeFilter
     search_fields = ('name',)
@@ -70,9 +62,6 @@ class ProductTypeViewSet(ModelViewSet):
     """
     serializer_class = ProductTypeSerializer
     queryset = ProductType.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductTypeFilter
     search_fields = ('name',)
@@ -103,9 +92,6 @@ class ProductCategoryViewSet(ModelViewSet):
     """
     serializer_class = ProductCategorySerializer
     queryset = ProductCategory.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductCategoryFilter
     search_fields = ('name',)
@@ -116,7 +102,6 @@ class ProductCategoryRelationshipView(RelationshipView):
 
 
 class ProductFilter(WebDjangoFilterSet):
-
     product_class_neq = CharFilter(field_name='product_class', exclude=True)
 
     class Meta:
@@ -146,9 +131,6 @@ class ProductViewSet(ModelViewSet):
     """
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = ProductFilter
     search_fields = ('name',)

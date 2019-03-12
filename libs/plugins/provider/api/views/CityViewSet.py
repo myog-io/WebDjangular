@@ -2,15 +2,14 @@ import json
 
 import requests
 from django_filters.filters import ModelChoiceFilter
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import exceptions, filters
-from rest_framework.authentication import TokenAuthentication
+from rest_framework import exceptions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from libs.plugins.store.api.models.Product import Product
 from webdjango.filters import WebDjangoFilterSet
+
 from ..models.City import City, NumberRange, PostalCodeRange, Street
 from ..serializers.CitySerializer import (CitySerializer,
                                           NumberRangeSerializer,
@@ -44,9 +43,6 @@ class CityViewSet(ModelViewSet):
     """
     serializer_class = CitySerializer
     queryset = City.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CityFilter
     search_fields = ('name',)
@@ -107,8 +103,6 @@ class CityViewSet(ModelViewSet):
 
 class CityRelationshipView(RelationshipView):
     queryset = City.objects
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
 
 
 class PostalCodeRangeFilter(WebDjangoFilterSet):
@@ -132,9 +126,6 @@ class PostalCodeRangeViewSet(ModelViewSet):
     """
     serializer_class = PostalCodeRangeSerializer
     queryset = PostalCodeRange.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = PostalCodeRangeFilter
     search_fields = ('start', 'end',)
@@ -165,9 +156,6 @@ class StreetViewSet(ModelViewSet):
     """
     serializer_class = StreetSerializer
     queryset = Street.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = StreetFilter
     search_fields = ('name', 'short_name',)
@@ -198,9 +186,6 @@ class NumberRangeViewSet(ModelViewSet):
     """
     serializer_class = NumberRangeSerializer
     queryset = NumberRange.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = NumberRangeFilter
     search_fields = ('name', 'short_name',)

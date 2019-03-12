@@ -58,6 +58,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (request.headers.get('Content-Type') == null) {
           newHeaders['Content-Type'] = 'application/vnd.api+json';
         }
+        console.log("Token valid?",token.isValid());
         if (token.isValid() && request.headers.get('Authorization') !== 'none') {
           newHeaders['Authorization'] = 'Bearer ' + token.getValue();
           var req = request.clone({

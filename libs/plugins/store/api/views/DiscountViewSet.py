@@ -1,12 +1,10 @@
-from django_filters.rest_framework.backends import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet
 
 from webdjango.filters import WebDjangoFilterSet
 from webdjango.models.Address import Address
+
 from ..models.Cart import Cart, CartItem
 from ..models.Discount import CartRule, CatalogRule
 from ..models.Product import Product, ProductCategory, ProductType
@@ -57,9 +55,6 @@ class CartRuleViewSet(ModelViewSet):
     """
     serializer_class = CartRuleSerializer
     queryset = CartRule.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CartRuleFilter
     search_fields = ('name', 'code',)
@@ -110,9 +105,6 @@ class CatalogRuleViewSet(ModelViewSet):
     """
     serializer_class = CatalogRuleSerializer
     queryset = CatalogRule.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = CatalogRuleFilter
     search_fields = ('name',)

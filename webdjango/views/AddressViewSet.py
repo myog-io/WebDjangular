@@ -1,9 +1,7 @@
-from django_filters.rest_framework.backends import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework_json_api.views import ModelViewSet
 
 from webdjango.filters import WebDjangoFilterSet
+
 from ..models.Address import Address
 from ..serializers.AddressSerializer import AddressSerializer
 
@@ -39,9 +37,6 @@ class AddressViewSet(ModelViewSet):
     """
     serializer_class = AddressSerializer
     queryset = Address.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter,
-                       filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = AddressFilter
     search_fields = ('name',)
