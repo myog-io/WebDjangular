@@ -55,7 +55,7 @@ export const InputTypes = [
   modelEndpointUrl: 'cms/form-field',
 })
 export class FormFieldModel extends AbstractModel {
-  private _config:BuilderFormFieldConfig;
+  private _config: BuilderFormFieldConfig;
 
 
   @Attribute()
@@ -120,7 +120,7 @@ export class FormFieldModel extends AbstractModel {
   })
   required: boolean;
 
-  
+
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
@@ -132,7 +132,7 @@ export class FormFieldModel extends AbstractModel {
   })
   label_position: 'default' | 'above' | 'below'
 
-  
+
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
@@ -173,22 +173,25 @@ export class FormFieldModel extends AbstractModel {
   @ExtraOptions({
     type: 'codeEditor',
     label: 'Extra Data',
+    options: {
+      language: 'json'
+    }
   })
-  data?: string;
+  data?: any;
 
   @BelongsTo({ key: 'Form' })
   form: any;
   //@ExtraOptions({
   //    type: 'hidden',
   //})
-  get formControl():FormControl {
+  get formControl(): FormControl {
     let validators = [];
-    if(this.required){
+    if (this.required) {
       validators.push(Validators.required);
     }
     return new FormControl(this.default_value, validators)
   }
-  public generateConfig(){
+  public generateConfig() {
     this._config = {
       type: this.field_type,
       //validators?: Validators[];
@@ -227,7 +230,7 @@ export class FormFieldModel extends AbstractModel {
       //json_logic_options_url?: string;
     }
   }
-  get config():BuilderFormFieldConfig {
+  get config(): BuilderFormFieldConfig {
     return this._config;
   }
   public toString = (): string => {

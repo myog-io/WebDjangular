@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { FormModel } from '../../models/Form.model';
 import { FormGroup } from '@angular/forms';
-import {AbstractForm} from "@core/data/src/lib/forms";
-import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
-import {ErrorResponse} from "angular2-jsonapi";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {FormSubmittedModel} from "@core/cms/src/lib/models/FormSubmittedModel";
+import { AbstractForm } from "@core/data/src/lib/forms";
+import { OrderModel } from "@plugins/store/src/lib/data/models/Order.model";
+import { ErrorResponse } from "angular2-jsonapi";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { FormSubmittedModel } from "@core/cms/src/lib/models/FormSubmittedModel";
 /*
 <ng-container wdaBuilderFormFields [config]="field" [group]="group"
                 (relationshipUpdated)="relationship($event)"></ng-container>
@@ -26,7 +26,7 @@ import {FormSubmittedModel} from "@core/cms/src/lib/models/FormSubmittedModel";
 export class CoreCmsFormComponent implements OnInit, OnDestroy {
   @Input() id: string;
   @Input() title_class: string;
-  
+
   public sub: Subscription;
   public form: FormModel;
   public formGroup: AbstractForm;
@@ -36,15 +36,13 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('ng on init');
     this.sub = this.datastore.findRecord(FormModel, this.id, {
-      include:'fields,actions'}).subscribe((form_model) => {
-        this.form = form_model;
-        this.formGroup = this.form.getFormGroup() as AbstractForm;
-        console.log(this.formGroup);
-      }, (error) => {
-        console.log(error)
-      }
+      include: 'fields,actions'
+    }).subscribe((form_model) => {
+      this.form = form_model;
+      this.formGroup = this.form.getFormGroup() as AbstractForm;
+    }, (error) => {
+    }
     );
   }
 
@@ -57,7 +55,7 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
 
   onSubmit(event: Event) {
     this.formGroup.formSubmitAttempts++;
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.formGroup.formSubmiting = true;
       this.submitForm().then(
         () => {
@@ -95,13 +93,13 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
 
 
   private submitForm(): Promise<FormSubmittedModel> {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.datastore.createRecord(FormSubmittedModel, {
         form: this.form,
         data: JSON.stringify(this.formGroup.value)
       }).save().subscribe(
         (formSubmitted: FormSubmittedModel) => {
-             resolve(formSubmitted);
+          resolve(formSubmitted);
         }, (error: ErrorResponse) => {
           reject(error);
         }

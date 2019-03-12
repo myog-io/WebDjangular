@@ -1,11 +1,11 @@
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from libs.core.cms.api.models.Form import (Form, FormAction, FormField,
-                                           FormSubmition)
+                                           FormSubmitted)
 from libs.core.cms.api.serializers.FormSerializer import (FormActionSerializer,
                                                           FormFieldSerializer,
                                                           FormSerializer,
-                                                          FormSubmitionSerializer)
+                                                          FormSubmittedSerializer)
 from webdjango.filters import WebDjangoFilterSet
 
 
@@ -47,9 +47,10 @@ class FormSubmittedViewSet(ModelViewSet):
     Update Pages
     Deleting Pages
     """
-    serializer_class = FormSubmitionSerializer
-    queryset = FormSubmition.objects.all()
+    serializer_class = FormSubmittedSerializer
+    queryset = FormSubmitted.objects.all()
     ordering_fields = '__all__'
+    public_views = ('create')
 
 
 class FormSubmittedRelationshipView(RelationshipView):

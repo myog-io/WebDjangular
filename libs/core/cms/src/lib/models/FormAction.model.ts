@@ -3,12 +3,12 @@ import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
 import { Validators } from "@angular/forms";
-import {FormModel} from "@core/cms/src/lib/models/Form.model";
+import { FormModel } from "@core/cms/src/lib/models/Form.model";
 
 
 
 export const ActionChoices = [
-    {id:'send_email', name:'Enviar email'},
+    { id: 'send_email', name: 'Enviar email' },
 ];
 
 @JsonApiModelConfig({
@@ -55,6 +55,9 @@ export class FormActionModel extends AbstractModel {
     @ExtraOptions({
         type: 'codeEditor',
         label: 'Extra Data',
+        options: {
+            language: 'json'
+        }
     })
     data?: string;
 

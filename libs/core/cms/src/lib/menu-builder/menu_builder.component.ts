@@ -182,22 +182,26 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
     this.list = [];
     this.menu_item_forms = {};
     if (this.current_menu.id) {
-      this.menusSub = this.datastore.findAll(MenuItemModel, { include: 'children,parent' }, null, `/api/menu/${this.current_menu.id}/menu_item/`).subscribe((query2) => {
-        this.current_menu.menu_item = query2.getModels();
+      this.menusSub = this.datastore.findAll(MenuItemModel,
+        { include: 'children,parent' }, null, `/api/cms/menu/${this.current_menu.id}/menu_item/`)
+        .subscribe(
+          (query2) => {
+            this.current_menu.menu_item = query2.getModels();
 
-        for (let i = 0; i < this.current_menu.menu_item.length; i++) {
-          const menu_item = this.current_menu.menu_item[i];
-          const form = menu_item.getForm();
-          form.displayGroups = menu_item.displayGroups;
-          form.generateForm();
-          form.populateForm(menu_item);
-          this.menu_item_forms[menu_item.id] = form;
-        }
-        this.list = this.current_menu.getList();
-        setTimeout(() => {
-          this.nestable.expandAll();
-        }, 300);
-      });
+            for (let i = 0; i < this.current_menu.menu_item.length; i++) {
+              const menu_item = this.current_menu.menu_item[i];
+              const form = menu_item.getForm();
+              form.displayGroups = menu_item.displayGroups;
+              form.generateForm();
+              form.populateForm(menu_item);
+              this.menu_item_forms[menu_item.id] = form;
+            }
+            this.list = this.current_menu.getList();
+            setTimeout(() => {
+              this.nestable.expandAll();
+            }, 300);
+          }
+        );
     }
   }
 

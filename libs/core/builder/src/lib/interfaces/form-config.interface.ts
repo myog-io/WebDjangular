@@ -55,7 +55,7 @@ export interface BuilderFormFieldConfig {
   conditionalValue?: any;
   wrapper_class?: string;
   element_class?: string;
-  label_position?: 'default' |'above' | 'below';
+  label_position?: 'default' | 'above' | 'below';
   inputType?: string;
   conditional?: any;
   display?: boolean;
@@ -70,8 +70,9 @@ export interface BuilderFormFieldConfig {
   formType?: any;
   sort?: number;
   displayGroup?: string;
-  copyOptions?: BuilderFormCopyArray
+  copyOptions?: BuilderFormCopyArray;
   json_logic_options_url?: string;
+
 }
 
 export interface BuilderFormField {
