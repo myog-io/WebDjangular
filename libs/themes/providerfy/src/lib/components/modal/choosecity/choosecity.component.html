@@ -4,11 +4,10 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>SEJA BEM VINDO!</h2>
 
-    <div class="form-group" id="choosecity-formgroup" >
-      <ng-select class="form-control" formControlName="city" (change)="selectChange($event)" [multiple]="false"
-        [loading]="loading" [placeholder]="placeholder" [clearable]="false" (focus)="onFocus();">
-        <ng-option *ngFor="let city of cities | async" [value]="city.id">{{ city.name }}</ng-option>
-      </ng-select>
+    <div class="form-group" id="choosecity-formgroup">
+      <select class="form-control" formControlName="city" (change)="selectChange($event)" [multiple]="false">
+        <option *ngFor="let city of cities | async" [value]="city.id">{{ city.name }}</option>
+      </select>
 
     </div>
     <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary text-white" id="chooseCitySubmit">

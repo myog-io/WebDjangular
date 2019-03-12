@@ -1,11 +1,11 @@
-import {Component, HostListener} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {HttpClient} from "@angular/common/http";
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
-import {ClientUserService} from '@core/services/src/lib/client-user.service';
-import {CityModel} from '@plugins/provider/src/lib/data';
-import {Observable} from 'rxjs';
+import { Component, HostListener } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from "@angular/common/http";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { CityModel } from '@plugins/provider/src/lib/data';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class ThemeProviderfyModalChoosecityComponent {
   placeholder = "Onde você está?"
 
   constructor(public activeModal: NgbActiveModal, private http: HttpClient, private datastore: WebAngularDataStore,
-              private formBuilder: FormBuilder, private clientUserService: ClientUserService) {
+    private formBuilder: FormBuilder, private clientUserService: ClientUserService) {
 
     this.form = this.formBuilder.group({
       city: ['', Validators.required]
@@ -34,7 +34,7 @@ export class ThemeProviderfyModalChoosecityComponent {
 
   getCities(): void {
 
-    this.cities = this.datastore.findAll(CityModel, {ordering: 'name', fields: "id,name", page: {size: 100}}).map(
+    this.cities = this.datastore.findAll(CityModel, { ordering: 'name', fields: "id,name", page: { size: 100 } }).map(
       (query, index) => {
         this.loading = false;
         this.city_list = query.getModels();
@@ -62,7 +62,7 @@ export class ThemeProviderfyModalChoosecityComponent {
 
   onSubmit() {
     //this.activeModal.close();
-    const city_id = this.form.get('city').value;
+    const city_id = this.form.get('city').value[0];
     const cityModel = this.city_list.find(city => city.id === city_id);
     this.clientUserService.clientUser.data['city'] = {
       id: cityModel.id,

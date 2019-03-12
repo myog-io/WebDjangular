@@ -9,13 +9,15 @@ from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
 from libs.plugins.store.api import defaults
-from webdjango.models.Core import Website
+from libs.plugins.store.api.serializers.CartSerializer import \
+    CartItemSerializer
+from libs.plugins.store.api.serializers.ProductSerializer import \
+    ProductSerializer
 from webdjango.models.Address import Address, AddressType
+from webdjango.models.Core import Website
 from webdjango.serializers.AddressSerializer import AddressSerializer
-from libs.plugins.store.api.serializers.CartSerializer import CartItemSerializer
-from libs.plugins.store.api.serializers.ProductSerializer import ProductSerializer
 from webdjango.utils.JsonLogic import jsonLogic
-from .DiscountUtils import increase_voucher_usage
+
 from ..models.Cart import Cart, CartStatus, CartTerm
 from ..models.Discount import CartRule, RuleValueType
 from ..models.Order import Order
@@ -25,6 +27,7 @@ from ..serializers.MoneySerializer import MoneyField
 from ..serializers.ProductSerializer import (ProductCategorySerializer,
                                              ProductSerializer,
                                              ProductTypeSerializer)
+from .DiscountUtils import increase_voucher_usage
 
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
@@ -58,7 +61,6 @@ def apply_cart_rule(cart, rule):
             data = {}
             data['item'] = CartItemSerializer(item).data
             if item.product:
-                
                 data['product'] = ProductSerializer(item.product).data
                 data['product_type'] = ProductTypeSerializer(
                     item.product.product_type
@@ -77,7 +79,8 @@ def apply_cart_rule(cart, rule):
                             item.save()
                     else:
                         item.data['discount_rules'] = {
-                            rule.voucher: money_serializer.to_representation(get_rule_ammount(item.base_price, rule))
+                            rule.voucher: money_serializer.to_representation(
+                                get_rule_ammount(item.base_price, rule))
                         }
                         item.save()
                 else:
@@ -128,7 +131,7 @@ def apply_all_cart_rules(cart):
                 serializer = CartItemSerializer(product)
                 product_data = serializer.data
                 if product.product:
-                    product_data['product_type'] =  ProductTypeSerializer(
+                    product_data['product_type'] = ProductTypeSerializer(
                         product.product.product_type
                     ).data
                 product_data['product'] = None
@@ -144,7 +147,7 @@ def apply_all_cart_rules(cart):
                 cart.billing_address).data
             data['shipping_address'] = AddressSerializer(
                 cart.shipping_address).data
-            
+
             try:
                 json_logic_response = jsonLogic(rule.conditions, data)
                 if json_logic_response:
