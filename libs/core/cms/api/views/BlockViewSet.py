@@ -31,6 +31,7 @@ class BlockViewSet(ModelViewSet):
     queryset = Block.objects.all()
     ordering_fields = '__all__'
     filter_class = BlockFilter
+    public_views = ('list', 'retrieve')
 
 
 class BlockRelationshipView(RelationshipView):

@@ -40,3 +40,4 @@ class AddressViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = AddressFilter
     search_fields = ('name',)
+    public_views = ('create', 'update', 'partial_update')

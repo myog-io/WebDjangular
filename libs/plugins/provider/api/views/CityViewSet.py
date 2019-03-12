@@ -46,6 +46,7 @@ class CityViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CityFilter
     search_fields = ('name',)
+    public_views = ('list', 'postal_code')
 
     @action(methods=['GET'], detail=True, url_path='postal_code', lookup_field='postal_code', lookup_url_kwarg='postal_code')
     def postal_code(self, request, *args, **kwargs):

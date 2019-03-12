@@ -7,7 +7,7 @@
         <div class="row" *ngIf="providerCheckout.plan_type.is_business">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="company_name"/>
+              <input type="text" formControlName="company_name" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Razão Social</label>
@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="name"/>
+              <input type="text" formControlName="name" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>
@@ -41,7 +41,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="email"/>
+              <input type="text" formControlName="email" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Email <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
@@ -55,7 +55,7 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="mobile" mask="(00) 00000-0000"/>
+              <input type="text" formControlName="mobile" mask="(00) 00000-0000" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Telefone Celular com DDD</label>
@@ -70,7 +70,7 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="telephone" mask="(00) 0000-0000"/>
+              <input type="text" formControlName="telephone" mask="(00) 0000-0000" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Telefone Fixo com DDD
@@ -83,14 +83,13 @@
         <div class="row" *ngIf="providerCheckout.plan_type.is_business">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="cnpj" mask="00.000.000/0000-00"/>
+              <input type="text" formControlName="cnpj" mask="00.000.000/0000-00" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>CNPJ</label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['cnpj']" name="CNPJ">
               </plugin-provider-checkout-error>
-              <div class="errors-feedback"
-                   *ngIf="formWizardStep01.get('cnpj').getError('invalidCNPJ') &&
+              <div class="errors-feedback" *ngIf="formWizardStep01.get('cnpj').getError('invalidCNPJ') &&
                    formWizardStep01.controls['cnpj'].touched">
                 <div class="alert alert-danger" role="alert">
                   <span>O CNPJ não é válido.</span>
@@ -103,12 +102,12 @@
         <div class="row" *ngIf="providerCheckout.plan_type.is_business">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="state_registration"/>
+              <input type="text" formControlName="state_registration" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Inscrição Estadual</label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['state_registration']"
-                                              name="state_registration">
+                name="state_registration">
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -117,7 +116,7 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="cpf" mask="000.000.000-00"/>
+              <input type="text" formControlName="cpf" mask="000.000.000-00" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>CPF <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
@@ -136,14 +135,14 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="rg" mask="00.000.000-0"/>
+              <input type="text" formControlName="rg" mask="00.000.000-0" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>RG <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['rg']" name="RG">
               </plugin-provider-checkout-error>
               <div class="errors-feedback"
-                   *ngIf="formWizardStep01.get('rg').getError('invalidRG') && formWizardStep01.controls['rg'].touched">
+                *ngIf="formWizardStep01.get('rg').getError('invalidRG') && formWizardStep01.controls['rg'].touched">
                 <div class="alert alert-danger" role="alert">
                   <span>O RG não é válido.</span>
                 </div>
@@ -160,7 +159,7 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="dob" mask="00/00/0000" dropSpecialCharacters="false"/>
+              <input type="text" formControlName="dob" mask="00/00/0000" dropSpecialCharacters="false" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>
@@ -169,15 +168,13 @@
               </label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['dob']" name="Data de Nascimento">
               </plugin-provider-checkout-error>
-              <div class="errors-feedback"
-                   *ngIf="formWizardStep01.get('dob').getError('invalidDate') &&
+              <div class="errors-feedback" *ngIf="formWizardStep01.get('dob').getError('invalidDate') &&
                    formWizardStep01.controls['dob'].touched">
                 <div class="alert alert-danger" role="alert">
                   <span>Data inválida.</span>
                 </div>
               </div>
-              <div class="errors-feedback"
-                   *ngIf="!formWizardStep01.get('dob').getError('invalidDate') &&
+              <div class="errors-feedback" *ngIf="!formWizardStep01.get('dob').getError('invalidDate') &&
                            formWizardStep01.get('dob').getError('notOver18') &&
                            formWizardStep01.controls['dob'].touched">
                 <div class="alert alert-danger" role="alert">
@@ -206,12 +203,12 @@
                     <div class="row">
                       <div class="col col-md-12">
                         <div class="form-group">
-                          <input type="text" mask="(00) 0000-0000" formControlName="portability_number"/>
+                          <input type="text" mask="(00) 0000-0000" formControlName="portability_number" />
                           <span class="highlight"></span>
                           <span class="bar"></span>
                           <label>Número a ser portado com DDD</label>
                           <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['portability_number']"
-                                                          [message]="'Número é obrigatório se a Operadora estiver selecionada'">
+                            [message]="'Número é obrigatório se a Operadora estiver selecionada'">
                           </plugin-provider-checkout-error>
                         </div>
                       </div>
@@ -227,7 +224,7 @@
                             <option value="nextel">Nextel</option>
                           </select>
                           <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['portability_provider']"
-                                                          name="Operadora">
+                            name="Operadora">
                           </plugin-provider-checkout-error>
                         </div>
                       </div>
@@ -268,7 +265,7 @@
         <div class="row">
           <div class="col-12 col-md-12">
             <div class="form-group">
-              <input type="text" name="postal_code" formControlName="postal_code" readonly/>
+              <input type="text" name="postal_code" formControlName="postal_code" readonly />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>CEP</label>
@@ -279,7 +276,7 @@
         <div class="row">
           <div class="col-12 col-md-8">
             <div class="form-group">
-              <input type="text" name="city" readonly formControlName="city"/>
+              <input type="text" name="city" readonly formControlName="city" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Cidade</label>
@@ -288,7 +285,7 @@
 
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="text" name="state" readonly formControlName="state"/>
+              <input type="text" name="state" readonly formControlName="state" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Estado</label>
@@ -299,12 +296,11 @@
         <div class="row">
           <div class="col-12 col-md-12">
             <div class="form-group">
-              <input type="text" name="street_address_1" formControlName="street_address_1"/>
+              <input type="text" name="street_address_1" formControlName="street_address_1" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Endereço</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['street_address_1']"
-                                              name="Endereço">
+              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['street_address_1']" name="Endereço">
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -313,19 +309,18 @@
         <div class="row">
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="text" name="number" formControlName="number"/>
+              <input type="text" name="number" formControlName="number" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Número</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['number']"
-                                              name="Número">
+              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['number']" name="Número">
               </plugin-provider-checkout-error>
             </div>
           </div>
 
           <div class="col-12 col-md-8">
             <div class="form-group">
-              <input type="text" name="street_address_2" formControlName="street_address_2"/>
+              <input type="text" name="street_address_2" formControlName="street_address_2" />
               <span class="highlight"></span>
               <span class="bar"></span>
               <label>Complemento</label>
@@ -344,7 +339,7 @@
         <div class="row mt-3">
           <div class="col-12 col-md-6">
             <button class="btn btn-primary btn-block" type="submit"
-                    [disabled]="!formWizardStep01.valid || formWizardStep01Submitted">
+              [disabled]="!formWizardStep01.valid || formWizardStep01Submitted">
               <span *ngIf="!formWizardStep01Submitted">Continuar</span>
               <span *ngIf="formWizardStep01Submitted"><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
             </button>
@@ -357,7 +352,7 @@
         <div class="row">
           <div class="col-12 col-md-6 my-2 text-center">
             <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details text-und"><u>Limpar
-              carrinho</u></a>
+                carrinho</u></a>
           </div>
         </div>
 
@@ -366,4 +361,3 @@
     </div>
   </form>
 </div>
-

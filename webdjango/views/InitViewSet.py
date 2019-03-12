@@ -1,13 +1,13 @@
 from django.core import serializers
-from rest_framework import permissions, viewsets
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
 from libs.core.cms.api.models.Page import Page
 from libs.core.cms.api.serializers.PageSerializer import PageSerializer
 from webdjango.models.Core import CoreConfig, Plugin, Theme
 from webdjango.models.CoreConfig import CoreConfigGroup
-from webdjango.serializers.CoreSerializer import (CoreConfigSerializer,
-                                                  PluginSerializer,
+from webdjango.serializers.CoreSerializer import (PluginSerializer,
                                                   ThemeSerializer)
 
 
@@ -18,39 +18,38 @@ class InitViewSet(viewsets.GenericViewSet):
     """
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+    public_views = ('list', )
+    #permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def list(self, request, format=None):
         """
         Return the essential data.
         """
         plugins = Plugin.objects.filter(active=True)
-        pluginsSerializer = None
+        plugins_serializer = None
         if plugins:
-            pluginsSerializer = PluginSerializer(
+            plugins_serializer = PluginSerializer(
                 plugins,
                 many=True
             )
-            pluginsSerializer.is_valid()
+            plugins_serializer.is_valid()
         theme = Theme.objects.filter(active=True).first()
-        themeSerializer = None
+        theme_serializer = None
         if theme:
-            themeSerializer = ThemeSerializer(
+            theme_serializer = ThemeSerializer(
                 theme,
                 many=False
             )
-            themeSerializer.is_valid()
+            theme_serializer.is_valid()
         # TODO: retrieve locale(s)
-        """
-        if there is more than 1 locale, get the locale based on localization
-        """
+        # if there is more than 1 locale, get the locale based on localization
 
         # TODO: load cache if exists
 
         # TODO: define current User Object
-        """
-        Current User Object is whether a guest, admin or any other role
-        in order to manage the user's requests according to its permissions.
-        """
+        # Current User Object is whether a guest, admin or any other role
+        # in order to manage the user's requests according to its permissions.
+
         config_groups = CoreConfigGroup.all()
         config_keys = []
         if config_groups:
@@ -78,8 +77,8 @@ class InitViewSet(viewsets.GenericViewSet):
                 "protocol": request.website.protocol
             }
         }
-        if pluginsSerializer:
-            response['plugins'] = pluginsSerializer.data
-        if themeSerializer:
-            response['theme'] = themeSerializer.data
+        if plugins_serializer:
+            response['plugins'] = plugins_serializer.data
+        if theme_serializer:
+            response['theme'] = theme_serializer.data
         return Response(response)

@@ -33,6 +33,7 @@ class MenuItemViewSet(ModelViewSet):
     queryset = MenuItem.objects.all()
     ordering_fields = '__all__'
     filter_class = MenuItemFilter
+    public_views = ('list',)
 
 
 class MenuItemRelationshipView(RelationshipView):

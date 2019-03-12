@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CityModel} from "@plugins/provider/src/lib/data";
-import {HttpHeaders} from "@angular/common/http";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { Component, Input, OnInit } from '@angular/core';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { CityModel } from "@plugins/provider/src/lib/data";
+import { HttpHeaders } from "@angular/common/http";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -26,13 +26,13 @@ export class PluginProviderCityCoverageComponent implements OnInit {
 
 
   constructor(private datastore: WebAngularDataStore,
-              private formBuilder: FormBuilder,
-              public modalService: NgbModal) {
+    private formBuilder: FormBuilder,
+    public modalService: NgbModal) {
 
     this.formCoverage = this.formBuilder.group({
-        postal_code: ['', [Validators.required, Validators.minLength(8)]],
-        address_number: ['', [Validators.required]]
-      });
+      postal_code: ['', [Validators.required, Validators.minLength(8)]],
+      address_number: ['', [Validators.required]]
+    });
 
   }
 
@@ -52,8 +52,13 @@ export class PluginProviderCityCoverageComponent implements OnInit {
         (city: CityModel) => {
           this.coverageLoaded = true;
           this.hasCoverage = true;
+        },
+        (error) => {
+          this.coverageLoaded = true;
+          this.hasCoverage = false;
+
         }
-      ).catch( (error: any) => {
+      ).catch((error: any) => {
         this.coverageLoaded = true;
         this.hasCoverage = false;
       });
@@ -71,10 +76,12 @@ export class PluginProviderCityCoverageComponent implements OnInit {
           CityModel,
           null,
           null,
-          new HttpHeaders({'Authorization': 'none'}),
+          new HttpHeaders({ 'Authorization': 'none' }),
           url
         ).subscribe((city: CityModel) => {
           resolve(city);
+        }, (error) => {
+          reject(error);
         })
       }
     });

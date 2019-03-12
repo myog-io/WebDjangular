@@ -32,6 +32,7 @@ class CondoViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CondoFilter
     search_fields = ('name')
+    public_views = ('list', 'retrieve')
 
 
 class CondoRelationshipView(RelationshipView):

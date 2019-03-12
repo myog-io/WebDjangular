@@ -1,6 +1,4 @@
-from django.contrib.auth.middleware import AuthenticationMiddleware
 from rest_framework import permissions
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 class AuthenticatedViewsetPermission(permissions.BasePermission):
@@ -12,6 +10,14 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
     }
 
     def has_permission(self, request, view):
+        if hasattr(view, 'public_views'):
+            if view.action in view.public_views or hasattr(view.public_views, view.action):
+                # This is a Public View, we should add more security
+                #print("This is a Public View, we should add more security")
+                # TODO: Improve security for public routes/ NONCE?
+                return True
+        print("ACTION!!!!", view.action)
+
         if hasattr(request, 'user'):
             if request.user.is_staff or request.user.is_superuser:
                 return True
@@ -36,5 +42,4 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
         return False
 
     def has_object_permission(self, request, view, obj):
-        print("has_object_permission")
         return True

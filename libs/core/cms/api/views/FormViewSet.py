@@ -31,6 +31,7 @@ class FormViewSet(ModelViewSet):
     queryset = Form.objects.all()
     ordering_fields = '__all__'
     filter_class = FormFilter
+    public_views = ('list', 'retrieve')
 
 
 class FormRelationshipView(RelationshipView):
