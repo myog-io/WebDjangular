@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  selector: 'wda-form',
+  selector: 'wda-form-builder',
   styleUrls: ['builder-form.component.scss'],
   templateUrl: 'builder-form.component.html'
 })
@@ -132,7 +132,7 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.ctrlKey && event.code == "KeyS") {
+    if ((event.ctrlKey || event.metaKey) && event.code == "KeyS") {
       event.preventDefault()
       this.submitForm(event, false)
     }

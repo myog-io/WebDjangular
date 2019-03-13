@@ -9,7 +9,7 @@ import { PermissionModel } from '@core/users/src/lib/models';
 
 @JsonApiModelConfig({
   type: 'Menu',
-  modelEndpointUrl: 'menu',
+  modelEndpointUrl: 'cms/menu',
 })
 export class MenuModel extends AbstractModel {
   include = "menu_item"

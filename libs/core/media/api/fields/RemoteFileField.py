@@ -39,6 +39,7 @@ class RemoteFileField(models.FileField):
         super(RemoteFileField, self).__init__(
             verbose_name, name, upload_to, storage, **kwargs)
 
+
     def StorageClassReference(self, className=None):
         return Tools.getClassReference(self.storageClassPath + '.' + str(className), str(className))
 

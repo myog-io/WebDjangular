@@ -1,4 +1,4 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from "angular2-jsonapi";
+import { Attribute, BelongsTo, JsonApiModelConfig } from "angular2-jsonapi";
 import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
@@ -35,7 +35,7 @@ export class NumberRangeModel extends AbstractModel {
   })
   end: string;
 
-  @BelongsTo({key: 'Street'})
+  @BelongsTo()
   @ExtraOptions({
     type: 'hidden',
   })

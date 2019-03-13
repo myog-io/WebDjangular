@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy, ViewChild, TemplateRef} from '@angular/core';
-import {BuilderFormField, BuilderFormFieldConfig} from '../../interfaces/form-config.interface';
-import {Subscription} from 'rxjs';
-import {LocalDataSource} from 'ng2-smart-table';
-import {NbWindowRef, NbWindowService} from '@nebular/theme';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
+import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import { Subscription } from 'rxjs';
+import { LocalDataSource } from 'ng2-smart-table';
+import { NbWindowRef, NbWindowService, NbToastrService } from '@nebular/theme';
 import { FormArray, FormGroup } from '@angular/forms';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { AbstractForm } from '@core/data/src/lib/forms';
@@ -35,10 +35,10 @@ enum state {
               (delete)="onDelete($event)" >
             </ng2-smart-table>
             <ng-template #InceptionForm let-data>
-              <wda-form [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
+              <wda-form-builder [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
                         [group]="form"
                         [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false"
-                        [title]="config.label" [inceptionForm]="true" ></wda-form>
+                        [title]="config.label" [inceptionForm]="true" ></wda-form-builder>
             </ng-template>
           </div>
         </nb-accordion-item-body>
@@ -99,7 +99,8 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    */
   constructor(
     private datastore: WebAngularDataStore,
-    private windowService: NbWindowService
+    private windowService: NbWindowService,
+    private toaster: NbToastrService,
   ) {
 
   }
@@ -110,7 +111,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   ngOnInit() {
 
     this.updateSettings();
-    if(this.group.get(this.config.name) && typeof this.group.get(this.config.name).value !== 'undefined'){
+    if (this.group.get(this.config.name) && typeof this.group.get(this.config.name).value !== 'undefined') {
       this.source.load(this.group.get(this.config.name).value);
     }
     this.subscription = this.group.valueChanges.subscribe((val) => {
@@ -144,8 +145,9 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
         case "prepend":
           this.includeRow(data.elements)
           break;
-        case "updateRow":
+        case "update":
           this.updateRow(data.elements);
+          break;
         case "remove":
           this.deleteRow(data.elements);
         default:
@@ -189,16 +191,13 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     // First Creation is Triggergin an Error
     // "Must supply a value for form control at index: 0
     const fa = this.group.get(this.config.name) as FormArray;
-
     for (let i = 0; i < val.length; i++) {
       const element = val[i];
-      const fg = fa.get(i.toString()) as FormGroup;
-      if(fg){
+      const fg = fa.get(i.toString()) as AbstractForm;
+      if (fg) {
         for (const key in element) {
-
           if (element.hasOwnProperty(key)) {
-            fg.get(key).setValue(element[key])
-
+            fg.get(key).setValue(element[key]);
           }
         }
       }
@@ -230,10 +229,10 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     }
     if (this.config.model) {
       this.smart_table_settings = Object.assign(
-          {},
-          this.smart_table_settings,
-          this.config.model.smartTableOptions
-        );
+        {},
+        this.smart_table_settings,
+        this.config.model.smartTableOptions
+      );
     } else if (this.config.fields) {
       for (const key in this.config.fields) {
         if (this.config.fields.hasOwnProperty(key)) {
@@ -328,9 +327,37 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     if ($event.data) {
       switch (this.state) {
         case state.updating:
-
+          const element_id = this.element.id;
           this.source.update(this.element, $event.data).then((val: any) => {
-            this.closeWindow();
+            // Also Update on 
+            if (element_id) {
+              const fg: AbstractForm = this.getEntity(element_id);
+              if(fg.entity.save){
+                fg.updateModel(fg.entity)
+                fg.entity.save().subscribe((new_entity) => {
+                  this.toaster.success(`Changes have been saved`, `Success!`);
+                  fg.populateForm(new_entity);
+                  fg.entity = new_entity;
+                  this.loading = false;
+                  this.closeWindow();
+                }, (error) => {
+                  this.loading = false;
+                  if (error.errors && error.errors.length > 0) {
+                    for (let i = 0; i < error.errors.length; i++) {
+                      // TODO: Check pointer to see if is for an specific field and set an error inside the field
+                      const element = error.errors[i];
+                      this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+                    }
+                  } else {
+                    this.toaster.danger(`Error saving the Changes`, `Error!`);
+                  }
+                });
+              }else{
+                this.closeWindow();
+              }
+            } else {
+              this.closeWindow();
+            }
           });
           this.element = null;
           break;
@@ -343,10 +370,36 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
           break;
       }
     }
-
-
   }
-
+  /**
+   * 
+   * @param id Id of the entity to find the elemnt
+   */
+  private getEntity(id: string): AbstractForm {
+    const fa = this.group.get(this.config.name) as FormArray;
+    return fa.at(fa.value.findIndex(e => e.id === id)) as AbstractForm;
+  }
+  /**
+   * 
+   */
+  private savingElement(id) {
+    //if(fg.entity && fg.get('id').value){
+    //  // We need to update the Entity linked to the group entity
+    //  const id = fg.get('id').value;
+    //  
+    //  if(this.group.entity[this.config.name]){
+    //    const en:any[] = this.group.entity[this.config.name]; 
+    //    let index = en.findIndex((e)=> e.id == id);
+    //    
+    //    fg.updateModel(this.group.entity[this.config.name][index])
+    //    
+    //  }
+    //  
+    //}
+  }
+  /**
+   * Closing Window
+   */
   private closeWindow() {
 
     setTimeout(() => {

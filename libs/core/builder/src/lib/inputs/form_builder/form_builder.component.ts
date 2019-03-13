@@ -18,6 +18,7 @@ export class BuilderFormBuilderComponent implements BuilderFormField, OnInit, On
   relationshipUpdated: EventEmitter<any>;
   value: object = {};
   valueSub: Subscription;
+
   ngOnInit() {
     this.valueSub = this.group.get(this.config.name).valueChanges.subscribe(
       (data: any) => {
@@ -35,10 +36,12 @@ export class BuilderFormBuilderComponent implements BuilderFormField, OnInit, On
     }
     this.valueSub = null;
   }
+
   onFormBuilderChanges(event) {
     this.relationshipUpdated.emit({
       name: this.config.name,
       entity: { data: event.form }
     });
   }
+
 }

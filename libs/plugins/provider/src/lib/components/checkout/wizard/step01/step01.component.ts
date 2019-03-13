@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ProviderCheckoutService} from "../../../../data/services/provider-checkout.service";
-import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {WebAngularDataStore} from "@core/services/src/lib/WebAngularDataStore.service";
-import {CartModel} from "@plugins/store/src/lib/data/models/Cart.model";
+import { Component, OnInit } from '@angular/core';
+import { ProviderCheckoutService } from "../../../../data/services/provider-checkout.service";
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators, ValidationErrors } from "@angular/forms";
+import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
+import { CartModel } from "@plugins/store/src/lib/data/models/Cart.model";
 import * as moment from 'moment';
 
 @Component({
@@ -18,8 +18,8 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
   public cart: CartModel;
 
   constructor(public datastore: WebAngularDataStore,
-              public providerCheckout: ProviderCheckoutService,
-              private formBuilder: FormBuilder) {
+    public providerCheckout: ProviderCheckoutService,
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -71,16 +71,16 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       cpf: [cpf, [Validators.required, this.CPFValidator()]],
       rg: [rg, [Validators.required, this.RGValidator()]],
       dob: [dob, [
-        Validators.required, Validators.minLength(8),
+        Validators.required, Validators.minLength(10),
         this.DateValidator(), this.Over18Validator()]],
-      file_document: ['', [Validators.required]],
-      postal_code: [postal_code],
-      city: [city],
-      state: [state],
-      number: [number],
-      street_address_1: [street_address_1],
-      street_address_2: [street_address_2],
-      street_address_3: [street_address_3],
+      //file_document: ['', [Validators.required]],
+      postal_code: [postal_code, []],
+      city: [city, []],
+      state: [state, []],
+      number: [number, []],
+      street_address_1: [street_address_1, []],
+      street_address_2: [street_address_2, []],
+      street_address_3: [street_address_3, []],
     });
 
     if (this.providerCheckout.plan_type.is_business) {
@@ -124,7 +124,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           } else {
             this.formWizardStep01.get('portability_provider').setValidators([]);
           }
-          this.formWizardStep01.get('portability_provider').updateValueAndValidity({emitEvent: false});
+          this.formWizardStep01.get('portability_provider').updateValueAndValidity({ emitEvent: false });
         }
       );
       this.formWizardStep01.get('portability_provider').valueChanges.subscribe(
@@ -134,17 +134,17 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           } else {
             this.formWizardStep01.get('portability_number').setValidators([]);
           }
-          this.formWizardStep01.get('portability_number').updateValueAndValidity({emitEvent: false});
+          this.formWizardStep01.get('portability_number').updateValueAndValidity({ emitEvent: false });
         }
       );
     }
 
 
-    this.formWizardStep01.get('file_document').valueChanges.subscribe((value)=>{
-      console.log(value);
-    }, (error) => {
-      console.log(error);
-    });
+    //this.formWizardStep01.get('file_document').valueChanges.subscribe((value) => {
+    //  console.log(value);
+    //}, (error) => {
+    //  console.log(error);
+    //});
   }
 
   DateValidator(): ValidatorFn {
@@ -154,10 +154,10 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
         return null
       }
       const m = moment(date, 'DD/MM/YYYY');
-      if (m.isValid()) {
-        return {invalidDate: false};
+      if (!m.isValid()) {
+        return { invalidDate: true };
       }
-      return {invalidDate: true};
+      return null
     }
   }
 
@@ -169,10 +169,10 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       }
       const birthday = moment(date, 'DD/MM/YYYY');
       const age = moment().diff(birthday, 'years');
-      if (age >= 18) {
-        return {notOver18: false}
+      if (age <= 18) {
+        return { notOver18: true }
       }
-      return {notOver18: true}
+      return null
     }
   }
 
@@ -184,7 +184,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
         equalDigits = 1;
 
         if (cpf.length < 11) {
-          return {invalidCPF: true};
+          return { invalidCPF: true };
         }
 
         for (i = 0; i < cpf.length - 1; i++) {
@@ -205,7 +205,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
 
           if (result !== Number(digits.charAt(0))) {
-            return {invalidCPF: true};
+            return { invalidCPF: true };
           }
           numbers = cpf.substring(0, 10);
           sum = 0;
@@ -216,11 +216,11 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
 
           if (result !== Number(digits.charAt(1))) {
-            return {invalidCPF: true};
+            return { invalidCPF: true };
           }
           return null;
         } else {
-          return {invalidCPF: true};
+          return { invalidCPF: true };
         }
       }
       return null;
@@ -232,9 +232,8 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       const rg = control.value;
       if (rg) {
         if (rg.length < 8) {
-          return {invalidRG: true};
+          return { invalidRG: true };
         }
-        return {invalidRG: false};
       }
       return null;
     }
@@ -245,7 +244,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       const cnpj = control.value;
       if (cnpj) {
         if (cnpj.length != 14)
-          return {invalidCNPJ: true};
+          return { invalidCNPJ: true };
 
         let tamanho = cnpj.length - 2;
         let numeros = cnpj.substring(0, tamanho);
@@ -259,7 +258,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
         }
         let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
         if (resultado != digitos.charAt(0))
-          return {invalidCNPJ: true};
+          return { invalidCNPJ: true };
 
         tamanho = tamanho + 1;
         numeros = cnpj.substring(0, tamanho);
@@ -272,12 +271,24 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
         }
         resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
         if (resultado != digitos.charAt(1)) {
-          return {invalidCNPJ: true};
+          return { invalidCNPJ: true };
         }
-        return {invalidCNPJ: false};
+        return null;
       }
       return null;
     }
+  }
+  getFormValidationErrors() {
+    Object.keys(this.formWizardStep01.controls).forEach(key => {
+
+      const controlErrors: ValidationErrors = this.formWizardStep01.get(key).errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach(keyError => {
+          console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+        });
+      }
+    });
+    return "ERRORS?";
   }
 
   onSubmit() {
@@ -323,7 +334,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     }
   }
 
- 
+
 
 
 }

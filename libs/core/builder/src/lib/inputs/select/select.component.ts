@@ -4,7 +4,6 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
-import { config } from 'ngx-mask';
 
 @Component({
   selector: 'wda-form-select',

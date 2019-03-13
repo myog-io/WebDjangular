@@ -1,27 +1,21 @@
-from django.contrib.auth import get_user_model
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import action, permission_classes, api_view
+from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
-from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, \
-    ListModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.mixins import (CreateModelMixin, DestroyModelMixin,
+                                   ListModelMixin, RetrieveModelMixin,
+                                   UpdateModelMixin)
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT, \
-    HTTP_400_BAD_REQUEST
+from rest_framework.status import (HTTP_201_CREATED, HTTP_204_NO_CONTENT,
+                                   HTTP_400_BAD_REQUEST)
 from rest_framework.viewsets import GenericViewSet
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
-from django_filters.rest_framework import DjangoFilterBackend
-from webdjango.filters import WebDjangoFilterSet
 
 from libs.core.users.api.models import User
-from libs.core.users.api.permissions.UpdateOwnUser import UpdateOwnUser
-from libs.core.users.api.serializers.ForgetPasswordSerializer import ForgetPasswordSerializer
-from libs.core.users.api.serializers.PermissionSerializer import PermissionSerializer
-from libs.core.users.api.serializers.SetPasswordSerializer import SetPasswordSerializer
+from libs.core.users.api.serializers.ForgetPasswordSerializer import \
+    ForgetPasswordSerializer
+from libs.core.users.api.serializers.SetPasswordSerializer import \
+    SetPasswordSerializer
 from libs.core.users.api.serializers.UserSerializer import UserSerializer
-from webdjango.utils.permissions.AuthenticatedViewsetPermission import AuthenticatedViewsetPermission
+from webdjango.filters import WebDjangoFilterSet
 
 
 class UserFilter(WebDjangoFilterSet):
@@ -29,8 +23,8 @@ class UserFilter(WebDjangoFilterSet):
         model = User
         fields = {
             'id': ['in'],
-            'first_name': ['contains','exact'],
-            'last_name': ['contains','exact'],
+            'first_name': ['contains', 'exact'],
+            'last_name': ['contains', 'exact'],
         }
 
 
@@ -45,11 +39,10 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
     """
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    authentication_classes = (JSONWebTokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
+
     ordering_fields = '__all__'
-    permission_classes = (AuthenticatedViewsetPermission, )
-    search_fields = ('first_name', 'last_name', 'email', 'username')  # Search field is for the Search Filter ?search=
+    # Search field is for the Search Filter ?search=
+    search_fields = ('first_name', 'last_name', 'email', 'username')
     filter_class = UserFilter
 
     def get_permissions(self):
@@ -124,6 +117,3 @@ class UserViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin,
         serializer.save()
 
         return Response(serializer.data, status=HTTP_201_CREATED)
-
-
-

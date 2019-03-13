@@ -26,8 +26,8 @@ export class WDAConfig {
   private compleLoading: any = null;
   private website: object;
   public init_url = '/api/core_init/';
-  public get_home_url = '/api/page/get_home/';
-  public get_page_url = '/api/page/#path#/get_page';
+  public get_home_url = '/api/cms/page/get_home/';
+  public get_page_url = '/api/cms/page/#path#/get_page';
   public include = 'header,footer,layout';
   public current_page:PageModel;
   public current_header:BlockHeaderModel;

@@ -8,7 +8,7 @@ import {
   Type,
   ViewContainerRef,
   Output,
-  EventEmitter
+  EventEmitter, SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
@@ -23,11 +23,13 @@ import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 import { BuilderFormField, BuilderFormFieldConfig } from './interfaces/form-config.interface';
+import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
 
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
   text: BuilderFormInputComponent,
+  textArea: BuilderFormTextAreaComponent,
   select: BuilderFormSelectComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
@@ -39,14 +41,13 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   jsonLogic: BuilderFormJsonLogicComponent,
 };
 
+
 @Directive({
   selector: '[wdaBuilderFormFields]'
 })
 export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnInit {
   @Input() config: BuilderFormFieldConfig;
-
   @Input() group: FormGroup;
-
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
 
   component: ComponentRef<BuilderFormField>;
@@ -57,16 +58,18 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
   ) {
   }
 
-  ngOnChanges() {
-    if (this.component) {
-      this.component.instance.config = this.config;
-      this.component.instance.group = this.group;
-      this.component.instance.relationshipUpdated = this.relationshipUpdated;
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.config.isFirstChange()) {
+      if (this.component) {
+        this.component.instance.config = this.config;
+        this.component.instance.group = this.group;
+        this.component.instance.relationshipUpdated = this.relationshipUpdated;
+      }
     }
   }
 
   ngOnInit() {
-    if(this.config.type === 'hidden') return;
+    if (this.config.type === 'hidden') return;
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(

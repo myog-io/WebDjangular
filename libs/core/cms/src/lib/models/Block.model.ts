@@ -7,7 +7,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'Block',
-  modelEndpointUrl: 'block',
+  modelEndpointUrl: 'cms/block',
 })
 export class BlockModel extends AbstractModel {
 

@@ -9,7 +9,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'PageCategory',
-  modelEndpointUrl: 'page-category',
+  modelEndpointUrl: 'cms/page-category',
 })
 export class PageCategoryModel extends AbstractModel {
 

@@ -157,6 +157,7 @@ p.subtitle {
   margin-bottom: 45px;
 }
 
+
 input, textarea {
   width: 100%;
   font-family: $input-ff;
@@ -169,6 +170,24 @@ input, textarea {
   background: transparent;
   outline-color: $primary
 }
+
+input.form-control {
+  border-top:unset;
+  border-left: unset;
+  border-right: unset;
+  border-radius: 0;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+
+.form-control.ng-invalid.ng-touched {
+  border-color: theme-color('danger');
+}
+
+
 
 select.form-control {
   width: 100%;
@@ -220,8 +239,8 @@ input:focus, textarea:focus {
   border-color: transparent;
 }
 
-input:focus ~ label, input:valid ~ label,
-textarea:focus ~ label, textarea:valid ~ label,
+input:focus ~ label, input.ng-touched ~ label,
+textarea:focus ~ label, textarea.ng-touched ~ label,
 input:read-only ~ label{
   bottom: -$input-fs*2;
   @include responsive-font-size($input-fs*0.95);
@@ -888,4 +907,7 @@ input:focus ~ .highlight {
   box-shadow: 0 6px 20px 0 $secondary;
   pointer-events: none;
 }
+
+
+
 

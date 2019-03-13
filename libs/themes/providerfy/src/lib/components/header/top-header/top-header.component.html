@@ -55,13 +55,8 @@
             <div ngbDropdown class="d-inline-block">
               <a ngbDropdownToggle> Sou assinante </a>
               <div class="shadow-lg" ngbDropdownMenu>
-                <a class="dropdown-item"> <span class="icon icon-barcode"></span> Segunda Via de Boleto</a>
-                <a class="dropdown-item"> <span class="icon icon-dashboard"></span> Medidor de Velocidade</a>
-                <a class="dropdown-item"> <span class="icon icon-gear"></span> Configurar Roteador</a>
-                <a class="dropdown-item"> <span class="icon icon-email"></span> Webmail</a>
-                <a class="dropdown-item"> <span class="icon icon-key"></span> Alterar Senha Webmail</a>
-                <a class="dropdown-item"> <span class="icon icon-support"></span> Suporte</a>
-                <a class="dropdown-item"> <span class="icon icon-change"></span> Mudar Meu Plano</a>
+                <ng-content></ng-content>
+
               </div>
             </div>
           </li>
@@ -76,16 +71,5 @@
         </div>
       </div>
     </div>
-
   </div>
-
-
 </div>
-
-
-<!--
-
-
-
-  </div>
--->

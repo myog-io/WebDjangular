@@ -1,12 +1,10 @@
-from django_filters.rest_framework.backends import DjangoFilterBackend
-from rest_framework import filters
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.exceptions import NotFound
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from webdjango.filters import WebDjangoFilterSet
+
 from ..models.Order import Order, OrderLine
-from ..serializers.OrderSerializer import OrderSerializer, OrderLineSerializer
+from ..serializers.OrderSerializer import OrderLineSerializer, OrderSerializer
 
 
 class OrderFilter(WebDjangoFilterSet):
@@ -30,12 +28,9 @@ class OrderViewSet(ModelViewSet):
     """
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
     filter_class = OrderFilter
     search_fields = ('order_num',)
-    permission_classes = ()
 
     """
     Create a model instance.
@@ -71,14 +66,8 @@ class OrderLineViewSet(ModelViewSet):
     """
     serializer_class = OrderLineSerializer
     queryset = OrderLine.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     ordering_fields = '__all__'
-    # search_fields = ()
-    permission_classes = ()
 
 
 class OrderLineRelationshipView(RelationshipView):
     queryset = OrderLine.objects
-
-

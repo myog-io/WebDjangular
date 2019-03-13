@@ -36,6 +36,17 @@ export interface BuilderFormCopyArray {
   name: string;
   field: string;
 }
+export interface BuilderFormValidatorMessages {
+
+  error_required?: string;
+  error_email?: string;
+  error_date?: string;
+  error_match?: string;
+  error_min_length?: string;
+  error_max_length?: string;
+  error_honeypot?: string;
+  error_invalid?: string;
+}
 export interface BuilderFormFieldConfig {
   type: string;
   validators?: Validators[];
@@ -54,6 +65,8 @@ export interface BuilderFormFieldConfig {
   default?: any;
   conditionalValue?: any;
   wrapper_class?: string;
+  element_class?: string;
+  label_position?: 'default' | 'above' | 'below';
   inputType?: string;
   conditional?: any;
   display?: boolean;
@@ -68,8 +81,10 @@ export interface BuilderFormFieldConfig {
   formType?: any;
   sort?: number;
   displayGroup?: string;
-  copyOptions?: BuilderFormCopyArray
+  copyOptions?: BuilderFormCopyArray;
   json_logic_options_url?: string;
+  validator_messages?: BuilderFormValidatorMessages;
+
 }
 
 export interface BuilderFormField {

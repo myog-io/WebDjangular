@@ -16,12 +16,14 @@ import { PluginProviderError404Component } from "@plugins/provider/src/lib/compo
 import { ThemeProviderfyTopHeaderComponent } from '@themes/providerfy/src/lib/components/header/top-header/top-header.component';
 import { ThemeProviderfyHeaderMenuComponent } from '@themes/providerfy/src/lib/components/header/menu/menu.component';
 import { CoreCmsLinkComponent } from '@core/cms/src/lib/components/link.component';
+import { CoreCmsFormComponent } from '@core/cms/src/lib/components/form/form.component';
 
 
 export const embeddedComponents = [
   CoreCmsMapsComponent,
   CoreCmsGalleryComponent,
   CoreCmsLinkComponent,
+  CoreCmsFormComponent,
   PluginProviderPricingInternetHorizontalComponent,
   PluginProviderPricingInternetVerticalComponent,
   PluginProviderPricingTelephoneVerticalComponent,
