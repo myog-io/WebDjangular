@@ -23,11 +23,13 @@ import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 import { BuilderFormField, BuilderFormFieldConfig } from './interfaces/form-config.interface';
+import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
 
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
   text: BuilderFormInputComponent,
+  textArea: BuilderFormTextAreaComponent,
   select: BuilderFormSelectComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
@@ -57,7 +59,7 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(!changes.config.isFirstChange()) {
+    if (!changes.config.isFirstChange()) {
       if (this.component) {
         this.component.instance.config = this.config;
         this.component.instance.group = this.group;

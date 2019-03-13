@@ -36,6 +36,17 @@ export interface BuilderFormCopyArray {
   name: string;
   field: string;
 }
+export interface BuilderFormValidatorMessages {
+
+  error_required?: string;
+  error_email?: string;
+  error_date?: string;
+  error_match?: string;
+  error_min_length?: string;
+  error_max_length?: string;
+  error_honeypot?: string;
+  error_invalid?: string;
+}
 export interface BuilderFormFieldConfig {
   type: string;
   validators?: Validators[];
@@ -72,6 +83,7 @@ export interface BuilderFormFieldConfig {
   displayGroup?: string;
   copyOptions?: BuilderFormCopyArray;
   json_logic_options_url?: string;
+  validator_messages?: BuilderFormValidatorMessages;
 
 }
 

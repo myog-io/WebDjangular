@@ -61,12 +61,14 @@ class CoreConfigInput(AbstractCoreConfigModel):
 
     FIELD_TYPE_BUTTON = 'button'
     FIELD_TYPE_TEXT = 'text'
+    FIELD_TYPE_TEXT_AREA = 'textArea'
     FIELD_TYPE_SELECT = 'select'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
 
     CONFIG_FIELD_TYPES = [
         (FIELD_TYPE_BUTTON, 'Button'),
         (FIELD_TYPE_TEXT, 'Text'),
+        (FIELD_TYPE_TEXT_AREA, 'Text Area'),
         (FIELD_TYPE_SELECT, 'Select'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
     ]

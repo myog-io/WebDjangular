@@ -67,7 +67,7 @@ export class AbstractModel extends JsonApiModel {
         }
       }
     }
-    
+
     return entities;
   }
   public saveAll(params?: any, headers?: HttpHeaders, customUrl?: string): Promise<this> {
@@ -91,10 +91,11 @@ export class AbstractModel extends JsonApiModel {
             cur_child.internalDatastore = this.service;
 
             const belongsTo = cur_child.belongsTo;
-           
+
             if (belongsTo) {
               for (let j = 0; j < belongsTo.length; j++) {
-                if (belongsTo[j].relationship === this.modelConfig.type) {
+                // Not the best way to do it, becuase i'm relying on the name of the variable and matching with the model name
+                if (belongsTo[j].relationship === this.modelConfig.type.toLowerCase()) {
                   if (!cur_child[belongsTo[j].propertyName] || cur_child[belongsTo[j].propertyName].id != entry.id) {
                     cur_child[belongsTo[j].propertyName] = entry;
                     save = true;
@@ -118,7 +119,7 @@ export class AbstractModel extends JsonApiModel {
                 )
               });
               promises.push(promise);
-              
+
             };
           }
 
@@ -126,7 +127,7 @@ export class AbstractModel extends JsonApiModel {
           for (let i = 0; i < child_to_remove.length; i++) {
             const del_child = child_to_remove[i];
             if (del_child.id) {
-              console.log("Deleting This Child",del_child);
+              console.log("Deleting This Child", del_child);
               let promise = new Promise((resolve_delete, reject_delete) => {
                 //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
                 // If the Relationship is One to One

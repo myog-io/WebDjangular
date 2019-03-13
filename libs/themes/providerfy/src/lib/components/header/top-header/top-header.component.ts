@@ -1,7 +1,7 @@
-import {Component, OnInit, PLATFORM_ID, Inject} from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject, ViewEncapsulation } from '@angular/core';
 
-import {ThemeProviderfyModalChoosecityComponent} from "../../modal/choosecity/choosecity.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import { ThemeProviderfyModalChoosecityComponent } from "../../modal/choosecity/choosecity.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ClientUserService } from '@core/services/src/lib/client-user.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -9,7 +9,8 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'theme-providerfy-top-header',
   templateUrl: './top-header.component.html',
-  styleUrls: ['./top-header.component.scss']
+  styleUrls: ['./top-header.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ThemeProviderfyTopHeaderComponent implements OnInit {
   testBrowser: boolean;
@@ -42,7 +43,7 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
   }
 
   openModalChooseCity() {
-    if( this.testBrowser ){
+    if (this.testBrowser) {
       this.modalService.open(ThemeProviderfyModalChoosecityComponent, {
         centered: true,
         backdropClass: 'backdrop-choosecity',

@@ -1,6 +1,6 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {NumberRangeModel} from "./NumberRangeModel";
-import {FormArray, Validators} from "@angular/forms";
+import { Attribute, BelongsTo, HasMany, JsonApiModelConfig } from "angular2-jsonapi";
+import { NumberRangeModel } from "./NumberRangeModel";
+import { FormArray, Validators } from "@angular/forms";
 import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
@@ -40,7 +40,7 @@ export class StreetModel extends AbstractModel {
   })
   numbers: NumberRangeModel[];
 
-  @BelongsTo({key: 'City'})
+  @BelongsTo()
   @ExtraOptions({
     type: 'hidden',
   })

@@ -14,6 +14,7 @@ export const LabelPostionOptions = [
 
 export const FieldOptions = [
   { id: 'text', name: "Text" },
+  { id: 'textArea', name: "Text Area" },
   { id: 'button', name: "Button" },
   { id: 'select', name: "Select" },
   { id: 'codeEditor', name: "Code Editor" },
@@ -179,7 +180,7 @@ export class FormFieldModel extends AbstractModel {
   })
   data?: any;
 
-  @BelongsTo({ key: 'Form' })
+  @BelongsTo()
   form: any;
   //@ExtraOptions({
   //    type: 'hidden',
@@ -188,6 +189,9 @@ export class FormFieldModel extends AbstractModel {
     let validators = [];
     if (this.required) {
       validators.push(Validators.required);
+    }
+    if (this.input_type === "email") {
+      validators.push(Validators.email)
     }
     return new FormControl(this.default_value, validators)
   }
@@ -228,6 +232,7 @@ export class FormFieldModel extends AbstractModel {
       //displayGroup: string;
       //copyOptions?: BuilderFormCopyArray
       //json_logic_options_url?: string;
+      validator_messages: this.form ? this.form.getValidatorMessages() : null
     }
   }
   get config(): BuilderFormFieldConfig {

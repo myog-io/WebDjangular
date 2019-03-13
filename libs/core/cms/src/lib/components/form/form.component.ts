@@ -3,16 +3,12 @@ import {
   OnInit,
   Input,
   OnDestroy,
-  SimpleChanges, OnChanges
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { FormModel } from '../../models/Form.model';
-import { FormGroup } from '@angular/forms';
 import { AbstractForm } from "@core/data/src/lib/forms";
-import { OrderModel } from "@plugins/store/src/lib/data/models/Order.model";
 import { ErrorResponse } from "angular2-jsonapi";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FormSubmittedModel } from "@core/cms/src/lib/models/FormSubmittedModel";
 /*
 <ng-container wdaBuilderFormFields [config]="field" [group]="group"
@@ -30,6 +26,9 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
   public sub: Subscription;
   public form: FormModel;
   public formGroup: AbstractForm;
+  public showForm = true;
+  public success_message = "Mensagem Enviada com sucesso!";
+  public error_message = "Ocorreu um erro ao enviar sua mensagem, por favor tente novamente!"
 
 
   constructor(private datastore: WebAngularDataStore) {
@@ -40,7 +39,16 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
       include: 'fields,actions'
     }).subscribe((form_model) => {
       this.form = form_model;
+      if (this.form.success_message) {
+        this.success_message = this.form.success_message;
+      }
+      if (this.form.error_message) {
+        this.error_message = this.form.error_message;
+      }
+
+      // Setting Validation Errors on the Group
       this.formGroup = this.form.getFormGroup() as AbstractForm;
+
     }, (error) => {
     }
     );
@@ -52,7 +60,14 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
       this.sub = null;
     }
   }
-
+  formSucess() {
+    if (this.form.clear_complete) {
+      this.formGroup.reset()
+    }
+    if (this.form.hide_complete) {
+      this.showForm = false;
+    }
+  }
   onSubmit(event: Event) {
     this.formGroup.formSubmitAttempts++;
     if (this.formGroup.valid) {

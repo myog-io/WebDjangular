@@ -3,8 +3,6 @@ import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
 import { Validators } from "@angular/forms";
-import { FormModel } from "@core/cms/src/lib/models/Form.model";
-
 
 
 export const ActionChoices = [
@@ -61,7 +59,7 @@ export class FormActionModel extends AbstractModel {
     })
     data?: string;
 
-    @BelongsTo({ key: 'Form' })
+    @BelongsTo()
     form: any;
 
     public toString = (): string => {
@@ -80,4 +78,5 @@ export class FormActionModel extends AbstractModel {
             },
         },
     };
+
 }

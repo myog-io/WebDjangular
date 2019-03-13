@@ -1,5 +1,5 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
-import {Validators} from '@angular/forms';
+import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
+import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
@@ -35,7 +35,7 @@ export class PostalCodeRangeModel extends AbstractModel {
   })
   end: string;
 
-  @BelongsTo({key: 'City'})
+  @BelongsTo()
   @ExtraOptions({
     type: 'hidden',
   })

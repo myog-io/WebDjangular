@@ -29,10 +29,12 @@ import { BuilderFormValidatorComponent } from './inputs/validators/validators.co
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 import { HoldableDirective } from './holdable/holdable.directive';
+import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
   BuilderFormInputComponent,
+  BuilderFormTextAreaComponent,
   BuilderFormSelectComponent,
   BuilderFormCodeComponent,
   BuilderFormBuilderComponent,
