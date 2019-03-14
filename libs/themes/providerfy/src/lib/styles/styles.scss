@@ -916,3 +916,104 @@ input:focus ~ .highlight {
 
 
 
+
+.pricing.card {
+  .card-header {
+    background: $pricing-plan-internet-horizontal-left-side-bg;
+    padding: 0;
+    border: unset;
+    border-top-left-radius: $plan-card-round;
+    border-top-right-radius: $plan-card-round;
+
+    .plan-amount {
+      @include responsive-font-size(34px);
+      font-weight: $pricing-plan-amount-fw;
+      font-family: $pricing-plan-amount-ff;
+      color: $pricing-plan-amount-c;
+
+      background: $primary;
+      border-top-left-radius: $plan-card-round;
+      border-top-right-radius: $plan-card-round;
+
+      margin-bottom: 0;
+    }
+  }
+
+  .card-body {
+    ul {
+
+      list-style: none;
+
+      li {
+        @include responsive-font-size($pricing-plan-features-fs);
+        font-weight: $pricing-plan-features-fw;
+        font-family: $pricing-plan-features-ff;
+        color: $pricing-plan-features-c;
+        line-height: $pricing-plan-features-lh;
+
+        height: $pricing-plan-features-lh * 2;
+
+        display: block;
+
+        .icon {
+          color: $primary;
+          float: left;
+          display: block;
+        }
+
+        p {
+          height: inherit;
+          margin-bottom: 0;
+          display: table-cell;
+          vertical-align: middle;
+        }
+
+      }
+    }
+
+    .plan-price {
+
+      .currency-unit {
+        @include responsive-font-size($pricing-plan-currency-unit-fs);
+        font-weight: $pricing-plan-currency-unit-fw;
+        font-family: $pricing-plan-currency-unit-ff;
+        color: $pricing-plan-currency-unit-c;
+        vertical-align: top;
+        line-height: $pricing-plan-price-fs * 1.2;
+      }
+
+      .price {
+        @include responsive-font-size($pricing-plan-price-fs);
+        font-weight: $pricing-plan-price-fw;
+        font-family: $pricing-plan-price-ff;
+        color: $pricing-plan-price-d;
+      }
+    }
+
+    .btn-outline-primary {
+      @include responsive-font-size($btn-subscribe-fs);
+
+      font-weight: bold;
+      font-family: $btn-subscribe-ff;
+      //color: $btn-subscribe-c;
+      text-transform: uppercase;
+
+
+
+      border-radius: 30px;
+    }
+
+    a.more-info {
+      @include responsive-font-size($pricing-plan-more-info-fs);
+      font-weight: $pricing-plan-more-info-fw;
+      font-family: $pricing-plan-more-info-ff;
+      color: $pricing-plan-more-info-c;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+
+    a.more-info:hover {
+      color: darken($pricing-plan-more-info-c, 15%);
+    }
+  }
+}
