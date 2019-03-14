@@ -1,4 +1,4 @@
-import { Attribute, BelongsTo, JsonApiModelConfig } from "angular2-jsonapi";
+import { Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute } from "angular2-jsonapi";
 import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
@@ -171,10 +171,11 @@ export class FormFieldModel extends AbstractModel {
   default_value: string;
 
 
-  @Attribute()
+  @NestedAttribute()
   @ExtraOptions({
     type: 'codeEditor',
     label: 'Extra Data',
+    element_class: 'small',
     options: {
       language: 'json'
     }
@@ -205,9 +206,9 @@ export class FormFieldModel extends AbstractModel {
       name: this.slug,
       //form_group_name: string;
       //model?: any;//AbstractModel;
-      //options?: any;
+      options: this.data.options || [],
       //options_include?: string;
-      //addTags?: boolean;
+      addTags: this.data.addTags || null,
       //multiple?: boolean;
       placeholder: this.placeholder,
       //validation?: ValidatorFn[];

@@ -23,7 +23,7 @@ export class AbstractForm extends FormGroup {
     conditional: null,
     sort: 0
   }];
-  public formSubmitAttempts : number = 0;
+  public formSubmitAttempts: number = 0;
   public formSubmiting: Boolean = false;
   public formSubmittedSuccess: Boolean = false;
 
@@ -37,16 +37,16 @@ export class AbstractForm extends FormGroup {
   /**
    * Generates form
    */
-  public generateForm(ignore_validation = false, ignore_recursion=false) {
+  public generateForm(ignore_validation = false, ignore_recursion = false) {
     for (let i = 0; i < this.formFields.length; i++) {
       const element = this.formFields[i];
       const propName = element.name
       if (this.formFields[i].formType == FormArray) {
-        if(ignore_recursion === false){
+        if (ignore_recursion === false) {
           this.registerControl(propName, new FormArray([], []));
         }
       } else if (this.formFields[i].formType == FormGroup) {
-        if(ignore_recursion === false){
+        if (ignore_recursion === false) {
           // If we Have Copy Options the form_group component will handle its creations
           if (this.formFields[i].model && !this.formFields[i].copyOptions) {
             let entity = new this.formFields[i].model(this.datastore)
@@ -82,15 +82,15 @@ export class AbstractForm extends FormGroup {
       // From Array
       if (this.formFields[i].formType == FormArray && typeof entity[propName] !== 'undefined') {
         for (let i = 0; i < entity[propName].length; i++) {
-          if (ignore_recursion === false){
+          if (ignore_recursion === false) {
             this.pushToFormArrayAttribute(propName, entity[propName][i]);
           }
         }
       } else {
         if (this.formFields[i].formType == FormGroup && typeof entity[propName] !== 'undefined') {
-          if (ignore_recursion === false){
+          if (ignore_recursion === false) {
             let fg = this.get(propName) as AbstractForm;
-            if(fg.populateForm){
+            if (fg.populateForm) {
               fg.populateForm(entity[propName]);
             }
           }
@@ -104,12 +104,12 @@ export class AbstractForm extends FormGroup {
     let id = null;
     if ('id' in data && data.id) {
       id = data.id;
-      delete(data.id);
+      delete (data.id);
     } else if ('pk' in data && data.pk) {
       id = data.pk;
-      delete(data.pk);
+      delete (data.pk);
     }
-    return new model(this.datastore, {id:id,attributes:data});
+    return new model(this.datastore, { id: id, attributes: data });
   }
   private getFormFieldByName(name: string) {
     return this.formFields.find((data) => data.name == name);
@@ -141,8 +141,16 @@ export class AbstractForm extends FormGroup {
           } else {
             entity[propName] = this.get(propName).value;
           }
-          break
+          break;
         default:
+          if (field.options && field.options.language === "json") {
+            try {
+              if (typeof values[propName] === 'string') {
+                values[propName] = JSON.parse(values[propName]);
+              }
+            } catch (error) {
+            }
+          }
           entity[propName] = values[propName];
           break;
       }
@@ -210,8 +218,8 @@ export class AbstractForm extends FormGroup {
       let field = this.getFormFieldByName(formKey);
       let entity = new field.model();
       let fb = entity.getForm();
-      fb.generateForm(true,true);
-      fb.populateForm(toRelateEntity,true);
+      fb.generateForm(true, true);
+      fb.populateForm(toRelateEntity, true);
       control.push(fb);
     }
   }
@@ -235,8 +243,8 @@ export class AbstractForm extends FormGroup {
       } else {
         f = entityToPush.getForm();
       }
-      f.generateForm(true,true);
-      f.populateForm(entityToPush,true);
+      f.generateForm(true, true);
+      f.populateForm(entityToPush, true);
       fa.push(f);
 
     }

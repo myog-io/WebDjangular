@@ -6,8 +6,8 @@
     <i class="fas fa-spinner fa-5x fa-pulse"></i>
   </span>
 </div>
-<div class="row" *ngIf="form && formGroup && showForm">
-  <div class="col">
+<div class="row" *ngIf="form && formGroup">
+  <div class="col-12" *ngIf="showForm">
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(event);">
 
       <ng-container *ngFor="let field of form.fields">
@@ -17,7 +17,16 @@
           </ng-container>
         </div>
       </ng-container>
+      <div class="error-validation alert alert-danger mt-1" *ngIf="showErrorValidation">
+        {{ error_validation }}
+      </div>
+      <div class="error-message alert alert-danger mt-1" *ngIf="showError">
+        {{ error_message }}
+      </div>
 
     </form>
+  </div>
+  <div class="col-12 alert alert-success mt-1" *ngIf="showSuccess">
+    {{ success_message }}
   </div>
 </div>

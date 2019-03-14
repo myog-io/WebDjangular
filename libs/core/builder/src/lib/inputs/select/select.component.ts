@@ -10,17 +10,10 @@ import { AbstractForm } from '@core/data/src/lib/forms';
 export class BuilderFormSelectComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
-  options =  [
-        { "id": "", "name": "Departamento"},
-        { "id": "Assinatura", "name": "Assinatura"},
-        { "id": "Cobrança", "name": "Cobrança"},
-        { "id": "Comercial", "name": "Comercial"},
-        { "id": "Financeiro", "name": "Financeiro"},
-        { "id": "Suporte Técnico", "name": "Suporte Técnico"}
-    ];
+  options = [];
 
   ngOnInit() {
-    console.log(this.config);
+    this.options = this.config.options || [];
   }
 
 }

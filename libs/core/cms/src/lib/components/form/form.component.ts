@@ -27,9 +27,12 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
   public form: FormModel;
   public formGroup: AbstractForm;
   public showForm = true;
+  public showSuccess = false;
+  public showError = false;
+  public showErrorValidation = false;
   public success_message = "Mensagem Enviada com sucesso!";
   public error_message = "Ocorreu um erro ao enviar sua mensagem, por favor tente novamente!"
-
+  public error_validation = "Por favor, corrija os erros antes de enviar o formulário."
 
   constructor(private datastore: WebAngularDataStore) {
   }
@@ -46,12 +49,16 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
         this.error_message = this.form.error_message;
       }
 
+      if (this.form.error_validation) {
+        this.error_validation = this.form.error_validation;
+      }
+
       // Setting Validation Errors on the Group
       this.formGroup = this.form.getFormGroup() as AbstractForm;
 
     }, (error) => {
-    }
-    );
+
+    });
   }
 
   ngOnDestroy() {
@@ -61,6 +68,7 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
     }
   }
   formSucess() {
+    this.showSuccess = true;
     if (this.form.clear_complete) {
       this.formGroup.reset()
     }
@@ -68,15 +76,23 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
       this.showForm = false;
     }
   }
+
   onSubmit(event: Event) {
+    this.showErrorValidation = false;
+    this.showSuccess = false;
+    this.showError = false;
+    this.showForm = true;
+
     this.formGroup.formSubmitAttempts++;
     if (this.formGroup.valid) {
       this.formGroup.formSubmiting = true;
       this.submitForm().then(
         () => {
-          console.log("SUCCESS!");
-        }, () => {
-          console.log("FAILED!");
+
+          this.formSucess();
+        },
+        () => {
+          this.showError = true;
         }
       ).finally(() => {
         this.formGroup.formSubmiting = false;
@@ -89,6 +105,7 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
        */
 
     } else {
+      this.showErrorValidation = true;
       Object.keys(this.formGroup.controls).forEach(field => {
         const control = this.formGroup.get(field);
         control.markAsTouched({ onlySelf: true });

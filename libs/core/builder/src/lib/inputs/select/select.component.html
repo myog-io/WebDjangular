@@ -7,11 +7,10 @@
          [attr.placeholder]="config.placeholder"
          [formControlName]="config.name"/>-->
 
-  <select class="form-control">
-      <option *ngFor="let option of options"
-              [value]="option.id" >
-        {{option.name}}
-      </option>
+  <select class="form-control" [formControlName]="config.name" placeholder="test??">
+    <option *ngFor="let option of options" [value]="option.id">
+      {{option.name}}
+    </option>
   </select>
 
   <span class="highlight"></span>
@@ -20,7 +19,7 @@
     {{ config.label }}
   </label>
 
-  <wda-form-validators [config]="config"
-                       [input]="group.get(this.config.name)">
+  <wda-form-validators [config]="config" [input]="group.get(this.config.name)">
   </wda-form-validators>
-</div> <!--form-group-->
+</div>
+<!--form-group-->

@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   template: `
   <div class="form-group" [formGroup]="group" >
     <label>{{ config.label }}</label>
-    <ngx-monaco-editor [options]="editorOptions" [formControlName]="config.name"></ngx-monaco-editor>
+    <ngx-monaco-editor class="monaco-editor {{ this.class }}" [options]="editorOptions" [formControlName]="config.name"></ngx-monaco-editor>
     <wda-form-validators [config]="config" [input]="group.get(this.config.name)"></wda-form-validators>
   </div><!--form-group-->
 `
@@ -19,22 +19,35 @@ import { Subscription } from 'rxjs';
 export class BuilderFormCodeComponent implements BuilderFormField, OnInit, OnDestroy {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
-  editorOptions = { theme: 'vs-dark', language: 'html', height: '50vh' };
-  sub: Subscription
+  editorOptions = { theme: 'vs-dark', language: 'html' };
+  sub: Subscription;
+  class = "large";
   ngOnInit() {
-
-    this.sub = this.group.get(this.config.name).valueChanges.subscribe((value) => {
-      if (typeof value === 'object') {
-        this.group.get(this.config.name).setValue(JSON.stringify(value, null, 2));
-      }
-      this.sub.unsubscribe();
-    });
     if (this.config.options) {
       this.editorOptions = Object.assign(
         this.editorOptions,
         this.config.options
       );
+    }
+    if (this.config.element_class) {
+      this.class = this.config.element_class
+    }
+    if (this.group.get(this.config.name).value) {
+      this.fromJson(this.group.get(this.config.name).value);
+    } else {
+      // TODO: Invalid Json
+      this.sub = this.group.get(this.config.name).valueChanges.subscribe((value) => {
+        if (value) {
+          this.fromJson(value);
+          this.sub.unsubscribe();
+        }
+      });
+    }
+  }
+  fromJson(value) {
 
+    if (typeof value === 'object') {
+      this.group.get(this.config.name).setValue(JSON.stringify(value, null, 2), { emitEvent: false });
     }
   }
   ngOnDestroy() {

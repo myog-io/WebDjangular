@@ -149,7 +149,7 @@ export class FormModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     type: 'text',
-    label: 'Por favor, corrija os erros antes de enviar este formulário.',
+    label: 'Por favor, corrija os erros antes de enviar o formulário.',
     wrapper_class: 'col-6',
   })
   error_validation: string;

@@ -1,4 +1,4 @@
-import { Attribute, BelongsTo, JsonApiModelConfig } from "angular2-jsonapi";
+import { Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute } from "angular2-jsonapi";
 import { AbstractModel } from "@core/data/src/lib/models";
 import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
 import { SmartTableSettings } from "@core/data/src/lib/data-store";
@@ -49,15 +49,16 @@ export class FormActionModel extends AbstractModel {
     })
     action_type: string;
 
-    @Attribute()
+    @NestedAttribute()
     @ExtraOptions({
         type: 'codeEditor',
         label: 'Extra Data',
+        element_class: 'small',
         options: {
             language: 'json'
         }
     })
-    data?: string;
+    data: any;
 
     @BelongsTo()
     form: any;
