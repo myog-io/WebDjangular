@@ -1,7 +1,8 @@
 <h4 id="{{form?.code}}_title" [class]="title_class" *ngIf="form?.title">
   {{form?.title}}
 </h4>
-<div class="card bg-dark text-white loading-container p-4" *ngIf="!form || !formGroup">
+<div class="card bg-dark text-white loading-container p-4"
+     *ngIf="!form || !formGroup">
   <span class="loading mx-auto">
     <i class="fas fa-spinner fa-5x fa-pulse"></i>
   </span>
