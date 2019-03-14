@@ -158,7 +158,7 @@ p.subtitle {
 }
 
 
-input, textarea {
+input, textarea, select {
   width: 100%;
   font-family: $input-ff;
   @include responsive-font-size($input-fs);
@@ -171,7 +171,7 @@ input, textarea {
   outline-color: $primary
 }
 
-input.form-control, textarea.form-control {
+input.form-control, textarea.form-control, select.form-control {
   border-top:unset;
   border-left: unset;
   border-right: unset;
@@ -214,7 +214,7 @@ select.form-control:after {
 
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus  {
   outline: none;
 }
 
@@ -239,18 +239,13 @@ input:focus, textarea:focus {
   border-color: transparent;
 }
 
-input:focus ~ label, input.ng-touched ~ label,
-textarea:focus ~ label, textarea.ng-touched ~ label,
-input:read-only ~ label,
-textarea:read-only ~ label{
+input:focus ~ label, input.ng-touched ~ label, input:read-only ~ label,
+textarea:focus ~ label, textarea.ng-touched ~ label, textarea:read-only ~ label,
+select:focus ~ label, select.ng-touched ~ label {
   bottom: -$input-fs*2;
   @include responsive-font-size($input-fs*0.95);
   color: $primary;
   border-color: transparent;
-}
-
-select ~ label{
-  display:none;
 }
 
 .custom-control-label {
