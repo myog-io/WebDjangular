@@ -171,7 +171,7 @@ input, textarea {
   outline-color: $primary
 }
 
-input.form-control {
+input.form-control, textarea.form-control {
   border-top:unset;
   border-left: unset;
   border-right: unset;
@@ -214,7 +214,7 @@ select.form-control:after {
 
 }
 
-input:focus {
+input:focus, textarea:focus {
   outline: none;
 }
 
@@ -241,7 +241,8 @@ input:focus, textarea:focus {
 
 input:focus ~ label, input.ng-touched ~ label,
 textarea:focus ~ label, textarea.ng-touched ~ label,
-input:read-only ~ label{
+input:read-only ~ label,
+textarea:read-only ~ label{
   bottom: -$input-fs*2;
   @include responsive-font-size($input-fs*0.95);
   color: $primary;
