@@ -10,21 +10,23 @@
 <div class="row" *ngIf="form && formGroup">
   <div class="col-12" *ngIf="showForm">
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(event);">
-
-      <ng-container *ngFor="let field of form.fields">
-        <div [class]="field.wrapper_class ? field.wrapper_class : 'col'">
-          <ng-container wdaBuilderFormFields [config]="field.config" [group]="formGroup"
-            (relationshipUpdated)="relationship($event)">
-          </ng-container>
+      <div class="row">
+        <ng-container *ngFor="let field of form.fields">
+          <div [class]="field.wrapper_class ? field.wrapper_class : 'col'">
+            <ng-container wdaBuilderFormFields [config]="field.config"
+                          [group]="formGroup"
+                          (relationshipUpdated)="relationship($event)">
+            </ng-container>
+          </div>
+        </ng-container>
+        <div class="error-validation alert alert-danger mt-1"
+             *ngIf="showErrorValidation">
+          {{ error_validation }}
         </div>
-      </ng-container>
-      <div class="error-validation alert alert-danger mt-1" *ngIf="showErrorValidation">
-        {{ error_validation }}
+        <div class="error-message alert alert-danger mt-1" *ngIf="showError">
+          {{ error_message }}
+        </div>
       </div>
-      <div class="error-message alert alert-danger mt-1" *ngIf="showError">
-        {{ error_message }}
-      </div>
-
     </form>
   </div>
   <div class="col-12 alert alert-success mt-1" *ngIf="showSuccess">
