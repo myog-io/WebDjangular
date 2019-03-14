@@ -22,7 +22,7 @@ export class PageRedirectModel extends AbstractModel {
     formType: FormGroup,
     model: PageModel,
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Redirect from Page:',
     wrapper_class: 'col-6',
   })
@@ -33,7 +33,7 @@ export class PageRedirectModel extends AbstractModel {
     formType: FormGroup,
     model: PageModel,
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Redirect to Page:',
     wrapper_class: 'col-6',
   })

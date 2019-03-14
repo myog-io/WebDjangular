@@ -29,7 +29,7 @@ export class CatalogRuleModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Discount Type',
     wrapper_class: 'col-6',
     placeholder: '',

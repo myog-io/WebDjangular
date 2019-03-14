@@ -20,7 +20,7 @@ export class CoreWebsiteModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Protocol',
     wrapper_class: 'col-4',
     value: 'http',

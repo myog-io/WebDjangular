@@ -74,7 +74,7 @@ export class MenuItemModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [],
-    type: 'select',
+    type: 'ngSelect',
     label: '"target" attribute',
     options: [
       { id: '_self', name: 'Self' },

@@ -34,7 +34,7 @@ export class CoreConfigGroupModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Core Config Input',
     wrapper_class: 'col-6',
     model: CoreConfigInputModel,

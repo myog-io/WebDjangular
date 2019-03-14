@@ -31,7 +31,7 @@ export class CartRuleModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Rule Type',
     wrapper_class: 'col-6',
     placeholder: '',

@@ -55,7 +55,7 @@ export class PluginModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Author',
     wrapper_class: 'col-6',
     model: AuthorModel,

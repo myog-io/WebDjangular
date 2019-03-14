@@ -29,7 +29,7 @@ export class CoreConfigModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Core Website',
     wrapper_class: 'col-6',
     model: CoreWebsiteModel,

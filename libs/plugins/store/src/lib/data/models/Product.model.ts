@@ -48,7 +48,7 @@ export class ProductModel extends AbstractModel {
     validators: [Validators.required],
     model: ProductTypeModel,
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Type',
     wrapper_class: 'col-12',
     placeholder: 'Select the Product Type',

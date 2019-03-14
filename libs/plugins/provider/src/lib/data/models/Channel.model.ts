@@ -34,7 +34,7 @@ export class ChannelModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     formType: FormArray,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Groups',
     addTags: true,
     multiple: true,
@@ -44,7 +44,7 @@ export class ChannelModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     formType: FormArray,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Types',
     addTags: true,
     multiple: true,

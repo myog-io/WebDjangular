@@ -249,6 +249,10 @@ textarea:read-only ~ label{
   border-color: transparent;
 }
 
+select ~ label{
+  display:none;
+}
+
 .custom-control-label {
   position: static;
   pointer-events: auto;

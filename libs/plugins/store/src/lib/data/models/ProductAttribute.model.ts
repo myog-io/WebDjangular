@@ -42,7 +42,7 @@ export class ProductAttributeModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     //validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Type',
     wrapper_class: 'col-6',
     value: ProductAttributeTypeValues.text,

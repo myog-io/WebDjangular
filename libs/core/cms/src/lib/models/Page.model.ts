@@ -61,7 +61,7 @@ export class PageModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Header',
     wrapper_class: 'col-12',
     model: BlockHeaderModel,
@@ -73,7 +73,7 @@ export class PageModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Layout',
     wrapper_class: 'col-12',
     model: BlockLayoutModel,
@@ -85,7 +85,7 @@ export class PageModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Footer',
     wrapper_class: 'col-12',
     model: BlockFooterModel,

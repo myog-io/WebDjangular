@@ -17,6 +17,7 @@ export const FieldOptions = [
   { id: 'textArea', name: "Text Area" },
   { id: 'button', name: "Button" },
   { id: 'select', name: "Select" },
+  { id: 'ngSelect', name: "NG Select" },
   { id: 'codeEditor', name: "Code Editor" },
   { id: 'formBuilder', name: "Form Builder" },
   { id: 'formArray', name: "Form Array" },
@@ -91,7 +92,7 @@ export class FormFieldModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Type',
     options: FieldOptions,
     wrapper_class: 'col-6',
@@ -104,7 +105,7 @@ export class FormFieldModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Input Types',
     options: InputTypes,
     value: InputTypes[0].id,
@@ -125,7 +126,7 @@ export class FormFieldModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Label Position',
     options: LabelPostionOptions,
     value: LabelPostionOptions[0].id,

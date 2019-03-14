@@ -14,6 +14,7 @@ import { FormGroup } from '@angular/forms';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
 import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
+import { BuilderFormNgSelectComponent } from './inputs/ngselect/ngselect.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
@@ -31,6 +32,7 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   text: BuilderFormInputComponent,
   textArea: BuilderFormTextAreaComponent,
   select: BuilderFormSelectComponent,
+  ngSelect: BuilderFormNgSelectComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
   formArray: BuilderFormArrayComponent,

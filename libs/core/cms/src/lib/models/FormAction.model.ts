@@ -43,7 +43,7 @@ export class FormActionModel extends AbstractModel {
 
     @Attribute()
     @ExtraOptions({
-        type: 'select',
+        type: 'ngSelect',
         label: 'Action Type',
         options: ActionChoices,
     })
