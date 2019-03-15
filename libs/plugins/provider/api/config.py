@@ -17,7 +17,7 @@ class ProviderConfig():
     INPUTS = [
         CoreConfigInput(
             id=CONFIG_SVA_SCM_CODES,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="multiple",
             order=0,
             disabled=False,
@@ -53,7 +53,7 @@ class ProviderConfig():
         ),
         CoreConfigInput(
             id=CONFIG_STFC_CODES,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="multiple",
             order=0,
             disabled=False,
@@ -65,7 +65,7 @@ class ProviderConfig():
         ),
         CoreConfigInput(
             id=CONFIG_SEAC_CODES,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="multiple",
             order=0,
             disabled=False,

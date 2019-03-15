@@ -19,7 +19,6 @@ def get_email_base_context(request=None):
     site = Website.get_current_website(request)
     # Get Default Logo on the Email Config
     default_logo = EmailCoreConfig.CONFIG_EMAIL_LOGO.value
-    print(default_logo)
     logo_url = build_absolute_uri(default_logo)
     return {
         'domain': site.domain,
@@ -84,7 +83,7 @@ class WebDjangoEmailBackend(BaseEmailBackend):
         email_ctx = None
         if 'context' in email_message:
             email_ctx = email_message['context']
-        print(email_ctx)
+
         if template is not None:
             context = Context(email_ctx, autoescape=False)
             subject = Template(template.subject).render(context)

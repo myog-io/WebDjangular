@@ -39,7 +39,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
 
     CONFIG_EMAIL_TYPE = CoreConfigInput(
         id='email_type',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         input_type="text",
         order=0,
         disabled=False,
@@ -149,7 +149,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
 
     CONFIG_SECURITY = CoreConfigInput(
         id='email_security',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         input_type="text",
         order=0,
         disabled=False,

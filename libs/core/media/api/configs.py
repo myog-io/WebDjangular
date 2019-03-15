@@ -20,7 +20,7 @@ MEDIA_CONFIG_GROUP = CoreConfigGroup(
 MEDIA_CONFIGS = [
     CoreConfigInput(
         id=CONFIG_STORAGE_CLASS,
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         input_type="text",
         order=0,
         disabled=False,

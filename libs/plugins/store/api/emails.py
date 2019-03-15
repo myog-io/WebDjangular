@@ -64,12 +64,12 @@ def send_order_confirmation(order_pk):
         order_pk,
         StoreEmailConfig.NEW_ORDER.value
     )
-    admin_email_data = collect_data_for_email(
-        order_pk,
-        StoreEmailConfig.NEW_ORDER_ADMIN.value
-    )
+    admin_email_data = email_data
+    admin_email_data['template_id'] = StoreEmailConfig.NEW_ORDER_ADMIN.value
 
-    admin_email_data['recipients'] = StoreEmailConfig.ADMIN_EMAILS.value.split()
+    admin_email_data['recipients'] = StoreEmailConfig.ADMIN_EMAILS.value.split(
+        ",")
+
     sender.send(email_data)
     sender.send(admin_email_data)
 

@@ -1,4 +1,5 @@
-from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput, AbstractCoreConfigModel
+from webdjango.models.CoreConfig import (AbstractCoreConfigModel,
+                                         CoreConfigGroup, CoreConfigInput)
 
 
 class StoreEmailConfig(AbstractCoreConfigModel):
@@ -11,7 +12,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     NEW_ACCCOUNT = CoreConfigInput(
         id='new_account',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="New Account Email",
@@ -23,7 +24,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     NEW_ORDER = CoreConfigInput(
         id='new_order',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="Email for new Orders",
@@ -32,14 +33,14 @@ class StoreEmailConfig(AbstractCoreConfigModel):
         wrapper_class="col-4",
         group=CONFIG_GROUP_SLUG,
     )
-    
+
     ADMIN_EMAILS = CoreConfigInput(
         id='admin_emails',
         field_type=CoreConfigInput.FIELD_TYPE_TEXT,
         input_type="email",
         order=0,
         disabled=False,
-        label="Admin Emails separeted by space",
+        label="Admin Emails separeted by,",
         validation=None,
         wrapper_class="col-4",
         group=CONFIG_GROUP_SLUG,
@@ -47,7 +48,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     NEW_ORDER_ADMIN = CoreConfigInput(
         id='new_order_admin',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="New Orders for Admins",
@@ -59,7 +60,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     ORDER_UPDATE = CoreConfigInput(
         id='order_update',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="Order Updated",
@@ -71,7 +72,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     ORDER_CANCELED = CoreConfigInput(
         id='order_canceled',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="Order Canceled",
@@ -83,7 +84,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     ORDER_FULLFILMENT = CoreConfigInput(
         id='order_fullfilment',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="Order Fullfilment",
@@ -95,7 +96,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     ORDER_FULLFILMENT_UPDATE = CoreConfigInput(
         id='order_fullfilment_update',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="Order Fullfilemnt Update",
@@ -107,7 +108,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
 
     PAYMENT_CONFIRMATION = CoreConfigInput(
         id='payment_upodate',
-        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
         order=0,
         disabled=False,
         label="Payment Confirmation",
@@ -116,7 +117,7 @@ class StoreEmailConfig(AbstractCoreConfigModel):
         wrapper_class="col-4",
         group=CONFIG_GROUP_SLUG,
     )
-    
+
     INPUTS = [
         NEW_ACCCOUNT,
         NEW_ORDER,

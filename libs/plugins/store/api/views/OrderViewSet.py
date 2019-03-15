@@ -47,7 +47,6 @@ class OrderViewSet(ModelViewSet):
 
     @action(methods=['GET'], detail=True, url_path='send_email')
     def send_email(self, request, *args, **kwargs):
-        print("HERE??!?!?!")
         from ..emails import send_order_confirmation
         order = self.get_object()
         send_order_confirmation(order.pk)

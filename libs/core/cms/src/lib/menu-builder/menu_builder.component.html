@@ -35,7 +35,7 @@
   <div class="col-12" *ngIf="current_menu && menuForm">
     <nb-card>
       <nb-accordion>
-        <nb-accordion-item>
+        <nb-accordion-item [expanded]="!current_menu?.id">
           <nb-accordion-item-header>
             Edit {{ current_menu }}
           </nb-accordion-item-header>
@@ -68,7 +68,7 @@
           <nb-accordion-item-header>
             Custom
           </nb-accordion-item-header>
-          <nb-accordion-item-body>
+          <nb-accordion-item-body *ngIf="current_menu?.id; else saveMenuFirst">
             <wda-form-builder [displayGroups]="menuItemForm.displayGroups" [inceptionForm]="true" [group]="menuItemForm"
               [formLoading]="formLoading" (onSubmit)="createMenuItem($event)">
             </wda-form-builder>
@@ -84,6 +84,11 @@
       [list]="list" [options]="options" [template]="itemTemplate">
     </ngx-nestable>
   </div>
+  <ng-template #saveMenuFirst>
+
+    <p class="text-center">Please save the Menu First</p>
+
+  </ng-template>
 
   <ng-template #itemTemplate let-row>
     <nb-accordion>
