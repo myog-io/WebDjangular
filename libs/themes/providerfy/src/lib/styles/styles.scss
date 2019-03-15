@@ -239,7 +239,7 @@ input:focus, textarea:focus {
   border-color: transparent;
 }
 
-input:focus ~ label, input.ng-touched ~ label, input:read-only ~ label, input:valid ~ label,
+input:focus ~ label, input:read-only ~ label, input:valid ~ label,
 textarea:focus ~ label, textarea.ng-touched ~ label, textarea:read-only ~ label, textarea:valid ~ label,
 select:focus ~ label, select.ng-touched ~ label, select:valid ~ label{
   bottom: -$input-fs*2;
