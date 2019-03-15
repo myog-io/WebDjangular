@@ -239,9 +239,9 @@ input:focus, textarea:focus {
   border-color: transparent;
 }
 
-input:focus ~ label, input:read-only ~ label, input:valid ~ label,
-textarea:focus ~ label, textarea.ng-touched ~ label, textarea:read-only ~ label, textarea:valid ~ label,
-select:focus ~ label, select.ng-touched ~ label, select:valid ~ label{
+input:focus ~ label, input:read-only ~ label, input.ng-valid ~ label,
+textarea:focus ~ label, textarea.ng-touched ~ label, textarea:read-only ~ label, textarea.ng-valid ~ label,
+select:focus ~ label, select.ng-touched ~ label, select.ng-valid ~ label{
   bottom: -$input-fs*2;
   @include responsive-font-size($input-fs*0.95);
   color: $primary;

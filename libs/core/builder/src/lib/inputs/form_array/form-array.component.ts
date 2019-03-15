@@ -113,16 +113,20 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     this.updateSettings();
     if (this.group.get(this.config.name) && typeof this.group.get(this.config.name).value !== 'undefined') {
       this.source.load(this.group.get(this.config.name).value);
+    } else {
+      this.subscription = this.group.valueChanges.subscribe((val) => {
+        if (this.group.get(this.config.name)) {
+          this.subscription.unsubscribe();
+          this.subscription = null;
+          // We need to subscribe only to changes of this table values not others
+          this.subscription = this.group.get(this.config.name).valueChanges.subscribe((value) => {
+            this.subscription.unsubscribe();
+            this.subscription = null;
+            this.source.load(value);
+          })
+        }
+      });
     }
-    this.subscription = this.group.valueChanges.subscribe((val) => {
-      if (this.group.get(this.config.name)) {
-        this.subscription.unsubscribe();
-        // We need to subscribe only to changes of this table values not others
-        this.subscription = this.group.get(this.config.name).valueChanges.subscribe((value) => {
-          this.source.load(value);
-        })
-      }
-    });
     this.onChange();
   }
 
@@ -332,7 +336,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
             // Also Update on 
             if (element_id) {
               const fg: AbstractForm = this.getEntity(element_id);
-              if(fg.entity.save){
+              if (fg.entity.save) {
                 fg.updateModel(fg.entity)
                 fg.entity.save().subscribe((new_entity) => {
                   this.toaster.success(`Changes have been saved`, `Success!`);
@@ -352,7 +356,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
                     this.toaster.danger(`Error saving the Changes`, `Error!`);
                   }
                 });
-              }else{
+              } else {
                 this.closeWindow();
               }
             } else {

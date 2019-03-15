@@ -8,7 +8,7 @@
 </div>
 <div class="row" *ngIf="form && formGroup">
   <div class="col-12" *ngIf="showForm">
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(event);" novalidate>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit(event);">
       <div class="row">
         <ng-container *ngFor="let field of form.fields">
           <div [class]="field?.config?.wrapper_class ? field?.config?.wrapper_class : 'col-12'"

@@ -2,10 +2,8 @@
   <label *ngIf="config.label_position != 'below'">
     {{ config.label }}
   </label>
-  <input class="form-control"
-         [type]="config.inputType ? config.inputType : 'text'"
-         [attr.placeholder]="config.placeholder"
-         [formControlName]="config.name" required/>
+  <input class="form-control" [type]="config.inputType ? config.inputType : 'text'"
+    [attr.placeholder]="config.placeholder" [formControlName]="config.name" />
 
   <span class="highlight"></span>
   <span class="bar"></span>
@@ -13,7 +11,7 @@
     {{ config.label }}
   </label>
 
-  <wda-form-validators [config]="config"
-                       [input]="group.get(this.config.name)">
+  <wda-form-validators [config]="config" [input]="group.get(this.config.name)">
   </wda-form-validators>
-</div> <!--form-group-->
+</div>
+<!--form-group-->
