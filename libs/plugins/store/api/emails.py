@@ -1,20 +1,21 @@
 import json
 
 from django.conf import settings
-from django.urls import reverse
 from django.core.serializers.json import DjangoJSONEncoder
+from django.urls import reverse
+
+from webdjango.email import WebDjangoEmailBackend, get_email_base_context
+from webdjango.models.Core import CoreConfig, Website
+from webdjango.utils import build_absolute_uri
+
+from .configs import StoreEmailConfig
+from .json import StoreJSONEncoder
+from .models.Order import Fulfillment, Order
 
 # from templated_email import send_templated_mail
 
-from .models.Order import Fulfillment, Order
-from .configs import StoreEmailConfig
-from webdjango.email import WebDjangoEmailBackend, get_email_base_context
-from webdjango.utils import build_absolute_uri
-from webdjango.models.Core import Website, CoreConfig
-from .json import StoreJSONEncoder
 
 sender = WebDjangoEmailBackend()
-
 
 
 def collect_data_for_email(order_pk, template):
@@ -27,9 +28,9 @@ def collect_data_for_email(order_pk, template):
     recipient_email = order.get_user_current_email()
     email_context = get_email_base_context()
     # TODO: Get Order Details URL
-    #email_context['order_details_url'] = build_absolute_uri(
+    # email_context['order_details_url'] = build_absolute_uri(
     #    reverse('order:details', kwargs={'order': order.order_num})
-    #)
+    # )
     new_order = StoreEmailConfig.NEW_ORDER.value
     # Order confirmation template requires additional information
     if template == new_order:
@@ -37,7 +38,7 @@ def collect_data_for_email(order_pk, template):
         email_context.update(
             {
                 'recipients': [recipient_email],
-                'template': template,
+                'template_id': template,
                 'order': order,
                 'schema_markup': email_markup
             }
@@ -45,7 +46,7 @@ def collect_data_for_email(order_pk, template):
     # TODO: Add more configuration for a FROM email
     return {
         'recipients': [recipient_email],
-        'template': template,
+        'template_id': template,
         'context': email_context
     }
 
@@ -67,8 +68,7 @@ def send_order_confirmation(order_pk):
         order_pk,
         StoreEmailConfig.NEW_ORDER_ADMIN.value
     )
-    
-    
+
     admin_email_data['recipients'] = StoreEmailConfig.ADMIN_EMAILS.value.split()
     sender.send(email_data)
     sender.send(admin_email_data)

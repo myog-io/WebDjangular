@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {NbAuthService} from '@nebular/auth';
+import { Injectable } from '@angular/core';
+import { NbAuthService } from '@nebular/auth';
 
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   FileUploaderService,
   UploaderLinksOptions,
   UploaderServiceOptions
 } from '@core/chunk-file-upload/src/lib/file-uploader.service';
-import {FileItem} from '@core/chunk-file-upload/src/lib/file-item.class';
-import {FileUploaderOptions} from '@core/chunk-file-upload/src/lib/file-uploader.class';
+import { FileItem } from '@core/chunk-file-upload/src/lib/file-item.class';
+import { FileUploaderOptions } from '@core/chunk-file-upload/src/lib/file-uploader.class';
 
 //import { AbstractService } from './abstract.service';
 @Injectable()
@@ -25,7 +25,7 @@ export class MediaService extends FileUploaderService {
     createMethod: 'POST',
     updateMethod: 'PATCH',
     authorizationHeaderName: "Authorization",
-    tokenPattern: 'JWT #token#',
+    tokenPattern: 'Bearer #token#',
     token: null,
     chunkSize: 1024 * 1024 * 3,
     totalChunkParamName: 'total_chunks',

@@ -187,7 +187,7 @@ export class FormFieldModel extends AbstractModel {
   //@ExtraOptions({
   //    type: 'hidden',
   //})
-  get formControl(): FormControl {
+  get validators(): any[] {
     let validators = [];
     if (this.required) {
       validators.push(Validators.required);
@@ -195,7 +195,21 @@ export class FormFieldModel extends AbstractModel {
     if (this.input_type === "email") {
       validators.push(Validators.email)
     }
-    return new FormControl(this.default_value, validators)
+    return validators;
+  }
+  get formControl(): FormControl {
+    let validators = [];
+    if (this.required) {
+      if (this.field_type === "checkbox") {
+        validators.push(Validators.requiredTrue)
+      } else {
+        validators.push(Validators.required);
+      }
+    }
+    if (this.input_type === "email") {
+      validators.push(Validators.email)
+    }
+    return new FormControl(this.default_value, this.validators)
   }
   public generateConfig() {
     this._config = {
@@ -220,7 +234,7 @@ export class FormFieldModel extends AbstractModel {
       label_position: this.label_position,
       inputType: this.input_type,
       conditional: this.data.conditional || null,
-      //display?: boolean;
+      display: this.data.display || true,
       //switch_vertical?: boolean;
       //switch_first_label?: string;
       //switch_second_label?: string;
@@ -239,6 +253,9 @@ export class FormFieldModel extends AbstractModel {
   }
   get config(): BuilderFormFieldConfig {
     return this._config;
+  }
+  set config(val) {
+    this._config = val;
   }
   public toString = (): string => {
     return `${this.label}(${this.slug})`;

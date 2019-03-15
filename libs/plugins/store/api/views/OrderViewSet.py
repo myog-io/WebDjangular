@@ -1,4 +1,6 @@
+from rest_framework.decorators import action
 from rest_framework.exceptions import NotFound
+from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from webdjango.filters import WebDjangoFilterSet
@@ -31,6 +33,7 @@ class OrderViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = OrderFilter
     search_fields = ('order_num',)
+    public_views = ('send_email',)
 
     """
     Create a model instance.
@@ -42,13 +45,13 @@ class OrderViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
-    # @action(methods=['GET'], detail=True, url_path='send_email')
-    # def send_email(self, request, *args, **kwargs):
-    #     print("HERE??!?!?!")
-    #     from ..emails import send_order_confirmation
-    #     order = self.get_object()
-    #     send_order_confirmation(order.pk)
-    #     return Response({})
+    @action(methods=['GET'], detail=True, url_path='send_email')
+    def send_email(self, request, *args, **kwargs):
+        print("HERE??!?!?!")
+        from ..emails import send_order_confirmation
+        order = self.get_object()
+        send_order_confirmation(order.pk)
+        return Response({})
 
 
 class OrderRelationshipView(RelationshipView):

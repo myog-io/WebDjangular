@@ -10,6 +10,9 @@ import { FormModel } from '../../models/Form.model';
 import { AbstractForm } from "@core/data/src/lib/forms";
 import { ErrorResponse } from "angular2-jsonapi";
 import { FormSubmittedModel } from "@core/cms/src/lib/models/FormSubmittedModel";
+import { JsonLogic } from '@core/builder/src/lib/builder-jsonlogic';
+import { FormFieldModel } from '../../models/FormField.model';
+import { FormControl } from '@angular/forms';
 /*
 <ng-container wdaBuilderFormFields [config]="field" [group]="group"
                 (relationshipUpdated)="relationship($event)"></ng-container>
@@ -24,6 +27,7 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
   @Input() title_class: string;
 
   public sub: Subscription;
+  public formSub: Subscription;
   public form: FormModel;
   public formGroup: AbstractForm;
   public showForm = true;
@@ -33,7 +37,7 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
   public success_message = "Mensagem Enviada com sucesso!";
   public error_message = "Ocorreu um erro ao enviar sua mensagem, por favor tente novamente!"
   public error_validation = "Por favor, corrija os erros antes de enviar o formulário."
-
+  private jsonLogic = new JsonLogic();
   constructor(private datastore: WebAngularDataStore) {
   }
 
@@ -55,16 +59,61 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
 
       // Setting Validation Errors on the Group
       this.formGroup = this.form.getFormGroup() as AbstractForm;
-
+      this.conditionalFields(this.formGroup.value);
+      if (this.formSub) {
+        this.formSub.unsubscribe()
+        this.formSub = null;
+      }
+      this.formSub = this.formGroup.valueChanges.subscribe((data) => {
+        this.conditionalFields(data);
+      });
     }, (error) => {
 
     });
+
+
   }
 
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();
       this.sub = null;
+    }
+    if (this.formSub) {
+      this.formSub.unsubscribe();
+      this.formSub = null;
+    }
+  }
+  private applyLogic(obj: FormFieldModel, data: any) {
+    let will_display = true;
+    if (obj.config.conditional) {
+      will_display = this.jsonLogic.apply(obj.config.conditional, data)
+    }
+
+    if (obj.config.display != will_display) {
+      obj.config.display = will_display;
+      const fc = this.formGroup.get(obj.config.name) as FormControl;
+      if (will_display) {
+        // Make sure the Validators are set
+        fc.setValidators(obj.validators);
+        fc.updateValueAndValidity({ emitEvent: false });
+      } else {
+        // Remove Validators
+        fc.setValidators([]);
+        fc.updateValueAndValidity({ emitEvent: false });
+      }
+    }
+    if (obj.config.conditionalValue) {
+      this.formGroup.get(obj.config.name).setValue(this.jsonLogic.apply(obj.config.conditionalValue, data), { emitEvent: false });
+    }
+  }
+  /**
+   * This will check the condition for the field to hide or show based on the jsonlogic conditional of each field
+   * @param data Form Data
+   */
+  private conditionalFields(data: any) {
+    for (let i = 0; i < this.form.fields.length; i++) {
+      this.applyLogic(this.form.fields[i], data);
     }
   }
   formSucess() {
@@ -128,7 +177,7 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       this.datastore.createRecord(FormSubmittedModel, {
         form: this.form,
-        data: JSON.stringify(this.formGroup.value)
+        data: this.formGroup.value
       }).save().subscribe(
         (formSubmitted: FormSubmittedModel) => {
           resolve(formSubmitted);

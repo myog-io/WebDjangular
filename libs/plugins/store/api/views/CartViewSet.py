@@ -45,6 +45,7 @@ class CartTermViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CartTermFilter
     search_fields = ('content',)
+    public_views = ('list', 'retrieve')
 
 
 class CartTermRelationshipView(RelationshipView):

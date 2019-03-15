@@ -1,3 +1,5 @@
+from rest_framework.response import Response
+from rest_framework.status import HTTP_201_CREATED
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from libs.core.cms.api.models.Form import (Form, FormAction, FormField,
@@ -51,6 +53,30 @@ class FormSubmittedViewSet(ModelViewSet):
     queryset = FormSubmitted.objects.all()
     ordering_fields = '__all__'
     public_views = ('create')
+
+    """
+    Create a model instance.
+    """
+
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        # Appending Request Meta to the Data
+        meta = {
+            'REMOTE_ADDR': request.META.get('REMOTE_ADDR'),
+            'HTTP_REFERER': request.META.get('HTTP_REFERER'),
+            'HTTP_USER_AGENT': request.META.get('HTTP_USER_AGENT'),
+            'REMOTE_HOST': request.META.get('REMOTE_HOST'),
+            'REMOTE_USER': request.META.get('REMOTE_USER'),
+            'SERVER_NAME': request.META.get('SERVER_NAME'),
+            'SERVER_PORT': request.META.get('SERVER_PORT'),
+        }
+        request.data['data']['meta'] = meta
+        print(request.data)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=HTTP_201_CREATED, headers=headers)
 
 
 class FormSubmittedRelationshipView(RelationshipView):
