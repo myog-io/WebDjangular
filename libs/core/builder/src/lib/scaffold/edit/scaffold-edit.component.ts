@@ -81,7 +81,7 @@ export class ScaffoldEditComponent implements OnInit {
       this.title = data.title;
       this.base_path = data.path;
       this.form = this.entry.getForm();
-      
+
       if (this.entry.include) {
         this.inlcude_args = { include: this.entry.include };
       }
@@ -89,7 +89,6 @@ export class ScaffoldEditComponent implements OnInit {
       this.getEntry();
     })
   }
-
   /**
    * Gets model Entry, Finding the Record
    */
@@ -133,6 +132,7 @@ export class ScaffoldEditComponent implements OnInit {
           this.router.navigate([`/${this.base_path}`]);
         } else {
           this.entry = result;
+          this.form.reset();
           this.form.populateForm(this.entry);
         }
       }

@@ -7,7 +7,6 @@ import { BuilderFormFieldConfig } from "@core/builder/src/lib/interfaces/form-co
 
 
 export const LabelPostionOptions = [
-  { id: 'default', name: 'default' },
   { id: 'above', name: 'above' },
   { id: 'below', name: 'below' },
 ];

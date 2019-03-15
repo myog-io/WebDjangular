@@ -129,7 +129,7 @@ export class AbstractModel extends JsonApiModel {
             if (del_child.id) {
               console.log("Deleting This Child", del_child);
               let promise = new Promise((resolve_delete, reject_delete) => {
-                //  This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
+                // This will Delete Recordy of a hasMany(parent) -- belongsTo(child) Relationship
                 // If the Relationship is One to One
                 this.service.deleteRecord(del_child.constructor, del_child.id).subscribe(
                   (response) => {

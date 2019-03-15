@@ -68,7 +68,11 @@ export class AbstractForm extends FormGroup {
       }
     }
   }
-
+  private clearFormArray(formArray: FormArray) {
+    while (formArray.length !== 0) {
+      formArray.removeAt(0)
+    }
+  }
   /**
    * Populates form
    * @param [entity]
@@ -81,6 +85,10 @@ export class AbstractForm extends FormGroup {
       let propName = element.name;
       // From Array
       if (this.formFields[i].formType == FormArray && typeof entity[propName] !== 'undefined') {
+        // Cleaning Form Array
+        if (this.get(propName)) {
+          this.clearFormArray(this.get(propName) as FormArray);
+        }
         for (let i = 0; i < entity[propName].length; i++) {
           if (ignore_recursion === false) {
             this.pushToFormArrayAttribute(propName, entity[propName][i]);
