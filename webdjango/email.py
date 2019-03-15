@@ -1,23 +1,23 @@
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 from django.core.mail.message import sanitize_address
+from django.template import Context, Template
 from requests.exceptions import HTTPError
 from rest_framework.fields import empty
-from webdjango.models.Core import CoreConfig
+
+from webdjango.exceptions import ServiceUnavailable, ValidationError
+from webdjango.models.Core import CoreConfig, Website
+from webdjango.models.Email import Email
+from webdjango.Tools import Tools
 from webdjango.transports.EmailConfig import EmailCoreConfig
 from webdjango.utils import build_absolute_uri
-from webdjango.Tools import Tools
-from webdjango.exceptions import ServiceUnavailable, ValidationError
-from webdjango.models.Core import Website
-from webdjango.models.Email import Email
+
 email_config = EmailCoreConfig()
-from django.template import Context
-from django.template import Template
 
 
 def get_email_base_context(request=None):
     site = Website.get_current_website(request)
-    ## Get Default Logo on the Email Config
+    # Get Default Logo on the Email Config
     default_logo = EmailCoreConfig.CONFIG_EMAIL_LOGO.value
     print(default_logo)
     logo_url = build_absolute_uri(default_logo)
@@ -26,7 +26,8 @@ def get_email_base_context(request=None):
         'logo_url': logo_url,
         'site_name': site.domain
     }
-        
+
+
 class WebDjangoEmailBackend(BaseEmailBackend):
     """
     A wrapper that Uses our System Transport to send messages
@@ -69,12 +70,23 @@ class WebDjangoEmailBackend(BaseEmailBackend):
         """A method that send with email template method that does the actual sending."""
         if 'recipients' not in email_message:
             return False
-        encoding = 'encoding' in email_message and email_message['encoding'] or settings.DEFAULT_CHARSET
+        encoding = 'encoding' in email_message and email_message[
+            'encoding'] or settings.DEFAULT_CHARSET
         recipients = [sanitize_address(addr, encoding)
                       for addr in email_message['recipients']]
+        template = None
+        if 'template_id' in email_message:
+            template = Email.objects.get(pk=email_message['template_id'])
+        if 'template_code' in email_message:
+            template = Email.objects.get(code=email_message['template_code'])
         if 'template' in email_message:
-            template = Email.objects.get(pk=email_message['template'])
-            context = Context(email_message,autoescape=False)
+            template = email_message['template']
+        email_ctx = None
+        if 'context' in email_message:
+            email_ctx = email_message['context']
+        print(email_ctx)
+        if template is not None:
+            context = Context(email_ctx, autoescape=False)
             subject = Template(template.subject).render(context)
             message = Template(template.content).render(context)
         else:
@@ -86,7 +98,7 @@ class WebDjangoEmailBackend(BaseEmailBackend):
                                     body=message)
         raise ServiceUnavailable(
             "No Email SMTP or API Configurated to send email")
-        
+
     def _send(self, email_message):
         """A helper method that does the actual sending."""
         if not email_message.recipients():
@@ -104,7 +116,6 @@ class WebDjangoEmailBackend(BaseEmailBackend):
         raise ServiceUnavailable(
             "No Email SMTP or API Configurated to send email")
 
-    
     def test(self, email_to):
         if self.sender:
             self.sender.test(email_to)

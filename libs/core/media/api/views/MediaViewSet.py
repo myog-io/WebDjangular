@@ -34,7 +34,6 @@ class MediaViewSet(ModelViewSet):
     Update Pages
     Deleting Pages
     """
-    resource_name = 'media'
     serializer_class = MediaSerializer
     queryset = Media.objects.all()
     ordering_fields = '__all__'
