@@ -21,6 +21,8 @@ import { CartService } from "@plugins/store/src/lib/data/services/cart.service";
 import { PluginProviderDialogComponent } from './components/dialog.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxMaskModule } from "ngx-mask";
+import { PluginProviderSendEmailFormComponent } from './components/terms/send-email/send-email.component';
+import { PluginProviderGenerateLinkFormComponent } from './components/terms/generate-link/generate-link.component';
 
 
 const MODULES = [
@@ -42,7 +44,9 @@ const COMPONENTS = [
   PluginProviderPricingTvVerticalComponent,
   PluginProviderError404Component,
   PluginProviderError500Component,
-  PluginProviderDialogComponent
+  PluginProviderDialogComponent,
+  PluginProviderSendEmailFormComponent,
+  PluginProviderGenerateLinkFormComponent
 ];
 
 const SERVICES = [
@@ -56,7 +60,7 @@ const SERVICES = [
     ...MODULES,
     AgmCoreModule,
     RouterModule,
-     NgxMaskModule.forRoot() // TODO: remove this from here after the Form Module is done.
+    NgxMaskModule.forRoot() // TODO: remove this from here after the Form Module is done.
   ],
   exports: [
     ...COMPONENTS,

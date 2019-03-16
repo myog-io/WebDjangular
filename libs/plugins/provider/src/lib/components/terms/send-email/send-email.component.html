@@ -1,0 +1,33 @@
+<div class="container mt-4 mb-4" *ngIf="!loading; else showLoading;">
+  <div class="row" *ngIf="success">
+    <div class="col-md-6 order-md-1 offset-md-3">
+      <div class="text-center">
+        <i class="fa fa-thumbs-up fa-5x" style="color:#189d9d"></i>
+        <br>
+        <h3 class="black mt-2">Muito obrigado. Entraremos em contato em breve!</h3>
+      </div>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="!success">
+    <div class="col-md-6 order-md-1 offset-md-3">
+      <div class="row" [innerHTML]="body">
+
+      </div>
+      <hr class="mb-4">
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{error}}
+      </div>
+      <button class="btn btn-success btn-lg btn-block" type="submit" (click)="sendEmail($event)" [disabled]="isSending">
+        <span *ngIf="!isSending">Enviar Email de Aceitação</span>
+        <span *ngIf="isSending">Enviando <i class="fa fa-spinner fa-spin"></i></span>
+      </button>
+    </div>
+  </div>
+
+</div>
+<ng-template #showLoading>
+  <div class="col-12 mt-4 mb-4 text-center">
+    <i class="fas fa-spinner fa-spin fa-4x"></i>
+  </div>
+</ng-template>

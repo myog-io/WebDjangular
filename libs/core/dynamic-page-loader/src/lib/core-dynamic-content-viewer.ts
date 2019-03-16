@@ -17,6 +17,8 @@ import { ThemeProviderfyTopHeaderComponent } from '@themes/providerfy/src/lib/co
 import { ThemeProviderfyHeaderMenuComponent } from '@themes/providerfy/src/lib/components/header/menu/menu.component';
 import { CoreCmsLinkComponent } from '@core/cms/src/lib/components/link.component';
 import { CoreCmsFormComponent } from '@core/cms/src/lib/components/form/form.component';
+import { PluginProviderGenerateLinkFormComponent } from '@plugins/provider/src/lib/components/terms/generate-link/generate-link.component';
+import { PluginProviderSendEmailFormComponent } from '@plugins/provider/src/lib/components/terms/send-email/send-email.component';
 
 
 export const embeddedComponents = [
@@ -35,10 +37,12 @@ export const embeddedComponents = [
   PluginProviderCityListComponent,
   PluginProviderError404Component,
   PluginProviderError500Component,
+  PluginProviderSendEmailFormComponent,
+  PluginProviderGenerateLinkFormComponent,
   ThemeProviderfyTopHeaderComponent,
   ThemeProviderfyHeaderMenuComponent,
-  
-  
+
+
 ];
 
 export class EmbeddedComponents {
@@ -54,7 +58,7 @@ export class ContentViewer {
   private hostElement: HTMLElement;
   private embeddedComponentFactories: Map<string, ComponentFactory<any>> = new Map();
   private embeddedComponents: ComponentRef<any>[] = [];
- 
+
   @Output()
   docRendered = new EventEmitter();
 
@@ -63,7 +67,7 @@ export class ContentViewer {
     elementRef: ElementRef,
     embeddedComponents: EmbeddedComponents,
     private injector: Injector,
-    
+
   ) {
     this.hostElement = elementRef.nativeElement;
     embeddedComponents.components.forEach((component: any) => {
@@ -80,7 +84,7 @@ export class ContentViewer {
       this.docRendered.emit();
     }
   }
-  
+
   private build(content) {
     this.hostElement.innerHTML = content || '';
 
@@ -103,8 +107,8 @@ export class ContentViewer {
         this.embeddedComponents.push(embeddedComponent);
       })
     });
-    
-    
+
+
   }
 
   ngDoCheck() {
