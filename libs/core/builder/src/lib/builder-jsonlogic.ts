@@ -1,70 +1,69 @@
-
-
 export class JsonLogic {
   /**
    * List of available Operatores
    */
   private operations = {
-    "==": (a, b) => {
+    '==': (a, b) => {
       return a == b;
     },
-    "===": (a, b) => {
+    '===': (a, b) => {
       return a === b;
     },
-    "!=": (a, b) => {
+    '!=': (a, b) => {
       return a != b;
     },
-    "!==": (a, b) => {
+    '!==': (a, b) => {
       return a !== b;
     },
-    ">": (a, b) => {
+    '>': (a, b) => {
       return a > b;
     },
-    ">=": (a, b) => {
+    '>=': (a, b) => {
       return a >= b;
     },
-    "<": (a, b, c) => {
-      return (c === undefined) ? a < b : (a < b) && (b < c);
+    '<': (a, b, c) => {
+      return c === undefined ? a < b : a < b && b < c;
     },
-    "<=": (a, b, c) => {
-      return (c === undefined) ? a <= b : (a <= b) && (b <= c);
+    '<=': (a, b, c) => {
+      return c === undefined ? a <= b : a <= b && b <= c;
     },
-    "!!": (a) => {
+    '!!': a => {
       return this.truthy(a);
     },
-    "!": (a) => {
+    '!': a => {
       return !this.truthy(a);
     },
-    "%": (a, b) => {
+    '%': (a, b) => {
       return a % b;
     },
-    "log": (a) => {
-      console.log(a); return a;
+    log: a => {
+      console.log(a);
+      return a;
     },
-    "in": (a, b) => {
-      if (!b || typeof b.indexOf === "undefined") return false;
-      return (b.indexOf(a) !== -1);
+    in: (a, b) => {
+      if (!b || typeof b.indexOf === 'undefined') return false;
+      return b.indexOf(a) !== -1;
     },
-    "cat": function () {
-      return Array.prototype.join.call(arguments, "");
+    cat: function() {
+      return Array.prototype.join.call(arguments, '');
     },
-    "slugfy": function (text: string) {
+    slugfy: function(text: string) {
       if (text) {
-        const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;'
-        const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------'
-        const p = new RegExp(a.split('').join('|'), 'g')
-        return text.toLowerCase()
+        const a = 'àáäâãåèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;';
+        const b = 'aaaaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------';
+        const p = new RegExp(a.split('').join('|'), 'g');
+        return text
+          .toLowerCase()
           .replace(/\s+/g, '-') // Replace spaces with
           .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
           .replace(/&/g, '-and-') // Replace & with ‘and’
           .replace(/[^\w\-]+/g, '') // Remove all non-word characters
           .replace(/\-\-+/g, '-') // Replace multiple — with single -
-          .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
+          .replace(/^-+/, ''); // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
       }
-      return "";
-
+      return '';
     },
-    "substr": (source, start, end) => {
+    substr: (source, start, end) => {
       if (end < 0) {
         // JavaScript doesn't support negative end, this emulates PHP behavior
         var temp = String(source).substr(start);
@@ -72,44 +71,52 @@ export class JsonLogic {
       }
       return String(source).substr(start, end);
     },
-    "+": function () {
-      return Array.prototype.reduce.call(arguments, function (a, b) {
-        return parseFloat(a) + parseFloat(b);
-      }, 0);
+    '+': function() {
+      return Array.prototype.reduce.call(
+        arguments,
+        function(a, b) {
+          return parseFloat(a) + parseFloat(b);
+        },
+        0
+      );
     },
-    "*": function () {
-      return Array.prototype.reduce.call(arguments, function (a, b) {
+    '*': function() {
+      return Array.prototype.reduce.call(arguments, function(a, b) {
         return parseFloat(a) * parseFloat(b);
       });
     },
-    "-": (a, b) => {
+    '-': (a, b) => {
       if (b === undefined) {
         return -a;
       } else {
         return a - b;
       }
     },
-    "/": (a, b) => {
+    '/': (a, b) => {
       return a / b;
     },
-    "min": function () {
+    min: function() {
       return Math.min.apply(this, arguments);
     },
-    "max": function () {
+    max: function() {
       return Math.max.apply(this, arguments);
     },
-    "merge": function () {
-      return Array.prototype.reduce.call(arguments, function (a, b) {
-        return a.concat(b);
-      }, []);
+    merge: function() {
+      return Array.prototype.reduce.call(
+        arguments,
+        function(a, b) {
+          return a.concat(b);
+        },
+        []
+      );
     },
-    "var": function (a, b) {
-      var not_found = (b === undefined) ? null : b;
+    var: function(a, b) {
+      var not_found = b === undefined ? null : b;
       var data = this;
-      if (typeof a === "undefined" || a === "" || a === null) {
+      if (typeof a === 'undefined' || a === '' || a === null) {
         return data;
       }
-      var sub_props = String(a).split(".");
+      var sub_props = String(a).split('.');
       for (var i = 0; i < sub_props.length; i++) {
         if (data === null) {
           return not_found;
@@ -122,7 +129,7 @@ export class JsonLogic {
       }
       return data;
     },
-    "missing": function () {
+    missing: function() {
       /*
       Missing can receive many keys as many arguments, like {"missing:[1,2]}
       Missing can also receive *one* argument that is an array of keys,
@@ -135,17 +142,17 @@ export class JsonLogic {
 
       for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
-        var value = this.apply({ "var": key }, this);
-        if (value === null || value === "") {
+        var value = this.apply({ var: key }, this);
+        if (value === null || value === '') {
           missing.push(key);
         }
       }
 
       return missing;
     },
-    "missing_some": (need_count, options) => {
+    missing_some: (need_count, options) => {
       // missing_some takes two arguments, how many (minimum) items must be present, and an array of keys (just like 'missing') to check for presence.
-      var are_missing = this.apply({ "missing": options }, this);
+      var are_missing = this.apply({ missing: options }, this);
 
       if (options.length - are_missing.length >= need_count) {
         return [];
@@ -153,11 +160,10 @@ export class JsonLogic {
         return are_missing;
       }
     },
-    "method": (obj, method, args) => {
+    method: (obj, method, args) => {
       return obj[method].apply(obj, args);
-    },
-
-  }
+    }
+  };
 
   private isArray(array) {
     return Array.isArray(array);
@@ -179,7 +185,7 @@ export class JsonLogic {
 
   public is_logic(logic): boolean {
     return (
-      typeof logic === "object" && // An object
+      typeof logic === 'object' && // An object
       logic !== null && // but not null
       !Array.isArray(logic) && // and not an array
       Object.keys(logic).length === 1 // with exactly one key
@@ -218,10 +224,9 @@ export class JsonLogic {
    * @param data Data to base the logic on
    */
   public apply(logic: any, data?: any) {
-
     // Does this array contain logic? Only one way to find out.
     if (Array.isArray(logic)) {
-      return logic.map(function (l) {
+      return logic.map(function(l) {
         return this.apply(l, data);
       });
     }
@@ -244,7 +249,7 @@ export class JsonLogic {
     }
 
     // 'if', 'and', and 'or' violate the normal rule of depth-first calculating consequents, let each manage recursion as needed.
-    if (op === "if" || op == "?:") {
+    if (op === 'if' || op == '?:') {
       /* 'if' should be called with a odd number of parameters, 3 or greater
       This works on the pattern:
       if( 0 ){ 1 }else{ 2 };
@@ -265,7 +270,8 @@ export class JsonLogic {
       }
       if (values.length === i + 1) return this.apply(values[i], data);
       return null;
-    } else if (op === "and") { // Return first falsy, or last
+    } else if (op === 'and') {
+      // Return first falsy, or last
       for (i = 0; i < values.length; i += 1) {
         current = this.apply(values[i], data);
         if (!this.truthy(current)) {
@@ -273,7 +279,8 @@ export class JsonLogic {
         }
       }
       return current; // Last
-    } else if (op === "or") {// Return first truthy, or last
+    } else if (op === 'or') {
+      // Return first truthy, or last
       for (i = 0; i < values.length; i += 1) {
         current = this.apply(values[i], data);
         if (this.truthy(current)) {
@@ -281,7 +288,6 @@ export class JsonLogic {
         }
       }
       return current; // Last
-
     } else if (op === 'filter') {
       scopedData = this.apply(values[0], data);
       scopedLogic = values[1];
@@ -292,7 +298,7 @@ export class JsonLogic {
       // Return only the elements from the array in the first argument,
       // that return truthy when passed to the logic in the second argument.
       // For parity with JavaScript, reindex the returned array
-      return scopedData.filter(function (datum) {
+      return scopedData.filter(function(datum) {
         return this.truthy(this.apply(scopedLogic, datum));
       });
     } else if (op === 'map') {
@@ -303,10 +309,9 @@ export class JsonLogic {
         return [];
       }
 
-      return scopedData.map(function (datum) {
+      return scopedData.map(function(datum) {
         return this.apply(scopedLogic, datum);
       });
-
     } else if (op === 'reduce') {
       scopedData = this.apply(values[0], data);
       scopedLogic = values[1];
@@ -316,17 +321,13 @@ export class JsonLogic {
         return initial;
       }
 
-      return scopedData.reduce(
-        function (accumulator, current) {
-          return this.apply(
-            scopedLogic,
-            { 'current': current, 'accumulator': accumulator }
-          );
-        },
-        initial
-      );
-
-    } else if (op === "all") {
+      return scopedData.reduce(function(accumulator, current) {
+        return this.apply(scopedLogic, {
+          current: current,
+          accumulator: accumulator
+        });
+      }, initial);
+    } else if (op === 'all') {
       scopedData = this.apply(values[0], data);
       scopedLogic = values[1];
       // All of an empty set is false. Note, some and none have correct fallback after the for loop
@@ -339,44 +340,48 @@ export class JsonLogic {
         }
       }
       return true; // All were truthy
-    } else if (op === "none") {
-      filtered = this.apply({ 'filter': values }, data);
+    } else if (op === 'none') {
+      filtered = this.apply({ filter: values }, data);
       return filtered.length === 0;
-
-    } else if (op === "some") {
-      filtered = this.apply({ 'filter': values }, data);
+    } else if (op === 'some') {
+      filtered = this.apply({ filter: values }, data);
       return filtered.length > 0;
     }
 
     // Everyone else gets immediate depth-first recursion
 
-    values = values.map((val) => {
+    values = values.map(val => {
       return this.apply(val, data);
     });
-
 
     // The operation is called with "data" bound to its "this" and "values" passed as arguments.
     // Structured commands like % or > can name formal arguments while flexible commands (like missing or merge) can operate on the pseudo-array arguments
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
-    if (typeof this.operations[op] === "function") {
+    if (typeof this.operations[op] === 'function') {
       return this.operations[op].apply(data, values);
-    } else if (op.indexOf(".") > 0) { // Contains a dot, and not in the 0th position
-      var sub_ops = String(op).split(".");
+    } else if (op.indexOf('.') > 0) {
+      // Contains a dot, and not in the 0th position
+      var sub_ops = String(op).split('.');
       var operation = this.operations;
       for (i = 0; i < sub_ops.length; i++) {
         // Descending into operations
         operation = operation[sub_ops[i]];
         if (operation === undefined) {
-          throw new Error("Unrecognized operation " + op +
-            " (failed at " + sub_ops.slice(0, i + 1).join(".") + ")");
+          throw new Error(
+            'Unrecognized operation ' +
+              op +
+              ' (failed at ' +
+              sub_ops.slice(0, i + 1).join('.') +
+              ')'
+          );
         }
       }
 
       return this.apply(data, values);
     }
 
-    throw new Error("Unrecognized operation " + op);
-  };
+    throw new Error('Unrecognized operation ' + op);
+  }
 
   private uses_data(logic) {
     var collection = [];
@@ -389,43 +394,43 @@ export class JsonLogic {
         values = [values];
       }
 
-      if (op === "var") {
+      if (op === 'var') {
         // This doesn't cover the case where the arg to var is itself a rule.
         collection.push(values[0]);
       } else {
         // Recursion!
-        values.map((val) => {
+        values.map(val => {
           collection.push.apply(collection, this.uses_data(val));
         });
       }
     }
 
     return this.arrayUnique(collection);
-  };
+  }
 
   private add_operatio(name: string, code: any) {
     this.operations[name] = code;
-  };
+  }
 
   private rm_operation(name: string) {
     delete this.operations[name];
-  };
+  }
 
   private rule_like(rule, pattern) {
     // console.log("Is ". JSON.stringify(rule) . " like " . JSON.stringify(pattern) . "?");
     if (pattern === rule) {
       return true;
     } // TODO : Deep object equivalency?
-    if (pattern === "@") {
+    if (pattern === '@') {
       return true;
     } // Wildcard!
-    if (pattern === "number") {
-      return (typeof rule === "number");
+    if (pattern === 'number') {
+      return typeof rule === 'number';
     }
-    if (pattern === "string") {
-      return (typeof rule === "string");
+    if (pattern === 'string') {
+      return typeof rule === 'string';
     }
-    if (pattern === "array") {
+    if (pattern === 'array') {
       // !logic test might be superfluous in JavaScript
       return Array.isArray(rule) && !this.is_logic(rule);
     }
@@ -435,7 +440,7 @@ export class JsonLogic {
         var pattern_op = this.get_operator(pattern);
         var rule_op = this.get_operator(rule);
 
-        if (pattern_op === "@" || pattern_op === rule_op) {
+        if (pattern_op === '@' || pattern_op === rule_op) {
           // echo "\nOperators match, go deeper\n";
           return this.rule_like(
             this.get_values(rule),
@@ -468,6 +473,5 @@ export class JsonLogic {
 
     // Not logic, not array, not a === match for rule.
     return false;
-  };
-
+  }
 }

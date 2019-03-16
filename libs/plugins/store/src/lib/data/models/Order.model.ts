@@ -1,17 +1,26 @@
-import {JsonApiModelConfig, Attribute, HasMany, BelongsTo, NestedAttribute} from 'angular2-jsonapi';
-import {AbstractModel, CoreConfigInputModel} from '@core/data/src/lib/models';
-import {PermissionModel, UserModel} from '@core/users/src/lib/models';
-import {SmartTableColumnSettings, SmartTableSettings, SmartTableSettingsAttr} from '@core/data/src/lib/data-store';
-import {ExtraOptions} from "@core/decorator/src/lib/ExtraOptions.decorator";
-import {FormGroup} from "@angular/forms";
-import {BlockFooterModel} from "@core/cms/src/lib/models/BlockFooter.model";
-import {OrderLineModel} from "@plugins/store/src/lib/data/models/OrderLine.model";
-import {OrderEventModel} from "@plugins/store/src/lib/data/models/OrderEvent.model";
-
+import {
+  JsonApiModelConfig,
+  Attribute,
+  HasMany,
+  BelongsTo,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { AbstractModel, CoreConfigInputModel } from '@core/data/src/lib/models';
+import { PermissionModel, UserModel } from '@core/users/src/lib/models';
+import {
+  SmartTableColumnSettings,
+  SmartTableSettings,
+  SmartTableSettingsAttr
+} from '@core/data/src/lib/data-store';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { FormGroup } from '@angular/forms';
+import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
+import { OrderLineModel } from '@plugins/store/src/lib/data/models/OrderLine.model';
+import { OrderEventModel } from '@plugins/store/src/lib/data/models/OrderEvent.model';
 
 @JsonApiModelConfig({
   type: 'Order',
-  modelEndpointUrl: 'store/order',
+  modelEndpointUrl: 'store/order'
 })
 export class OrderModel extends AbstractModel {
   public static include = null;
@@ -73,7 +82,6 @@ export class OrderModel extends AbstractModel {
   @HasMany()
   events: OrderEventModel[];
 
-
   @Attribute()
   created: Date;
 
@@ -86,31 +94,29 @@ export class OrderModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public static smartTableOptions: SmartTableSettings = {
     editable: false,
     columns: {
       order_num: {
         title: 'Order number',
-        type: 'text',
+        type: 'text'
       },
       status: {
         title: 'Status',
-        type: 'text',
+        type: 'text'
       },
       created: {
         title: 'Created',
-        type: 'text',
+        type: 'text'
       }
     },
     actions: {
       add: false,
       edit: true,
       delete: false,
-      position: 'left',
+      position: 'left'
       /*custom:[
         {
           name: 'view',
@@ -119,5 +125,4 @@ export class OrderModel extends AbstractModel {
       ], */
     }
   };
-
 }

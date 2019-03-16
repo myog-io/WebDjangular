@@ -16,11 +16,9 @@ import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
       { path: '', pathMatch: 'full', component: ViewMediaComponent }
     ]),
     CoreSharedSafePipe,
-    BuilderFormModule,
+    BuilderFormModule
   ],
-  providers: [
-    MediaService
-  ],
+  providers: [MediaService],
   declarations: [ViewMediaComponent]
 })
 export class CoreMediaModule {}

@@ -1,66 +1,85 @@
-<div class="col-12 col-sm-6 col-md-6 col-lg-3 p-1"  *ngIf="!loading;else loading_holder">
-    <div class="card mt-1 mb-1">
-        <div class="card-header">
-            <h4 class="plan-title plan-internet" *ngIf="net">
-                <div class="row pt-2 pb-2">
-                <div class="col-4 pt-1">
-                  <span class="icon"></span>
-                </div>
-                <div class="col-8 p-0">
-                  <span class="plan-title-1">INTERNET</span>
-                  <span class="plan-title-2"><b>{{net?.data?.download}} MEGA</b></span>
-                  <span class="plan-title-3"><b>{{internet_call}}</b></span>
-                </div>
-              </div>
-            </h4>
-            <h4 class="plan-title plan-tv" *ngIf="tv">
-                <div class="row pt-2 pb-2">
-                <div class="col-4 pt-1">
-                  <span class="icon"></span>
-                </div>
-                <div class="col-8 p-0">
-                  <span class="plan-title-1">HDTV</span>
-                  <span class="plan-title-2"><b>{{tv?.name}}</b></span>
-                  <span class="plan-title-3"><b>{{tv_call}}</b></span>
-                </div>
-              </div>
-            </h4>
-            <h4 class="plan-title plan-telephone" *ngIf="phone">
-              <div class="row pt-2 pb-2">
-                <div class="col-4 pt-1">
-                  <span class="icon"></span>
-                </div>
-                <div class="col-8 p-0">
-                  <span class="plan-title-1">TELEFONE</span>
-                  <span class="plan-title-2"><b>{{ phone?.name.split(" ")[2] }}</b></span>
-                  <span class="plan-title-3"><b>{{ phone?.name.split(" ")[0] }} {{ phone?.name.split(" ")[1] }}</b></span>
-                </div>
-              </div>
-            </h4>
+<div
+  class="col-12 col-sm-6 col-md-6 col-lg-3 p-1"
+  *ngIf="!loading; else loading_holder"
+>
+  <div class="card mt-1 mb-1">
+    <div class="card-header">
+      <h4 class="plan-title plan-internet" *ngIf="net">
+        <div class="row pt-2 pb-2">
+          <div class="col-4 pt-1"><span class="icon"></span></div>
+          <div class="col-8 p-0">
+            <span class="plan-title-1">INTERNET</span>
+            <span class="plan-title-2"
+              ><b>{{ net?.data?.download }} MEGA</b></span
+            >
+            <span class="plan-title-3"
+              ><b>{{ internet_call }}</b></span
+            >
+          </div>
         </div>
-        <div class="card-body p-0 ml-1 mr-1 ">
-            <div class="row mt-3">
-                <div class="col">
-                    <p class="plan-price text-center mb-1">
-                        <span class="price strikethrough">{{full_price}}/mês</span>
-                        <br> 
-                        <span class="price text-black">{{total}}</span>
-                        <span class="plan-period"><span class="align-text-super">*</span>/mês</span>
-                    </p>
-                </div>
-            </div>
-            <div class="row mt-2 mb-3">
-                <div class="col">
-                    <p class="text-center m-1">
-                        <a [routerLink]="['/assine']" [queryParams]="{net: net?.sku, phone: phone?.sku, tv: tv?.sku}" class="btn btn-outline-primary"> QUERO ESTE </a>
-                    </p>
-                </div>
-            </div>
+      </h4>
+      <h4 class="plan-title plan-tv" *ngIf="tv">
+        <div class="row pt-2 pb-2">
+          <div class="col-4 pt-1"><span class="icon"></span></div>
+          <div class="col-8 p-0">
+            <span class="plan-title-1">HDTV</span>
+            <span class="plan-title-2"
+              ><b>{{ tv?.name }}</b></span
+            >
+            <span class="plan-title-3"
+              ><b>{{ tv_call }}</b></span
+            >
+          </div>
         </div>
+      </h4>
+      <h4 class="plan-title plan-telephone" *ngIf="phone">
+        <div class="row pt-2 pb-2">
+          <div class="col-4 pt-1"><span class="icon"></span></div>
+          <div class="col-8 p-0">
+            <span class="plan-title-1">TELEFONE</span>
+            <span class="plan-title-2"
+              ><b>{{ phone?.name.split(' ')[2] }}</b></span
+            >
+            <span class="plan-title-3"
+              ><b
+                >{{ phone?.name.split(' ')[0] }}
+                {{ phone?.name.split(' ')[1] }}</b
+              ></span
+            >
+          </div>
+        </div>
+      </h4>
     </div>
+    <div class="card-body p-0 ml-1 mr-1 ">
+      <div class="row mt-3">
+        <div class="col">
+          <p class="plan-price text-center mb-1">
+            <span class="price strikethrough">{{ full_price }}/mês</span> <br />
+            <span class="price text-black">{{ total }}</span>
+            <span class="plan-period"
+              ><span class="align-text-super">*</span>/mês</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="row mt-2 mb-3">
+        <div class="col">
+          <p class="text-center m-1">
+            <a
+              [routerLink]="['/assine']"
+              [queryParams]="{ net: net?.sku, phone: phone?.sku, tv: tv?.sku }"
+              class="btn btn-outline-primary"
+            >
+              QUERO ESTE
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <ng-template #loading_holder>
-  <div  class="col col-md-3 col-xs-12 p-1">
+  <div class="col col-md-3 col-xs-12 p-1">
     <i class="fas fa-spinner fa-spin fa-3x"></i>
   </div>
 </ng-template>

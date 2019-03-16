@@ -10,7 +10,12 @@ import {
   NbSpinnerModule,
   NbButtonModule,
   NbListModule,
-  NbCheckboxModule, NbCardModule, NbAccordionModule, NbDatepickerModule, NbSelectModule, NbAlertModule
+  NbCheckboxModule,
+  NbCardModule,
+  NbAccordionModule,
+  NbDatepickerModule,
+  NbSelectModule,
+  NbAlertModule
 } from '@nebular/theme';
 
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
@@ -51,10 +56,15 @@ const ENTRY_COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [ScaffoldFieldDirective, HoldableDirective, BuilderFormComponent, ...ENTRY_COMPONENTS],
+  declarations: [
+    ScaffoldFieldDirective,
+    HoldableDirective,
+    BuilderFormComponent,
+    ...ENTRY_COMPONENTS
+  ],
   imports: [
     CommonModule,
-    MonacoEditorModule.forRoot({ baseUrl: "./assets" }),
+    MonacoEditorModule.forRoot({ baseUrl: './assets' }),
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
@@ -69,11 +79,14 @@ const ENTRY_COMPONENTS = [
     NbListModule,
     NbCheckboxModule,
     NbCardModule,
-    NbAccordionModule,
-
-
+    NbAccordionModule
   ],
-  exports: [ScaffoldFieldDirective, HoldableDirective, BuilderFormComponent, ModelPaginatorComponent],
+  exports: [
+    ScaffoldFieldDirective,
+    HoldableDirective,
+    BuilderFormComponent,
+    ModelPaginatorComponent
+  ],
   entryComponents: [...ENTRY_COMPONENTS]
 })
-export class BuilderFormModule { }
+export class BuilderFormModule {}

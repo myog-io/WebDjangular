@@ -1,23 +1,22 @@
 <div class="form-group" [formGroup]="group">
-  <label *ngIf="config.label_position != 'below'">
-    {{ config.label }}
-  </label>
+  <label *ngIf="config.label_position != 'below'"> {{ config.label }} </label>
   <!--<input class="form-control"
          [type]="config.inputType ? config.inputType : 'text'"
          [attr.placeholder]="config.placeholder"
          [formControlName]="config.name"/>-->
 
-  <select class="form-control" [formControlName]="config.name" placeholder="test??">
+  <select
+    class="form-control"
+    [formControlName]="config.name"
+    placeholder="test??"
+  >
     <option *ngFor="let option of options" [value]="option.id">
-      {{option.name}}
+      {{ option.name }}
     </option>
   </select>
 
-  <span class="highlight"></span>
-  <span class="bar"></span>
-  <label *ngIf="config.label_position == 'below'">
-    {{ config.label }}
-  </label>
+  <span class="highlight"></span> <span class="bar"></span>
+  <label *ngIf="config.label_position == 'below'"> {{ config.label }} </label>
 
   <wda-form-validators [config]="config" [input]="group.get(this.config.name)">
   </wda-form-validators>

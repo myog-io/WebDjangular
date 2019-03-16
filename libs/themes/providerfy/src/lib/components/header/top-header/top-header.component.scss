@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 @import '~rfs/sass/_rfs';
 
 .top-header {
@@ -6,7 +6,6 @@
 }
 
 .top-header {
-
   height: 50px;
 
   .topnav {
@@ -23,18 +22,18 @@
       text-transform: uppercase;
 
       > a {
-        display:block;
-        width:100%;
-        height:100%;
+        display: block;
+        width: 100%;
+        height: 100%;
         padding: 0 20px;
         color: $white;
       }
 
       > .dropdown {
         a.dropdown-toggle {
-          display:block;
-          width:100%;
-          height:100%;
+          display: block;
+          width: 100%;
+          height: 100%;
           padding: 0 20px;
           color: $white;
         }
@@ -43,7 +42,7 @@
           display: flex;
 
           text-transform: none;
-          @include responsive-font-size( 16px);
+          @include responsive-font-size(16px);
           line-height: 46px;
 
           height: 46px;
@@ -63,17 +62,13 @@
           width: inherit;
           height: inherit;
         }
-
       }
-
     }
-
   }
-
 }
 
-.location{
-  @include responsive-font-size( 14px);
+.location {
+  @include responsive-font-size(14px);
   font-family: $secondary-ff;
   line-height: 50px;
   color: $white;

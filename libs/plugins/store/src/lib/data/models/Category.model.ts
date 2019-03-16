@@ -1,4 +1,4 @@
-import {Attribute, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
+import { Attribute, JsonApiModelConfig, HasMany } from 'angular2-jsonapi';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { Validators, FormArray } from '@angular/forms';
@@ -8,7 +8,7 @@ import { ProductModel } from './Product.model';
 
 @JsonApiModelConfig({
   type: 'ProductCategory',
-  modelEndpointUrl: 'store/category',
+  modelEndpointUrl: 'store/category'
 })
 export class CategoryModel extends AbstractModel {
   public static include = 'products';
@@ -22,7 +22,7 @@ export class CategoryModel extends AbstractModel {
     type: 'text',
     label: 'Name',
     wrapper_class: 'col-12',
-    placeholder: 'Enter the Category name',
+    placeholder: 'Enter the Category name'
   })
   name: string;
 
@@ -32,7 +32,7 @@ export class CategoryModel extends AbstractModel {
     type: 'text',
     label: 'Category URL',
     wrapper_class: 'col-12',
-    placeholder: 'Enter the Category URL',
+    placeholder: 'Enter the Category URL'
   })
   slug: string;
 
@@ -42,7 +42,7 @@ export class CategoryModel extends AbstractModel {
     type: 'codeEditor',
     label: 'Description',
     wrapper_class: 'col-12',
-    placeholder: 'Enter Page Title',
+    placeholder: 'Enter Page Title'
   })
   description: string;
 
@@ -51,7 +51,7 @@ export class CategoryModel extends AbstractModel {
     type: 'checkbox',
     formType: FormArray,
     label: 'Product Parent',
-    model: ProductModel,    
+    model: ProductModel
   })
   products: ProductModel[];
 
@@ -67,21 +67,18 @@ export class CategoryModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       description: {
         title: 'Description',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
-
 }

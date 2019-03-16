@@ -1,11 +1,17 @@
 <div class="row" *ngIf="!providerCheckout.loading_plans; else loading_holder">
-  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.telephone;">
+  <div
+    class="col-12 col-lg-6 mb-2"
+    *ngFor="let plan of providerCheckout.plans.telephone"
+  >
     <div class="card">
       <div class="card-header">
         <div class="row title-wrapper ">
-          <div class="col col-xs-12 align-self-center"
-            [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
-          </div>
+          <div
+            class="col col-xs-12 align-self-center"
+            [innerHTML]="
+              plan?.data?.display_title ? plan?.data?.display_title : plan?.name
+            "
+          ></div>
         </div>
         <div class="price-wrapper">
           <span class="currency-unit">R$</span>
@@ -18,34 +24,49 @@
           <div class="d-flex flex-row ">
             <div class="list-group-item col d-flex">
               <span class="icon" [class]="plan?.data?.addon_icon_1"></span>
-              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_1"></span>
+              <span
+                class="title pl-1 align-self-center"
+                [innerHTML]="plan?.data?.addon_text_1"
+              ></span>
             </div>
           </div>
           <div class="d-flex flex-row">
             <div class="list-group-item col d-flex">
               <span class="icon" [class]="plan?.data?.addon_icon_2"></span>
-              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_2"></span>
+              <span
+                class="title pl-1 align-self-center"
+                [innerHTML]="plan?.data?.addon_text_2"
+              ></span>
             </div>
           </div>
           <div class="d-flex flex-row">
             <div class="list-group-item col d-flex">
               <span class="icon" [class]="plan?.data?.addon_icon_3"></span>
-              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_3"></span>
+              <span
+                class="title pl-1 align-self-center"
+                [innerHTML]="plan?.data?.addon_text_3"
+              ></span>
             </div>
           </div>
           <div class="d-flex flex-row">
             <div class="list-group-item col d-flex">
               <span class="icon" [class]="plan?.data?.addon_icon_4"></span>
-              <span class="title pl-1 align-self-center" [innerHTML]="plan?.data?.addon_text_4"></span>
+              <span
+                class="title pl-1 align-self-center"
+                [innerHTML]="plan?.data?.addon_text_4"
+              ></span>
             </div>
           </div>
         </div>
         <div class="select-wrapper">
-          <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
-            (click)="providerCheckout.selectTelephonePlan(plan)" [disabled]="providerCheckout.selectingTelephonePlan">
+          <button
+            type="button"
+            class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+            (click)="providerCheckout.selectTelephonePlan(plan)"
+            [disabled]="providerCheckout.selectingTelephonePlan"
+          >
             <span *ngIf="providerCheckout.selectingTelephonePlan">
-              <i class="fa fa-spinner fa-pulse"></i>
-              Carregando
+              <i class="fa fa-spinner fa-pulse"></i> Carregando
             </span>
             <span *ngIf="!providerCheckout.selectingTelephonePlan">
               Escolher
@@ -60,11 +81,8 @@
   </div>
 </div>
 
-
 <ng-template #loading_holder>
   <div class="col-12 text-center">
     <i class="fas fa-spinner fa-pulse fa-5x"></i>
   </div>
 </ng-template>
-
-

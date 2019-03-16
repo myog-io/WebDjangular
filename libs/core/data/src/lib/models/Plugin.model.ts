@@ -7,7 +7,7 @@ import {
 
 import { AbstractModel } from './Abstract.model';
 import { AuthorModel } from './Author.model';
-import {Validators} from "@angular/forms";
+import { Validators } from '@angular/forms';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '../data-store';
@@ -16,7 +16,6 @@ import { SmartTableSettings } from '../data-store';
   type: 'core_plugin'
 })
 export class PluginModel extends AbstractModel {
-
   @Attribute()
   id: string;
 

@@ -1,17 +1,16 @@
 @import '~rfs/sass/_rfs';
 
 .modal-logo {
-  background-image: url("../../../assets/images/modal_choose_city_logo.png");
+  background-image: url('../../../assets/images/modal_choose_city_logo.png');
   width: 256px;
   height: 190px;
   display: block;
   margin-bottom: 40px;
 }
 
-
 h2 {
-  font-family: "Boston", Helvetica, sans-serif;
-  @include responsive-font-size( 24px);
+  font-family: 'Boston', Helvetica, sans-serif;
+  @include responsive-font-size(24px);
   font-weight: 900;
   letter-spacing: 3px;
   color: #fff;
@@ -23,17 +22,15 @@ h2 {
 
   margin-bottom: 25px;
 
-  select, .ng-select {
+  select,
+  .ng-select {
     border-radius: 30px;
   }
-
-
 }
 
-
-button[type=submit] {
-  @include responsive-font-size( 14px);
-  font-family: "Boston", Helvetica, sans-serif;
+button[type='submit'] {
+  @include responsive-font-size(14px);
+  font-family: 'Boston', Helvetica, sans-serif;
   letter-spacing: 2px;
   font-weight: 700;
   border-width: 2px;
@@ -44,8 +41,7 @@ button[type=submit] {
   &:disabled {
     opacity: 0.5;
   }
-
 }
-select.form-control{
+select.form-control {
   background-color: #fff !important;
 }

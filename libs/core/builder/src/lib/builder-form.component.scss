@@ -1,7 +1,7 @@
 @import '~@nebular/theme/styles/prebuilt/corporate';
 
-.sticky-top{
-  top:65px;
+.sticky-top {
+  top: 65px;
   z-index: 888 !important;
 }
 
@@ -10,7 +10,6 @@
     cursor: pointer;
     margin: 0 0.25rem;
   }
-  
 }
 .progress-btn {
   position: relative;
@@ -36,7 +35,7 @@
 .progress-btn .progress {
   width: 0%;
   z-index: 5;
-  background:#000;
+  background: #000;
   opacity: 0;
   transition: all 0.3s ease;
 }
@@ -52,4 +51,3 @@
   height: 100%;
   width: 100%;
 }
-  

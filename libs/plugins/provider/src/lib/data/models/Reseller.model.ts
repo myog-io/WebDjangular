@@ -1,12 +1,12 @@
-import { JsonApiModelConfig, Attribute, HasMany } from "angular2-jsonapi";
-import { Validators } from "@angular/forms";
-import { AbstractModel } from "@core/data/src/lib/models";
-import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
-import { SmartTableSettings } from "@core/data/src/lib/data-store";
+import { JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
+import { Validators } from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'Reseller',
-  modelEndpointUrl: 'provider/reseller',
+  modelEndpointUrl: 'provider/reseller'
 })
 export class ResellerModel extends AbstractModel {
   public static include = null;
@@ -19,7 +19,7 @@ export class ResellerModel extends AbstractModel {
     validators: [Validators.required],
     type: 'text',
     inputType: 'text',
-    label: 'Name',
+    label: 'Name'
   })
   name: string;
 
@@ -28,21 +28,20 @@ export class ResellerModel extends AbstractModel {
     validators: [Validators.required, Validators.email],
     type: 'text',
     inputType: 'email',
-    label: 'Email',
+    label: 'Email'
   })
   email: string;
 
-  public static smartTableOptions:SmartTableSettings = {
+  public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       email: {
         title: 'Email',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
-
 }

@@ -14,7 +14,6 @@ import { PermissionModel } from '@core/users/src/lib/models';
   type: 'core_config'
 })
 export class CoreConfigModel extends AbstractModel {
-
   @Attribute()
   slug: string;
 

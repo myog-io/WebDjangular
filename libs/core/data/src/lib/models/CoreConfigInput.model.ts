@@ -2,8 +2,7 @@ import {
   JsonApiModelConfig,
   Attribute,
   BelongsTo,
-  NestedAttribute,
-
+  NestedAttribute
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
@@ -61,7 +60,7 @@ export class CoreConfigInputModel extends AbstractModel {
   conditional: any;
 
   @BelongsTo()
-  core_config: CoreConfigModel
+  core_config: CoreConfigModel;
 
   permissions: PermissionModel[];
 
@@ -71,7 +70,7 @@ export class CoreConfigInputModel extends AbstractModel {
 
   set pk(value) {}
 
-  get fieldConfig() : BuilderFormFieldConfig {
+  get fieldConfig(): BuilderFormFieldConfig {
     return {
       disabled: this.disabled,
       label: this.label,
@@ -87,7 +86,7 @@ export class CoreConfigInputModel extends AbstractModel {
       display: true,
       conditional: this.conditional,
       multiple: this.input_type === 'multiple',
-      addTags: this.add_tags,
+      addTags: this.add_tags
     };
   }
 }

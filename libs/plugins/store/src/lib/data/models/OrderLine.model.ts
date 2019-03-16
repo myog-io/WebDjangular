@@ -1,12 +1,16 @@
-import {Attribute, BelongsTo, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
-import {AbstractModel} from '@core/data/src/lib/models';
-import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
-import {ProductModel} from "@plugins/store/src/lib/data/models/Product.model";
-
+import {
+  Attribute,
+  BelongsTo,
+  JsonApiModelConfig,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 
 @JsonApiModelConfig({
   type: 'OrderLine',
-  modelEndpointUrl: 'store/order-line',
+  modelEndpointUrl: 'store/order-line'
 })
 export class OrderLineModel extends AbstractModel {
   public static include = null;
@@ -53,16 +57,13 @@ export class OrderLineModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-
   get pk() {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   getTotal() {
-    return this.unit_price * this.quantity
+    return this.unit_price * this.quantity;
   }
 }

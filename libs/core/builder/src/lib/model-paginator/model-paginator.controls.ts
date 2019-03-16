@@ -1,7 +1,6 @@
-import {JsonApiModel, JsonApiQueryData} from 'angular2-jsonapi';
+import { JsonApiModel, JsonApiQueryData } from 'angular2-jsonapi';
 
 export class ModelPaginatorControls {
-
   currentPage: number = 1;
   totalPages: number = 1;
   totalEntries: number = 0;
@@ -23,20 +22,20 @@ export class ModelPaginatorControls {
   makeQuery() {
     let query_options: any = {};
     if (this.options.options) {
-      query_options = this.options.options
+      query_options = this.options.options;
     }
     query_options.page = {
       size: this.pageSize,
-      number: this.currentPage,
+      number: this.currentPage
     };
 
     if (typeof this.options['useDatastore'] !== 'undefined') {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
-        this.options['useDatastore'].findAll(this.options['modelToPaginate'], query_options).subscribe(
-          (r: JsonApiQueryData<JsonApiModel>) => {
+        this.options['useDatastore']
+          .findAll(this.options['modelToPaginate'], query_options)
+          .subscribe((r: JsonApiQueryData<JsonApiModel>) => {
             this.updatePaginationControls(r.getMeta(), r.getModels());
-          }
-        );
+          });
       }
     }
   }
@@ -46,14 +45,21 @@ export class ModelPaginatorControls {
     this.entries = returnEntries;
 
     if (typeof this.unparsedPaginatorMeta['meta'] !== 'undefined') {
-      if (typeof this.unparsedPaginatorMeta['meta']['pagination'] !== 'undefined') {
-        this.totalPages = this.unparsedPaginatorMeta['meta']['pagination']['pages'];
-        this.totalEntries = this.unparsedPaginatorMeta['meta']['pagination']['count'];
-        this.currentPage = this.unparsedPaginatorMeta['meta']['pagination']['page'];
+      if (
+        typeof this.unparsedPaginatorMeta['meta']['pagination'] !== 'undefined'
+      ) {
+        this.totalPages = this.unparsedPaginatorMeta['meta']['pagination'][
+          'pages'
+        ];
+        this.totalEntries = this.unparsedPaginatorMeta['meta']['pagination'][
+          'count'
+        ];
+        this.currentPage = this.unparsedPaginatorMeta['meta']['pagination'][
+          'page'
+        ];
       }
     }
   }
-
 
   getCount() {
     return this.totalEntries;

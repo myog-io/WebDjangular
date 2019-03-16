@@ -1,35 +1,48 @@
 <div class="accordion" id="accordionProviderCheckoutPlans">
   <div class="card internet plan-select-wrapper">
-    <div class="card-header d-flex justify-content-center plan-panel"
-      (click)="providerCheckout.toggleCollapse($event, 'internet')">
-      <span class="icon-wrapper">
-        <i class="icon icon-globo_big"></i>
-      </span>
+    <div
+      class="card-header d-flex justify-content-center plan-panel"
+      (click)="providerCheckout.toggleCollapse($event, 'internet')"
+    >
+      <span class="icon-wrapper"> <i class="icon icon-globo_big"></i> </span>
       <span class="title"> Planos de internet </span>
       <span class="caret float-right">
-        <i [ngClass]="{
-          'fa-chevron-up': providerCheckout.internet_plan_collapsed,
-          'fa-chevron-down': !providerCheckout.internet_plan_collapsed
+        <i
+          [ngClass]="{
+            'fa-chevron-up': providerCheckout.internet_plan_collapsed,
+            'fa-chevron-down': !providerCheckout.internet_plan_collapsed
           }"
-          class="text-primary fas fa-3x"></i>
+          class="text-primary fas fa-3x"
+        ></i>
       </span>
     </div>
 
-    <div id="collapseProviderCheckoutPlanInternet" class="collapse"
+    <div
+      id="collapseProviderCheckoutPlanInternet"
+      class="collapse"
       [ngClass]="{
-            'show': providerCheckout.internet_plan_collapsed
-          }"
+        show: providerCheckout.internet_plan_collapsed
+      }"
     >
       <div class="card-body" *ngIf="!providerCheckout.selected_internet_plan">
-        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.internet.length > 0" >
-          <h3 class="plan-caption" >
-            ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:
-          </h3>
+        <div
+          class="select-plans-wrapper"
+          *ngIf="providerCheckout.plans.internet.length > 0"
+        >
+          <h3 class="plan-caption">ESCOLHA A VELOCIDADE DA SUA BANDA LARGA:</h3>
           <plugin-provider-checkout-plan-internet>
           </plugin-provider-checkout-plan-internet>
         </div>
-        <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.internet.length === 0">
-          <p>Sua cidade ou condomínio não tem  plano de telefone disponível ainda.</p>
+        <div
+          class="select-plans-wrapper"
+          *ngIf="
+            !providerCheckout.loading_plans &&
+            providerCheckout.plans.internet.length === 0
+          "
+        >
+          <p>
+            Sua cidade ou condomínio não tem plano de telefone disponível ainda.
+          </p>
         </div>
       </div>
       <div class="card-body" *ngIf="providerCheckout.selected_internet_plan">
@@ -40,20 +53,29 @@
           <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">{{ providerCheckout.selected_internet_plan.product.pricing_list }}</span>
+              <span class=" align-self-center price">{{
+                providerCheckout.selected_internet_plan.product.pricing_list
+              }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
           <div class="col-12 col-lg-4 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
-              (click)="providerCheckout.deselectInternetPlan()">
+            <button
+              type="button"
+              class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
+              (click)="providerCheckout.deselectInternetPlan()"
+            >
               Alterar
             </button>
           </div>
         </div>
         <div class="select-internet-optional-plan-wrapper">
           <plugin-provider-checkout-plan-internet-optional
-            *ngFor="let plan_optional of providerCheckout.plans_optionals.internet" [plan]="plan_optional">
+            *ngFor="
+              let plan_optional of providerCheckout.plans_optionals.internet
+            "
+            [plan]="plan_optional"
+          >
           </plugin-provider-checkout-plan-internet-optional>
         </div>
       </div>
@@ -61,35 +83,53 @@
   </div>
 
   <div class="card tv plan-select-wrapper">
-    <div class="card-header d-flex justify-content-center plan-panel"
-      (click)="providerCheckout.toggleCollapse($event, 'tv')">
-      <span class="icon-wrapper">
-        <i class="icon icon-tv_big"></i>
-      </span>
-      <span class="title">  PLANOS DE TV </span>
+    <div
+      class="card-header d-flex justify-content-center plan-panel"
+      (click)="providerCheckout.toggleCollapse($event, 'tv')"
+    >
+      <span class="icon-wrapper"> <i class="icon icon-tv_big"></i> </span>
+      <span class="title"> PLANOS DE TV </span>
       <span class="caret float-right">
-        <i [ngClass]="{
-          'fa-chevron-up': providerCheckout.tv_plan_collapsed,
-          'fa-chevron-down': !providerCheckout.tv_plan_collapsed
+        <i
+          [ngClass]="{
+            'fa-chevron-up': providerCheckout.tv_plan_collapsed,
+            'fa-chevron-down': !providerCheckout.tv_plan_collapsed
           }"
-          class="text-primary fas fa-3x"></i>
+          class="text-primary fas fa-3x"
+        ></i>
       </span>
     </div>
 
-    <div id="collapseProviderCheckoutPlanTV" class="collapse" [ngClass]="{
-            'show': providerCheckout.tv_plan_collapsed
-          }">
-
+    <div
+      id="collapseProviderCheckoutPlanTV"
+      class="collapse"
+      [ngClass]="{
+        show: providerCheckout.tv_plan_collapsed
+      }"
+    >
       <div class="card-body" *ngIf="!providerCheckout.selected_tv_plan">
-        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.tv.length > 0" >
-          <h3 class="plan-caption" >
-            Escolha seu pacote inicial. depois complete com HBO, Telecine, Premiere e muito mais!
+        <div
+          class="select-plans-wrapper"
+          *ngIf="providerCheckout.plans.tv.length > 0"
+        >
+          <h3 class="plan-caption">
+            Escolha seu pacote inicial. depois complete com HBO, Telecine,
+            Premiere e muito mais!
           </h3>
           <plugin-provider-checkout-plan-television>
           </plugin-provider-checkout-plan-television>
         </div>
-        <div  class="select-plans-wrapper "*ngIf="!providerCheckout.loading_plans && providerCheckout.plans.tv.length === 0">
-          <p>Sua cidade ou condomínio não tem  plano de televisão disponível ainda.</p>
+        <div
+          class="select-plans-wrapper "
+          *ngIf="
+            !providerCheckout.loading_plans &&
+            providerCheckout.plans.tv.length === 0
+          "
+        >
+          <p>
+            Sua cidade ou condomínio não tem plano de televisão disponível
+            ainda.
+          </p>
         </div>
       </div>
 
@@ -101,25 +141,38 @@
           <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">{{ providerCheckout.selected_tv_plan.product.pricing_list }}</span>
+              <span class=" align-self-center price">{{
+                providerCheckout.selected_tv_plan.product.pricing_list
+              }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
           <div class="col-12 col-lg-4 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-outline-light btn-deselect-plan btn-round text-uppercase"
-              (click)="providerCheckout.deselectTVPlan()">Alterar
+            <button
+              type="button"
+              class="btn btn-outline-light btn-deselect-plan btn-round text-uppercase"
+              (click)="providerCheckout.deselectTVPlan()"
+            >
+              Alterar
             </button>
           </div>
         </div>
-        <div class="row extra-tv-decoder" *ngIf="providerCheckout.selected_extra_tv_decoder.plan">
+        <div
+          class="row extra-tv-decoder"
+          *ngIf="providerCheckout.selected_extra_tv_decoder.plan"
+        >
           <div class="col-12 col-lg-6">
             <h4>
               <span class="icon icon-extra-decoder"></span>
               <span class="title"> Adquirir pontos extra? </span>
             </h4>
             <div class="form-group">
-              <select class="form-control" [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty"
-                (change)="providerCheckout.updateTVDecoderQty($event);" [disabled]="providerCheckout.selectingTVPlan">
+              <select
+                class="form-control"
+                [(ngModel)]="providerCheckout.selected_extra_tv_decoder.qty"
+                (change)="providerCheckout.updateTVDecoderQty($event)"
+                [disabled]="providerCheckout.selectingTVPlan"
+              >
                 <option value="0">Nenhum ponto adicional</option>
                 <option value="1">1 ponto adicional</option>
                 <option value="2">2 pontos adicionais</option>
@@ -129,68 +182,103 @@
           <div class="col col-lg-3 price-wrapper align-self-center">
             <span *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
               <span class="currency-unit">R$</span>
-              <span class="price" [innerHTML]="providerCheckout.priceExtraTVDecoder"></span>
+              <span
+                class="price"
+                [innerHTML]="providerCheckout.priceExtraTVDecoder"
+              ></span>
             </span>
           </div>
           <div class="col-lg-3 actions-wrapper align-self-center">
-            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 0"
-              type="button" class="btn btn-outline-primary btn-round text-uppercase"
-              (click)="providerCheckout.addExtraTVDecoder(1)" [disabled]="providerCheckout.selectingTVPlan">
-              Adicionar <i class="fa fa-spinner fa-pulse" *ngIf="providerCheckout.selectingTVPlan"></i>
+            <button
+              *ngIf="providerCheckout.selected_extra_tv_decoder.qty == 0"
+              type="button"
+              class="btn btn-outline-primary btn-round text-uppercase"
+              (click)="providerCheckout.addExtraTVDecoder(1)"
+              [disabled]="providerCheckout.selectingTVPlan"
+            >
+              Adicionar
+              <i
+                class="fa fa-spinner fa-pulse"
+                *ngIf="providerCheckout.selectingTVPlan"
+              ></i>
             </button>
-            <button *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
-              type="button" class="btn btn-outline-danger btn-round text-uppercase"
-              (click)="providerCheckout.removeExtraTVDecoder()">
+            <button
+              *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
+              type="button"
+              class="btn btn-outline-danger btn-round text-uppercase"
+              (click)="providerCheckout.removeExtraTVDecoder()"
+            >
               Remover
             </button>
           </div>
         </div>
-        <div class="select-television-optional-plan-wrapper" *ngIf="providerCheckout.plans_optionals.tv.length > 0">
+        <div
+          class="select-television-optional-plan-wrapper"
+          *ngIf="providerCheckout.plans_optionals.tv.length > 0"
+        >
           <h4>
             <span class="icon icon-squares"></span>
             <span class="title"> ADICIONE CANAIS OPCIONAIS </span>
           </h4>
           <div class="row">
-          <plugin-provider-checkout-plan-television-optional
-            *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
-          </plugin-provider-checkout-plan-television-optional>
+            <plugin-provider-checkout-plan-television-optional
+              *ngFor="let plan_optional of providerCheckout.plans_optionals.tv"
+              [plan]="plan_optional"
+            >
+            </plugin-provider-checkout-plan-television-optional>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
   <div class="card telephone plan-select-wrapper">
-    <div class="card-header  d-flex justify-content-center plan-panel"
-         id="ProviderCheckoutTabPlanTelephone"
+    <div
+      class="card-header  d-flex justify-content-center plan-panel"
+      id="ProviderCheckoutTabPlanTelephone"
       (click)="providerCheckout.toggleCollapse($event, 'telephone')"
       [ngClass]="{
-          'closed': !providerCheckout.telephone_plan_collapsed
-          }">
+        closed: !providerCheckout.telephone_plan_collapsed
+      }"
+    >
       <span class="icon-wrapper"><i class="icon icon-telephone_big"></i></span>
       <span class="title"> PLANOS DE TELEFONE FIXO </span>
       <span class="caret float-right">
-        <i [ngClass]="{
-          'fa-chevron-up': providerCheckout.telephone_plan_collapsed,
-          'fa-chevron-down': !providerCheckout.telephone_plan_collapsed
+        <i
+          [ngClass]="{
+            'fa-chevron-up': providerCheckout.telephone_plan_collapsed,
+            'fa-chevron-down': !providerCheckout.telephone_plan_collapsed
           }"
-          class="text-primary fas fa-3x"></i>
+          class="text-primary fas fa-3x"
+        ></i>
       </span>
     </div>
 
-    <div class="collapse" [ngClass]="{
-            'show': providerCheckout.telephone_plan_collapsed
-          }">
-
+    <div
+      class="collapse"
+      [ngClass]="{
+        show: providerCheckout.telephone_plan_collapsed
+      }"
+    >
       <div class="card-body" *ngIf="!providerCheckout.selected_telephone_plan">
-        <div class="select-plans-wrapper" *ngIf="providerCheckout.plans.telephone.length > 0">
+        <div
+          class="select-plans-wrapper"
+          *ngIf="providerCheckout.plans.telephone.length > 0"
+        >
           <h3 class="plan-caption"></h3>
           <plugin-provider-checkout-plan-telephone>
           </plugin-provider-checkout-plan-telephone>
         </div>
-        <div  class="select-plans-wrapper" *ngIf="!providerCheckout.loading_plans && providerCheckout.plans.telephone.length === 0">
-          <p>Sua cidade ou condomínio não tem  plano de telefone disponível ainda.</p>
+        <div
+          class="select-plans-wrapper"
+          *ngIf="
+            !providerCheckout.loading_plans &&
+            providerCheckout.plans.telephone.length === 0
+          "
+        >
+          <p>
+            Sua cidade ou condomínio não tem plano de telefone disponível ainda.
+          </p>
         </div>
       </div>
 
@@ -202,13 +290,18 @@
           <div class="col-12 col-lg-3 price-wrapper align-self-center">
             <div class="row pull-right">
               <span class=" align-self-center currency-unit">R$ </span>
-              <span class=" align-self-center price">{{ providerCheckout.selected_telephone_plan.product.pricing_list }}</span>
+              <span class=" align-self-center price">{{
+                providerCheckout.selected_telephone_plan.product.pricing_list
+              }}</span>
               <span class=" align-self-center periodicity">/MÊS</span>
             </div>
           </div>
           <div class="col-12 col-lg-4 actions-wrapper align-self-center">
-            <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
-              (click)="providerCheckout.deselectTelephonePlan()">
+            <button
+              type="button"
+              class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
+              (click)="providerCheckout.deselectTelephonePlan()"
+            >
               Alterar
             </button>
           </div>
@@ -216,13 +309,14 @@
 
         <div class="select-internet-optional-plan-wrapper">
           <plugin-provider-checkout-plan-telephone-optional
-            *ngFor="let plan_optional of providerCheckout.plans_optionals.telephone" [plan]="plan_optional">
+            *ngFor="
+              let plan_optional of providerCheckout.plans_optionals.telephone
+            "
+            [plan]="plan_optional"
+          >
           </plugin-provider-checkout-plan-telephone-optional>
         </div>
-
       </div>
     </div>
   </div>
-
-
 </div>

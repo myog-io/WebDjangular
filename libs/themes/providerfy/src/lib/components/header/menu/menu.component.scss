@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~rfs/sass/_rfs';
 
@@ -8,15 +8,14 @@
     margin-right: 0.5rem;
   }
   .nav-link {
-    @include responsive-font-size( $header-menu-fs);
+    @include responsive-font-size($header-menu-fs);
     font-family: $header-menu-ff;
     font-weight: $header-menu-fw;
     color: $header-menu-c !important;
     text-transform: uppercase;
   }
   .nav-item.active {
-    
-    .nav-link{
+    .nav-link {
       color: $primary !important;
     }
   }
@@ -29,39 +28,36 @@
     .nav-link {
       color: $header-menu-featured-c !important;
     }
-    
-
   }
-  .nav-item.dropdown{
+  .nav-item.dropdown {
     padding-right: 0.5rem;
   }
 
   .dropdown-menu {
     border-radius: 15px;
-    padding:20px 0;
+    padding: 20px 0;
 
     @include media-breakpoint-down(sm) {
       position: absolute;
       left: unset !important;
     }
 
-    .dropdown-item{
-      display:flex;
-      padding-right:20px;
+    .dropdown-item {
+      display: flex;
+      padding-right: 20px;
 
-      .icon{
-        margin-right:10px;
+      .icon {
+        margin-right: 10px;
       }
-
     }
-
   }
 
-  .dropdown-menu:after, .dropdown-menu:before {
+  .dropdown-menu:after,
+  .dropdown-menu:before {
     bottom: 100%;
     left: 35%;
     border: solid transparent;
-    content: " ";
+    content: ' ';
     height: 0;
     width: 0;
     position: absolute;
@@ -82,15 +78,14 @@
   }
 
   .nav-item.btn-enroll-now {
-
     .dropdown-menu {
       margin-top: 10px;
       padding: 0;
       border: 0;
     }
 
-
-    .dropdown-menu:after, .dropdown-menu:before {
+    .dropdown-menu:after,
+    .dropdown-menu:before {
       right: 30%;
       left: unset;
     }
@@ -128,12 +123,8 @@
       border-bottom-right-radius: 15px;
 
       background: #00a3a7;
-
     }
-
   }
-
-
 }
 
 @include media-breakpoint-down(sm) {
@@ -143,18 +134,11 @@
     z-index: 999999;
     background: #fff;
     padding: 0 50px 20px 50px;
-    left:0;
+    left: 0;
     right: 0;
   }
 
-  .navbar.navbar-expand-lg{
-    padding:10px;
+  .navbar.navbar-expand-lg {
+    padding: 10px;
   }
-
-
-
-
 }
-
-
-

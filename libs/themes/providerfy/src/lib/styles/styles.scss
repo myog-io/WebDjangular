@@ -4,7 +4,8 @@
 @import './icons.scss';
 @import '~rfs/sass/_rfs';
 
-@mixin border-radius($radius: 5px) { // the 5px is the default
+@mixin border-radius($radius: 5px) {
+  // the 5px is the default
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   border-radius: $radius;
@@ -27,8 +28,7 @@ body {
   font-family: $primary-ff;
 }
 
-
-a{
+a {
   cursor: pointer;
 }
 
@@ -157,8 +157,9 @@ p.subtitle {
   margin-bottom: 45px;
 }
 
-
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   font-family: $input-ff;
   @include responsive-font-size($input-fs);
@@ -168,11 +169,13 @@ input, textarea, select {
   border: none;
   border-bottom: 1px solid $input-cc;
   background: transparent;
-  outline-color: $primary
+  outline-color: $primary;
 }
 
-input.form-control, textarea.form-control, select.form-control {
-  border-top:unset;
+input.form-control,
+textarea.form-control,
+select.form-control {
+  border-top: unset;
   border-left: unset;
   border-right: unset;
   border-radius: 0;
@@ -182,12 +185,9 @@ input.form-control, textarea.form-control, select.form-control {
   box-shadow: none;
 }
 
-
 .form-control.ng-invalid.ng-touched {
   border-color: theme-color('danger');
 }
-
-
 
 select.form-control {
   width: 100%;
@@ -207,14 +207,16 @@ select.form-control {
   appearance: none;
   outline-width: 0;
 
-  background: url('../assets/images/select_arrow_down.png') no-repeat right 5px center;
+  background: url('../assets/images/select_arrow_down.png') no-repeat right 5px
+    center;
 }
 
 select.form-control:after {
-
 }
 
-input:focus, textarea:focus, select:focus  {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }
 
@@ -231,19 +233,27 @@ label {
   -webkit-transition: 0.2s ease all;
 }
 
-
-
 /* active state */
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border-color: transparent;
 }
 
-input:focus ~ label, input:read-only ~ label, input.ng-valid ~ label, input:valid ~ label,
-textarea:focus ~ label, textarea.ng-touched ~ label, textarea:read-only ~ label, textarea.ng-valid ~ label, textarea:valid ~ label,
-select:focus ~ label, select.ng-touched ~ label, select.ng-valid ~ label{
-  bottom: -$input-fs*2;
-  @include responsive-font-size($input-fs*0.95);
+input:focus ~ label,
+input:read-only ~ label,
+input.ng-valid ~ label,
+input:valid ~ label,
+textarea:focus ~ label,
+textarea.ng-touched ~ label,
+textarea:read-only ~ label,
+textarea.ng-valid ~ label,
+textarea:valid ~ label,
+select:focus ~ label,
+select.ng-touched ~ label,
+select.ng-valid ~ label {
+  bottom: -$input-fs * 2;
+  @include responsive-font-size($input-fs * 0.95);
   color: $primary;
   border-color: transparent;
 }
@@ -252,11 +262,11 @@ select:focus ~ label, select.ng-touched ~ label, select.ng-valid ~ label{
   position: static;
   pointer-events: auto;
   cursor: pointer;
-  color:#8ea5b0 !important;
+  color: #8ea5b0 !important;
 }
 
-
-.btn.disabled, .btn:disabled {
+.btn.disabled,
+.btn:disabled {
   opacity: 0.25;
 }
 
@@ -271,7 +281,8 @@ select:focus ~ label, select.ng-touched ~ label, select.ng-valid ~ label{
   display: block;
 }
 
-.bar:before, .bar:after {
+.bar:before,
+.bar:after {
   content: '';
   height: 2px;
   width: 0;
@@ -292,7 +303,8 @@ select:focus ~ label, select.ng-touched ~ label, select.ng-valid ~ label{
 }
 
 /* active state */
-input:focus ~ .bar:before, input:focus ~ .bar:after {
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
   width: 50%;
 }
 
@@ -346,7 +358,6 @@ input:focus ~ .highlight {
 
 #requestForPortability {
   background: #f7f7f7;
-
 }
 
 #banner-home {
@@ -411,7 +422,7 @@ input:focus ~ .highlight {
       border: 0;
     }
 
-    font-family: "Open Sans", Helvetica, sans-serif;
+    font-family: 'Open Sans', Helvetica, sans-serif;
 
     .card-title {
       color: #000;
@@ -427,7 +438,7 @@ input:focus ~ .highlight {
       font-weight: 400;
     }
 
-    a[href^="tel"] {
+    a[href^='tel'] {
       color: $primary;
       @include responsive-font-size(38px);
       font-weight: $fw-black;
@@ -442,13 +453,12 @@ input:focus ~ .highlight {
     a {
       @include responsive-font-size(18px);
     }
-
   }
 }
 
 .backdrop-choosecity {
   opacity: 1 !important;
-  background-image: url("../assets/images/modal_choose_city_bg.jpg");
+  background-image: url('../assets/images/modal_choose_city_bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: right center;
@@ -488,7 +498,6 @@ input:focus ~ .highlight {
   }
 }
 
-
 #banner-experiment {
   .img-wrapper {
     @include media-breakpoint-up(lg) {
@@ -504,14 +513,12 @@ input:focus ~ .highlight {
     }
   }
 
-
   h2 {
     font-family: $secondary-ff;
     @include responsive-font-size(44px);
     line-height: 39px;
     font-weight: $fw-regular;
     font-style: italic;
-
 
     b {
       font-weight: $fw-black;
@@ -571,13 +578,11 @@ input:focus ~ .highlight {
 }
 
 #economia-e-controle {
-
   padding-top: map-get($spacers, 1);
 
   @include media-breakpoint-up(md) {
     padding-top: map-get($spacers, 5);
   }
-
 
   h4 {
     padding-top: map-get($spacers, 1);
@@ -587,7 +592,6 @@ input:focus ~ .highlight {
       padding-bottom: map-get($spacers, 2);
     }
   }
-
 
   p {
     @include responsive-font-size(17px);
@@ -609,7 +613,6 @@ input:focus ~ .highlight {
 }
 
 #quem-esta-ligando {
-
   padding-top: map-get($spacers, 1);
   padding-bottom: map-get($spacers, 1);
 
@@ -628,16 +631,13 @@ input:focus ~ .highlight {
   }
 
   h4 {
-
     padding-bottom: map-get($spacers, 1);
     margin-bottom: 0;
 
     @include media-breakpoint-up(md) {
       padding-bottom: 0;
     }
-
   }
-
 
   p {
     @include responsive-font-size(17px);
@@ -665,7 +665,6 @@ input:focus ~ .highlight {
   }
 
   form {
-
     background: rgba(255, 255, 255, 0.3);
     padding: 20px;
     padding-bottom: 5px;
@@ -685,7 +684,6 @@ input:focus ~ .highlight {
       padding-right: 50px;
       border-width: 2px;
       border-radius: 50px;
-
     }
 
     span {
@@ -745,7 +743,6 @@ input:focus ~ .highlight {
       column-count: $citiesColumnCount;
     }
 
-
     li {
       @include responsive-font-size(17px);
       color: #616c74;
@@ -753,7 +750,6 @@ input:focus ~ .highlight {
       display: inline-block;
     }
   }
-
 }
 
 .maxw1366 {
@@ -793,7 +789,6 @@ input:focus ~ .highlight {
       max-width: 300px;
     }
   }
-
 }
 
 #banner-tv {
@@ -851,21 +846,26 @@ input:focus ~ .highlight {
   -webkit-transform: rotate(-45deg);
 }
 
-
 .loader {
-
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
 
 .pace {
   -webkit-pointer-events: none;
@@ -884,9 +884,9 @@ input:focus ~ .highlight {
   -ms-transform: translate3d(0, -50px, 0);
   transform: translate3d(0, -50px, 0);
 
-  -webkit-transition: -webkit-transform .5s ease-out;
-  -ms-transition: -webkit-transform .5s ease-out;
-  transition: transform .5s ease-out;
+  -webkit-transition: -webkit-transform 0.5s ease-out;
+  -ms-transition: -webkit-transform 0.5s ease-out;
+  transition: transform 0.5s ease-out;
 }
 
 .pace.pace-active {
@@ -907,10 +907,6 @@ input:focus ~ .highlight {
   box-shadow: 0 6px 20px 0 $secondary;
   pointer-events: none;
 }
-
-
-
-
 
 .pricing.card {
   .card-header {
@@ -936,7 +932,6 @@ input:focus ~ .highlight {
 
   .card-body {
     ul {
-
       list-style: none;
 
       li {
@@ -962,12 +957,10 @@ input:focus ~ .highlight {
           display: table-cell;
           vertical-align: middle;
         }
-
       }
     }
 
     .plan-price {
-
       .currency-unit {
         @include responsive-font-size($pricing-plan-currency-unit-fs);
         font-weight: $pricing-plan-currency-unit-fw;
@@ -992,8 +985,6 @@ input:focus ~ .highlight {
       font-family: $btn-subscribe-ff;
       //color: $btn-subscribe-c;
       text-transform: uppercase;
-
-
 
       border-radius: 30px;
     }

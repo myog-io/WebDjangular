@@ -1,15 +1,19 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {CityModel} from "./City.model";
-import {FormArray, FormGroup, Validators} from "@angular/forms";
-import { AbstractModel } from "@core/data/src/lib/models";
-import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
-import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
-import { SmartTableSettings } from "@core/data/src/lib/data-store";
-
+import {
+  Attribute,
+  BelongsTo,
+  HasMany,
+  JsonApiModelConfig
+} from 'angular2-jsonapi';
+import { CityModel } from './City.model';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'Condo',
-  modelEndpointUrl: 'provider/condo',
+  modelEndpointUrl: 'provider/condo'
 })
 export class CondoModel extends AbstractModel {
   public static include = 'city,products';
@@ -22,7 +26,7 @@ export class CondoModel extends AbstractModel {
     validators: [Validators.required],
     type: 'text',
     inputType: 'text',
-    label: 'Name',
+    label: 'Name'
   })
   name: string;
 
@@ -42,7 +46,7 @@ export class CondoModel extends AbstractModel {
     formType: FormArray,
     model: ProductModel,
     type: 'checkbox',
-    label: 'Products',
+    label: 'Products'
   })
   products: ProductModel;
 
@@ -50,15 +54,15 @@ export class CondoModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       city: {
         title: 'City',
         type: 'text',
         valuePrepareFunction: (cell, row) => {
-          return `${cell.name} (${cell.id})`
+          return `${cell.name} (${cell.id})`;
         }
       }
-    },
+    }
   };
 }

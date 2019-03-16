@@ -1,5 +1,9 @@
-import { Attribute, JsonApiModelConfig, NestedAttribute } from 'angular2-jsonapi';
-import { Validators } from "@angular/forms";
+import {
+  Attribute,
+  JsonApiModelConfig,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { Validators } from '@angular/forms';
 import { DiscountTypeOptions } from '../interfaces/Discount.interface';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
@@ -8,7 +12,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'CatalogRule',
-  modelEndpointUrl: 'store/discount/catalog-rule',
+  modelEndpointUrl: 'store/discount/catalog-rule'
 })
 export class CatalogRuleModel extends AbstractModel {
   public static include = null;
@@ -22,7 +26,7 @@ export class CatalogRuleModel extends AbstractModel {
     type: 'text',
     label: 'Name',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   name: string;
 
@@ -44,7 +48,7 @@ export class CatalogRuleModel extends AbstractModel {
     inputType: 'number',
     label: 'Discount Ammount',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   value: string;
 
@@ -55,7 +59,7 @@ export class CatalogRuleModel extends AbstractModel {
     inputType: 'datetime-local',
     label: 'Start Date/Time',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   start: Date;
 
@@ -66,7 +70,7 @@ export class CatalogRuleModel extends AbstractModel {
     inputType: 'datetime-local',
     label: 'End Date/Time',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   end: Date;
 
@@ -75,7 +79,7 @@ export class CatalogRuleModel extends AbstractModel {
     type: 'switch',
     label: 'Is active',
     wrapper_class: 'col-3',
-    value: true,
+    value: true
   })
   is_active: boolean;
 
@@ -100,39 +104,35 @@ export class CatalogRuleModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
-
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       rule_type: {
         title: 'Type',
-        type: 'text',
+        type: 'text'
       },
       value: {
         title: 'Value',
-        type: 'text',
+        type: 'text'
       },
       is_active: {
         title: 'Active',
         type: 'text',
-        valuePrepareFunction: (cell,row) => cell ? 'Yes':'No'
+        valuePrepareFunction: (cell, row) => (cell ? 'Yes' : 'No')
       },
       start: {
         title: 'Start Date/Time:',
-        type: 'text',
+        type: 'text'
       },
       end: {
         title: 'End Date/Time',
-        type: 'text',
+        type: 'text'
       }
     }
-  }
-
+  };
 }

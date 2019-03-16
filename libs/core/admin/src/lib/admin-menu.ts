@@ -1,10 +1,10 @@
-import {NbMenuItem} from '@nebular/theme';
+import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
     icon: 'nb-home',
-    link: '/',
+    link: '/'
   },
   {
     title: 'CMS',
@@ -12,15 +12,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Posts',
-        link: '/cms/posts',
+        link: '/cms/posts'
       },
       {
         title: 'Pages',
-        link: '/cms/pages',
+        link: '/cms/pages'
       },
       {
         title: 'Blocks',
-          children: [
+        children: [
           {
             title: 'Headers',
             link: '/cms/block/headers'
@@ -41,29 +41,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
             title: 'Custom',
             link: '/cms/block/custom'
           }
-        ],
+        ]
       },
       {
         title: 'Medias',
-        link: '/media',
+        link: '/media'
       },
-     
+
       {
         title: 'Tags',
-        link: '/cms/page-tags',
+        link: '/cms/page-tags'
       },
       {
         title: 'Categories',
-        link: '/cms/page-categories',
+        link: '/cms/page-categories'
       },
       {
         title: 'Menus',
-        link: '/cms/menu_builder',
+        link: '/cms/menu_builder'
       },
       {
         title: 'Forms',
-        link: '/cms/form',
-      },
+        link: '/cms/form'
+      }
       /* MENU BUILDER is the NExt */
     ]
   },
@@ -72,7 +72,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'fas fa-shopping-cart',
     children: [
       {
-        title: "Catalog",
+        title: 'Catalog',
         children: [
           {
             title: 'Products',
@@ -89,34 +89,34 @@ export const MENU_ITEMS: NbMenuItem[] = [
           {
             title: 'Product attribute',
             link: '/store/catalog/attributes'
-          },
+          }
         ]
       },
       {
         title: 'Orders',
-        link: '/store/orders',
+        link: '/store/orders'
       },
       {
         title: 'Store Rules',
         children: [
           {
             title: 'Catalog Rules',
-            link: '/store/rules/catalog-rules',
+            link: '/store/rules/catalog-rules'
           },
           {
             title: 'Cart Rules',
-            link: '/store/rules/cart-rules',
+            link: '/store/rules/cart-rules'
           },
           {
             title: 'Cart Terms',
-            link: '/store/rules/cart-terms',
-          },
+            link: '/store/rules/cart-terms'
+          }
         ]
       },
       {
         title: 'Shipping methods',
-        link: '/store/shipping-methods',
-      },
+        link: '/store/shipping-methods'
+      }
     ]
   },
   {
@@ -127,60 +127,47 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Cities',
         link: '/provider/cities',
         data: {
-          permission: [
-            {label: 'provider', action: 'view_city'}
-          ]
+          permission: [{ label: 'provider', action: 'view_city' }]
         }
       },
       {
         title: 'Page Redirect',
         link: '/provider/page-redirect',
         data: {
-          permission: [
-            {label: 'provider', action: 'view_pageredirect'}
-          ]
+          permission: [{ label: 'provider', action: 'view_pageredirect' }]
         }
       },
       {
         title: 'Condos',
         link: '/provider/condo',
         data: {
-          permission: [
-            {label: 'provider', action: 'view_condo'}
-          ]
+          permission: [{ label: 'provider', action: 'view_condo' }]
         }
       },
       {
         title: 'Channels',
         link: '/provider/channel',
         data: {
-          permission: [
-            {label: 'provider', action: 'view_channel'}
-          ]
+          permission: [{ label: 'provider', action: 'view_channel' }]
         }
       },
       {
         title: 'Resellers',
         link: '/provider/reseller',
         data: {
-          permission: [
-            {label: 'provider', action: 'view_reseller'}
-          ]
+          permission: [{ label: 'provider', action: 'view_reseller' }]
         }
       },
       {
         title: 'Plan Types',
         link: '/provider/plan-type',
         data: {
-          permission: [
-            {label: 'provider', action: 'view_plantype'}
-          ]
+          permission: [{ label: 'provider', action: 'view_plantype' }]
         }
       },
       {
         title: 'Orders',
-        link: '/provider/order',
-
+        link: '/provider/order'
       }
     ]
   },
@@ -192,18 +179,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Emails',
         link: '/core_email',
         data: {
-          permission: [
-            {label: 'webdjango', action: 'view_email'},
-          ]
+          permission: [{ label: 'webdjango', action: 'view_email' }]
         }
       },
       {
         title: 'Themes',
         link: '/core_themes',
         data: {
-          permission: [
-            {label: 'webdjango', action: 'view_theme'},
-          ]
+          permission: [{ label: 'webdjango', action: 'view_theme' }]
         }
       },
       {
@@ -214,7 +197,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
             {
               label: 'webdjango', // Name of the plugin on WebDjango side
               action: 'view_plugin'
-            },
+            }
           ]
         }
       },
@@ -222,26 +205,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Users',
         link: '/user',
         data: {
-          permission: [
-            {label: 'users', action: 'view_user'},
-          ]
+          permission: [{ label: 'users', action: 'view_user' }]
         }
       },
       {
         title: 'Groups',
         link: '/group',
         data: {
-          permission: [
-            {label: 'auth', action: 'view_group'}
-          ]
+          permission: [{ label: 'auth', action: 'view_group' }]
         }
       },
       {
         title: 'Import/Export',
         children: [
           {
-            title: "Import",
-            link: '/import-data',
+            title: 'Import',
+            link: '/import-data'
           },
           {
             title: 'Export',
@@ -253,21 +232,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'Configs',
         data: {
-          core_configs: true,
+          core_configs: true
         },
-        children:
-          [
-            {
-              title: 'Websites',
-              link: '/core_websites',
-              data: {
-                permission: [
-                  {label: 'webdjango', action: 'view_website'}
-                ]
-              }
+        children: [
+          {
+            title: 'Websites',
+            link: '/core_websites',
+            data: {
+              permission: [{ label: 'webdjango', action: 'view_website' }]
             }
-          ]
+          }
+        ]
       }
     ]
-  },
+  }
 ];

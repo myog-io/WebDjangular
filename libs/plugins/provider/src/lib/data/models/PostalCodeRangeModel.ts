@@ -7,7 +7,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'PostalCodeRange',
-  modelEndpointUrl: 'provider/postal-code-range',
+  modelEndpointUrl: 'provider/postal-code-range'
 })
 export class PostalCodeRangeModel extends AbstractModel {
   public static include = null;
@@ -21,7 +21,7 @@ export class PostalCodeRangeModel extends AbstractModel {
     type: 'text',
     label: 'Start',
     wrapper_class: 'col-6',
-    placeholder: 'Enter where the Postal Code range begins',
+    placeholder: 'Enter where the Postal Code range begins'
   })
   start: string;
 
@@ -31,13 +31,13 @@ export class PostalCodeRangeModel extends AbstractModel {
     type: 'text',
     label: 'End',
     wrapper_class: 'col-6',
-    placeholder: 'Enter where the Postal Code range ends',
+    placeholder: 'Enter where the Postal Code range ends'
   })
   end: string;
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'hidden',
+    type: 'hidden'
   })
   city: number;
 
@@ -53,9 +53,7 @@ export class PostalCodeRangeModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;
@@ -65,12 +63,12 @@ export class PostalCodeRangeModel extends AbstractModel {
     columns: {
       start: {
         title: 'start',
-        type: 'text',
+        type: 'text'
       },
       end: {
         title: 'end',
-        type: 'text',
-      },
-    },
+        type: 'text'
+      }
+    }
   };
 }

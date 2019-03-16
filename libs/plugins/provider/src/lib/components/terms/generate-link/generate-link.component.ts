@@ -13,27 +13,28 @@ export class PluginProviderGenerateLinkFormComponent implements OnInit {
   @Input() show_phone = true;
   @Input() show_tv = true;
   @Input() show_equip = true;
-  @Input() send_link: string = "send-terms";
-  taxvat_mask = "000.000.000-000";
+  @Input() send_link: string = 'send-terms';
+  taxvat_mask = '000.000.000-000';
   link: string = null;
   linkForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    taxvat: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    taxvat: new FormControl('', [
+      Validators.required,
+      Validators.minLength(10)
+    ]),
     company_name: new FormControl('', [Validators.minLength(4)]),
     taxvat_resp: new FormControl('', [Validators.minLength(10)]),
     internet: new FormControl(''),
     tv: new FormControl(''),
     phone: new FormControl(''),
-    equip: new FormControl(''),
-  })
+    equip: new FormControl('')
+  });
   url: string = null;
 
-  copy_text: string = "Copiar o link";
+  copy_text: string = 'Copiar o link';
 
-  constructor(@Inject(DOCUMENT) private document,
-    private router: Router) {
+  constructor(@Inject(DOCUMENT) private document, private router: Router) {
     this.url = document.location.protocol + '//' + document.location.host;
-
   }
 
   ngOnInit() {
@@ -42,18 +43,18 @@ export class PluginProviderGenerateLinkFormComponent implements OnInit {
       for (const k in data) {
         if (data.hasOwnProperty(k)) {
           if (data[k] === true) {
-            data[k] = 1
-          } else if (data[k] === "" || data[k] === false) {
-            delete (data[k])
+            data[k] = 1;
+          } else if (data[k] === '' || data[k] === false) {
+            delete data[k];
           }
         }
       }
       if (data.taxvat) {
-        console.log(data.taxvat.length)
+        console.log(data.taxvat.length);
         if (data.taxvat.length > 14) {
-          this.taxvat_mask = "00.000.000/0000-00";
+          this.taxvat_mask = '00.000.000/0000-00';
         } else {
-          this.taxvat_mask = "000.000.000-000";
+          this.taxvat_mask = '000.000.000-000';
         }
       }
       this.generateLink(data);
@@ -71,7 +72,6 @@ export class PluginProviderGenerateLinkFormComponent implements OnInit {
   cleanForm() {
     this.linkForm.reset();
     this.link = null;
-
   }
   copyLink() {
     const selBox = document.createElement('textarea');
@@ -86,8 +86,4 @@ export class PluginProviderGenerateLinkFormComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
-
-
-
-
 }

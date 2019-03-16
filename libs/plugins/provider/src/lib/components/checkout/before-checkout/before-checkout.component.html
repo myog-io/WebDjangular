@@ -1,41 +1,63 @@
 <div class="col-12 col-sm-8 col-xl-6 offset-md-2 offset-xl-3 offset-sm-0">
   <div class="card">
     <div class="card-body">
-
       <div class="row justify-content-md-center">
         <div class="col col-md-12">
           <div class="row" *ngIf="!providerCheckout.has_reseller">
-            <div class="col pb-2">
-              <span class="icon icon-pin"></span>
-            </div>
+            <div class="col pb-2"><span class="icon icon-pin"></span></div>
           </div>
-          <h4 class="text-center text-black" *ngIf="!providerCheckout.has_reseller">ONDE VOCÊ ESTÁ?</h4>
-          <h4 class="text-center text-black" *ngIf="providerCheckout.has_reseller">Página de assinatura para
-            <b>REVENDEDORES</b><br>
+          <h4
+            class="text-center text-black"
+            *ngIf="!providerCheckout.has_reseller"
+          >
+            ONDE VOCÊ ESTÁ?
+          </h4>
+          <h4
+            class="text-center text-black"
+            *ngIf="providerCheckout.has_reseller"
+          >
+            Página de assinatura para <b>REVENDEDORES</b><br />
           </h4>
           <p class="text-center subtitle mx-auto">
-            Digite seu CEP e número de sua residência para
-            consultar a disponibilidade dos nossos serviços.
+            Digite seu CEP e número de sua residência para consultar a
+            disponibilidade dos nossos serviços.
           </p>
         </div>
       </div>
       <div class="row justify-content-md-center">
         <div class="col col-md-12">
-          <form [formGroup]="providerCheckout.formBeforeCheckout"
-            (ngSubmit)="providerCheckout.onBeforeCheckoutSubmit()">
-             <div class="row" *ngIf="providerCheckout.has_reseller">
+          <form
+            [formGroup]="providerCheckout.formBeforeCheckout"
+            (ngSubmit)="providerCheckout.onBeforeCheckoutSubmit()"
+          >
+            <div class="row" *ngIf="providerCheckout.has_reseller">
               <div class="col">
                 <div class="form-group">
                   <select class="form-control" formControlName="reseller">
                     <option value="">Revendedor</option>
-                    <option *ngFor="let reseller of resellers | async" [value]="reseller.id">
-                      {{reseller.name}} <{{reseller.email}}>
+                    <option
+                      *ngFor="let reseller of (resellers | async)"
+                      [value]="reseller.id"
+                    >
+                      {{ reseller.name }} <{{ reseller.email }}>
                     </option>
                   </select>
-                  <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                          providerCheckout.formBeforeCheckout.controls['reseller'].errors">
-                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['reseller'].errors['required']"
-                      class="alert alert-danger" role="alert">
+                  <div
+                    class="errors-feedback"
+                    *ngIf="
+                      providerCheckout.formBeforeCheckoutSubmitted &&
+                      providerCheckout.formBeforeCheckout.controls['reseller']
+                        .errors
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        providerCheckout.formBeforeCheckout.controls['reseller']
+                          .errors['required']
+                      "
+                      class="alert alert-danger"
+                      role="alert"
+                    >
                       Selecione um revendedor
                     </div>
                   </div>
@@ -43,22 +65,41 @@
               </div>
             </div>
 
-
             <div class="row">
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <input type="text" required mask="00000-000" formControlName="postalCode" />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
+                  <input
+                    type="text"
+                    required
+                    mask="00000-000"
+                    formControlName="postalCode"
+                  />
+                  <span class="highlight"></span> <span class="bar"></span>
                   <label>CEP da instalação</label>
 
-                  <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="BLANK" class="link">Não sei
-                    meu CEP</a>
+                  <a
+                    href="http://www.buscacep.correios.com.br/sistemas/buscacep/"
+                    target="BLANK"
+                    class="link"
+                    >Não sei meu CEP</a
+                  >
                 </div>
-                <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                        providerCheckout.formBeforeCheckout.controls['postalCode'].errors">
-                  <div *ngIf="providerCheckout.formBeforeCheckout.controls['postalCode'].errors['required']" class="alert alert-danger"
-                    role="alert">
+                <div
+                  class="errors-feedback"
+                  *ngIf="
+                    providerCheckout.formBeforeCheckoutSubmitted &&
+                    providerCheckout.formBeforeCheckout.controls['postalCode']
+                      .errors
+                  "
+                >
+                  <div
+                    *ngIf="
+                      providerCheckout.formBeforeCheckout.controls['postalCode']
+                        .errors['required']
+                    "
+                    class="alert alert-danger"
+                    role="alert"
+                  >
                     CEP é obrigatório
                   </div>
                 </div>
@@ -66,15 +107,32 @@
 
               <div class="col-12 col-md-6">
                 <div class="form-group">
-                  <input type="text" required formControlName="numberOfAddress" />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
+                  <input
+                    type="text"
+                    required
+                    formControlName="numberOfAddress"
+                  />
+                  <span class="highlight"></span> <span class="bar"></span>
                   <label>Nº da Residência</label>
                 </div>
-                <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                        providerCheckout.formBeforeCheckout.controls['numberOfAddress'].errors">
-                  <div *ngIf="providerCheckout.formBeforeCheckout.controls['numberOfAddress'].errors['required']" class="alert alert-danger"
-                    role="alert">
+                <div
+                  class="errors-feedback"
+                  *ngIf="
+                    providerCheckout.formBeforeCheckoutSubmitted &&
+                    providerCheckout.formBeforeCheckout.controls[
+                      'numberOfAddress'
+                    ].errors
+                  "
+                >
+                  <div
+                    *ngIf="
+                      providerCheckout.formBeforeCheckout.controls[
+                        'numberOfAddress'
+                      ].errors['required']
+                    "
+                    class="alert alert-danger"
+                    role="alert"
+                  >
                     Nº da Residência é obrigatório
                   </div>
                 </div>
@@ -86,12 +144,30 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfAccess">
                     <option value="">Tipo de acesso</option>
-                    <option *ngFor="let plan_type of plan_types | async" [value]="plan_type.id">{{plan_type.name}}</option>
+                    <option
+                      *ngFor="let plan_type of (plan_types | async)"
+                      [value]="plan_type.id"
+                      >{{ plan_type.name }}</option
+                    >
                   </select>
-                  <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                          providerCheckout.formBeforeCheckout.controls['typeOfAccess'].errors">
-                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['typeOfAccess'].errors['required']" class="alert alert-danger"
-                      role="alert">
+                  <div
+                    class="errors-feedback"
+                    *ngIf="
+                      providerCheckout.formBeforeCheckoutSubmitted &&
+                      providerCheckout.formBeforeCheckout.controls[
+                        'typeOfAccess'
+                      ].errors
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        providerCheckout.formBeforeCheckout.controls[
+                          'typeOfAccess'
+                        ].errors['required']
+                      "
+                      class="alert alert-danger"
+                      role="alert"
+                    >
                       Selecione um tipo de acesso
                     </div>
                   </div>
@@ -104,13 +180,26 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="condo">
                     <option value="">Condominio</option>
-                    <option *ngFor="let condo of condos" [value]="condo.id">{{condo.name}}</option>
-
+                    <option *ngFor="let condo of condos" [value]="condo.id">{{
+                      condo.name
+                    }}</option>
                   </select>
-                  <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                        providerCheckout.formBeforeCheckout.controls['condo'].errors">
-                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['condo'].errors['required']" class="alert alert-danger"
-                      role="alert">
+                  <div
+                    class="errors-feedback"
+                    *ngIf="
+                      providerCheckout.formBeforeCheckoutSubmitted &&
+                      providerCheckout.formBeforeCheckout.controls['condo']
+                        .errors
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        providerCheckout.formBeforeCheckout.controls['condo']
+                          .errors['required']
+                      "
+                      class="alert alert-danger"
+                      role="alert"
+                    >
                       Selecione seu condominio
                     </div>
                   </div>
@@ -119,14 +208,26 @@
               <div class="col-12">
                 <div class="form-group">
                   <input type="text" required formControlName="condoNumber" />
-                  <span class="highlight"></span>
-                  <span class="bar"></span>
+                  <span class="highlight"></span> <span class="bar"></span>
                   <label>Complemento</label>
                 </div>
-                <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                        providerCheckout.formBeforeCheckout.controls['condoNumber'].errors">
-                  <div *ngIf="providerCheckout.formBeforeCheckout.controls['condoNumber'].errors['required']"
-                      class="alert alert-danger" role="alert">
+                <div
+                  class="errors-feedback"
+                  *ngIf="
+                    providerCheckout.formBeforeCheckoutSubmitted &&
+                    providerCheckout.formBeforeCheckout.controls['condoNumber']
+                      .errors
+                  "
+                >
+                  <div
+                    *ngIf="
+                      providerCheckout.formBeforeCheckout.controls[
+                        'condoNumber'
+                      ].errors['required']
+                    "
+                    class="alert alert-danger"
+                    role="alert"
+                  >
                     Complemento é obrigatório
                   </div>
                 </div>
@@ -138,38 +239,69 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfCustomer">
                     <option value="">Já é client LPNet?</option>
-                    <option value="new">{{ providerCheckout.customer_types.new }}</option>
-                    <option value="internet_fibra">{{ providerCheckout.customer_types.internet_fibra }}</option>
-                    <option value="internet_radio">{{ providerCheckout.customer_types.internet_radio }}</option>
+                    <option value="new">{{
+                      providerCheckout.customer_types.new
+                    }}</option>
+                    <option value="internet_fibra">{{
+                      providerCheckout.customer_types.internet_fibra
+                    }}</option>
+                    <option value="internet_radio">{{
+                      providerCheckout.customer_types.internet_radio
+                    }}</option>
                   </select>
-                  <div class="errors-feedback" *ngIf="providerCheckout.formBeforeCheckoutSubmitted &&
-                        providerCheckout.formBeforeCheckout.controls['typeOfCustomer'].errors">
-                    <div *ngIf="providerCheckout.formBeforeCheckout.controls['typeOfCustomer'].errors['required']"
-                      class="alert alert-danger" role="alert">
+                  <div
+                    class="errors-feedback"
+                    *ngIf="
+                      providerCheckout.formBeforeCheckoutSubmitted &&
+                      providerCheckout.formBeforeCheckout.controls[
+                        'typeOfCustomer'
+                      ].errors
+                    "
+                  >
+                    <div
+                      *ngIf="
+                        providerCheckout.formBeforeCheckout.controls[
+                          'typeOfCustomer'
+                        ].errors['required']
+                      "
+                      class="alert alert-danger"
+                      role="alert"
+                    >
                       Esse campo é obrigatório
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
 
             <div class="row">
               <div class="col">
-                <button class="btn btn-primary btn-block p-2" [disabled]="providerCheckout.formBeforeCheckoutLoading || !providerCheckout.formBeforeCheckout.valid"
-                  *ngIf="providerCheckout?.city?.id;else invalid_city">
-                  CONTINUAR ASSINATURA EM {{providerCheckout?.city?.name.toUpperCase()}}
-                  <i class="fas fa-spinner fa-pulse" *ngIf="providerCheckout.formBeforeCheckoutLoading"></i>
+                <button
+                  class="btn btn-primary btn-block p-2"
+                  [disabled]="
+                    providerCheckout.formBeforeCheckoutLoading ||
+                    !providerCheckout.formBeforeCheckout.valid
+                  "
+                  *ngIf="providerCheckout?.city?.id; else invalid_city"
+                >
+                  CONTINUAR ASSINATURA EM
+                  {{ providerCheckout?.city?.name.toUpperCase() }}
+                  <i
+                    class="fas fa-spinner fa-pulse"
+                    *ngIf="providerCheckout.formBeforeCheckoutLoading"
+                  ></i>
                 </button>
-                <ng-template #invalid_city><p class="text-center" >Desculpe, não temos atendemos a cidade de {{providerCheckout?.city?.name}}</p></ng-template>
+                <ng-template #invalid_city
+                  ><p class="text-center">
+                    Desculpe, não temos atendemos a cidade de
+                    {{ providerCheckout?.city?.name }}
+                  </p></ng-template
+                >
               </div>
             </div>
-
           </form>
         </div>
       </div>
-
-
     </div>
   </div>
 </div>

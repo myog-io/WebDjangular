@@ -1,18 +1,16 @@
 import { JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
-import { Validators, FormGroup, FormArray } from "@angular/forms";
+import { Validators, FormGroup, FormArray } from '@angular/forms';
 import { MenuItemModel } from './MenuItem.model';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 
-
-
 @JsonApiModelConfig({
   type: 'Menu',
-  modelEndpointUrl: 'cms/menu',
+  modelEndpointUrl: 'cms/menu'
 })
 export class MenuModel extends AbstractModel {
-  include = "menu_item"
+  include = 'menu_item';
   @Attribute()
   id: string;
 
@@ -47,7 +45,6 @@ export class MenuModel extends AbstractModel {
   @HasMany()
   menu_item: MenuItemModel[];
 
-
   @Attribute()
   created: Date;
 
@@ -60,24 +57,22 @@ export class MenuModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
+  set pk(value) {}
 
-  }
-
-  arrangeItems(){
-    this.menu_item.sort((a,b)=> a.position - b.position);
+  arrangeItems() {
+    this.menu_item.sort((a, b) => a.position - b.position);
     for (let i = 0; i < this.menu_item.length; i++) {
-      if (this.menu_item[i].children.length > 0){
+      if (this.menu_item[i].children.length > 0) {
         this.menu_item[i].arrangeItems();
       }
     }
   }
 
-  getList(){
-    const list = []
+  getList() {
+    const list = [];
     for (let i = 0; i < this.menu_item.length; i++) {
       const element = this.menu_item[i];
-      if(!element.parent){
+      if (!element.parent) {
         list.push(element.getList());
       }
     }
@@ -85,6 +80,5 @@ export class MenuModel extends AbstractModel {
   }
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;
-  }
+  };
 }
-

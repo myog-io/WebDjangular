@@ -33,7 +33,7 @@ export enum OrderEventTypes {
 
   TRACKING_UPDATED = 'tracking_updated',
 
-  NOTE_ADDED = 'note_added',
+  NOTE_ADDED = 'note_added'
 }
 
 export enum OrderEventsEmails {
@@ -42,4 +42,3 @@ export enum OrderEventsEmails {
   SHIPPING = 'shipping_confirmation',
   FULFILLMENT = 'fulfillment_confirmation'
 }
-

@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from '../../interfaces/form-config.interface';
 import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-select',
   templateUrl: 'select.component.html',
-  styleUrls: ['select.component.scss'],
+  styleUrls: ['select.component.scss']
 })
 export class BuilderFormSelectComponent implements BuilderFormField {
   config: BuilderFormFieldConfig;
@@ -15,5 +18,4 @@ export class BuilderFormSelectComponent implements BuilderFormField {
   ngOnInit() {
     this.options = this.config.options || [];
   }
-
 }

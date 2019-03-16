@@ -1,12 +1,18 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, NestedAttribute} from 'angular2-jsonapi';
-import {AbstractModel, AddressModel} from '@core/data/src/lib/models';
-import {PermissionModel, UserModel} from '@core/users/src/lib/models';
-import {CartItemModel} from "@plugins/store/src/lib/data/models/CartItem.model";
-import {CartTermModel} from "@plugins/store/src/lib/data/models/CartTerm.model";
+import {
+  Attribute,
+  BelongsTo,
+  HasMany,
+  JsonApiModelConfig,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { AbstractModel, AddressModel } from '@core/data/src/lib/models';
+import { PermissionModel, UserModel } from '@core/users/src/lib/models';
+import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
+import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model';
 
 @JsonApiModelConfig({
   type: 'Cart',
-  modelEndpointUrl: 'store/cart',
+  modelEndpointUrl: 'store/cart'
 })
 export class CartModel extends AbstractModel {
   public static include = 'billing_address,shipping_address';
@@ -52,7 +58,7 @@ export class CartModel extends AbstractModel {
 
   @Attribute()
   shipping_price: number;
-  
+
   @Attribute()
   taxes: number;
 
@@ -74,13 +80,9 @@ export class CartModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public toString = (): string => {
     return `${this.id}`;
   };
-
-
 }

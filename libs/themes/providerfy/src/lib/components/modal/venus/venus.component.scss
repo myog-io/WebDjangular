@@ -1,20 +1,18 @@
-
-:host{
-  background-image:url("../../../assets/images/modal_venus_bg.png");
+:host {
+  background-image: url('../../../assets/images/modal_venus_bg.png');
   background-position: right top;
-  background-size:cover;
+  background-size: cover;
   background-repeat: no-repeat;
 
   height: inherit;
 }
 
-
-.tv-channel-logo{
-  background-image:url("../../../assets/images/modal_venus_logo.png");
-  width:228px;
-  height:92px;
-  margin-bottom:20px;
+.tv-channel-logo {
+  background-image: url('../../../assets/images/modal_venus_logo.png');
+  width: 228px;
+  height: 92px;
+  margin-bottom: 20px;
 }
-p{
-  max-width:270px;
+p {
+  max-width: 270px;
 }

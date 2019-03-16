@@ -1,27 +1,45 @@
 <section [id]="title_id">
   <div class="container">
     <div class="col-md-12">
-      <h3 class="pt-4 pb-3 mb-0 text-center text-uppercase" [style.color]="titleColor" [style.background]="background">{{title}}</h3>
+      <h3
+        class="pt-4 pb-3 mb-0 text-center text-uppercase"
+        [style.color]="titleColor"
+        [style.background]="background"
+      >
+        {{ title }}
+      </h3>
       <ul *ngIf="cities.length > 0; else loading_holder">
-        <li class="pb-3" *ngFor="let city of cities;">
-          <i class="icon text-primary fas fa-map-marker-alt"></i> {{city.name}}
+        <li class="pb-3" *ngFor="let city of cities">
+          <i class="icon text-primary fas fa-map-marker-alt"></i>
+          {{ city.name }}
         </li>
       </ul>
     </div>
   </div>
 </section>
 <section class="city-map" *ngIf="show_map && !loading">
-
-  <agm-map [disableDefaultUI]="true" [styles]="styles" [zoom]="zoom" [latitude]="lat" [longitude]="lng"  id="AgmMap" #AgmMap>
-    <span *ngFor="let city of cities;">
-      <agm-marker *ngIf="city.lat && city.long" [latitude]="city.lat" [longitude]="city.long" [title]="city.name"
-        [markerClickable]="true" >
+  <agm-map
+    [disableDefaultUI]="true"
+    [styles]="styles"
+    [zoom]="zoom"
+    [latitude]="lat"
+    [longitude]="lng"
+    id="AgmMap"
+    #AgmMap
+  >
+    <span *ngFor="let city of cities">
+      <agm-marker
+        *ngIf="city.lat && city.long"
+        [latitude]="city.lat"
+        [longitude]="city.long"
+        [title]="city.name"
+        [markerClickable]="true"
+      >
         <agm-info-window>
-          <strong>{{city?.name}}</strong>
+          <strong>{{ city?.name }}</strong>
         </agm-info-window>
       </agm-marker>
     </span>
-
   </agm-map>
 </section>
 <ng-template #loading_holder>

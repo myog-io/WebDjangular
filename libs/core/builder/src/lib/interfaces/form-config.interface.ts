@@ -37,7 +37,6 @@ export interface BuilderFormCopyArray {
   field: string;
 }
 export interface BuilderFormValidatorMessages {
-
   error_required?: string;
   error_email?: string;
   error_date?: string;
@@ -54,7 +53,7 @@ export interface BuilderFormFieldConfig {
   label?: string;
   name?: string; // Maybe we wont use it
   form_group_name?: string;
-  model?: any;//AbstractModel;
+  model?: any; //AbstractModel;
   options?: any;
   options_include?: string;
   addTags?: boolean;
@@ -84,12 +83,10 @@ export interface BuilderFormFieldConfig {
   copyOptions?: BuilderFormCopyArray;
   json_logic_options_url?: string;
   validator_messages?: BuilderFormValidatorMessages;
-
 }
 
 export interface BuilderFormField {
   config: BuilderFormFieldConfig;
   group: FormGroup;
   relationshipUpdated?: EventEmitter<any>;
-
 }

@@ -5,12 +5,23 @@
     <h2>SEJA BEM VINDO!</h2>
 
     <div class="form-group" id="choosecity-formgroup">
-      <select class="form-control" formControlName="city" (change)="selectChange($event)" [multiple]="false">
-        <option *ngFor="let city of cities | async" [value]="city.id">{{ city.name }}</option>
+      <select
+        class="form-control"
+        formControlName="city"
+        (change)="selectChange($event)"
+        [multiple]="false"
+      >
+        <option *ngFor="let city of (cities | async)" [value]="city.id">{{
+          city.name
+        }}</option>
       </select>
-
     </div>
-    <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary text-white" id="chooseCitySubmit">
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="btn btn-outline-primary text-white"
+      id="chooseCitySubmit"
+    >
       Continuar
     </button>
   </form>

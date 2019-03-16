@@ -1,10 +1,7 @@
-import {
-  JsonApiModelConfig,
-  Attribute,
-} from 'angular2-jsonapi';
+import { JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
-import {Validators} from "@angular/forms";
+import { Validators } from '@angular/forms';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '../data-store';
@@ -13,7 +10,6 @@ import { SmartTableSettings } from '../data-store';
   type: 'core_website'
 })
 export class CoreWebsiteModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -24,10 +20,7 @@ export class CoreWebsiteModel extends AbstractModel {
     label: 'Protocol',
     wrapper_class: 'col-4',
     value: 'http',
-    options: [
-      {id:'http', name: 'HTTP'},
-      {id:'https', name: 'HTTPS'},
-    ]
+    options: [{ id: 'http', name: 'HTTP' }, { id: 'https', name: 'HTTPS' }]
   })
   protocol: string;
 
@@ -50,15 +43,11 @@ export class CoreWebsiteModel extends AbstractModel {
   })
   code: string;
 
- 
-  
   @Attribute()
   created: Date;
 
   @Attribute()
   updated: Date;
-
-
 
   permissions: PermissionModel[];
 
@@ -68,7 +57,7 @@ export class CoreWebsiteModel extends AbstractModel {
 
   set pk(value) {}
 
-   public static smartTableOptions: SmartTableSettings = {
+  public static smartTableOptions: SmartTableSettings = {
     columns: {
       protocol: {
         title: 'Protocolo',
@@ -81,8 +70,7 @@ export class CoreWebsiteModel extends AbstractModel {
       code: {
         title: 'Code',
         type: 'text'
-      },
+      }
     }
   };
-
 }

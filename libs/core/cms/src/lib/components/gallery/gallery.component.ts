@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'image-gallery',
   styleUrls: ['gallery.component.scss'],
-  templateUrl: './gallery.component.html',
+  templateUrl: './gallery.component.html'
 })
 export class CoreCmsGalleryComponent implements OnInit {
   @Input() arrows: boolean = false;
@@ -18,14 +18,11 @@ export class CoreCmsGalleryComponent implements OnInit {
   public widthL = '1200px';
 
   image_array: any[];
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    
     this.image_array = JSON.parse(this.images);
-    if (this.image_array){
+    if (this.image_array) {
       if (this.arrows === null) {
         this.arrows = this.image_array.length > 1;
       }
@@ -41,5 +38,4 @@ export class CoreCmsGalleryComponent implements OnInit {
       this.router.navigate([image.url]);
     }
   }
-
 }

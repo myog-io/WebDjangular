@@ -14,8 +14,8 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   @Input() sku_tv: string;
   @Input() sku_phone: string;
   @Input() total: number | string;
-  @Input() internet_call = "2X VELOCIDADE";
-  @Input() tv_call = "50% DESCONTO";
+  @Input() internet_call = '2X VELOCIDADE';
+  @Input() tv_call = '50% DESCONTO';
 
   loading = true;
   net: ProductModel;
@@ -24,23 +24,25 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   sub: Subscription;
   full_price: number | string;
 
-  constructor(private datastore: WebAngularDataStore) { }
+  constructor(private datastore: WebAngularDataStore) {}
 
   ngOnInit() {
     let options = {};
     options['page'] = { number: 1, size: 3 };
     let skus = [];
-    if (this.sku_net) skus.push(this.sku_net)
-    if (this.sku_tv) skus.push(this.sku_tv)
-    if (this.sku_phone) skus.push(this.sku_phone)
+    if (this.sku_net) skus.push(this.sku_net);
+    if (this.sku_tv) skus.push(this.sku_tv);
+    if (this.sku_phone) skus.push(this.sku_phone);
 
-    options['sku__in'] = skus.join(",");
-    this.sub = this.datastore.findAll(ProductModel, options).subscribe((query) => {
-      let entries: ProductModel[] = query.getModels();
-      this.net = entries.find((product) => product.sku == this.sku_net);
-      this.tv = entries.find((product) => product.sku == this.sku_tv);
-      this.phone = entries.find((product) => product.sku == this.sku_phone);
-      let price = 0;
+    options['sku__in'] = skus.join(',');
+    this.sub = this.datastore
+      .findAll(ProductModel, options)
+      .subscribe(query => {
+        let entries: ProductModel[] = query.getModels();
+        this.net = entries.find(product => product.sku == this.sku_net);
+        this.tv = entries.find(product => product.sku == this.sku_tv);
+        this.phone = entries.find(product => product.sku == this.sku_phone);
+        let price = 0;
         if (this.net && this.net.price) {
           price += parseFloat(this.net.price.toString());
         }
@@ -50,18 +52,17 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
         if (this.phone && this.phone.price) {
           price += parseFloat(this.phone.price.toString());
         }
-        
-      
-      if (!this.total) {
-        this.total = price.toFixed(2);
-      }
-      this.full_price = price.toFixed(2);
-      //this.total = (<number>this.total).toFixed(2);
-      // TODO: Discount Should be based on the cart, but for now is very hard to do this
-      //total = "133.90"
-      
-      this.loading = false;
-    });
+
+        if (!this.total) {
+          this.total = price.toFixed(2);
+        }
+        this.full_price = price.toFixed(2);
+        //this.total = (<number>this.total).toFixed(2);
+        // TODO: Discount Should be based on the cart, but for now is very hard to do this
+        //total = "133.90"
+
+        this.loading = false;
+      });
   }
   ngOnDestroy() {
     if (this.sub) {
@@ -69,5 +70,4 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
       this.sub = null;
     }
   }
-
 }

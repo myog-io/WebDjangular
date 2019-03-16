@@ -1,10 +1,15 @@
-import { Component, OnInit, PLATFORM_ID, Inject, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  PLATFORM_ID,
+  Inject,
+  ViewEncapsulation
+} from '@angular/core';
 
-import { ThemeProviderfyModalChoosecityComponent } from "../../modal/choosecity/choosecity.component";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ThemeProviderfyModalChoosecityComponent } from '../../modal/choosecity/choosecity.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientUserService } from '@core/services/src/lib/client-user.service';
 import { isPlatformBrowser } from '@angular/common';
-
 
 @Component({
   selector: 'theme-providerfy-top-header',
@@ -34,13 +39,14 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
       this.plan_type = this.clientUserService.clientUser.data['plan_type'];
     } else {
       this.plan_type = this.plan_type_default;
-      this.clientUserService.clientUser.data['plan_type'] = this.plan_type_default;
+      this.clientUserService.clientUser.data[
+        'plan_type'
+      ] = this.plan_type_default;
       this.clientUserService.updateCookie();
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   openModalChooseCity() {
     if (this.testBrowser) {
@@ -62,5 +68,4 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
     this.clientUserService.clientUser.data['plan_type'] = value;
     this.clientUserService.updateCookie();
   }
-
 }

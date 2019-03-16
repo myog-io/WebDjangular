@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ProviderCheckoutService} from "../../../../data/services/provider-checkout.service";
+import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProviderCheckoutService } from '../../../../data/services/provider-checkout.service';
 
 @Component({
   selector: 'plugin-provider-checkout-plan-television',
@@ -8,18 +8,8 @@ import {ProviderCheckoutService} from "../../../../data/services/provider-checko
   styleUrls: ['./television.component.scss']
 })
 export class PluginProviderCheckoutPlanTelevisionComponent {
-
-  constructor(public providerCheckout: ProviderCheckoutService,
-              public modalService: NgbModal) {
-  }
-
-
+  constructor(
+    public providerCheckout: ProviderCheckoutService,
+    public modalService: NgbModal
+  ) {}
 }
-
-
-
-
-
-
-
-

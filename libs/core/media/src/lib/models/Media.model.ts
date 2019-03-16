@@ -8,7 +8,6 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SafeUrl } from '@angular/platform-browser';
 
-
 @JsonApiModelConfig({
   type: 'media'
 })
@@ -17,8 +16,6 @@ export class MediaModel extends AbstractModel {
     super(_datastore, data);
   }
 
-
-  
   @Attribute()
   id: string;
 
@@ -56,8 +53,8 @@ export class MediaModel extends AbstractModel {
   }
   get safeFileUrl(): SafeUrl {
     // For some reason the file is comming wiwth the domain from the API, and we dont want it!
-    return this.file.replace("http://localhost:4201", "")
+    return this.file.replace('http://localhost:4201', '');
     //return this._sanitizer.bypassSecurityTrustUrl(this.file);
   }
-  set pk(value) { }
+  set pk(value) {}
 }

@@ -2,23 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreAdminRoutingModule } from './store-admin-routing.module';
 
-const MODULES = [
-  CommonModule,
-  StoreAdminRoutingModule,
-];
+const MODULES = [CommonModule, StoreAdminRoutingModule];
 
-const COMPONENTS = [
-
-];
-
+const COMPONENTS = [];
 
 @NgModule({
   imports: [...MODULES],
-  exports: [
-    ...COMPONENTS,
-    ...MODULES
-  ],
+  exports: [...COMPONENTS, ...MODULES],
   declarations: [...COMPONENTS]
 })
-export class PluginStoreAdminModule {
-}
+export class PluginStoreAdminModule {}

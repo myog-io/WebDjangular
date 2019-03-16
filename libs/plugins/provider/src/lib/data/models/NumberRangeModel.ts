@@ -1,8 +1,7 @@
-import { Attribute, BelongsTo, JsonApiModelConfig } from "angular2-jsonapi";
-import { AbstractModel } from "@core/data/src/lib/models";
-import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
-import { SmartTableSettings } from "@core/data/src/lib/data-store";
-
+import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 export interface NumberRangeInterface {
   start: number;
@@ -11,17 +10,16 @@ export interface NumberRangeInterface {
 
 @JsonApiModelConfig({
   type: 'NumberRange',
-  modelEndpointUrl: 'provider/number-range',
+  modelEndpointUrl: 'provider/number-range'
 })
 export class NumberRangeModel extends AbstractModel {
-
   @Attribute()
   @ExtraOptions({
     type: 'text',
     inputType: 'number',
     label: 'Start',
     name: 'start',
-    placeholder: 'Start of the Range',
+    placeholder: 'Start of the Range'
   })
   start: string;
 
@@ -31,13 +29,13 @@ export class NumberRangeModel extends AbstractModel {
     inputType: 'number',
     label: 'End',
     name: 'end',
-    placeholder: 'End of the Range',
+    placeholder: 'End of the Range'
   })
   end: string;
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'hidden',
+    type: 'hidden'
   })
   street: number;
 
@@ -45,9 +43,7 @@ export class NumberRangeModel extends AbstractModel {
     return null;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public toString = (): string => {
     return `Start:${this.start} End:${this.end}`;
@@ -57,12 +53,12 @@ export class NumberRangeModel extends AbstractModel {
     columns: {
       start: {
         title: 'Start',
-        type: 'text',
+        type: 'text'
       },
       end: {
         title: 'End',
-        type: 'text',
-      },
-    },
+        type: 'text'
+      }
+    }
   };
 }

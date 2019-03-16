@@ -9,7 +9,12 @@ import { NbLogoutComponent } from './logout/logout.component';
 import { NbAuthComponent } from './auth.component';
 import { NbRequestPasswordComponent } from './request-password/request-password.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NbAlertModule, NbCheckboxModule, NbLayoutModule, NbCardModule } from '@nebular/theme';
+import {
+  NbAlertModule,
+  NbCheckboxModule,
+  NbLayoutModule,
+  NbCardModule
+} from '@nebular/theme';
 import { RouterModule } from '@angular/router';
 
 const COMPONENTS = [
@@ -17,11 +22,11 @@ const COMPONENTS = [
   NbAuthBlockComponent,
   NbLoginComponent,
   NbRequestPasswordComponent,
-  
+
   NbResetPasswordComponent,
   NbRegisterComponent,
   NbLogoutComponent
-]
+];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -33,7 +38,7 @@ const COMPONENTS = [
     NbAlertModule,
     NbCheckboxModule,
     NbLayoutModule,
-    NbCardModule,
+    NbCardModule
   ],
   exports: [...COMPONENTS]
 })

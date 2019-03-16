@@ -1,14 +1,18 @@
-import { Attribute, BelongsTo, HasMany, JsonApiModelConfig } from "angular2-jsonapi";
-import { NumberRangeModel } from "./NumberRangeModel";
-import { FormArray, Validators } from "@angular/forms";
-import { AbstractModel } from "@core/data/src/lib/models";
-import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
-import { SmartTableSettings } from "@core/data/src/lib/data-store";
-
+import {
+  Attribute,
+  BelongsTo,
+  HasMany,
+  JsonApiModelConfig
+} from 'angular2-jsonapi';
+import { NumberRangeModel } from './NumberRangeModel';
+import { FormArray, Validators } from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'Street',
-  modelEndpointUrl: 'provider/street',
+  modelEndpointUrl: 'provider/street'
 })
 export class StreetModel extends AbstractModel {
   @Attribute()
@@ -16,7 +20,7 @@ export class StreetModel extends AbstractModel {
     validators: [Validators.required],
     type: 'text',
     label: 'Name',
-    placeholder: 'Street Name',
+    placeholder: 'Street Name'
   })
   name: string;
 
@@ -27,7 +31,7 @@ export class StreetModel extends AbstractModel {
     label: 'Short Name',
     name: 'short_name',
     wrapper_class: 'col-12',
-    placeholder: 'Street Short Name',
+    placeholder: 'Street Short Name'
   })
   short_name: string;
 
@@ -36,23 +40,21 @@ export class StreetModel extends AbstractModel {
     type: 'formArray',
     formType: FormArray,
     label: 'numbers',
-    model: NumberRangeModel,
+    model: NumberRangeModel
   })
   numbers: NumberRangeModel[];
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'hidden',
+    type: 'hidden'
   })
   city: number;
 
   get pk() {
-    return null
+    return null;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public toString = (): string => {
     return `Start:${this.start} End:${this.end}`;
@@ -62,12 +64,12 @@ export class StreetModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       short_name: {
         title: 'Short Name',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
 }

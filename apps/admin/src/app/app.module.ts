@@ -1,21 +1,17 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { NgModule, APP_INITIALIZER } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-import { NbToastrModule, NbGlobalPhysicalPosition } from "@nebular/theme";
-import { CookieService } from "ngx-cookie-service";
-import { ThemeModule } from "@core/admin/src/lib/@theme";
-import { CoreAdminModule } from "@core/admin/src/lib/core-admin.module";
-import { AppHttpInterceptor } from "@core/interceptors/src/lib/apphttp.interceptor";
-import { CoreAuthModule } from "@core/auth/src/lib/core-auth.module";
-
-
-
-
+import { NbToastrModule, NbGlobalPhysicalPosition } from '@nebular/theme';
+import { CookieService } from 'ngx-cookie-service';
+import { ThemeModule } from '@core/admin/src/lib/@theme';
+import { CoreAdminModule } from '@core/admin/src/lib/core-admin.module';
+import { AppHttpInterceptor } from '@core/interceptors/src/lib/apphttp.interceptor';
+import { CoreAuthModule } from '@core/auth/src/lib/core-auth.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,9 +29,8 @@ import { CoreAuthModule } from "@core/auth/src/lib/core-auth.module";
       destroyByClick: true,
       duration: 3000,
       preventDuplicates: false,
-      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
-
-    }),
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT
+    })
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -47,4 +42,4 @@ import { CoreAuthModule } from "@core/auth/src/lib/core-auth.module";
     }
   ]
 })
-export class AppModule { }
+export class AppModule {}

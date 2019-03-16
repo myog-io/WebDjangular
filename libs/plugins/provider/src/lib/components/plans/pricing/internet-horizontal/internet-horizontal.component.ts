@@ -10,10 +10,11 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
   styleUrls: ['./internet-horizontal.component.scss']
 })
 export class PluginProviderPricingInternetHorizontalComponent extends PluginProviderAbstractPricingComponent {
-  @Input() discount:number = 0
+  @Input() discount: number = 0;
   constructor(
     public datastore: WebAngularDataStore,
-    public modalService: NgbModal) {
-    super(datastore, modalService)
+    public modalService: NgbModal
+  ) {
+    super(datastore, modalService);
   }
 }

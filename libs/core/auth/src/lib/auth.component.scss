@@ -14,7 +14,7 @@
     a {
       text-decoration: none;
       i {
-        @include responsive-font-size( 2rem);
+        @include responsive-font-size(2rem);
         font-weight: bold;
       }
     }

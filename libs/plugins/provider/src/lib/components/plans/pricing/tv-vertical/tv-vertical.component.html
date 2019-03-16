@@ -1,26 +1,41 @@
-<div class="row" *ngIf="!loading;else loading_holder">
-  <div [class]="class" *ngFor="let plan of entries;">
+<div class="row" *ngIf="!loading; else loading_holder">
+  <div [class]="class" *ngFor="let plan of entries">
     <ng-template #content let-modal>
       <div class="modal-header">
         <h4 class="modal-title" [innerHTML]="plan?.name"></h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" [innerHTML]="plan?.description">
-      </div>
-    </ng-template><!-- END MODAL -->
+      <div
+        class="modal-body"
+        [innerHTML]="plan?.description"
+      ></div> </ng-template
+    ><!-- END MODAL -->
     <div class="card mt-1 mb-1">
       <div class="card-header">
-        <div class="corner-ribbon top-right" *ngIf="plan?.data?.is_best_seller == 1">Mais vendido</div>
-        <h5 class="plan-title text-center pt-3 pb-3"
-          [innerHTML]="plan?.data?.display_title ? plan?.data?.display_title : plan?.name">
-        </h5>
+        <div
+          class="corner-ribbon top-right"
+          *ngIf="plan?.data?.is_best_seller == 1"
+        >
+          Mais vendido
+        </div>
+        <h5
+          class="plan-title text-center pt-3 pb-3"
+          [innerHTML]="
+            plan?.data?.display_title ? plan?.data?.display_title : plan?.name
+          "
+        ></h5>
         <div class="plan-channels">
-          <span class="amount">{{plan?.channel_count}}</span> Total de canais
+          <span class="amount">{{ plan?.channel_count }}</span> Total de canais
         </div>
         <div class="plan-channels-hd">
-          <span class="amount">{{plan?.channel_hd_count}}</span> Canais HD
+          <span class="amount">{{ plan?.channel_hd_count }}</span> Canais HD
         </div>
       </div>
       <div class="card-body p-0 ml-1 mr-1 ">
@@ -28,11 +43,20 @@
           <div class="col">
             <ul class="pt-3 pb-1 pl-2 mb-0">
               <li class="mb-1">
-                <i [class]="plan?.data?.addon_icon_1 + ' mr-2'" aria-hidden="true"></i>
+                <i
+                  [class]="plan?.data?.addon_icon_1 + ' mr-2'"
+                  aria-hidden="true"
+                ></i>
                 <p [innerHTML]="plan?.data?.addon_text_1"></p>
               </li>
-              <li class="mb-1 can-click" (click)="openChannelListModel(plan.id)">
-                <i class="fa fa-2x icon icon-channels mr-2" aria-hidden="true"></i>
+              <li
+                class="mb-1 can-click"
+                (click)="openChannelListModel(plan.id)"
+              >
+                <i
+                  class="fa fa-2x icon icon-channels mr-2"
+                  aria-hidden="true"
+                ></i>
                 <p>Ver lista de canais</p>
               </li>
               <!--
@@ -52,32 +76,40 @@
         <div class="row">
           <div class="col">
             <p class="plan-price text-center mb-1">
-              <span class="currency-unit">R$ </span> <span class="price text-black">{{ plan?.price }}</span>
+              <span class="currency-unit">R$ </span>
+              <span class="price text-black">{{ plan?.price }}</span>
             </p>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <p class="text-center m-1">
-              <a [routerLink]="['/assine']" [queryParams]="{tv: plan?.sku}" class="btn btn-outline-primary pl-3 pr-3"> Assine já </a>
+              <a
+                [routerLink]="['/assine']"
+                [queryParams]="{ tv: plan?.sku }"
+                class="btn btn-outline-primary pl-3 pr-3"
+              >
+                Assine já
+              </a>
             </p>
           </div>
         </div>
         <div class="row">
           <div class="col">
             <p class="text-center m-1">
-              <a href="javascript:void(0);" (click)="openModal(content)" class="more-info">INFORMAÇÕES ADICIONAIS</a>
+              <a
+                href="javascript:void(0);"
+                (click)="openModal(content)"
+                class="more-info"
+                >INFORMAÇÕES ADICIONAIS</a
+              >
             </p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="right-panel">
-
-    </div>
-
-
+    <div class="right-panel"></div>
   </div>
 </div>
 <ng-template #loading_holder>
@@ -85,4 +117,3 @@
     <i class="fas fa-spinner fa-spin fa-5x"></i>
   </div>
 </ng-template>
-

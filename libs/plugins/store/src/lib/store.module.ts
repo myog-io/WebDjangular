@@ -1,27 +1,14 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { PluginStoreComponent } from './store.component';
 
+const MODULES = [CommonModule];
 
-
-const MODULES = [
-  CommonModule,
-
-];
-
-const COMPONENTS = [
-  PluginStoreComponent,
-
-];
-
+const COMPONENTS = [PluginStoreComponent];
 
 @NgModule({
   imports: [...MODULES],
-  exports: [
-    ...COMPONENTS,
-    ...MODULES
-  ],
+  exports: [...COMPONENTS, ...MODULES],
   declarations: [...COMPONENTS]
 })
-export class PluginStoreModule {
-}
+export class PluginStoreModule {}

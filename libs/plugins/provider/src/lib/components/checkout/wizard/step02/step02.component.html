@@ -21,15 +21,20 @@
         </div>
 
         <div class="row">
-          <div class="col-12">
-            <h6>Como quer receber a fatura?</h6>
-          </div>
+          <div class="col-12"><h6>Como quer receber a fatura?</h6></div>
           <div class="col-12">
             <div class="custom-control custom-radio mb-1">
-              <input type="radio" id="paymentTypeMail"
-                     formControlName="paymentType"
-                     name="paymentType" class="custom-control-input" value="mail">
-              <label class="custom-control-label" for="paymentTypeMail">Por Correios</label>
+              <input
+                type="radio"
+                id="paymentTypeMail"
+                formControlName="paymentType"
+                name="paymentType"
+                class="custom-control-input"
+                value="mail"
+              />
+              <label class="custom-control-label" for="paymentTypeMail"
+                >Por Correios</label
+              >
             </div>
             <div class="row">
               <div class="col-12">
@@ -37,12 +42,16 @@
                   <div class="card-body py-1">
                     <div class="row">
                       <p class="mb-0 col-12">
-                        {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
-                        {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
+                        {{ providerCheckout.address.first_name }}
+                        {{ providerCheckout.address.last_name }} <br />
+                        {{ providerCheckout.address.street_address_1 }},
+                        {{ providerCheckout.address.number }}
                         <span *ngIf="providerCheckout.address.street_address_2">
                           - {{ providerCheckout.address.street_address_2 }}
-                        </span> <br>
-                        {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
+                        </span>
+                        <br />
+                        {{ providerCheckout.address.city }},
+                        {{ providerCheckout.address.state }}
                         {{ providerCheckout.address.postal_code }}
                       </p>
                     </div>
@@ -52,11 +61,16 @@
             </div>
 
             <div class="custom-control custom-radio mt-2 mb-1">
-              <input type="radio" id="paymentTypeEmail"
-                     formControlName="paymentType"
-                     name="paymentType" class="custom-control-input" value="email">
-              <label class="custom-control-label" for="paymentTypeEmail">Por Email
-                <small>(R$5,00 de desconto)</small>
+              <input
+                type="radio"
+                id="paymentTypeEmail"
+                formControlName="paymentType"
+                name="paymentType"
+                class="custom-control-input"
+                value="email"
+              />
+              <label class="custom-control-label" for="paymentTypeEmail"
+                >Por Email <small>(R$5,00 de desconto)</small>
               </label>
             </div>
             <div class="row">
@@ -70,17 +84,19 @@
                     </div>
                   </div>
                 </div>
-                <br>
-                <p class="text-primary" *ngIf="formWizardStep02.get('paymentType').value == 'email'">
-                  <b>IMPORTANTE:</b> Você não receberá faturas por correio.
-                  Este e-mail será utilizado para enviar qualquer
-                  informação da LPNet. Por favor verifique se nossos
-                  emails chegarão corretamente em sua caixa de entrada.
-                  Se não chegaram, verifique sua caixa de spam.
+                <br />
+                <p
+                  class="text-primary"
+                  *ngIf="formWizardStep02.get('paymentType').value == 'email'"
+                >
+                  <b>IMPORTANTE:</b> Você não receberá faturas por correio. Este
+                  e-mail será utilizado para enviar qualquer informação da
+                  LPNet. Por favor verifique se nossos emails chegarão
+                  corretamente em sua caixa de entrada. Se não chegaram,
+                  verifique sua caixa de spam.
                 </p>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -94,35 +110,47 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="custom-control custom-checkbox mt-2 mb-1"  *ngFor="let term of terms">
-              <input type="checkbox" class="custom-control-input"
-                [formControlName]="'term-'+term.id"
-                [id]="'term-'+term.id">
-              <label class="custom-control-label" [for]="'term-'+term.id" >
+            <div
+              class="custom-control custom-checkbox mt-2 mb-1"
+              *ngFor="let term of terms"
+            >
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [formControlName]="'term-' + term.id"
+                [id]="'term-' + term.id"
+              />
+              <label class="custom-control-label" [for]="'term-' + term.id">
                 <span [innerHTML]="term.content"></span>
               </label>
             </div>
             <p>
-              O não cumprimento do prazo de Fidelização acarretará na perda da Bonificação
-              e como base de cálculo rescisório será utilizado o valor integral do Serviço de Instalação.
+              O não cumprimento do prazo de Fidelização acarretará na perda da
+              Bonificação e como base de cálculo rescisório será utilizado o
+              valor integral do Serviço de Instalação.
             </p>
-            <hr class="my-2">
+            <hr class="my-2" />
           </div>
         </div>
 
         <div class="row mt-1">
-
           <div class="col-12">
-            <button class="btn btn-primary btn-block btn-large"
-              [disabled]="!formWizardStep02.valid || formWizardStep02Submitted ">
-              <span *ngIf="!formWizardStep02Submitted">Confirmar assinatura</span>
-              <span *ngIf="formWizardStep02Submitted"><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
+            <button
+              class="btn btn-primary btn-block btn-large"
+              [disabled]="!formWizardStep02.valid || formWizardStep02Submitted"
+            >
+              <span *ngIf="!formWizardStep02Submitted"
+                >Confirmar assinatura</span
+              >
+              <span *ngIf="formWizardStep02Submitted"
+                ><i class="fa fa-spinner fa-pulse"></i> Carregando</span
+              >
             </button>
           </div>
           <div class="col-10 mt-2 mx-auto">
             <p>
-              Ao prosseguir, você confirma sua intenção de assinar
-              o plano selecionado e concorda com os nossos termos de uso.
+              Ao prosseguir, você confirma sua intenção de assinar o plano
+              selecionado e concorda com os nossos termos de uso.
             </p>
           </div>
         </div>
@@ -130,16 +158,22 @@
         <div class="row mt-3">
           <div class="col-9">
             <div class="form-group">
-              <input type="text" readonly id="token-full-url"
-                [value]="providerCheckout.getTokenFullURL()" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                readonly
+                id="token-full-url"
+                [value]="providerCheckout.getTokenFullURL()"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Link do carrinho</label>
             </div>
           </div>
           <div class="col-3">
-            <button class="btn btn-primary btn-sm btn-block" type="button"
-              (click)="providerCheckout.onCopyTokenFullURL($event)" >
+            <button
+              class="btn btn-primary btn-sm btn-block"
+              type="button"
+              (click)="providerCheckout.onCopyTokenFullURL($event)"
+            >
               <i class="far fa-copy"></i>
               <span *ngIf="!providerCheckout.copying"> Copiar </span>
               <span *ngIf="providerCheckout.copying"> Copiado </span>
@@ -149,15 +183,14 @@
 
         <div class="row">
           <div class="col-12 col-md-6">
-            <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details text-und"><u>Limpar carrinho</u></a>
+            <a
+              (click)="providerCheckout.restartProviderCheckout()"
+              class="btn-summary-details text-und"
+              ><u>Limpar carrinho</u></a
+            >
           </div>
         </div>
-
       </div>
-
-
     </div>
   </form>
 </div>
-
-

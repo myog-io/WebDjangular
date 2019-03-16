@@ -8,11 +8,7 @@ import { CommonModule } from '@angular/common';
 import { BuilderFormModule } from '../builder-form.module';
 import { ThemeModule } from '@core/admin/src/lib/@theme';
 
-
-const COMPONENTS = [
-    ScaffoldComponent,
-    ScaffoldEditComponent,
-];
+const COMPONENTS = [ScaffoldComponent, ScaffoldEditComponent];
 
 @NgModule({
   imports: [
@@ -21,15 +17,9 @@ const COMPONENTS = [
     Ng2SmartTableModule,
     ReactiveFormsModule,
     CommonModule,
-    BuilderFormModule,
+    BuilderFormModule
   ],
-  declarations: [
-    ...COMPONENTS
-  ],
-  entryComponents: [
-  ]
+  declarations: [...COMPONENTS],
+  entryComponents: []
 })
-export class ScaffoldModule {
-
-}
-
+export class ScaffoldModule {}

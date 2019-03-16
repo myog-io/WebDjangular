@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
-import { NbToastrService } from "@nebular/theme";
-import { JsonApiQueryData } from "angular2-jsonapi";
-import { WebAngularDataStore } from "@core/services/src/lib/WebAngularDataStore.service";
-import { AbstractModel } from "@core/data/src/lib/models";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { NbToastrService } from '@nebular/theme';
+import { JsonApiQueryData } from 'angular2-jsonapi';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { AbstractModel } from '@core/data/src/lib/models';
 
 @Component({
   selector: 'wda-export-json',
@@ -11,9 +11,8 @@ import { AbstractModel } from "@core/data/src/lib/models";
   templateUrl: 'export.component.html'
 })
 export class AdminExportComponent implements OnInit, OnDestroy {
-
   formGroup = this.fb.group({
-    model: [null, Validators.required],
+    model: [null, Validators.required]
   });
 
   public loading = true;
@@ -24,21 +23,20 @@ export class AdminExportComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private datastore: WebAngularDataStore,
-    private toaster: NbToastrService,
-  ) { }
-  ngOnDestroy() {
-
-  }
+    private toaster: NbToastrService
+  ) {}
+  ngOnDestroy() {}
   ngOnInit() {
-    this.models = Reflect.getMetadata('JsonApiDatastoreConfig', this.datastore.constructor).models;
+    this.models = Reflect.getMetadata(
+      'JsonApiDatastoreConfig',
+      this.datastore.constructor
+    ).models;
     for (const key in this.models) {
       if (this.models.hasOwnProperty(key)) {
-        this.options.push({ 'value': key, 'label': key });
-
+        this.options.push({ value: key, label: key });
       }
     }
     this.loading = false;
-
   }
   onSubmit() {
     this.promises = [];
@@ -46,7 +44,7 @@ export class AdminExportComponent implements OnInit, OnDestroy {
     if (this.formGroup.get('model').value) {
       const models = this.formGroup.get('model').value;
       const data = new Array();
-      this.loading = true
+      this.loading = true;
 
       for (let i = 0; i < models.length; i++) {
         const model_name = models[i];
@@ -56,44 +54,41 @@ export class AdminExportComponent implements OnInit, OnDestroy {
             value: 0,
             text: `${model_name}`
           });
-          this.promises.push(
-            this.loadDataRecursivly(model_name, i)
-          )
-          Promise.all(this.promises)
-            .then((results: any[]) => {
-              if (results.length == models.length) {
-                let new_data = [];
-                for (let k = 0; k < results.length; k++) {
-                  new_data = new_data.concat(results[k]);
-
-                }
-                this.loading = false;
-                this.saveTextAsFile(JSON.stringify(new_data, null, 2), `${models.join('-')}.json`);
+          this.promises.push(this.loadDataRecursivly(model_name, i));
+          Promise.all(this.promises).then((results: any[]) => {
+            if (results.length == models.length) {
+              let new_data = [];
+              for (let k = 0; k < results.length; k++) {
+                new_data = new_data.concat(results[k]);
               }
-            })
+              this.loading = false;
+              this.saveTextAsFile(
+                JSON.stringify(new_data, null, 2),
+                `${models.join('-')}.json`
+              );
+            }
+          });
         }
       }
     }
   }
   saveTextAsFile(data, filename) {
-
     if (!data) {
-      console.error('Console.save: No data')
+      console.error('Console.save: No data');
       return;
     }
 
-    if (!filename) filename = 'console.json'
+    if (!filename) filename = 'console.json';
 
     const blob = new Blob([data], { type: 'text/json' }),
       e = document.createEvent('MouseEvents'),
-      a = document.createElement('a')
+      a = document.createElement('a');
     // FOR IE:
     // Error window on universal server
     if (typeof window !== 'undefined') {
       if (window.navigator && window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(blob, filename);
-      }
-      else {
+      } else {
         const e = document.createEvent('MouseEvents'),
           a = document.createElement('a');
         a.download = filename;
@@ -105,16 +100,22 @@ export class AdminExportComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadDataRecursivly(model_name: string, index: number, page = 1): Promise<any> {
+  loadDataRecursivly(
+    model_name: string,
+    index: number,
+    page = 1
+  ): Promise<any> {
     // this.loading_percentage = (i * 100) / models.length;
     const model = this.models[model_name];
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(model,
-        {
+      this.datastore
+        .findAll(model, {
           page: { size: 50, number: page },
           include: model.include
-        }).subscribe((data: JsonApiQueryData<any>) => {
-          this.loading_infos[index].value = (page * 100) / data.getMeta().meta.pagination.pages;
+        })
+        .subscribe((data: JsonApiQueryData<any>) => {
+          this.loading_infos[index].value =
+            (page * 100) / data.getMeta().meta.pagination.pages;
           const array_data = [];
           const models = data.getModels();
           for (let i = 0; i < models.length; i++) {
@@ -126,19 +127,20 @@ export class AdminExportComponent implements OnInit, OnDestroy {
           if (page < data.getMeta().meta.pagination.pages) {
             page++;
 
-            this.loadDataRecursivly(model_name, index, page).then((data_array) => {
-              for (let j = 0; j < array_data.length; j++) {
-                const element = array_data[j];
-                data_array.push(element)
+            this.loadDataRecursivly(model_name, index, page).then(
+              data_array => {
+                for (let j = 0; j < array_data.length; j++) {
+                  const element = array_data[j];
+                  data_array.push(element);
+                }
+                resolve(data_array);
               }
-              resolve(data_array)
-            })
+            );
           } else {
-            resolve(array_data)
+            resolve(array_data);
           }
-
-        })
-    })
+        });
+    });
   }
 
   private toObject(entity: AbstractModel): any {
@@ -169,7 +171,6 @@ export class AdminExportComponent implements OnInit, OnDestroy {
         }
       }
     }
-
 
     const belongsTo = entity.belongsTo;
     if (belongsTo) {

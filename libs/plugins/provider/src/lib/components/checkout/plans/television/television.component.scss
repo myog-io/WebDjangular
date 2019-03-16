@@ -1,110 +1,105 @@
 @import '~rfs/sass/_rfs';
-:host{
-    padding-left:5px;
-    padding-right:5px;
-    margin-bottom:10px;
+:host {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-bottom: 10px;
 }
-.card{
+.card {
+  border: unset;
 
-    border:unset;
+  .card-header {
+    background: unset;
+    text-align: center;
+    padding: 0;
 
-    .card-header{
-        background: unset;
-        text-align:center;
-        padding:0;
-
-        .title-wrapper{
-            background: #00b9bd;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            font-family: "Boston", Arial, Helvetica, sans-serif;
-            color: #fff;
-            padding: 0;
-            height:80px;
-            line-height:80px;
-            vertical-align: text-bottom;
-            @include responsive-font-size(32px);
-            .prefix{
-                font-weight: 700;
-                color: #00b9bd;
-                background: #fff;
-                @include responsive-font-size( 24px);
-                padding: 0 5px;
-                border-radius: 5px;
-                vertical-align: top;
-            }
-            .title{
-
-                font-weight: 900;
-                padding-left: 5px;
-                vertical-align: top;
-            }
-        }
-
-        .price-wrapper{
-
-            background: #899299;
-            height:50px;
-            line-height: 50px;
-            text-align:center;
-
-            font-family: "Boston", Arial, Helvetica, sans-serif;
-            color:#fff;
-
-            .currency-unit{
-                @include responsive-font-size(16px);
-                font-weight: 600;
-                vertical-align: text-bottom;
-                padding-right:5px;
-
-            }
-            .price{
-                @include responsive-font-size(30px);
-                font-weight: 600;
-                vertical-align: text-bottom;
-            }
-            .periodicity{
-                @include responsive-font-size(16px);
-                font-weight: 400;
-                vertical-align: text-bottom;
-            }
-        }
+    .title-wrapper {
+      background: #00b9bd;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
+      color: #fff;
+      padding: 0;
+      height: 80px;
+      line-height: 80px;
+      vertical-align: text-bottom;
+      @include responsive-font-size(32px);
+      .prefix {
+        font-weight: 700;
+        color: #00b9bd;
+        background: #fff;
+        @include responsive-font-size(24px);
+        padding: 0 5px;
+        border-radius: 5px;
+        vertical-align: top;
+      }
+      .title {
+        font-weight: 900;
+        padding-left: 5px;
+        vertical-align: top;
+      }
     }
-    .card-body{
-        padding:0;
-        border:1px solid #f1f1f1;
 
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
+    .price-wrapper {
+      background: #899299;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
 
-        .features-wrapper{
-            list-style: none;
-            padding:10px 0;
-            margin: 0;
-        }
-        .select-wrapper{
-            text-align:center;
-            button{
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
+      color: #fff;
 
-            }
-        }
-        .more-info-wrapper{
-            text-align:center;
-            padding-top:10px;
-            padding-bottom:5px;
-            a{
-                font-family: "Boston", Arial, Helvetica, sans-serif;
-                @include responsive-font-size(11px);
-                font-weight: 600;
-                color:#899299;
-                text-decoration: underline;
-                text-transform: uppercase;
-            }
-            a:not(:last-child) {
-                border-right: 2px solid #0bbb79;
-                padding-right:5px;
-                margin-right: 5px;
-            }
-        }
+      .currency-unit {
+        @include responsive-font-size(16px);
+        font-weight: 600;
+        vertical-align: text-bottom;
+        padding-right: 5px;
+      }
+      .price {
+        @include responsive-font-size(30px);
+        font-weight: 600;
+        vertical-align: text-bottom;
+      }
+      .periodicity {
+        @include responsive-font-size(16px);
+        font-weight: 400;
+        vertical-align: text-bottom;
+      }
     }
+  }
+  .card-body {
+    padding: 0;
+    border: 1px solid #f1f1f1;
+
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+
+    .features-wrapper {
+      list-style: none;
+      padding: 10px 0;
+      margin: 0;
+    }
+    .select-wrapper {
+      text-align: center;
+      button {
+      }
+    }
+    .more-info-wrapper {
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 5px;
+      a {
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
+        @include responsive-font-size(11px);
+        font-weight: 600;
+        color: #899299;
+        text-decoration: underline;
+        text-transform: uppercase;
+      }
+      a:not(:last-child) {
+        border-right: 2px solid #0bbb79;
+        padding-right: 5px;
+        margin-right: 5px;
+      }
+    }
+  }
 }

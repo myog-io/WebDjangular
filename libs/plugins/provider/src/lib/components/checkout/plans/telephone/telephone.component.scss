@@ -6,7 +6,6 @@
 }
 
 .card {
-
   border: unset;
 
   .card-header {
@@ -18,10 +17,10 @@
       background: #00b9bd;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
-      font-family: "Boston", Arial, Helvetica, sans-serif;
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
       color: #fff;
       padding: 0;
-      @include responsive-font-size( 24px);
+      @include responsive-font-size(24px);
       height: 80px;
       line-height: 26px;
       vertical-align: text-bottom;
@@ -29,31 +28,29 @@
     }
 
     .price-wrapper {
-
       background: #899299;
       height: 50px;
       line-height: 50px;
       text-align: center;
 
-      font-family: "Boston", Arial, Helvetica, sans-serif;
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
       color: #fff;
 
       .currency-unit {
-        @include responsive-font-size( 16px);
+        @include responsive-font-size(16px);
         font-weight: 600;
         vertical-align: text-bottom;
         padding-right: 5px;
-
       }
 
       .price {
-        @include responsive-font-size( 30px);
+        @include responsive-font-size(30px);
         font-weight: 600;
         vertical-align: text-bottom;
       }
 
       .periodicity {
-        @include responsive-font-size( 16px);
+        @include responsive-font-size(16px);
         font-weight: 400;
         vertical-align: text-bottom;
       }
@@ -81,14 +78,12 @@
           line-height: 15px;
         }
       }
-
     }
 
     .select-wrapper {
       text-align: center;
 
       button {
-
       }
     }
 
@@ -98,8 +93,8 @@
       padding-bottom: 5px;
 
       a {
-        font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 11px);
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
+        @include responsive-font-size(11px);
         font-weight: 600;
         color: #899299;
         text-decoration: underline;

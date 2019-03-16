@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from '../../interfaces/form-config.interface';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { HttpClient } from '@angular/common/http';
 
-
 interface BaseLogicCondition {
-  type: 'logic_condition',
-  condition: string,
-  value: string | BaseLogicCondition,
-  variable: string,
-};
+  type: 'logic_condition';
+  condition: string;
+  value: string | BaseLogicCondition;
+  variable: string;
+}
 
 interface BaseLogicGroup {
-  type: 'logic_group',
+  type: 'logic_group';
   operator: string;
-  children: (BaseLogicCondition | BaseLogicGroup)[]
-};
-
+  children: (BaseLogicCondition | BaseLogicGroup)[];
+}
 
 @Component({
   selector: 'wda-form-json-logic',
@@ -30,23 +31,19 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
 
   public result = [
     {
-      'AND': [
-
-      ]
+      AND: []
     }
   ];
   public logic_group: BaseLogicGroup = {
     type: 'logic_group',
     operator: 'AND',
-    children: [
-
-    ]
+    children: []
   };
 
   public operators = [
     { label: 'ALL of Conditions (AND)', value: 'AND' },
-    { label: 'ANY of the Conditions (OR)', value: 'OR' },
-  ]
+    { label: 'ANY of the Conditions (OR)', value: 'OR' }
+  ];
   // TODO: We Have to Work with the 'some'  Operator and Others for the ARRAYS
   public conditions = [
     { label: 'Is Equal(==)', value: '==' },
@@ -56,19 +53,14 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     { label: 'Greater than(>)', value: '>' },
     { label: 'Greater than or Equal(>=)', value: '>=' },
     { label: 'Contains', value: 'contains' },
-    { label: 'Not Contains', value: 'not_contains' },
-  ]
-  public mc_variables = [
-    'contains',
-    'not_contains'
-  ]
-  public fields = [
-
-  ]
+    { label: 'Not Contains', value: 'not_contains' }
+  ];
+  public mc_variables = ['contains', 'not_contains'];
+  public fields = [];
 
   constructor(
     private datastore: WebAngularDataStore,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
     const models = datastore.datastoreConfig.models;
     //for (const key in models) {
@@ -85,7 +77,6 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     //    }
     //  }
     //}
-
   }
 
   set_logic_recursive(children: any[]) {
@@ -95,7 +86,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
         for (const key in children[i]) {
           if (children[i].hasOwnProperty(key)) {
             const element = children[i][key];
-            if (key == "OR" || key == "AND") {
+            if (key == 'OR' || key == 'AND') {
               logics.push({
                 type: 'logic_group',
                 operator: key,
@@ -103,32 +94,34 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
               });
             } else {
               let variable = element[0]['var'];
-              
-              if(this.fields.indexOf(variable) === -1){
+
+              if (this.fields.indexOf(variable) === -1) {
                 this.fields.push({
                   id: `${variable}`,
                   name: `${variable}`
-                })
-                this.addTagPromise(variable).then()  
+                });
+                this.addTagPromise(variable).then();
               }
               logics.push({
                 type: 'logic_condition',
                 condition: key,
-                value: this.mc_variables.indexOf(key) === -1 ? element[1] : this.set_logic_recursive([element[1]])[0] ,
-                variable: variable,
+                value:
+                  this.mc_variables.indexOf(key) === -1
+                    ? element[1]
+                    : this.set_logic_recursive([element[1]])[0],
+                variable: variable
               });
             }
           }
         }
       }
     }
-    
+
     return logics;
   }
   ngOnInit() {
-
     if (this.config.json_logic_options_url) {
-      this.get_options().then((data) => {
+      this.get_options().then(data => {
         this.set_starting_logic();
       });
     } else {
@@ -139,7 +132,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     if (this.group.entity && this.group.entity.id) {
       this.start_loading();
     } else {
-      let subscription = this.group.valueChanges.subscribe((data) => {
+      let subscription = this.group.valueChanges.subscribe(data => {
         subscription.unsubscribe();
         this.start_loading();
       });
@@ -148,11 +141,13 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
   start_loading() {
     if (this.group.entity && this.group.entity.id) {
       if (this.group.entity[this.config.name]) {
-        let key = Object.keys(this.group.entity[this.config.name])[0]
+        let key = Object.keys(this.group.entity[this.config.name])[0];
         this.logic_group = {
           type: 'logic_group',
           operator: key,
-          children: this.set_logic_recursive(this.group.entity[this.config.name][key])
+          children: this.set_logic_recursive(
+            this.group.entity[this.config.name][key]
+          )
         };
       }
     }
@@ -174,76 +169,78 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
                   this.fields.push({
                     id: `${key}.${attr}`,
                     name: `${key.toLowerCase()}.${attr}`
-                  })
+                  });
                 }
               }
             }
           }
           resolve(true);
-        }, (error) => {
+        },
+        error => {
           reject(error);
         }
       );
     });
-
-
-
   }
   addTagPromise(name) {
-    return new Promise((resolve) => {
-
+    return new Promise(resolve => {
       resolve({
         id: name,
         name: name,
         valid: true
       });
-    })
+    });
   }
   updateField() {
     this.group.entity[this.config.name] = this.get_json_logic();
-
   }
   get_logic_recursive(children: any[]): any {
-    let logic = []
+    let logic = [];
     for (let i = 0; i < children.length; i++) {
       const element = children[i];
       switch (element.type) {
         case 'logic_condition':
-          
-            let condition = {}
-            let value = element.value;
-            if(this.mc_variables.indexOf(element.condition) >=0 && typeof value != "object"){
-              element.value = {
-                type: 'logic_condition',
-                condition: '==',
-                value: '',
-                variable: '',
-              }
-              value = element.value;
-            }
-            condition[element.condition] = [
-              { 'var': element.variable }, 
-              this.mc_variables.indexOf(element.condition) === -1 ? element.value : this.get_logic_recursive([element.value])[0]
-            ]
-            logic.push(condition)
-          
+          let condition = {};
+          let value = element.value;
+          if (
+            this.mc_variables.indexOf(element.condition) >= 0 &&
+            typeof value != 'object'
+          ) {
+            element.value = {
+              type: 'logic_condition',
+              condition: '==',
+              value: '',
+              variable: ''
+            };
+            value = element.value;
+          }
+          condition[element.condition] = [
+            { var: element.variable },
+            this.mc_variables.indexOf(element.condition) === -1
+              ? element.value
+              : this.get_logic_recursive([element.value])[0]
+          ];
+          logic.push(condition);
+
           break;
         default:
-          let group = {}
-          group[element.operator] = this.get_logic_recursive(element.children)
-          logic.push(group)
+          let group = {};
+          group[element.operator] = this.get_logic_recursive(element.children);
+          logic.push(group);
           break;
       }
     }
-    return logic
+    return logic;
   }
   get_json_logic(): any {
     let json_logic = {};
-    json_logic[this.logic_group.operator] = this.get_logic_recursive(this.logic_group.children)
+    json_logic[this.logic_group.operator] = this.get_logic_recursive(
+      this.logic_group.children
+    );
     if (json_logic[this.logic_group.operator].length <= 0) {
       return {};
     }
-    return json_logic
+    return json_logic;
   }
 
   addCondition(node: BaseLogicGroup): void {
@@ -251,7 +248,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
       type: 'logic_condition',
       condition: '==',
       value: '',
-      variable: '',
+      variable: ''
     });
     this.updateField();
   }
@@ -263,9 +260,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     node.children.push({
       type: 'logic_group',
       operator: 'AND',
-      children: [
-
-      ]
+      children: []
     });
     this.updateField();
   }
@@ -273,6 +268,4 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
     node.children.splice(node.children.indexOf(group), 1);
     this.updateField();
   }
-
-
 }

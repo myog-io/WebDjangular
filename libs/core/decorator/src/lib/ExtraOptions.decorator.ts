@@ -1,4 +1,4 @@
-import { BuilderFormFieldConfig } from "@core/builder/src/lib/interfaces/form-config.interface";
+import { BuilderFormFieldConfig } from '@core/builder/src/lib/interfaces/form-config.interface';
 
 export function ExtraOptions(config: BuilderFormFieldConfig) {
   return function(target: any, propertyName: string | symbol) {

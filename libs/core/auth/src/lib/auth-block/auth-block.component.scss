@@ -61,11 +61,11 @@
     .socials a {
       margin: 0 1rem;
       text-decoration: none;
-      @include responsive-font-size( 1rem);
+      @include responsive-font-size(1rem);
       vertical-align: middle;
 
       &.with-icon {
-        @include responsive-font-size( 2rem);
+        @include responsive-font-size(2rem);
       }
     }
   }

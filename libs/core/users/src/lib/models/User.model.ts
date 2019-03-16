@@ -1,17 +1,20 @@
-import {Attribute, HasMany, JsonApiModelConfig, NestedAttribute,} from 'angular2-jsonapi';
-import {GroupModel} from './Group.model';
-import {PermissionModel} from './Permission.model';
+import {
+  Attribute,
+  HasMany,
+  JsonApiModelConfig,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { GroupModel } from './Group.model';
+import { PermissionModel } from './Permission.model';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
-
 @JsonApiModelConfig({
   type: 'User',
-  modelEndpointUrl: 'user',
+  modelEndpointUrl: 'user'
 })
 export class UserModel extends AbstractModel {
-
   public static include = 'groups';
 
   @Attribute()
@@ -21,7 +24,7 @@ export class UserModel extends AbstractModel {
   @ExtraOptions({
     type: 'text',
     label: 'First Name',
-    wrapper_class: 'col-4',
+    wrapper_class: 'col-4'
   })
   first_name: string;
 
@@ -29,7 +32,7 @@ export class UserModel extends AbstractModel {
   @ExtraOptions({
     type: 'text',
     label: 'Middle Name',
-    wrapper_class: 'col-4',
+    wrapper_class: 'col-4'
   })
   middle_name: string;
 
@@ -37,7 +40,7 @@ export class UserModel extends AbstractModel {
   @ExtraOptions({
     type: 'text',
     label: 'Last Name',
-    wrapper_class: 'col-4',
+    wrapper_class: 'col-4'
   })
   last_name: string;
 
@@ -45,7 +48,7 @@ export class UserModel extends AbstractModel {
   @ExtraOptions({
     type: 'text',
     label: 'Username',
-    wrapper_class: 'col-4',
+    wrapper_class: 'col-4'
   })
   username: string;
 
@@ -111,7 +114,7 @@ export class UserModel extends AbstractModel {
     type: 'checkbox',
     label: 'Groups',
     wrapper_class: 'col-12',
-    model: GroupModel,
+    model: GroupModel
   })
   groups: GroupModel;
 
@@ -122,16 +125,14 @@ export class UserModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   get name(): string {
-    return `${this.first_name} ${this.last_name}`
+    return `${this.first_name} ${this.last_name}`;
   }
 
   get full_name(): string {
-    return `${this.first_name} ${this.middle_name} ${this.last_name}`
+    return `${this.first_name} ${this.middle_name} ${this.last_name}`;
   }
 
   get is_guest(): boolean {
@@ -142,14 +143,12 @@ export class UserModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
-
+        type: 'text'
       },
       email: {
         title: 'Email',
-        type: 'html',
-      },
-    },
+        type: 'html'
+      }
+    }
   };
-
 }

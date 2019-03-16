@@ -1,17 +1,14 @@
-import {Attribute, HasMany, JsonApiModelConfig,} from 'angular2-jsonapi';
-import {PermissionModel} from './Permission.model';
+import { Attribute, HasMany, JsonApiModelConfig } from 'angular2-jsonapi';
+import { PermissionModel } from './Permission.model';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
-
 @JsonApiModelConfig({
   type: 'Group',
-  modelEndpointUrl: 'group',
-
+  modelEndpointUrl: 'group'
 })
 export class GroupModel extends AbstractModel {
-
   public static include = 'permissions';
 
   @Attribute()
@@ -21,7 +18,7 @@ export class GroupModel extends AbstractModel {
   @ExtraOptions({
     type: 'text',
     label: 'Name',
-    wrapper_class: 'col-12',
+    wrapper_class: 'col-12'
   })
   name: string;
 
@@ -30,7 +27,7 @@ export class GroupModel extends AbstractModel {
     type: 'checkbox',
     label: 'Permissions',
     wrapper_class: 'col-12',
-    model: PermissionModel,
+    model: PermissionModel
   })
   permissions: PermissionModel;
 
@@ -38,8 +35,7 @@ export class GroupModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-  }
+  set pk(value) {}
 
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;
@@ -49,7 +45,7 @@ export class GroupModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       }
     }
   };

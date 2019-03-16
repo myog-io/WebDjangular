@@ -1,14 +1,13 @@
-import {Attribute, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {FormArray, Validators} from "@angular/forms";
-import { AbstractModel } from "@core/data/src/lib/models";
-import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
-import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
-import { SmartTableSettings } from "@core/data/src/lib/data-store";
-
+import { Attribute, HasMany, JsonApiModelConfig } from 'angular2-jsonapi';
+import { FormArray, Validators } from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'Channel',
-  modelEndpointUrl: 'provider/channel',
+  modelEndpointUrl: 'provider/channel'
 })
 export class ChannelModel extends AbstractModel {
   public static include = 'products';
@@ -20,14 +19,14 @@ export class ChannelModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Name',
+    label: 'Name'
   })
   name: string;
 
   @Attribute()
   @ExtraOptions({
     type: 'text',
-    label: 'Logo',
+    label: 'Logo'
   })
   logo: string;
 
@@ -37,7 +36,7 @@ export class ChannelModel extends AbstractModel {
     type: 'ngSelect',
     label: 'Groups',
     addTags: true,
-    multiple: true,
+    multiple: true
   })
   groups: string[];
 
@@ -47,7 +46,7 @@ export class ChannelModel extends AbstractModel {
     type: 'ngSelect',
     label: 'Types',
     addTags: true,
-    multiple: true,
+    multiple: true
   })
   types: string[];
 
@@ -56,16 +55,15 @@ export class ChannelModel extends AbstractModel {
     validators: [Validators.required],
     type: 'text',
     inputType: 'number',
-    label: 'Channel Number',
+    label: 'Channel Number'
   })
   number: number;
-
 
   @Attribute()
   @ExtraOptions({
     type: 'text',
     inputType: 'number',
-    label: 'Position',
+    label: 'Position'
   })
   position: number;
 
@@ -74,7 +72,7 @@ export class ChannelModel extends AbstractModel {
     formType: FormArray,
     type: 'checkbox',
     label: 'Products',
-    model: ProductModel,
+    model: ProductModel
   })
   products: ProductModel;
 
@@ -85,16 +83,16 @@ export class ChannelModel extends AbstractModel {
         filter: false,
         type: 'html',
         valuePrepareFunction: (cell, row) => {
-          return `<img src="${cell}" height="50px" alt="logo"/>`
+          return `<img src="${cell}" height="50px" alt="logo"/>`;
         }
       },
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       number: {
         title: 'Number',
-        type: 'text',
+        type: 'text'
       },
       groups: {
         title: 'Groups',
@@ -103,10 +101,8 @@ export class ChannelModel extends AbstractModel {
       },
       types: {
         title: 'Types',
-        type: 'text',
+        type: 'text'
       }
-
-    },
+    }
   };
-
 }

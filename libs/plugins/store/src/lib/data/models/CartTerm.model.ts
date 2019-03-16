@@ -1,4 +1,9 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {
+  JsonApiModelConfig,
+  Attribute,
+  HasMany,
+  BelongsTo
+} from 'angular2-jsonapi';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
@@ -6,26 +11,25 @@ import { ProductModel } from './Product.model';
 import { FormArray } from '@angular/forms';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 
-
 @JsonApiModelConfig({
   type: 'CartTerm',
-  modelEndpointUrl: 'store/cart-term',
+  modelEndpointUrl: 'store/cart-term'
 })
 export class CartTermModel extends AbstractModel {
   public static include = 'products';
 
   @Attribute()
   id: string;
-  
+
   @Attribute()
   @ExtraOptions({
     type: 'switch',
     label: 'Apply to All carts?',
     wrapper_class: 'col-4',
     value: true,
-    placeholder: '',
+    placeholder: ''
   })
-  all_carts: boolean
+  all_carts: boolean;
 
   @Attribute()
   @ExtraOptions({
@@ -33,10 +37,9 @@ export class CartTermModel extends AbstractModel {
     label: 'Enabled?',
     wrapper_class: 'col-4',
     value: true,
-    placeholder: '',
+    placeholder: ''
   })
-  enabled: boolean
-
+  enabled: boolean;
 
   @Attribute()
   @ExtraOptions({
@@ -44,18 +47,18 @@ export class CartTermModel extends AbstractModel {
     label: 'Position',
     wrapper_class: 'col-4',
     value: 0,
-    placeholder: '',
+    placeholder: ''
   })
-  position: number
+  position: number;
 
   @Attribute()
   @ExtraOptions({
     type: 'codeEditor',
     label: 'Term Condition',
     wrapper_class: 'col-12',
-    placeholder: '',
+    placeholder: ''
   })
-  content: string
+  content: string;
 
   @HasMany()
   @ExtraOptions({
@@ -63,12 +66,11 @@ export class CartTermModel extends AbstractModel {
     formType: FormArray,
     label: 'Products',
     model: ProductModel,
-    conditional:{
-        "!=" : [{"var":'all_carts'},true]
+    conditional: {
+      '!=': [{ var: 'all_carts' }, true]
     }
   })
   products: ProductModel;
-
 
   @Attribute()
   created: Date;
@@ -82,25 +84,22 @@ export class CartTermModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       content: {
         title: 'Content',
-        type: 'html',
+        type: 'html'
       },
       position: {
         title: 'Position Number',
-        type: 'text',
+        type: 'text'
       },
       created: {
         title: 'Created',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
-
 }

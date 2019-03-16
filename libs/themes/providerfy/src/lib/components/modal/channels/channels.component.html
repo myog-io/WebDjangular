@@ -1,5 +1,8 @@
 <div class="modal-body pt-0 pb-0">
-  <div class="close text-primary p-1" (click)="activeModal.dismiss('Cross click')">
+  <div
+    class="close text-primary p-1"
+    (click)="activeModal.dismiss('Cross click')"
+  >
     <i class="fas fa-times"></i>
   </div>
   <div class="row main-wrapper">
@@ -11,86 +14,116 @@
 
       <ul class="categories nav flex-column">
         <li class="nav-item">
-          <button class="nav-link active" (click)="toggleChannels($event, '');"
-            [disabled]="loadingChannels">Todos
+          <button
+            class="nav-link active"
+            (click)="toggleChannels($event, '')"
+            [disabled]="loadingChannels"
+          >
+            Todos
           </button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" (click)="toggleChannels($event, 'HD');"
-            [disabled]="loadingChannels" >HD
+          <button
+            class="nav-link"
+            (click)="toggleChannels($event, 'HD')"
+            [disabled]="loadingChannels"
+          >
+            HD
           </button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" (click)="toggleChannels($event, 'Cortesia');"
-            [disabled]="loadingChannels" >Cortesia
+          <button
+            class="nav-link"
+            (click)="toggleChannels($event, 'Cortesia')"
+            [disabled]="loadingChannels"
+          >
+            Cortesia
           </button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" (click)="toggleChannels($event, 'Aberto');"
-            [disabled]="loadingChannels" >Aberto
+          <button
+            class="nav-link"
+            (click)="toggleChannels($event, 'Aberto')"
+            [disabled]="loadingChannels"
+          >
+            Aberto
           </button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" (click)="toggleChannels($event, 'Obrigatório');"
-            [disabled]="loadingChannels" >Obrigatório
+          <button
+            class="nav-link"
+            (click)="toggleChannels($event, 'Obrigatório')"
+            [disabled]="loadingChannels"
+          >
+            Obrigatório
           </button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" (click)="toggleChannels($event, 'Local'); "
-            [disabled]="loadingChannels">Local
+          <button
+            class="nav-link"
+            (click)="toggleChannels($event, 'Local')"
+            [disabled]="loadingChannels"
+          >
+            Local
           </button>
         </li>
-
       </ul>
-
     </div>
     <div class="col-7 col-md-9 col-lg-9 pr-3 right-side">
       <div class="row">
-        <form action="" class="col-12 p-0 form-inline search-form" autocomplete="off">
+        <form
+          action=""
+          class="col-12 p-0 form-inline search-form"
+          autocomplete="off"
+        >
           <div class="form-group p-1">
             <label for="search">Encontre o canal:</label>
-            <input type="text" class="form-control" name="search-channel"
-                   id="search-channel" placeholder=""
-              [(ngModel)]="search" (ngModelChange)="onSearch($event)"
-              [disabled]="loadingChannels" >
-            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            <input
+              type="text"
+              class="form-control"
+              name="search-channel"
+              id="search-channel"
+              placeholder=""
+              [(ngModel)]="search"
+              (ngModelChange)="onSearch($event)"
+              [disabled]="loadingChannels"
+            />
+            <span
+              class="glyphicon glyphicon-search form-control-feedback"
+            ></span>
           </div>
         </form>
       </div>
       <div class="row  p-2">
-
         <div class="channels-wrapper">
           <div class="row m-0" *ngIf="!loadingChannels">
-
-            <div class="col-6 col-sm-4 col-md-3 p-0 channel active mt-1 mb-3" *ngFor="let channel of channels;"
-              [ngClass]="channel.types" [attr.data-name]="channel.name">
+            <div
+              class="col-6 col-sm-4 col-md-3 p-0 channel active mt-1 mb-3"
+              *ngFor="let channel of channels"
+              [ngClass]="channel.types"
+              [attr.data-name]="channel.name"
+            >
               <div class="img-wrapper d-block ">
-                <img class="img-fluid" [src]="channel.logo"/>
+                <img class="img-fluid" [src]="channel.logo" />
               </div>
               <span class="number d-block mx-auto text-center ">
-                <b *ngIf=" channel.types.indexOf('HD')">HD</b>
+                <b *ngIf="channel.types.indexOf('HD')">HD</b>
                 {{ channel.number }}
               </span>
               <span class="name d-block mx-auto text-center">
                 <small>{{ channel.name }}</small>
               </span>
             </div>
-
           </div>
 
-          <div class="loading-wrapper h-100 d-flex justify-content-center" *ngIf="loadingChannels">
-
-            <div>
-              <i class="fa fa-spinner fa-pulse fa-4x"></i>
-            </div>
+          <div
+            class="loading-wrapper h-100 d-flex justify-content-center"
+            *ngIf="loadingChannels"
+          >
+            <div><i class="fa fa-spinner fa-pulse fa-4x"></i></div>
           </div>
-
-
         </div>
-
-
       </div>
     </div>
   </div>
 </div>
-

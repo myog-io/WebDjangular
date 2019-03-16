@@ -1,2 +1,1 @@
-export { MediaModel } from "./Media.model";
-
+export { MediaModel } from './Media.model';

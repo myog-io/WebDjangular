@@ -9,12 +9,12 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
   styleUrls: ['./internet-vertical.component.scss']
 })
 export class PluginProviderPricingInternetVerticalComponent extends PluginProviderAbstractPricingComponent {
-  @Input() class = "entry col-10 col-md-6 col-lg-3 mx-auto";
-  @Input() discount:number = 0;
+  @Input() class = 'entry col-10 col-md-6 col-lg-3 mx-auto';
+  @Input() discount: number = 0;
   constructor(
     public datastore: WebAngularDataStore,
-    public modalService: NgbModal) {
-    super(datastore, modalService)
+    public modalService: NgbModal
+  ) {
+    super(datastore, modalService);
   }
-
 }

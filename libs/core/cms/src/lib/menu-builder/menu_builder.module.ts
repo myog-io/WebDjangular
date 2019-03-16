@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { MenuBuilderComponent } from './menu_builder.component';
-import { NbAccordionModule } from '@nebular/theme'
+import { NbAccordionModule } from '@nebular/theme';
 import { MenuBuilderRoutingModule } from './menu_builder-routing.module';
 import { ThemeModule } from '@core/admin/src/lib/@theme';
 import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
 import { NestableModule } from 'ngx-nestable';
-
-
 
 @NgModule({
   imports: [
@@ -15,12 +13,7 @@ import { NestableModule } from 'ngx-nestable';
     NbAccordionModule,
     BuilderFormModule,
     NestableModule
-    
   ],
-  declarations: [
-    MenuBuilderComponent,
-  ],
+  declarations: [MenuBuilderComponent]
 })
-export class MenuBuilderModule { 
-
-}
+export class MenuBuilderModule {}

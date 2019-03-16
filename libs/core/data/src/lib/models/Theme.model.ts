@@ -2,7 +2,7 @@ import { JsonApiModelConfig, Attribute, BelongsTo } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
 import { AuthorModel } from './Author.model';
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 import { SmartTableSettings } from '../data-store/SmartTable.interfaces';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
@@ -11,7 +11,6 @@ import { PermissionModel } from '@core/users/src/lib/models';
   type: 'core_theme'
 })
 export class ThemeModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -77,7 +76,7 @@ export class ThemeModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) { }
+  set pk(value) {}
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

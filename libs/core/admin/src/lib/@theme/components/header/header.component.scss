@@ -43,7 +43,6 @@
       i {
         display: block;
       }
-
     }
 
     .logo {
@@ -155,7 +154,6 @@
   }
 
   @include media-breakpoint-down(md) {
-
     nb-action:not(.toggle-layout) {
       border: none;
     }
@@ -178,14 +176,12 @@
   }
 
   @include media-breakpoint-down(sm) {
-
     nb-user /deep/ .user-name {
       display: none;
     }
   }
 
   @include media-breakpoint-down(is) {
-
     .header-container {
       .logo {
         @include responsive-font-size(1.25rem);

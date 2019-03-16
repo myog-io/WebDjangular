@@ -1,25 +1,25 @@
 @import '~rfs/sass/_rfs';
 
-.modal-header{
+.modal-header {
   border-bottom: unset;
 }
 
-.icon{
+.icon {
   float: none;
   display: block;
   margin-left: auto;
-  margin-right:auto;
-  width:100%;
-  margin-top:40px;
+  margin-right: auto;
+  width: 100%;
+  margin-top: 40px;
 }
-.close{
+.close {
   outline: none;
 }
 
-h4{
+h4 {
   @include responsive-font-size(28px);
 }
-h6{
+h6 {
   @include responsive-font-size(15px);
-  color:#999999;
+  color: #999999;
 }

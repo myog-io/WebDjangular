@@ -14,23 +14,9 @@ const ADMIN_COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    AdminRoutingModule,
-    ThemeModule,
-    DashboardModule,
-  ],
-  declarations: [
-    ...ADMIN_COMPONENTS,
-
-  ],
-  exports:[
-    AdminRoutingModule,
-  ],
-  entryComponents:[
-    ...ADMIN_COMPONENTS
-  ]
+  imports: [AdminRoutingModule, ThemeModule, DashboardModule],
+  declarations: [...ADMIN_COMPONENTS],
+  exports: [AdminRoutingModule],
+  entryComponents: [...ADMIN_COMPONENTS]
 })
-export class AdminModule {
-
-}
-
+export class AdminModule {}

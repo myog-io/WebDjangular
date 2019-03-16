@@ -1,10 +1,9 @@
-@import "../checkout_variables";
+@import '../checkout_variables';
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~rfs/sass/_rfs';
 
 :host {
-
   margin-top: map-get($spacers, 2);
 
   @include media-breakpoint-up(md) {
@@ -18,7 +17,6 @@ table {
 }
 
 .card {
-
   top: 20px;
   border: 0;
 
@@ -26,7 +24,7 @@ table {
     height: 50px;
 
     background: #00b9bd;
-    font-family: "Boston", Arial, Helvetica, sans-serif;
+    font-family: 'Boston', Arial, Helvetica, sans-serif;
     @include responsive-font-size(24px);
     font-weight: 900;
     color: #fff;
@@ -45,15 +43,11 @@ table {
     .summary-items-wrapper {
       margin-bottom: 20px;
 
-
       &.cart-updating {
-
         .table {
           opacity: 0.5;
         }
-
       }
-
 
       .loader {
         border-radius: 15px;
@@ -67,8 +61,8 @@ table {
         align-items: center;
         z-index: 9;
 
-        span{
-          color:#fff;
+        span {
+          color: #fff;
           font-size: 26px;
           display: block;
           margin: auto;
@@ -83,7 +77,7 @@ table {
         margin: 0;
         padding: 0;
 
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         @include responsive-font-size(14px);
         line-height: 16px;
         font-weight: 700;
@@ -121,7 +115,6 @@ table {
             .icon {
               height: 23px;
             }
-
           }
         }
 
@@ -142,7 +135,7 @@ table {
             align-items: center;
 
             color: #00b9bd;
-            font-family: "Boston", Arial, Helvetica, sans-serif;
+            font-family: 'Boston', Arial, Helvetica, sans-serif;
             @include responsive-font-size(19px);
 
             position: relative;
@@ -177,7 +170,6 @@ table {
           }
 
           .btn-add-wrapper {
-
             position: absolute;
             top: 0;
             right: 0;
@@ -186,17 +178,15 @@ table {
 
             .add {
               width: 100%;
-              font-family: "Boston", Arial, Helvetica, sans-serif;
+              font-family: 'Boston', Arial, Helvetica, sans-serif;
               @include responsive-font-size(14px);
               font-weight: 600;
               color: #00b9bd;
               text-transform: uppercase;
               text-align: center;
               background: rgba(0, 0, 0, 0);
-
             }
           }
-
         }
 
         &.selected {
@@ -211,21 +201,16 @@ table {
           .summary-action {
             padding-left: 20px;
             padding-right: 10px;
-
-
           }
-
         }
-
       }
-
     }
 
     .summary-total-wrapper {
       .title {
         background: #899299;
         color: #ffffff;
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         @include responsive-font-size(22px);
         font-weight: bold;
         text-align: right;
@@ -235,22 +220,18 @@ table {
       }
 
       .price-wrapper {
-
         background: #00b9bd;
         color: #ffffff;
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         @include responsive-font-size(22px);
         font-weight: bold;
         text-align: right;
 
         .currency-unit {
-
         }
 
         .price {
-
         }
-
       }
     }
 
@@ -258,12 +239,11 @@ table {
       margin-bottom: 20px;
 
       .table {
-
         tr {
           td {
             border: 0;
             padding: 0 20px;
-            font-family: "Open Sans", Helvetica, sans-serif;
+            font-family: 'Open Sans', Helvetica, sans-serif;
             @include responsive-font-size(13px);
             line-height: 22px;
             font-weight: 400;
@@ -271,7 +251,6 @@ table {
           }
 
           td:first-child {
-
           }
 
           td:last-child {
@@ -282,7 +261,7 @@ table {
     }
 
     .btn-summary-details {
-      font-family: "Boston", Arial, Helvetica, sans-serif;
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
       @include responsive-font-size(11px);
       font-weight: 600;
       color: #899299;
@@ -297,21 +276,12 @@ table {
         margin-bottom: map-get($spacers, 3);
       }
 
-      button[type="submit"] {
-
+      button[type='submit'] {
         @include media-breakpoint-up(lg) {
           padding-left: 45px;
           padding-right: 45px;
         }
       }
     }
-
   }
-
 }
-
-
-
-
-
-

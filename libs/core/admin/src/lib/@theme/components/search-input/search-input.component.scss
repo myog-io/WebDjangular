@@ -6,7 +6,7 @@
 
   i.control-icon {
     &::before {
-      @include responsive-font-size(2.3rem)
+      @include responsive-font-size(2.3rem);
     }
 
     &:hover {

@@ -1,5 +1,5 @@
 // HARDCODE
-@import "../../../../../../../../themes/providerfy/src/lib/styles/variables";
+@import '../../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~rfs/sass/_rfs';
 
 :host {
@@ -7,7 +7,6 @@
 }
 
 .card {
-
   border-radius: $plan-card-round;
 
   .card-header {
@@ -19,7 +18,7 @@
     border-top-left-radius: $plan-card-round;
     border-top-right-radius: $plan-card-round;
 
-    position:relative;
+    position: relative;
     overflow: hidden;
 
     .plan-title {
@@ -51,7 +50,6 @@
         @include responsive-font-size(30px);
         font-weight: 500;
         vertical-align: sub;
-
       }
     }
 
@@ -68,15 +66,12 @@
         @include responsive-font-size(30px);
         font-weight: 700;
         vertical-align: sub;
-
       }
     }
-
   }
 
   .card-body {
     ul {
-
       list-style: none;
 
       li {
@@ -108,12 +103,10 @@
           display: table-cell;
           vertical-align: middle;
         }
-
       }
     }
 
     .plan-price {
-
       .currency-unit {
         @include responsive-font-size($pricing-plan-currency-unit-fs);
         font-weight: $pricing-plan-currency-unit-fw;
@@ -137,8 +130,6 @@
       font-family: $btn-subscribe-ff;
       //color: $btn-subscribe-c;
       text-transform: uppercase;
-
-
 
       border-radius: 30px;
     }

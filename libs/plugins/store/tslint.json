@@ -1,17 +1,7 @@
 {
   "extends": "../../../tslint.json",
   "rules": {
-    "directive-selector": [
-      true,
-      "attribute",
-      "webdjangular",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "webdjangular",
-      "kebab-case"
-    ]
+    "directive-selector": [true, "attribute", "webdjangular", "camelCase"],
+    "component-selector": [true, "element", "webdjangular", "kebab-case"]
   }
 }

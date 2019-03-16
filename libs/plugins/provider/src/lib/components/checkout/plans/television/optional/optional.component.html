@@ -1,6 +1,8 @@
 <div class="card">
-  <div class="channel-cover"
-    [ngStyle]="{'background-image': 'url(' + plan?.data?.thumbnail + ')'}"></div>
+  <div
+    class="channel-cover"
+    [ngStyle]="{ 'background-image': 'url(' + plan?.data?.thumbnail + ')' }"
+  ></div>
   <div class="card-body pt-0">
     <!--<div class="row">
       <div class="col col-xs-12 channels-wrapper">
@@ -15,19 +17,29 @@
       </div>
     </div>
     <div class="actions-wrapper">
-      
-      <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+      <button
+        type="button"
+        class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
         *ngIf="!providerCheckout.checkCartItemTVOptional(plan)"
-        (click)="providerCheckout.addTVOptional(plan)" [disabled]="plan.disabled || providerCheckout.selectingTVPlan">
-        Adicionar <i class="fa fa-spinner fa-pulse" *ngIf="providerCheckout.selectingTVPlan"></i>
+        (click)="providerCheckout.addTVOptional(plan)"
+        [disabled]="plan.disabled || providerCheckout.selectingTVPlan"
+      >
+        Adicionar
+        <i
+          class="fa fa-spinner fa-pulse"
+          *ngIf="providerCheckout.selectingTVPlan"
+        ></i>
       </button>
 
-      <button type="button" class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
+      <button
+        type="button"
+        class="btn btn-outline-danger pl-3 pr-3 btn-round text-uppercase"
         *ngIf="providerCheckout.checkCartItemTVOptional(plan)"
-        (click)="providerCheckout.removeTVOptional(plan)" [disabled]="providerCheckout.selectingTVPlan">
+        (click)="providerCheckout.removeTVOptional(plan)"
+        [disabled]="providerCheckout.selectingTVPlan"
+      >
         Remover
       </button>
-
     </div>
   </div>
 </div>

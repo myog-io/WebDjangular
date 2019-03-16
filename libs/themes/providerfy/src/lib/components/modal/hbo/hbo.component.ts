@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'webdjangular-hbo',
@@ -7,10 +7,5 @@ import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./hbo.component.scss', '../styles/tv-channels.scss']
 })
 export class ThemeProviderfyModalHBOComponent {
-
-   constructor(public activeModal: NgbActiveModal) {
-
-   }
-
-
+  constructor(public activeModal: NgbActiveModal) {}
 }

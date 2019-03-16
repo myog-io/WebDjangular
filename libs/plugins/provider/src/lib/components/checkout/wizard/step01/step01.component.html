@@ -8,10 +8,12 @@
           <div class="col-12">
             <div class="form-group">
               <input type="text" formControlName="company_name" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Razão Social</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['company_name']" name="Razão Social">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['company_name']"
+                name="Razão Social"
+              >
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -21,12 +23,17 @@
           <div class="col-12">
             <div class="form-group">
               <input type="text" formControlName="name" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <span class="highlight"></span> <span class="bar"></span>
               <label>
-                Nome completo <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span>
+                Nome completo
+                <span *ngIf="providerCheckout.plan_type.is_business"
+                  >do responsável</span
+                >
               </label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['name']" name="Nome">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['name']"
+                name="Nome"
+              >
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -35,19 +42,25 @@
         <div class="row">
           <div class="col-12">
             <p class="text-primary">
-              Este e-mail será utilizado para enviar a confirmação
-              de assinatura e combinar a instalação.
+              Este e-mail será utilizado para enviar a confirmação de assinatura
+              e combinar a instalação.
             </p>
           </div>
           <div class="col-12">
             <div class="form-group">
               <input type="text" formControlName="email" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>Email <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['email']" name="Email">
+              <span class="highlight"></span> <span class="bar"></span>
+              <label
+                >Email
+                <span *ngIf="providerCheckout.plan_type.is_business"
+                  >do responsável</span
+                ></label
+              >
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['email']"
+                name="Email"
+              >
               </plugin-provider-checkout-error>
-
             </div>
           </div>
         </div>
@@ -55,27 +68,32 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="mobile" mask="(00) 00000-0000" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                formControlName="mobile"
+                mask="(00) 00000-0000"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Telefone Celular com DDD</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['mobile']" name="Telefone">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['mobile']"
+                name="Telefone"
+              >
               </plugin-provider-checkout-error>
-
             </div>
-
           </div>
         </div>
 
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="telephone" mask="(00) 0000-0000" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>Telefone Fixo com DDD
-                <small>(opcional)</small>
-              </label>
+              <input
+                type="text"
+                formControlName="telephone"
+                mask="(00) 0000-0000"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
+              <label>Telefone Fixo com DDD <small>(opcional)</small> </label>
             </div>
           </div>
         </div>
@@ -83,14 +101,25 @@
         <div class="row" *ngIf="providerCheckout.plan_type.is_business">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="cnpj" mask="00.000.000/0000-00" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                formControlName="cnpj"
+                mask="00.000.000/0000-00"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>CNPJ</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['cnpj']" name="CNPJ">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['cnpj']"
+                name="CNPJ"
+              >
               </plugin-provider-checkout-error>
-              <div class="errors-feedback" *ngIf="formWizardStep01.get('cnpj').getError('invalidCNPJ') &&
-                   formWizardStep01.controls['cnpj'].touched">
+              <div
+                class="errors-feedback"
+                *ngIf="
+                  formWizardStep01.get('cnpj').getError('invalidCNPJ') &&
+                  formWizardStep01.controls['cnpj'].touched
+                "
+              >
                 <div class="alert alert-danger" role="alert">
                   <span>O CNPJ não é válido.</span>
                 </div>
@@ -103,11 +132,12 @@
           <div class="col-12">
             <div class="form-group">
               <input type="text" formControlName="state_registration" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Inscrição Estadual</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['state_registration']"
-                name="state_registration">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['state_registration']"
+                name="state_registration"
+              >
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -117,13 +147,25 @@
           <div class="col-12">
             <div class="form-group">
               <input type="text" formControlName="cpf" mask="000.000.000-00" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>CPF <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['cpf']" name="CPF">
+              <span class="highlight"></span> <span class="bar"></span>
+              <label
+                >CPF
+                <span *ngIf="providerCheckout.plan_type.is_business"
+                  >do responsável</span
+                ></label
+              >
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['cpf']"
+                name="CPF"
+              >
               </plugin-provider-checkout-error>
-              <div class="errors-feedback" *ngIf="formWizardStep01.get('cpf').getError('invalidCPF') &&
-                   formWizardStep01.controls['cpf'].touched">
+              <div
+                class="errors-feedback"
+                *ngIf="
+                  formWizardStep01.get('cpf').getError('invalidCPF') &&
+                  formWizardStep01.controls['cpf'].touched
+                "
+              >
                 <div class="alert alert-danger" role="alert">
                   <span>O CPF não é válido.</span>
                 </div>
@@ -136,13 +178,25 @@
           <div class="col-12">
             <div class="form-group">
               <input type="text" formControlName="rg" mask="00.000.000-0" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
-              <label>RG <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['rg']" name="RG">
+              <span class="highlight"></span> <span class="bar"></span>
+              <label
+                >RG
+                <span *ngIf="providerCheckout.plan_type.is_business"
+                  >do responsável</span
+                ></label
+              >
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['rg']"
+                name="RG"
+              >
               </plugin-provider-checkout-error>
-              <div class="errors-feedback"
-                *ngIf="formWizardStep01.get('rg').getError('invalidRG') && formWizardStep01.controls['rg'].touched">
+              <div
+                class="errors-feedback"
+                *ngIf="
+                  formWizardStep01.get('rg').getError('invalidRG') &&
+                  formWizardStep01.controls['rg'].touched
+                "
+              >
                 <div class="alert alert-danger" role="alert">
                   <span>O RG não é válido.</span>
                 </div>
@@ -153,30 +207,48 @@
 
         <div class="row">
           <div class="col-12">
-            <p class="text-primary">
-              Você precisa ser maior de 18 anos.
-            </p>
+            <p class="text-primary">Você precisa ser maior de 18 anos.</p>
           </div>
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="dob" mask="00/00/0000" dropSpecialCharacters="false" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                formControlName="dob"
+                mask="00/00/0000"
+                dropSpecialCharacters="false"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>
-                Data de Nascimento <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span>
+                Data de Nascimento
+                <span *ngIf="providerCheckout.plan_type.is_business"
+                  >do responsável</span
+                >
                 <small> (dd/mm/aaaa)</small>
               </label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['dob']" name="Data de Nascimento">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['dob']"
+                name="Data de Nascimento"
+              >
               </plugin-provider-checkout-error>
-              <div class="errors-feedback" *ngIf="formWizardStep01.get('dob').getError('invalidDate') &&
-                   formWizardStep01.controls['dob'].touched">
+              <div
+                class="errors-feedback"
+                *ngIf="
+                  formWizardStep01.get('dob').getError('invalidDate') &&
+                  formWizardStep01.controls['dob'].touched
+                "
+              >
                 <div class="alert alert-danger" role="alert">
                   <span>Data inválida.</span>
                 </div>
               </div>
-              <div class="errors-feedback" *ngIf="!formWizardStep01.get('dob').getError('invalidDate') &&
-                           formWizardStep01.get('dob').getError('notOver18') &&
-                           formWizardStep01.controls['dob'].touched">
+              <div
+                class="errors-feedback"
+                *ngIf="
+                  !formWizardStep01.get('dob').getError('invalidDate') &&
+                  formWizardStep01.get('dob').getError('notOver18') &&
+                  formWizardStep01.controls['dob'].touched
+                "
+              >
                 <div class="alert alert-danger" role="alert">
                   <span>Você precisa ser maior de 18 anos.</span>
                 </div>
@@ -193,9 +265,13 @@
                   <div class="col col-md-12">
                     <div class="row">
                       <div class="col">
-                        <h6 class="text-primary mb-0">PORTABILIDADE TELEFONE FIXO</h6>
-                        <p> Se você tem o interesse em fazer a portabilidade do seu atual Telefone Fixo para a LPNET,
-                          por favor preencha os dados a baixo
+                        <h6 class="text-primary mb-0">
+                          PORTABILIDADE TELEFONE FIXO
+                        </h6>
+                        <p>
+                          Se você tem o interesse em fazer a portabilidade do
+                          seu atual Telefone Fixo para a LPNET, por favor
+                          preencha os dados a baixo
                         </p>
                       </div>
                     </div>
@@ -203,19 +279,32 @@
                     <div class="row">
                       <div class="col col-md-12">
                         <div class="form-group">
-                          <input type="text" mask="(00) 0000-0000" formControlName="portability_number" />
+                          <input
+                            type="text"
+                            mask="(00) 0000-0000"
+                            formControlName="portability_number"
+                          />
                           <span class="highlight"></span>
                           <span class="bar"></span>
                           <label>Número a ser portado com DDD</label>
-                          <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['portability_number']"
-                            [message]="'Número é obrigatório se a Operadora estiver selecionada'">
+                          <plugin-provider-checkout-error
+                            [ctrl]="
+                              formWizardStep01.controls['portability_number']
+                            "
+                            [message]="
+                              'Número é obrigatório se a Operadora estiver selecionada'
+                            "
+                          >
                           </plugin-provider-checkout-error>
                         </div>
                       </div>
                       <div class="col col-md-12">
                         <div class="form-group">
                           <!-- HARDCODE -->
-                          <select class="form-control" formControlName="portability_provider">
+                          <select
+                            class="form-control"
+                            formControlName="portability_provider"
+                          >
                             <option value="">Operadora atual</option>
                             <option value="vivo">Vivo</option>
                             <option value="tim">Tim</option>
@@ -223,8 +312,12 @@
                             <option value="oi">Oi</option>
                             <option value="nextel">Nextel</option>
                           </select>
-                          <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['portability_provider']"
-                            name="Operadora">
+                          <plugin-provider-checkout-error
+                            [ctrl]="
+                              formWizardStep01.controls['portability_provider']
+                            "
+                            name="Operadora"
+                          >
                           </plugin-provider-checkout-error>
                         </div>
                       </div>
@@ -259,15 +352,18 @@
         <hr>
         -->
 
-
         <h5 class="text-primary mb-3">ENDEREÇO DE INSTALAÇÃO</h5>
 
         <div class="row">
           <div class="col-12 col-md-12">
             <div class="form-group">
-              <input type="text" name="postal_code" formControlName="postal_code" readonly />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                name="postal_code"
+                formControlName="postal_code"
+                readonly
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>CEP</label>
             </div>
           </div>
@@ -277,17 +373,20 @@
           <div class="col-12 col-md-8">
             <div class="form-group">
               <input type="text" name="city" readonly formControlName="city" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Cidade</label>
             </div>
           </div>
 
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="text" name="state" readonly formControlName="state" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                name="state"
+                readonly
+                formControlName="state"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Estado</label>
             </div>
           </div>
@@ -296,11 +395,17 @@
         <div class="row">
           <div class="col-12 col-md-12">
             <div class="form-group">
-              <input type="text" name="street_address_1" formControlName="street_address_1" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                name="street_address_1"
+                formControlName="street_address_1"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Endereço</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['street_address_1']" name="Endereço">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['street_address_1']"
+                name="Endereço"
+              >
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -310,19 +415,24 @@
           <div class="col-12 col-md-4">
             <div class="form-group">
               <input type="text" name="number" formControlName="number" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Número</label>
-              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['number']" name="Número">
+              <plugin-provider-checkout-error
+                [ctrl]="formWizardStep01.controls['number']"
+                name="Número"
+              >
               </plugin-provider-checkout-error>
             </div>
           </div>
 
           <div class="col-12 col-md-8">
             <div class="form-group">
-              <input type="text" name="street_address_2" formControlName="street_address_2" />
-              <span class="highlight"></span>
-              <span class="bar"></span>
+              <input
+                type="text"
+                name="street_address_2"
+                formControlName="street_address_2"
+              />
+              <span class="highlight"></span> <span class="bar"></span>
               <label>Complemento</label>
             </div>
           </div>
@@ -330,34 +440,45 @@
 
         <div class="row">
           <div class="col-12">
-            <p class="text-primary">Para que a instalação ocorra com sucesso é muito
-              importante que os dados do seu endereço estejam
-              completos. Ex.: bloco, apartamento, casa, quadra e etc.</p>
+            <p class="text-primary">
+              Para que a instalação ocorra com sucesso é muito importante que os
+              dados do seu endereço estejam completos. Ex.: bloco, apartamento,
+              casa, quadra e etc.
+            </p>
           </div>
         </div>
 
         <div class="row mt-3">
           <div class="col-12 col-md-6">
-            <button class="btn btn-primary btn-block" type="submit"
-              [disabled]="!formWizardStep01.valid || formWizardStep01Submitted">
+            <button
+              class="btn btn-primary btn-block"
+              type="submit"
+              [disabled]="!formWizardStep01.valid || formWizardStep01Submitted"
+            >
               <span *ngIf="!formWizardStep01Submitted">Continuar</span>
-              <span *ngIf="formWizardStep01Submitted"><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
+              <span *ngIf="formWizardStep01Submitted"
+                ><i class="fa fa-spinner fa-pulse"></i> Carregando</span
+              >
             </button>
           </div>
           <div class="col-12 col-md-6">
-            <p>Próximos passos: <br class="d-none d-md-block"> forma de pagamento.</p>
+            <p>
+              Próximos passos: <br class="d-none d-md-block" />
+              forma de pagamento.
+            </p>
           </div>
         </div>
 
         <div class="row">
           <div class="col-12 col-md-6 my-2 text-center">
-            <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details text-und"><u>Limpar
-                carrinho</u></a>
+            <a
+              (click)="providerCheckout.restartProviderCheckout()"
+              class="btn-summary-details text-und"
+              ><u>Limpar carrinho</u></a
+            >
           </div>
         </div>
-
       </div>
-
     </div>
   </form>
 </div>

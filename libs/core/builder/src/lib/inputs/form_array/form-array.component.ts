@@ -1,5 +1,14 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  TemplateRef
+} from '@angular/core';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from '../../interfaces/form-config.interface';
 import { Subscription } from 'rxjs';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbWindowRef, NbWindowService, NbToastrService } from '@nebular/theme';
@@ -12,7 +21,7 @@ enum state {
   start = 'start',
   updating = 'updating',
   creating = 'creating',
-  removing = 'removing',
+  removing = 'removing'
 }
 
 /**
@@ -32,13 +41,20 @@ enum state {
               [source]="source"
               (create)="onCreate($event)"
               (edit)="onEdit($event)"
-              (delete)="onDelete($event)" >
+              (delete)="onDelete($event)"
+            >
             </ng2-smart-table>
             <ng-template #InceptionForm let-data>
-              <wda-form-builder [displayGroups]="form.displayGroups" (onSubmit)="submitModal($event)"
-                        [group]="form"
-                        [loading]="loading" [sticky_top]="false" [show_breadcrumb]="false"
-                        [title]="config.label" [inceptionForm]="true" ></wda-form-builder>
+              <wda-form-builder
+                [displayGroups]="form.displayGroups"
+                (onSubmit)="submitModal($event)"
+                [group]="form"
+                [loading]="loading"
+                [sticky_top]="false"
+                [show_breadcrumb]="false"
+                [title]="config.label"
+                [inceptionForm]="true"
+              ></wda-form-builder>
             </ng-template>
           </div>
         </nb-accordion-item-body>
@@ -46,7 +62,8 @@ enum state {
     </nb-accordion>
   `
 })
-export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDestroy {
+export class BuilderFormArrayComponent
+  implements BuilderFormField, OnInit, OnDestroy {
   public smart_table_settings: SmartTableSettings = {
     editable: true,
     mode: 'external',
@@ -58,20 +75,20 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>'
       //confirmCreate: true,
     },
     view: {
-      viewButtonContent: '<i class="far fa-eye"></i>',
+      viewButtonContent: '<i class="far fa-eye"></i>'
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
       saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>'
       // confirmSave: true,
     },
     delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
+      deleteButtonContent: '<i class="nb-trash"></i>'
       //confirmDelete: true
     }
   };
@@ -90,7 +107,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   interval;
   private element: any = null;
 
-
   @ViewChild('InceptionForm') formTemplate: TemplateRef<any>;
 
   /**
@@ -100,37 +116,39 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
   constructor(
     private datastore: WebAngularDataStore,
     private windowService: NbWindowService,
-    private toaster: NbToastrService,
-  ) {
-
-  }
+    private toaster: NbToastrService
+  ) {}
 
   /**
    * On Initialization of the Component
    */
   ngOnInit() {
-
     this.updateSettings();
-    if (this.group.get(this.config.name) && typeof this.group.get(this.config.name).value !== 'undefined') {
+    if (
+      this.group.get(this.config.name) &&
+      typeof this.group.get(this.config.name).value !== 'undefined'
+    ) {
       this.source.load(this.group.get(this.config.name).value);
     }
-    this.subscription = this.group.valueChanges.subscribe((val) => {
+    this.subscription = this.group.valueChanges.subscribe(val => {
       if (this.group.get(this.config.name)) {
         this.subscription.unsubscribe();
         this.subscription = null;
         // We need to subscribe only to changes of this table values not others
-        this.subscription = this.group.get(this.config.name).valueChanges.subscribe((value) => {
-          //this.subscription.unsubscribe();
-          //this.subscription = null;
-          this.source.load(value);
-        })
+        this.subscription = this.group
+          .get(this.config.name)
+          .valueChanges.subscribe(value => {
+            //this.subscription.unsubscribe();
+            //this.subscription = null;
+            this.source.load(value);
+          });
       }
     });
 
     this.onChange();
   }
 
-  private openWindow(title: string = "Edit") {
+  private openWindow(title: string = 'Edit') {
     //this.loadOptions();
 
     this.windowRef = this.windowService.open(this.formTemplate, {
@@ -144,20 +162,20 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    * Smart Table Has changed
    */
   private onChange() {
-    this.onChangeSub = this.source.onChanged().subscribe((data) => {
+    this.onChangeSub = this.source.onChanged().subscribe(data => {
       switch (data.action) {
-        case "prepend":
-          this.includeRow(data.elements)
+        case 'prepend':
+          this.includeRow(data.elements);
           break;
-        case "update":
+        case 'update':
           this.updateRow(data.elements);
           break;
-        case "remove":
+        case 'remove':
           this.deleteRow(data.elements);
         default:
           break;
       }
-    })
+    });
   }
 
   /**
@@ -205,7 +223,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
           }
         }
       }
-
     }
   }
 
@@ -214,12 +231,14 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
    */
   private getFormConfig() {
     if (this.config.model) {
-      const entity = new this.config.model(this.datastore)
+      const entity = new this.config.model(this.datastore);
       this.form = entity.getForm();
       this.form.generateForm();
     } else {
       throw new Error(
-        `Form Array require 'model' with a formClassRef inside formFields[${this.config.name}]`
+        `Form Array require 'model' with a formClassRef inside formFields[${
+          this.config.name
+        }]`
       );
     }
   }
@@ -243,8 +262,8 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
           const element = this.config.fields[key];
           this.smart_table_settings.columns[element.name] = {
             title: element.label,
-            type: 'text', // TODO: Imporve Match Type
-          }
+            type: 'text' // TODO: Imporve Match Type
+          };
         }
       }
     } else {
@@ -252,7 +271,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
         `Form Array require Fields Configuration on BuilderFormFieldConfig`
       );
     }
-
   }
 
   /**
@@ -267,7 +285,6 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       this.onChangeSub.unsubscribe();
       this.onChangeSub = null;
     }
-
   }
 
   /**
@@ -333,29 +350,38 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
         case state.updating:
           const element_id = this.element.id;
           this.source.update(this.element, $event.data).then((val: any) => {
-            // Also Update on 
+            // Also Update on
             if (element_id) {
               const fg: AbstractForm = this.getEntity(element_id);
               if (fg.entity.save) {
-                fg.updateModel(fg.entity)
-                fg.entity.save().subscribe((new_entity) => {
-                  this.toaster.success(`Changes have been saved`, `Success!`);
-                  fg.populateForm(new_entity);
-                  fg.entity = new_entity;
-                  this.loading = false;
-                  this.closeWindow();
-                }, (error) => {
-                  this.loading = false;
-                  if (error.errors && error.errors.length > 0) {
-                    for (let i = 0; i < error.errors.length; i++) {
-                      // TODO: Check pointer to see if is for an specific field and set an error inside the field
-                      const element = error.errors[i];
-                      this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+                fg.updateModel(fg.entity);
+                fg.entity.save().subscribe(
+                  new_entity => {
+                    this.toaster.success(`Changes have been saved`, `Success!`);
+                    fg.populateForm(new_entity);
+                    fg.entity = new_entity;
+                    this.loading = false;
+                    this.closeWindow();
+                  },
+                  error => {
+                    this.loading = false;
+                    if (error.errors && error.errors.length > 0) {
+                      for (let i = 0; i < error.errors.length; i++) {
+                        // TODO: Check pointer to see if is for an specific field and set an error inside the field
+                        const element = error.errors[i];
+                        this.toaster.danger(
+                          `Error saving the Changes, Details: ${
+                            element.detail
+                          }`,
+                          `Error!`,
+                          { duration: 5000 }
+                        );
+                      }
+                    } else {
+                      this.toaster.danger(`Error saving the Changes`, `Error!`);
                     }
-                  } else {
-                    this.toaster.danger(`Error saving the Changes`, `Error!`);
                   }
-                });
+                );
               } else {
                 this.closeWindow();
               }
@@ -376,7 +402,7 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     }
   }
   /**
-   * 
+   *
    * @param id Id of the entity to find the elemnt
    */
   private getEntity(id: string): AbstractForm {
@@ -384,28 +410,27 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
     return fa.at(fa.value.findIndex(e => e.id === id)) as AbstractForm;
   }
   /**
-   * 
+   *
    */
   private savingElement(id) {
     //if(fg.entity && fg.get('id').value){
     //  // We need to update the Entity linked to the group entity
     //  const id = fg.get('id').value;
-    //  
+    //
     //  if(this.group.entity[this.config.name]){
-    //    const en:any[] = this.group.entity[this.config.name]; 
+    //    const en:any[] = this.group.entity[this.config.name];
     //    let index = en.findIndex((e)=> e.id == id);
-    //    
+    //
     //    fg.updateModel(this.group.entity[this.config.name][index])
-    //    
+    //
     //  }
-    //  
+    //
     //}
   }
   /**
    * Closing Window
    */
   private closeWindow() {
-
     setTimeout(() => {
       this.loading = false;
       this.windowRef.close();
@@ -413,5 +438,4 @@ export class BuilderFormArrayComponent implements BuilderFormField, OnInit, OnDe
       this.form.reset();
     }, 350);
   }
-
 }

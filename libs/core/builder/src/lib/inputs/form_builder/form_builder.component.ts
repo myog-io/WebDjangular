@@ -1,18 +1,20 @@
 import { Component, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from '../../interfaces/form-config.interface';
 import { AbstractForm } from '@core/data/src/lib/forms';
 
 @Component({
   selector: 'wda-form-formbuilder',
   styleUrls: [],
   template: `
-    <div class="form-group" [formGroup]="group" >
-
-    </div>
+    <div class="form-group" [formGroup]="group"></div>
   `
 })
-export class BuilderFormBuilderComponent implements BuilderFormField, OnInit, OnDestroy {
+export class BuilderFormBuilderComponent
+  implements BuilderFormField, OnInit, OnDestroy {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
   relationshipUpdated: EventEmitter<any>;
@@ -43,5 +45,4 @@ export class BuilderFormBuilderComponent implements BuilderFormField, OnInit, On
       entity: { data: event.form }
     });
   }
-
 }

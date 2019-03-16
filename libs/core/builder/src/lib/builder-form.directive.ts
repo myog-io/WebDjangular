@@ -8,7 +8,8 @@ import {
   Type,
   ViewContainerRef,
   Output,
-  EventEmitter, SimpleChanges
+  EventEmitter,
+  SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
@@ -23,9 +24,11 @@ import { BuilderFormGroupComponent } from './inputs/form_group/form_group.compon
 import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
-import { BuilderFormField, BuilderFormFieldConfig } from './interfaces/form-config.interface';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from './interfaces/form-config.interface';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
-
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
@@ -40,14 +43,14 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   switch: BuilderFormSwitcherComponent,
   checkbox: BuilderFormCheckboxOptionsComponent,
   datepicker: BuilderFormDatepickerComponent,
-  jsonLogic: BuilderFormJsonLogicComponent,
+  jsonLogic: BuilderFormJsonLogicComponent
 };
-
 
 @Directive({
   selector: '[wdaBuilderFormFields]'
 })
-export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnInit {
+export class ScaffoldFieldDirective
+  implements BuilderFormField, OnChanges, OnInit {
   @Input() config: BuilderFormFieldConfig;
   @Input() group: FormGroup;
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
@@ -57,8 +60,7 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
   constructor(
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
-  ) {
-  }
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.config.isFirstChange()) {

@@ -1,22 +1,33 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { MapTypeStyle } from "@agm/core";
+import { Component, OnInit, Input } from '@angular/core';
+import { MapTypeStyle } from '@agm/core';
 
 @Component({
   selector: 'cms-maps',
   styleUrls: ['maps.component.scss'],
   template: `
-    <!-- this creates a google map on the page with the given lat/lng from -->
-    <!-- the component as the initial center of the map: -->
-    <agm-map *ngIf="!loading" [latitude]="lat" [longitude]="lng" [disableDefaultUI]="true" [styles]="styles" [zoom]="zoom">
-      <span *ngFor="let item of pins;">
-        <agm-marker  [latitude]="item.lat" [longitude]="item.lng" [markerClickable]="item?.title ? true: false" >
+     <!-- this creates a google map on the page with the given lat/lng from --
+      <!-- the component as the initial center of the map: -
+    <agm-map
+      *ngIf="!loading"
+      [latitude]="lat"
+      [longitude]="lng"
+      [disableDefaultUI]="true"
+      [styles]="styles"
+      [zoom]="zoom"
+    >
+      <span *ngFor="let item of pins">
+        <agm-marker
+          [latitude]="item.lat"
+          [longitude]="item.lng"
+          [markerClickable]="item?.title ? true : false"
+        >
           <agm-info-window>
-            <strong>{{item?.title}}</strong>
+            <strong>{{ item?.title }}</strong>
           </agm-info-window>
         </agm-marker>
       </span>
     </agm-map>
-  `,
+  `
 })
 export class CoreCmsMapsComponent implements OnInit {
   // TODO: Improve
@@ -26,7 +37,7 @@ export class CoreCmsMapsComponent implements OnInit {
   lat: number;
   lng: number;
   loading = true;
-  public styles: MapTypeStyle[]
+  public styles: MapTypeStyle[];
   ngOnInit() {
     // Centering the pins
     let minLat: number = 999999;
@@ -48,20 +59,19 @@ export class CoreCmsMapsComponent implements OnInit {
     if (this.color) {
       this.styles = [
         {
-          featureType: "all",
-          elementType: "all", stylers: [
-            { hue: this.color }
-          ]
+          featureType: 'all',
+          elementType: 'all',
+          stylers: [{ hue: this.color }]
         },
         {
-          featureType: "water",
-          elementType: "all", stylers: [
-            { hue: this.color },
-            { saturation: 0 }, { lightness: 50 }
-          ]
+          featureType: 'water',
+          elementType: 'all',
+          stylers: [{ hue: this.color }, { saturation: 0 }, { lightness: 50 }]
         },
         {
-          featureType: "poi", elementType: "all", stylers: [{ visibility: "off" }]
+          featureType: 'poi',
+          elementType: 'all',
+          stylers: [{ visibility: 'off' }]
         }
       ];
     }

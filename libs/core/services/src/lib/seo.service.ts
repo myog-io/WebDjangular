@@ -1,24 +1,23 @@
-import {Inject, Injectable} from '@angular/core';
-import {Meta, MetaDefinition, Title} from "@angular/platform-browser";
-import {PageModel} from "@core/cms/src/lib/models";
-import {DOCUMENT} from "@angular/common";
-import {WDAConfig} from "@core/services/src/lib/wda-config.service";
-
+import { Inject, Injectable } from '@angular/core';
+import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
+import { PageModel } from '@core/cms/src/lib/models';
+import { DOCUMENT } from '@angular/common';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 
 @Injectable()
 export class SEOService {
-
   private pageMetas: HTMLMetaElement[] = [];
   private linkCanonical: HTMLLinkElement = null;
   private linkFavicon: HTMLLinkElement = null;
   private cms_core: any;
 
-
-  constructor(public meta: Meta,
-              public title: Title,
-              public wdaConfig: WDAConfig,
-              @Inject(DOCUMENT) public document) {
-    this.wdaConfig.getCoreConfig('cms_core').then((data) => {
+  constructor(
+    public meta: Meta,
+    public title: Title,
+    public wdaConfig: WDAConfig,
+    @Inject(DOCUMENT) public document
+  ) {
+    this.wdaConfig.getCoreConfig('cms_core').then(data => {
       this.cms_core = data;
       this.setFavicon();
     });
@@ -29,13 +28,12 @@ export class SEOService {
       this.linkFavicon = document.createElement('link');
       this.linkFavicon.setAttribute('href', this.cms_core.favicon);
       this.linkFavicon.setAttribute('type', 'image/x-icon');
-      this.linkFavicon.setAttribute('rel' , 'shortcut icon');
+      this.linkFavicon.setAttribute('rel', 'shortcut icon');
       document.head.appendChild(this.linkFavicon);
     }
   }
 
   setTitleByPage(page: PageModel) {
-
     let title: string = '';
     let site_title: string = '';
     let title_separator: string = '';
@@ -57,7 +55,8 @@ export class SEOService {
         title = page.title;
       }
       if (this.cms_core.hasOwnProperty('site_title_placeholder')) {
-        title_placeholder = this.cms_core['site_title_placeholder'].replace('${title}', title)
+        title_placeholder = this.cms_core['site_title_placeholder']
+          .replace('${title}', title)
           .replace('${title_separator}', title_separator)
           .replace('${site_title}', site_title);
       } else {
@@ -71,16 +70,16 @@ export class SEOService {
     this.resetPageMetas();
 
     if (page.is_searchable) {
-      this.addPageMetaTag({name: 'robots', content: 'INDEX, FOLLOW'});
+      this.addPageMetaTag({ name: 'robots', content: 'INDEX, FOLLOW' });
 
       let description: string;
       if (page.seo_description) {
         description = page.seo_description;
       } else {
         // TODO: It is not a good seo, maybe warn the admin somehow.
-        let div = document.createElement("div");
+        let div = document.createElement('div');
         div.innerHTML = page.content;
-        let text = div.textContent || div.innerText || "";
+        let text = div.textContent || div.innerText || '';
         text = text.replace(/\s\s+/g, ' ').trim();
         if (text.length > 180) {
           description = `${text.slice(0, 180)}...`;
@@ -88,19 +87,25 @@ export class SEOService {
           description = text;
         }
       }
-      this.addPageMetaTag({name: 'HandheldFriendly', content: "True"});
-      this.addPageMetaTag({name: 'MobileOptimized', content: "320"});
+      this.addPageMetaTag({ name: 'HandheldFriendly', content: 'True' });
+      this.addPageMetaTag({ name: 'MobileOptimized', content: '320' });
 
-      this.addPageMetaTag({name: 'description', content: description});
-      this.addPageMetaTag({name: 'og:description', content: description});
+      this.addPageMetaTag({ name: 'description', content: description });
+      this.addPageMetaTag({ name: 'og:description', content: description });
 
       this.setCanonicalURL(page.slug); // TODO: #38 get the right Path Absolute
-      this.addPageMetaTag({name: 'og:locate', content: this.wdaConfig.getCurrentLocale()});
+      this.addPageMetaTag({
+        name: 'og:locate',
+        content: this.wdaConfig.getCurrentLocale()
+      });
 
       const localeList = this.wdaConfig.getLocaleList();
       for (let locale in localeList) {
         if (localeList[locale] != this.wdaConfig.getCurrentLocale()) {
-          this.addPageMetaTag({name: 'og:locale:alternate', content: localeList[locale]});
+          this.addPageMetaTag({
+            name: 'og:locale:alternate',
+            content: localeList[locale]
+          });
         }
       }
 
@@ -108,10 +113,8 @@ export class SEOService {
 
       // Twitter
     } else {
-      this.addPageMetaTag({name: 'robots', content: 'NOINDEX, NOFOLLOW'});
+      this.addPageMetaTag({ name: 'robots', content: 'NOINDEX, NOFOLLOW' });
     }
-
-
   }
 
   private addPageMetaTag(meta: MetaDefinition) {
@@ -134,8 +137,8 @@ export class SEOService {
       this.linkCanonical.setAttribute('rel', 'canonical');
       document.head.appendChild(this.linkCanonical);
     }
-    this.linkCanonical.setAttribute('href', url);  // Google and everybody
-    this.addPageMetaTag({property: 'og:url', content: url}) // Facebook
+    this.linkCanonical.setAttribute('href', url); // Google and everybody
+    this.addPageMetaTag({ property: 'og:url', content: url }); // Facebook
   }
 
   /*
@@ -206,7 +209,6 @@ export class SEOService {
 
    */
 
-
   // TODO: #40 improve SEO after the Page Classes is done
   // e.g.: if the page is an article,
   //      og:type = article
@@ -214,6 +216,4 @@ export class SEOService {
   //      article:modified_time  - datetime - When the article was last changed.
   //      article:expiration_time - datetime - When the article is out of date after.
   //      article:author - profile array - Writers of the article.
-
-
 }
