@@ -10,37 +10,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 @Component({
   selector: 'wda-form-checkbox',
   styleUrls: ['checkbox.component.scss'],
-  template: `
-    <div class="form-group" [formGroup]="group">
-      <label>{{ config.label }}</label>
-
-      <wda-model-paginator
-        [options]="paginatorConfig"
-        (controls)="modelPaginatorControlsGetter($event)"
-      >
-        <div class="row" *ngIf="paginatorControls">
-          <div
-            class="col-4"
-            *ngFor="let entry of paginatorControls.getEntries(); let i = index"
-          >
-            <nb-checkbox
-              status="success"
-              class="col-sm-4"
-              [value]="group.doesEntityHasRelationship(config.name, entry)"
-              (change)="
-                group.checkboxRelationListener($event, config.name, entry)
-              "
-            >
-              {{ entry.toString() }}
-            </nb-checkbox>
-          </div>
-        </div>
-      </wda-model-paginator>
-    </div>
-    tor>
-
-  </div><
-  `
+  templateUrl: 'checkbox.component.html'
 })
 export class BuilderFormCheckboxOptionsComponent
   implements BuilderFormField, OnInit {
@@ -54,7 +24,7 @@ export class BuilderFormCheckboxOptionsComponent
     useDatastore: null
   };
 
-  constructor(private datastore: WebAngularDataStore) {}
+  constructor(private datastore: WebAngularDataStore) { }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

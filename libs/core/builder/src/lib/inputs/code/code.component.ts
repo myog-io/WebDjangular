@@ -10,21 +10,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'wda-form-code',
   styleUrls: ['code.component.scss'],
-  template: `
-    <div class="form-group" [formGroup]="group">
-      <label>{{ config.label }}</label>
-      <ngx-monaco-editor
-        class="monaco-editor {{ this.class }}"
-        [options]="editorOptions"
-        [formControlName]="config.name"
-      ></ngx-monaco-editor>
-      <wda-form-validators
-        [config]="config"
-        [input]="group.get(this.config.name)"
-      ></wda-form-validators>
-    </div>
-    /div><!--form-gro
-  `
+  templateUrl: 'code.component.html'
 })
 export class BuilderFormCodeComponent
   implements BuilderFormField, OnInit, OnDestroy {

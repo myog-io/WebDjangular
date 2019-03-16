@@ -11,39 +11,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 @Component({
   selector: 'wda-form-ngselect',
   styleUrls: ['ngselect.component.scss'],
-  template: `
-    <div
-      class="form-group form-select"
-      [formGroup]="isFormGroup ? group.get(config.name) : group"
-    >
-      <label>{{ config.label }}</label>
-      <ng-select
-        [appendTo]="'body'"
-        class="form-control"
-        (change)="onChange($event)"
-        bindLabel="name"
-        bindValue="id"
-        [formControlName]="isFormGroup ? 'id' : config.name"
-        [multiple]="config.multiple"
-        [addTag]="addTagPromise"
-        [loading]="loading"
-        [placeholder]="placeholder"
-        [items]="options"
-        [compareWith]="compareValues"
-      >
-        <ng-template ng-tag-tmp let-search="searchTerm" *ngIf="config.addTags">
-          <b>create new tag</b>: {{ search }}
-        </ng-template>
-      </ng-select>
-      <wda-form-validators
-        [config]="isFormGroup ? group.get(config.name) : group"
-        [input]="isFormGroup ? group.get('id') : group.get(config.name)"
-      >
-      </wda-form-validators>
-    </div>
-    s>
-    </div><!-
-  `
+  templateUrl: 'ngselect.component.html'
 })
 export class BuilderFormNgSelectComponent implements BuilderFormField, OnInit {
   config: BuilderFormFieldConfig;
@@ -57,7 +25,7 @@ export class BuilderFormNgSelectComponent implements BuilderFormField, OnInit {
    * Creates an instance of scaffold form select component.
    * @param datastore
    */
-  constructor(private datastore: WebAngularDataStore) {}
+  constructor(private datastore: WebAngularDataStore) { }
   get isFormGroup(): boolean {
     return this.config.model && this.config.formType == FormGroup;
   }

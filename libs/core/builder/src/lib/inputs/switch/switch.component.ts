@@ -9,29 +9,7 @@ import { AbstractForm } from '@core/data/src/lib/forms';
 @Component({
   selector: 'wda-form-switch',
   styleUrls: ['switch.component.scss'],
-  template: `
-    <div class="form-group" [formGroup]="group">
-      <label>{{ config.label }}</label>
-      <label class="switch-label" [class.vertical]="vertical">
-        <span class="first" [class.active]="vertical || isFirstValue()">
-          {{ vertical ? currentValueLabel() : first_label }}
-        </span>
-        <div class="switch">
-          <input
-            type="checkbox"
-            [checked]="isSecondValue()"
-            (change)="changeValue()"
-          />
-          <span class="slider"></span>
-        </div>
-        <span *ngIf="!vertical" class="second" [class.active]="isSecondValue()">
-          {{ second_label }}
-        </span>
-      </label>
-    </div>
-     </label>
-  </di
-  `
+  templateUrl: 'switch.component.html'
 })
 export class BuilderFormSwitcherComponent
   implements BuilderFormField, OnInit, OnDestroy {

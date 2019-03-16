@@ -5,8 +5,6 @@ import { MapTypeStyle } from '@agm/core';
   selector: 'cms-maps',
   styleUrls: ['maps.component.scss'],
   template: `
-     <!-- this creates a google map on the page with the given lat/lng from --
-      <!-- the component as the initial center of the map: -
     <agm-map
       *ngIf="!loading"
       [latitude]="lat"
