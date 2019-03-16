@@ -21,12 +21,12 @@ export class PluginProviderCheckoutWizardStep03Component implements OnInit {
   public sva_price: number = 0;
   public scm_price: number = 0;
 
-  constructor(public providerCheckout: ProviderCheckoutService) {}
+  constructor(public providerCheckout: ProviderCheckoutService) { }
 
   ngOnInit() {
     this.cart = this.providerCheckout.cartService.cart;
     const providerConfig = this.providerCheckout.providerConfig;
-    console.log(providerConfig);
+    //console.log(providerConfig);
     let total: number = 0;
 
     let item: CartItemModel;

@@ -117,7 +117,7 @@ export class BuilderFormArrayComponent
     private datastore: WebAngularDataStore,
     private windowService: NbWindowService,
     private toaster: NbToastrService
-  ) {}
+  ) { }
 
   /**
    * On Initialization of the Component
@@ -197,12 +197,12 @@ export class BuilderFormArrayComponent
   }
 
   /**
-   *
+   * Deleting a Row
    * @param val
    */
   private deleteRow(val: any) {
-    this.group.formArrayRemoveAt(this.config.name, 0);
-    this.setGroupValue(val);
+    //console.log("Deleting Row", val)
+    ////this.setGroupValue(val);
   }
 
   /**
@@ -237,7 +237,7 @@ export class BuilderFormArrayComponent
     } else {
       throw new Error(
         `Form Array require 'model' with a formClassRef inside formFields[${
-          this.config.name
+        this.config.name
         }]`
       );
     }
@@ -292,6 +292,9 @@ export class BuilderFormArrayComponent
    */
   onDelete($event) {
     this.state = state.removing;
+    const fa = this.group.get(this.config.name) as FormArray
+    const index = fa.controls.findIndex((fc) => fc.get('id').value === $event.data.id);
+    this.group.formArrayRemoveAt(this.config.name, index);
     this.source.remove($event.data);
   }
 
@@ -371,7 +374,7 @@ export class BuilderFormArrayComponent
                         const element = error.errors[i];
                         this.toaster.danger(
                           `Error saving the Changes, Details: ${
-                            element.detail
+                          element.detail
                           }`,
                           `Error!`,
                           { duration: 5000 }

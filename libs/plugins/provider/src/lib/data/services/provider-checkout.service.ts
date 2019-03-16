@@ -146,10 +146,12 @@ export class ProviderCheckoutService {
 
   private _condo: CondoModel;
   public has_reseller: boolean = false;
+  private cartSub: Subscription;
 
   constructor(
     private datastore: WebAngularDataStore,
     public cartService: CartService,
+
     public clientUserService: ClientUserService,
     //private pageScrollService: PageScrollService,
     private formBuilder: FormBuilder,
@@ -175,12 +177,13 @@ export class ProviderCheckoutService {
       typeOfCustomer: ['', [Validators.required]],
       reseller: ['', []]
     });
-
+    // We always have the cart create but sometimes does not have ID
     if (this.cartService.cart) {
       this.loadedCart();
     } else {
       this.listener_cart_changes = this.cartService.cart_changes.subscribe(
         () => {
+          this.checkDisabledByCategories(this.cartService.cart);
           this.loadedCart();
         }
       );
@@ -258,6 +261,14 @@ export class ProviderCheckoutService {
 
   loadedCart() {
     if (this.loading_cart) {
+      if (this.cartSub) {
+        this.cartSub.unsubscribe();
+        this.cartSub = null;
+      }
+      this.cartSub = this.cartService.cart_changes.subscribe(() => {
+        this.checkDisabledByCategories(this.cartService.cart);
+      });
+
       if (this.listener_cart_changes) {
         this.listener_cart_changes.unsubscribe();
       }
@@ -338,9 +349,7 @@ export class ProviderCheckoutService {
       }
       this.loading_cart = false;
     }
-    this.cartService.cart_changes.subscribe(() => {
-      this.checkDisabledByCategories(this.cartService.cart);
-    });
+
   }
 
   checkDisabledByCategories(cart) {
