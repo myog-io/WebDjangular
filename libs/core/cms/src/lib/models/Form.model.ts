@@ -18,7 +18,7 @@ import { BuilderFormValidatorMessages } from '@core/builder/src/lib/interfaces/f
   modelEndpointUrl: 'cms/form'
 })
 export class FormModel extends AbstractModel {
-  public include = 'fields,actions';
+  public static include = 'fields,actions';
 
   @Attribute()
   id: string;

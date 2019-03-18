@@ -8,6 +8,11 @@
   right: 0;
   top: 0;
   z-index: 1090;
+  @include media-breakpoint-down(sm) {
+    i{
+      color:#fff;
+    }
+  }
 }
 
 .main-wrapper {
@@ -20,12 +25,23 @@
   background: #5f6a73;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
+  @include media-breakpoint-down(sm) {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    
+  }
 }
 
 .right-side {
   background: #fff;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  @include media-breakpoint-down(sm) {
+    min-height: 350px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+  }
 }
 
 h3.title {
@@ -49,13 +65,25 @@ h5.amount {
   font-weight: $fw-semibold;
   text-transform: uppercase;
   color: #7f868b;
+  @include media-breakpoint-down(sm) {
+    text-align: center;
+  }
 }
-
+@include media-breakpoint-down(sm) {
+  .nav {
+    display:block;
+  }
+}
 .nav-item {
   width: 100%;
+  @include media-breakpoint-down(sm) {
+    width: auto;
+    display: inline-block;
+  }
 
   .nav-link {
     width: 100%;
+   
     text-align: left;
     border: 0;
     background: transparent;
@@ -71,7 +99,12 @@ h5.amount {
 
     outline: unset;
     cursor: pointer;
-
+    @include media-breakpoint-down(sm) {
+      width: auto;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      display: block;
+    }
     &.active {
       background: #fff;
       color: #5f6a73;
@@ -83,10 +116,13 @@ h5.amount {
     }
   }
 }
-
+form {
+  width: 100%;  
+}
 .form-group {
   position: static;
   margin-bottom: unset;
+  width: 100%;
 
   label {
     position: static;

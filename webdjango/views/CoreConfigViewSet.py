@@ -28,25 +28,26 @@ class CoreConfigGroupViewSet(viewsets.GenericViewSet):
 
         return obj
 
-    """
-    List a queryset.
-    """
-
     def list(self, request, format=None):
+        """
+        List a queryset.
+        """
         groups = CoreConfigGroup.all()
         serializer = self.serializer_class(groups, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk, *args, **kwargs):
+        """
+        Retrieve a core config
+        """
         group = CoreConfigGroup.get(pk)
         serializer = self.serializer_class(group, many=False)
         return Response(serializer.data)
 
-    """
-    This Update it's actually to update The Core Config Values of a Group
-    """
-
     def update(self, request, *args, **kwargs):
+        """
+        This Update it's actually to update The Core Config Values of a Group
+        """
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)

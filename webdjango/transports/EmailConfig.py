@@ -11,6 +11,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
     ]
 
     CONFIG_SECURITY_OPTIONS = [
+        {'id': 'none', 'name': 'None'},
         {'id': 'tls', 'name': 'TLS'},
         {'id': 'ssl', 'name': 'SSL'},
     ]

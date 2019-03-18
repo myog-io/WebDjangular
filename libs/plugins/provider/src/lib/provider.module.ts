@@ -7,7 +7,7 @@ import { PluginProviderCheckoutModule } from './components/checkout/checkout.mod
 import { PluginProviderPlansComponent } from './components/plans/plans.component';
 import { PluginProviderPricingInternetHorizontalComponent } from './components/plans/pricing/internet-horizontal/internet-horizontal.component';
 import { PluginPricingComboVerticalComponent } from './components/plans/pricing/combo-vertical/combo-vertical.component';
-import { PluginProviderPricingInternetVerticalComponent } from './components/plans/pricing/internet-vertical/internet-vertical.component';
+import { PluginProviderPricingInternetComponent } from './components/plans/pricing/internet/internet.component';
 import { PluginProviderPricingTelephoneVerticalComponent } from './components/plans/pricing/telephone-vertical/telephone-vertical.component';
 import { PluginProviderPricingTvVerticalComponent } from './components/plans/pricing/tv-vertical/tv-vertical.component';
 import { PluginProviderError404Component } from './components/errors/404/404.component';
@@ -38,7 +38,7 @@ const COMPONENTS = [
   PluginProviderCityCoverageComponent,
   PluginProviderPricingInternetHorizontalComponent,
   PluginPricingComboVerticalComponent,
-  PluginProviderPricingInternetVerticalComponent,
+  PluginProviderPricingInternetComponent,
   PluginProviderPricingTelephoneVerticalComponent,
   PluginProviderPricingTvVerticalComponent,
   PluginProviderError404Component,

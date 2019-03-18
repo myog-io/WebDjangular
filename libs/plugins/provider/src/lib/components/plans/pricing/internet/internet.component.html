@@ -9,13 +9,77 @@
       </div>
       <div class="modal-body" [innerHTML]="plan?.description"></div>
     </ng-template><!-- END MODAL -->
-    <div class="card ml-2 mr-2 mt-1 mb-1 ">
+    <div class="d-none d-sm-block card mt-1 mb-1 shadow-sm vartical-plan">
+      <div class="card-header">
+
+        <div class="ribbon ribbon-top-right" *ngIf="plan?.data?.is_best_seller == 1">
+          <span>Mais vendido</span>
+        </div>
+        <h5 class="plan-amount text-center pt-3 pb-2">
+          {{ plan?.data?.download }}<br />
+          <span class="pt-0 pt-sm-2 d-block plan-amount-unit"> MEGA </span>
+        </h5>
+      </div>
+      <div class="card-body p-0 ml-1 mr-1 ">
+        <div class="row text-center">
+
+          <ul>
+            <li class="mb-1">
+              <i class="icon mr-1 fa fa-2x icon-download" aria-hidden="true"></i>
+              <p>Download {{ plan?.data?.download }}Mbps</p>
+            </li>
+            <li class="mb-1">
+              <i class="icon mr-1 fa fa-2x icon-upload" aria-hidden="true"></i>
+              <p>Upload: até {{ plan?.data?.upload }}Mbps</p>
+            </li>
+            <li class="mb-1">
+              <i [class]="plan?.data?.addon_icon_1 + ' mr-1'" aria-hidden="true"></i>
+              <p [innerHTML]="plan?.data?.addon_text_1"></p>
+            </li>
+            <li class="mb-1">
+              <i [class]="plan?.data?.addon_icon_2 + ' mr-1'" aria-hidden="true"></i>
+              <p [innerHTML]="plan?.data?.addon_text_2"></p>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="plan-price text-center mb-1">
+              <span class="currency-unit">R$ </span>
+              <span class="price">{{
+                (plan?.price - discount).toFixed(2)
+              }}</span>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="text-center m-1">
+              <a [routerLink]="['/assine']" [queryParams]="{ net: plan?.sku }"
+                class="btn btn-outline-primary pl-3 pr-3">
+                Assine já
+              </a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p class="text-center m-1">
+              <a href="javascript:void(0);" (click)="openModal(content)" class="more-info">Mais informações</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div><!-- END OF VERTICAL PLAN-->
+    <div class="d-block d-sm-none card ml-2 mr-2 mt-1 mb-1 horizontal-plan">
       <div class="card-body p-0 ml-1 mr-1 ">
         <div class="row">
           <div class="left-side">
+            <!--
             <div class="ribbon ribbon-top-right" *ngIf="plan?.data?.is_best_seller == 1">
               <span>Mais vendido</span>
             </div>
+            -->
             <h5 class="plan-amount text-center pt-3 pb-2">
               {{ plan?.data?.download }} <br />
               <span class="plan-amount-unit"> MEGA </span>
@@ -59,6 +123,7 @@
       </div>
     </div>
   </div>
+  <!--END OF horizontal-plan-->
 </div>
 <ng-template #loading_holder>
   <div class="col-12 text-center">

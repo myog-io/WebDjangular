@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 
 import { PluginProviderPricingInternetHorizontalComponent } from '@plugins/provider/src/lib/components/plans/pricing/internet-horizontal/internet-horizontal.component';
-import { PluginProviderPricingInternetVerticalComponent } from '@plugins/provider/src/lib/components/plans/pricing/internet-vertical/internet-vertical.component';
+import { PluginProviderPricingInternetComponent } from '@plugins/provider/src/lib/components/plans/pricing/internet/internet.component';
 import { PluginProviderPricingTelephoneVerticalComponent } from '@plugins/provider/src/lib/components/plans/pricing/telephone-vertical/telephone-vertical.component';
 import { PluginProviderPricingTvVerticalComponent } from '@plugins/provider/src/lib/components/plans/pricing/tv-vertical/tv-vertical.component';
 import { CoreCmsGalleryComponent } from '@core/cms/src/lib/components/gallery/gallery.component';
@@ -37,7 +37,7 @@ export const embeddedComponents = [
   CoreCmsLinkComponent,
   CoreCmsFormComponent,
   PluginProviderPricingInternetHorizontalComponent,
-  PluginProviderPricingInternetVerticalComponent,
+  PluginProviderPricingInternetComponent,
   PluginProviderPricingTelephoneVerticalComponent,
   PluginProviderPricingTvVerticalComponent,
   PluginPricingComboVerticalComponent,

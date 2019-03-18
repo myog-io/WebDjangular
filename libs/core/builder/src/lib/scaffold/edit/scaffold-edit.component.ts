@@ -67,7 +67,7 @@ export class ScaffoldEditComponent implements OnInit {
     private datastore: WebAngularDataStore,
     private router: Router,
     private toaster: NbToastrService
-  ) {}
+  ) { }
 
   /**
    * on init
@@ -85,8 +85,8 @@ export class ScaffoldEditComponent implements OnInit {
       this.base_path = data.path;
       this.form = this.entry.getForm();
 
-      if (this.entry.include) {
-        this.inlcude_args = { include: this.entry.include };
+      if (this.current_model.include) {
+        this.inlcude_args = { include: this.current_model.include };
       }
       this.form.generateForm();
       this.getEntry();
@@ -99,11 +99,7 @@ export class ScaffoldEditComponent implements OnInit {
     this.formLoading = true;
     if (this.route.params['value'].id != null) {
       this.datastore
-        .findRecord(
-          this.current_model,
-          this.route.params['value'].id,
-          this.inlcude_args
-        )
+        .findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args)
         .subscribe((data: AbstractModel) => {
           this.entry = data;
           this.form.populateForm(this.entry);

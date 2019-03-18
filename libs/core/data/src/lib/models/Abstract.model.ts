@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 export class AbstractModel extends JsonApiModel {
-  public include = null;
+  public static include = null;
   public static smartTableOptions: SmartTableSettings;
   public displayGroups: BuilderFormDisplayGroups[] = [
     {
@@ -50,7 +50,7 @@ export class AbstractModel extends JsonApiModel {
   public getRelationshipLink(relationship: string): string {
     return `${this.modelConfig.modelEndpointUrl}/${
       this.pk
-    }/relationships/${relationship}/`;
+      }/relationships/${relationship}/`;
   }
 
   public gerRelationLink(relationship: string): string {
@@ -208,7 +208,7 @@ export class AbstractModel extends JsonApiModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public toString = (): string => {
     return `(ID: ${this.id})`;

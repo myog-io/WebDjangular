@@ -130,20 +130,23 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.loading = true;
     const data = this.form.value;
+    this.configGroup.value = {};
 
     // Doing this a little bit more manually beucase the way we treat the CoreConfig, it's not a direct relationship
     for (let i = 0; i < this.configGroup.inputs.length; i++) {
-      this.configGroup.inputs[i]['value'] = null;
       this.configGroup.inputs[i]['value'] = data[this.configGroup.inputs[i].id];
-
+      this.configGroup.value[this.configGroup.inputs[i].id] = data[this.configGroup.inputs[i].id];
     }
+    this.configGroup.updateValues()
 
-    this.configGroup.updateValues();
     const sub = this.configGroup.save().subscribe(
-      result => {
+      (result: CoreConfigGroupModel) => {
         this.toaster.success(`Changes have been saved`, `Success!`);
         this.loading = false;
         sub.unsubscribe();
+        this.configGroup = result;
+        this.loadConfigInput();
+
       },
       (error: any) => {
         this.loading = false;

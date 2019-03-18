@@ -1,5 +1,8 @@
+from smtplib import SMTPConnectError
+
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from urllib3.exceptions import SSLError
 
 from webdjango.email import WebDjangoEmailBackend
 from webdjango.exceptions import BadRequest, ValidationError
@@ -26,13 +29,13 @@ def validate_email_config(sender, instance, **kwargs):
     """
     if instance.slug == EmailCoreConfig.EMAIL_CONFIG_GROUP_SLUG:
         if EmailCoreConfig.CONFIG_EMAIL_TYPE.id in instance.value and EmailCoreConfig.CONFIG_TEST_EMAIL.id in instance.value:
-            emailBackend = WebDjangoEmailBackend()
-            emailBackend.set_sender_config(instance.value)
+            sender = WebDjangoEmailBackend()
+            sender.set_sender_config(instance.value)
             try:
-                emailBackend.test(
+                sender.test(
                     (instance.value[EmailCoreConfig.CONFIG_TEST_EMAIL.id],))
-            except TimeoutError as err:
-                raise BadRequest(str(err))
+            except Exception as e:
+                raise BadRequest(str(e))
 
         else:
             raise BadRequest("Email Test did not Work, Missing parameters")

@@ -173,7 +173,7 @@ export class WDAConfig {
     return this.plugins;
   }
 
-  private addPlugin(plugin: any) {}
+  private addPlugin(plugin: any) { }
 
   public getLocaleList() {
     return this.locale_list;

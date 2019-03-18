@@ -20,7 +20,7 @@ enum pageDG {
   modelEndpointUrl: 'cms/page'
 })
 export class PageModel extends AbstractModel {
-  public include = 'header,footer,layout';
+  public static include = 'header,footer,layout';
 
   @Attribute()
   id: string;
@@ -140,7 +140,7 @@ export class PageModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   getContent(): string {
     return this.content;

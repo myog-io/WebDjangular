@@ -276,7 +276,7 @@ export class ProductModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public displayGroups = [
     {

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 
-
 class CoreConfigInputSerializer(serializers.Serializer):
     """
     Serializer to CoreConfigInput to tranform into JSON data
@@ -21,6 +20,7 @@ class CoreConfigInputSerializer(serializers.Serializer):
     value = serializers.JSONField(read_only=True)
     conditional = serializers.JSONField(read_only=True)
     add_tags = serializers.BooleanField(read_only=True)
+
 
 class CoreConfigGroupSerializer(serializers.Serializer):
     """

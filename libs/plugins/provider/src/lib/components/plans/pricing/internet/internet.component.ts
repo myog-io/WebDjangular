@@ -4,13 +4,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
 @Component({
-  selector: 'plugin-provider-plan-pricing-internet-vertical',
-  templateUrl: './internet-vertical.component.html',
-  styleUrls: ['./internet-vertical.component.scss']
+  selector: 'plugin-provider-plan-pricing-internet',
+  templateUrl: './internet.component.html',
+  styleUrls: ['./internet.component.scss']
 })
-export class PluginProviderPricingInternetVerticalComponent extends PluginProviderAbstractPricingComponent {
-  @Input() class = 'entry col-10 col-md-6 col-lg-3 mx-auto';
+export class PluginProviderPricingInternetComponent extends PluginProviderAbstractPricingComponent {
   @Input() discount: number = 0;
+  @Input() class = "entry col-12 col-md-3 p-0 m-0";
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal

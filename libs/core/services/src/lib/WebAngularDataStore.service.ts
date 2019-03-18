@@ -52,6 +52,7 @@ import { FormFieldModel } from '@core/cms/src/lib/models/FormField.model';
 import { FormSubmittedModel } from '@core/cms/src/lib/models/FormSubmittedModel';
 
 // tslint:disable-next-line:variable-name
+/*
 function cleanEmptyRecursive(attribute) {
   if (attribute === '') {
     attribute = null;
@@ -71,27 +72,20 @@ function cleanEmptyRecursive(attribute) {
 
 function getDirtyAttributes(attributesMetadata: any): { string: any } {
   const dirtyData: any = {};
-
   for (const propertyName in attributesMetadata) {
     if (attributesMetadata.hasOwnProperty(propertyName)) {
       const metadata: any = attributesMetadata[propertyName];
 
       if (metadata.hasDirtyAttributes) {
-        const attributeName =
-          metadata.serializedName != null
-            ? metadata.serializedName
-            : propertyName;
-        dirtyData[attributeName] = metadata.serialisationValue
-          ? metadata.serialisationValue
-          : metadata.newValue;
-        dirtyData[attributeName] = cleanEmptyRecursive(
-          dirtyData[attributeName]
-        );
+        const attributeName = metadata.serializedName != null ? metadata.serializedName : propertyName;
+        dirtyData[attributeName] = metadata.serialisationValue ? metadata.serialisationValue : metadata.newValue;
+        dirtyData[attributeName] = cleanEmptyRecursive(dirtyData[attributeName]);
       }
     }
   }
   return dirtyData;
 }
+*/
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
@@ -150,7 +144,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
     if (baseHref && this.datastoreConfig.baseUrl.search(baseHref) === -1) {
       this.datastoreConfig.baseUrl = `${baseHref}${
         this.datastoreConfig.baseUrl
-      }`;
+        }`;
     }
   }
 
@@ -214,7 +208,7 @@ export class WebAngularDataStore extends JsonApiDatastore {
       for (let i = 0; i < hasManyFields.length; i++) {
         let url = `${modelConfig['type']}/${model.pk}/relationships/${
           hasManyFields[i].relationship
-        }/`;
+          }/`;
         let pointer = [];
         let typeToSend = modelConfig['type'];
 
