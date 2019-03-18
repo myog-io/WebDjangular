@@ -11,7 +11,7 @@ import { FormControl } from '@angular/forms';
       </div>
       <div
         *ngIf="
-          ctrl.errors.email || ctrl.errors.minlength || ctrl.errors.maxlength
+          ctrl.errors.email || ctrl.errors.minlength || ctrl.errors.maxlength || ctrl.errors['Mask error']
         "
         class="alert alert-danger"
         role="alert"
@@ -26,5 +26,5 @@ export class PluginProviderCheckoutErrorComponent implements OnInit {
   @Input() name: string = 'Campo';
   @Input() message: string = '';
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

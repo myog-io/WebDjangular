@@ -19,7 +19,7 @@ export class PluginProviderCheckoutWizardStep02Component
   constructor(
     public providerCheckout: ProviderCheckoutService,
     public formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formWizardStep02Submitted = false;
@@ -67,7 +67,7 @@ export class PluginProviderCheckoutWizardStep02Component
         (cart: CartModel) => {
           this.providerCheckout.updating_cart = false;
         },
-        () => {}
+        () => { }
       );
     });
     this.formWizardStep02.get('contractTime').valueChanges.subscribe(value => {
@@ -80,16 +80,16 @@ export class PluginProviderCheckoutWizardStep02Component
         (cart: CartModel) => {
           this.providerCheckout.updating_cart = false;
         },
-        () => {}
+        () => { }
       );
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   onSubmit() {
-    this.formWizardStep02Submitted = true;
     if (this.formWizardStep02.valid) {
+      this.formWizardStep02Submitted = true;
       this.providerCheckout.onWizardStep02Submit().then(
         () => {
           this.formWizardStep02Submitted = false;
@@ -98,6 +98,12 @@ export class PluginProviderCheckoutWizardStep02Component
           this.formWizardStep02Submitted = false;
         }
       );
+    } else {
+      Object.keys(this.formWizardStep02.controls).forEach(field => {
+        const control = this.formWizardStep02.get(field);
+        console.log(control, control.errors)
+        control.markAsTouched({ onlySelf: true });
+      });
     }
   }
 }

@@ -169,7 +169,7 @@ export class ProviderCheckoutService {
     this.addressFromCity(this.city);
 
     this.formBeforeCheckout = this.formBuilder.group({
-      postalCode: ['', [Validators.required]],
+      postalCode: ['', [Validators.required, Validators.minLength(8)]],
       numberOfAddress: ['', [Validators.required]],
       condo: ['', null],
       condoNumber: ['', null],
@@ -357,13 +357,15 @@ export class ProviderCheckoutService {
     this.selectingTVPlan = false;
     this.selectingInternetPlan = false;
     let categories_ids = {};
-    for (let i = 0; i < cart.items.length; i++) {
-      const item = cart.items[i];
-      if (item.product) {
-        if (item.product.categories) {
-          for (let j = 0; j < item.product.categories.length; j++) {
-            const category = item.product.categories[j];
-            categories_ids[category.slug] = category.id;
+    if (cart.items) {
+      for (let i = 0; i < cart.items.length; i++) {
+        const item = cart.items[i];
+        if (item.product) {
+          if (item.product.categories) {
+            for (let j = 0; j < item.product.categories.length; j++) {
+              const category = item.product.categories[j];
+              categories_ids[category.slug] = category.id;
+            }
           }
         }
       }
@@ -1245,8 +1247,9 @@ export class ProviderCheckoutService {
   }
 
   onBeforeCheckoutSubmit() {
-    this.formBeforeCheckoutLoading = true;
+
     if (this.formBeforeCheckout.valid) {
+      this.formBeforeCheckoutLoading = true;
       if (!(this.city instanceof CityModel)) {
         this.getCurrentCity().then((city: CityModel) => {
           this.saveAddress().then((address: AddressModel) => {
@@ -1259,6 +1262,12 @@ export class ProviderCheckoutService {
           this.setAddressAndNextSetp();
         });
       }
+    } else {
+      Object.keys(this.formBeforeCheckout.controls).forEach(field => {
+        const control = this.formBeforeCheckout.get(field);
+        console.log(control, control.errors)
+        control.markAsTouched({ onlySelf: true });
+      });
     }
   }
 

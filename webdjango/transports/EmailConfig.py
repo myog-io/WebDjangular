@@ -1,4 +1,5 @@
-from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput, AbstractCoreConfigModel
+from webdjango.models.CoreConfig import (AbstractCoreConfigModel,
+                                         CoreConfigGroup, CoreConfigInput)
 
 
 class EmailCoreConfig(AbstractCoreConfigModel):
@@ -8,9 +9,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
         {'id': CONFIG_EMAIL_OPTION_SMTP, 'name': 'Custom SMTP'},
         {'id': CONFIG_EMAIL_OPTION_MAILGUN, 'name': 'Mailgun API'}
     ]
-    
-    
-    
+
     CONFIG_SECURITY_OPTIONS = [
         {'id': 'tls', 'name': 'TLS'},
         {'id': 'ssl', 'name': 'SSL'},
@@ -39,7 +38,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
 
     CONFIG_EMAIL_TYPE = CoreConfigInput(
         id='email_type',
-        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
         input_type="text",
         order=0,
         disabled=False,
@@ -149,7 +148,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
 
     CONFIG_SECURITY = CoreConfigInput(
         id='email_security',
-        field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
+        field_type=CoreConfigInput.FIELD_TYPE_SELECT,
         input_type="text",
         order=0,
         disabled=False,
@@ -197,7 +196,6 @@ class EmailCoreConfig(AbstractCoreConfigModel):
             "==": [{'var': CONFIG_EMAIL_TYPE.id}, CONFIG_EMAIL_OPTION_MAILGUN]
         }
     )
-
 
     EMAIL_CONFIG_INPUTS = [
         CONFIG_EMAIL_LOGO,

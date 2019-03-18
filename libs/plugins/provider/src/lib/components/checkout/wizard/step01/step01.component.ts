@@ -26,7 +26,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     public datastore: WebAngularDataStore,
     public providerCheckout: ProviderCheckoutService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formWizardStep01Submitted = false;
@@ -334,6 +334,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
   }
 
   onSubmit() {
+
     if (this.formWizardStep01.valid) {
       this.formWizardStep01Submitted = true;
       const fullname: string = this.formWizardStep01.get('name').value;
@@ -400,6 +401,12 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
           this.formWizardStep01Submitted = false;
         }
       );
+    } else {
+      Object.keys(this.formWizardStep01.controls).forEach(field => {
+        const control = this.formWizardStep01.get(field);
+        console.log(control, control.errors)
+        control.markAsTouched({ onlySelf: true });
+      });
     }
   }
 }

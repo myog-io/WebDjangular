@@ -63,7 +63,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private datastore: WebAngularDataStore,
     private toaster: NbToastrService
-  ) {}
+  ) { }
 
   /**
    * on init
@@ -130,10 +130,14 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.loading = true;
     const data = this.form.value;
+
     // Doing this a little bit more manually beucase the way we treat the CoreConfig, it's not a direct relationship
     for (let i = 0; i < this.configGroup.inputs.length; i++) {
+      this.configGroup.inputs[i]['value'] = null;
       this.configGroup.inputs[i]['value'] = data[this.configGroup.inputs[i].id];
+
     }
+
     this.configGroup.updateValues();
     const sub = this.configGroup.save().subscribe(
       result => {

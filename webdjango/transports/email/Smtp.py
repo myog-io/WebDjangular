@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 from rest_framework.exceptions import ValidationError
+
 from webdjango.transports.AbstractTransport import AbstractTransport
 from webdjango.transports.EmailConfig import EmailCoreConfig
 
@@ -16,7 +17,8 @@ class Smtp(AbstractTransport):
         self.password = kwargs[EmailCoreConfig.CONFIG_PWD.id]
         self.sender = kwargs[EmailCoreConfig.CONFIG_SENDER.id]
         self.host = kwargs[EmailCoreConfig.CONFIG_HOST.id]
-        self.port = kwargs[EmailCoreConfig.CONFIG_PORT.id]
+        self.port = (kwargs[EmailCoreConfig.CONFIG_PORT.id]
+                     if EmailCoreConfig.CONFIG_PORT.id in kwargs else 25)
         self.security = kwargs[EmailCoreConfig.CONFIG_SECURITY.id]
 
     @property
@@ -40,8 +42,8 @@ class Smtp(AbstractTransport):
         return ['to', 'subject', 'body']
 
     def send(self, to='', subject='', body='', content_subtype='html'):
-        email = EmailMessage(subject=subject, body=body, from_email=self.sender, to=
-                             to, connection=self.smtp_backend)
+        email = EmailMessage(subject=subject, body=body,
+                             from_email=self.sender, to=to, connection=self.smtp_backend)
         email.content_subtype = "html"  # to encode as HTML instead of text/plain
 
         if email.send():

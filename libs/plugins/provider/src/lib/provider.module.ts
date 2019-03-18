@@ -55,11 +55,11 @@ const SERVICES = [CartService, ProviderCheckoutService];
     ...MODULES,
     AgmCoreModule,
     RouterModule,
-    NgxMaskModule.forRoot() // TODO: remove this from here after the Form Module is done.
+    NgxMaskModule.forRoot()
   ],
   exports: [...COMPONENTS, ...MODULES],
   entryComponents: [...COMPONENTS],
   declarations: [...COMPONENTS],
   providers: [...SERVICES]
 })
-export class PluginProviderModule {}
+export class PluginProviderModule { }

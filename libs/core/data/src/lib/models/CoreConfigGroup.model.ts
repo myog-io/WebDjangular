@@ -47,7 +47,9 @@ export class CoreConfigGroupModel extends AbstractModel {
     let vals = {};
     for (let i = 0; i < this.inputs.length; i++) {
       const input: CoreConfigInputModel = this.inputs[i];
-      vals[input.id] = input.value;
+      if (input.value) {
+        vals[input.id] = input.value;
+      }
     }
     this.value = vals;
     return this.value;
