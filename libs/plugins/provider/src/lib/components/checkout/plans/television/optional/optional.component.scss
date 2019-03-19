@@ -17,6 +17,14 @@
     background-size: initial;
     background-repeat: no-repeat;
     background-position: left 20px center;
+    .title{
+      height: 100%;
+      line-height: 1;
+      margin-top: 0.5rem;
+      text-align: center;
+      @include responsive-font-size(30px);
+      color: #00b9bd;
+    }
   }
 
   .card-body {
