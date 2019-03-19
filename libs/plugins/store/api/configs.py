@@ -7,7 +7,8 @@ class StoreEmailConfig(AbstractCoreConfigModel):
     GROUP = CoreConfigGroup(
         id=CONFIG_GROUP_SLUG,
         title="Store Emails",
-        order=7
+        order=7,
+        secure=True,
     )
 
     NEW_ACCCOUNT = CoreConfigInput(

@@ -21,6 +21,9 @@ export class CoreConfigGroupModel extends AbstractModel {
   id: string;
 
   @Attribute()
+  secure: boolean;
+
+  @Attribute()
   order: number;
 
   @Attribute()

@@ -145,6 +145,7 @@ export class CoreConfigGroupComponent implements OnInit, OnDestroy {
         this.loading = false;
         sub.unsubscribe();
         this.configGroup = result;
+        this.configGroup.updateValues()
         this.loadConfigInput();
 
       },

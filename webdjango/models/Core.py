@@ -1,4 +1,5 @@
 import sys
+from distutils.version import LooseVersion
 
 from dirtyfields import DirtyFieldsMixin
 from django.core.exceptions import ObjectDoesNotExist
@@ -6,10 +7,9 @@ from django.core.validators import validate_slug
 from django.db import connection, models
 from django.db.utils import OperationalError, ProgrammingError
 from django_mysql.models import JSONField
+
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.utils.DynamicLoader import DynamicLoader
-
-from distutils.version import LooseVersion
 
 
 class WebsiteProtocols:
@@ -60,6 +60,7 @@ class CoreConfig(BaseModel):
     slug = models.SlugField(max_length=200, validators=[
         validate_slug], unique=True)
     value = JSONField(max_length=500, null=True)
+    secure = models.BooleanField(default=False)
     website = models.ForeignKey(
         Website, on_delete=models.CASCADE, null=False, related_name="Configs", default=1)
     created = models.DateTimeField(auto_now_add=True)
@@ -68,7 +69,7 @@ class CoreConfig(BaseModel):
     @staticmethod
     def read(slug, website=None):
         try:
-            #TODO: Make This Recursive?!
+            # TODO: Make This Recursive?!
             slug_path = slug.split('.')
             if not website:
                 website = Website.get_current_website()
@@ -82,19 +83,22 @@ class CoreConfig(BaseModel):
             else:
                 return None
         except:
-            print ("Unexpected error: {0}".format(sys.exc_info()[0]))
+            print("Unexpected error: {0}".format(sys.exc_info()[0]))
             return None
 
     @staticmethod
     def write(slug, value, website=None):
-        #TODO: Make This Recursive?!
+        # TODO: Make This Recursive?!
         slug_path = slug.split('.')
         if not website:
             website = Website.get_current_website()
 
         config = CoreConfig.objects.filter(
-                    slug=slug_path[0], website=website).first()
+            slug=slug_path[0], website=website).first()
         if config:
+            from .CoreConfig import CoreConfigGroup
+            group = CoreConfigGroup.get(config.slug)
+
             config.slug = slug
             if len(slug_path) > 1:
                 val_list = config.value
@@ -103,6 +107,7 @@ class CoreConfig(BaseModel):
 
             config.value = value
             config.website = website
+            config.secure = group.secure
             config.save()
         else:
             # If the Value Should be inside a Json Object
@@ -115,7 +120,6 @@ class CoreConfig(BaseModel):
                 slug=slug_path[0], value=value, website=website)
 
         return config
-
 
     class Meta:
         ordering = ['-created']

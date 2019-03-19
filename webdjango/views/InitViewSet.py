@@ -50,13 +50,10 @@ class InitViewSet(viewsets.GenericViewSet):
         # Current User Object is whether a guest, admin or any other role
         # in order to manage the user's requests according to its permissions.
 
-        config_groups = CoreConfigGroup.all()
-        config_keys = []
-        if config_groups:
-            for group in config_groups:
-                config_keys.append(group.pk)
         configs = CoreConfig.objects.filter(
-            website=request.website, slug__in=config_keys)
+            secure=False,
+            website=request.website
+        )
 
         core_config_data = {}
         if configs:

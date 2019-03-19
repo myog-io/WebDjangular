@@ -20,6 +20,7 @@ class EmailCoreConfig(AbstractCoreConfigModel):
     EMAIL_CONFIG_GROUP = CoreConfigGroup(
         id=EMAIL_CONFIG_GROUP_SLUG,
         title="Email",
+        secure=True,
         order=5
     )
 

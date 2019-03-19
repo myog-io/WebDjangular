@@ -29,5 +29,7 @@ class CoreConfigGroupSerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)
     order = serializers.IntegerField(read_only=True)
     title = serializers.CharField(read_only=True)
+    secure = serializers.BooleanField(default=False)
     value = serializers.JSONField()
+
     # inputs = CoreConfigInputSerializer(many=True, read_only=True)

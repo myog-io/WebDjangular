@@ -2,14 +2,15 @@ from django.db import models
 from django_mysql.models import JSONField
 
 from webdjango.models.Core import CoreConfig
-from webdjango.signals.CoreSignals import config_group_register, config_register
-
+from webdjango.signals.CoreSignals import (config_group_register,
+                                           config_register)
 
 # TODO: Implement Permissions based on Groups
 
+
 class AbstractCoreConfigModel(models.Model):
     id = models.SlugField(null=False, primary_key=True)
-    
+
     class Meta:
         abstract = True
 
@@ -22,6 +23,7 @@ class CoreConfigGroup(AbstractCoreConfigModel):
     This is the Agroupment inside the Admin Panel that will devide the Groups of Each Core Configuration
     If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
     """
+    secure = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     title = models.CharField(default=None)
 
