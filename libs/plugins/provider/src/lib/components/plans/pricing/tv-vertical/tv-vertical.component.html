@@ -11,7 +11,8 @@
     </ng-template><!-- END MODAL -->
     <div class="card mt-1 mb-1">
       <div class="card-header">
-        <div class="ribbon ribbon-top-right" *ngIf="plan?.data?.is_best_seller == 1">
+        <div class="ribbon ribbon-top-right ribbon-sm"
+             *ngIf="plan?.data?.is_best_seller == 1">
           <span>Mais vendido</span>
         </div>
         <h5 class="plan-title text-center pt-3 pb-3" [innerHTML]="

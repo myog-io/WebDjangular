@@ -150,7 +150,7 @@
 }
 
 /* VERTICAL CARD */
-.vartical-plan.card {
+.vertical-plan.card {
   border-radius: $plan-card-round;
 
   .card-header {
@@ -187,6 +187,8 @@
 
   .card-body {
     ul {
+      margin:auto;
+      padding:0;
       list-style: none;
 
       li {
@@ -198,7 +200,7 @@
 
         height: $pricing-plan-features-lh * 2;
 
-        display: inline-block;
+        display: block;
 
         .icon {
           color: $primary;

@@ -823,6 +823,10 @@ input:focus ~ .highlight {
   text-align: center;
 }
 
+.ribbon-sm {
+  transform: scale(0.7);
+}
+
 /* top left*/
 .ribbon-top-left {
   top: -3px;
@@ -864,6 +868,9 @@ input:focus ~ .highlight {
 .ribbon-top-right::after {
   bottom: 0;
   right: 0;
+}
+.ribbon-top-right {
+  transform-origin: top right;
 }
 .ribbon-top-right span {
   left: -15px;
