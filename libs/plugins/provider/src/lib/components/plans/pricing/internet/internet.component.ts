@@ -10,7 +10,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 })
 export class PluginProviderPricingInternetComponent extends PluginProviderAbstractPricingComponent {
   @Input() discount: number = 0;
-  @Input() class = "entry col-12 col-md-3 p-0 m-0";
+  @Input() class = "entry col-12 col-md-3 px-1 py-0 m-0";
   constructor(
     public datastore: WebAngularDataStore,
     public modalService: NgbModal
@@ -18,3 +18,4 @@ export class PluginProviderPricingInternetComponent extends PluginProviderAbstra
     super(datastore, modalService);
   }
 }
+
