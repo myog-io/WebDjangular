@@ -154,7 +154,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
   }
   get_options(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.http.get(this.config.json_logic_options_url).subscribe(
+      this.datastore.httget(this.config.json_logic_options_url).subscribe(
         (options: any) => {
           if (options.data) {
             for (const key in options.data) {

@@ -33,7 +33,7 @@ export class CartRuleModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'ngSelect',
+    type: 'select',
     label: 'Rule Type',
     wrapper_class: 'col-6',
     placeholder: '',
@@ -152,7 +152,7 @@ export class CartRuleModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

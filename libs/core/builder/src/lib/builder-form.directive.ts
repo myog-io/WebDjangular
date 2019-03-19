@@ -49,8 +49,7 @@ const components: { [type: string]: Type<BuilderFormField> } = {
 @Directive({
   selector: '[wdaBuilderFormFields]'
 })
-export class ScaffoldFieldDirective
-  implements BuilderFormField, OnChanges, OnInit {
+export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnInit {
   @Input() config: BuilderFormFieldConfig;
   @Input() group: FormGroup;
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
@@ -60,7 +59,7 @@ export class ScaffoldFieldDirective
   constructor(
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
-  ) {}
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.config.isFirstChange()) {

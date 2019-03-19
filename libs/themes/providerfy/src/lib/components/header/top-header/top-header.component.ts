@@ -3,7 +3,8 @@ import {
   OnInit,
   PLATFORM_ID,
   Inject,
-  ViewEncapsulation
+  ViewEncapsulation,
+  AfterViewInit,
 } from '@angular/core';
 
 import { ThemeProviderfyModalChoosecityComponent } from '../../modal/choosecity/choosecity.component';
@@ -17,7 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./top-header.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ThemeProviderfyTopHeaderComponent implements OnInit {
+export class ThemeProviderfyTopHeaderComponent implements AfterViewInit {
   testBrowser: boolean;
   city_name: string;
   plan_type: string;
@@ -29,11 +30,6 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: string
   ) {
     this.testBrowser = isPlatformBrowser(platformId);
-    if (this.clientUserService.clientUser.data.hasOwnProperty('city')) {
-      this.city_name = this.clientUserService.clientUser.data['city']['name'];
-    } else {
-      this.openModalChooseCity();
-    }
 
     if (this.clientUserService.clientUser.data.hasOwnProperty('plan_type')) {
       this.plan_type = this.clientUserService.clientUser.data['plan_type'];
@@ -46,7 +42,16 @@ export class ThemeProviderfyTopHeaderComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.clientUserService.clientUser.data.hasOwnProperty('city')) {
+        this.city_name = this.clientUserService.clientUser.data['city']['name'];
+      } else {
+        this.openModalChooseCity();
+      }
+    });
+  }
 
   openModalChooseCity() {
     if (this.testBrowser) {

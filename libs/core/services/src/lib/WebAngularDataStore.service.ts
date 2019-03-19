@@ -39,7 +39,7 @@ import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 import { ProductTypeModel } from '@plugins/store/src/lib/data/models/ProductType.model';
 import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/ProductAttribute.model';
 import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model';
 import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
@@ -273,4 +273,20 @@ export class WebAngularDataStore extends JsonApiDatastore {
   //
   //  return queryParams ? `${url}?${queryParams}` : url;
   //}
+
+  httget(url: string, options?: {
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    observe?: 'body';
+    params?: HttpParams | {
+      [param: string]: string | string[];
+    };
+    reportProgress?: boolean;
+    responseType: 'arraybuffer';
+    withCredentials?: boolean;
+  }) {
+    return this.http.get(url, options)
+  }
+
 }

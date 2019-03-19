@@ -45,6 +45,7 @@ export class PluginProviderCityCoverageComponent implements OnInit {
     if (this.formCoverage.valid) {
       this.formSubmited = true;
       this.coverageLoaded = false;
+      this.hasCoverage = true;
       this.findCoverage()
         .then(
           (city: CityModel) => {
@@ -60,32 +61,36 @@ export class PluginProviderCityCoverageComponent implements OnInit {
           this.coverageLoaded = true;
           this.hasCoverage = false;
         });
+    } else {
+      Object.keys(this.formCoverage.controls).forEach(field => {
+        const control = this.formCoverage.get(field);
+        control.markAsTouched({ onlySelf: true });
+        console.log(control, control.errors)
+      });
     }
   }
 
   findCoverage(): Promise<CityModel> {
+    const postalCode = this.formCoverage.get('postal_code').value;
     return new Promise((resolve, reject) => {
-      const postalCode = this.formCoverage.get('postal_code').value;
-
-      if (postalCode.length >= 8) {
-        const url = `/api/provider/city/${postalCode}/postal_code/`;
-        this.datastore
-          .findRecord(
-            CityModel,
-            null,
-            null,
-            new HttpHeaders({ Authorization: 'none' }),
-            url
-          )
-          .subscribe(
-            (city: CityModel) => {
-              resolve(city);
-            },
-            error => {
-              reject(error);
-            }
-          );
-      }
+      const url = `/api/provider/city/${postalCode}/postal_code/`;
+      this.datastore
+        .findRecord(
+          CityModel,
+          null,
+          null,
+          new HttpHeaders({ Authorization: 'none' }),
+          url
+        )
+        .subscribe(
+          (city: CityModel) => {
+            resolve(city);
+          },
+          error => {
+            reject(error);
+          }
+        );
     });
+
   }
 }

@@ -1,8 +1,4 @@
-<section
-  [id]="session_id"
-  class="city-coverage"
-  [style.backgroundImage]="'url(' + background + ')'"
->
+<section [id]="session_id" class="city-coverage" [style.backgroundImage]="'url(' + background + ')'">
   <div class="container d-flex h-100">
     <div class="row justify-content-center align-self-center m-1">
       <h1 class="text-white mb-0">COBERTURA LPNET</h1>
@@ -12,58 +8,32 @@
 
       <form [formGroup]="formCoverage" (ngSubmit)="onSubmit()">
         <div class="form-row" *ngIf="!formSubmited || !hasCoverage">
-          <div class="form-group col-12 col-sm-6">
+          <div class="form-group col-12 col-sm-6 m-0">
             <fieldset>
-              <input
-                type="text"
-                class="form-control mr-1"
-                formControlName="postal_code"
-                id="postal_code"
-                placeholder="CEP"
-                mask="00000-000"
-                tabindex="1"
-              />
+              <input type="text" class="form-control mr-1" formControlName="postal_code" id="postal_code"
+                placeholder="CEP" mask="00000-000" tabindex="1" />
               <span class="text">
-                <a
-                  href="http://www.buscacep.correios.com.br/sistemas/buscacep/"
-                  target="blank"
-                  tabindex="4"
-                >
+                <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="blank" tabindex="4">
                   Não sei meu CEP
                 </a>
               </span>
             </fieldset>
           </div>
-          <div class="form-group col-12 col-sm-6">
+          <div class="form-group col-12 col-sm-6 m-0">
             <fieldset>
-              <input
-                type="text"
-                class="form-control mr-1 mb-3"
-                formControlName="address_number"
-                id="address_number"
-                placeholder="Nº da residência"
-                tabindex="2"
-                mask="000000"
-              />
+              <input type="text" class="form-control mr-1 mb-3" formControlName="address_number" id="address_number"
+                placeholder="Nº da residência" tabindex="2" />
             </fieldset>
           </div>
           <div class="form-group col-12 text-center">
             <fieldset>
-              <button
-                type="submit"
-                class="btn btn-primary text-white text-uppercase "
-                tabindex="3"
-              >
+              <button type="submit" class="btn btn-primary text-white text-uppercase " tabindex="3">
                 Continuar
               </button>
               <p class="text-white" *ngIf="!hasCoverage && formSubmited">
                 Infelizmente sua cidade não tem cobertura ainda. <br />Qualquer
                 dúvida entre em
-                <u
-                  ><a class="text-white" [routerLink]="['/contato']"
-                    >contato</a
-                  ></u
-                >.
+                <u><a class="text-white" [routerLink]="['/contato']">contato</a></u>.
               </p>
             </fieldset>
           </div>
@@ -78,11 +48,7 @@
             <div class="form-success" *ngIf="hasCoverage">
               <h3 class="text-center text-primary">
                 😊🎉✔<br />Temos cobertura em sua cidade<br />
-                <a
-                  class="btn btn-primary text-white text-uppercase"
-                  [routerLink]="['/assine']"
-                  >assine já</a
-                >
+                <a class="btn btn-primary text-white text-uppercase" [routerLink]="['/assine']">assine já</a>
               </h3>
             </div>
           </div>
