@@ -8,6 +8,7 @@ import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'Block',
@@ -29,7 +30,7 @@ export class BlockModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Block Code',
     wrapper_class: 'col-6',
@@ -56,7 +57,7 @@ export class BlockModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
   public toString = (): string => {
     return `${this.title} (#${this.id})`;
   };

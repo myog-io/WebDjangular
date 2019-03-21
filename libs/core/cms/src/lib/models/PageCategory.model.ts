@@ -5,6 +5,7 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'PageCategory',
@@ -26,7 +27,7 @@ export class PageCategoryModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Slug',
     wrapper_class: 'col-12',
@@ -56,7 +57,7 @@ export class PageCategoryModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;

@@ -9,6 +9,7 @@ import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { Validators, FormControl } from '@angular/forms';
 import { BuilderFormFieldConfig } from '@core/builder/src/lib/interfaces/form-config.interface';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 export const LabelPostionOptions = [
   { id: 'above', name: 'above' },
@@ -76,7 +77,7 @@ export class FormFieldModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Slug',
     wrapper_class: 'col-4'
@@ -172,6 +173,7 @@ export class FormFieldModel extends AbstractModel {
 
   @NestedAttribute()
   @ExtraOptions({
+    validators: [WDAValidators.json],
     type: 'codeEditor',
     label: 'Extra Data',
     element_class: 'small',
@@ -218,7 +220,7 @@ export class FormFieldModel extends AbstractModel {
       label: this.label,
       name: this.slug,
       //form_group_name: string;
-      //model?: any;//AbstractModel;
+      model: this.data.model || null,
       options: this.data.options || [],
       //options_include?: string;
       addTags: this.data.addTags || null,
@@ -234,6 +236,7 @@ export class FormFieldModel extends AbstractModel {
       inputType: this.input_type,
       conditional: this.data.conditional || null,
       display: this.data.display || true,
+      mask: this.data.mask || null,
       //switch_vertical?: boolean;
       //switch_first_label?: string;
       //switch_second_label?: string;

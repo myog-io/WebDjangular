@@ -62,7 +62,7 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
         title: `Delete ${this.current_menu}`,
         body: `Please confirm that you would like to delete this ${
           this.current_menu
-        }`
+          }`
       }
     });
   }
@@ -197,20 +197,19 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
       this.menusSub = this.datastore
         .findAll(
           MenuItemModel,
-          { include: 'children,parent' },
-          null,
-          `/api/cms/menu/${this.current_menu.id}/menu_item/`
+          {
+            include: 'children,parent,menu',
+            parent__isnull: true,
+            menu: this.current_menu.id,
+            page: { size: 100 }
+          },
         )
         .subscribe(query2 => {
           this.current_menu.menu_item = query2.getModels();
-
           for (let i = 0; i < this.current_menu.menu_item.length; i++) {
             const menu_item = this.current_menu.menu_item[i];
-            const form = menu_item.getForm();
-            form.displayGroups = menu_item.displayGroups;
-            form.generateForm();
-            form.populateForm(menu_item);
-            this.menu_item_forms[menu_item.id] = form;
+            this.generateFormRecursive(menu_item);
+
           }
           this.list = this.current_menu.getList();
           setTimeout(() => {
@@ -219,11 +218,22 @@ export class MenuBuilderComponent implements OnInit, OnDestroy {
         });
     }
   }
-
+  generateFormRecursive(menu_item: MenuItemModel) {
+    const form = menu_item.getForm();
+    form.displayGroups = menu_item.displayGroups;
+    form.generateForm();
+    form.populateForm(menu_item);
+    this.menu_item_forms[menu_item.id] = form;
+    if (menu_item.children) {
+      for (let i = 0; i < menu_item.children.length; i++) {
+        this.generateFormRecursive(menu_item.children[i]);
+      }
+    }
+  }
   updateMenuItem($event, item_id) {
     this.formLoading = true;
     const form = this.menu_item_forms[item_id];
-    const item = this.current_menu.menu_item.find(i => i.id === item_id);
+    const item = this.recursiveFindById(this.current_menu.menu_item, item_id) //this.current_menu.menu_item.find(i => i.id === item_id);
     form.updateModel(item);
     item.save().subscribe(menu_item => {
       form.populateForm(menu_item);

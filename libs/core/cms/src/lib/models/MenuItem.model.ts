@@ -8,6 +8,7 @@ import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'MenuItem',
@@ -28,21 +29,12 @@ export class MenuItemModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_/]+$')],
+    validators: [Validators.required],
     type: 'text',
     label: 'URL',
     wrapper_class: 'col-12'
   })
   url: string;
-
-  @Attribute()
-  @ExtraOptions({
-    validators: [],
-    type: 'text',
-    label: '"alt" attribute',
-    wrapper_class: 'col-6'
-  })
-  alt: string;
 
   @Attribute()
   @ExtraOptions({
@@ -74,7 +66,7 @@ export class MenuItemModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [],
-    type: 'ngSelect',
+    type: 'select',
     label: '"target" attribute',
     options: [
       { id: '_self', name: 'Self' },
@@ -83,7 +75,7 @@ export class MenuItemModel extends AbstractModel {
       { id: '_top', name: 'Top' }
     ],
     value: '_self',
-    wrapper_class: 'col-12'
+    wrapper_class: 'col-6'
   })
   target: string;
 
@@ -111,7 +103,7 @@ export class MenuItemModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
   get class() {
     return this.css_class;
   }

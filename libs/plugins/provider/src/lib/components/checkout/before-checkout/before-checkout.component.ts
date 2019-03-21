@@ -50,7 +50,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
     this.subPostalCode = this.providerCheckout.formBeforeCheckout
       .get('postalCode')
       .valueChanges.subscribe((PostalCode: string) => {
-        this.providerCheckout.getCurrentCity().then(city => {});
+        this.providerCheckout.getCurrentCity().then(city => { });
       });
 
     this.plan_types = this.datastore
@@ -76,7 +76,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
       this.resellers = this.datastore
         .findAll(
           ResellerModel,
-          null,
+          { active: true },
           new HttpHeaders({ Authorization: 'none' })
         )
         .map((query: JsonApiQueryData<ResellerModel>) => {

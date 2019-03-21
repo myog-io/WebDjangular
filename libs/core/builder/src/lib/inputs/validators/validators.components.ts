@@ -20,7 +20,7 @@ import { AbstractForm } from '@core/data/src/lib/forms';
         <div *ngIf="input.errors.forbiddenName">
           {{ config.label }} cannot be {{ input.value }}.
         </div>
-        <div *ngIf="input.errors.pattern">{{ errors.error_invalid }}</div>
+        <div *ngIf="input.errors.pattern || input.errors['Mask error']">{{ errors.error_invalid }}</div>
       </div>
     </div>
   `

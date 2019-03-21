@@ -83,6 +83,7 @@ export interface BuilderFormFieldConfig {
   copyOptions?: BuilderFormCopyArray;
   json_logic_options_url?: string;
   validator_messages?: BuilderFormValidatorMessages;
+  mask?: string;
 }
 
 export interface BuilderFormField {

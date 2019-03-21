@@ -4,6 +4,7 @@ import { MenuItemModel } from './MenuItem.model';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'Menu',
@@ -25,7 +26,7 @@ export class MenuModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Menu Slug',
     wrapper_class: 'col-12'
@@ -57,7 +58,7 @@ export class MenuModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   arrangeItems() {
     this.menu_item.sort((a, b) => a.position - b.position);

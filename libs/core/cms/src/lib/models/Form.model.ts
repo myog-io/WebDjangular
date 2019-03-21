@@ -12,6 +12,7 @@ import { FormFieldModel } from './FormField.model';
 import { FormActionModel } from './FormAction.model';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { BuilderFormValidatorMessages } from '@core/builder/src/lib/interfaces/form-config.interface';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'Form',
@@ -34,7 +35,7 @@ export class FormModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Code',
     wrapper_class: 'col-6'

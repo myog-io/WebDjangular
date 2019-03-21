@@ -36,6 +36,7 @@ import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.c
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 import { HoldableDirective } from './holdable/holdable.directive';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
@@ -79,7 +80,8 @@ const ENTRY_COMPONENTS = [
     NbListModule,
     NbCheckboxModule,
     NbCardModule,
-    NbAccordionModule
+    NbAccordionModule,
+    NgxMaskModule.forRoot(),
   ],
   exports: [
     ScaffoldFieldDirective,
@@ -89,4 +91,4 @@ const ENTRY_COMPONENTS = [
   ],
   entryComponents: [...ENTRY_COMPONENTS]
 })
-export class BuilderFormModule {}
+export class BuilderFormModule { }

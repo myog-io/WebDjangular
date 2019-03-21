@@ -138,7 +138,7 @@ export class CityModel extends AbstractModel {
   set pk(value) {}
 
   public toString = (): string => {
-    return `${this.name} (ID: ${this.id})`;
+    return this.name;
   };
 
   public displayGroups = [

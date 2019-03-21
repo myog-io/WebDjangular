@@ -12,7 +12,8 @@ class ResellerFilter(WebDjangoFilterSet):
         fields = {
             'id': ['in'],
             'name': ['contains', 'exact'],
-            'email': ['contains', 'exact']
+            'email': ['contains', 'exact'],
+            'active': ['exact']
         }
 
 
@@ -30,6 +31,7 @@ class ResellerViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = ResellerFilter
     search_fields = ('name')
+    public_views = ('list', 'retrieve')
 
 
 class ResellerRelationshipView(RelationshipView):

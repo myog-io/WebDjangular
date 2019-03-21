@@ -3,6 +3,7 @@ import { AbstractModel } from './Abstract.model';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { Validators } from '@angular/forms';
 import { SmartTableSettings } from '../data-store';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'Email',
@@ -24,7 +25,7 @@ export class EmailModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Code',
     wrapper_class: 'col-12',
@@ -51,7 +52,7 @@ export class EmailModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public toString = (): string => {
     return `${this.code} (ID: ${this.id})`;

@@ -7,7 +7,6 @@ from webdjango.filters import WebDjangoFilterSet
 
 
 class MenuItemFilter(WebDjangoFilterSet):
-    orfan = BooleanFilter(field_name='parent', lookup_expr='isnull')
 
     class Meta:
         model = MenuItem
@@ -16,7 +15,8 @@ class MenuItemFilter(WebDjangoFilterSet):
             'name': ['contains', 'exact'],
             'url': ['contains'],
             'parent': ['exact', 'isnull'],
-            'menu': ['exact', 'isnull']
+            'menu': ['exact', 'isnull'],
+
         }
 
 

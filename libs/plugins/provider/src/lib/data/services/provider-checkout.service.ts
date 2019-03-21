@@ -666,9 +666,7 @@ export class ProviderCheckoutService {
       number = this.formBeforeCheckout.get('numberOfAddress').value || 'N/A';
       if (this.condo) {
         condoNumber = this.formBeforeCheckout.get('condoNumber').value || null;
-        this.address.street_address_3 = `${
-          this.condo.name
-          } APTO ${condoNumber}`;
+        this.address.street_address_2 = `${this.condo.name} - ${condoNumber}`;
       }
     }
 

@@ -93,6 +93,7 @@ export class ProductModel extends AbstractModel {
     type: 'text',
     label: 'List',
     wrapper_class: 'col-6',
+    mask: 'comma_separator.2',
     displayGroup: productDG.pricing
   })
   pricing_list: string;
@@ -101,6 +102,7 @@ export class ProductModel extends AbstractModel {
   @ExtraOptions({
     type: 'text',
     label: 'Sale',
+    mask: 'comma_separator.2',
     wrapper_class: 'col-6',
     displayGroup: productDG.pricing
   })
@@ -112,6 +114,7 @@ export class ProductModel extends AbstractModel {
     label: 'Description',
     wrapper_class: 'col-12',
     placeholder: '',
+    element_class: 'small',
     displayGroup: productDG.general
   })
   description: string;

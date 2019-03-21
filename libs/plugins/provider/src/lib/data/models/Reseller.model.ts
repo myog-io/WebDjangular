@@ -32,6 +32,17 @@ export class ResellerModel extends AbstractModel {
   })
   email: string;
 
+  @Attribute()
+  @ExtraOptions({
+    type: 'switch',
+    label: "Is Activate?",
+    value: true,
+  })
+  active: string;
+
+  @Attribute()
+  order_count: number
+
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       name: {
@@ -40,6 +51,14 @@ export class ResellerModel extends AbstractModel {
       },
       email: {
         title: 'Email',
+        type: 'text'
+      },
+      active: {
+        title: "Is Active?",
+        type: 'text'
+      },
+      order_count: {
+        title: "Order Count",
         type: 'text'
       }
     }

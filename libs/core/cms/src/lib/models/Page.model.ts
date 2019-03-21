@@ -8,6 +8,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { BlockHeaderModel } from '@core/cms/src/lib/models/BlockHeader.model';
 import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
 import { BlockLayoutModel } from '@core/cms/src/lib/models/BlockLayout.model';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 enum pageDG {
   general = 'general',
@@ -38,7 +39,7 @@ export class PageModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Page URL',
     wrapper_class: 'col-12',
@@ -53,6 +54,7 @@ export class PageModel extends AbstractModel {
     type: 'codeEditor',
     label: 'Page Content',
     wrapper_class: 'col-12',
+    element_class: 'medium',
     displayGroup: pageDG.general
   })
   content: string;

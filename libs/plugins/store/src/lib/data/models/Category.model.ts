@@ -5,6 +5,7 @@ import { Validators, FormArray } from '@angular/forms';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { ProductModel } from './Product.model';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'ProductCategory',
@@ -28,7 +29,7 @@ export class CategoryModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Category URL',
     wrapper_class: 'col-12',
@@ -67,7 +68,7 @@ export class CategoryModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

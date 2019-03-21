@@ -8,6 +8,7 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { Validators } from '@angular/forms';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 export const ActionChoices = [{ id: 'send_email', name: 'Enviar email' }];
 
@@ -29,7 +30,7 @@ export class FormActionModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Code'
   })

@@ -14,7 +14,7 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   @Input() sku_tv: string;
   @Input() sku_phone: string;
   @Input() total: number | string;
-  @Input() internet_call = '2X VELOCIDADE';
+  @Input() internet_call = 'FIBRA';
   @Input() tv_call = '50% DESCONTO';
 
   loading = true;
@@ -24,7 +24,7 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   sub: Subscription;
   full_price: number | string;
 
-  constructor(private datastore: WebAngularDataStore) {}
+  constructor(private datastore: WebAngularDataStore) { }
 
   ngOnInit() {
     let options = {};
