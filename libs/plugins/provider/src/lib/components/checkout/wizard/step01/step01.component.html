@@ -68,6 +68,8 @@
               <input type="text" formControlName="telephone" mask="(00) 0000-0000" />
               <span class="highlight"></span> <span class="bar"></span>
               <label>Telefone Fixo com DDD <small>(opcional)</small> </label>
+              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['telephone']" name="Telefone Fixo">
+              </plugin-provider-checkout-error>
             </div>
           </div>
         </div>

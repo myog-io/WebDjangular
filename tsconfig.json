@@ -19,6 +19,12 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@wda-admin/*": [
+        "apps/admin/src/*"
+      ],
+      "@wda-client/*": [
+        "apps/client/src/*"
+      ],
       "@core/*": [
         "libs/core/*"
       ],

@@ -71,8 +71,7 @@ class WebDjangoEmailBackend(BaseEmailBackend):
             return False
         encoding = 'encoding' in email_message and email_message[
             'encoding'] or settings.DEFAULT_CHARSET
-        recipients = [sanitize_address(addr, encoding)
-                      for addr in email_message['recipients']]
+
         template = None
         if 'template_id' in email_message:
             template = Email.objects.get(pk=email_message['template_id'])
@@ -80,17 +79,38 @@ class WebDjangoEmailBackend(BaseEmailBackend):
             template = Email.objects.get(code=email_message['template_code'])
         if 'template' in email_message:
             template = email_message['template']
+
         email_ctx = None
         if 'context' in email_message:
             email_ctx = email_message['context']
 
+        context = Context(email_ctx, autoescape=False)
         if template is not None:
-            context = Context(email_ctx, autoescape=False)
-            subject = Template(template.subject).render(context)
-            message = Template(template.content).render(context)
+            subject = template.subject
+            message = template.content
         else:
-            message = email_message['message']
             subject = email_message['subject']
+            message = email_message['message']
+
+        # Running Context to change variables to it's context values
+        subject = Template(subject).render(context)
+        message = Template(message).render(context)
+
+        # Checking if the Recipients is a string, and spliting if we receive with ";" or ","
+        if isinstance(email_message['recipients'], str):
+            # Running Context on the String As well
+            email_message['recipients'] = Template(
+                email_message['recipients']).render(context)
+            if ";" in email_message['recipients']:
+                email_message['recipients'] = email_message['recipients'].split(
+                    ";")
+            else:
+                email_message['recipients'] = email_message['recipients'].split(
+                    ",")
+
+        recipients = [sanitize_address(addr, encoding)
+                      for addr in email_message['recipients']]
+
         if self.sender:
             return self.sender.send(to=recipients,
                                     subject=subject,

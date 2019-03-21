@@ -186,7 +186,7 @@ export class CartService {
               })
               .subscribe((query: JsonApiQueryData<ProductModel>) => {
                 cartItem.product.addons = query.getModels();
-                this.updateCart().then(() => {});
+                this.updateCart().then(() => { });
                 resolve(cartItem);
               });
           },
@@ -228,7 +228,7 @@ export class CartService {
         (cartItem: CartItemModel) => {
           console.log(this.cart.items);
         },
-        () => {}
+        () => { }
       );
     });
   }
@@ -238,13 +238,13 @@ export class CartService {
     updateCart = true
   ): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.cart.items = this.cart.items.filter(function(ele) {
+      this.cart.items = this.cart.items.filter(function (ele) {
         return ele != cartItem;
       });
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
         response => {
           if (updateCart) {
-            this.updateCart().then(() => {});
+            this.updateCart().then(() => { });
           }
           resolve(true);
         },
@@ -287,10 +287,10 @@ export class CartService {
     });
   }
 
-  public clearCart(): Promise<any> {
+  public clearCart(remove = true): Promise<any> {
     return new Promise((resolve, reject) => {
       this.cookieService.delete(this.cart_cookie_name);
-      if (this._cart.id) {
+      if (this._cart.id && remove) {
         this.datastore.deleteRecord(CartModel, this._cart.id).subscribe(
           response => {
             resolve(response);
@@ -300,7 +300,7 @@ export class CartService {
           }
         );
       } else {
-        reject('Cart does not exists');
+        resolve(true);
       }
     });
   }

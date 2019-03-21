@@ -12,20 +12,13 @@
   <div class="row" *ngIf="!success">
     <div class="col-md-6 order-md-1 offset-md-3">
       <div class="row" [innerHTML]="body"></div>
-      <hr class="mb-4" />
+      <hr class="" />
       <div class="alert alert-danger" role="alert" *ngIf="error">
         {{ error }}
       </div>
-      <button
-        class="btn btn-success btn-lg btn-block"
-        type="submit"
-        (click)="sendEmail($event)"
-        [disabled]="isSending"
-      >
+      <button class="btn btn-success btn-lg btn-block" type="submit" (click)="sendEmail($event)" [disabled]="isSending">
         <span *ngIf="!isSending">Enviar Email de Aceitação</span>
-        <span *ngIf="isSending"
-          >Enviando <i class="fa fa-spinner fa-spin"></i
-        ></span>
+        <span *ngIf="isSending">Enviando <i class="fa fa-spinner fa-spin"></i></span>
       </button>
     </div>
   </div>

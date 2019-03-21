@@ -29,6 +29,7 @@ import {
   BuilderFormFieldConfig
 } from './interfaces/form-config.interface';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
+import { BuilderFormLabelComponent } from './inputs/label/label.component';
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
@@ -43,7 +44,8 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   switch: BuilderFormSwitcherComponent,
   checkbox: BuilderFormCheckboxOptionsComponent,
   datepicker: BuilderFormDatepickerComponent,
-  jsonLogic: BuilderFormJsonLogicComponent
+  jsonLogic: BuilderFormJsonLogicComponent,
+  label: BuilderFormLabelComponent,
 };
 
 @Directive({

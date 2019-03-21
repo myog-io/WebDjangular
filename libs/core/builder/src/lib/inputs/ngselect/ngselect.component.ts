@@ -30,10 +30,10 @@ export class BuilderFormNgSelectComponent implements BuilderFormField, OnInit {
     return this.config.model && this.config.formType == FormGroup;
   }
   addTagPromise(name) {
-    console.log(name, 'HERE????');
+
     return new Promise(resolve => {
       this.loading = true;
-      resolve({ id: this.options.length, name: name, valid: true });
+      resolve({ id: name, name: name, valid: true });
       this.loading = false;
     });
   }
@@ -49,7 +49,7 @@ export class BuilderFormNgSelectComponent implements BuilderFormField, OnInit {
       for (let i = 0; i < tags.length; i++) {
         const tag = tags[i];
         this.options.push({
-          id: i,
+          id: tag,
           name: tag
         });
         this.loading = false;

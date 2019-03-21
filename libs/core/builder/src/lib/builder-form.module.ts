@@ -37,6 +37,7 @@ import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.co
 import { HoldableDirective } from './holdable/holdable.directive';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { BuilderFormLabelComponent } from './inputs/label/label.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
@@ -53,7 +54,8 @@ const ENTRY_COMPONENTS = [
   BuilderFormDatepickerComponent,
   BuilderFormJsonLogicComponent,
   ModelPaginatorComponent,
-  BuilderFormValidatorComponent
+  BuilderFormValidatorComponent,
+  BuilderFormLabelComponent,
 ];
 
 @NgModule({

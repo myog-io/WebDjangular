@@ -4,47 +4,25 @@
       <div class="col-md-6 order-md-1 offset-md-3">
         <div class="row">
           <ng-template #tipCleanContent>Limpar Formulario</ng-template>
-          <div class="col-md-12 mb-3">
+          <div class="col-md-12">
             <div class="float-right" style="cursor: pointer;">
-              <i
-                (click)="cleanForm()"
-                alt="Limpar Formulario"
-                class="fa fa-eraser float-right"
-              ></i>
+              <i (click)="cleanForm()" alt="Limpar Formulario" class="fa fa-eraser float-right"></i>
             </div>
           </div>
-          <div class="col-md-12 mb-3">
+          <div class="col-md-12 ">
             <div class="form-group">
-              <input
-                type="text"
-                autocomplete="off"
-                class="form-control"
-                id="name"
-                placeholder=""
-                value=""
-                required
-                formControlName="name"
-              />
+              <input type="text" autocomplete="off" class="form-control" id="name" placeholder="" value="" required
+                formControlName="name" />
               <span class="highlight"></span> <span class="bar"></span>
               <label for="name">Nome</label>
               <div class="invalid-feedback">Nome é obrigatorio</div>
             </div>
           </div>
           <!-- COL -->
-          <div class="col-md-12 mb-3">
+          <div class="col-md-12">
             <div class="form-group">
-              <input
-                autocomplete="off"
-                type="phone"
-                class="form-control"
-                id="taxvat"
-                placeholder=""
-                value=""
-                required=""
-                formControlName="taxvat"
-                [dropSpecialCharacters]="false"
-                [mask]="taxvat_mask"
-              />
+              <input autocomplete="off" type="phone" class="form-control" id="taxvat" placeholder="" value=""
+                required="" formControlName="taxvat" [dropSpecialCharacters]="false" [mask]="taxvat_mask" />
               <span class="highlight"></span> <span class="bar"></span>
               <label for="taxvat">CPF/CPNJ</label>
 
@@ -52,21 +30,10 @@
             </div>
           </div>
           <!-- COL -->
-          <div
-            class="col-md-12 mb-3"
-            *ngIf="linkForm.get('taxvat')?.value?.length > 14"
-          >
+          <div class="col-md-12 " *ngIf="linkForm.get('taxvat')?.value?.length > 14">
             <div class="form-group">
-              <input
-                autocomplete="off"
-                type="text"
-                class="form-control"
-                id="company_name"
-                placeholder=""
-                value=""
-                required=""
-                formControlName="company_name"
-              />
+              <input autocomplete="off" type="text" class="form-control" id="company_name" placeholder="" value=""
+                required="" formControlName="company_name" />
               <span class="highlight"></span> <span class="bar"></span>
               <label for="company_name">Nome da Empresa</label>
 
@@ -74,23 +41,10 @@
             </div>
           </div>
           <!-- COL -->
-          <div
-            class="col-md-12 mb-3"
-            *ngIf="linkForm.get('taxvat')?.value?.length > 14"
-          >
+          <div class="col-md-12 " *ngIf="linkForm.get('taxvat')?.value?.length > 14">
             <div class="form-group">
-              <input
-                autocomplete="off"
-                type="phone"
-                class="form-control"
-                id="taxvat_resp"
-                placeholder=""
-                value=""
-                required=""
-                formControlName="taxvat_resp"
-                [dropSpecialCharacters]="false"
-                mask="000.000.000-00"
-              />
+              <input autocomplete="off" type="phone" class="form-control" id="taxvat_resp" placeholder="" value=""
+                required="" formControlName="taxvat_resp" [dropSpecialCharacters]="false" mask="000.000.000-00" />
               <span class="highlight"></span> <span class="bar"></span>
               <label for="taxvat_resp">CPF do Responsavel</label>
 
@@ -102,70 +56,40 @@
           <!-- COL -->
         </div>
         <!-- ROW -->
-        <hr class="mb-4" />
+        <hr class="" />
         <div class="row">
-          <div class="col-md-12 mb-3">
+          <div class="col-md-12 ">
             <div class="custom-control custom-checkbox" *ngIf="show_internet">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="sign_internet"
-                formControlName="internet"
-              />
-              <label class="custom-control-label" for="sign_internet"
-                >Assinar <b>Internet</b></label
-              >
+              <input type="checkbox" class="custom-control-input" id="sign_internet" formControlName="internet" />
+              <label class="custom-control-label" for="sign_internet">Assinar <b>Internet</b></label>
             </div>
             <!-- Checkbox -->
             <div class="custom-control custom-checkbox" *ngIf="show_equip">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="sign_router"
-                formControlName="equip"
-              />
-              <label class="custom-control-label" for="sign_router"
-                >Alugar <b>Roteador</b></label
-              >
+              <input type="checkbox" class="custom-control-input" id="sign_router" formControlName="equip" />
+              <label class="custom-control-label" for="sign_router">Alugar <b>Roteador</b></label>
             </div>
             <!-- Checkbox -->
             <div class="custom-control custom-checkbox" *ngIf="show_tv">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="sign_tv"
-                formControlName="tv"
-              />
-              <label class="custom-control-label" for="sign_tv"
-                >Assinar <b>TV</b></label
-              >
+              <input type="checkbox" class="custom-control-input" id="sign_tv" formControlName="tv" />
+              <label class="custom-control-label" for="sign_tv">Assinar <b>TV</b></label>
             </div>
             <!-- Checkbox -->
             <div class="custom-control custom-checkbox" *ngIf="show_phone">
-              <input
-                type="checkbox"
-                class="custom-control-input"
-                id="sign_phone"
-                formControlName="phone"
-                *ngIf="show_phone"
-              />
-              <label class="custom-control-label" for="sign_phone"
-                >Assinar <b>Telefone</b></label
-              >
+              <input type="checkbox" class="custom-control-input" id="sign_phone" formControlName="phone"
+                *ngIf="show_phone" />
+              <label class="custom-control-label" for="sign_phone">Assinar <b>Telefone</b></label>
             </div>
             <!-- Checkbox -->
           </div>
         </div>
-        <hr class="mb-4" />
+        <hr class="" />
         <div class="alert alert-success" role="alert" *ngIf="link">
           <a href="{{ link }}" target="_NEW" style="word-break: break-all">{{
             link
           }}</a>
 
           <button type="button" class="close" (click)="copyLink($event)">
-            <span aria-hidden="true" placement="left"
-              ><i class="fa fa-copy"></i
-            ></span>
+            <span aria-hidden="true" placement="left"><i class="fa fa-copy"></i></span>
           </button>
         </div>
       </div>

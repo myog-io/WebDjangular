@@ -29,7 +29,8 @@ export const FieldOptions = [
   { id: 'switch', name: 'Switch' },
   { id: 'checkbox', name: 'Checkbox' },
   { id: 'datepicker', name: 'Datepicker' },
-  { id: 'jsonLogic', name: 'Json Logic' }
+  { id: 'jsonLogic', name: 'Json Logic' },
+  { id: 'label', name: 'Label' }
 ];
 export const InputTypes = [
   { id: 'text', name: 'Text' },

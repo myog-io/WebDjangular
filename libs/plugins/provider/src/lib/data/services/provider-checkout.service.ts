@@ -197,8 +197,8 @@ export class ProviderCheckoutService {
     });
   }
 
-  restartProviderCheckout() {
-    this.cartService.clearCart().then(
+  restartProviderCheckout(remove = true) {
+    this.cartService.clearCart(remove).then(
       res => {
         // TODO: maybe improve, maybe not
         location.reload();

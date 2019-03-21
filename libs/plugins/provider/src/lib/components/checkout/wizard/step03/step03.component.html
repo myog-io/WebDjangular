@@ -59,10 +59,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr
-                class="bg-primary text-white"
-                *ngIf="providerCheckout.selected_internet_plan"
-              >
+              <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_internet_plan">
                 <th scope="row">Internet</th>
                 <td>
                   <b>{{
@@ -71,23 +68,17 @@
                 </td>
                 <td></td>
               </tr>
-              <tr
-                *ngFor="
+              <tr *ngFor="
                   let plan_optional of providerCheckout.selected_internet_optionals
-                "
-              >
+                ">
                 <th scope="row"></th>
                 <td>{{ plan_optional.name }}</td>
                 <td>
-                  R$ <b>{{ plan_optional.product.price }}</b
-                  >/mês
+                  R$ <b>{{ plan_optional.product.price }}</b>/mês
                 </td>
               </tr>
 
-              <tr
-                class="bg-primary text-white"
-                *ngIf="providerCheckout.selected_tv_plan"
-              >
+              <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_tv_plan">
                 <th scope="row">TV</th>
                 <td>
                   <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
@@ -103,31 +94,24 @@
                 </td>
                 <td></td>
               </tr>
-              <tr
-                *ngFor="
+              <tr *ngFor="
                   let plan_optional of providerCheckout.selected_tv_optionals
-                "
-              >
+                ">
                 <th scope="row"></th>
                 <td>{{ plan_optional.name }}</td>
                 <td></td>
               </tr>
 
-              <tr
-                class="bg-primary text-white"
-                *ngIf="providerCheckout.selected_telephone_plan"
-              >
+              <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_telephone_plan">
                 <th scope="row">Telefone</th>
                 <td>
                   <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
                 </td>
                 <td></td>
               </tr>
-              <tr
-                *ngFor="
+              <tr *ngFor="
                   let plan_optional of providerCheckout.selected_telephone_optionals
-                "
-              >
+                ">
                 <th scope="row"></th>
                 <td>{{ plan_optional.name }}</td>
                 <td></td>
@@ -138,8 +122,7 @@
                   Serviço de comunicação multimídia (SCM)
                 </th>
                 <td>
-                  R$ <b>{{ scm_price | currency: symbol:'' }}</b
-                  >/mês
+                  R$ <b>{{ scm_price | currency: symbol:'' }}</b>/mês
                 </td>
               </tr>
               <tr *ngIf="sva_price">
@@ -147,15 +130,13 @@
                   Provedor de Serviço de Conexão a Internet - PSCI (SVA)
                 </th>
                 <td>
-                  R$ <b>{{ sva_price | currency: symbol:'' }}</b
-                  >/mês
+                  R$ <b>{{ sva_price | currency: symbol:'' }}</b>/mês
                 </td>
               </tr>
               <tr *ngIf="seac_price">
                 <th scope="row" colspan="2">Serviços de HDTV (SEAC)</th>
                 <td>
-                  R$ <b>{{ seac_price | currency: symbol:'' }}</b
-                  >/mês
+                  R$ <b>{{ seac_price | currency: symbol:'' }}</b>/mês
                 </td>
               </tr>
               <tr *ngIf="stfc_price">
@@ -163,8 +144,7 @@
                   Serviço Telefônico Fixo Comutado (STFC)
                 </th>
                 <td>
-                  R$ <b>{{ stfc_price | currency: symbol:'' }}</b
-                  >/mês
+                  R$ <b>{{ stfc_price | currency: symbol:'' }}</b>/mês
                 </td>
               </tr>
             </tbody>
@@ -172,8 +152,7 @@
               <tr class="bg-secondary text-white">
                 <th scope="col" colspan="2">TOTAL</th>
                 <th>
-                  R$ <b>{{ providerCheckout.cartService.cart.subtotal }}</b
-                  >/mês
+                  R$ <b>{{ providerCheckout.cartService.cart.subtotal }}</b>/mês
                 </th>
               </tr>
 
@@ -191,24 +170,14 @@
               <tr>
                 <td>
                   Pagamento:
-                  <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"
-                    ><b>Por Email</b></span
-                  >
-                  <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"
-                    ><b>Por Correios</b></span
-                  >
+                  <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"><b>Por Email</b></span>
+                  <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"><b>Por Correios</b></span>
                 </td>
-                <td
-                  colspan="2"
-                  *ngIf="this.cart.extra_data['paymentType'] == 'email'"
-                >
+                <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'email'">
                   <b>{{ providerCheckout.cartService.cart.email }} </b>
                 </td>
 
-                <td
-                  colspan="2"
-                  *ngIf="this.cart.extra_data['paymentType'] == 'mail'"
-                >
+                <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'mail'">
                   <b>
                     {{ providerCheckout.address.first_name }}
                     {{ providerCheckout.address.last_name }} <br />

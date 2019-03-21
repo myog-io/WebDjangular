@@ -193,6 +193,7 @@ export class BuilderFormArrayComponent
    * @param val form value
    */
   private updateRow(val: any) {
+
     this.setGroupValue(val);
   }
 
@@ -215,7 +216,9 @@ export class BuilderFormArrayComponent
     const fa = this.group.get(this.config.name) as FormArray;
     for (let i = 0; i < val.length; i++) {
       const element = val[i];
-      const fg = fa.get(i.toString()) as AbstractForm;
+      const fg = fa.controls.find((fc) => {
+        return fc.get('id').value === element.id
+      });
       if (fg) {
         for (const key in element) {
           if (element.hasOwnProperty(key)) {

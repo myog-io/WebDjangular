@@ -67,7 +67,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
     FIELD_TYPE_SELECT = 'select'
     FIELD_TYPE_NGSELECT = 'ngSelect'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
-
+    FIELD_TYPE_LABEL = 'label'
     CONFIG_FIELD_TYPES = [
         (FIELD_TYPE_BUTTON, 'Button'),
         (FIELD_TYPE_TEXT, 'Text'),
@@ -75,6 +75,7 @@ class CoreConfigInput(AbstractCoreConfigModel):
         (FIELD_TYPE_SELECT, 'Select'),
         (FIELD_TYPE_NGSELECT, 'NG Select'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
+        (FIELD_TYPE_LABEL, 'Label')
     ]
     field_type = models.CharField(default=None, choices=CONFIG_FIELD_TYPES)
     input_type = models.CharField(default=None)

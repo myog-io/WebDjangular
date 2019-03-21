@@ -59,7 +59,6 @@ class FormSubmittedViewSet(ModelViewSet):
     """
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
         # Appending Request Meta to the Data
         meta = {
             'REMOTE_ADDR': request.META.get('REMOTE_ADDR'),
@@ -71,7 +70,6 @@ class FormSubmittedViewSet(ModelViewSet):
             'SERVER_PORT': request.META.get('SERVER_PORT'),
         }
         request.data['data']['meta'] = meta
-        print(request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

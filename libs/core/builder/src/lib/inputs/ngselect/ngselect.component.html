@@ -1,6 +1,6 @@
 <div class="form-group form-select" [formGroup]="isFormGroup ? group.get(config.name) : group">
     <label>{{ config.label }}</label>
-    <ng-select [appendTo]="'body'" class="form-control" (change)="onChange($event)" bindLabel="name" bindValue="id"
+    <ng-select appendTo="body" class="form-control" (change)="onChange($event)" bindLabel="name" bindValue="id"
         [formControlName]="isFormGroup ? 'id' : config.name" [multiple]="config.multiple" [addTag]="addTagPromise"
         [loading]="loading" [placeholder]="placeholder" [items]="options" [compareWith]="compareValues">
         <ng-template ng-tag-tmp let-search="searchTerm" *ngIf="config.addTags">

@@ -120,9 +120,12 @@
 
         <div class="row mt-1">
           <div class="col-12">
-            <button class="btn btn-primary btn-block btn-large" [disabled]="formWizardStep02Submitted">
-              <span *ngIf="!formWizardStep02Submitted">Confirmar assinatura</span>
-              <span *ngIf="formWizardStep02Submitted"><i class="fa fa-spinner fa-pulse"></i> Carregando</span>
+            <button class="btn btn-primary btn-block btn-large"
+              [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating">
+              <span *ngIf="!formWizardStep02Submitted && !providerCheckout.cartService.cart_updating">Confirmar
+                assinatura</span>
+              <span *ngIf="formWizardStep02Submitted || providerCheckout.cartService.cart_updating"><i
+                  class="fa fa-spinner fa-pulse"></i> Carregando</span>
             </button>
           </div>
           <div class="col-10 mt-2 mx-auto">
@@ -153,8 +156,9 @@
 
         <div class="row">
           <div class="col-12 col-md-6">
-            <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details text-und"><u>Limpar
-                carrinho</u></a>
+            <a (click)="providerCheckout.restartProviderCheckout(false)" class="btn-summary-details text-und">
+              <u>Começar novamente</u>
+            </a>
           </div>
         </div>
       </div>
