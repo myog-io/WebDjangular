@@ -131,7 +131,7 @@ def get_product_data(line, organization):
 
 
 def get_order_confirmation_markup(order):
-    """Generates schema.org markup for order confirmation e-mail message."""
+    """Generates schema.org markup for order confirmation email message."""
     # website = order.website
     organization = get_organization(order)
     order_url = build_absolute_uri(order.get_absolute_url())

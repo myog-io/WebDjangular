@@ -13,8 +13,8 @@ from ..models.Order import OrderEventTypes
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
                                           CartTermSerializer)
 from ..serializers.OrderSerializer import OrderSerializer
-from ..utils.CartUtils import (apply_all_cart_rules, apply_cart_terms,
-                               cart_has_product, create_order)
+from ..utils.CartUtils import (apply_all_cart_rules, cart_has_product,
+                               create_order)
 
 
 class CartTermFilter(WebDjangoFilterSet):
@@ -85,7 +85,8 @@ class CartViewSet(ModelViewSet):
 
     def apply_rules(self, instance):
         apply_all_cart_rules(instance)
-        apply_cart_terms(instance)
+        # Removing Cart From Here, shold be added on Signals
+        # apply_cart_terms(instance)
 
     @action(methods=['GET'], detail=True, url_path='complete_order')
     def complete_order(self, request, *args, **kwargs):
@@ -188,10 +189,6 @@ class CartItemViewSet(ModelViewSet):
 
     def perform_destroy(self, item):
         # Let's Check if theres any terms in the cart that need to be removed
-        if item.cart and item.product:
-            term = item.cart.terms.filter(products=item.product).first()
-            if term:
-                item.cart.terms.remove(term)
         item.delete()
 
 

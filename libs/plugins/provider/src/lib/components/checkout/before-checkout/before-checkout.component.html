@@ -88,9 +88,7 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="condo">
                     <option value="">Condominio</option>
-                    <option *ngFor="let condo of condos" [value]="condo.id">{{
-                      condo.name
-                    }}</option>
+                    <option *ngFor="let condo of condos" [value]="condo.id">{{condo.name}}</option>
                   </select>
                   <plugin-provider-checkout-error [ctrl]="providerCheckout.formBeforeCheckout.get('condo')"
                     name="Condominio">
@@ -115,20 +113,18 @@
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfCustomer">
                     <option value="">Já é cliente?</option>
-                    <option value="new">{{
-                      providerCheckout.customer_types.new
-                    }}</option>
-                    <option value="internet_fibra">{{
-                      providerCheckout.customer_types.internet_fibra
-                    }}</option>
-                    <option value="internet_radio">{{
-                      providerCheckout.customer_types.internet_radio
-                    }}</option>
+                    <option value="new">{{ providerCheckout.customer_types.new }}</option>
+                    <option value="internet_fibra">{{ providerCheckout.customer_types.internet_fibra }}</option>
+                    <option value="internet_radio">{{ providerCheckout.customer_types.internet_radio }}</option>
                   </select>
                   <plugin-provider-checkout-error [ctrl]="providerCheckout.formBeforeCheckout.get('typeOfCustomer')"
                     name="Este campo">
                   </plugin-provider-checkout-error>
-
+                  <div class="alert alert-danger mt-2" *ngIf="cep_error">
+                    <h6 class="h-alert"><i class="far fa-frown"></i> Ops!</h6>
+                    {{ cep_error }}
+                    <br>
+                  </div>
                   <div class="alert alert-info mt-2"
                     *ngIf="providerCheckout.formBeforeCheckout.get('typeOfCustomer').value === 'new'">
                     <h6 class="h-alert"><i class="fas fa-info-circle"></i> Atenção</h6>
@@ -153,7 +149,7 @@
             <div class="row">
               <div class="col">
                 <button class="btn btn-primary btn-block p-2" [disabled]="
-                    providerCheckout.formBeforeCheckoutLoading
+                    providerCheckout.formBeforeCheckoutLoading || cep_error
                   " *ngIf="providerCheckout?.city?.id; else invalid_city">
                   CONTINUAR ASSINATURA EM
                   {{ providerCheckout?.city?.name.toUpperCase() }}

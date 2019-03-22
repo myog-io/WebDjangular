@@ -5,26 +5,17 @@
     </div>
   </div>
   <div class="card-body">
-    <div
-      class="summary-items-wrapper table-responsive "
-      [ngClass]="{
+    <div class="summary-items-wrapper table-responsive " [ngClass]="{
         'cart-updating': this.providerCheckout.cartService.cart_updating
-      }"
-    >
-      <div
-        class="loader"
-        *ngIf="this.providerCheckout.cartService.cart_updating"
-      >
+      }">
+      <div class="loader" *ngIf="this.providerCheckout.cartService.cart_updating">
         <span><i class=" fas fa-spinner fa-pulse fa-5x text-white"></i></span>
       </div>
       <table class="table ">
         <tbody>
-          <tr
-            class="summary-item "
-            [ngClass]="{
+          <tr class="summary-item " [ngClass]="{
               selected: providerCheckout.selected_internet_plan
-            }"
-          >
+            }">
             <td class="icon-wrapper align-middle ">
               <i class="icon icon-globo_big"></i>
             </td>
@@ -37,32 +28,21 @@
                 {{ providerCheckout.selected_internet_plan.product.name }}
               </span>
             </td>
-            <td
-              class="summary-action align-middle"
-              *ngIf="!providerCheckout.selected_internet_plan"
-            >
+            <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_internet_plan">
               <div class="btn-add-wrapper">
-                <button
-                  class="btn add h-100"
-                  (click)="providerCheckout.openTabInternetPlan()"
-                >
+                <button class="btn add h-100" (click)="providerCheckout.openTabInternetPlan()">
                   Adicionar item
                 </button>
               </div>
             </td>
-            <td
-              class="summary-action align-middle"
-              *ngIf="providerCheckout.selected_internet_plan"
-            >
+            <td class="summary-action align-middle" *ngIf="providerCheckout.selected_internet_plan">
               <div class="price-wrapper">
                 <span class="currency-unit float-left">R$</span>
                 <span>
                   <span class="price float-right strikethrough">
-                    <span
-                      *ngIf="
+                    <span *ngIf="
                         providerCheckout.selected_internet_plan.discount < 0
-                      "
-                    >
+                      ">
                       {{ providerCheckout.selected_internet_plan.base_price }}
                     </span>
                   </span>
@@ -70,35 +50,21 @@
                     {{ providerCheckout.selected_internet_plan.total }}
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="providerCheckout.deselectInternetPlan()"
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                <button type="button" class="remove" aria-label="Close"
+                  (click)="providerCheckout.deselectInternetPlan()">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
           </tr>
 
-          <tr
-            class="summary-item selected optionals"
-            *ngFor="
+          <tr class="summary-item selected optionals" *ngFor="
               let plan_optional of providerCheckout.selected_internet_optionals
-            "
-          >
+            ">
             <td class="icon-wrapper align-middle">
-              <span
-                *ngIf="plan_optional.product.data.checkout_icon"
-                [class]="'icon ' + plan_optional.product?.data?.checkout_icon"
-              ></span>
-              <span
-                *ngIf="!plan_optional.product.data.checkout_icon"
-                class="fa fa-globe"
-              ></span>
+              <span *ngIf="plan_optional.product.data.checkout_icon"
+                [class]="'icon ' + plan_optional.product?.data?.checkout_icon"></span>
+              <span *ngIf="!plan_optional.product.data.checkout_icon" class="fa fa-globe"></span>
             </td>
             <td class="align-middle title">{{ plan_optional.product.name }}</td>
             <td class="summary-action align-middle">
@@ -114,28 +80,18 @@
                     {{ plan_optional.total }}
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="
+                <button type="button" class="remove" aria-label="Close" (click)="
                     providerCheckout.removeInternetOptional(plan_optional)
-                  "
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                  ">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
           </tr>
 
-          <tr
-            class="summary-item "
-            [ngClass]="{
+          <tr class="summary-item " [ngClass]="{
               selected: providerCheckout.selected_tv_plan
-            }"
-          >
+            }">
             <td class="icon-wrapper align-middle ">
               <i class="icon icon-tv_big"></i>
             </td>
@@ -145,30 +101,19 @@
                 {{ providerCheckout.selected_tv_plan.product.name }}
               </span>
             </td>
-            <td
-              class="summary-action align-middle"
-              *ngIf="!providerCheckout.selected_tv_plan"
-            >
+            <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_tv_plan">
               <div class="btn-add-wrapper">
-                <button
-                  class="btn add h-100"
-                  (click)="providerCheckout.openTabTVPlan()"
-                >
+                <button class="btn add h-100" (click)="providerCheckout.openTabTVPlan()">
                   Adicionar item
                 </button>
               </div>
             </td>
-            <td
-              class="summary-action align-middle"
-              *ngIf="providerCheckout.selected_tv_plan"
-            >
+            <td class="summary-action align-middle" *ngIf="providerCheckout.selected_tv_plan">
               <div class="price-wrapper">
                 <span class="currency-unit float-left">R$</span>
                 <span>
                   <span class="price float-right strikethrough">
-                    <span
-                      *ngIf="providerCheckout.selected_tv_plan.discount < 0"
-                    >
+                    <span *ngIf="providerCheckout.selected_tv_plan.discount < 0">
                       {{ providerCheckout.selected_tv_plan.base_price }}
                     </span>
                   </span>
@@ -176,24 +121,14 @@
                     {{ providerCheckout.selected_tv_plan.total }}
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="providerCheckout.deselectTVPlan()"
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectTVPlan()">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
           </tr>
 
-          <tr
-            class="summary-item selected optionals"
-            *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0"
-          >
+          <tr class="summary-item selected optionals" *ngIf="providerCheckout.selected_extra_tv_decoder.qty > 0">
             <td class="icon-wrapper align-middle ">
               <span class="icon icon-extra-decoder"></span>
             </td>
@@ -213,30 +148,19 @@
                   <span class="price float-right strikethrough">
                     <span> </span>
                   </span>
-                  <span
-                    class="price float-right"
-                    [innerHTML]="providerCheckout.priceExtraTVDecoder"
-                  >
+                  <span class="price float-right" [innerHTML]="providerCheckout.priceExtraTVDecoder">
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="providerCheckout.removeExtraTVDecoder()"
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                <button type="button" class="remove" aria-label="Close"
+                  (click)="providerCheckout.removeExtraTVDecoder()">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
           </tr>
 
-          <tr
-            class="summary-item selected optionals"
-            *ngFor="let plan_optional of providerCheckout.selected_tv_optionals"
-          >
+          <tr class="summary-item selected optionals"
+            *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
             <td class="icon-wrapper align-middle ">
               <span class="icon icon-squares"></span>
             </td>
@@ -254,26 +178,17 @@
                     {{ plan_optional.total }}
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="providerCheckout.removeTVOptional(plan_optional)"
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                <button type="button" class="remove" aria-label="Close"
+                  (click)="providerCheckout.removeTVOptional(plan_optional)">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
           </tr>
 
-          <tr
-            class="summary-item "
-            [ngClass]="{
+          <tr class="summary-item " [ngClass]="{
               selected: providerCheckout.selected_telephone_plan
-            }"
-          >
+            }">
             <td class="icon-wrapper align-middle ">
               <i class="icon icon-telephone"></i>
             </td>
@@ -285,32 +200,21 @@
                 {{ providerCheckout.selected_telephone_plan.product.name }}
               </span>
             </td>
-            <td
-              class="summary-action align-middle"
-              *ngIf="!providerCheckout.selected_telephone_plan"
-            >
+            <td class="summary-action align-middle" *ngIf="!providerCheckout.selected_telephone_plan">
               <div class="btn-add-wrapper">
-                <button
-                  class="btn add h-100"
-                  (click)="providerCheckout.openTabTelephonePlan()"
-                >
+                <button class="btn add h-100" (click)="providerCheckout.openTabTelephonePlan()">
                   Adicionar item
                 </button>
               </div>
             </td>
-            <td
-              class="summary-action align-middle"
-              *ngIf="providerCheckout.selected_telephone_plan"
-            >
+            <td class="summary-action align-middle" *ngIf="providerCheckout.selected_telephone_plan">
               <div class="price-wrapper">
                 <span class="currency-unit float-left">R$</span>
                 <span>
                   <span class="price float-right strikethrough">
-                    <span
-                      *ngIf="
+                    <span *ngIf="
                         providerCheckout.selected_telephone_plan.discount < 0
-                      "
-                    >
+                      ">
                       {{ providerCheckout.selected_telephone_plan.base_price }}
                     </span>
                   </span>
@@ -318,26 +222,17 @@
                     {{ providerCheckout.selected_telephone_plan.total }}
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="providerCheckout.deselectTelephonePlan()"
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                <button type="button" class="remove" aria-label="Close"
+                  (click)="providerCheckout.deselectTelephonePlan()">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
           </tr>
 
-          <tr
-            class="summary-item selected"
-            *ngFor="
+          <tr class="summary-item selected" *ngFor="
               let plan_optional of providerCheckout.selected_telephone_optionals
-            "
-          >
+            ">
             <td class="icon-wrapper align-middle ">
               <i class="fas fa-2x fa-globe"></i>
             </td>
@@ -355,17 +250,10 @@
                     {{ plan_optional.total }}
                   </span>
                 </span>
-                <button
-                  type="button"
-                  class="remove"
-                  aria-label="Close"
-                  (click)="
+                <button type="button" class="remove" aria-label="Close" (click)="
                     providerCheckout.removeTelephoneOptional(plan_optional)
-                  "
-                >
-                  <span aria-hidden="true"
-                    ><i class="fas fa-times-circle"></i
-                  ></span>
+                  ">
+                  <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
             </td>
@@ -398,7 +286,7 @@
                     R${{ fee?.price }}
                   </span>
 
-                  <span  *ngIf="fee?.price == 0">
+                  <span *ngIf="fee?.price == 0">
                     GRÁTIS
                   </span>
 
@@ -424,15 +312,10 @@
     <div class="summary-submit-wrapper">
       <div class="row">
         <div class="col text-center">
-          <button
-            type="submit"
-            class="btn btn-primary btn-lg"
-            [disabled]="
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="
               !providerCheckout.isBuildingPlanValid() ||
               this.providerCheckout.cartService.cart_updating
-            "
-            (click)="submit()"
-          >
+            " (click)="submit()">
             FINALIZAR ASSINATURA
           </button>
         </div>
@@ -441,10 +324,7 @@
 
     <div class="row">
       <div class="col text-center my-2">
-        <a
-          (click)="providerCheckout.restartProviderCheckout()"
-          class="btn-summary-details"
-        >
+        <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details">
           Limpar carrinho
         </a>
       </div>

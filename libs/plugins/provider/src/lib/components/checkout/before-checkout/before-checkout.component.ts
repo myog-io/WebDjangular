@@ -24,7 +24,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
   resellers: Observable<ResellerModel[]>;
   plan_types: Observable<PlanTypeModel[]>;
   plan_types_list: PlanTypeModel[];
-
+  public cep_error: string | boolean = false;
   constructor(
     providerCheckout: ProviderCheckoutService,
     private datastore: WebAngularDataStore
@@ -50,7 +50,24 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
     this.subPostalCode = this.providerCheckout.formBeforeCheckout
       .get('postalCode')
       .valueChanges.subscribe((PostalCode: string) => {
-        this.providerCheckout.getCurrentCity().then(city => { });
+        this.providerCheckout.getCurrentCity().then(
+          (city) => {
+            if (city) {
+              this.cep_error = false;
+            }
+          },
+          (error) => {
+            if (error.errors) {
+              for (let i = 0; i < error.errors.length; i++) {
+                const element = error.errors[i];
+                if (element.detail) {
+                  this.cep_error = element.detail
+                }
+              }
+            } else {
+              this.cep_error = "Erro desconhecido, por favor digite o CEP novamente"
+            }
+          });
       });
 
     this.plan_types = this.datastore
@@ -59,9 +76,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
         this.plan_types_list = query.getModels();
         this.checkCondos(
           this.plan_types_list.find(
-            type =>
-              type.id ==
-              this.providerCheckout.formBeforeCheckout.get('typeOfAccess').value
+            type => type.id == this.providerCheckout.formBeforeCheckout.get('typeOfAccess').value
           )
         );
         return this.plan_types_list;

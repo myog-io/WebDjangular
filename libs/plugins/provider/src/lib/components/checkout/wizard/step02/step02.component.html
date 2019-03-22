@@ -29,7 +29,7 @@
             <div class="custom-control custom-radio mb-1">
               <input type="radio" id="paymentTypeMail" formControlName="paymentType" name="paymentType"
                 class="custom-control-input" value="mail"
-                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating"/>
+                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating" />
               <label class="custom-control-label" for="paymentTypeMail">Por Correios</label>
             </div>
             <div class="row">
@@ -59,7 +59,7 @@
             <div class="custom-control custom-radio mt-2 mb-1">
               <input type="radio" id="paymentTypeEmail" formControlName="paymentType" name="paymentType"
                 class="custom-control-input" value="email"
-                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating"/>
+                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating" />
               <label class="custom-control-label" for="paymentTypeEmail">Por Email <small>(R$5,00 de desconto)</small>
               </label>
             </div>
@@ -77,7 +77,7 @@
                 <br />
                 <p class="text-primary" *ngIf="formWizardStep02.get('paymentType').value == 'email'">
                   <b>IMPORTANTE:</b> Você não receberá faturas por correio. Este
-                  e-mail será utilizado para enviar qualquer informação da
+                  email será utilizado para enviar qualquer informação da
                   LPNet. Por favor verifique se nossos emails chegarão
                   corretamente em sua caixa de entrada. Se não chegaram,
                   verifique sua caixa de spam.

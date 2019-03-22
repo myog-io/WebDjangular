@@ -687,7 +687,7 @@ export class ProviderCheckoutService {
     //}
   }
 
-  getCurrentCity(): Promise<CityModel> {
+  getCurrentCity(): Promise<CityModel | any> {
     return new Promise((resolve, reject) => {
       const postalCode = this.formBeforeCheckout.get('postalCode').value;
 
@@ -707,6 +707,9 @@ export class ProviderCheckoutService {
             this.addressFromCity(this.city);
             resolve(this.city);
             // TODO: Create Address Baser on City
+          }, (error) => {
+            console.log(error)
+            reject(error);
           });
       }
     });
@@ -1265,15 +1268,21 @@ export class ProviderCheckoutService {
     if (this.formBeforeCheckout.valid) {
       this.formBeforeCheckoutLoading = true;
       if (!(this.city instanceof CityModel)) {
-        this.getCurrentCity().then((city: CityModel) => {
-          this.saveAddress().then((address: AddressModel) => {
-            this.setAddressAndNextSetp();
-          });
-        });
+        this.getCurrentCity().then(
+          (city: CityModel) => {
+            this.saveAddress().then((address: AddressModel) => {
+              this.setAddressAndNextSetp();
+            });
+          }, (error) => {
+            this.formBeforeCheckoutLoading = false;
+          }
+        );
       } else {
         this.addressFromCity(this.city);
         this.saveAddress().then((address: AddressModel) => {
           this.setAddressAndNextSetp();
+        }, (error) => {
+          this.formBeforeCheckoutLoading = false;
         });
       }
     } else {
@@ -1350,16 +1359,16 @@ export class ProviderCheckoutService {
           'sku_migracao_tecnologia': 'parcelas_migracao_tecnologia_'
         };
 
-        let fees =  this.cartService.cart.items.filter(data => !data.product);
+        let fees = this.cartService.cart.items.filter(data => !data.product);
         fees.forEach((fee: ProductModel | any, index: number) => {
 
           Object.keys(providerConfigKeys).forEach((
             providerConfigKey: ProductModel | any, index: number) => {
 
-            if(fee.sku == this.providerConfig[providerConfigKey]){
-              fee.split_in = this.providerConfig[providerConfigKeys[providerConfigKey]+this.cartService.cart.extra_data.contractTime];
+            if (fee.sku == this.providerConfig[providerConfigKey]) {
+              fee.split_in = this.providerConfig[providerConfigKeys[providerConfigKey] + this.cartService.cart.extra_data.contractTime];
               let show_splited_price = fee.price;
-              if( fee.split_in > 0) {
+              if (fee.split_in > 0) {
                 show_splited_price = fee.price / fee.split_in;
                 fee.show_splited_price = show_splited_price.toFixed(2);
               }

@@ -64,6 +64,7 @@ class CityViewSet(ModelViewSet):
             'http://viacep.com.br/ws/{0}/json/'.format(postal_code))
 
         city_data = json.loads(r.text)
+
         if 'erro' in city_data:
             raise exceptions.NotFound("Cep Não encontrado ou invalido")
         city = None
@@ -86,7 +87,9 @@ class CityViewSet(ModelViewSet):
 
         if not city:
             raise exceptions.NotFound(
-                "Não temos cobertura na cidade relacionada aesse cep")
+                "Desculpe, infelizmente não temos cobertura na cidade {1} CEP:{0}".format(
+                    city_data['cep'], city_data['localidade'])
+            )
 
         serializer = self.get_serializer(city)
         data = serializer.data

@@ -55,6 +55,7 @@ export class CartTermModel extends AbstractModel {
   @ExtraOptions({
     type: 'codeEditor',
     label: 'Term Condition',
+    element_class: 'small',
     wrapper_class: 'col-12',
     placeholder: ''
   })
@@ -84,7 +85,7 @@ export class CartTermModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

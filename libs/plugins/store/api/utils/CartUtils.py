@@ -13,12 +13,12 @@ from libs.plugins.store.api.serializers.CartSerializer import \
     CartItemSerializer
 from libs.plugins.store.api.serializers.ProductSerializer import \
     ProductSerializer
-from webdjango.models.Address import Address, AddressType
+from webdjango.models.Address import AddressType
 from webdjango.models.Core import Website
 from webdjango.serializers.AddressSerializer import AddressSerializer
 from webdjango.utils.JsonLogic import jsonLogic
 
-from ..models.Cart import Cart, CartStatus, CartTerm
+from ..models.Cart import Cart, CartStatus
 from ..models.Discount import CartRule, RuleValueType
 from ..models.Order import Order
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
@@ -161,17 +161,6 @@ def apply_all_cart_rules(cart):
         else:
             apply_cart_rule(cart, rule)
             # apply rule
-
-    return cart
-
-
-def apply_cart_terms(cart):
-    # Search for Terms that Should be applied to all carts
-    terms_list = [o.id for o in cart.terms.all()]
-    terms = CartTerm.objects.filter(enabled=True, products__in=[item.product for item in cart.items.all()]).exclude(
-        id__in=terms_list) | CartTerm.objects.filter(all_carts=True, enabled=True).exclude(id__in=terms_list)
-    if terms:
-        cart.terms.add(*terms.all())
 
     return cart
 
