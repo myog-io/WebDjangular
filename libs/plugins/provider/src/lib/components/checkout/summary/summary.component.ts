@@ -22,14 +22,10 @@ export class PluginProviderCheckoutSummaryComponent implements OnInit {
     this.providerCheckout = providerCheckout;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   submit() {
-    if (
-      this.providerCheckout.cartService.cart.extra_data.customer_type ===
-        'new' &&
-      !this.providerCheckout.selected_internet_plan
-    ) {
+    if (this.providerCheckout.cartService.cart.extra_data.customer_type === 'new' && !this.providerCheckout.selected_internet_plan && !this.providerCheckout.is_migration) {
       let modalRef = this._modalService.open(PluginProviderDialogComponent, {
         size: 'sm',
         centered: true

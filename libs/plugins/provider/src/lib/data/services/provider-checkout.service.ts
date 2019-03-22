@@ -149,6 +149,7 @@ export class ProviderCheckoutService {
   private _condo: CondoModel;
   public has_reseller: boolean = false;
   public is_migration: boolean = false;
+  public migration_type: 'upgrade' | 'downgrade' = null;
   private cartSub: Subscription;
 
   constructor(
@@ -1245,10 +1246,12 @@ export class ProviderCheckoutService {
     extra_data.condo = this.formBeforeCheckout.get('condo').value;
     extra_data.condo_number = this.formBeforeCheckout.get('condoNumber').value;
     extra_data.plan_type_id = this.formBeforeCheckout.get('typeOfAccess').value;
-    extra_data.customer_type = this.formBeforeCheckout.get(
-      'typeOfCustomer'
-    ).value;
+    extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
     extra_data.city_id = this.city.id;
+    extra_data.is_migration = this.is_migration;
+    if (this.migration_type) {
+      extra_data.migration_type = this.migration_type;
+    }
     this.cartService.setExtraData(extra_data);
 
     this.updating_cart = true;
