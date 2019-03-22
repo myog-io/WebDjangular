@@ -11,7 +11,8 @@
           <div class="col-12">
             <h6>Fidelidade</h6>
             <div class="form-group">
-              <select class="form-control" formControlName="contractTime">
+              <select class="form-control" formControlName="contractTime"
+                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating">
                 <option value="0">Sem Fidelidade</option>
                 <option value="1">1 ano</option>
                 <option value="2">2 anos</option>
@@ -27,7 +28,8 @@
           <div class="col-12">
             <div class="custom-control custom-radio mb-1">
               <input type="radio" id="paymentTypeMail" formControlName="paymentType" name="paymentType"
-                class="custom-control-input" value="mail" />
+                class="custom-control-input" value="mail"
+                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating"/>
               <label class="custom-control-label" for="paymentTypeMail">Por Correios</label>
             </div>
             <div class="row">
@@ -56,7 +58,8 @@
 
             <div class="custom-control custom-radio mt-2 mb-1">
               <input type="radio" id="paymentTypeEmail" formControlName="paymentType" name="paymentType"
-                class="custom-control-input" value="email" />
+                class="custom-control-input" value="email"
+                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating"/>
               <label class="custom-control-label" for="paymentTypeEmail">Por Email <small>(R$5,00 de desconto)</small>
               </label>
             </div>

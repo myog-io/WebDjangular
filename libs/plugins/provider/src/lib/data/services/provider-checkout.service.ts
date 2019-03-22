@@ -1343,7 +1343,33 @@ export class ProviderCheckoutService {
   getFees() {
     if (this.cartService.cart) {
       if (this.cartService.cart.items) {
-        return this.cartService.cart.items.filter(data => !data.product);
+
+        let providerConfigKeys = {
+          'sku_instalacao': 'parcela_instalacao_',
+          'sku_migracao_velocidade': 'parcelas_migracao_velocidade_',
+          'sku_migracao_tecnologia': 'parcelas_migracao_tecnologia_'
+        };
+
+        let fees =  this.cartService.cart.items.filter(data => !data.product);
+        fees.forEach((fee: ProductModel | any, index: number) => {
+
+          Object.keys(providerConfigKeys).forEach((
+            providerConfigKey: ProductModel | any, index: number) => {
+
+            if(fee.sku == this.providerConfig[providerConfigKey]){
+              fee.split_in = this.providerConfig[providerConfigKeys[providerConfigKey]+this.cartService.cart.extra_data.contractTime];
+              let show_splited_price = fee.price;
+              if( fee.split_in > 0) {
+                show_splited_price = fee.price / fee.split_in;
+                fee.show_splited_price = show_splited_price.toFixed(2);
+              }
+            }
+          });
+
+
+
+        });
+        return fees;
       }
     }
     return [];
