@@ -67,7 +67,9 @@ export class ProviderCheckoutService {
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
   public current_wizard_step: number = 1;
   // TODO: Make a Core Config Dynamic
-  private plan_type_codes_internet = ['radio', 'fiber'];
+  private plan_type_fiber = 'fiber';
+  private plan_type_radio = 'radio';
+  private plan_type_codes_internet = [this.plan_type_fiber, this.plan_type_radio];
   private plan_type_codes_tv = ['tv'];
   private plan_type_codes_phone = ['phone'];
 
@@ -146,6 +148,7 @@ export class ProviderCheckoutService {
 
   private _condo: CondoModel;
   public has_reseller: boolean = false;
+  public is_migration: boolean = false;
   private cartSub: Subscription;
 
   constructor(
@@ -714,7 +717,6 @@ export class ProviderCheckoutService {
     //options['include'] = `${ProductModel.include}`;
     options['include'] = `product_type`;
     options['plan_types__id'] = this.plan_type.id;
-
     if (this.condo && this.condo.id) {
       options['condos__id'] = this.condo.id;
     } else {
@@ -734,13 +736,24 @@ export class ProviderCheckoutService {
       .subscribe(
         (query: JsonApiQueryData<ProductModel>) => {
           const plans = query.getModels();
-          this.plans.internet = plans.filter(
-            pm =>
-              this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1
+          const c_type = this.cartService.cart.extra_data.customer_type
+          this.plans.internet = plans.filter((pm) => {
+            // extra_data.customer_type
+            if (c_type === 'new' || this.is_migration) {
+              // If New or Migration we show all the plans
+              return this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1;
+            } else if (c_type == 'internet_radio') {
+              // If radio show only fiber plans
+              return pm.product_type.code === this.plan_type_fiber;
+            } else {
+              // If Fiber, won't select any other plans
+              return false;
+            }
+          }
+
           );
           this.plans.telephone = plans.filter(
-            pm =>
-              this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1
+            pm => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1
           );
           this.plans.tv = plans.filter(
             pm => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1

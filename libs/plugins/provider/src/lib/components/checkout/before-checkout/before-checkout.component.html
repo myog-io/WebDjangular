@@ -114,7 +114,7 @@
               <div class="col">
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfCustomer">
-                    <option value="">Já é client LPNet?</option>
+                    <option value="">Já é cliente?</option>
                     <option value="new">{{
                       providerCheckout.customer_types.new
                     }}</option>
@@ -129,6 +129,23 @@
                     name="Este campo">
                   </plugin-provider-checkout-error>
 
+                  <div class="alert alert-info mt-2"
+                    *ngIf="providerCheckout.formBeforeCheckout.get('typeOfCustomer').value === 'new'">
+                    <h6 class="h-alert"><i class="fas fa-info-circle"></i> Atenção</h6>
+                    Para poder solicitar Telefone Fixo* ou HDTV* por assinatura, é necessario ser cliente Banda
+                    Larga Fibra*, para fazer sua migração agora mesmo, clique em Continuar
+                    <br>
+                    <small>*Todos os Planos dependem de disponibilidade técnica</small>
+                  </div>
+                  <div class="alert alert-info mt-2"
+                    *ngIf="providerCheckout.formBeforeCheckout.get('typeOfCustomer').value === 'internet_fibra' || providerCheckout.formBeforeCheckout.get('typeOfCustomer').value === 'internet_radio'">
+                    <h6 class="h-alert"><i class="fas fa-info-circle"></i> Atenção</h6>
+                    Para poder solicitar o seu plano de Telefone Fixo* ou HDTV*, você precisa contratar ou já ser um
+                    cliente em um plano de Internet Banda Larga Fibra*, para fazer sua assinatura agora mesmo, clique em
+                    Continuar
+                    <br>
+                    <small>*Todos os Planos dependem de disponibilidade técnica</small>
+                  </div>
                 </div>
               </div>
             </div>

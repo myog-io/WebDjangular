@@ -26,6 +26,7 @@ import { PluginProviderCheckoutBeforeCheckoutComponent } from './before-checkout
 import { NgxMaskModule } from 'ngx-mask';
 import { PluginProviderCheckoutErrorComponent } from './checkout-form-error.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule } from '@angular/router';
 
 const COMPONENTS = [
   PluginProviderCheckoutComponent,
@@ -49,6 +50,7 @@ const COMPONENTS = [
   imports: [
     //BrowserModule,
     CommonModule,
+    RouterModule,
     NbCardModule,
     NbTooltipModule,
     FormsModule,
@@ -60,4 +62,4 @@ const COMPONENTS = [
   declarations: [...COMPONENTS],
   entryComponents: [...COMPONENTS]
 })
-export class PluginProviderCheckoutModule {}
+export class PluginProviderCheckoutModule { }

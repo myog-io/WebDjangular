@@ -19,9 +19,18 @@ export class EmailModel extends AbstractModel {
     type: 'text',
     label: 'Subject',
     wrapper_class: 'col-12',
-    placeholder: 'Hi {{first_name}}'
+
   })
   subject: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'From',
+    wrapper_class: 'col-12',
+  })
+  email_from: string;
 
   @Attribute()
   @ExtraOptions({

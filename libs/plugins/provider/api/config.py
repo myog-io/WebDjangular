@@ -8,6 +8,17 @@ class ProviderConfig():
     CONFIG_STFC_CODES = 'stfc_codes'
     CONFIG_SEAC_CODES = 'seac_codes'
     CONFIG_GROUP_SLUG = 'provider'
+    CONFIG_PARCELAS_INSTALACAO_0 = 'parcela_instalacao_0'
+    CONFIG_PARCELAS_INSTALACAO_1 = 'parcela_instalacao_1'
+    CONFIG_PARCELAS_INSTALACAO_2 = 'parcela_instalacao_2'
+    CONFIG_PARCELAS_MIGRACAO_VELOCIDADE = 'parcelas_migracao_velocidade'
+    CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_0 = 'parcelas_migracao_tecnologia_0'
+    CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_1 = 'parcelas_migracao_tecnologia_1'
+    CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_2 = 'parcelas_migracao_tecnologia_2'
+    CONFIG_SKU_INSTALACAO = 'sku_instalacao'
+    CONFIG_SKU_MIGRACAO = 'sku_migracao_velocidade'
+    CONFIG_SKU_MIGRACAO_TECNOLOGIA = 'sku_migracao_tecnologia'
+
     GROUP = CoreConfigGroup(
         id=CONFIG_GROUP_SLUG,
         title="Provider",
@@ -15,6 +26,117 @@ class ProviderConfig():
     )
 
     INPUTS = [
+        CoreConfigInput(
+            id=CONFIG_SKU_INSTALACAO,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            order=0,
+            disabled=False,
+            label="Cod SKU Instalação",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_SKU_MIGRACAO,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            order=0,
+            disabled=False,
+            label="Cod SKU Migração Velocidade",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_SKU_MIGRACAO,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            order=0,
+            disabled=False,
+            label="Cod SKU Migração Tecnologia",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_MIGRACAO_VELOCIDADE,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Migracao de Velocidade/Troca de Plano",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_0,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Migração Tecnologia Sem Fidelidade",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_1,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Migração Tecnologia Fidelidade 1 Ano",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_2,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Migração Tecnologia Fidelidade 2 Anos",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_INSTALACAO_0,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Instalação Sem Fidelidade",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_INSTALACAO_1,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Instalação Fidelidade 1 Ano",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_INSTALACAO_2,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Instalação Fidelidade 2 Anos",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+
+
+
         CoreConfigInput(
             id=CONFIG_SVA_SCM_CODES,
             field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
@@ -75,5 +197,5 @@ class ProviderConfig():
             wrapper_class="col-6",
             group=CONFIG_GROUP_SLUG,
         ),
-        
+
     ]

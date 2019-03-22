@@ -41,10 +41,12 @@ class Smtp(AbstractTransport):
     def getSendArgs(self):
         return ['to', 'subject', 'body']
 
-    def send(self, to='', subject='', body='', content_subtype='html'):
+    def send(self, to='', subject='', body='', content_subtype='html', sender=None, *args, **kwargs):
+        if not sender:
+            sender = self.sender
         email = EmailMessage(subject=subject, body=body,
-                             from_email=self.sender, to=to, connection=self.smtp_backend)
-        email.content_subtype = "html"  # to encode as HTML instead of text/plain
+                             from_email="{0}<{1}>".format(sender, self.username), to=to, connection=self.smtp_backend)
+        email.content_subtype = content_subtype
 
         if email.send():
             return True

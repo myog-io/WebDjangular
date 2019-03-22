@@ -83,18 +83,23 @@ class WebDjangoEmailBackend(BaseEmailBackend):
         email_ctx = None
         if 'context' in email_message:
             email_ctx = email_message['context']
-
+        email_from = None
         context = Context(email_ctx, autoescape=False)
         if template is not None:
             subject = template.subject
             message = template.content
+            email_from = template.email_from
         else:
             subject = email_message['subject']
             message = email_message['message']
+            if 'from' in email_message:
+                email_from = email_message['from']
 
         # Running Context to change variables to it's context values
         subject = Template(subject).render(context)
         message = Template(message).render(context)
+        if email_from:
+            email_from = Template(email_from).render(context)
 
         # Checking if the Recipients is a string, and spliting if we receive with ";" or ","
         if isinstance(email_message['recipients'], str):
@@ -114,7 +119,8 @@ class WebDjangoEmailBackend(BaseEmailBackend):
         if self.sender:
             return self.sender.send(to=recipients,
                                     subject=subject,
-                                    body=message)
+                                    body=message,
+                                    sender=email_from or self.sender.sender)
         raise ServiceUnavailable(
             "No Email SMTP or API Configurated to send email")
 
