@@ -113,8 +113,23 @@
                   <tbody>
                     <tr *ngFor="let fee of providerCheckout.getFees()">
                       <td>{{ fee?.name }}</td>
-                      <td *ngIf="fee?.price != 0">R${{ fee?.price }}</td>
-                      <td *ngIf="fee?.price == 0">GRÁTIS</td>
+                      <td>
+                        <span *ngIf="fee?.base_price > fee?.price">
+                          <s>R${{ fee?.base_price}}</s><br>
+                        </span>
+
+                        <span *ngIf="fee?.price != 0 && fee?.split_in === 0">
+                          R${{ fee?.price }}
+                        </span>
+
+                        <span  *ngIf="fee?.price == 0">
+                          GRÁTIS
+                        </span>
+
+                        <span *ngIf="fee?.price != 0 && fee?.split_in > 0">
+                          {{ fee?.split_in }}x R${{ fee?.show_splited_price }}
+                        </span>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

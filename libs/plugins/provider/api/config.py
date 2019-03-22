@@ -11,7 +11,9 @@ class ProviderConfig():
     CONFIG_PARCELAS_INSTALACAO_0 = 'parcela_instalacao_0'
     CONFIG_PARCELAS_INSTALACAO_1 = 'parcela_instalacao_1'
     CONFIG_PARCELAS_INSTALACAO_2 = 'parcela_instalacao_2'
-    CONFIG_PARCELAS_MIGRACAO_VELOCIDADE = 'parcelas_migracao_velocidade'
+    CONFIG_PARCELAS_MIGRACAO_VELOCIDADE_0 = 'parcelas_migracao_velocidade_0'
+    CONFIG_PARCELAS_MIGRACAO_VELOCIDADE_1 = 'parcelas_migracao_velocidade_1'
+    CONFIG_PARCELAS_MIGRACAO_VELOCIDADE_2 = 'parcelas_migracao_velocidade_2'
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_0 = 'parcelas_migracao_tecnologia_0'
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_1 = 'parcelas_migracao_tecnologia_1'
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_2 = 'parcelas_migracao_tecnologia_2'
@@ -57,12 +59,34 @@ class ProviderConfig():
             group=CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(
-            id=CONFIG_PARCELAS_MIGRACAO_VELOCIDADE,
+            id=CONFIG_PARCELAS_MIGRACAO_VELOCIDADE_0,
             field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             input_type="number",
             order=0,
             disabled=False,
             label="Max Parcelas Migracao de Velocidade/Troca de Plano",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_MIGRACAO_VELOCIDADE_1,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Migracao de Velocidade/Troca de Plano 1 ano",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_PARCELAS_MIGRACAO_VELOCIDADE_2,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="number",
+            order=0,
+            disabled=False,
+            label="Max Parcelas Migracao de Velocidade/Troca de Plano 2 anos",
             validation=None,
             wrapper_class="col-4",
             group=CONFIG_GROUP_SLUG,

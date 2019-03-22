@@ -32,6 +32,7 @@ export class PluginProviderCheckoutWizardStep03Component implements OnInit {
     let item: CartItemModel;
     for (item of this.cart.items) {
       if (item.product) {
+
         let show_price: boolean = true;
         if (
           providerConfig.seac_codes.find(
@@ -64,12 +65,12 @@ export class PluginProviderCheckoutWizardStep03Component implements OnInit {
         item.data['show_price'] = show_price;
       }
     }
-
-    //console.log('sva_price:', this.sva_price);
-    //console.log('scm_price:', this.scm_price);
-    //console.log('seac_price:', this.seac_price);
-    //console.log('stfc_price:', this.stfc_price);
-    //console.log('subtotal:', this.cart.subtotal);
+    console.log(providerConfig);
+    console.log('sva_price:', this.sva_price);
+    console.log('scm_price:', this.scm_price);
+    console.log('seac_price:', this.seac_price);
+    console.log('stfc_price:', this.stfc_price);
+    console.log('subtotal:', this.cart.subtotal);
     //console.log('total:', total);
   }
 }
