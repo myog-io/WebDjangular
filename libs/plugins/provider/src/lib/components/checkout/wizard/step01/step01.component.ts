@@ -352,15 +352,9 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       this.providerCheckout.address.number = this.formWizardStep01.get(
         'number'
       ).value;
-      this.providerCheckout.address.street_address_1 = this.formWizardStep01.get(
-        'street_address_1'
-      ).value;
-      this.providerCheckout.address.street_address_2 = this.formWizardStep01.get(
-        'street_address_2'
-      ).value;
-      this.providerCheckout.address.street_address_3 = this.formWizardStep01.get(
-        'street_address_3'
-      ).value;
+      this.providerCheckout.address.street_address_1 = this.formWizardStep01.get('street_address_1').value;
+      this.providerCheckout.address.street_address_2 = this.formWizardStep01.get('street_address_2').value;
+      this.providerCheckout.address.street_address_3 = this.formWizardStep01.get('street_address_3').value;
 
       this.cart.email = this.formWizardStep01.get('email').value;
       let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();

@@ -45,6 +45,9 @@
                         <span *ngIf="providerCheckout.address.street_address_2">
                           - {{ providerCheckout.address.street_address_2 }}
                         </span>
+                        <span *ngIf="providerCheckout.address.street_address_3">
+                          <br>{{ providerCheckout.address.street_address_3 }}
+                        </span>
                         <br />
                         {{ providerCheckout.address.city }},
                         {{ providerCheckout.address.state }}

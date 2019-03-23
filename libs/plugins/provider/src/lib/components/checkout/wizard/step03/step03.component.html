@@ -7,49 +7,6 @@
 
       <h5 class="text-primary">INFORMAÇÕES SOBRE SUA ASSINATURA</h5>
 
-      <!--
-
-      <p *ngIf="providerCheckout.selected_internet_plan">
-        Internet - <b>{{ providerCheckout.selected_internet_plan.product.name }}</b>
-      </p>
-      <p *ngIf="providerCheckout.selected_tv_plan">
-        TV - <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
-      </p>
-      <p *ngIf="providerCheckout.selected_telephone_plan">
-        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
-        <b> {{ plan_optional.name }}</b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
-        <b> {{ plan_optional.name }}</b>
-      </p>
-
-      <p class="subitem" *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
-        <b> {{ providerCheckout.selected_extra_tv_decoder.qty }}x
-          {{ providerCheckout.selected_extra_tv_decoder.plan.name }}
-        </b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
-        <b> {{ plan_optional.name }}</b>
-      </p>
-
-
-      <p *ngFor="let fee of providerCheckout.getFees()">
-        {{ fee?.name }}:
-        <b *ngIf="fee?.price != 0">
-          R${{ fee?.price }}
-        </b>
-        <b *ngIf="fee?.price == 0">
-          GRÁTIS
-        </b>
-      </p>
-
-
-      -->
       <div class="row">
         <div class="col table-responsive">
           <table class="table">
@@ -62,15 +19,11 @@
               <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_internet_plan">
                 <th scope="row">Internet</th>
                 <td>
-                  <b>{{
-                    providerCheckout.selected_internet_plan.product.name
-                  }}</b>
+                  <b>{{providerCheckout.selected_internet_plan.product.name}}</b>
                 </td>
                 <td></td>
               </tr>
-              <tr *ngFor="
-                  let plan_optional of providerCheckout.selected_internet_optionals
-                ">
+              <tr *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
                 <th scope="row"></th>
                 <td>{{ plan_optional.name }}</td>
                 <td>
@@ -88,9 +41,8 @@
               <tr *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
                 <td></td>
                 <td>
-                  {{ providerCheckout.selected_extra_tv_decoder.plan.name }} x{{
-                    providerCheckout.selected_extra_tv_decoder.qty
-                  }}
+                  {{ providerCheckout.selected_extra_tv_decoder.plan.name }} x
+                  {{providerCheckout.selected_extra_tv_decoder.qty}}
                 </td>
                 <td></td>
               </tr>
@@ -105,13 +57,11 @@
               <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_telephone_plan">
                 <th scope="row">Telefone</th>
                 <td>
-                  <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
+                  <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
                 </td>
                 <td></td>
               </tr>
-              <tr *ngFor="
-                  let plan_optional of providerCheckout.selected_telephone_optionals
-                ">
+              <tr *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
                 <th scope="row"></th>
                 <td>{{ plan_optional.name }}</td>
                 <td></td>
@@ -195,6 +145,9 @@
                     {{ providerCheckout.address.number }}
                     <span *ngIf="providerCheckout.address.street_address_2">
                       - {{ providerCheckout.address.street_address_2 }}
+                    </span>
+                    <span *ngIf="providerCheckout.address.street_address_3">
+                      <br>{{ providerCheckout.address.street_address_3 }}
                     </span>
                     <br />
                     {{ providerCheckout.address.city }},
