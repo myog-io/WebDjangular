@@ -26,18 +26,19 @@ export class CondoModel extends AbstractModel {
     validators: [Validators.required],
     type: 'text',
     inputType: 'text',
-    label: 'Name'
+    label: 'Name',
+    wrapper_class: 'col-6',
   })
   name: string;
 
   @BelongsTo()
   @ExtraOptions({
+    formType: FormGroup,
+    type: 'select',
     validators: [Validators.required],
-    type: 'relationship',
     label: 'City',
-    wrapper_class: 'col-12',
+    wrapper_class: 'col-6',
     model: CityModel,
-    backendResourceName: 'City'
   })
   city: CityModel;
 

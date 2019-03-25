@@ -102,7 +102,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       number: [number, [Validators.required]],
       street_address_1: [street_address_1, [Validators.required]],
       street_address_2: [street_address_2, []],
-      street_address_3: [street_address_3, []]
+      street_address_3: [street_address_3, [Validators.required]]
     });
 
     if (this.providerCheckout.plan_type.is_business) {
@@ -338,20 +338,12 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     if (this.formWizardStep01.valid) {
       this.formWizardStep01Submitted = true;
       const fullname: string = this.formWizardStep01.get('name').value;
-      const first_name: string = fullname
-        .split(' ')
-        .slice(0, -1)
-        .join(' ');
-      const last_name: string = fullname
-        .split(' ')
-        .slice(-1)
-        .join(' ');
+      const first_name: string = fullname.split(' ').slice(0, -1).join(' ');
+      const last_name: string = fullname.split(' ').slice(-1).join(' ');
 
       this.providerCheckout.address.first_name = first_name;
       this.providerCheckout.address.last_name = last_name;
-      this.providerCheckout.address.number = this.formWizardStep01.get(
-        'number'
-      ).value;
+      this.providerCheckout.address.number = this.formWizardStep01.get('number').value;
       this.providerCheckout.address.street_address_1 = this.formWizardStep01.get('street_address_1').value;
       this.providerCheckout.address.street_address_2 = this.formWizardStep01.get('street_address_2').value;
       this.providerCheckout.address.street_address_3 = this.formWizardStep01.get('street_address_3').value;

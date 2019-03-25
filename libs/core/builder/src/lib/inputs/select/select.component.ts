@@ -5,6 +5,7 @@ import {
 } from '../../interfaces/form-config.interface';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'wda-form-select',
@@ -53,5 +54,8 @@ export class BuilderFormSelectComponent implements BuilderFormField {
           }
         });
     }
+  }
+  get isFormGroup(): boolean {
+    return this.config.model && this.config.formType == FormGroup;
   }
 }

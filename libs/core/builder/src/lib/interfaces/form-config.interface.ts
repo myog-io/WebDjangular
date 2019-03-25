@@ -48,7 +48,7 @@ export interface BuilderFormValidatorMessages {
 }
 export interface BuilderFormFieldConfig {
   type: string;
-  validators?: Validators[];
+  validators?: ValidatorFn | ValidatorFn[];
   disabled?: boolean;
   label?: string;
   name?: string; // Maybe we wont use it

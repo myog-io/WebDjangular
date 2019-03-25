@@ -1,5 +1,5 @@
 import { JsonApiModel } from 'angular2-jsonapi';
-import { FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, Validators, FormControl, FormArray, ValidatorFn } from '@angular/forms';
 import { AbstractModel } from '../models';
 import {
   BuilderFormFieldConfig,
@@ -55,19 +55,18 @@ export class AbstractForm extends FormGroup {
           if (this.formFields[i].model && !this.formFields[i].copyOptions) {
             let entity = new this.formFields[i].model(this.datastore);
             const fb = entity.getForm();
-            fb.generateForm(ignore_validation);
+            // If is select, checkbox or ngselct we should ignore validation of the fields 
+            fb.generateForm(['select', 'checkbox', 'ngSelect'].indexOf(element.type) !== -1 ? true : ignore_validation);
             this.registerControl(propName, fb);
+
           } else {
             this.registerControl(propName, new FormGroup({}));
           }
         }
       } else {
-        let validators = [];
+        let validators: ValidatorFn | ValidatorFn[] = [];
 
-        if (
-          typeof this.formFields[i]['validators'] !== 'undefined' &&
-          ignore_validation === false
-        ) {
+        if (typeof this.formFields[i]['validators'] !== 'undefined' && ignore_validation === false) {
           validators = this.formFields[i]['validators'];
         }
         if (this.formFields[i].type === 'jsonLogic') continue;
@@ -181,7 +180,7 @@ export class AbstractForm extends FormGroup {
               if (typeof values[propName] === 'string') {
                 values[propName] = JSON.parse(values[propName]);
               }
-            } catch (error) {}
+            } catch (error) { }
           }
           entity[propName] = values[propName];
           break;
@@ -203,9 +202,9 @@ export class AbstractForm extends FormGroup {
     let control = this.get(formKey);
     let hasNot = true;
 
-    fullArray.map(function(item) {
+    fullArray.map(function (item) {
       hasNot = true;
-      control.value.map(function(item2) {
+      control.value.map(function (item2) {
         if (item2.pk == item.pk) {
           hasNot = false;
         }
@@ -232,7 +231,7 @@ export class AbstractForm extends FormGroup {
     let control = this.get(formKey);
     return (
       control.value &&
-      control.value.find(function(alreadyRelatedEntity) {
+      control.value.find(function (alreadyRelatedEntity) {
         return alreadyRelatedEntity.id === toRelateEntity.id;
       })
     );
