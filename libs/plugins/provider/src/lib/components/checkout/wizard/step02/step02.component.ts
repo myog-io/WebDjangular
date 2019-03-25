@@ -3,6 +3,7 @@ import { ProviderCheckoutService } from '../../../../data/services/provider-chec
 import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'plugin-provider-checkout-wizard-step02',
@@ -15,7 +16,10 @@ export class PluginProviderCheckoutWizardStep02Component
   public formWizardStep02: FormGroup;
   public formWizardStep02Submitted: boolean = false;
   public cart: CartModel;
-
+  public showMigration: boolean = false;
+  public ptSub: Subscription;
+  public ctSub: Subscription;
+  public mgSub: Subscription;
   constructor(
     public providerCheckout: ProviderCheckoutService,
     public formBuilder: FormBuilder
@@ -28,14 +32,25 @@ export class PluginProviderCheckoutWizardStep02Component
     let paymentType: string = '';
     let contractTime: string = '2';
 
-    if (this.cart.extra_data.hasOwnProperty('paymentType'))
-      paymentType = this.cart.extra_data['paymentType'];
-    if (this.cart.extra_data.hasOwnProperty('contractTime'))
-      contractTime = this.cart.extra_data['contractTime'];
+    if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
+    if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime = this.cart.extra_data['contractTime'];
+    // Checking if we have a migation of speed, has to have internetplan,
+    if (this.providerCheckout.selected_internet_plan) {
+      if (
+        (this.providerCheckout.plan_type_fiber.indexOf(this.providerCheckout.selected_internet_plan.product.product_type.code) !== -1
+          && this.providerCheckout.cartService.cart.extra_data.customer_type == 'internet_fibra')
+        ||
+        this.providerCheckout.plan_type_radio.indexOf(this.providerCheckout.selected_internet_plan.product.product_type.code) !== -1
+        && this.providerCheckout.cartService.cart.extra_data.customer_type == 'internet_radio') {
+        // This case is a migration of Speed
+        this.showMigration = true;
+      }
+    }
 
     this.formWizardStep02 = this.formBuilder.group({
       paymentType: [paymentType, [Validators.required]],
-      contractTime: [contractTime, []]
+      contractTime: [contractTime, []],
+      isUpgrade: [this.providerCheckout.migration_type, this.showMigration ? [Validators.required] : []],
     });
     //this.config.forEach(control => group.addControl(control.name, this.fb.control()));
     // group;
@@ -56,36 +71,46 @@ export class PluginProviderCheckoutWizardStep02Component
           );
         });
       });
-
-    this.formWizardStep02.get('paymentType').valueChanges.subscribe(value => {
-      let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
-      cart_extra_data['paymentType'] = this.formWizardStep02.get(
-        'paymentType'
-      ).value;
-      this.providerCheckout.updating_cart = true;
-      this.providerCheckout.cartService.updateCart().then(
-        (cart: CartModel) => {
-          this.providerCheckout.updating_cart = false;
-        },
-        () => { }
-      );
+    // Checking if Payment Type Changes
+    this.ptSub = this.formWizardStep02.get('paymentType').valueChanges.subscribe(value => {
+      this.updateCartExtraData('paymentType', value);
     });
-    this.formWizardStep02.get('contractTime').valueChanges.subscribe(value => {
-      let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
-      cart_extra_data['contractTime'] = this.formWizardStep02.get(
-        'contractTime'
-      ).value;
-      this.providerCheckout.updating_cart = true;
-      this.providerCheckout.cartService.updateCart().then(
-        (cart: CartModel) => {
-          this.providerCheckout.updating_cart = false;
-        },
-        () => { }
-      );
+    // Checking if Contract time is changing
+    this.ctSub = this.formWizardStep02.get('contractTime').valueChanges.subscribe(value => {
+      this.updateCartExtraData('contractTime', value);
     });
+    // Checking if the Migration Form is chaning
+    this.mgSub = this.formWizardStep02.get('isUpgrade').valueChanges.subscribe(value => {
+      this.updateCartExtraData('migration_type', value);
+    })
   }
-
-  ngOnDestroy(): void { }
+  updateCartExtraData(key, value) {
+    let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
+    cart_extra_data[key] = value;
+    this.providerCheckout.updating_cart = true;
+    this.providerCheckout.cartService.updateCart().then(
+      (cart: CartModel) => {
+        this.providerCheckout.updating_cart = false;
+      },
+      () => {
+        this.providerCheckout.updating_cart = false;
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.ctSub) {
+      this.ctSub.unsubscribe();
+      this.ctSub = null;
+    }
+    if (this.ptSub) {
+      this.ptSub.unsubscribe();
+      this.ptSub = null;
+    }
+    if (this.mgSub) {
+      this.mgSub.unsubscribe();
+      this.mgSub = null;
+    }
+  }
 
   onSubmit() {
     if (this.formWizardStep02.valid) {

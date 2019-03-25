@@ -85,7 +85,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       mobile: [mobile, [Validators.required, Validators.minLength(11)]],
       telephone: [telephone],
       cpf: [cpf, [Validators.required, this.CPFValidator()]],
-      rg: [rg, [Validators.required, this.RGValidator()]],
+      rg: [rg, [Validators.required, Validators.minLength(4)]],
       dob: [
         dob,
         [

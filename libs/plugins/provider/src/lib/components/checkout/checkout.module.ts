@@ -28,6 +28,7 @@ import { PluginProviderCheckoutErrorComponent } from './checkout-form-error.comp
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
+
 const COMPONENTS = [
   PluginProviderCheckoutComponent,
   PluginProviderCheckoutPlansComponent,
@@ -43,7 +44,8 @@ const COMPONENTS = [
   PluginProviderCheckoutWizardStep01Component,
   PluginProviderCheckoutWizardStep02Component,
   PluginProviderCheckoutWizardStep03Component,
-  PluginProviderCheckoutErrorComponent
+  PluginProviderCheckoutErrorComponent,
+
 ];
 
 @NgModule({

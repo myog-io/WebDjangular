@@ -10,6 +10,7 @@ export enum ProductClasses {
 }
 
 export enum ProductAttributeTypeValues {
+  switch = 'switch',
   button = 'button',
   text = 'text',
   select = 'select',

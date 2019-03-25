@@ -131,20 +131,12 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <input type="text" formControlName="rg" mask="00.000.000-A" />
+              <input type="text" formControlName="rg" />
               <span class="highlight"></span> <span class="bar"></span>
               <label>RG
                 <span *ngIf="providerCheckout.plan_type.is_business">do responsável</span></label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['rg']" name="RG">
               </plugin-provider-checkout-error>
-              <div class="errors-feedback" *ngIf="
-                  formWizardStep01.get('rg').getError('invalidRG') &&
-                  formWizardStep01.controls['rg'].touched
-                ">
-                <div class="alert alert-danger" role="alert">
-                  <span>O RG não é válido.</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

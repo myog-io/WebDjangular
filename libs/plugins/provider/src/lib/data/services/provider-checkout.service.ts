@@ -67,11 +67,11 @@ export class ProviderCheckoutService {
   //private current_step: ProviderCheckoutSteps = ProviderCheckoutSteps.buildingPlan;
   public current_wizard_step: number = 1;
   // TODO: Make a Core Config Dynamic
-  private plan_type_fiber = 'fiber';
-  private plan_type_radio = 'radio';
-  private plan_type_codes_internet = [this.plan_type_fiber, this.plan_type_radio];
-  private plan_type_codes_tv = ['tv'];
-  private plan_type_codes_phone = ['phone'];
+  public plan_type_fiber = 'fiber';
+  public plan_type_radio = 'radio';
+  public plan_type_codes_internet = [this.plan_type_fiber, this.plan_type_radio];
+  public plan_type_codes_tv = ['tv'];
+  public plan_type_codes_phone = ['phone'];
 
   //private plan_type_codes_addon = ['opcionais'];
   public loading_plans: boolean = true;
@@ -113,6 +113,11 @@ export class ProviderCheckoutService {
   public selectingInternetPlan: boolean = false;
   public selectingTVPlan: boolean = false;
   public selectingTelephonePlan: boolean = false;
+
+  public canSelectRadioPlan: boolean = true;
+  public canSelectFiberPlan: boolean = true;
+  public canSelectTvPlan: boolean = true;
+  public canSelectTelephonePlan: boolean = true;
 
   public pre_select_plans = {
     has_pre_selected_plans: false,
@@ -418,9 +423,7 @@ export class ProviderCheckoutService {
       this.selected_internet_plan = items.find(
         item =>
           item.product &&
-          this.plan_type_codes_internet.indexOf(
-            item.product.product_type.code
-          ) !== -1
+          this.plan_type_codes_internet.indexOf(item.product.product_type.code) !== -1
       );
       if (this.selected_internet_plan) {
         url_params['net'] = this.selected_internet_plan.product.sku;
@@ -449,9 +452,7 @@ export class ProviderCheckoutService {
       }
       /* Searching For TV Plans on Cart */
       this.selected_tv_plan = items.find(
-        item =>
-          item.product &&
-          this.plan_type_codes_tv.indexOf(item.product.product_type.code) !== -1
+        item => item.product && this.plan_type_codes_tv.indexOf(item.product.product_type.code) !== -1
       );
       if (this.selected_tv_plan) {
         url_params['tv'] = this.selected_tv_plan.product.sku;
@@ -510,10 +511,7 @@ export class ProviderCheckoutService {
 
       /* Searching For Phone Plans on Cart */
       this.selected_telephone_plan = items.find(
-        item =>
-          item.product &&
-          this.plan_type_codes_phone.indexOf(item.product.product_type.code) !==
-          -1
+        item => item.product && this.plan_type_codes_phone.indexOf(item.product.product_type.code) !== -1
       );
       if (this.selected_telephone_plan) {
         url_params['phone'] = this.selected_telephone_plan.product.sku;
@@ -741,27 +739,18 @@ export class ProviderCheckoutService {
         (query: JsonApiQueryData<ProductModel>) => {
           const plans = query.getModels();
           const c_type = this.cartService.cart.extra_data.customer_type
-          this.plans.internet = plans.filter((pm) => {
-            // extra_data.customer_type
-            if (c_type === 'new' || this.is_migration) {
-              // If New or Migration we show all the plans
-              return this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1;
-            } else if (c_type == 'internet_radio') {
-              // If radio show only fiber plans
-              return pm.product_type.code === this.plan_type_fiber;
-            } else {
-              // If Fiber, won't select any other plans
-              return false;
-            }
+
+          if (c_type === 'internet_fibra') {
+            this.canSelectFiberPlan = true;
+            this.canSelectRadioPlan = false;
+          } else {
+            this.canSelectFiberPlan = true;
+            this.canSelectRadioPlan = true;
           }
 
-          );
-          this.plans.telephone = plans.filter(
-            pm => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1
-          );
-          this.plans.tv = plans.filter(
-            pm => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1
-          );
+          this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+          this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
+          this.plans.tv = plans.filter(pm => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
           this.loading_plans = false;
 
           this.updateSelectedItems();
@@ -775,15 +764,11 @@ export class ProviderCheckoutService {
 
   toggleCollapse($event, plan) {
     if (plan == 'internet') {
-      this.internet_plan_collapsed
-        ? this.closeTabInternetPlan()
-        : this.openTabInternetPlan();
+      this.internet_plan_collapsed ? this.closeTabInternetPlan() : this.openTabInternetPlan();
     } else if (plan == 'tv') {
       this.tv_plan_collapsed ? this.closeTabTVPlan() : this.openTabTVPlan();
     } else if (plan == 'telephone') {
-      this.telephone_plan_collapsed
-        ? this.closeTabTelephonePlan()
-        : this.openTabTelephonePlan();
+      this.telephone_plan_collapsed ? this.closeTabTelephonePlan() : this.openTabTelephonePlan();
     }
   }
 
@@ -848,6 +833,17 @@ export class ProviderCheckoutService {
   }
 
   selectInternetPlan(plan: ProductModel): Promise<CartItemModel> {
+
+    if (this.plan_type_fiber.indexOf(plan.product_type.code) === -1) {
+      // It's not Internet Fiber Plan
+      this.canSelectTvPlan = false;
+      this.canSelectTelephonePlan = false;
+      this.deselectTVPlan();
+      this.deselectTelephonePlan();
+    } else {
+      this.canSelectTvPlan = true;
+      this.canSelectTelephonePlan = true;
+    }
     return new Promise((resolve, reject) => {
       this.selectingInternetPlan = true;
       this.cartService.addToCart({ product: plan }).then(
@@ -855,9 +851,17 @@ export class ProviderCheckoutService {
           this.selectingInternetPlan = false;
           this.selected_internet_plan = cartItem;
           this.plans_optionals.internet = cartItem.product.addons;
+
+
+          // Getting stuff to 
+          //this.canSelectFiberPlan
+          //this.canSelectRadioPlan
+
           resolve(cartItem);
         },
         (error: ErrorResponse) => {
+          this.canSelectTvPlan = true;
+          this.canSelectTelephonePlan = true;
           this.selectingInternetPlan = false;
           reject(error);
         }
@@ -919,48 +923,54 @@ export class ProviderCheckoutService {
   }
 
   deselectInternetPlan() {
-    this.selectingInternetPlan = true;
-    this.cartService.removeFromCart(this.selected_internet_plan, false).then(
-      () => {
-        this.selectingInternetPlan = false;
-        this.selected_internet_plan = null;
-        this.plans_optionals.internet = [];
-        this.removeAllInternetOptionals();
-      },
-      (error: ErrorResponse) => {
-        this.selectingInternetPlan = false;
-      }
-    );
+    if (this.selected_internet_plan) {
+      this.selectingInternetPlan = true;
+      this.cartService.removeFromCart(this.selected_internet_plan, false).then(
+        () => {
+          this.selectingInternetPlan = false;
+          this.selected_internet_plan = null;
+          this.plans_optionals.internet = [];
+          this.removeAllInternetOptionals();
+        },
+        (error: ErrorResponse) => {
+          this.selectingInternetPlan = false;
+        }
+      );
+    }
   }
 
   deselectTVPlan() {
-    this.selectingTVPlan = true;
-    this.cartService.removeFromCart(this.selected_tv_plan, false).then(
-      () => {
-        this.selectingTVPlan = false;
-        this.selected_tv_plan = null;
-        this.plans_optionals.tv = [];
-        this.removeAllTVOptionals();
-      },
-      (error: ErrorResponse) => {
-        this.selectingTVPlan = false;
-      }
-    );
+    if (this.selected_tv_plan) {
+      this.selectingTVPlan = true;
+      this.cartService.removeFromCart(this.selected_tv_plan, false).then(
+        () => {
+          this.selectingTVPlan = false;
+          this.selected_tv_plan = null;
+          this.plans_optionals.tv = [];
+          this.removeAllTVOptionals();
+        },
+        (error: ErrorResponse) => {
+          this.selectingTVPlan = false;
+        }
+      );
+    }
   }
 
   deselectTelephonePlan() {
-    this.selectingTelephonePlan = true;
-    this.cartService.removeFromCart(this.selected_telephone_plan, false).then(
-      () => {
-        this.selectingTelephonePlan = false;
-        this.selected_telephone_plan = null;
-        this.plans_optionals.telephone = [];
-        this.removeAllTelephoneOptionals();
-      },
-      (error: ErrorResponse) => {
-        this.selectingTelephonePlan = false;
-      }
-    );
+    if (this.selected_telephone_plan) {
+      this.selectingTelephonePlan = true;
+      this.cartService.removeFromCart(this.selected_telephone_plan, false).then(
+        () => {
+          this.selectingTelephonePlan = false;
+          this.selected_telephone_plan = null;
+          this.plans_optionals.telephone = [];
+          this.removeAllTelephoneOptionals();
+        },
+        (error: ErrorResponse) => {
+          this.selectingTelephonePlan = false;
+        }
+      );
+    }
   }
 
   addInternetOptional(plan) {
@@ -1359,14 +1369,20 @@ export class ProviderCheckoutService {
           'sku_migracao_tecnologia': 'parcelas_migracao_tecnologia_'
         };
 
-        let fees = this.cartService.cart.items.filter(data => !data.product);
+        let fees: any[] = this.cartService.cart.items.filter(data => !data.product);
         fees.forEach((fee: ProductModel | any, index: number) => {
-
           Object.keys(providerConfigKeys).forEach((
-            providerConfigKey: ProductModel | any, index: number) => {
-
+            providerConfigKey: any, index: number) => {
             if (fee.sku == this.providerConfig[providerConfigKey]) {
-              fee.split_in = this.providerConfig[providerConfigKeys[providerConfigKey] + this.cartService.cart.extra_data.contractTime];
+              // Let's check first on product
+              fee.split_in = 0;
+              const fee_config = `${providerConfigKeys[providerConfigKey]}${this.cartService.cart.extra_data.contractTime}`;
+              if (this.selected_internet_plan.product.data[fee_config]) {
+                // If product has, we will overried
+                fee.split_in = this.selected_internet_plan.product.data[fee_config];
+              } else {
+                fee.split_in = this.providerConfig[fee_config];
+              }
               let show_splited_price = fee.price;
               if (fee.split_in > 0) {
                 show_splited_price = fee.price / fee.split_in;
@@ -1374,9 +1390,25 @@ export class ProviderCheckoutService {
               }
             }
           });
-
-
-
+          //display_fee_price
+          fee.display_fee_price = ""
+          let fee_price = `R${fee.price}`;
+          if (fee.price == 0) {
+            fee_price = 'GRÁTIS';
+          } else if (fee.price != 0 && fee.split_in > 0) {
+            fee_price = ` ${fee.split_in}x R${fee.show_splited_price}`;
+          }
+          fee.display_fee_price = `<span>
+              ${fee_price}
+            <span>`;
+          if (fee.base_price > fee.price) {
+            fee.display_fee_price = `
+            <span>
+              <s>R${fee.base_price}</s><br>
+            </span>
+            ${fee.display_fee_price}
+            `;
+          }
         });
         return fees;
       }

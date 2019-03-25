@@ -1,8 +1,5 @@
 <div class="row" *ngIf="!providerCheckout.loading_plans; else loading_holder">
-  <div
-    class="col-12 col-lg-6 mb-2"
-    *ngFor="let plan of providerCheckout.plans.internet"
-  >
+  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.internet">
     <div class="card">
       <div class="card-header">
         <div class="title-wrapper">
@@ -41,12 +38,9 @@
           </div>
         </div>
         <div class="select-wrapper">
-          <button
-            type="button"
-            class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
+          <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
             (click)="providerCheckout.selectInternetPlan(plan)"
-            [disabled]="providerCheckout.selectingInternetPlan"
-          >
+            [disabled]="providerCheckout.selectingInternetPlan || ((!providerCheckout.canSelectRadioPlan && plan?.product_type?.code === 'radio') || (!providerCheckout.canSelectFiberPlan && plan?.product_type?.code === 'fiber'))">
             <span *ngIf="providerCheckout.selectingInternetPlan">
               <i class="fa fa-spinner fa-pulse"></i> Carregando
             </span>
@@ -55,7 +49,9 @@
             </span>
           </button>
         </div>
-        <div class="more-info-wrapper"><a href="#">Mais detalhes</a></div>
+        <div class="more-info-wrapper">
+          <!--<a href="#">Mais detalhes</a>-->
+        </div>
       </div>
     </div>
   </div>

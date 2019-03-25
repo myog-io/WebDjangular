@@ -48,13 +48,16 @@ export class ProductAttributeModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     //validators: [Validators.required],
-    type: 'ngSelect',
+    type: 'select',
     label: 'Type',
     wrapper_class: 'col-6',
-    value: ProductAttributeTypeValues.text,
+    default: ProductAttributeTypeValues.text,
     options: [
-      { label: 'Text', value: ProductAttributeTypeValues.text },
-      { label: 'Select', value: ProductAttributeTypeValues.select }
+      { name: 'Text', id: ProductAttributeTypeValues.text },
+      { name: 'Select', id: ProductAttributeTypeValues.select },
+      { name: 'Switch', id: ProductAttributeTypeValues.switch },
+      { name: 'Code Editor', id: ProductAttributeTypeValues.codeEditor },
+
     ]
   })
   class_type: ProductAttributeTypeValues;

@@ -10,9 +10,7 @@ import { FormControl } from '@angular/forms';
         <span *ngIf="message">{{ message }}</span>
       </div>
       <div
-        *ngIf="
-          ctrl.errors.email || ctrl.errors.minlength || ctrl.errors.maxlength || ctrl.errors['Mask error']
-        "
+        *ngIf="ctrl.errors.email || ctrl.errors.minlength || ctrl.errors.maxlength || ctrl.errors['Mask error']"
         class="alert alert-danger"
         role="alert"
       >

@@ -11,8 +11,7 @@
           <div class="col-12">
             <h6>Fidelidade</h6>
             <div class="form-group">
-              <select class="form-control" formControlName="contractTime"
-                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating">
+              <select class="form-control" formControlName="contractTime">
                 <option value="0">Sem Fidelidade</option>
                 <option value="1">1 ano</option>
                 <option value="2">2 anos</option>
@@ -20,7 +19,32 @@
             </div>
           </div>
         </div>
+        <div class="row" *ngIf="showMigration">
+          <div class="col-12">
+            <h6>Você esta aumentado ou diminuindo sua velocidade de internet?</h6>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <div class="custom-control custom-radio mb-1">
+                <input type="radio" id="upgrade" formControlName="isUpgrade" name="isUpgrade"
+                  class="custom-control-input" value="upgrade" />
+                <label class="custom-control-label" for="upgrade">Estou aumento a velocidade
+                  (Upgrade)</label>
+              </div>
+              <div class="custom-control custom-radio mb-1">
+                <input type="radio" id="downgrade" formControlName="isUpgrade" name="isUpgrade"
+                  class="custom-control-input" value="downgrade" />
+                <label class="custom-control-label" for="downgrade">Estou diminuindo a velocidade (Downgrade)</label>
+              </div>
+              <div
+                *ngIf="formWizardStep02.get('isUpgrade')?.touched && formWizardStep02.get('isUpgrade')?.errors?.required"
+                class="alert alert-danger" role="alert">
+                <span>Por favor, selecione se sua migração é para aumentar ou diminuir a velocidade</span>
 
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <h6>Como quer receber a fatura?</h6>
@@ -28,8 +52,7 @@
           <div class="col-12">
             <div class="custom-control custom-radio mb-1">
               <input type="radio" id="paymentTypeMail" formControlName="paymentType" name="paymentType"
-                class="custom-control-input" value="mail"
-                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating" />
+                class="custom-control-input" value="mail" />
               <label class="custom-control-label" for="paymentTypeMail">Por Correios</label>
             </div>
             <div class="row">
@@ -61,9 +84,9 @@
 
             <div class="custom-control custom-radio mt-2 mb-1">
               <input type="radio" id="paymentTypeEmail" formControlName="paymentType" name="paymentType"
-                class="custom-control-input" value="email"
-                [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating" />
-              <label class="custom-control-label" for="paymentTypeEmail">Por Email <small>(R$5,00 de desconto)</small>
+                class="custom-control-input" value="email" />
+              <label class="custom-control-label" for="paymentTypeEmail">Por Email <small>(R$5,00 de desconto nos planos
+                  de internet)</small>
               </label>
             </div>
             <div class="row">
