@@ -86,10 +86,7 @@ export class AbstractForm extends FormGroup {
    * Populates form
    * @param [entity]
    */
-  public populateForm(
-    entity: JsonApiModel | any = null,
-    ignore_recursion = false
-  ) {
+  public populateForm(entity: JsonApiModel | any = null, ignore_recursion = false) {
     if (!entity) return false;
     this.entity = entity;
     for (let i = 0; i < this.formFields.length; i++) {
@@ -153,12 +150,15 @@ export class AbstractForm extends FormGroup {
       let field = this.getFormFieldByName(propName);
       switch (field.formType) {
         case FormGroup:
-          if (field.model) {
+          if (field.model && !field.copyOptions) {
             entity[propName] = this.createEntity(
               field.model,
               this.get(propName).value
             );
           } else {
+            if (!entity[propName]) {
+              entity[propName] = {};
+            }
             entity[propName] = this.get(propName).value;
           }
           break;
@@ -194,10 +194,7 @@ export class AbstractForm extends FormGroup {
    * @param [fullArray]
    * @returns attribute has many difference
    */
-  public getAttributeHasManyDifference(
-    formKey: string = null,
-    fullArray = []
-  ): String[] {
+  public getAttributeHasManyDifference(formKey: string = null, fullArray = []): String[] {
     let diff = [];
     let control = this.get(formKey);
     let hasNot = true;
@@ -224,10 +221,7 @@ export class AbstractForm extends FormGroup {
    * @param [toRelateEntity]
    * @returns
    */
-  public doesEntityHasRelationship(
-    formKey: string = null,
-    toRelateEntity = null
-  ) {
+  public doesEntityHasRelationship(formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey);
     return (
       control.value &&
@@ -243,11 +237,7 @@ export class AbstractForm extends FormGroup {
    * @param [formKey]
    * @param [toRelateEntity]
    */
-  public checkboxRelationListener(
-    $event,
-    formKey: string = null,
-    toRelateEntity = null
-  ) {
+  public checkboxRelationListener($event, formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey) as FormArray;
     if ($event.target.checked == false) {
       for (let i = 0; i < control.value.length; i++) {
