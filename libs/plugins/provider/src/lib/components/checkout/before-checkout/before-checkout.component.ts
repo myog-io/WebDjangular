@@ -128,7 +128,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
     this.datastore
       .findAll(
         CondoModel,
-        { city__id: this.providerCheckout.city.id },
+        { city__id: this.providerCheckout.city.id, page: { size: 100, number: 1 } },
         new HttpHeaders({ Authorization: 'none' })
       )
       .subscribe(
