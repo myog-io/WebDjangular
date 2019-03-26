@@ -80,7 +80,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       dob = this.cart.extra_data['dob'];
 
     this.formWizardStep01 = this.formBuilder.group({
-      name: [name, [Validators.required, Validators.minLength(2)]],
+      name: [name, [Validators.required, this.FullNameValidator()]],
       email: [email, [Validators.required, Validators.email]],
       mobile: [mobile, [Validators.required, Validators.minLength(11)]],
       telephone: [telephone],
@@ -214,6 +214,18 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       const age = moment().diff(birthday, 'years');
       if (age <= 18) {
         return { notOver18: true };
+      }
+      return null;
+    };
+  }
+
+  FullNameValidator(): ValidatorFn {
+    return (control: AbstractControl): Validators => {
+      const name = control.value.trim();
+      if (name) {
+        if (name.split(" ").length < 2) {
+          return { invalidName: true };
+        }
       }
       return null;
     };

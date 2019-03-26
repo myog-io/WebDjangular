@@ -27,6 +27,14 @@
               </label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['name']" name="Nome">
               </plugin-provider-checkout-error>
+              <div class="errors-feedback" *ngIf="
+                  formWizardStep01.get('name').getError('invalidName') &&
+                  formWizardStep01.controls['name'].touched
+                ">
+                <div class="alert alert-danger" role="alert">
+                  <span>Favor digitar o nome completo.</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
