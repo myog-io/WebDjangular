@@ -6,9 +6,10 @@
   </div>
   <div class="card-body">
     <div class="summary-items-wrapper table-responsive " [ngClass]="{
-        'cart-updating': this.providerCheckout.cartService.cart_updating
+        'cart-updating': this.providerCheckout.cartService.cart_updating || providerCheckout.selectingInternetPlan || providerCheckout.selectingTVPlan || providerCheckout.selectingTelephonePlan
       }">
-      <div class="loader" *ngIf="this.providerCheckout.cartService.cart_updating">
+      <div class="loader"
+        *ngIf="this.providerCheckout.cartService.cart_updating || providerCheckout.selectingInternetPlan || providerCheckout.selectingTVPlan || providerCheckout.selectingTelephonePlan">
         <span><i class=" fas fa-spinner fa-pulse fa-5x text-white"></i></span>
       </div>
       <table class="table ">

@@ -275,7 +275,9 @@ export class ProviderCheckoutService {
         this.cartSub = null;
       }
       this.cartSub = this.cartService.cart_changes.subscribe(() => {
-        this.checkDisabledByCategories(this.cartService.cart);
+        if (this.cartService.cart) {
+          this.checkDisabledByCategories(this.cartService.cart);
+        }
       });
 
       if (this.listener_cart_changes) {
@@ -925,7 +927,7 @@ export class ProviderCheckoutService {
   deselectInternetPlan() {
     if (this.selected_internet_plan) {
       this.selectingInternetPlan = true;
-      this.cartService.removeFromCart(this.selected_internet_plan, false).then(
+      this.cartService.removeFromCart(this.selected_internet_plan).then(
         () => {
           this.selectingInternetPlan = false;
           this.selected_internet_plan = null;
@@ -942,7 +944,7 @@ export class ProviderCheckoutService {
   deselectTVPlan() {
     if (this.selected_tv_plan) {
       this.selectingTVPlan = true;
-      this.cartService.removeFromCart(this.selected_tv_plan, false).then(
+      this.cartService.removeFromCart(this.selected_tv_plan).then(
         () => {
           this.selectingTVPlan = false;
           this.selected_tv_plan = null;
@@ -959,7 +961,7 @@ export class ProviderCheckoutService {
   deselectTelephonePlan() {
     if (this.selected_telephone_plan) {
       this.selectingTelephonePlan = true;
-      this.cartService.removeFromCart(this.selected_telephone_plan, false).then(
+      this.cartService.removeFromCart(this.selected_telephone_plan).then(
         () => {
           this.selectingTelephonePlan = false;
           this.selected_telephone_plan = null;
@@ -1035,7 +1037,7 @@ export class ProviderCheckoutService {
     }
     Promise.all(promises).then(responses => {
       this.updating_cart = true;
-      this.cartService.updateCart().then(() => {
+      this.cartService.getCartInfo().then(() => {
         this.updating_cart = false;
       });
     });
@@ -1364,7 +1366,8 @@ export class ProviderCheckoutService {
       if (this.cartService.cart.items) {
 
         let providerConfigKeys = {
-          'sku_instalacao': 'parcela_instalacao_',
+          'sku_instalacao_fibra': 'parcela_instalacao_',
+          'sku_instalacao_radio': 'parcela_instalacao_',
           'sku_migracao_velocidade': 'parcelas_migracao_velocidade_',
           'sku_migracao_tecnologia': 'parcelas_migracao_tecnologia_'
         };
@@ -1377,7 +1380,7 @@ export class ProviderCheckoutService {
               // Let's check first on product
               fee.split_in = 0;
               const fee_config = `${providerConfigKeys[providerConfigKey]}${this.cartService.cart.extra_data.contractTime}`;
-              if (this.selected_internet_plan.product.data[fee_config]) {
+              if (this.selected_internet_plan && this.selected_internet_plan.product && this.selected_internet_plan.product.data[fee_config]) {
                 // If product has, we will overried
                 fee.split_in = this.selected_internet_plan.product.data[fee_config];
               } else {
@@ -1392,11 +1395,11 @@ export class ProviderCheckoutService {
           });
           //display_fee_price
           fee.display_fee_price = ""
-          let fee_price = `R${fee.price}`;
+          let fee_price = `R$${fee.price}`;
           if (fee.price == 0) {
             fee_price = 'GRÁTIS';
           } else if (fee.price != 0 && fee.split_in > 0) {
-            fee_price = ` ${fee.split_in}x R${fee.show_splited_price}`;
+            fee_price = ` ${fee.split_in}x R$${fee.show_splited_price}`;
           }
           fee.display_fee_price = `<span>
               ${fee_price}
@@ -1404,7 +1407,7 @@ export class ProviderCheckoutService {
           if (fee.base_price > fee.price) {
             fee.display_fee_price = `
             <span>
-              <s>R${fee.base_price}</s><br>
+              <s>R$${fee.base_price}</s><br>
             </span>
             ${fee.display_fee_price}
             `;

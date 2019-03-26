@@ -6,6 +6,7 @@ from webdjango.signals.CoreSignals import (config_group_register,
 
 from .configs import StoreEmailConfig
 from .models.Cart import Cart, CartItem, CartTerm
+from .utils.CartUtils import apply_all_cart_rules
 
 
 @receiver(config_register)
@@ -28,6 +29,7 @@ def add_term_to_cart(sender, instance, created, *args, **kwargs):
         terms = CartTerm.objects.filter(all_carts=True, enabled=True)
         if terms:
             instance.terms.add(*terms.all())
+    apply_all_cart_rules(instance)
 
 
 @receiver(post_save, sender=CartItem)
@@ -38,6 +40,7 @@ def add_term_releted_to_product(sender, instance, created, *args, **kwargs):
             id__in=terms_list)
         if terms:
             instance.cart.terms.add(*terms.all())
+    apply_all_cart_rules(instance.cart)
 
 
 @receiver(pre_delete, sender=CartItem)
@@ -47,3 +50,9 @@ def remove_term_related_to_product(sender, instance, *args, **kwargs):
         if terms:
             for term in terms:
                 instance.cart.terms.remove(term)
+
+
+@receiver(post_delete, sender=CartItem)
+def update_cart_rules(sender, instance, *args, **kwargs):
+    if instance.cart:
+        apply_all_cart_rules(instance.cart)

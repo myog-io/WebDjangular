@@ -58,8 +58,12 @@ export class PluginProviderCheckoutWizardStep03Component implements OnInit {
           )
         ) {
           //this.sva_n_scm_items.push(item);
-          this.sva_price += item.getTotal() * (providerConfig.sva_total / 100);
-          this.scm_price += item.getTotal() * (providerConfig.scm_total / 100);
+
+
+          const sva_total = Math.floor(item.getTotal() * (providerConfig.sva_total / 100))
+
+          this.sva_price += sva_total;
+          this.scm_price += item.getTotal() - sva_total;
           show_price = false;
         }
         item.data['show_price'] = show_price;

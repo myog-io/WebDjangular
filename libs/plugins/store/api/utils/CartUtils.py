@@ -95,7 +95,7 @@ def apply_cart_rule(cart, rule):
     else:
         value = get_rule_ammount(cart.total, rule)
 
-        item = cart_has_product(cart, rule.voucher)
+        item = cart_has_product(cart.id, rule.voucher)
         if not item:
             parsed_value = money_serializer.to_representation(value)
             item = cart.items.create(quantity=1, data={
@@ -114,53 +114,55 @@ def clean_cart_rule(cart, rule):
                 del item.data['discount_rules'][rule.voucher]
                 item.save()
         else:
-            item = cart_has_product(cart, rule.voucher)
+            item = cart_has_product(cart.id, rule.voucher)
             if item:
                 # This case the line is the rule, so we can remove it
                 item.delete()
 
 
 def apply_all_cart_rules(cart):
-    rules = CartRule.objects.active().all()
-    for rule in rules:
-        if rule.conditions and len(rule.conditions) > 0:
-            data = {}
-            data['product'] = []
-            products = []
-            for product in cart.items.all():
-                serializer = CartItemSerializer(product)
-                product_data = serializer.data
-                if product.product:
-                    product_data['product_type'] = ProductTypeSerializer(
-                        product.product.product_type
-                    ).data
-                product_data['product'] = None
-                product_data['cart'] = None
-                products.append(product_data)
-            data['product'] = products
-            data['cart'] = CartSerializer(cart).data
-            data['cart']['items'] = products
-            data['cart']['billing_address'] = None
-            data['cart']['shipping_address'] = None
-            data['cart']['terms'] = None
-            data['billing_address'] = AddressSerializer(
-                cart.billing_address).data
-            data['shipping_address'] = AddressSerializer(
-                cart.shipping_address).data
+    if CartRule.objects.active().count() > 0:
+        data = {}
+        data['product'] = []
+        products = []
+        for product in cart.items.all():
+            serializer = CartItemSerializer(product)
+            product_data = serializer.data
+            if product.product:
+                product_data['product_type'] = ProductTypeSerializer(
+                    product.product.product_type
+                ).data
+            product_data['product'] = None
+            product_data['cart'] = None
+            products.append(product_data)
+        data['product'] = products
+        data['cart'] = CartSerializer(cart).data
+        data['cart']['items'] = products
+        data['cart']['billing_address'] = None
+        data['cart']['shipping_address'] = None
+        data['cart']['terms'] = None
+        data['billing_address'] = AddressSerializer(
+            cart.billing_address).data
+        data['shipping_address'] = AddressSerializer(
+            cart.shipping_address).data
 
-            try:
-                json_logic_response = jsonLogic(rule.conditions, data)
-                if json_logic_response:
-                    base_price = apply_cart_rule(cart, rule)
-                else:
-                    clean_cart_rule(cart, rule)
-            except:
-                traceback.print_tb(sys.exc_info()[2])
-                raise
-            # apply Rule
-        else:
-            apply_cart_rule(cart, rule)
-            # apply rule
+        rules = CartRule.objects.active().all()
+        for rule in rules:
+            if rule.conditions and len(rule.conditions) > 0:
+
+                try:
+                    json_logic_response = jsonLogic(rule.conditions, data)
+                    if json_logic_response:
+                        base_price = apply_cart_rule(cart, rule)
+                    else:
+                        clean_cart_rule(cart, rule)
+                except:
+                    traceback.print_tb(sys.exc_info()[2])
+                    raise
+                # apply Rule
+            else:
+                apply_cart_rule(cart, rule)
+                # apply rule
 
     return cart
 
@@ -178,7 +180,8 @@ def token_is_valid(token):
     return True
 
 
-def cart_has_product(cart, id_or_sku):
+def cart_has_product(cart_id, id_or_sku):
+    cart = Cart.objects.get(pk=cart_id)
     if cart.items.count() > 0 and id_or_sku is not None:
         for item in cart.items.all():
             if item.product:

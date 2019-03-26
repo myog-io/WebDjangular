@@ -116,28 +116,62 @@ export class CartService {
       );
     }
   }
-
-  public updateCart(): Promise<CartModel> {
-    this.cart_updating = true;
+  public getCartInfo(): Promise<CartModel> {
     return new Promise((resolve, reject) => {
-      this.cart
-        .save({
+      if (!this.cart_updating) {
+        this.cart_updating = true;
+        this.datastore.findRecord(CartModel, this.cart.id, {
           include: `${CartModel.include},items.product,items.product.categories`
-        })
-        .subscribe(
+        }).subscribe(
           (cart: CartModel) => {
             this.cart = cart;
             this.updateCookie();
             resolve(cart);
           },
           (error: ErrorResponse) => {
+            this.cart_updating = false;
             reject(error);
           },
           () => {
             this.cart_updating = false;
           }
-        );
+        )
+      } else {
+        console.log("Cart Already being Fetched");
+        resolve(this.cart)
+      }
     });
+
+  }
+  public updateCart(): Promise<CartModel> {
+    return new Promise((resolve, reject) => {
+      if (!this.cart_updating) {
+        this.cart_updating = true;
+        this.cart
+          .save({
+            include: `${CartModel.include},items.product,items.product.categories`
+          })
+          .subscribe(
+            (cart: CartModel) => {
+              this.cart = cart;
+              this.updateCookie();
+              resolve(cart);
+            },
+            (error: ErrorResponse) => {
+              this.cart_updating = false;
+              reject(error);
+            },
+            () => {
+              this.cart_updating = false;
+            }
+          );
+      } else {
+        console.log("Cart is already being Updated");
+        resolve(this.cart)
+      }
+
+    });
+
   }
 
   public getCartTerms(): Promise<any> {
@@ -186,7 +220,7 @@ export class CartService {
               })
               .subscribe((query: JsonApiQueryData<ProductModel>) => {
                 cartItem.product.addons = query.getModels();
-                this.updateCart().then(() => { });
+                this.getCartInfo().then(() => { });
                 resolve(cartItem);
               });
           },
@@ -233,10 +267,7 @@ export class CartService {
     });
   }
 
-  public removeFromCart(
-    cartItem: CartItemModel,
-    updateCart = true
-  ): Promise<boolean> {
+  public removeFromCart(cartItem: CartItemModel, updateCart = true): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.cart.items = this.cart.items.filter(function (ele) {
         return ele != cartItem;
@@ -244,9 +275,13 @@ export class CartService {
       this.datastore.deleteRecord(CartItemModel, cartItem.id).subscribe(
         response => {
           if (updateCart) {
-            this.updateCart().then(() => { });
+            this.getCartInfo().then(() => {
+              resolve(true);
+            });
+            //this.updateCart().then(() => { });
+          } else {
+            resolve(true);
           }
-          resolve(true);
         },
         (error: ErrorResponse) => {
           reject(false);
@@ -276,7 +311,7 @@ export class CartService {
       });
       Promise.all(promises).then(
         values => {
-          this.updateCart().then(() => {
+          this.getCartInfo().then(() => {
             resolve(values);
           });
         },

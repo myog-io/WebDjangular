@@ -17,7 +17,8 @@ class ProviderConfig():
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_0 = 'parcelas_migracao_tecnologia_0'
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_1 = 'parcelas_migracao_tecnologia_1'
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_2 = 'parcelas_migracao_tecnologia_2'
-    CONFIG_SKU_INSTALACAO = 'sku_instalacao'
+    CONFIG_SKU_INSTALACAO_FIBRA = 'sku_instalacao_fibra'
+    CONFIG_SKU_INSTALACAO_RADIO = 'sku_instalacao_radio'
     CONFIG_SKU_MIGRACAO = 'sku_migracao_velocidade'
     CONFIG_SKU_MIGRACAO_TECNOLOGIA = 'sku_migracao_tecnologia'
 
@@ -29,11 +30,21 @@ class ProviderConfig():
 
     INPUTS = [
         CoreConfigInput(
-            id=CONFIG_SKU_INSTALACAO,
+            id=CONFIG_SKU_INSTALACAO_FIBRA,
             field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             order=0,
             disabled=False,
-            label="Cod SKU Instalação",
+            label="Cod SKU Servico Instalação Fibra",
+            validation=None,
+            wrapper_class="col-4",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_SKU_INSTALACAO_RADIO,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            order=0,
+            disabled=False,
+            label="Cod SKU Servico Instalação Radio",
             validation=None,
             wrapper_class="col-4",
             group=CONFIG_GROUP_SLUG,

@@ -122,14 +122,11 @@ class CartViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         instance = serializer.instance
-        self.apply_rules(instance)
         serializer = self.get_serializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def retrieve(self, request, *args, **kwargs):
         # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
-        instance = self.get_object()
-        self.apply_rules(instance)
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -148,7 +145,7 @@ class CartViewSet(ModelViewSet):
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
         # Run Rules
-        self.apply_rules(instance)
+
         # Get Instance again
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
@@ -179,12 +176,15 @@ class CartItemViewSet(ModelViewSet):
         # Checking if not adding Duplicated to the Cart
         if validated_data['cart']:
             cart = validated_data['cart']
-            item = cart_has_product(cart, validated_data['product'].id)
+            item = cart_has_product(cart.id, validated_data['product'].id)
             if item:
                 serializer.instance = item
                 serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
                 self.perform_update(serializer)
                 return
+        serializer.save()
+
+    def perform_update(self, serializer):
         serializer.save()
 
     def perform_destroy(self, item):
