@@ -25,13 +25,13 @@
           </div>
           <div class="col-12">
             <div class="form-group">
-              <div class="custom-control custom-radio mb-1">
+              <div class="custom-control custom-radio ml-3 mb-1">
                 <input type="radio" id="upgrade" formControlName="isUpgrade" name="isUpgrade"
                   class="custom-control-input" value="upgrade" />
                 <label class="custom-control-label" for="upgrade">Estou aumento a velocidade
                   (Upgrade)</label>
               </div>
-              <div class="custom-control custom-radio mb-1">
+              <div class="custom-control custom-radio ml-3 mb-1">
                 <input type="radio" id="downgrade" formControlName="isUpgrade" name="isUpgrade"
                   class="custom-control-input" value="downgrade" />
                 <label class="custom-control-label" for="downgrade">Estou diminuindo a velocidade (Downgrade)</label>
@@ -50,7 +50,7 @@
             <h6>Como quer receber a fatura?</h6>
           </div>
           <div class="col-12">
-            <div class="custom-control custom-radio mb-1">
+            <div class="custom-control custom-radio ml-3 mb-1">
               <input type="radio" id="paymentTypeMail" formControlName="paymentType" name="paymentType"
                 class="custom-control-input" value="mail" />
               <label class="custom-control-label" for="paymentTypeMail">Por Correios</label>
@@ -82,7 +82,7 @@
               </div>
             </div>
 
-            <div class="custom-control custom-radio mt-2 mb-1">
+            <div class="custom-control custom-radio ml-3 mt-2 mb-1">
               <input type="radio" id="paymentTypeEmail" formControlName="paymentType" name="paymentType"
                 class="custom-control-input" value="email" />
               <label class="custom-control-label" for="paymentTypeEmail">Por Email <small>(R$5,00 de desconto nos planos
@@ -123,7 +123,7 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="custom-control custom-checkbox mt-2 mb-1" *ngFor="let term of terms">
+            <div class="custom-control custom-checkbox ml-3 mt-2 mb-1" *ngFor="let term of terms">
               <input type="checkbox" class="custom-control-input" [formControlName]="'term-' + term.id"
                 [id]="'term-' + term.id" />
               <label class="custom-control-label" [for]="'term-' + term.id">
