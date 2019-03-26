@@ -41,13 +41,13 @@ export class OrderModel extends AbstractModel {
   user_email: string;
 
   @NestedAttribute()
-  extra_data: object;
+  extra_data: any;
 
   @NestedAttribute()
-  security_data: object;
+  security_data: any;
 
   @NestedAttribute()
-  extra_payment_data: object;
+  extra_payment_data: any;
 
   @NestedAttribute()
   billing_address: object;
@@ -94,7 +94,7 @@ export class OrderModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public static smartTableOptions: SmartTableSettings = {
     editable: false,
