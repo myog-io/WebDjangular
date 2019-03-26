@@ -60,7 +60,7 @@ export class PluginProviderCheckoutWizardStep03Component implements OnInit {
           //this.sva_n_scm_items.push(item);
 
 
-          const sva_total = Math.floor(item.getTotal() * (providerConfig.sva_total / 100))
+          const sva_total = Math.floor(item.getTotal() * providerConfig.sva_total) / 100;
 
           this.sva_price += sva_total;
           this.scm_price += item.getTotal() - sva_total;
