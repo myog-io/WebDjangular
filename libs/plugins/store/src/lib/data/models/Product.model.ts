@@ -410,6 +410,10 @@ export class ProductModel extends AbstractModel {
         title: 'SKU',
         type: 'text'
       },
+      price: {
+        title: 'Price',
+        type: 'text'
+      },
       product_type: {
         title: 'Type',
         type: 'text'

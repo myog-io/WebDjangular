@@ -85,6 +85,6 @@ export class PluginProviderAdminOrdersComponent implements OnInit {
         break;
     }
     // TODO: Plan Type and Resellers
-    console.log(this.order.extra_data)
+
   }
 }
