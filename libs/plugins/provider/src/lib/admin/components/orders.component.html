@@ -18,6 +18,37 @@
   <div class="row">
     <div class="col-12 col-md-6 d-flex align-items-stretch">
       <nb-card class="w-100">
+        <nb-card-header> Dados da Assinature</nb-card-header>
+        <nb-card-body>
+          Assinatura de: <strong>{{customer_type}}</strong><br>
+          Tipo do acesso: <strong>{{tipo_de_acesso}}</strong><br>
+          Fidelidade: <strong>{{fidelidade}}</strong><br>
+
+          <span *ngIf="revendedor">
+            Revendedor:<strong>{{ revendedor }}</strong>
+          </span>
+          <br>
+
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-12 col-md-6 d-flex align-items-stretch">
+      <nb-card class="w-100">
+        <nb-card-header> Cliente</nb-card-header>
+        <nb-card-body>
+          Nome completo:<strong> {{ order.billing_address.first_name }}
+            {{ order.billing_address.last_name }}</strong><br>
+          RG: <strong>{{ order.extra_data.rg }}</strong><br>
+          CPF: <strong>{{ order.extra_data.cpf }}</strong><br>
+          Nascimento:<strong> {{ order.extra_data.dob }}</strong><br>
+          Celular: <strong>{{ order.extra_data.mobile }}</strong><br>
+          Telefone: <strong>{{ order.extra_data.telephone }}</strong><br>
+          Email: <strong>{{ order.user_email }}</strong>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-12 col-md-6 d-flex align-items-stretch">
+      <nb-card class="w-100">
         <nb-card-header> Endereço </nb-card-header>
         <nb-card-body>
           {{ order.billing_address.first_name }}
@@ -95,8 +126,7 @@
                   <tr>
                     <th scope="col" colspan="3">TOTAL</th>
                     <th>
-                      R$ <b>{{ order.subtotal }}</b
-                      >/mês
+                      R$ <b>{{ order.subtotal }}</b>/mês
                     </th>
                   </tr>
                   <!--
@@ -235,7 +265,7 @@
               <table class="table">
                 <tbody>
                   <tr *ngFor="let term of order.terms">
-                    <td>{{ term.content }}</td>
+                    <td [innerHtml]="term.content"></td>
                   </tr>
                 </tbody>
               </table>
