@@ -19,7 +19,7 @@ class City(BaseModel):
 
     class Meta:
         db_table = 'provider_city'
-        ordering = ['-created']
+        ordering = ['name']
 
 
 class PostalCodeRange(BaseModel):

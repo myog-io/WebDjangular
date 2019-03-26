@@ -1408,6 +1408,8 @@ export class ProviderCheckoutService {
             fee.display_fee_price = `
             <span>
               <s>R$${fee.base_price}</s><br>
+              <small class="discount">(R$${fee.base_price - fee.price} de desconto)</small><br>
+              
             </span>
             ${fee.display_fee_price}
             `;
