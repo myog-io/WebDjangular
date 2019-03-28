@@ -34,6 +34,7 @@ import { LayoutComponent } from '@themes/providerfy/src/lib/components/layout/la
 import { LayoutFullContentComponent } from '@themes/providerfy/src/lib/components/layout/full-content/full-content.component';
 import { LayoutRightSidebarComponent } from '@themes/providerfy/src/lib/components/layout/right-sidebar/right-sidebar.component';
 import { LayoutLeftSidebarComponent } from '@themes/providerfy/src/lib/components/layout/left-sidebar/left-sidebar.component';
+import { NbCheckboxModule } from '@nebular/theme';
 
 const LAYOUTS = [
   LayoutComponent,
@@ -83,6 +84,8 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NbCheckboxModule,
+
     NgSelectModule,
     CoreDynamicPageLoaderModule,
     NgxMaskModule.forRoot(),
@@ -112,4 +115,4 @@ const COMPONENTS = [
     ThemeProviderfyHeaderMenuComponent
   ]
 })
-export class ThemeProviderfyModule {}
+export class ThemeProviderfyModule { }

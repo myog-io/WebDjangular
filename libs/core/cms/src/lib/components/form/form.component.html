@@ -1,10 +1,7 @@
 <h4 id="{{ form?.code }}_title" [class]="title_class" *ngIf="form?.title">
   {{ form?.title }}
 </h4>
-<div
-  class="card bg-dark text-white loading-container p-4"
-  *ngIf="!form || !formGroup"
->
+<div class="card bg-dark text-white loading-container p-4" *ngIf="!form || !formGroup">
   <span class="loading mx-auto">
     <i class="fas fa-spinner fa-5x fa-pulse"></i>
   </span>
@@ -14,27 +11,17 @@
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(event)">
       <div class="row">
         <ng-container *ngFor="let field of form.fields">
-          <div
-            [class]="
+          <div [class]="
               field?.config?.wrapper_class
                 ? field?.config?.wrapper_class
                 : 'col-12'
-            "
-            *ngIf="field?.config?.display"
-          >
-            <ng-container
-              wdaBuilderFormFields
-              [config]="field.config"
-              [group]="formGroup"
-              (relationshipUpdated)="relationship($event)"
-            >
+            " *ngIf="field?.config?.display">
+            <ng-container wdaBuilderFormFields [config]="field.config" [group]="formGroup"
+              (relationshipUpdated)="relationship($event)">
             </ng-container>
           </div>
         </ng-container>
-        <div
-          class="error-validation alert alert-danger mt-1"
-          *ngIf="showErrorValidation"
-        >
+        <div class="error-validation alert alert-danger mt-1" *ngIf="showErrorValidation">
           {{ error_validation }}
         </div>
         <div class="error-message alert alert-danger mt-1" *ngIf="showError">

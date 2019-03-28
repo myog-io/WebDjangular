@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { CoreCmsFormComponent } from './components/form/form.component';
 import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbCheckboxModule } from '@nebular/theme';
 
 const MODULES = [
   CommonModule,
@@ -17,7 +18,8 @@ const MODULES = [
   RouterModule,
   BuilderFormModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  NbCheckboxModule
 ];
 
 const COMPONENTS = [
@@ -34,4 +36,4 @@ const COMPONENTS = [
   declarations: [...COMPONENTS],
   entryComponents: [...COMPONENTS]
 })
-export class CoreCmsModule {}
+export class CoreCmsModule { }

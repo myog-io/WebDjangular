@@ -68,6 +68,8 @@ class CoreConfigInput(AbstractCoreConfigModel):
     FIELD_TYPE_NGSELECT = 'ngSelect'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
     FIELD_TYPE_LABEL = 'label'
+    FIELD_TYPE_SWITCH = 'switch'
+    FIELD_TYPE_CHECKBOX = 'checkbox'
     CONFIG_FIELD_TYPES = [
         (FIELD_TYPE_BUTTON, 'Button'),
         (FIELD_TYPE_TEXT, 'Text'),
@@ -75,7 +77,9 @@ class CoreConfigInput(AbstractCoreConfigModel):
         (FIELD_TYPE_SELECT, 'Select'),
         (FIELD_TYPE_NGSELECT, 'NG Select'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
-        (FIELD_TYPE_LABEL, 'Label')
+        (FIELD_TYPE_LABEL, 'Label'),
+        (FIELD_TYPE_SWITCH, 'Switch (ON/OFF)'),
+        (FIELD_TYPE_CHECKBOX, 'Checkbox')
     ]
     field_type = models.CharField(default=None, choices=CONFIG_FIELD_TYPES)
     input_type = models.CharField(default=None)

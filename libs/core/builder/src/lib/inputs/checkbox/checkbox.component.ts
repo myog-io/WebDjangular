@@ -33,6 +33,7 @@ export class BuilderFormCheckboxOptionsComponent
       this.paginatorConfig.modelToPaginate = this.config.model;
       this.paginatorConfig.useDatastore = this.datastore;
     }
+    console.log(this.group)
     if (this.config.options) {
       this.paginatorConfig.options = this.config.options;
     }

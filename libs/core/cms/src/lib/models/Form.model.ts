@@ -176,7 +176,7 @@ export class FormModel extends AbstractModel {
   error_invalid: string;
 
   public getFormGroup(): FormGroup {
-    const fg = new FormGroup({});
+    const fg = new AbstractForm(this.service);
     for (let i = 0; i < this.fields.length; i++) {
       const field = this.fields[i];
       field.generateConfig();

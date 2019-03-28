@@ -1,5 +1,7 @@
 <div class="row">
-  <div class="col-12"><ng-content></ng-content></div>
+  <div class="col-12">
+    <ng-content></ng-content>
+  </div>
   <!--col-->
 </div>
 <!--row-->
@@ -8,76 +10,51 @@
   <div class="col-12 mt-4">
     <nav>
       <ul class="pagination {{ alignNumbersTo }}">
-        <li
-          [ngClass]="{
+        <li [ngClass]="{
             'page-item': true,
             disabled: !paginatorControls.hasPrevPage()
-          }"
-        >
-          <a class="page-link" (click)="paginatorControls.changePage(1)"
-            >&laquo;</a
-          >
+          }">
+          <a class="page-link" (click)="paginatorControls.changePage(1)">&laquo;</a>
         </li>
 
-        <li
-          [ngClass]="{
+        <li [ngClass]="{
             'page-item': true,
             disabled: !paginatorControls.hasPrevPage()
-          }"
-        >
-          <a
-            class="page-link"
-            (click)="
+          }">
+          <a class="page-link" (click)="
               paginatorControls.changePage(
                 paginatorControls.getCurrentPage() - 1
               )
-            "
-            >&lt;</a
-          >
+            ">&lt;</a>
         </li>
 
-        <li
-          [ngClass]="{
+        <li [ngClass]="{
             'page-item': true,
             active: paginatorControls.isCurrentPage(item)
-          }"
-          *ngFor="let item of paginatorControls.getPagesArray(); let i = index"
-        >
+          }" *ngFor="let item of paginatorControls.getPagesArray(); let i = index">
           <a class="page-link" (click)="paginatorControls.changePage(item)">{{
             item
           }}</a>
         </li>
 
-        <li
-          [ngClass]="{
+        <li [ngClass]="{
             'page-item': true,
             disabled: !paginatorControls.hasNextPage()
-          }"
-        >
-          <a
-            class="page-link"
-            (click)="
+          }">
+          <a class="page-link" (click)="
               paginatorControls.changePage(
                 paginatorControls.getCurrentPage() + 1
               )
-            "
-            >&gt;</a
-          >
+            ">&gt;</a>
         </li>
 
-        <li
-          [ngClass]="{
+        <li [ngClass]="{
             'page-item': true,
             disabled: !paginatorControls.hasNextPage()
-          }"
-        >
-          <a
-            class="page-link"
-            (click)="
+          }">
+          <a class="page-link" (click)="
               paginatorControls.changePage(paginatorControls.getTotalPages())
-            "
-            >&raquo;</a
-          >
+            ">&raquo;</a>
         </li>
       </ul>
     </nav>

@@ -1384,10 +1384,8 @@ export class ProviderCheckoutService {
             // Want to search for an order to check if was created or not, if yes
             this.datastore.findRecord(OrderModel, this.cartService.cart.id, null, null `api/store/order/${this.cartService.cart.token}/by_token/`).subscribe((order) => {
               this.nextStep();
-              console.log("ORDER???")
               resolve(order);
             }, (new_error) => {
-              console.log("NEW?!?!?!", new_error)
               reject(error);
             })
           }

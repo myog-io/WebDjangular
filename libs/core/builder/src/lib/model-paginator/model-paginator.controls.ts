@@ -28,8 +28,8 @@ export class ModelPaginatorControls {
       size: this.pageSize,
       number: this.currentPage
     };
-
-    if (typeof this.options['useDatastore'] !== 'undefined') {
+    console.log(this.options)
+    if (typeof this.options['useDatastore'] !== 'undefined' && this.options['useDatastore']) {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
         this.options['useDatastore']
           .findAll(this.options['modelToPaginate'], query_options)
@@ -37,28 +37,30 @@ export class ModelPaginatorControls {
             this.updatePaginationControls(r.getMeta(), r.getModels());
           });
       }
+    } else {
+      console.log("Should be here")
+      this.updatePaginationControls(null, this.options.options)
     }
   }
 
   updatePaginationControls(returnMeta, returnEntries) {
     this.unparsedPaginatorMeta = returnMeta;
     this.entries = returnEntries;
-
-    if (typeof this.unparsedPaginatorMeta['meta'] !== 'undefined') {
-      if (
-        typeof this.unparsedPaginatorMeta['meta']['pagination'] !== 'undefined'
-      ) {
-        this.totalPages = this.unparsedPaginatorMeta['meta']['pagination'][
-          'pages'
-        ];
-        this.totalEntries = this.unparsedPaginatorMeta['meta']['pagination'][
-          'count'
-        ];
-        this.currentPage = this.unparsedPaginatorMeta['meta']['pagination'][
-          'page'
-        ];
+    if (returnMeta) {
+      if (typeof this.unparsedPaginatorMeta['meta'] !== 'undefined') {
+        if (typeof this.unparsedPaginatorMeta['meta']['pagination'] !== 'undefined') {
+          const pagination = this.unparsedPaginatorMeta['meta']['pagination'];
+          this.totalPages = pagination['pages'];
+          this.totalEntries = pagination['count'];
+          this.currentPage = pagination['page'];
+        }
       }
+    } else {
+      this.totalPages = 0;
+      this.totalEntries = this.entries.length;
+      this.currentPage = 0;
     }
+
   }
 
   getCount() {

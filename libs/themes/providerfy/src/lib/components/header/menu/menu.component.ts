@@ -39,7 +39,7 @@ export class ThemeProviderfyHeaderMenuComponent implements OnInit {
       if (item.click) {
         // Run item.click
       } else {
-        this.router.navigateByUrl(item.url, { fragment: item.fragment });
+        this.router.navigateByUrl(item.fragment ? `${item.url}#${item.fragment}` : item.url, { fragment: item.fragment });
       }
       this.isNavbarCollapsed = !this.isNavbarCollapsed;
     }

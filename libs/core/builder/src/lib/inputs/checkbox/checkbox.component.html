@@ -8,7 +8,7 @@
                     [value]="group.doesEntityHasRelationship(config.name, entry)" (change)="
               group.checkboxRelationListener($event, config.name, entry)
             ">
-                    {{ entry.toString() }}
+                    {{ entry.name? entry.name : entry.toString() }}
                 </nb-checkbox>
             </div>
         </div>
