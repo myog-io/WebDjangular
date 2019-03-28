@@ -108,6 +108,7 @@ def apply_cart_rule(cart, rule):
 
 
 def clean_cart_rules(cart, rules):
+
     for item in cart.items.all():
         for rule in rules:
             if item.sku == rule.voucher:
@@ -183,11 +184,12 @@ def token_is_valid(token):
 def cart_has_product(cart_id, **kwargs):
     if 'product_id' in kwargs:
         return CartItem.objects.filter(cart__id=cart_id).filter(
-            product__id=kwargs['product_id'])
+            product__id=kwargs['product_id']).first()
 
     elif 'product_sku' in kwargs:
-        return CartItem.objects.filter(cart__id=cart_id).filter(
-            product__sku=kwargs['product_sku']) | CartItem.objects.filter(data__voucher=kwargs['product_sku'])
+        query = CartItem.objects.filter(cart__id=cart_id).filter(
+            product__sku=kwargs['product_sku']) | CartItem.objects.filter(cart__id=cart_id).filter(data__voucher=kwargs['product_sku'])
+        return query.first()
 
     return None
 
