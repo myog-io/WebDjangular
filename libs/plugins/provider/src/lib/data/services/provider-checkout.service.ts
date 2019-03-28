@@ -157,6 +157,10 @@ export class ProviderCheckoutService {
   public is_migration: boolean = false;
   public migration_type: 'upgrade' | 'downgrade' = null;
   private cartSub: Subscription;
+  private city_has_fiber = false;
+  private city_has_radio = false;
+  private city_has_tv = false;
+  private city_has_phone = false;
 
   constructor(
     private datastore: WebAngularDataStore,
@@ -750,13 +754,32 @@ export class ProviderCheckoutService {
             this.canSelectFiberPlan = true;
             this.canSelectRadioPlan = true;
           }
+          this.city_has_radio = false;
+          this.city_has_fiber = false;
+          this.city_has_phone = false;
+          this.city_has_tv = false;
+          const fibers = plans.filter((pm) => pm.product_type.code === this.plan_type_fiber);
+          const radios = plans.filter((pm) => pm.product_type.code === this.plan_type_radio);
 
-          this.plans.internet = plans.filter((pm) => this.plan_type_codes_internet.indexOf(pm.product_type.code) !== -1);
+          this.plans.internet = fibers.concat(radios);
           this.plans.telephone = plans.filter((pm) => this.plan_type_codes_phone.indexOf(pm.product_type.code) !== -1);
           this.plans.tv = plans.filter(pm => this.plan_type_codes_tv.indexOf(pm.product_type.code) !== -1);
+          if (radios.length > 0) {
+            this.city_has_radio = true;
+          }
+          if (fibers.length > 0) {
+            this.city_has_fiber = true;
+          }
+          if (this.plans.telephone.length > 0) {
+            this.city_has_phone = true;
+          }
+          if (this.plans.tv.length > 0) {
+            this.city_has_tv = true;
+          }
           this.loading_plans = false;
 
           this.updateSelectedItems();
+          this.updateCartExtraData();
         },
         error => {
           // TODO: do something
@@ -837,7 +860,7 @@ export class ProviderCheckoutService {
 
   selectInternetPlan(plan: ProductModel): Promise<CartItemModel> {
 
-    if (this.plan_type_fiber.indexOf(plan.product_type.code) === -1) {
+    if (this.plan_type_fiber !== plan.product_type.code) {
       // It's not Internet Fiber Plan
       this.canSelectTvPlan = false;
       this.canSelectTelephonePlan = false;
@@ -1216,11 +1239,7 @@ export class ProviderCheckoutService {
   }
 
   setWizardStep(number: number) {
-    if (
-      this.current_wizard_step < 3 &&
-      number < 3 &&
-      this.current_wizard_step > number
-    ) {
+    if (this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
       this.current_wizard_step = number;
       this.updateCartExtraData();
     }
@@ -1230,14 +1249,13 @@ export class ProviderCheckoutService {
     this.current_step = ProviderCheckoutSteps.buildingPlan;
     this.current_wizard_step = 1;
 
-    if (
-      this.plans.internet.length <= 0 ||
-      this.plans.telephone.length <= 0 ||
-      this.plans.tv.length <= 0
-    ) {
+    if (this.plans.internet.length <= 0 || this.plans.telephone.length <= 0 || this.plans.tv.length <= 0) {
       this.loadPlans();
+      // UpdateCartExtraData Will ran after Load Plan
+    } else {
+      this.updateCartExtraData();
     }
-    this.updateCartExtraData();
+
   }
 
   prevStep() {
@@ -1262,7 +1280,7 @@ export class ProviderCheckoutService {
     } else {
       this.current_wizard_step++;
     }
-    if (this.current_wizard_step < 3) {
+    if (this.currentStep > 1 && this.current_wizard_step < 3) {
       this.updateCartExtraData();
     }
   }
@@ -1287,6 +1305,11 @@ export class ProviderCheckoutService {
     extra_data.customer_type = this.formBeforeCheckout.get('typeOfCustomer').value;
     extra_data.city_id = this.city.id;
     extra_data.is_migration = this.is_migration;
+    extra_data.city_has_radio = this.city_has_radio;
+    extra_data.city_has_fiber = this.city_has_fiber;
+    extra_data.city_has_phone = this.city_has_phone;
+    extra_data.city_has_tv = this.city_has_tv;
+
     if (this.migration_type) {
       extra_data.migration_type = this.migration_type;
     }

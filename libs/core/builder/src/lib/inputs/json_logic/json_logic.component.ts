@@ -105,10 +105,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
               logics.push({
                 type: 'logic_condition',
                 condition: key,
-                value:
-                  this.mc_variables.indexOf(key) === -1
-                    ? element[1]
-                    : this.set_logic_recursive([element[1]])[0],
+                value: this.mc_variables.indexOf(key) === -1 ? element[1] : this.set_logic_recursive([element[1]])[0],
                 variable: variable
               });
             }
@@ -116,7 +113,6 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
         }
       }
     }
-
     return logics;
   }
   ngOnInit() {
@@ -202,28 +198,32 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
         case 'logic_condition':
           let condition = {};
           let value = element.value;
-          if (
-            this.mc_variables.indexOf(element.condition) >= 0 &&
-            typeof value != 'object'
-          ) {
+          if (value && typeof value === 'string') {
+            // Forcing Logic to be Bolean
+            if (value.toLowerCase() === 'false') {
+              value = false;
+            } else if (value.toLowerCase() === 'true') {
+              value = true;
+            }
+          }
+          if (this.mc_variables.indexOf(element.condition) >= 0 && typeof value != 'object') {
             element.value = {
               type: 'logic_condition',
               condition: '==',
               value: '',
               variable: ''
             };
-            value = element.value;
+            value = value;
           }
           condition[element.condition] = [
             { var: element.variable },
-            this.mc_variables.indexOf(element.condition) === -1
-              ? element.value
-              : this.get_logic_recursive([element.value])[0]
+            this.mc_variables.indexOf(element.condition) === -1 ? value : this.get_logic_recursive([value])[0]
           ];
           logic.push(condition);
 
           break;
         default:
+
           let group = {};
           group[element.operator] = this.get_logic_recursive(element.children);
           logic.push(group);
@@ -234,9 +234,7 @@ export class BuilderFormJsonLogicComponent implements BuilderFormField, OnInit {
   }
   get_json_logic(): any {
     let json_logic = {};
-    json_logic[this.logic_group.operator] = this.get_logic_recursive(
-      this.logic_group.children
-    );
+    json_logic[this.logic_group.operator] = this.get_logic_recursive(this.logic_group.children);
     if (json_logic[this.logic_group.operator].length <= 0) {
       return {};
     }

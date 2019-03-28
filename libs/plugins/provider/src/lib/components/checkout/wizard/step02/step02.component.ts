@@ -39,11 +39,11 @@ export class PluginProviderCheckoutWizardStep02Component
     // Checking if we have a migation of speed, has to have internetplan,
     if (this.providerCheckout.selected_internet_plan) {
       if (
-        (this.providerCheckout.plan_type_fiber.indexOf(this.providerCheckout.selected_internet_plan.product.product_type.code) !== -1
+        (this.providerCheckout.plan_type_fiber === this.providerCheckout.selected_internet_plan.product.product_type.code
           && this.providerCheckout.cartService.cart.extra_data.customer_type == 'internet_fibra')
         ||
-        this.providerCheckout.plan_type_radio.indexOf(this.providerCheckout.selected_internet_plan.product.product_type.code) !== -1
-        && this.providerCheckout.cartService.cart.extra_data.customer_type == 'internet_radio') {
+        (this.providerCheckout.plan_type_radio === this.providerCheckout.selected_internet_plan.product.product_type.code
+          && this.providerCheckout.cartService.cart.extra_data.customer_type == 'internet_radio')) {
         // This case is a migration of Speed
         this.showMigration = true;
       }
