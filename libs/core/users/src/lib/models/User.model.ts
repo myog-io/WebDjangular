@@ -111,7 +111,7 @@ export class UserModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Groups',
     wrapper_class: 'col-12',
     model: GroupModel
@@ -125,7 +125,7 @@ export class UserModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   get name(): string {
     return `${this.first_name} ${this.last_name}`;

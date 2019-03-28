@@ -24,7 +24,7 @@ export class GroupModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Permissions',
     wrapper_class: 'col-12',
     model: PermissionModel
@@ -35,7 +35,7 @@ export class GroupModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public toString = (): string => {
     return `${this.name} (ID: ${this.id})`;

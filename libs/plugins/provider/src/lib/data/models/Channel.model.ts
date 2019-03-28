@@ -68,7 +68,7 @@ export class ChannelModel extends AbstractModel {
   @HasMany()
   @ExtraOptions({
     formType: FormArray,
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Products',
     model: ProductModel
   })

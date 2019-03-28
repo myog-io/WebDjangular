@@ -56,7 +56,7 @@ export class AbstractForm extends FormGroup {
             let entity = new this.formFields[i].model(this.datastore);
             const fb = entity.getForm();
             // If is select, checkbox or ngselct we should ignore validation of the fields 
-            fb.generateForm(['select', 'checkbox', 'ngSelect'].indexOf(element.type) !== -1 ? true : ignore_validation);
+            fb.generateForm(['select', 'relationship_checkbox', 'ngSelect'].indexOf(element.type) !== -1 ? true : ignore_validation);
             this.registerControl(propName, fb);
 
           } else {
@@ -240,18 +240,22 @@ export class AbstractForm extends FormGroup {
   public checkboxRelationListener($event, formKey: string = null, toRelateEntity = null) {
     let control = this.get(formKey) as FormArray;
     if ($event.target.checked == false) {
-      for (let i = 0; i < control.value.length; i++) {
-        if (control.value[i].id == toRelateEntity.id) {
-          control.removeAt(i);
+      if (control.value) {
+        for (let i = 0; i < control.value.length; i++) {
+          if (control.value[i].id == toRelateEntity.id) {
+            control.removeAt(i);
+          }
         }
       }
     } else {
       let field = this.getFormFieldByName(formKey);
-      let entity = new field.model();
-      let fb = entity.getForm();
-      fb.generateForm(true, true);
-      fb.populateForm(toRelateEntity, true);
-      control.push(fb);
+      if (field) {
+        let entity = new field.model();
+        let fb = entity.getForm();
+        fb.generateForm(true, true);
+        fb.populateForm(toRelateEntity, true);
+        control.push(fb);
+      }
     }
   }
 

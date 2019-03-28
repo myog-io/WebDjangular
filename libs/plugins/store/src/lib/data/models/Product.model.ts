@@ -235,7 +235,7 @@ export class ProductModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     formType: FormArray,
     label: 'Product Addons',
     model: ProductModel,
@@ -246,7 +246,7 @@ export class ProductModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     formType: FormArray,
     label: 'Product Parent',
     model: ProductModel,

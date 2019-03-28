@@ -29,7 +29,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BuilderFormComponent } from './builder-form.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
-import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+
 import { ModelPaginatorComponent } from './model-paginator/model-paginator.component';
 import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
@@ -38,6 +38,8 @@ import { HoldableDirective } from './holdable/holdable.directive';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { BuilderFormLabelComponent } from './inputs/label/label.component';
+import { BuilderFormCheckboxComponent } from './inputs/checkbox/checkbox.component';
+import { BuilderFormRelationshipCheckboxOptionsComponent } from './inputs/relationship_checkbox/checkbox.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
@@ -50,7 +52,8 @@ const ENTRY_COMPONENTS = [
   BuilderFormArrayComponent,
   BuilderFormSwitcherComponent,
   BuilderFormGroupComponent,
-  BuilderFormCheckboxOptionsComponent,
+  BuilderFormCheckboxComponent,
+  BuilderFormRelationshipCheckboxOptionsComponent,
   BuilderFormDatepickerComponent,
   BuilderFormJsonLogicComponent,
   ModelPaginatorComponent,

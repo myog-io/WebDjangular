@@ -46,7 +46,7 @@ export class CondoModel extends AbstractModel {
   @ExtraOptions({
     formType: FormArray,
     model: ProductModel,
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Products'
   })
   products: ProductModel;

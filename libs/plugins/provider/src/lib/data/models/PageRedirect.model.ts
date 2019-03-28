@@ -50,7 +50,7 @@ export class PageRedirectModel extends AbstractModel {
     formType: FormArray,
     model: CityModel,
     validators: [Validators.required],
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Cities',
     name: 'cities'
   })

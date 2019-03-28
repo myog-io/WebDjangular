@@ -114,7 +114,7 @@ export class CityModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     formType: FormArray,
     label: 'Products',
     model: ProductModel,

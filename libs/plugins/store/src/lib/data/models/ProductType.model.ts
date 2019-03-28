@@ -58,7 +58,7 @@ export class ProductTypeModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Attributes',
     wrapper_class: 'col-12',
     formType: FormArray,
@@ -80,7 +80,7 @@ export class ProductTypeModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public toString = (): string => {
     return `${this.name}`;

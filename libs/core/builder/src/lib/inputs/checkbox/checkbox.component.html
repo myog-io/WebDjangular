@@ -1,16 +1,13 @@
-<div class="form-group" [formGroup]="group">
-    <label>{{ config.label }}</label>
-    <wda-model-paginator [options]="paginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
-        <div class="row" *ngIf="paginatorControls">
-            <div class="{{config?.element_class || 'col-4'}}"
-                 *ngFor="let entry of paginatorControls.getEntries(); let i = index">
-                <nb-checkbox status="success" class="col-sm-4"
-                    [value]="group.doesEntityHasRelationship(config.name, entry)" (change)="
-              group.checkboxRelationListener($event, config.name, entry)
-            ">
-                    {{ entry.name? entry.name : entry.toString() }}
-                </nb-checkbox>
-            </div>
-        </div>
-    </wda-model-paginator>
+<!--form-group-->
+<div class="row" [formGroup]="form">
+    <p class="col-12">{{ config.label }}</p>
+    <div class="form-check {{config?.element_class || 'col-4'}}" *ngFor="let option of options; let i = index">
+        <label formArrayName="options">
+            <input type="checkbox" [formControlName]="i">
+            {{options[i].name}}
+        </label>
+        <wda-form-validators [config]="config" [input]="group.get(this.config.name)">
+        </wda-form-validators>
+    </div>
+
 </div>

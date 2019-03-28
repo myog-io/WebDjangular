@@ -21,7 +21,7 @@ import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
-import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+import { BuilderFormCheckboxComponent } from './inputs/checkbox/checkbox.component';
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 import {
@@ -30,6 +30,7 @@ import {
 } from './interfaces/form-config.interface';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
 import { BuilderFormLabelComponent } from './inputs/label/label.component';
+import { BuilderFormRelationshipCheckboxOptionsComponent } from './inputs/relationship_checkbox/checkbox.component';
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
@@ -42,7 +43,8 @@ const components: { [type: string]: Type<BuilderFormField> } = {
   formArray: BuilderFormArrayComponent,
   formGroup: BuilderFormGroupComponent,
   switch: BuilderFormSwitcherComponent,
-  checkbox: BuilderFormCheckboxOptionsComponent,
+  relationship_checkbox: BuilderFormRelationshipCheckboxOptionsComponent,
+  checkbox: BuilderFormCheckboxComponent,
   datepicker: BuilderFormDatepickerComponent,
   jsonLogic: BuilderFormJsonLogicComponent,
   label: BuilderFormLabelComponent,

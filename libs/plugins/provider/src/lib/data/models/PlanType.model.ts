@@ -56,7 +56,7 @@ export class PlanTypeModel extends AbstractModel {
   @HasMany()
   @ExtraOptions({
     formType: FormArray,
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Products',
     options: { product_class_neq: 'addon' },
     model: ProductModel
