@@ -50,6 +50,9 @@ import { FormModel } from '@core/cms/src/lib/models/Form.model';
 import { FormActionModel } from '@core/cms/src/lib/models/FormAction.model';
 import { FormFieldModel } from '@core/cms/src/lib/models/FormField.model';
 import { FormSubmittedModel } from '@core/cms/src/lib/models/FormSubmittedModel';
+import { CartRuleModel } from '@plugins/store/src/lib/data/models/CartRule.model';
+import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model';
+import { CatalogRuleModel } from '@plugins/store/src/lib/data/models/CatalogRule.model';
 
 // tslint:disable-next-line:variable-name
 /*
@@ -125,6 +128,9 @@ const config: DatastoreConfig = {
     ProductAttributeOption: ProductAttributeOptionModel, // Store
     CartItem: CartItemModel, // Store
     Cart: CartModel, // Store
+    CartRules: CartRuleModel, // Store
+    CartTerms: CartTermModel, // Store
+    CatalogRules: CatalogRuleModel, // Store
     Order: OrderModel, // Store
     OrderLine: OrderLineModel // Store
   }

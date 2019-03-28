@@ -70,7 +70,7 @@ class CityViewSet(ModelViewSet):
         city = None
         if city_data['localidade']:
             # Distrito de Potunduva (Potunduva)
-            if city_data['bairro'] and city_data['bairro'].lower().find('Distrito') is not -1:
+            if city_data['bairro'] and city_data['bairro'].lower().find('distrito') is not -1:
                 city = City.objects.filter(name=city_data['bairro']).first()
 
             if not city:

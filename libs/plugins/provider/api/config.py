@@ -19,7 +19,9 @@ class ProviderConfig():
     CONFIG_PARCELAS_MIGRACAO_TECNOLOGIA_2 = 'parcelas_migracao_tecnologia_2'
     CONFIG_SKU_INSTALACAO_FIBRA = 'sku_instalacao_fibra'
     CONFIG_SKU_INSTALACAO_RADIO = 'sku_instalacao_radio'
-    CONFIG_SKU_MIGRACAO = 'sku_migracao_velocidade'
+    CONFIG_SKU_MIGRACAO_RADIO = 'sku_migracao_velocidade_radio'
+    CONFIG_SKU_MIGRACAO_FIBRA = 'sku_migracao_velocidade_fibra'
+
     CONFIG_SKU_MIGRACAO_TECNOLOGIA = 'sku_migracao_tecnologia'
 
     GROUP = CoreConfigGroup(
@@ -36,7 +38,7 @@ class ProviderConfig():
             disabled=False,
             label="Cod SKU Servico Instalação Fibra",
             validation=None,
-            wrapper_class="col-4",
+            wrapper_class="col-3",
             group=CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(
@@ -46,27 +48,37 @@ class ProviderConfig():
             disabled=False,
             label="Cod SKU Servico Instalação Radio",
             validation=None,
-            wrapper_class="col-4",
+            wrapper_class="col-3",
             group=CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(
-            id=CONFIG_SKU_MIGRACAO,
+            id=CONFIG_SKU_MIGRACAO_RADIO,
             field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             order=0,
             disabled=False,
-            label="Cod SKU Migração Velocidade",
+            label="Cod SKU Migração Velocidade Radio",
             validation=None,
-            wrapper_class="col-4",
+            wrapper_class="col-3",
             group=CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(
-            id=CONFIG_SKU_MIGRACAO,
+            id=CONFIG_SKU_MIGRACAO_FIBRA,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            order=0,
+            disabled=False,
+            label="Cod SKU Migração Velocidade Fibra",
+            validation=None,
+            wrapper_class="col-3",
+            group=CONFIG_GROUP_SLUG,
+        ),
+        CoreConfigInput(
+            id=CONFIG_SKU_MIGRACAO_TECNOLOGIA,
             field_type=CoreConfigInput.FIELD_TYPE_TEXT,
             order=0,
             disabled=False,
             label="Cod SKU Migração Tecnologia",
             validation=None,
-            wrapper_class="col-4",
+            wrapper_class="col-12",
             group=CONFIG_GROUP_SLUG,
         ),
         CoreConfigInput(

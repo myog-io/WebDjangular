@@ -137,7 +137,7 @@ class WebDjangoEmailBackend(BaseEmailBackend):
         if self.sender:
             return self.sender.send(to=recipients,
                                     subject=subject,
-                                    body=message)
+                                    body=str(message).replace('\n', '<br>\n'))
         raise ServiceUnavailable(
             "No Email SMTP or API Configurated to send email")
 

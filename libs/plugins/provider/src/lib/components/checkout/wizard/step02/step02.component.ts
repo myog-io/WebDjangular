@@ -4,6 +4,7 @@ import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import { Subscription } from 'rxjs';
+import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
 
 @Component({
   selector: 'plugin-provider-checkout-wizard-step02',
@@ -20,6 +21,7 @@ export class PluginProviderCheckoutWizardStep02Component
   public ptSub: Subscription;
   public ctSub: Subscription;
   public mgSub: Subscription;
+  public error: string = null;
   constructor(
     public providerCheckout: ProviderCheckoutService,
     public formBuilder: FormBuilder
@@ -113,20 +115,26 @@ export class PluginProviderCheckoutWizardStep02Component
   }
 
   onSubmit() {
+    this.error = null;
     if (this.formWizardStep02.valid) {
       this.formWizardStep02Submitted = true;
       this.providerCheckout.onWizardStep02Submit().then(
-        () => {
+        (order: OrderModel) => {
           this.formWizardStep02Submitted = false;
         },
-        () => {
+        (error: any) => {
+          // We Got an error, could be varius things
           this.formWizardStep02Submitted = false;
+          if (error && error.status == 500) {
+          }
+          this.error = `Encontramos um erro não identificado, 
+          um alerta com detalhes do erro ja foi enviado para nossa equipe!<br>
+          Por favor começe novamente sua assinatura!`
         }
       );
     } else {
       Object.keys(this.formWizardStep02.controls).forEach(field => {
         const control = this.formWizardStep02.get(field);
-        console.log(control, control.errors)
         control.markAsTouched({ onlySelf: true });
       });
     }

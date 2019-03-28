@@ -1,5 +1,5 @@
 <div class="step-item">
-  <form [formGroup]="formWizardStep02" (ngSubmit)="onSubmit()">
+  <form [formGroup]="formWizardStep02" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="row mt-4">
       <div class="col-12 col-md-6">
         <div class="row">
@@ -7,7 +7,7 @@
             <h5 class="text-primary mb-3">FORMA DE PAGAMENTO</h5>
           </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!showMigration">
           <div class="col-12">
             <h6>Fidelidade</h6>
             <div class="form-group">
@@ -28,7 +28,7 @@
               <div class="custom-control custom-radio ml-3 mb-1">
                 <input type="radio" id="upgrade" formControlName="isUpgrade" name="isUpgrade"
                   class="custom-control-input" value="upgrade" />
-                <label class="custom-control-label" for="upgrade">Estou aumento a velocidade
+                <label class="custom-control-label" for="upgrade">Estou aumentando a velocidade
                   (Upgrade)</label>
               </div>
               <div class="custom-control custom-radio ml-3 mb-1">
@@ -148,6 +148,10 @@
         </div>
 
         <div class="row mt-1">
+          <div class="alert alert-danger mt-2" *ngIf="error">
+            <h6 class="h-alert"><i class="far fa-frown"></i> Ops!</h6>
+            <span [innerHtml]="error"></span>
+          </div>
           <div class="col-12">
             <button class="btn btn-primary btn-block btn-large"
               [disabled]="formWizardStep02Submitted || providerCheckout.cartService.cart_updating">

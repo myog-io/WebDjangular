@@ -18,6 +18,7 @@ import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model
 import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model';
 import { PlanTypeModel } from '../models/PlanType.model';
 import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -980,8 +981,11 @@ export class ProviderCheckoutService {
     this.cartService.addToCart({ product: plan }).then(
       (cartItem: CartItemModel) => {
         this.selected_internet_optionals.push(cartItem);
+        this.selectingInternetPlan = false;
       },
-      (error: ErrorResponse) => { }
+      (error: ErrorResponse) => {
+        this.selectingInternetPlan = false;
+      }
     );
   }
 
@@ -990,8 +994,11 @@ export class ProviderCheckoutService {
     this.cartService.addToCart({ product: plan }).then(
       (cartItem: CartItemModel) => {
         this.selected_tv_optionals.push(cartItem);
+        this.selectingTVPlan = false;
       },
-      (error: ErrorResponse) => { }
+      (error: ErrorResponse) => {
+        this.selectingTVPlan = false;
+      }
     );
   }
 
@@ -1000,8 +1007,11 @@ export class ProviderCheckoutService {
     this.cartService.addToCart({ product: plan }).then(
       (cartItem: CartItemModel) => {
         this.selected_telephone_optionals.push(cartItem);
+        this.selectingTelephonePlan = false;
       },
-      (error: ErrorResponse) => { }
+      (error: ErrorResponse) => {
+        this.selectingTelephonePlan = false;
+      }
     );
   }
 
@@ -1018,14 +1028,18 @@ export class ProviderCheckoutService {
     } else {
       cartItem = plan;
     }
+    this.selectingInternetPlan = true;
     this.cartService.removeFromCart(cartItem).then(
       () => {
         this.selected_internet_optionals = this.arrayRemove(
           this.selected_internet_optionals,
           cartItem
         );
+        this.selectingInternetPlan = false;
       },
-      (error: ErrorResponse) => { }
+      (error: ErrorResponse) => {
+        this.selectingInternetPlan = false;
+      }
     );
   }
 
@@ -1052,20 +1066,25 @@ export class ProviderCheckoutService {
   }
 
   removeTVOptional(plan: CartItemModel | ProductModel) {
+
     let cartItem: CartItemModel = null;
     if (plan instanceof ProductModel) {
       cartItem = this.checkCartItemTVOptional(plan);
     } else {
       cartItem = plan;
     }
+    this.selectingTVPlan = true;
     this.cartService.removeFromCart(cartItem).then(
       () => {
         this.selected_tv_optionals = this.arrayRemove(
           this.selected_tv_optionals,
           cartItem
         );
+        this.selectingTVPlan = false;
       },
-      (error: ErrorResponse) => { }
+      (error: ErrorResponse) => {
+        this.selectingTVPlan = false;
+      }
     );
   }
 
@@ -1087,14 +1106,18 @@ export class ProviderCheckoutService {
     } else {
       cartItem = plan;
     }
+    this.selectingTelephonePlan = true;
     this.cartService.removeFromCart(cartItem).then(
       () => {
         this.selected_telephone_optionals = this.arrayRemove(
           this.selected_telephone_optionals,
           cartItem
         );
+        this.selectingTelephonePlan = false;
       },
-      (error: ErrorResponse) => { }
+      (error: ErrorResponse) => {
+        this.selectingTelephonePlan = false;
+      }
     );
   }
 
@@ -1350,12 +1373,26 @@ export class ProviderCheckoutService {
   onWizardStep02Submit(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.cartService.completeCart().then(
-        () => {
+        (order) => {
           this.nextStep();
-          resolve();
+          resolve(order);
         },
-        () => {
-          reject();
+        (error) => {
+          if (error && error.status == 500) {
+            reject(error)
+          } else {
+            // Want to search for an order to check if was created or not, if yes
+            this.datastore.findRecord(OrderModel, this.cartService.cart.id, null, null `api/store/order/${this.cartService.cart.token}/by_token/`).subscribe((order) => {
+              this.nextStep();
+              console.log("ORDER???")
+              resolve(order);
+            }, (new_error) => {
+              console.log("NEW?!?!?!", new_error)
+              reject(error);
+            })
+          }
+
+          //reject(error);
         }
       );
     });
@@ -1368,7 +1405,8 @@ export class ProviderCheckoutService {
         let providerConfigKeys = {
           'sku_instalacao_fibra': 'parcela_instalacao_',
           'sku_instalacao_radio': 'parcela_instalacao_',
-          'sku_migracao_velocidade': 'parcelas_migracao_velocidade_',
+          'sku_migracao_velocidade_radio': 'parcelas_migracao_velocidade_',
+          'sku_migracao_velocidade_fibra': 'parcelas_migracao_velocidade_',
           'sku_migracao_tecnologia': 'parcelas_migracao_tecnologia_'
         };
 
@@ -1408,7 +1446,7 @@ export class ProviderCheckoutService {
             fee.display_fee_price = `
             <span>
               <s>R$${fee.base_price}</s><br>
-              <small class="discount">(R$${fee.base_price - fee.price} de desconto)</small><br>
+              <small class="discount">(R$${(fee.base_price - fee.price).toFixed(2)} de desconto)</small><br>
               
             </span>
             ${fee.display_fee_price}

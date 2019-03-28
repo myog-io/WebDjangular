@@ -121,7 +121,7 @@ export class CartRuleModel extends AbstractModel {
   })
   value: string;
 
-  @NestedAttribute()
+  @Attribute()
   @ExtraOptions({
     type: 'jsonLogic',
     label:
@@ -130,7 +130,7 @@ export class CartRuleModel extends AbstractModel {
   })
   conditions: any;
 
-  @NestedAttribute()
+  @Attribute()
   @ExtraOptions({
     type: 'jsonLogic',
     label:

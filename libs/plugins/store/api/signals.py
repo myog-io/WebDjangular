@@ -19,6 +19,15 @@ def register_config_group(*args, **kwargs):
     return StoreEmailConfig.GROUP
 
 
+@receiver(post_delete, sender=Cart)
+def remove_cart_items(sender, instance, *args, **kwargs):
+    '''
+    Removing all Items from Cart just because sometimes deleting the cart directly was causing
+    "Cannot delete or update a parent row: a foreign key constraint fails"
+    '''
+    CartItem.objects.filter(cart=None).all().delete()
+
+
 @receiver(post_save, sender=Cart)
 def add_term_to_cart(sender, instance, created, *args, **kwargs):
     '''

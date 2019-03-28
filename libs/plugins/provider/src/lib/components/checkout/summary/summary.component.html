@@ -6,7 +6,7 @@
   </div>
   <div class="card-body">
     <div class="summary-items-wrapper table-responsive " [ngClass]="{
-        'cart-updating': this.providerCheckout.cartService.cart_updating || providerCheckout.selectingInternetPlan || providerCheckout.selectingTVPlan || providerCheckout.selectingTelephonePlan
+    'cart-updating': this.providerCheckout.cartService.cart_updating || providerCheckout.selectingInternetPlan || providerCheckout.selectingTVPlan || providerCheckout.selectingTelephonePlan
       }">
       <div class="loader"
         *ngIf="this.providerCheckout.cartService.cart_updating || providerCheckout.selectingInternetPlan || providerCheckout.selectingTVPlan || providerCheckout.selectingTelephonePlan">
@@ -270,8 +270,8 @@
         </tbody>
       </table>
     </div>
-
     <div class="summary-info-wrapper ">
+
       <div class="row">
         <div class="col table-responsive">
           <table class="table">
@@ -284,14 +284,16 @@
           </table>
         </div>
       </div>
+      <!--
       <div class="row">
-        <!--
+        
         TODO:
         <div class="col text-center mt-2">
           <a href="#" class="btn-summary-details"> DETALHES DA OFERTA </a>
         </div>
-        -->
+       
       </div>
+      -->
     </div>
 
     <div class="summary-submit-wrapper">

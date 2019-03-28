@@ -6,6 +6,7 @@ import traceback
 from uuid import UUID
 
 from django.db import transaction
+from django.db.models import Q
 from rest_framework.exceptions import ValidationError
 
 from libs.plugins.store.api import defaults
@@ -18,7 +19,7 @@ from webdjango.models.Core import Website
 from webdjango.serializers.AddressSerializer import AddressSerializer
 from webdjango.utils.JsonLogic import jsonLogic
 
-from ..models.Cart import Cart, CartStatus
+from ..models.Cart import Cart, CartItem, CartStatus
 from ..models.Discount import CartRule, RuleValueType
 from ..models.Order import Order
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
@@ -95,7 +96,7 @@ def apply_cart_rule(cart, rule):
     else:
         value = get_rule_ammount(cart.total, rule)
 
-        item = cart_has_product(cart.id, rule.voucher)
+        item = cart_has_product(cart_id=cart.id, product_sku=rule.voucher)
         if not item:
             parsed_value = money_serializer.to_representation(value)
             item = cart.items.create(quantity=1, data={
@@ -106,18 +107,16 @@ def apply_cart_rule(cart, rule):
             })
 
 
-def clean_cart_rule(cart, rule):
+def clean_cart_rules(cart, rules):
     for item in cart.items.all():
-        if 'discount_rules' in item.data:
-            if rule.voucher in item.data['discount_rules']:
-                # This case the line has the rule, so we can only remove the rule
-                del item.data['discount_rules'][rule.voucher]
-                item.save()
-        else:
-            item = cart_has_product(cart.id, rule.voucher)
-            if item:
-                # This case the line is the rule, so we can remove it
+        for rule in rules:
+            if item.sku == rule.voucher:
                 item.delete()
+            elif 'discount_rules' in item.data:
+                if rule.voucher in item.data['discount_rules']:
+                    # This case the line has the rule, so we can only remove the rule
+                    del item.data['discount_rules'][rule.voucher]
+                    item.save()
 
 
 def apply_all_cart_rules(cart):
@@ -147,6 +146,7 @@ def apply_all_cart_rules(cart):
             cart.shipping_address).data
 
         rules = CartRule.objects.active().all()
+        rules_to_clear = []
         for rule in rules:
             if rule.conditions and len(rule.conditions) > 0:
 
@@ -155,7 +155,7 @@ def apply_all_cart_rules(cart):
                     if json_logic_response:
                         base_price = apply_cart_rule(cart, rule)
                     else:
-                        clean_cart_rule(cart, rule)
+                        rules_to_clear.append(rule)
                 except:
                     traceback.print_tb(sys.exc_info()[2])
                     raise
@@ -163,7 +163,7 @@ def apply_all_cart_rules(cart):
             else:
                 apply_cart_rule(cart, rule)
                 # apply rule
-
+        clean_cart_rules(cart, rules_to_clear)
     return cart
 
 
@@ -180,15 +180,15 @@ def token_is_valid(token):
     return True
 
 
-def cart_has_product(cart_id, id_or_sku):
-    cart = Cart.objects.get(pk=cart_id)
-    if cart.items.count() > 0 and id_or_sku is not None:
-        for item in cart.items.all():
-            if item.product:
-                if item.product.id is id_or_sku or item.product.sku is id_or_sku:
-                    return item
-            if 'voucher' in item.data and item.data['voucher'] == id_or_sku:
-                return item
+def cart_has_product(cart_id, **kwargs):
+    if 'product_id' in kwargs:
+        return CartItem.objects.filter(cart__id=cart_id).filter(
+            product__id=kwargs['product_id'])
+
+    elif 'product_sku' in kwargs:
+        return CartItem.objects.filter(cart__id=cart_id).filter(
+            product__sku=kwargs['product_sku']) | CartItem.objects.filter(data__voucher=kwargs['product_sku'])
+
     return None
 
 
@@ -237,7 +237,6 @@ def get_guest_cart_from_token(token):
     :param token:
     :return: return the cart if exists, False otherwise
     """
-
     return Cart.objects.filter(token=token, status=CartStatus.ACTIVE).first()
 
 
@@ -406,6 +405,7 @@ def create_order(cart, request):
         order_data.update(_process_user_data_for_order(cart, request))
         order_data.update(_process_terms_data_for_order(cart))
         order_data.update({
+            'token': cart.token,
             'total': cart.total,
             'subtotal': cart.subtotal,
             'taxes': cart.taxes,

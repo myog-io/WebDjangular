@@ -10,15 +10,13 @@ from prices import Money
 
 from libs.core.users.api.models.User import User
 from libs.plugins.store.api import defaults
-from libs.plugins.store.api.models.Product import Product
 from libs.plugins.store.api.models.Payment import ChargeStatus
+from libs.plugins.store.api.models.Product import Product
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Address import Address
 from webdjango.models.Core import Website
+
 from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
-from prices import Money
-from enum import Enum
-from libs.plugins.store.api import defaults
 
 
 class OrderStatus:
@@ -182,7 +180,7 @@ class OrderEvent(BaseModel):
     data = JSONField(blank=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='+')
     order = models.ForeignKey('Order', related_name='events', on_delete=models.CASCADE)
-
+    
     class Meta:
         ordering = ('created',)
 
@@ -233,6 +231,7 @@ class Order(BaseModel):
     billing_address = JSONField(blank=True, editable=False)
     shipping_address = JSONField(blank=True, editable=False)
     terms = JSONField(blank=True, editable=False)
+    token = models.UUIDField(default=None, editable=False, blank=True, null=True)
     # shipping_method = models.ForeignKey(
     #     ShippingMethod, blank=True, null=True, related_name='orders',
     #     on_delete=models.SET_NULL)
