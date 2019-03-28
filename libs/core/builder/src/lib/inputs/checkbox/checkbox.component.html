@@ -1,7 +1,8 @@
 <!--form-group-->
-<div class="row" [formGroup]="form">
-    <p class="col-12">{{ config.label }}</p>
-    <div class="form-check {{config?.element_class || 'col-4'}}" *ngFor="let option of options; let i = index">
+<div class="form-group" [formGroup]="form">
+    <legend class="col-form-label">{{ config.label }}</legend>
+    <div class="form-check form-check-inline {{config?.element_class}}"
+         *ngFor="let option of options; let i = index">
         <label formArrayName="options">
             <input type="checkbox" [formControlName]="i">
             {{options[i].name}}
@@ -9,5 +10,4 @@
         <wda-form-validators [config]="config" [input]="group.get(this.config.name)">
         </wda-form-validators>
     </div>
-
 </div>

@@ -276,11 +276,22 @@ select.ng-valid ~ label {
 }
 
 wda-form-checkbox {
+
+  .form-group{
+    margin-bottom: 0;
+  }
+
   label{
     pointer-events: auto;
     position: static;
     cursor: pointer;
   }
+
+  input {
+    width:auto;
+    display: unset;
+  }
+
 
   .customised-control-input {
     opacity: 1 !important;
