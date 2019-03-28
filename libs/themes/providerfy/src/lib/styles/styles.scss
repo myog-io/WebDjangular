@@ -275,6 +275,31 @@ select.ng-valid ~ label {
   right: 0;
 }
 
+wda-form-checkbox {
+  label{
+    pointer-events: auto;
+    position: static;
+    cursor: pointer;
+  }
+
+  .customised-control-input {
+    opacity: 1 !important;
+    position: static !important;
+    width: initial !important;
+    cursor: pointer;
+    margin: auto;
+  }
+
+  .customised-control-indicator::before {
+    content: unset !important;
+  }
+
+  .customised-control-description{
+    position: static;
+  }
+
+}
+
 /* BOTTOM BARS ================================= */
 .bar {
   position: relative;
