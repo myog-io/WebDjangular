@@ -49,7 +49,7 @@ export class WDAValidators {
                 return null;
             }
             const birthday = moment(date, 'DD/MM/YYYY');
-            const age = moment().diff(birthday, 'years');
+            const age = moment.duration(moment().diff(birthday)).asYears();
             if (age <= 18) {
                 return { notOver18: true };
             }
@@ -152,6 +152,17 @@ export class WDAValidators {
                     return { invalidCNPJ: true };
                 }
                 return null;
+            }
+            return null;
+        };
+    }
+    static fullName(): ValidatorFn {
+        return (control: AbstractControl): Validators => {
+            const name = control.value.trim();
+            if (name) {
+                if (name.split(" ").length < 2) {
+                    return { invalidName: true };
+                }
             }
             return null;
         };
