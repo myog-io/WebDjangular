@@ -1456,7 +1456,7 @@ export class ProviderCheckoutService {
           fee.display_fee_price = ""
           let fee_price = `R$${fee.price}`;
           if (fee.price == 0) {
-            fee_price = 'GRÁTIS';
+            fee_price = '';//'GRÁTIS';
           } else if (fee.price != 0 && fee.split_in > 0) {
             fee_price = ` ${fee.split_in}x R$${fee.show_splited_price}`;
           }

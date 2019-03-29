@@ -22,7 +22,7 @@ enableProdMode();
 
 // Express server
 const app = express();
-const api_url = process.env.api_link || 'http://127.0.0.1:8000';
+const api_url = process.env.API_LINK || 'http://127.0.0.1:8000';
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist', 'apps');
 const clientAppServer = (file = '') => join(DIST_FOLDER, 'client', file);
