@@ -19,6 +19,7 @@ import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model
 import { PlanTypeModel } from '../models/PlanType.model';
 import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
+import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 
 export enum ProviderCheckoutSteps {
   beforeCheckout = 0,
@@ -419,7 +420,15 @@ export class ProviderCheckoutService {
           this.addPreSelectedPlans();
         });
       } else {
-        this.addPreSelectedPlans();
+
+        if (this.cartService.cart && this.cartService.cart.id) {
+          this.addPreSelectedPlans();
+        } else {
+          this.updateCartExtraData().then(() => {
+            this.addPreSelectedPlans();
+          })
+        }
+        //this.addPreSelectedPlans();
       }
     } else if (items) {
       // TODO: Improve This Function
@@ -1285,7 +1294,7 @@ export class ProviderCheckoutService {
     }
   }
 
-  private updateCartExtraData() {
+  private updateCartExtraData(): Promise<CartModel> {
     let extra_data: any = {};
     if (this.cartService.getExtraData()) {
       extra_data = this.cartService.getExtraData();
@@ -1315,10 +1324,18 @@ export class ProviderCheckoutService {
     }
     this.cartService.setExtraData(extra_data);
 
-    this.updating_cart = true;
-    this.cartService.updateCart().then(() => {
-      this.updating_cart = false;
+    return new Promise((resolve, reject) => {
+      this.updating_cart = true;
+      this.cartService.updateCart().then(
+        (cart: CartModel) => {
+          this.updating_cart = false;
+          resolve(cart);
+        }, (error) => {
+          reject(error);
+        }
+      );
     });
+
   }
 
   onBeforeCheckoutSubmit() {
