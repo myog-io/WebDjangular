@@ -4,6 +4,7 @@ import { PluginProviderAbstractPricingComponent } from '../abstract-pricing.comp
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { ThemeProviderfyModalChannelsComponent } from '@themes/providerfy/src/lib/components/modal/channels/channels.component';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 
 @Component({
   selector: 'plugin-provider-plan-pricing-tv-vertical',
@@ -21,7 +22,7 @@ export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbst
     super(datastore, modalService);
   }
 
-  openChannelListModel(product_id: string = '') {
+  openChannelListModel(product: ProductModel) {
     const modalChannelList = this.modalService.open(
       ThemeProviderfyModalChannelsComponent,
       {
@@ -30,6 +31,6 @@ export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbst
         windowClass: 'modal-channel-list'
       }
     );
-    modalChannelList.componentInstance.product_id = product_id;
+    modalChannelList.componentInstance.product = product;
   }
 }

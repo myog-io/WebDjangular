@@ -10,6 +10,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { ChannelModel } from '@plugins/provider/src/lib/data';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 
 @Component({
   selector: 'webdjangular-channels',
@@ -17,7 +18,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
   styleUrls: ['./channels.component.scss']
 })
 export class ThemeProviderfyModalChannelsComponent implements OnInit {
-  @Input() product_id;
+  @Input() product: ProductModel;
   public channels: ChannelModel[];
 
   public get_channels_current_page: number = 1;
@@ -89,7 +90,7 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
   private getChannels() {
     let options = {
       fields: 'types,name,logo,number',
-      products: this.product_id,
+      products: this.product.id,
       page: { number: this.get_channels_current_page, size: 10 },
       order: 'number'
     };
@@ -104,7 +105,7 @@ export class ThemeProviderfyModalChannelsComponent implements OnInit {
           this.get_channels_current_page++;
           this.getChannels();
         } else {
-          this.channels.sort(function(a: ChannelModel, b: ChannelModel) {
+          this.channels.sort(function (a: ChannelModel, b: ChannelModel) {
             return a.number - b.number;
           });
           this.loadingChannels = false;
