@@ -46,7 +46,12 @@ export class PluginProviderCheckoutWizardStep02Component
           && this.providerCheckout.cartService.cart.extra_data.customer_type == 'internet_radio')) {
         // This case is a migration of Speed
         this.showMigration = true;
+
+      } else {
+        this.providerCheckout.migration_type = null;
       }
+    } else {
+      this.providerCheckout.migration_type = null;
     }
 
     this.formWizardStep02 = this.formBuilder.group({

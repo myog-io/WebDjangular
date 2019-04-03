@@ -1321,6 +1321,8 @@ export class ProviderCheckoutService {
 
     if (this.migration_type) {
       extra_data.migration_type = this.migration_type;
+    } else {
+      extra_data.migration_type = null;
     }
     this.cartService.setExtraData(extra_data);
 
