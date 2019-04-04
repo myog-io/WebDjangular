@@ -20,7 +20,7 @@ export class PluginProviderSendEmailFormComponent implements OnInit {
   @Input() data_key = 'body';
   private routeSub: Subscription;
   private form: FormModel;
-  public loading = false;
+  public loading = true;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -33,9 +33,18 @@ export class PluginProviderSendEmailFormComponent implements OnInit {
         this.routeSub = null;
       }
       if (params.data) {
+
         //const json = atob(params.data);
-        this.data = JSON.parse(atob(params.data));
+        try {
+          this.data = JSON.parse(atob(params.data));
+        } catch (error) {
+          // Node Decode
+          this.data = JSON.parse(Buffer.from(params.data, 'base64').toString('ascii'));
+        }
+
+
       }
+      this.loading = false;
     });
     /*
     this.activeRoute.params.subscribe(params => {
@@ -72,14 +81,14 @@ export class PluginProviderSendEmailFormComponent implements OnInit {
     if (this.data.taxvat.length > 14) {
       taxvat_text = `portador do CPF <b>${
         this.data.taxvat_resp
-      }</b>, responsavel pela empresa <b>${
+        }</b>, responsavel pela empresa <b>${
         this.data.company_name
-      }</b> registrada sob o CNPJ`;
+        }</b> registrada sob o CNPJ`;
     }
     body += `<p style="text-align:center" class="text-black">
       Eu&#160;<b>${this.data.name}</b>, ${taxvat_text} &#160;<b>${
       this.data.taxvat
-    }</b>, declaro que estou ciente que as
+      }</b>, declaro que estou ciente que as
       informações referente ao plano escolhido, valores de mensalidade,
       endereço, bonificação, fidelização estarão contidos na ordem de serviço que
       será assinado no ato da instalação.<br>Declaro ainda que:</p>

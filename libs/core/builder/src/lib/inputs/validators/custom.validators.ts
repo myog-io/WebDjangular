@@ -163,6 +163,8 @@ export class WDAValidators {
                 if (name.split(" ").length < 2) {
                     return { invalidName: true };
                 }
+            } else {
+                return { invalidName: true };
             }
             return null;
         };
