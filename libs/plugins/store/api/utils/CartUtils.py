@@ -14,6 +14,7 @@ from libs.plugins.store.api.serializers.CartSerializer import \
     CartItemSerializer
 from libs.plugins.store.api.serializers.ProductSerializer import \
     ProductSerializer
+from webdjango.exceptions import BadRequest
 from webdjango.models.Address import AddressType
 from webdjango.models.Core import Website
 from webdjango.serializers.AddressSerializer import AddressSerializer
@@ -335,10 +336,14 @@ def _process_user_data_for_order(cart, request):
 
     if cart.user:
         store_user_address(cart.user, billing_address, AddressType.BILLING)
-
+    email = cart.user.email if cart.user and cart.user.email else cart.email
+    if not email:
+        raise BadRequest('Missing Email')
+    if not billing_address.first_name or not billing_address.last_name:
+        raise BadRequest('Missing Name')
     return {
         'user': cart.user,
-        'user_email': cart.user.email if cart.user else cart.email,
+        'user_email': cart.user.email if cart.user and cart.user.email else cart.email,
         'customer_note': cart.note,
         'billing_address': AddressSerializer(billing_address).data,
         'extra_data': cart.extra_data,

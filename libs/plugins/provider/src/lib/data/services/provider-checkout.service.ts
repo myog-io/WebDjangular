@@ -1247,7 +1247,10 @@ export class ProviderCheckoutService {
     return this.current_wizard_step;
   }
 
-  setWizardStep(number: number) {
+  setWizardStep(number: number, $event) {
+    if ($event) {
+      $event.preventDefault();
+    }
     if (this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
       this.current_wizard_step = number;
       this.updateCartExtraData();
@@ -1413,6 +1416,8 @@ export class ProviderCheckoutService {
   }
 
   onWizardStep02Submit(): Promise<any> {
+    // For Some reason Sometimes the cart does not have the email or Name
+
     return new Promise((resolve, reject) => {
       this.cartService.completeCart().then(
         (order) => {
@@ -1424,7 +1429,7 @@ export class ProviderCheckoutService {
             reject(error)
           } else {
             // Want to search for an order to check if was created or not, if yes
-            this.datastore.findRecord(OrderModel, this.cartService.cart.id, null, null `api/store/order/${this.cartService.cart.token}/by_token/`).subscribe((order) => {
+            this.datastore.findRecord(OrderModel, this.cartService.cart.id, null, null, `api/store/order/${this.cartService.cart.token}/by_token/`).subscribe((order) => {
               this.nextStep();
               resolve(order);
             }, (new_error) => {

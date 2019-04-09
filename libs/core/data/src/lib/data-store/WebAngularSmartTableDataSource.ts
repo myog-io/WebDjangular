@@ -82,9 +82,10 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     for (let i = 0; i < this.filterConf.filters.length; i++) {
       //filters[this.filterConf.filters[i].field + '__contains'] = this.filterConf.filters[i].search;
       if (this.filterConf.filters[i].search) {
-        filters[this.filterConf.filters[i].field] = this.filterConf.filters[
-          i
-        ].search;
+        filters[this.filterConf.filters[i].field] = this.filterConf.filters[i].search;
+        //filters[this.filterConf.filters[i].field] = this.filterConf.filters[
+        //  i
+        //].search;
       }
     }
 

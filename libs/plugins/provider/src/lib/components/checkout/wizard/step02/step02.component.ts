@@ -121,6 +121,11 @@ export class PluginProviderCheckoutWizardStep02Component
 
   onSubmit() {
     this.error = null;
+    if (!this.providerCheckout.address.first_name.trim() || !this.providerCheckout.address.last_name.trim()) {
+      this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha seu <b>Nome Completo</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`
+      return;
+    }
+
     if (this.formWizardStep02.valid) {
       this.formWizardStep02Submitted = true;
       this.providerCheckout.onWizardStep02Submit().then(
@@ -130,11 +135,23 @@ export class PluginProviderCheckoutWizardStep02Component
         (error: any) => {
           // We Got an error, could be varius things
           this.formWizardStep02Submitted = false;
-          if (error && error.status == 500) {
+          if (error.errors) {
+            for (let i = 0; i < error.errors.length; i++) {
+              const cur_error = error.errors[i];
+              if (cur_error.detail === 'Missing Email') {
+                this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha um <b>Email Válido</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`;
+              } else if (cur_error.detail === 'Missing Name') {
+                this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha seu <b>Nome Completo</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`;
+              }
+            }
           }
-          this.error = `Encontramos um erro não identificado, 
-          um alerta com detalhes do erro ja foi enviado para nossa equipe!<br>
-          Por favor começe novamente sua assinatura!`
+          if (!this.error) {
+            this.error = `Encontramos um erro não identificado, 
+            um alerta com detalhes do erro ja foi enviado para nossa equipe!<br>
+            Por favor começe novamente sua assinatura!`
+          }
+
+
         }
       );
     } else {

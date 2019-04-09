@@ -148,7 +148,7 @@
         </div>
 
         <div class="row mt-1">
-          <div class="alert alert-danger mt-2" *ngIf="error">
+          <div class="alert alert-danger mt-2" *ngIf="error" (click)="providerCheckout.setWizardStep(1)">
             <h6 class="h-alert"><i class="far fa-frown"></i> Ops!</h6>
             <span [innerHtml]="error"></span>
           </div>
