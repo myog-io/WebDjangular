@@ -91,7 +91,7 @@ export class ProviderCheckoutService {
 
   public default_contract_time: string = '2'; //in years
   public default_payment_type: string = 'email'; // email or mail
-
+  private fees: any;
   get plan_type(): PlanTypeModel {
     return this._plan_type;
   }
@@ -1318,7 +1318,7 @@ export class ProviderCheckoutService {
     extra_data.city_has_fiber = this.city_has_fiber;
     extra_data.city_has_phone = this.city_has_phone;
     extra_data.city_has_tv = this.city_has_tv;
-
+    extra_data.fees = this.fees;
     if (this.migration_type) {
       extra_data.migration_type = this.migration_type;
     } else {
@@ -1481,20 +1481,16 @@ export class ProviderCheckoutService {
           } else if (fee.price != 0 && fee.split_in > 0) {
             fee_price = ` ${fee.split_in}x R$${fee.show_splited_price}`;
           }
-          fee.display_fee_price = `<span>
-              ${fee_price}
-            <span>`;
+          fee.display_fee_price = `<span>${fee_price}<span>`;
           if (fee.base_price > fee.price) {
-            fee.display_fee_price = `
-            <span>
-              <s>R$${fee.base_price}</s><br>
-              <small class="discount">(R$${(fee.base_price - fee.price).toFixed(2)} de desconto)</small><br>
-              
-            </span>
-            ${fee.display_fee_price}
-            `;
+            fee.display_fee_price = `<span><del>R$${fee.base_price}</del><br><small class="discount">(R$${(fee.base_price - fee.price).toFixed(2)} de desconto)</small><br></span>${fee.display_fee_price}`;
           }
         });
+        // Saving this Information to display on the email latter
+        this.fees = {};
+        for (let i = 0; i < fees.length; i++) {
+          this.fees[fees[i].sku] = fees[i].display_fee_price
+        }
         return fees;
       }
     }
