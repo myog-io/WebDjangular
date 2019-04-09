@@ -70,9 +70,6 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
         street_address_3 = this.providerCheckout.address.street_address_3;
     }
     email = this.cart.email;
-    console.log("EMAIL", email);
-    console.log("NAME", name);
-
     if (this.cart.extra_data.hasOwnProperty('cpf'))
       cpf = this.cart.extra_data['cpf'];
     if (this.cart.extra_data.hasOwnProperty('rg'))
@@ -218,7 +215,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       const fullname: string = this.formWizardStep01.get('name').value;
       const first_name: string = fullname.split(' ').slice(0, -1).join(' ');
       const last_name: string = fullname.split(' ').slice(-1).join(' ');
-      console.log(fullname)
+
       this.providerCheckout.address.first_name = first_name;
       this.providerCheckout.address.last_name = last_name;
       this.providerCheckout.address.number = this.formWizardStep01.get('number').value;
@@ -268,7 +265,6 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     } else {
       Object.keys(this.formWizardStep01.controls).forEach(field => {
         const control = this.formWizardStep01.get(field);
-        console.log(control, control.errors)
         control.markAsTouched({ onlySelf: true });
       });
     }

@@ -1247,10 +1247,7 @@ export class ProviderCheckoutService {
     return this.current_wizard_step;
   }
 
-  setWizardStep(number: number, $event) {
-    if ($event) {
-      $event.preventDefault();
-    }
+  setWizardStep(number: number) {
     if (this.current_wizard_step < 3 && number < 3 && this.current_wizard_step > number) {
       this.current_wizard_step = number;
       this.updateCartExtraData();
