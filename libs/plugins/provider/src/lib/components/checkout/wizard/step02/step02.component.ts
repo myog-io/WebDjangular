@@ -92,10 +92,8 @@ export class PluginProviderCheckoutWizardStep02Component
     })
   }
   updateCartExtraData(key, value) {
-    let cart_extra_data: object = this.providerCheckout.cartService.getExtraData();
-    cart_extra_data[key] = value;
     this.providerCheckout.updating_cart = true;
-    this.providerCheckout.cartService.updateCart().then(
+    this.providerCheckout.updateCartExtraData(key, value).then(
       (cart: CartModel) => {
         this.providerCheckout.updating_cart = false;
       },
@@ -128,32 +126,39 @@ export class PluginProviderCheckoutWizardStep02Component
 
     if (this.formWizardStep02.valid) {
       this.formWizardStep02Submitted = true;
-      this.providerCheckout.onWizardStep02Submit().then(
-        (order: OrderModel) => {
-          this.formWizardStep02Submitted = false;
-        },
-        (error: any) => {
-          // We Got an error, could be varius things
-          this.formWizardStep02Submitted = false;
-          if (error.errors) {
-            for (let i = 0; i < error.errors.length; i++) {
-              const cur_error = error.errors[i];
-              if (cur_error.detail === 'Missing Email') {
-                this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha um <b>Email Válido</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`;
-              } else if (cur_error.detail === 'Missing Name') {
-                this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha seu <b>Nome Completo</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`;
+      // Extra Cart Update Just to get the New Fees
+      this.providerCheckout.updateCartExtraData().then(
+        (cart: CartModel) => {
+          this.providerCheckout.onWizardStep02Submit().then(
+            (order: OrderModel) => {
+              this.formWizardStep02Submitted = false;
+            },
+            (error: any) => {
+              // We Got an error, could be varius things
+              this.formWizardStep02Submitted = false;
+              if (error.errors) {
+                for (let i = 0; i < error.errors.length; i++) {
+                  const cur_error = error.errors[i];
+                  if (cur_error.detail === 'Missing Email') {
+                    this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha um <b>Email Válido</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`;
+                  } else if (cur_error.detail === 'Missing Name') {
+                    this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha seu <b>Nome Completo</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`;
+                  }
+                }
+              }
+              if (!this.error) {
+                this.error = `Encontramos um erro não identificado, 
+                um alerta com detalhes do erro ja foi enviado para nossa equipe!<br>
+                Por favor começe novamente sua assinatura!`
               }
             }
-          }
-          if (!this.error) {
-            this.error = `Encontramos um erro não identificado, 
-            um alerta com detalhes do erro ja foi enviado para nossa equipe!<br>
-            Por favor começe novamente sua assinatura!`
-          }
-
-
+          );
+        },
+        () => {
+          this.providerCheckout.updating_cart = false;
         }
       );
+
     } else {
       Object.keys(this.formWizardStep02.controls).forEach(field => {
         const control = this.formWizardStep02.get(field);

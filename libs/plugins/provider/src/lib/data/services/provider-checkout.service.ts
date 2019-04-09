@@ -1294,7 +1294,7 @@ export class ProviderCheckoutService {
     }
   }
 
-  private updateCartExtraData(): Promise<CartModel> {
+  public updateCartExtraData(key?, value?): Promise<CartModel> {
     let extra_data: any = {};
     if (this.cartService.getExtraData()) {
       extra_data = this.cartService.getExtraData();
@@ -1324,6 +1324,10 @@ export class ProviderCheckoutService {
     } else {
       extra_data.migration_type = null;
     }
+    if (key && value) {
+      extra_data[key] = value;
+    }
+
     this.cartService.setExtraData(extra_data);
 
     return new Promise((resolve, reject) => {
