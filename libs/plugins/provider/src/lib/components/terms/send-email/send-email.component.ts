@@ -127,7 +127,7 @@ export class PluginProviderSendEmailFormComponent implements OnInit {
     if (this.data.equip) {
       body += `
       <li>
-        Li, Entendi e aceito os <a href="https://www.lpnet.com.br/termos-roteador/" target="_NEW"> Termos do contrato de Alugel de Equipamentos.</a>
+        Li, Entendi e aceito os <a href="https://www.lpnet.com.br/termos-roteador/" target="_NEW"> Termos do contrato de Aluguel de Equipamentos.</a>
       </li>
       `;
     }
