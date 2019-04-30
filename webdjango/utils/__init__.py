@@ -1,8 +1,10 @@
 #from geolite2 import geolite2
 from urllib.parse import urljoin
-from ..i18n import COUNTRY_CODE_CHOICES
-from django.utils.encoding import iri_to_uri, smart_text
+
 from django.conf import settings
+from django.utils.encoding import iri_to_uri, smart_text
+
+from ..i18n import COUNTRY_CODE_CHOICES
 
 
 def get_country_name_by_code(country_code):
@@ -23,10 +25,9 @@ def build_absolute_uri(location, request=None):
 
 
 def get_client_ip(request):
-    ip = request.META.get('HTTP_X_FORWARDED_FOR', None)
-    if ip:
-        return ip.split(',')[0].strip()
-    return request.META.get('REMOTE_ADDR', None)
+    from ipware import get_client_ip
+    ip, is_routable = get_client_ip(request)
+    return ip
 
 
 # def get_country_by_ip(ip_address):
@@ -39,7 +40,7 @@ def get_client_ip(request):
 #         if country_iso_code in countries:
 #             return Country(country_iso_code)
 #     return None
-# 
+#
 
 # def get_currency_for_country(country):
 #     currencies = get_territory_currencies(country.code)

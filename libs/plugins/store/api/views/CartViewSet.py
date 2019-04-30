@@ -7,7 +7,7 @@ from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from webdjango.filters import WebDjangoFilterSet
 
-from ..emails import send_order_confirmation
+from ..emails import send_admin_order_confirmation, send_order_confirmation
 from ..models.Cart import Cart, CartItem, CartTerm
 from ..models.Order import OrderEventTypes
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
@@ -110,6 +110,7 @@ class CartViewSet(ModelViewSet):
             data={
                 'email': order.get_user_current_email(),
             })
+        send_admin_order_confirmation(order.pk)
 
         serializer = OrderSerializer(order)
         headers = self.get_success_headers(serializer.data)

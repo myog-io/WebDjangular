@@ -4,11 +4,11 @@ from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from libs.core.cms.api.models.Form import (Form, FormAction, FormField,
                                            FormSubmitted)
-from libs.core.cms.api.serializers.FormSerializer import (FormActionSerializer,
-                                                          FormFieldSerializer,
-                                                          FormSerializer,
-                                                          FormSubmittedSerializer)
+from libs.core.cms.api.serializers.FormSerializer import (
+    FormActionSerializer, FormFieldSerializer, FormSerializer,
+    FormSubmittedSerializer)
 from webdjango.filters import WebDjangoFilterSet
+from webdjango.utils import get_client_ip
 
 
 class FormFilter(WebDjangoFilterSet):
@@ -61,7 +61,7 @@ class FormSubmittedViewSet(ModelViewSet):
     def create(self, request, *args, **kwargs):
         # Appending Request Meta to the Data
         meta = {
-            'REMOTE_ADDR': request.META.get('REMOTE_ADDR'),
+            'REMOTE_ADDR': get_client_ip(request),
             'HTTP_REFERER': request.META.get('HTTP_REFERER'),
             'HTTP_USER_AGENT': request.META.get('HTTP_USER_AGENT'),
             'REMOTE_HOST': request.META.get('REMOTE_HOST'),

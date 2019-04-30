@@ -11,6 +11,7 @@ django-mysql==2.4.1
 
 # Enviroment
 django-environ==0.4.5
+django-ipware==2.1.0
 
 # Django REST Framework
 djangorestframework==3.9.2

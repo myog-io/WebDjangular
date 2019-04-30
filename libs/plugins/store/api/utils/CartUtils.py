@@ -18,6 +18,7 @@ from webdjango.exceptions import BadRequest
 from webdjango.models.Address import AddressType
 from webdjango.models.Core import Website
 from webdjango.serializers.AddressSerializer import AddressSerializer
+from webdjango.utils import get_client_ip
 from webdjango.utils.JsonLogic import jsonLogic
 
 from ..models.Cart import Cart, CartItem, CartStatus
@@ -349,7 +350,7 @@ def _process_user_data_for_order(cart, request):
         'extra_data': cart.extra_data,
         'security_data': {
             'HTTP_USER_AGENT': request.META.get('HTTP_USER_AGENT'),
-            'REMOTE_ADDR': request.META.get('REMOTE_ADDR')
+            'REMOTE_ADDR': get_client_ip(request)
         }
     }
 
