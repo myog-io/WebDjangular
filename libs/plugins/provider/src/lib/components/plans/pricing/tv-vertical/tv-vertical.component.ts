@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { ThemeProviderfyModalChannelsComponent } from '@themes/providerfy/src/lib/components/modal/channels/channels.component';
 import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 
 @Component({
   selector: 'plugin-provider-plan-pricing-tv-vertical',
@@ -17,9 +18,10 @@ export class PluginProviderPricingTvVerticalComponent extends PluginProviderAbst
   //public loadingChannels = true;
   constructor(
     public datastore: WebAngularDataStore,
-    public modalService: NgbModal
+    public modalService: NgbModal,
+    public wdaConfig: WDAConfig,
   ) {
-    super(datastore, modalService);
+    super(datastore, modalService, wdaConfig);
   }
 
   openChannelListModel(product: ProductModel) {

@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PluginProviderAbstractPricingComponent } from '../abstract-pricing.component';
 import { ProviderProductModel } from '../../../../data/models/ProviderProduct.model';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 
 @Component({
   selector: 'plugin-provider-plan-pricing-telephone-vertical',
@@ -15,8 +16,9 @@ export class PluginProviderPricingTelephoneVerticalComponent extends PluginProvi
   model = ProviderProductModel;
   constructor(
     public datastore: WebAngularDataStore,
-    public modalService: NgbModal
+    public modalService: NgbModal,
+    public wdaConfig: WDAConfig,
   ) {
-    super(datastore, modalService);
+    super(datastore, modalService, wdaConfig);
   }
 }

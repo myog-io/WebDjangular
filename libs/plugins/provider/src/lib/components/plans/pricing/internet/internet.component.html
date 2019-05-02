@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" [innerHTML]="plan?.description"></div>
+      <div class="modal-body" [innerHTML]="getContent(plan)"></div>
     </ng-template><!-- END MODAL -->
     <div class="d-none d-sm-block card mt-1 mb-1 shadow-sm vertical-plan">
       <div class="card-header">

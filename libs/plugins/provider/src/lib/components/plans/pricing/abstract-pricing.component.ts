@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JsonApiQueryData, Attribute } from 'angular2-jsonapi';
 import { Subject } from 'rxjs';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { WDAConfig } from '@core/services/src/lib/wda-config.service';
 export class PluginProviderAbstractPricingComponent implements OnInit {
   @Input() title: string;
   @Input() title_id: string;
@@ -18,17 +19,24 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
   loading = true;
   public model = ProductModel;
   public entries: ProductModel[];
+  private providerConfig = null;
   protected include = null;
   public entriesChanged: Subject<ProductModel[]> = new Subject();
 
   constructor(
     public datastore: WebAngularDataStore,
-    public modalService: NgbModal
-  ) {}
+    public modalService: NgbModal,
+    public wdaConfig: WDAConfig,
+  ) {
+
+  }
   emitChanges() {
     this.entriesChanged.next(this.entries);
   }
   ngOnInit() {
+    this.wdaConfig.getCoreConfig('provider').then(data => {
+      this.providerConfig = data;
+    });
     let options = {};
     let order: string[] = null;
     options['page'] = { number: 1, size: 10 };
@@ -61,8 +69,42 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
         });
     }
   }
+  getSvaScm(value) {
+    const sva_total = Math.floor(value * this.providerConfig.sva_total) / 100;
+    return [sva_total.toFixed(2), (value - sva_total).toFixed(2)];
+  }
+  getContent(plan: ProductModel) {
+    if (plan) {
+      const replaces = {
+        'price': plan.price,
+        'discounted_price': (plan.price - this.discount).toFixed(2),
+      }
+      // Getting Total Price SVA and SCM
+      let sva_scm = this.getSvaScm(plan.price);
+      replaces['price_sva'] = sva_scm[0];
+      replaces['price_scm'] = sva_scm[1];
+      // Getting Discounted Price SVA and SCM
+      sva_scm = this.getSvaScm(plan.price - this.discount);
+      replaces['discounted_sva'] = sva_scm[0];
+      replaces['discounted_scm'] = sva_scm[1];
 
-  openModal(content) {
+
+      for (const key in replaces) {
+        if (replaces.hasOwnProperty(key)) {
+          const rep = replaces[key];
+          plan.description = plan.description.replace(`{{${key}}}`, rep);
+        }
+      }
+    }
+    return plan.description ? plan.description : plan.name;
+  }
+
+  /**
+   * 
+   * @param content 
+   * @param plan 
+   */
+  openModal(content: string) {
     this.modalService.open(content, { size: 'lg', centered: true });
   }
 }
