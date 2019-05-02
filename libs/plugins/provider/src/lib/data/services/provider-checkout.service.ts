@@ -1328,7 +1328,6 @@ export class ProviderCheckoutService {
       extra_data.migration_type = null;
     }
 
-    console.log("Updating Extra Data", extra_data);
     this.cartService.setExtraData(extra_data);
 
     return new Promise((resolve, reject) => {

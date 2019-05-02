@@ -36,6 +36,10 @@ export class PluginProviderCheckoutWizardStep02Component
 
     if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
     if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime = this.cart.extra_data['contractTime'];
+    if (!this.providerCheckout.selected_internet_plan) {
+      // Forcing Contract Time with 1 year
+      contractTime = '1';
+    }
     // Checking if we have a migation of speed, has to have internetplan,
     if (this.providerCheckout.selected_internet_plan) {
       if (
