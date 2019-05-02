@@ -1319,15 +1319,16 @@ export class ProviderCheckoutService {
     extra_data.city_has_phone = this.city_has_phone;
     extra_data.city_has_tv = this.city_has_tv;
     extra_data.fees = this.fees;
+    if (key && value) {
+      extra_data[key] = value;
+    }
     if (this.migration_type) {
       extra_data.migration_type = this.migration_type;
     } else {
       extra_data.migration_type = null;
     }
-    if (key && value) {
-      extra_data[key] = value;
-    }
 
+    console.log("Updating Extra Data", extra_data);
     this.cartService.setExtraData(extra_data);
 
     return new Promise((resolve, reject) => {

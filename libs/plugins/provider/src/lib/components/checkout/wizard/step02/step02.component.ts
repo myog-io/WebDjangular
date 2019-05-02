@@ -88,6 +88,7 @@ export class PluginProviderCheckoutWizardStep02Component
     });
     // Checking if the Migration Form is chaning
     this.mgSub = this.formWizardStep02.get('isUpgrade').valueChanges.subscribe(value => {
+      this.providerCheckout.migration_type = value;
       this.updateCartExtraData('migration_type', value);
     })
   }
