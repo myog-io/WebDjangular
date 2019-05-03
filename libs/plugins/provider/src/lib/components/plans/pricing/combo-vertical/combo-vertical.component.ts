@@ -16,6 +16,7 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   @Input() total: number | string;
   @Input() internet_call = 'FIBRA';
   @Input() tv_call = '50% DESCONTO';
+  @Input() class = 'col-12 col-sm-6 col-md-6 col-lg-3 p-1';
 
   loading = true;
   net: ProductModel;

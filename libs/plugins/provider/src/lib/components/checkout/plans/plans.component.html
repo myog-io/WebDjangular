@@ -61,7 +61,7 @@
         <div class="select-internet-optional-plan-wrapper">
           <plugin-provider-checkout-plan-internet-optional *ngFor="
               let plan_optional of providerCheckout.plans_optionals.internet
-            " [plan]="plan_optional">
+            " [plan]="plan_optional" [ngClass]="{'d-none': !plan_optional.isVisible()}">
           </plugin-provider-checkout-plan-internet-optional>
         </div>
       </div>
@@ -168,7 +168,8 @@
           </h4>
           <div class="row">
             <plugin-provider-checkout-plan-television-optional
-              *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional">
+              *ngFor="let plan_optional of providerCheckout.plans_optionals.tv" [plan]="plan_optional"
+              [ngClass]="{'d-none': !plan_optional.isVisible()}">
             </plugin-provider-checkout-plan-television-optional>
           </div>
         </div>
@@ -237,7 +238,7 @@
         <div class="select-internet-optional-plan-wrapper">
           <plugin-provider-checkout-plan-telephone-optional *ngFor="
               let plan_optional of providerCheckout.plans_optionals.telephone
-            " [plan]="plan_optional">
+            " [plan]="plan_optional" [ngClass]="{'d-none': !plan_optional.isVisible()}">
           </plugin-provider-checkout-plan-telephone-optional>
         </div>
       </div>

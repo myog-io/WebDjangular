@@ -35,6 +35,11 @@ enum productDG {
 })
 export class ProductModel extends AbstractModel {
   public static include = 'product_type,addons,addon_parent,categories';
+  public static VISIBILITY_NOT_VISIBLE = 'not_visible';
+  public static VISIBILITY_CATALOG = 'catalog';
+  public static VISIBILITY_SEARCH = 'search';
+  public static VISIBILITY_ALL = 'all';
+
 
   @Attribute()
   id: string;
@@ -70,12 +75,28 @@ export class ProductModel extends AbstractModel {
     validators: [Validators.required],
     type: 'text',
     label: 'SKU',
-    wrapper_class: 'col-12',
+    wrapper_class: 'col-6',
     placeholder: '',
     displayGroup: productDG.general,
     conditionalValue: { slugfy: [{ var: 'sku' }] }
   })
   sku: string;
+
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'select',
+    label: 'Visiblity',
+    wrapper_class: 'col-6',
+    options: [
+      { id: ProductModel.VISIBILITY_NOT_VISIBLE, name: "Not Visible" },
+      { id: ProductModel.VISIBILITY_CATALOG, name: "Catalog Only" },
+      { id: ProductModel.VISIBILITY_SEARCH, name: "Search Only" },
+      { id: ProductModel.VISIBILITY_ALL, name: "Visible in all" },
+    ],
+    displayGroup: productDG.general,
+  })
+  visibility: string;
 
   @Attribute()
   @ExtraOptions({
@@ -433,5 +454,15 @@ export class ProductModel extends AbstractModel {
     const url = `/api/store/product/${this.id}/addons/`;
 
     return dataStore.findAll(ProductModel, options, header, url);
+  }
+
+  isVisibleInCatalog() {
+    return this.visibility === ProductModel.VISIBILITY_CATALOG || this.visibility === ProductModel.VISIBILITY_ALL
+  }
+  isVisibileInSearch() {
+    return this.visibility === ProductModel.VISIBILITY_SEARCH || this.visibility === ProductModel.VISIBILITY_ALL
+  }
+  isVisible() {
+    return this.visibility !== ProductModel.VISIBILITY_NOT_VISIBLE
   }
 }

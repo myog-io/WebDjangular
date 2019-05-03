@@ -960,7 +960,7 @@ export class ProviderCheckoutService {
   deselectInternetPlan() {
     if (this.selected_internet_plan) {
       this.selectingInternetPlan = true;
-      this.cartService.removeFromCart(this.selected_internet_plan).then(
+      this.removeItem(this.selected_internet_plan).then(
         () => {
           this.selectingInternetPlan = false;
           this.selected_internet_plan = null;
@@ -977,7 +977,7 @@ export class ProviderCheckoutService {
   deselectTVPlan() {
     if (this.selected_tv_plan) {
       this.selectingTVPlan = true;
-      this.cartService.removeFromCart(this.selected_tv_plan).then(
+      this.removeItem(this.selected_tv_plan).then(
         () => {
           this.selectingTVPlan = false;
           this.selected_tv_plan = null;
@@ -994,7 +994,7 @@ export class ProviderCheckoutService {
   deselectTelephonePlan() {
     if (this.selected_telephone_plan) {
       this.selectingTelephonePlan = true;
-      this.cartService.removeFromCart(this.selected_telephone_plan).then(
+      this.removeItem(this.selected_telephone_plan).then(
         () => {
           this.selectingTelephonePlan = false;
           this.selected_telephone_plan = null;
@@ -1061,7 +1061,7 @@ export class ProviderCheckoutService {
       cartItem = plan;
     }
     this.selectingInternetPlan = true;
-    this.cartService.removeFromCart(cartItem).then(
+    this.removeItem(cartItem).then(
       () => {
         this.selected_internet_optionals = this.arrayRemove(
           this.selected_internet_optionals,
@@ -1079,7 +1079,7 @@ export class ProviderCheckoutService {
     let promises: Promise<boolean>[] = [];
     while (type_list.length) {
       let op = type_list.pop();
-      promises.push(this.cartService.removeFromCart(op, false));
+      promises.push(this.removeItem(op, false));
     }
     Promise.all(promises).then(responses => {
       this.updating_cart = true;
@@ -1106,7 +1106,7 @@ export class ProviderCheckoutService {
       cartItem = plan;
     }
     this.selectingTVPlan = true;
-    this.cartService.removeFromCart(cartItem).then(
+    this.removeItem(cartItem).then(
       () => {
         this.selected_tv_optionals = this.arrayRemove(
           this.selected_tv_optionals,
@@ -1139,7 +1139,7 @@ export class ProviderCheckoutService {
       cartItem = plan;
     }
     this.selectingTelephonePlan = true;
-    this.cartService.removeFromCart(cartItem).then(
+    this.removeItem(cartItem).then(
       () => {
         this.selected_telephone_optionals = this.arrayRemove(
           this.selected_telephone_optionals,
@@ -1219,8 +1219,7 @@ export class ProviderCheckoutService {
   removeExtraTVDecoder() {
     if (this.selected_extra_tv_decoder.cartItem) {
       this.selectingTVPlan = true;
-      this.cartService
-        .removeFromCart(this.selected_extra_tv_decoder.cartItem)
+      this.removeItem(this.selected_extra_tv_decoder.cartItem)
         .then(
           () => {
             this.selectingTVPlan = false;
@@ -1232,6 +1231,25 @@ export class ProviderCheckoutService {
           }
         );
     }
+  }
+
+  public removeItem(cartItem: CartItemModel, updateCart = true): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let clean_cart = false;
+      if (cartItem.product && cartItem.product.isVisible() === false) {
+        clean_cart = true;
+      }
+      this.cartService.removeFromCart(cartItem, updateCart).then((response: boolean) => {
+        if (clean_cart) {
+          this.deselectInternetPlan();
+          this.deselectTVPlan();
+          this.deselectTelephonePlan();
+        }
+        resolve(response);
+      }, (error) => {
+        reject(error);
+      });
+    });
   }
 
   get subtotal() {

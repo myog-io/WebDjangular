@@ -26,7 +26,7 @@ export class ScaffoldComponent implements OnInit {
     private datastore: WebAngularDataStore,
     private router: Router,
     private dialogService: NbDialogService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.current_model = this.route.data['value'].model;
     this.title = this.route.data['value'].title;
@@ -41,7 +41,7 @@ export class ScaffoldComponent implements OnInit {
         title: `Delete ${this.title} #${element.data.pk}`,
         body: `Please confirm that you would like to delete this ${
           this.title
-        } with Id ${element.data.pk}`,
+          } with Id ${element.data.pk}`,
         element: element
       }
     });
@@ -67,6 +67,7 @@ export class ScaffoldComponent implements OnInit {
 
     this.source = new WebAngularSmartTableDataSource(this.datastore);
     this.source.model = this.current_model;
+
     this.source.conf = new WebAngularSmartTableDataSourceOptions({
       smartTableSettings: this.current_model.smartTableOptions,
       onEditButtonClick: $event => {

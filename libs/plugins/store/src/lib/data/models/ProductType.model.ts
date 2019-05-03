@@ -42,15 +42,15 @@ export class ProductTypeModel extends AbstractModel {
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
-    type: 'ngSelect',
+    type: 'select',
     label: 'Product Class',
     wrapper_class: 'col-6',
     value: ProductClasses.simple,
     options: [
-      { label: 'Simple Product', value: ProductClasses.simple },
-      { label: 'Variant Product', value: ProductClasses.variant },
-      { label: 'AddOn Product', value: ProductClasses.addon },
-      { label: 'Bundle Product', value: ProductClasses.bundle }
+      { name: 'Simple Product', id: ProductClasses.simple },
+      { name: 'Variant Product', id: ProductClasses.variant },
+      { name: 'AddOn Product', id: ProductClasses.addon },
+      { name: 'Bundle Product', id: ProductClasses.bundle }
     ],
     sort: 1
   })

@@ -1,5 +1,6 @@
 <div class="row" *ngIf="!providerCheckout.loading_plans; else loading_holder">
-  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.telephone">
+  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.telephone"
+    [ngClass]="{'d-none': !plan.isVisible()}">
     <div class="card">
       <div class="card-header">
         <div class="row title-wrapper ">
