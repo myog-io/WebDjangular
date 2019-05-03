@@ -35,7 +35,6 @@ export class CoreCmsGalleryComponent implements OnInit {
 
   action(image: any) {
     if (image.url) {
-      console.log(image.url);
       const splited = image.url.split('?');
       const url = splited[0];
       const splited_params = splited[1] ? splited[1].split('&') : null;

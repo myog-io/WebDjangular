@@ -28,7 +28,7 @@ export class ModelPaginatorControls {
       size: this.pageSize,
       number: this.currentPage
     };
-    console.log(this.options)
+
     if (typeof this.options['useDatastore'] !== 'undefined' && this.options['useDatastore']) {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
         this.options['useDatastore']

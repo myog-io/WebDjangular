@@ -17,7 +17,8 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   @Input() internet_call = 'FIBRA';
   @Input() tv_call = '50% DESCONTO';
   @Input() class = 'col-12 col-sm-6 col-md-6 col-lg-3 p-1';
-
+  @Input() btn_call = 'QUERO ESTE';
+  @Input() show_discount: boolean = true;
   loading = true;
   net: ProductModel;
   tv: ProductModel;
@@ -30,11 +31,12 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let options = {};
     options['page'] = { number: 1, size: 3 };
+
     let skus = [];
     if (this.sku_net) skus.push(this.sku_net);
     if (this.sku_tv) skus.push(this.sku_tv);
     if (this.sku_phone) skus.push(this.sku_phone);
-
+    this.show_discount = Boolean(this.show_discount);
     options['sku__in'] = skus.join(',');
     this.sub = this.datastore
       .findAll(ProductModel, options)
@@ -65,6 +67,7 @@ export class PluginPricingComboVerticalComponent implements OnInit, OnDestroy {
         this.loading = false;
       });
   }
+
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();
