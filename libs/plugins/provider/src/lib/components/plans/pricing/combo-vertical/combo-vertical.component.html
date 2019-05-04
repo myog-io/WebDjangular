@@ -26,11 +26,9 @@
           <div class="col-4 pt-1"><span class="icon"></span></div>
           <div class="col-8 p-0">
             <span class="plan-title-1">TELEFONE</span>
-            <span
-              class="plan-title-2"><b>{{ phone?.extraOptions?.name_1 ? phone?.extraOptions?.name_1 : phone?.name.split(' ')[2] }}</b></span>
-            <span
-              class="plan-title-3"><b>{{ phone?.extraOptions?.name_2 ? phone?.extraOptions?.name_2 : phone?.name.split(' ')[0] }}
-                {{ phone?.extraOptions?.name_3? phone?.extraOptions?.name_3 : phone?.name.split(' ')[1] }}</b></span>
+            <span class="plan-title-2"><b>{{ phone?.name.split(' ').splice(2,99).join(' ') }}</b></span>
+            <span class="plan-title-3"><b>{{ phone?.name.split(' ')[0] }}
+                {{ phone?.name.split(' ')[1] }}</b></span>
           </div>
         </div>
       </h4>
