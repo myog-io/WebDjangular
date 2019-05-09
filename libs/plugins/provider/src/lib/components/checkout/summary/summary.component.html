@@ -52,7 +52,8 @@
                   </span>
                 </span>
                 <button type="button" class="remove" aria-label="Close"
-                  (click)="providerCheckout.deselectInternetPlan()">
+                  (click)="providerCheckout.deselectInternetPlan()"
+                  *ngIf="providerCheckout?.selected_internet_plan?.product?.isVisible()">
                   <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
@@ -81,9 +82,9 @@
                     {{ plan_optional.total }}
                   </span>
                 </span>
-                <button type="button" class="remove" aria-label="Close" (click)="
-                    providerCheckout.removeInternetOptional(plan_optional)
-                  ">
+                <button type="button" class="remove" aria-label="Close"
+                  (click)="providerCheckout.removeInternetOptional(plan_optional)"
+                  *ngIf="plan_optional?.product?.isVisible()">
                   <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
@@ -122,7 +123,8 @@
                     {{ providerCheckout.selected_tv_plan.total }}
                   </span>
                 </span>
-                <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectTVPlan()">
+                <button type="button" class="remove" aria-label="Close" (click)="providerCheckout.deselectTVPlan()"
+                  *ngIf="providerCheckout?.selected_tv_plan?.product?.isVisible()">
                   <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
@@ -180,7 +182,8 @@
                   </span>
                 </span>
                 <button type="button" class="remove" aria-label="Close"
-                  (click)="providerCheckout.removeTVOptional(plan_optional)">
+                  (click)="providerCheckout.removeTVOptional(plan_optional)"
+                  *ngIf="plan_optional?.product?.isVisible()">
                   <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
@@ -224,7 +227,8 @@
                   </span>
                 </span>
                 <button type="button" class="remove" aria-label="Close"
-                  (click)="providerCheckout.deselectTelephonePlan()">
+                  (click)="providerCheckout.deselectTelephonePlan()"
+                  *ngIf="providerCheckout?.selected_telephone_plan?.product?.isVisible()">
                   <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
@@ -251,9 +255,9 @@
                     {{ plan_optional.total }}
                   </span>
                 </span>
-                <button type="button" class="remove" aria-label="Close" (click)="
-                    providerCheckout.removeTelephoneOptional(plan_optional)
-                  ">
+                <button type="button" class="remove" aria-label="Close"
+                  (click)="providerCheckout.removeTelephoneOptional(plan_optional)"
+                  *ngIf="plan_optional?.product?.isVisible()">
                   <span aria-hidden="true"><i class="fas fa-times-circle"></i></span>
                 </button>
               </div>
@@ -310,13 +314,17 @@
     </div>
 
     <div class="row">
-      <div class="col text-center my-2">
+      <div class="col-12 text-center my-2">
         <a (click)="providerCheckout.restartProviderCheckout()" class="btn-summary-details">
           Limpar carrinho
         </a>
       </div>
+
     </div>
   </div>
+</div>
+<div class="col-12" *ngIf="providerCheckout?.cartService?.cart?.extra_data?.has_hidden_product">
+  <small>* Carrinho contem promoções especiais não alteraveis</small>
 </div>
 <div *ngIf="custom_block">
   <span [innerHtml]="custom_block.content"> </span>

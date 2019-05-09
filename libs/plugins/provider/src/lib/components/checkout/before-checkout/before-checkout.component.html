@@ -26,7 +26,7 @@
               <div class="col">
                 <div class="form-group">
                   <select class="form-control" formControlName="reseller">
-                    <option value="">Revendedor</option>
+                    <option value=""><span *ngIf="!(resellers | async)">Carregando... </span> Revendedor</option>
                     <option *ngFor="let reseller of (resellers | async)" [value]="reseller.id">
                       {{ reseller.name }} <{{ reseller.email }}>
                     </option>
@@ -51,8 +51,6 @@
                   <a href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="BLANK" class="link">Não sei
                     meu CEP</a>
                 </div>
-
-
               </div>
 
               <div class="col-12 col-md-6">
@@ -71,7 +69,7 @@
               <div class="col">
                 <div class="form-group">
                   <select class="form-control" formControlName="typeOfAccess">
-                    <option value="">Tipo de acesso</option>
+                    <option value=""><span *ngIf="!(plan_types | async)">Carregando... </span>Tipo de acesso</option>
                     <option *ngFor="let plan_type of (plan_types | async)" [value]="plan_type.id">{{ plan_type.name }}
                     </option>
 

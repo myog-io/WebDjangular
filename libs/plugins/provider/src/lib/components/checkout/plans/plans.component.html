@@ -53,7 +53,8 @@
           </div>
           <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
-              (click)="providerCheckout.deselectInternetPlan()">
+              (click)="providerCheckout.deselectInternetPlan()"
+              *ngIf="providerCheckout?.selected_internet_plan?.product?.isVisible()">
               Alterar
             </button>
           </div>
@@ -122,7 +123,8 @@
           </div>
           <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-outline-light btn-deselect-plan btn-round text-uppercase"
-              (click)="providerCheckout.deselectTVPlan()">
+              (click)="providerCheckout.deselectTVPlan()"
+              *ngIf="providerCheckout?.selected_tv_plan?.product?.isVisible()">
               Alterar
             </button>
           </div>
@@ -229,7 +231,8 @@
           </div>
           <div class="col-12 col-lg-4 actions-wrapper align-self-center">
             <button type="button" class="btn btn-deselect-plan btn-outline-light btn-round text-uppercase"
-              (click)="providerCheckout.deselectTelephonePlan()">
+              (click)="providerCheckout.deselectTelephonePlan()"
+              *ngIf="providerCheckout?.selected_telephone_plan?.product?.isVisible()">
               Alterar
             </button>
           </div>

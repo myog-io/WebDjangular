@@ -1345,7 +1345,17 @@ export class ProviderCheckoutService {
     } else {
       extra_data.migration_type = null;
     }
-
+    extra_data.has_hidden_product = false;
+    if (this.cartService.cart && this.cartService.cart.items) {
+      for (let i = 0; i < this.cartService.cart.items.length; i++) {
+        const item = this.cartService.cart.items[i];
+        if (item.product && !item.product.isVisible()) {
+          extra_data.has_hidden_product = true;
+          break;
+        }
+      }
+    }
+    console.log("HAS HIDDEN PRODUCT", extra_data.has_hidden_product);
     this.cartService.setExtraData(extra_data);
 
     return new Promise((resolve, reject) => {
