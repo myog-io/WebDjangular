@@ -1355,7 +1355,6 @@ export class ProviderCheckoutService {
         }
       }
     }
-    console.log("HAS HIDDEN PRODUCT", extra_data.has_hidden_product);
     this.cartService.setExtraData(extra_data);
 
     return new Promise((resolve, reject) => {

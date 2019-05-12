@@ -10,7 +10,7 @@ export class CoreCmsGalleryComponent implements OnInit {
   @Input() arrows: boolean = false;
   @Input() indicators: boolean = null;
   @Input() images: string;
-  @Input() pauseOnHover = true;
+  @Input() pauseOnHover = false;
   @Input() interval = 5000;
 
   public widthS = '768px';
@@ -28,6 +28,12 @@ export class CoreCmsGalleryComponent implements OnInit {
       }
       if (this.indicators === null) {
         this.indicators = this.image_array.length > 1;
+      }
+      for (let i = 0; i < this.image_array.length; i++) {
+        if (!this.image_array[i].id) {
+          this.image_array[i].id = `${i}_banner_image`;
+        }
+
       }
     }
     //this.indicators = true;
