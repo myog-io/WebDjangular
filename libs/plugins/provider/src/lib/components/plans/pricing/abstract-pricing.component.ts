@@ -53,6 +53,15 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
         options['include'] = this.include;
       }
 
+      options['fields'] = [
+        'price',
+        'pricing_list',
+        'base_price',
+        'data',
+        'name',
+        'sku',
+      ].join(',');
+
       this.datastore
         .findAll(this.model, options)
         .subscribe((query: JsonApiQueryData<ProductModel>) => {
