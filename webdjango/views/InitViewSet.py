@@ -1,4 +1,6 @@
 from django.core import serializers
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -21,6 +23,7 @@ class InitViewSet(viewsets.GenericViewSet):
     public_views = ('list', )
     #permission_classes = (IsAuthenticatedOrReadOnly, )
 
+    @method_decorator(cache_page(7200, key_prefix='core_init'))
     def list(self, request, format=None):
         """
         Return the essential data.
@@ -43,8 +46,6 @@ class InitViewSet(viewsets.GenericViewSet):
             theme_serializer.is_valid()
         # TODO: retrieve locale(s)
         # if there is more than 1 locale, get the locale based on localization
-
-        # TODO: load cache if exists
 
         # TODO: define current User Object
         # Current User Object is whether a guest, admin or any other role
