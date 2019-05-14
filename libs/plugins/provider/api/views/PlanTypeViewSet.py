@@ -6,7 +6,7 @@ from webdjango.filters import WebDjangoFilterSet
 
 from ..models.PlanType import PlanType
 from ..serializers.PlanTypeSerializer import PlanTypeSerializer
-
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class PlanTypeFilter(WebDjangoFilterSet):
     products = ModelMultipleChoiceFilter(
@@ -22,7 +22,7 @@ class PlanTypeFilter(WebDjangoFilterSet):
         }
 
 
-class PlanTypeViewSet(ModelViewSet):
+class PlanTypeViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Cities
