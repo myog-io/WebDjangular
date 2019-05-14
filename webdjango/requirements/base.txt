@@ -42,6 +42,9 @@ django-filter==2.1.0
 #django-url-filter==0.3.8 Not Working For now
 requests==2.21.0
 
+# Django Redis {in-memory key:value database }
+django-redis==4.10.0
+
 # For the CDNS
 
 # Deployment

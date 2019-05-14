@@ -16,7 +16,7 @@ from ..serializers.CitySerializer import (CitySerializer,
                                           PostalCodeRangeSerializer,
                                           StreetSerializer)
 from ..utils import getClientUserCookie
-
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class CityFilter(WebDjangoFilterSet):
     products = ModelChoiceFilter(queryset=Product.objects.all())
@@ -32,7 +32,7 @@ class CityFilter(WebDjangoFilterSet):
         }
 
 
-class CityViewSet(ModelViewSet):
+class CityViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Cities

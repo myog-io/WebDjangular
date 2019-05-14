@@ -5,6 +5,7 @@ from libs.core.cms.api.models.Menu import MenuItem
 from libs.core.cms.api.serializers.MenuItemSerializer import MenuItemSerializer
 from webdjango.filters import WebDjangoFilterSet
 
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class MenuItemFilter(WebDjangoFilterSet):
 
@@ -20,7 +21,7 @@ class MenuItemFilter(WebDjangoFilterSet):
         }
 
 
-class MenuItemViewSet(ModelViewSet):
+class MenuItemViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Pages
@@ -34,7 +35,6 @@ class MenuItemViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = MenuItemFilter
     public_views = ('list',)
-
 
 class MenuItemRelationshipView(RelationshipView):
     queryset = MenuItem.objects

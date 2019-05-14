@@ -8,6 +8,24 @@ from webdjango.serializers.CoreSerializer import AuthorSerializer, \
     CoreConfigSerializer, PluginSerializer, ThemeSerializer, \
     WebsiteSerializer
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
+
+class CachedModelViewSet(ModelViewSet):
+
+    @method_decorator(cache_page(7200)) # Cache requested url for each user for 2 hours
+    @method_decorator(vary_on_cookie)
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 class WebsiteFilter(WebDjangoFilterSet):
     class Meta:

@@ -15,6 +15,7 @@ from ..serializers.PageSerializer import (PageCategorySerializer,
                                           PageSerializer, PageTagSerializer)
 from ..signals import post_get_page, pre_get_page
 
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class PageTagFilter(WebDjangoFilterSet):
     class Meta:
@@ -80,7 +81,7 @@ class PageFilter(WebDjangoFilterSet):
         }
 
 
-class PageViewSet(ModelViewSet):
+class PageViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Pages
