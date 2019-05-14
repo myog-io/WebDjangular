@@ -7,7 +7,7 @@ from webdjango.filters import WebDjangoFilterSet
 from ....store.api.models.Product import Product
 from ..models.Channel import Channel
 from ..serializers.ChannelSerializer import ChannelSerializer
-
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class ChannelFilter(WebDjangoFilterSet):
     products = ModelMultipleChoiceFilter(
@@ -24,7 +24,7 @@ class ChannelFilter(WebDjangoFilterSet):
         }
 
 
-class ChannelViewSet(ModelViewSet):
+class ChannelViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Cities
