@@ -12,13 +12,26 @@ from webdjango.serializers.CoreSerializer import AuthorSerializer, \
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
+from django.core.cache import cache
 
 class CachedModelViewSet(ModelViewSet):
-
-    @method_decorator(cache_page(7200)) # Cache requested url for each user for 2 hours
-    @method_decorator(vary_on_cookie)
+    
     def list(self, request, *args, **kwargs):
-        return super(CachedModelViewSet, self).list(self, request, *args, **kwargs)
+        @method_decorator(cache_page(7200, key_prefix=self.basename))
+        @method_decorator(vary_on_cookie)
+        def list_in(self, request, *args, **kwargs):
+            return super(CachedModelViewSet, self).list(self, request, *args, **kwargs)
+            
+        return list_in(self, request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        
+        @method_decorator(cache_page(7200, key_prefix=self.basename))
+        @method_decorator(vary_on_cookie)
+        def retrieve_in(self, request, *args, **kwargs):
+            return super(CachedModelViewSet, self).retrieve(self, request, *args, **kwargs)
+        
+        return retrieve_in(self, request, *args, **kwargs)
 
 class WebsiteFilter(WebDjangoFilterSet):
     class Meta:
