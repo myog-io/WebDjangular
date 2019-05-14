@@ -60,6 +60,8 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
         'data',
         'name',
         'sku',
+        'channel_count',
+        'channel_hd_count'
       ].join(',');
 
       this.datastore
