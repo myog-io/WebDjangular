@@ -6,6 +6,7 @@ from webdjango.signals.CoreSignals import (config_group_register,
 
 from .configs import StoreEmailConfig
 from .models.Cart import Cart, CartItem, CartTerm, Product
+from .models.Discount import CartRule
 from .utils.CartUtils import apply_all_cart_rules
 from django.core.cache import cache
 
@@ -42,6 +43,12 @@ def add_term_to_cart(sender, instance, created, *args, **kwargs):
         if terms:
             instance.terms.add(*terms.all())
 
+
+@receiver(post_save, sender=CartRule)
+def cartrule_saved(sender, instance, created, *args, **kwargs):
+    """ Clean Cart Rules cache after some rule is changed """
+    cache.delete("active-cart-rules-count")
+    cache.delete("active-cart-rules")
 
 @receiver(post_save, sender=CartItem)
 def add_term_releted_to_product(sender, instance, created, *args, **kwargs):

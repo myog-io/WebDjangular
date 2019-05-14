@@ -31,6 +31,7 @@ from ..serializers.ProductSerializer import (ProductCategorySerializer,
                                              ProductSerializer,
                                              ProductTypeSerializer)
 from .DiscountUtils import increase_voucher_usage
+from django.core.cache import cache
 
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
@@ -123,7 +124,13 @@ def clean_cart_rules(cart, rules):
 
 
 def apply_all_cart_rules(cart):
-    if CartRule.objects.active().count() > 0:
+   
+    rules_count = cache.get('active-cart-rules-count')
+    if rules_count is None:
+            rules_count = CartRule.objects.active().count()
+            cache.set('active-cart-rules-count', rules_count, 7200)
+
+    if rules_count > 0:
         data = {}
         data['product'] = []
         products = []
@@ -147,8 +154,12 @@ def apply_all_cart_rules(cart):
             cart.billing_address).data
         data['shipping_address'] = AddressSerializer(
             cart.shipping_address).data
-
-        rules = CartRule.objects.active().all()
+        
+        rules = cache.get('active-cart-rules')
+        if rules is None:
+            rules = CartRule.objects.active().all()
+            cache.set('active-cart-rules', rules, 7200)
+        
         rules_to_clear = []
         for rule in rules:
             if rule.conditions and len(rule.conditions) > 0:
