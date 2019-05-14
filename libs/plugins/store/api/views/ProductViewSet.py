@@ -121,7 +121,7 @@ class ProductFilter(WebDjangoFilterSet):
         }
 
 
-class ProductViewSet(CachedModelViewSet):
+class ProductViewSet(ModelViewSet):
     """
     Handles:
     Creating Product
