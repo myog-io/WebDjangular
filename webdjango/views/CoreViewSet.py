@@ -2,7 +2,8 @@ from webdjango.filters import WebDjangoFilterSet
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import GenericViewSet
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from webdjango.models.Core import Author, CoreConfig, Plugin, Theme, Website
 from webdjango.serializers.CoreSerializer import AuthorSerializer, \
     CoreConfigSerializer, PluginSerializer, ThemeSerializer, \
