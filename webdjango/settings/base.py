@@ -80,7 +80,7 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'webdjango.utils.middleware.CurrentWebsiteMiddleware'
 
-
+    'webdjango.utils.middleware.DisableClientSideCachingMiddleware',
 ]
 
 ROOT_URLCONF = 'webdjango.urls'
