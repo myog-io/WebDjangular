@@ -9,6 +9,10 @@ from webdjango.signals.CoreSignals import (config_group_register,
 from webdjango.utils.JsonLogic import jsonLogic
 
 from .models.Form import FormSubmitted
+from .models.Page import Page
+from .models.Menu import MenuItem
+
+from django.core.cache import cache
 
 pre_get_page = ModelSignal(
     providing_args=["request", "args", "kwargs"], use_caching=True)
@@ -38,6 +42,16 @@ def form_submitted(sender, instance, created, *args, **kwargs):
             form_action_triggered.send(sender=sender, instance=action,
                                        form_submitted=instance)
 
+
+@receiver(post_save, sender=Page)
+def page_saved(sender, instance, created, *args, **kwargs):
+    cache.delete_pattern("*page*")
+    cache.delete_pattern("*get_home*")
+    cache.delete_pattern("*get_page*")
+
+@receiver(post_save, sender=MenuItem)
+def menuitem_saved(sender, instance, created, *args, **kwargs):
+    cache.delete_pattern("*menuitem*")
 
 @receiver(form_action_triggered, sender=FormSubmitted)
 def form_send_email(sender, instance, form_submitted, *args, **kwargs):

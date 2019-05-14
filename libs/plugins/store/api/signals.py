@@ -5,14 +5,17 @@ from webdjango.signals.CoreSignals import (config_group_register,
                                            config_register)
 
 from .configs import StoreEmailConfig
-from .models.Cart import Cart, CartItem, CartTerm
+from .models.Cart import Cart, CartItem, CartTerm, Product
 from .utils.CartUtils import apply_all_cart_rules
-
+from django.core.cache import cache
 
 @receiver(config_register)
 def register_configs(*args, **kwargs):
     return StoreEmailConfig.INPUTS
 
+@receiver(post_save, sender=Product)
+def product_saved(sender, instance, created, *args, **kwargs):
+    cache.delete_pattern("*product*")
 
 @receiver(config_group_register)
 def register_config_group(*args, **kwargs):
