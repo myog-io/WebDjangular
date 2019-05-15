@@ -155,7 +155,7 @@ class PageViewSet(CachedModelViewSet):
         return content
 
     @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug', lookup_url_kwarg='slug')
-    @method_decorator(cache_page(7200, key_prefix='get_page'))
+    @method_decorator(cache_page(86400, key_prefix='get_page'))
     @method_decorator(vary_on_cookie)
     def get_page(self, request, *args, **kwargs):
         assert 'pk' in self.kwargs, (
@@ -179,7 +179,7 @@ class PageViewSet(CachedModelViewSet):
         return Response(serializer.data)
 
     @action(methods=['GET'], detail=False, url_path='get_home')
-    @method_decorator(cache_page(7200, key_prefix='get_home'))
+    @method_decorator(cache_page(86400, key_prefix='get_home'))
     @method_decorator(vary_on_cookie)
     def get_home(self, request, format=None, *args, **kwargs):
         """
