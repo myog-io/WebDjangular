@@ -59,6 +59,7 @@ export class PluginProviderAbstractPricingComponent implements OnInit {
         'base_price',
         'data',
         'name',
+        'description',
         'sku',
         'channel_count',
         'channel_hd_count'
