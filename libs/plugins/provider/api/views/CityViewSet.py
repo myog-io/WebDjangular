@@ -52,7 +52,7 @@ class CityViewSet(CachedModelViewSet):
     public_views = ('retrieve', 'list', 'postal_code')
 
     @action(methods=['GET'], detail=True, url_path='postal_code', lookup_field='postal_code', lookup_url_kwarg='postal_code')
-    @method_decorator(cache_page(7200, key_prefix='postal_code'))
+    @method_decorator(cache_page(86400, key_prefix='postal_code'))
     def postal_code(self, request, *args, **kwargs):
         assert 'pk' in self.kwargs, (
             'Expected view %s to be called with a URL keyword argument '

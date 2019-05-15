@@ -128,7 +128,7 @@ def apply_all_cart_rules(cart):
     rules_count = cache.get('active-cart-rules-count')
     if rules_count is None:
             rules_count = CartRule.objects.active().count()
-            cache.set('active-cart-rules-count', rules_count, 7200)
+            cache.set('active-cart-rules-count', rules_count, 86400)
 
     if rules_count > 0:
         data = {}
@@ -158,7 +158,7 @@ def apply_all_cart_rules(cart):
         rules = cache.get('active-cart-rules')
         if rules is None:
             rules = CartRule.objects.active().all()
-            cache.set('active-cart-rules', rules, 7200)
+            cache.set('active-cart-rules', rules, 86400)
         
         rules_to_clear = []
         for rule in rules:

@@ -11,13 +11,12 @@ from webdjango.serializers.CoreSerializer import AuthorSerializer, \
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_cookie
 from django.core.cache import cache
 
 class CachedModelViewSet(ModelViewSet):
     
     def list(self, request, *args, **kwargs):
-        @method_decorator(cache_page(7200, key_prefix=self.basename))
+        @method_decorator(cache_page(86400, key_prefix=self.basename))
         def list_in(self, request, *args, **kwargs):
             return super(CachedModelViewSet, self).list(self, request, *args, **kwargs)
             
@@ -25,7 +24,7 @@ class CachedModelViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         
-        @method_decorator(cache_page(7200, key_prefix=self.basename))
+        @method_decorator(cache_page(86400, key_prefix=self.basename))
         def retrieve_in(self, request, *args, **kwargs):
             return super(CachedModelViewSet, self).retrieve(self, request, *args, **kwargs)
         
