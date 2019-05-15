@@ -78,8 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'webdjango.utils.middleware.CurrentWebsiteMiddleware'
-
+    'webdjango.utils.middleware.CurrentWebsiteMiddleware',
     'webdjango.utils.middleware.DisableClientSideCachingMiddleware',
 ]
 
