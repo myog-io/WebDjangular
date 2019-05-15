@@ -19,7 +19,6 @@ from ..utils import getClientUserCookie
 from webdjango.views.CoreViewSet import CachedModelViewSet
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from django.views.decorators.vary import vary_on_cookie
 
 
 class CityFilter(WebDjangoFilterSet):
@@ -54,7 +53,6 @@ class CityViewSet(CachedModelViewSet):
 
     @action(methods=['GET'], detail=True, url_path='postal_code', lookup_field='postal_code', lookup_url_kwarg='postal_code')
     @method_decorator(cache_page(7200, key_prefix='postal_code'))
-    @method_decorator(vary_on_cookie)
     def postal_code(self, request, *args, **kwargs):
         assert 'pk' in self.kwargs, (
             'Expected view %s to be called with a URL keyword argument '

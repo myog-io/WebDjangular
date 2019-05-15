@@ -18,7 +18,6 @@ class CachedModelViewSet(ModelViewSet):
     
     def list(self, request, *args, **kwargs):
         @method_decorator(cache_page(7200, key_prefix=self.basename))
-        @method_decorator(vary_on_cookie)
         def list_in(self, request, *args, **kwargs):
             return super(CachedModelViewSet, self).list(self, request, *args, **kwargs)
             
@@ -27,7 +26,6 @@ class CachedModelViewSet(ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         
         @method_decorator(cache_page(7200, key_prefix=self.basename))
-        @method_decorator(vary_on_cookie)
         def retrieve_in(self, request, *args, **kwargs):
             return super(CachedModelViewSet, self).retrieve(self, request, *args, **kwargs)
         
