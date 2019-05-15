@@ -243,7 +243,6 @@ export class ProviderCheckoutService {
         .toString();
       this.location.go(url);
       this.cartService.setCartToken(params['token'], params['city_id']).then((cart) => {
-        console.log(cart, "CART LOADEDed??");
         this.city = this.clientUserService.clientUser.data['city'];
         this.loading_cart = true;
         this.loadedCart();
