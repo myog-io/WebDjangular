@@ -20,16 +20,22 @@ export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestro
   cities: CityModel[];
   loading = true;
   sub: Subscription;
+  cookieSub: Subscription;
+
   constructor(
     public activeModal: NgbActiveModal,
     private http: HttpClient,
     private datastore: WebAngularDataStore,
-    private clientUserService: ClientUserService
+    private clientUserService: ClientUserService,
   ) {
 
   }
   ngOnInit() {
 
+    this.cookieSub = this.clientUserService.clientCookieChange.subscribe((data) => {
+      // Closing the Modal,because cookie has already being set
+      this.activeModal.close();
+    })
 
   }
   ngOnDestroy() {

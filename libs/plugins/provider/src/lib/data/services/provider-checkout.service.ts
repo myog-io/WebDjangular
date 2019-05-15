@@ -216,14 +216,15 @@ export class ProviderCheckoutService {
     this.cartService.clearCart(remove).then(
       res => {
         // TODO: maybe improve, maybe not
-
+        location.reload();
         // console.log('restart cart deleted',res );
-        this.current_step = ProviderCheckoutSteps.beforeCheckout;
-        this.current_wizard_step = 1;
-        this.formBeforeCheckoutSubmitted = false;
+        //this.current_step = ProviderCheckoutSteps.beforeCheckout;
+        //this.current_wizard_step = 1;
+        //this.formBeforeCheckoutSubmitted = false;
         //
-        this.formBeforeCheckout.reset();
-        this.cartService
+        //this.formBeforeCheckout.reset();
+
+        //this.cartService
         // console.log(this.formBeforeCheckout.get('typeOfAccess').errors);
       },
       error => {
@@ -241,7 +242,15 @@ export class ProviderCheckoutService {
         })
         .toString();
       this.location.go(url);
-      this.cartService.setCartToken(params['token'], params['city_id']);
+      this.cartService.setCartToken(params['token'], params['city_id']).then((cart) => {
+        console.log(cart, "CART LOADEDed??");
+        this.city = this.clientUserService.clientUser.data['city'];
+        this.loading_cart = true;
+        this.loadedCart();
+      }, (error) => {
+
+      });
+
     }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
@@ -276,6 +285,7 @@ export class ProviderCheckoutService {
   }
 
   loadedCart() {
+    console.log("Loading Cart?!?!", this.loading_cart);
     if (this.loading_cart) {
       if (this.cartSub) {
         this.cartSub.unsubscribe();
@@ -375,7 +385,7 @@ export class ProviderCheckoutService {
     this.selectingTVPlan = false;
     this.selectingInternetPlan = false;
     let categories_ids = {};
-    if (cart.items) {
+    if (cart && cart.items) {
       for (let i = 0; i < cart.items.length; i++) {
         const item = cart.items[i];
         if (item.product) {

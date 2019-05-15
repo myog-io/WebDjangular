@@ -32,46 +32,62 @@ export class CartService {
     private datastore: WebAngularDataStore,
     private clientUserService: ClientUserService
   ) {
-    const cartExists: boolean = cookieService.check(this.cart_cookie_name);
-    if (cartExists) {
-      const cartCookie = JSON.parse(cookieService.get(this.cart_cookie_name));
-      if (cartCookie['token']) {
-        this.datastore
-          .findAll(CartModel, {
-            token: cartCookie['token'],
-            page: { size: 1, number: 1 },
-            include: [
-              'billing_address',
-              'shipping_address',
-              'items',
-              'items.product',
-              'items.product.product_type',
-              'items.product.categories',
-              'user'
-            ].join(',')
-          })
-          .subscribe(
-            (queryData: JsonApiQueryData<CartModel>) => {
-              const carts = queryData.getModels();
-              if (carts.length > 0) {
-                this.cart = carts[0];
-              } else {
-                this.cookieService.delete(this.cart_cookie_name);
-                this.cart = datastore.createRecord(CartModel, {
-                  extra_data: {}
-                });
+    this.initCart().then((cart) => {
+      console.log("Loaded Cart");
+    });
+  }
+  private initCart(): Promise<CartModel> {
+
+    return new Promise((resolve, reject) => {
+      this.cart_updating = true;
+      const cartExists: boolean = this.cookieService.check(this.cart_cookie_name);
+      if (cartExists) {
+        const cartCookie = JSON.parse(this.cookieService.get(this.cart_cookie_name));
+        if (cartCookie['token']) {
+          this.datastore
+            .findAll(CartModel, {
+              token: cartCookie['token'],
+              page: { size: 1, number: 1 },
+              include: [
+                'billing_address',
+                'shipping_address',
+                'items',
+                'items.product',
+                'items.product.product_type',
+                'items.product.categories',
+                'user'
+              ].join(',')
+            })
+            .subscribe(
+              (queryData: JsonApiQueryData<CartModel>) => {
+                const carts = queryData.getModels();
+                if (carts.length > 0) {
+                  this.cart = carts[0];
+                } else {
+                  this.cookieService.delete(this.cart_cookie_name);
+                  this.cart = this.datastore.createRecord(CartModel, {
+                    extra_data: {}
+                  });
+
+                }
+                this.cart_updating = false;
+                resolve(this.cart);
+              },
+              (error: any) => {
+                // TODO: do something
+                console.log("ERROR?!?!?", error);
+                this.cart_updating = false;
+                reject(error);
               }
-            },
-            (error: any) => {
-              // TODO: do something
-            }
-          );
+            );
+        }
+      } else {
+        this.cart = this.datastore.createRecord(CartModel, {
+          extra_data: {}
+        });
+        resolve(this.cart);
       }
-    } else {
-      this.cart = datastore.createRecord(CartModel, {
-        extra_data: {}
-      });
-    }
+    });
   }
 
   get cart(): CartModel {
@@ -83,25 +99,33 @@ export class CartService {
     this.cart_changes.emit();
   }
 
-  public setCartToken(token: string, city_id: string) {
-    const cartCookie: CookieCart = {
-      token: token
-    };
-    this.cookieService.set(
-      this.cart_cookie_name,
-      JSON.stringify(cartCookie),
-      30
-    );
-    this.datastore
-      .findRecord(CityModel, city_id, { fields: 'id,name' })
-      .subscribe(city => {
-        this.clientUserService.clientUser.data['city'] = {
-          id: city.id,
-          name: city.name
-        };
-        this.clientUserService.updateCookie();
-        //TODO: Instead of Refreshing the page we shoul actually get the cart
-      });
+  public setCartToken(token: string, city_id: string): Promise<CartModel> {
+    return new Promise((resolve, reject) => {
+      const cartCookie: CookieCart = {
+        token: token
+      };
+      this.cookieService.set(
+        this.cart_cookie_name,
+        JSON.stringify(cartCookie),
+        30
+      );
+      this.datastore
+        .findRecord(CityModel, city_id, { fields: 'id,name' })
+        .subscribe(city => {
+          this.clientUserService.clientUser.data['city'] = {
+            id: city.id,
+            name: city.name
+          };
+          this.clientUserService.updateCookie();
+          this.initCart().then((cart: CartModel) => {
+            resolve(cart)
+          }, (error) => {
+            reject(error);
+          });
+          //TODO: Instead of Refreshing the page we shoul actually get the cart
+
+        });
+    });
   }
 
   public updateCookie() {
