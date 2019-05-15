@@ -216,7 +216,9 @@ export class ProviderCheckoutService {
     this.cartService.clearCart(remove).then(
       res => {
         // TODO: maybe improve, maybe not
-        location.reload();
+        if (typeof window !== 'undefined') {
+          window.location.reload(); // Error window on server need to do a IF?
+        }
         // console.log('restart cart deleted',res );
         // this.current_step = ProviderCheckoutSteps.beforeCheckout;
         // this.current_wizard_step = 1;

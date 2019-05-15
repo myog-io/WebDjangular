@@ -100,7 +100,9 @@ export class CartService {
           name: city.name
         };
         this.clientUserService.updateCookie();
-        location.reload();
+        if (typeof window !== 'undefined') {
+          window.location.reload(); // Error window on server need to do a IF?
+        }
       });
   }
 
