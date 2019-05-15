@@ -39,7 +39,7 @@ export class CartService {
   private initCart(): Promise<CartModel> {
 
     return new Promise((resolve, reject) => {
-      this.cart_updating = true;
+
       const cartExists: boolean = this.cookieService.check(this.cart_cookie_name);
       if (cartExists) {
         const cartCookie = JSON.parse(this.cookieService.get(this.cart_cookie_name));
@@ -70,13 +70,12 @@ export class CartService {
                   });
 
                 }
-                this.cart_updating = false;
                 resolve(this.cart);
               },
               (error: any) => {
                 // TODO: do something
                 console.log("ERROR?!?!?", error);
-                this.cart_updating = false;
+            
                 reject(error);
               }
             );
@@ -161,7 +160,6 @@ export class CartService {
           }
         )
       } else {
-        console.log("Cart Already being Fetched");
         resolve(this.cart)
       }
     });

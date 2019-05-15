@@ -285,7 +285,6 @@ export class ProviderCheckoutService {
   }
 
   loadedCart() {
-    console.log("Loading Cart?!?!", this.loading_cart);
     if (this.loading_cart) {
       if (this.cartSub) {
         this.cartSub.unsubscribe();
