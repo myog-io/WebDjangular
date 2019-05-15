@@ -23,7 +23,6 @@ class InitViewSet(viewsets.GenericViewSet):
     public_views = ('list', )
     #permission_classes = (IsAuthenticatedOrReadOnly, )
 
-    @method_decorator(cache_page(7200, key_prefix='core_init'))
     def list(self, request, format=None):
         """
         Return the essential data.
