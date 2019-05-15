@@ -100,9 +100,7 @@ export class CartService {
           name: city.name
         };
         this.clientUserService.updateCookie();
-        if (typeof window !== 'undefined') {
-          window.location.reload(); // Error window on server need to do a IF?
-        }
+        //TODO: Instead of Refreshing the page we shoul actually get the cart
       });
   }
 
@@ -330,6 +328,9 @@ export class CartService {
       if (this._cart.id && remove) {
         this.datastore.deleteRecord(CartModel, this._cart.id).subscribe(
           response => {
+            this.cart = this.datastore.createRecord(CartModel, {
+              extra_data: {}
+            });
             resolve(response);
           },
           (error: ErrorResponse) => {

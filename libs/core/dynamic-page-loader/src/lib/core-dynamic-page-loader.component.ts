@@ -4,9 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   ViewEncapsulation,
-  Inject
+  Inject,
+  OnDestroy
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup } from '@angular/router';
 import { PageModel } from '@core/cms/src/lib/models';
 import { ErrorResponse } from 'angular2-jsonapi';
 
@@ -16,6 +17,8 @@ import { DOCUMENT } from '@angular/common';
 import { BlockHeaderModel } from '@core/cms/src/lib/models/BlockHeader.model';
 import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
 import { WDAConfig } from '@core/services/src/lib/wda-config.service';
+import { ClientUserService } from '@core/services/src/lib/client-user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'webdjangular-dynamic-page-loader',
@@ -31,7 +34,7 @@ import { WDAConfig } from '@core/services/src/lib/wda-config.service';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CoreDynamicPageLoaderComponent implements AfterViewInit {
+export class CoreDynamicPageLoaderComponent implements AfterViewInit, OnDestroy {
   public content: string;
   public header: string;
   public footer: string;
@@ -43,6 +46,8 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   private links = [];
   //private bodyRef: ComponentRef<{}>;
   public completeLoadCallback = null;
+  private cookieSub: Subscription;
+  private routeSub: Subscription;
   //@ViewChild('bodyContainer', { read: ViewContainerRef }) bodyContainer: ViewContainerRef;
 
   constructor(
@@ -51,9 +56,11 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     public seo: SEOService,
     public router: Router,
+    public clientUserService: ClientUserService,
     //private pageScrollService: PageScrollService,
     @Inject(DOCUMENT) private document: any
   ) {
+
     this.links.push({
       path: '**',
       pathMatch: 'full',
@@ -67,14 +74,6 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
         if (event.anchor) {
           this.completeLoadCallback = () => {
             this.completeLoadCallback = null;
-            //let pageScrollInstance: PageScrollInstance = PageScrollInstance.newInstance(
-            //  {
-            //    document: this.document,
-            //    scrollTarget: `#${event.anchor}`,
-            //    pageScrollDuration: 450
-            //  }
-            //);
-            //this.pageScrollService.start(pageScrollInstance);
           };
         }
       });
@@ -84,11 +83,39 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
   async ngAfterViewInit() {
     this.domain = document.location.hostname;
     this.url = document.location.protocol + '//' + this.domain;
-    this.activatedRoute.data.subscribe((data: any) => {
+
+
+    this.routeSub = this.activatedRoute.data.subscribe((data: any) => {
       this.loadPagesContent(data.page);
     });
+    this.cookieSub = this.clientUserService.clientCookieChange.subscribe((clientCoookie) => {
+      this.reloadPage();
+    });
   }
+  public async reloadPage() {
+    const tree: UrlTree = this.router.parseUrl(this.router.url);
+    const urlSegmentGroup: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+    if (urlSegmentGroup) {
+      const urlSegments: UrlSegment[] = urlSegmentGroup.segments;
+      try {
+        const page = await this.wdaConfig.getPage(urlSegments);
+        this.loadPagesContent(page);
+      }
+      catch (error) {
+        this.loadPagesContent(error);
+      }
+    } else {
+      try {
+        const home = await this.wdaConfig.getHome();
+        this.loadPagesContent(home);
+      }
+      catch (error_1) {
+        this.loadPagesContent(error_1);
+      }
+    }
 
+
+  }
   public renderComplete() {
     if (this.completeLoadCallback) {
       this.completeLoadCallback();
@@ -119,5 +146,15 @@ export class CoreDynamicPageLoaderComponent implements AfterViewInit {
       }
     }
     this.cdr.detectChanges();
+  }
+  ngOnDestroy() {
+    if (this.cookieSub) {
+      this.cookieSub.unsubscribe();
+      this.cookieSub = null;
+    }
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+      this.routeSub = null;
+    }
   }
 }

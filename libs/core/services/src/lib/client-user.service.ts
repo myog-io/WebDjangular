@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { WebAngularDataStore } from './WebAngularDataStore.service';
@@ -16,7 +16,7 @@ export interface CookieClientUser {
 })
 export class ClientUserService {
   public clientUser: UserModel;
-
+  public clientCookieChange: EventEmitter<CookieClientUser> = new EventEmitter();
   constructor(
     private http: HttpClient,
     private datastore: WebAngularDataStore,
@@ -61,6 +61,7 @@ export class ClientUserService {
       data: this.clientUser.data
     };
     this.setCookie('clientUser', JSON.stringify(userCookie));
+    this.clientCookieChange.emit(userCookie);
   }
 
   private setCookie(name, data) {

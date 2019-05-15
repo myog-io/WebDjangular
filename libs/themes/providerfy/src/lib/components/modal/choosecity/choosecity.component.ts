@@ -68,7 +68,7 @@ export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestro
   }
 
   onSubmit() {
-    //this.activeModal.close();
+
     const city_id = this.form.get('city').value;
     const cityModel = this.cities.find(city => city.id === city_id);
     this.clientUserService.clientUser.data['city'] = {
@@ -76,9 +76,6 @@ export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestro
       name: cityModel.name
     };
     this.clientUserService.updateCookie();
-    // TODO: remake it with a better way
-    if (typeof window !== 'undefined') {
-      window.location.reload(); // Error window on server need to do a IF?
-    }
+    this.activeModal.close();
   }
 }
