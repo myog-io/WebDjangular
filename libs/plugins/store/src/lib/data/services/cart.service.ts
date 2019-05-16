@@ -25,7 +25,7 @@ export class CartService {
   private cart_cookie_name: string = '_cart';
   public cart_changes: EventEmitter<null> = new EventEmitter();
   public cart_updating: boolean = false;
-
+  private cart_model_include = `${CartModel.include},items.product,items.product.categories,items.product.product_type,user,billing_address,shipping_address`;
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -48,34 +48,38 @@ export class CartService {
             .findAll(CartModel, {
               token: cartCookie['token'],
               page: { size: 1, number: 1 },
-              include: [
-                'billing_address',
-                'shipping_address',
-                'items',
-                'items.product',
-                'items.product.product_type',
-                'items.product.categories',
-                'user'
-              ].join(',')
+              include: this.cart_model_include,
+              //include: [
+              //  'billing_address',
+              //  'shipping_address',
+              //  'items',
+              //  'items.product',
+              //  'items.product.product_type',
+              //  'items.product.categories',
+              //  'user'
+              //].join(',')
             })
             .subscribe(
               (queryData: JsonApiQueryData<CartModel>) => {
                 const carts = queryData.getModels();
                 if (carts.length > 0) {
-                  this.cart = carts[0];
-                } else {
-                  this.cookieService.delete(this.cart_cookie_name);
-                  this.cart = this.datastore.createRecord(CartModel, {
-                    extra_data: {}
-                  });
-
+                  for (let i = 0; i < carts.length; i++) {
+                    const cur_cart = carts[i];
+                    if (cur_cart.token === cartCookie['token']) {
+                      this.cart = cur_cart;
+                      break;
+                    }
+                  }
+                }
+                if (!this.cart) {
+                  this.cartTokenNotFound();
                 }
                 resolve(this.cart);
               },
               (error: any) => {
                 // TODO: do something
                 console.log("ERROR?!?!?", error);
-            
+
                 reject(error);
               }
             );
@@ -88,7 +92,12 @@ export class CartService {
       }
     });
   }
-
+  private cartTokenNotFound() {
+    this.cookieService.delete(this.cart_cookie_name);
+    this.cart = this.datastore.createRecord(CartModel, {
+      extra_data: {}
+    });
+  }
   get cart(): CartModel {
     return this._cart;
   }
@@ -144,7 +153,7 @@ export class CartService {
       if (!this.cart_updating) {
         this.cart_updating = true;
         this.datastore.findRecord(CartModel, this.cart.id, {
-          include: `${CartModel.include},items.product,items.product.categories`
+          include: this.cart_model_include,
         }).subscribe(
           (cart: CartModel) => {
             this.cart = cart;
@@ -282,9 +291,12 @@ export class CartService {
     return new Promise((resolve, reject) => {
       cartItem.save().subscribe(
         (cartItem: CartItemModel) => {
-          console.log(this.cart.items);
+          //console.log(this.cart.items);
+          resolve(cartItem);
         },
-        () => { }
+        (error) => {
+          reject(error);
+        }
       );
     });
   }

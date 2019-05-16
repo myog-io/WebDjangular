@@ -45,16 +45,14 @@ export class CoreCmsGalleryComponent implements OnInit {
       const url = splited[0];
       const splited_params = splited[1] ? splited[1].split('&') : null;
       const query_params = {};
-      let params = null;
-      if (splited_params.length > 0) {
+      let params = {};
+      if (splited_params && splited_params.length > 0) {
         for (let i = 0; i < splited_params.length; i++) {
           const key_value = splited_params[i].split('=');
           query_params[key_value[0]] = key_value[1];
         }
         params = { queryParams: query_params }
       }
-
-
       this.router.navigate([url], params);
     }
   }

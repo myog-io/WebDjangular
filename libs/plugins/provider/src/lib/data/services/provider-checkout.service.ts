@@ -321,8 +321,8 @@ export class ProviderCheckoutService {
           reseller: cart.extra_data.reseller_id || ''
         });
       }
-
-      this.updateSelectedItems();
+      // Looks like we should't be calling this function twice
+      //this.updateSelectedItems();
 
       if (this.cartService.cart.extra_data.hasOwnProperty('current_step')) {
         this.current_step = this.cartService.cart.extra_data['current_step'];
@@ -731,7 +731,6 @@ export class ProviderCheckoutService {
             resolve(this.city);
             // TODO: Create Address Baser on City
           }, (error) => {
-            console.log(error)
             reject(error);
           });
       }
@@ -1405,7 +1404,6 @@ export class ProviderCheckoutService {
     } else {
       Object.keys(this.formBeforeCheckout.controls).forEach(field => {
         const control = this.formBeforeCheckout.get(field);
-        console.log(control, control.errors)
         control.markAsTouched({ onlySelf: true });
       });
     }
