@@ -89,7 +89,6 @@ export class ProviderCheckoutService {
     telephone: []
   };
 
-  public default_contract_time: string = '2'; //in years
   public default_payment_type: string = 'email'; // email or mail
   private fees: any;
   get plan_type(): PlanTypeModel {
@@ -1328,7 +1327,7 @@ export class ProviderCheckoutService {
     if (this.has_reseller)
       extra_data.reseller_id = this.formBeforeCheckout.get('reseller').value;
     if (!extra_data.hasOwnProperty('contractTime'))
-      extra_data.contractTime = this.default_contract_time;
+      extra_data.contractTime = this.providerConfig.max_year_contract || 2;
     if (!extra_data.hasOwnProperty('paymentType'))
       extra_data.paymentType = this.default_payment_type;
 

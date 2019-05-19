@@ -22,23 +22,37 @@ export class PluginProviderCheckoutWizardStep02Component
   public ctSub: Subscription;
   public mgSub: Subscription;
   public error: string = null;
+  public maxYearsContract: any = [
+    'Sem Fidelidade',
+    '1 Ano',
+    '2 Anos',
+  ];
+  public yearString = "Anos";
   constructor(
     public providerCheckout: ProviderCheckoutService,
     public formBuilder: FormBuilder
-  ) { }
+  ) {
+    this.generatingContractTime();
+  }
 
   ngOnInit() {
     this.formWizardStep02Submitted = false;
 
     this.cart = this.providerCheckout.cartService.cart;
     let paymentType: string = '';
-    let contractTime: string = '2';
+    const contractTime = {
+      value: this.providerCheckout.providerConfig.max_year_contract || 2,
+      disabled: false,
+    };
 
     if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
-    if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime = this.cart.extra_data['contractTime'];
+    if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime.value = this.cart.extra_data['contractTime'];
+
     if (!this.providerCheckout.selected_internet_plan) {
       // Forcing Contract Time with 1 year
-      contractTime = '1';
+      // TODO: This also should be dynamic
+      contractTime.value = '1';
+      contractTime.disabled = true;
     }
     // Checking if we have a migation of speed, has to have internetplan,
     if (this.providerCheckout.selected_internet_plan) {
@@ -96,6 +110,32 @@ export class PluginProviderCheckoutWizardStep02Component
       this.updateCartExtraData('migration_type', value);
     })
   }
+  /**
+   * This function will make the logic behind the Contract Time
+   */
+  generatingContractTime() {
+    // Starting the Value
+    this.maxYearsContract = [
+      'Sem Fidelidade',
+      '1 Ano',
+      '2 Anos',
+    ];
+
+    if (this.providerCheckout.providerConfig.max_year_contract && this.providerCheckout.providerConfig.max_year_contract != 2) {
+      let contracts = [];
+
+      for (let i = 0; i <= this.providerCheckout.providerConfig.max_year_contract; i++) {
+        if (i > 1) {
+          contracts[i] = `${i} ${this.yearString}`;
+        } else {
+          contracts[i] = this.maxYearsContract[i];
+        }
+      }
+
+      this.maxYearsContract = contracts;
+    }
+  }
+
   updateCartExtraData(key, value) {
     this.providerCheckout.updating_cart = true;
     this.providerCheckout.updateCartExtraData(key, value).then(

@@ -12,10 +12,7 @@
             <h6>Fidelidade</h6>
             <div class="form-group">
               <select class="form-control" formControlName="contractTime">
-                <!-- For Some reason when there's not an internet plan, we should only give the 1 year option-->
-                <option value="0" *ngIf="providerCheckout.selected_internet_plan">Sem Fidelidade</option>
-                <option value="1">1 ano</option>
-                <option value="2" *ngIf="providerCheckout.selected_internet_plan">2 anos</option>
+                <option *ngFor="let yearContract of maxYearsContract; index as i;" [value]="i">{{yearContract}}</option>
               </select>
             </div>
           </div>
