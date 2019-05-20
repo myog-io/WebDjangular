@@ -71,7 +71,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
       });
 
     this.plan_types = this.datastore
-      .findAll(PlanTypeModel, null, new HttpHeaders({ Authorization: 'none' }))
+      .findAll(PlanTypeModel, { fields: 'id,name,code' }, new HttpHeaders({ Authorization: 'none' }))
       .map(query => {
         this.plan_types_list = query.getModels();
         this.checkCondos(

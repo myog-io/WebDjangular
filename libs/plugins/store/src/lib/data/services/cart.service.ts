@@ -32,11 +32,11 @@ export class CartService {
     private datastore: WebAngularDataStore,
     private clientUserService: ClientUserService
   ) {
-    this.initCart().then((cart) => {
-      console.log("Loaded Cart");
-    });
+    //this.initCart().then((cart) => {
+    //  console.log("Loaded Cart");
+    //});
   }
-  private initCart(): Promise<CartModel> {
+  public initCart(): Promise<CartModel> {
 
     return new Promise((resolve, reject) => {
 

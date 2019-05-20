@@ -208,6 +208,7 @@ export class ProviderCheckoutService {
         this.has_reseller = true;
       }
       this.checkPreSelectedPlans(params);
+
     });
   }
 
@@ -248,7 +249,12 @@ export class ProviderCheckoutService {
       }, (error) => {
 
       });
-
+    } else {
+      this.cartService.initCart().then((cart) => {
+        this.city = this.clientUserService.clientUser.data['city'];
+        this.loading_cart = true;
+        this.loadedCart();
+      })
     }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
@@ -335,7 +341,8 @@ export class ProviderCheckoutService {
             this.datastore
               .findRecord(
                 PlanTypeModel,
-                this.cartService.cart.extra_data.plan_type_id
+                this.cartService.cart.extra_data.plan_type_id,
+                { fields: 'id,code' }
               )
               .subscribe(plan_type => {
                 this.plan_type = plan_type;
@@ -1544,7 +1551,6 @@ export class ProviderCheckoutService {
   }
 
   getTokenFullURL() {
-    console.log(this.cartService.cart.token);
     const url: string =
       window.location.origin +
       this.router
