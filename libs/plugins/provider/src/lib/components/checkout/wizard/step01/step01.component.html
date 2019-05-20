@@ -204,7 +204,7 @@
                       </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="formWizardStep01.get('portability_number')">
                       <div class="col col-md-12">
                         <div class="form-group">
                           <input type="text" mask="(00) 0000-0000" formControlName="portability_number" />
@@ -230,9 +230,8 @@
                             <option value="oi">Oi</option>
                             <option value="nextel">Nextel</option>
                           </select>
-                          <plugin-provider-checkout-error [ctrl]="
-                              formWizardStep01.controls['portability_provider']
-                            " name="Operadora">
+                          <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['portability_provider']"
+                            name="Operadora">
                           </plugin-provider-checkout-error>
                         </div>
                       </div>

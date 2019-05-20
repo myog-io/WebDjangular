@@ -49,6 +49,7 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     let street_address_3: string = '';
 
 
+
     if (this.providerCheckout.address) {
       if (this.providerCheckout.address.first_name)
         name += this.providerCheckout.address.first_name;
