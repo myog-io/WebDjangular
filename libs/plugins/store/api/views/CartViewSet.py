@@ -1,3 +1,6 @@
+import re
+
+from django.http import Http404
 from django_filters.filters import ModelChoiceFilter
 from rest_framework import status
 from rest_framework.decorators import action
@@ -142,7 +145,15 @@ class CartViewSet(ModelViewSet):
         '''
         self.lookup_url_kwarg = 'pk'
         self.lookup_field = 'token'
-        instance = self.get_object()
+        try:
+            instance = self.get_object()
+        except Http404 as err404:
+            # If not found we have to remove all the "-" from the string to try to find
+            # Backwards compatability
+            lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+            self.kwargs[lookup_url_kwarg] = re.sub('-','',self.kwargs[lookup_url_kwarg]) 
+            instance = self.get_object()
+        
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
