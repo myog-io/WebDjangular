@@ -80,7 +80,7 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     # TODO: Improve Security we should have some way to know who's the Cart Owner
     # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
-    public_views = ('list', 'retrieve', 'complete_order',
+    public_views = ('list', 'retrieve', 'complete_order', 'by_token',
                     'create', 'update', 'partial_update', 'destroy')
 
     def apply_rules(self, instance):
@@ -129,11 +129,24 @@ class CartViewSet(ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
         instance = self.get_object()
-        apply_all_cart_rules(instance)
+        self.apply_rules(instance)
         instance = self.get_object()
         serializer = self.get_serializer(instance)
 
         return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True, url_path='by_token')
+    def by_token(self, request, *args, **kwargs):
+        '''
+        Get the Details of an order by order token
+        '''
+        self.lookup_url_kwarg = 'pk'
+        self.lookup_field = 'token'
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+
+    
 
     def update(self, request, *args, **kwargs):
         # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
@@ -143,15 +156,17 @@ class CartViewSet(ModelViewSet):
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-        apply_all_cart_rules(instance)
+        # Run Rules After the Update Perform
+        self.apply_rules(instance)
+        # Get Instance again
         instance = self.get_object()
         if getattr(instance, '_prefetched_objects_cache', None):
             # If 'prefetch_related' has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
-        # Run Rules
+        
 
-        # Get Instance again
+        
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 

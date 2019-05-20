@@ -46,8 +46,8 @@ class Cart(BaseModel):
                              blank=True, null=True, related_name='user')
     # When user is null, the email means it is a guest (not logged in user)
     email = models.CharField(max_length=64, null=True, default=None)
-
-    token = models.UUIDField(default=uuid4, editable=False)
+    
+    token = models.CharField(max_length=40, default=uuid4, editable=False, unique=True)
     total_quantity = models.PositiveIntegerField(default=0)
     status = models.CharField(
         max_length=16, choices=CartStatus.CHOICES, default=CartStatus.ACTIVE)

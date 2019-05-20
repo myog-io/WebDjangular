@@ -44,45 +44,22 @@ export class CartService {
       if (cartExists) {
         const cartCookie = JSON.parse(this.cookieService.get(this.cart_cookie_name));
         if (cartCookie['token']) {
-          this.datastore
-            .findAll(CartModel, {
-              token: cartCookie['token'],
-              page: { size: 1, number: 1 },
-              include: this.cart_model_include,
-              //include: [
-              //  'billing_address',
-              //  'shipping_address',
-              //  'items',
-              //  'items.product',
-              //  'items.product.product_type',
-              //  'items.product.categories',
-              //  'user'
-              //].join(',')
-            })
-            .subscribe(
-              (queryData: JsonApiQueryData<CartModel>) => {
-                const carts = queryData.getModels();
-                if (carts.length > 0) {
-                  for (let i = 0; i < carts.length; i++) {
-                    const cur_cart = carts[i];
-                    if (cur_cart.token === cartCookie['token']) {
-                      this.cart = cur_cart;
-                      break;
-                    }
-                  }
-                }
-                if (!this.cart) {
-                  this.cartTokenNotFound();
-                }
-                resolve(this.cart);
-              },
-              (error: any) => {
-                // TODO: do something
-                console.log("ERROR?!?!?", error);
+          this.datastore.findRecord(CartModel,
+            cartCookie['token'], { include: this.cart_model_include },
+            null, `api/store/cart/${cartCookie['token']}/by_token/`
+          ).subscribe(
+            (cart: CartModel) => {
+              this.cart = cart;
+              resolve(this.cart);
+            },
+            (error: any) => {
+              // TODO: do something
+              console.log("ERROR?!?!?", error);
+              this.cartTokenNotFound();
+              reject(error);
 
-                reject(error);
-              }
-            );
+            }
+          );
         }
       } else {
         this.cart = this.datastore.createRecord(CartModel, {

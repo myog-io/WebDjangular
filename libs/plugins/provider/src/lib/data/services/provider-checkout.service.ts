@@ -1463,7 +1463,10 @@ export class ProviderCheckoutService {
             reject(error)
           } else {
             // Want to search for an order to check if was created or not, if yes
-            this.datastore.findRecord(OrderModel, this.cartService.cart.id, null, null, `api/store/order/${this.cartService.cart.token}/by_token/`).subscribe((order) => {
+            this.datastore.findRecord(OrderModel,
+              this.cartService.cart.id, null, null,
+              `api/store/order/${this.cartService.cart.token}/by_token/`
+            ).subscribe((order) => {
               this.nextStep();
               resolve(order);
             }, (new_error) => {
@@ -1541,6 +1544,7 @@ export class ProviderCheckoutService {
   }
 
   getTokenFullURL() {
+    console.log(this.cartService.cart.token);
     const url: string =
       window.location.origin +
       this.router

@@ -231,7 +231,7 @@ class Order(BaseModel):
     billing_address = JSONField(blank=True, editable=False)
     shipping_address = JSONField(blank=True, editable=False)
     terms = JSONField(blank=True, editable=False)
-    token = models.UUIDField(default=None, editable=False, blank=True, null=True)
+    token = models.CharField(max_length=40, default=None, editable=False, blank=True, null=True)
     # shipping_method = models.ForeignKey(
     #     ShippingMethod, blank=True, null=True, related_name='orders',
     #     on_delete=models.SET_NULL)
