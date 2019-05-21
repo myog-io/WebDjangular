@@ -342,7 +342,7 @@ export class ProviderCheckoutService {
               .findRecord(
                 PlanTypeModel,
                 this.cartService.cart.extra_data.plan_type_id,
-                { fields: 'id,code' }
+                { fields: 'id,code,is_business' }
               )
               .subscribe(plan_type => {
                 this.plan_type = plan_type;

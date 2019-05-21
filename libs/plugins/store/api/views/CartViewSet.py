@@ -151,13 +151,12 @@ class CartViewSet(ModelViewSet):
             # If not found we have to remove all the "-" from the string to try to find
             # Backwards compatability
             lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
-            self.kwargs[lookup_url_kwarg] = re.sub('-','',self.kwargs[lookup_url_kwarg]) 
+            self.kwargs[lookup_url_kwarg] = re.sub(
+                '-', '', self.kwargs[lookup_url_kwarg])
             instance = self.get_object()
-        
+
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-
-    
 
     def update(self, request, *args, **kwargs):
         # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
@@ -175,9 +174,7 @@ class CartViewSet(ModelViewSet):
             # If 'prefetch_related' has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
-        
 
-        
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
