@@ -5,16 +5,10 @@ import {
   BelongsTo,
   NestedAttribute
 } from 'angular2-jsonapi';
-import { AbstractModel, CoreConfigInputModel } from '@core/data/src/lib/models';
+import { AbstractModel } from '@core/data/src/lib/models';
 import { PermissionModel, UserModel } from '@core/users/src/lib/models';
-import {
-  SmartTableColumnSettings,
-  SmartTableSettings,
-  SmartTableSettingsAttr
-} from '@core/data/src/lib/data-store';
-import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
-import { FormGroup } from '@angular/forms';
-import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
+
 import { OrderLineModel } from '@plugins/store/src/lib/data/models/OrderLine.model';
 import { OrderEventModel } from '@plugins/store/src/lib/data/models/OrderEvent.model';
 
@@ -103,6 +97,17 @@ export class OrderModel extends AbstractModel {
         title: 'Order number',
         type: 'text'
       },
+      billing_address: {
+        title: 'Name',
+        type: 'text',
+        valuePrepareFunction: (cell: any, row: any) => {
+          if (cell.company_name) {
+            return `${cell.first_name} ${cell.last_name} - ${cell.company_name}`;
+          }
+          return `${cell.first_name} ${cell.last_name}`;
+        }
+      },
+
       status: {
         title: 'Status',
         type: 'text'
