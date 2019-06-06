@@ -42,8 +42,11 @@
           CPF: <strong>{{ order.extra_data.cpf }}</strong><br>
           Nascimento:<strong> {{ order.extra_data.dob }}</strong><br>
           Celular: <strong>{{ order.extra_data.mobile }}</strong><br>
+          Celular Extra: <strong>{{ order.extra_data.mobile_extra }}</strong><br>
           Telefone: <strong>{{ order.extra_data.telephone }}</strong><br>
-          Email: <strong>{{ order.user_email }}</strong>
+          Email: <strong>{{ order.user_email }}</strong><br>
+          Observação: <br>
+          <pre>{{ order.extra_data.message }}</pre>
         </nb-card-body>
       </nb-card>
     </div>

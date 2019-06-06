@@ -37,8 +37,10 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     let cpf: string = '';
     let rg: string = '';
     let mobile: string = '';
+    let mobile_extra: string = '';
     let telephone: string = '';
     let dob: string = '';
+    let message: string = '';
 
     let postal_code: string = '';
     let city: string = '';
@@ -77,15 +79,21 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       rg = this.cart.extra_data['rg'];
     if (this.cart.extra_data.hasOwnProperty('mobile'))
       mobile = this.cart.extra_data['mobile'];
+    if (this.cart.extra_data.hasOwnProperty('mobile_extra'))
+      mobile_extra = this.cart.extra_data['mobile_extra'];
     if (this.cart.extra_data.hasOwnProperty('telephone'))
       telephone = this.cart.extra_data['telephone'];
     if (this.cart.extra_data.hasOwnProperty('dob'))
       dob = this.cart.extra_data['dob'];
+    if (this.cart.extra_data.hasOwnProperty('message'))
+      message = this.cart.extra_data['message'];
+
 
     this.formWizardStep01 = this.formBuilder.group({
       name: [name, [Validators.required, WDAValidators.fullName()]],
       email: [email, [Validators.required, Validators.email]],
       mobile: [mobile, [Validators.required, Validators.minLength(11)]],
+      mobile_extra: [mobile_extra],
       telephone: [telephone],
       cpf: [cpf, [Validators.required, WDAValidators.cpf()]],
       rg: [rg, [Validators.required, Validators.minLength(4)]],
@@ -105,7 +113,8 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       number: [number, [Validators.required]],
       street_address_1: [street_address_1, [Validators.required]],
       street_address_2: [street_address_2, []],
-      street_address_3: [street_address_3, [Validators.required]]
+      street_address_3: [street_address_3, [Validators.required]],
+      message: [message, []]
     });
 
     if (this.providerCheckout.plan_type.is_business) {
@@ -229,28 +238,20 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       cart_extra_data['cpf'] = this.formWizardStep01.get('cpf').value;
       cart_extra_data['rg'] = this.formWizardStep01.get('rg').value;
       cart_extra_data['mobile'] = this.formWizardStep01.get('mobile').value;
-      cart_extra_data['telephone'] = this.formWizardStep01.get(
-        'telephone'
-      ).value;
+      cart_extra_data['mobile_extra'] = this.formWizardStep01.get('mobile_extra').value;
+      cart_extra_data['telephone'] = this.formWizardStep01.get('telephone').value;
       cart_extra_data['dob'] = this.formWizardStep01.get('dob').value;
+      cart_extra_data['message'] = this.formWizardStep01.get('message').value;
 
       if (this.providerCheckout.plan_type.is_business) {
-        this.providerCheckout.address.company_name = this.formWizardStep01.get(
-          'company_name'
-        ).value;
+        this.providerCheckout.address.company_name = this.formWizardStep01.get('company_name').value;
         cart_extra_data['cnpj'] = this.formWizardStep01.get('cnpj').value;
-        cart_extra_data['state_registration'] = this.formWizardStep01.get(
-          'state_registration'
-        ).value;
+        cart_extra_data['state_registration'] = this.formWizardStep01.get('state_registration').value;
       }
 
       if (this.providerCheckout.selected_telephone_plan) {
-        cart_extra_data['portability_number'] = this.formWizardStep01.get(
-          'portability_number'
-        ).value;
-        cart_extra_data['portability_provider'] = this.formWizardStep01.get(
-          'portability_provider'
-        ).value;
+        cart_extra_data['portability_number'] = this.formWizardStep01.get('portability_number').value;
+        cart_extra_data['portability_provider'] = this.formWizardStep01.get('portability_provider').value;
       }
 
       this.providerCheckout.saveAddress().then();

@@ -59,12 +59,21 @@
         </div>
 
         <div class="row">
-          <div class="col-12">
+          <div class="col-6">
             <div class="form-group">
               <input type="text" formControlName="mobile" mask="(00) 00000-0000" />
               <span class="highlight"></span> <span class="bar"></span>
-              <label>Telefone Celular com DDD</label>
+              <label>Telefone Celular</label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['mobile']" name="Telefone">
+              </plugin-provider-checkout-error>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <input type="text" formControlName="mobile_extra" mask="(00) 00000-0000" />
+              <span class="highlight"></span> <span class="bar"></span>
+              <label>Celular Adicional <small>(opcional)</small></label>
+              <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['mobile_extra']" name="Telefone">
               </plugin-provider-checkout-error>
             </div>
           </div>
@@ -75,7 +84,7 @@
             <div class="form-group">
               <input type="text" formControlName="telephone" mask="(00) 0000-0000" />
               <span class="highlight"></span> <span class="bar"></span>
-              <label>Telefone Fixo com DDD <small>(opcional)</small> </label>
+              <label>Telefone Fixo <small>(opcional)</small> </label>
               <plugin-provider-checkout-error [ctrl]="formWizardStep01.controls['telephone']" name="Telefone Fixo">
               </plugin-provider-checkout-error>
             </div>
@@ -183,6 +192,17 @@
               </div>
             </div>
           </div>
+          <div class="col-12">
+            <div class="form-group">
+              <textarea type="text" formControlName="message"></textarea>
+              <span class="highlight"></span> <span class="bar"></span>
+              <label>
+                Observações
+
+              </label>
+            </div>
+          </div>
+
         </div>
 
         <div class="row mt-3" *ngIf="providerCheckout.selected_telephone_plan">
