@@ -26,7 +26,6 @@
                 formControlName="email" />
               <span class="highlight"></span> <span class="bar"></span>
               <label for="email">Email</label>
-              {{ linkForm.get('email').getError() }}
               <div class="alert alert-danger" role="alert"
                 *ngIf="linkForm.get('email').errors && linkForm.get('email').touched">
                 Email válido é obrigatorio</div>
