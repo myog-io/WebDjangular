@@ -6,6 +6,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 import { ClientUserService } from '@core/services/src/lib/client-user.service';
 import { CityModel } from '@plugins/provider/src/lib/data';
 import { Observable, Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestro
     private http: HttpClient,
     private datastore: WebAngularDataStore,
     private clientUserService: ClientUserService,
+    private location: Location,
   ) {
 
   }
@@ -54,7 +56,7 @@ export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestro
     this.sub = this.datastore
       .findAll(CityModel, {
         ordering: 'name',
-        fields: 'id,name',
+        fields: 'id,name,redirect_url',
         page: { size: 100 }
       }).subscribe((query) => {
         this.loading = false;
@@ -77,11 +79,15 @@ export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestro
 
     const city_id = this.form.get('city').value;
     const cityModel = this.cities.find(city => city.id === city_id);
-    this.clientUserService.clientUser.data['city'] = {
-      id: cityModel.id,
-      name: cityModel.name
-    };
-    this.clientUserService.updateCookie();
-    this.activeModal.close();
+    if (cityModel.redirect_url) {
+      window.open(cityModel.redirect_url, '_self');
+    } else {
+      this.clientUserService.clientUser.data['city'] = {
+        id: cityModel.id,
+        name: cityModel.name
+      };
+      this.clientUserService.updateCookie();
+      this.activeModal.close();
+    }
   }
 }

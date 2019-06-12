@@ -78,6 +78,16 @@ export class CityModel extends AbstractModel {
   })
   long: number;
 
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Redirect URL',
+    wrapper_class: 'col-6',
+    displayGroup: DiplayGroups.city
+  })
+  redirect_url: string;
+
   @HasMany()
   @ExtraOptions({
     type: 'formArray',
