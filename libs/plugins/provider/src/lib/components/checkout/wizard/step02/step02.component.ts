@@ -21,7 +21,9 @@ export class PluginProviderCheckoutWizardStep02Component
   public ptSub: Subscription;
   public ctSub: Subscription;
   public mgSub: Subscription;
+  public dueSub: Subscription;
   public error: string = null;
+  public possibleDueDates: any[] = null;
   public maxYearsContract: any = [
     'Sem Fidelidade',
     '1 Ano',
@@ -37,9 +39,11 @@ export class PluginProviderCheckoutWizardStep02Component
 
   ngOnInit() {
     this.formWizardStep02Submitted = false;
+    this.possibleDueDates = this.providerCheckout.providerConfig.due_date ? this.providerCheckout.providerConfig.due_date.split(',') : null;
 
     this.cart = this.providerCheckout.cartService.cart;
     let paymentType: string = '';
+    let dueDay: string = '';
     const contractTime = {
       value: this.providerCheckout.providerConfig.max_year_contract || 2,
       disabled: false,
@@ -47,6 +51,7 @@ export class PluginProviderCheckoutWizardStep02Component
 
     if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
     if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime.value = this.cart.extra_data['contractTime'];
+    if (this.cart.extra_data.hasOwnProperty('dueDay')) dueDay = this.cart.extra_data['dueDay'];
 
     if (!this.providerCheckout.selected_internet_plan) {
       // Forcing Contract Time with 1 year
@@ -73,6 +78,7 @@ export class PluginProviderCheckoutWizardStep02Component
     }
 
     this.formWizardStep02 = this.formBuilder.group({
+      dueDay: [dueDay, this.possibleDueDates ? [Validators.required] : []],
       paymentType: [paymentType, [Validators.required]],
       contractTime: [contractTime, []],
       isUpgrade: [this.providerCheckout.migration_type, this.showMigration ? [Validators.required] : []],
@@ -104,10 +110,14 @@ export class PluginProviderCheckoutWizardStep02Component
     this.ctSub = this.formWizardStep02.get('contractTime').valueChanges.subscribe(value => {
       this.updateCartExtraData('contractTime', value);
     });
-    // Checking if the Migration Form is chaning
+    // Checking if the Migration Form is changing
     this.mgSub = this.formWizardStep02.get('isUpgrade').valueChanges.subscribe(value => {
       this.providerCheckout.migration_type = value;
       this.updateCartExtraData('migration_type', value);
+    })
+    // Checking if the DueDate form is changing
+    this.dueSub = this.formWizardStep02.get('dueDay').valueChanges.subscribe(value => {
+      this.updateCartExtraData('dueDay', value);
     })
   }
   /**
@@ -159,6 +169,10 @@ export class PluginProviderCheckoutWizardStep02Component
     if (this.mgSub) {
       this.mgSub.unsubscribe();
       this.mgSub = null;
+    }
+    if (this.dueSub) {
+      this.dueSub.unsubscribe();
+      this.dueSub = null;
     }
   }
 

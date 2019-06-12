@@ -25,6 +25,7 @@ class ProviderConfig():
 
     CONFIG_SKU_MIGRACAO_TECNOLOGIA = 'sku_migracao_tecnologia'
     CONFIG_MAX_YEAR_CONTRACT = 'max_year_contract'
+    CONFIG_DUE_DATE = 'due_date'
 
     GROUP = CoreConfigGroup(
         id=CONFIG_GROUP_SLUG,
@@ -258,5 +259,16 @@ class ProviderConfig():
             wrapper_class="col-6",
             group=CONFIG_GROUP_SLUG,
         ),
-
+        CoreConfigInput(
+            id=CONFIG_DUE_DATE,
+            field_type=CoreConfigInput.FIELD_TYPE_TEXT,
+            input_type="text",
+            order=0,
+            disabled=False,
+            label="Datas de Venciemnto, separado por virgula",
+            select_model="ProductType",
+            validation=None,
+            wrapper_class="col-6",
+            group=CONFIG_GROUP_SLUG,
+        ),
     ]

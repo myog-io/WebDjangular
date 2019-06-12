@@ -43,6 +43,26 @@
             </div>
           </div>
         </div>
+        <div class="row" *ngIf="this?.possibleDueDates?.length > 0">
+          <div class="col-12">
+            <h6>Dia do vencimento da fatura</h6>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <div class="custom-control custom-radio ml-3 mb-1 col-6" *ngFor="let day of this.possibleDueDates">
+                <input type="radio" id="dueDay_{{ day }}" formControlName="dueDay" name="dueDay"
+                  class="custom-control-input" [value]="day" />
+                <label class="custom-control-label" for="dueDay_{{ day }}">Dia {{day}}</label>
+              </div>
+
+              <div *ngIf="formWizardStep02.get('dueDay')?.touched && formWizardStep02.get('dueDay')?.errors?.required"
+                class="alert alert-danger" role="alert">
+                <span>Por favor, selecione data de vencimento da fatura</span>
+
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <h6>Como quer receber a fatura?</h6>
