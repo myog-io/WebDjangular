@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @Component({
   selector: 'provider-terms-form',
@@ -14,16 +15,18 @@ export class PluginProviderGenerateLinkFormComponent implements OnInit {
   @Input() show_tv = true;
   @Input() show_equip = true;
   @Input() send_link: string = 'send-terms';
-  taxvat_mask = '000.000.000-000';
+  private is_company = false;
+  taxvat_mask = '000.000.000-009';
   link: string = null;
   linkForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     taxvat: new FormControl('', [
       Validators.required,
-      Validators.minLength(10)
+      WDAValidators.cpf()
     ]),
     company_name: new FormControl('', [Validators.minLength(4)]),
-    taxvat_resp: new FormControl('', [Validators.minLength(10)]),
+    taxvat_resp: new FormControl('', [WDAValidators.cpf()]),
     internet: new FormControl(''),
     tv: new FormControl(''),
     phone: new FormControl(''),
@@ -50,21 +53,43 @@ export class PluginProviderGenerateLinkFormComponent implements OnInit {
         }
       }
       if (data.taxvat) {
-        console.log(data.taxvat.length);
         if (data.taxvat.length > 14) {
-          this.taxvat_mask = '00.000.000/0000-00';
+          if (this.is_company === false) {
+            this.is_company = true;
+            this.taxvat_mask = '00.000.000/0000-00';
+            this.linkForm.get('taxvat').setValidators([Validators.required, WDAValidators.cnpj()]);
+            this.linkForm.get('taxvat').updateValueAndValidity({ emitEvent: false });
+            this.linkForm.get('company_name').setValidators([Validators.required, Validators.minLength(4)]);
+            this.linkForm.get('company_name').updateValueAndValidity({ emitEvent: false });
+            this.linkForm.get('taxvat_resp').setValidators([Validators.required, WDAValidators.cpf()]);
+            this.linkForm.get('taxvat_resp').updateValueAndValidity({ emitEvent: false });
+          }
         } else {
-          this.taxvat_mask = '000.000.000-000';
+          if (this.is_company) {
+            this.is_company = false;
+            this.taxvat_mask = '000.000.000-009';
+            this.linkForm.get('taxvat').setValidators([Validators.required, WDAValidators.cpf()]);
+            this.linkForm.get('taxvat').updateValueAndValidity({ emitEvent: false });
+            this.linkForm.get('company_name').setValidators([]);
+            this.linkForm.get('company_name').updateValueAndValidity({ emitEvent: false });
+            this.linkForm.get('taxvat_resp').setValidators([]);
+            this.linkForm.get('taxvat_resp').updateValueAndValidity({ emitEvent: false });
+          }
+
         }
       }
       this.generateLink(data);
     });
   }
   generateLink(data) {
-    if (data.internet || data.tv || data.phone || data.equip) {
-      const tree = this.router.createUrlTree([this.send_link]).toString();
-      const bdata = btoa(JSON.stringify(data));
-      this.link = `${this.url}${tree}?data=${bdata}`;
+    if (this.linkForm.valid && data.name && data.email && data.taxvat) {
+      if (data.internet || data.tv || data.phone || data.equip) {
+        const tree = this.router.createUrlTree([this.send_link]).toString();
+        const bdata = btoa(JSON.stringify(data));
+        this.link = `${this.url}${tree}?data=${bdata}`;
+      } else {
+        this.link = null;
+      }
     } else {
       this.link = null;
     }

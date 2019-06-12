@@ -60,8 +60,10 @@ export class WDAValidators {
 
     static cpf(): ValidatorFn {
         return (control: AbstractControl): Validators => {
-            const cpf = control.value;
+            let cpf: string = control.value;
             if (cpf) {
+                cpf = cpf.replace(/\D/g, '');
+
                 let numbers, digits, sum, i, result, equalDigits;
                 equalDigits = 1;
 
@@ -123,8 +125,10 @@ export class WDAValidators {
 
     static cnpj(): ValidatorFn {
         return (control: AbstractControl): Validators => {
-            const cnpj = control.value;
+            let cnpj = control.value;
             if (cnpj) {
+                cnpj = cnpj.replace(/\D/g, '');
+
                 if (cnpj.length != 14) return { invalidCNPJ: true };
 
                 let tamanho = cnpj.length - 2;
