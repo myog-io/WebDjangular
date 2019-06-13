@@ -118,7 +118,7 @@
                   <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"><strong>Por Email</strong></span>
                   <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"><strong>Por Correios</strong></span>
                   <span *ngIf="this.cart.extra_data['dueDay']"><br>Vencimento da Fatura:
-                    <strong>{{this.cart.extra_data.dueDay}}</strong></span>
+                    <strong>Dia {{this.cart.extra_data.dueDay}}</strong></span>
                 </td>
                 <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'email'">
                   <b>{{ providerCheckout.cartService.cart.email }} </b>

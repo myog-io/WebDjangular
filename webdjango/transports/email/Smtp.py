@@ -1,3 +1,5 @@
+from smtplib import SMTPException, SMTPRecipientsRefused
+
 import requests
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -48,11 +50,18 @@ class Smtp(AbstractTransport):
                              from_email="{0}<{1}>".format(sender, self.username), to=to, connection=self.smtp_backend)
         email.content_subtype = content_subtype
 
-        if email.send():
+        try:
+            email.send()
             return True
-        else:
+        except SMTPRecipientsRefused as error:
             raise ValidationError(
-                "Email could not be sent due to SMTP credentials haven't worked it")
+                "O Email {0} é invalido ou não existe, por favor tentar outro".format(to))
+        except SMTPException as error:
+            raise ValidationError(
+                "Error no envio do email de confiramção, por favor tente novamente")
+        except:
+            raise ValidationError(
+                "As credenciais de SMTP estão erradas, por favor configurar novas credenciais SMTP")
 
     def getInfo(self):
         return {}

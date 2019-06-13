@@ -135,11 +135,11 @@ export class PluginProviderSendEmailFormComponent implements OnInit {
     body += '</ul>';
     return body;
   }
-  failed() {
+  failed(message = 'Ocorreu um erro ao enviar seu email, por favor tente novamente!') {
+
     this.isSending = false;
     this.success = false;
-    this.error =
-      'Ocorreu um erro ao enviar seu email, por favor tente novamente!';
+    this.error = message;
   }
   sendEmail() {
     this.isSending = true;
@@ -159,7 +159,11 @@ export class PluginProviderSendEmailFormComponent implements OnInit {
           this.router.navigate(['.'], { relativeTo: this.route });
         },
         (error: ErrorResponse) => {
-          this.failed();
+          if (error.errors && error.errors[0].detail) {
+            this.failed(error.errors[0].detail);
+          } else {
+            this.failed();
+          }
         }
       );
     /*

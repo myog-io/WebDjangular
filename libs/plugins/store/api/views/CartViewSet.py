@@ -106,14 +106,16 @@ class CartViewSet(ModelViewSet):
         if not order:
             raise ValidationError('Please Review your Cart')
         cart.delete()
-        order.events.create(event_type=OrderEventTypes.PLACED)
+        # First we send the email to the Admin that we are sure we won't have problems
+        send_admin_order_confirmation(order.pk)
+        # Then we send the email to the client that could faild but the front end will continue with the order
         send_order_confirmation(order.pk)
+        order.events.create(event_type=OrderEventTypes.PLACED)
         order.events.create(
             event_type=OrderEventTypes.EMAIL_SENT,
             data={
                 'email': order.get_user_current_email(),
             })
-        send_admin_order_confirmation(order.pk)
 
         serializer = OrderSerializer(order)
         headers = self.get_success_headers(serializer.data)
