@@ -19,11 +19,17 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
   formSub: Subscription;
   condoSub: Subscription;
   subPostalCode: Subscription;
+  resellerSub: Subscription;
+  searchResellerSub: Subscription;
   condos: CondoModel[];
   show_condos = false;
   resellers: Observable<ResellerModel[]>;
   plan_types: Observable<PlanTypeModel[]>;
   plan_types_list: PlanTypeModel[];
+  public reseller_mask: string = '000.000.000-009';
+  private is_company = false;
+  private reseller: ResellerModel;
+  public reseller_loading = false;
   public cep_error: string | boolean = false;
   constructor(
     providerCheckout: ProviderCheckoutService,
@@ -82,21 +88,57 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
         return this.plan_types_list;
       });
     if (this.providerCheckout.has_reseller) {
+      this.resellerSub = this.providerCheckout.formBeforeCheckout.get('resellerTaxvat').valueChanges.subscribe(
+        (value) => {
+          // Change Mask Between CNPJ and CPF
+          if (value.length > 11) {
+            if (this.is_company === false) {
+              this.is_company = true;
+              this.reseller_mask = '00.000.000/0000-00';
+            } else {
+              this.is_company = false;
+              this.reseller_mask = '000.000.000-009';
+            }
+          }
+          if (value.length === 11 || value.length === 13) {
+            this.reseller_loading = true;
+            this.searchResellerSub = this.datastore
+              .findRecord(
+                ResellerModel, value,
+                null, null,
+                `/api/v1/provider/reseller/${value}/by_taxvat/`
+              ).subscribe(
+                (reseller: ResellerModel) => {
+                  this.reseller = reseller;
+
+                  this.providerCheckout.formBeforeCheckout.get('reseller').setValue(this.reseller.id);
+                  this.reseller_loading = false;
+                },
+                (error) => {
+                  this.reseller_loading = false;
+                }
+              )
+          }
+        }
+      );
+
       this.providerCheckout.formBeforeCheckout
-        .get('reseller')
+        .get('resellerTaxvat')
         .setValidators([Validators.required]);
       this.providerCheckout.formBeforeCheckout
-        .get('reseller')
+        .get('resellerTaxvat')
         .updateValueAndValidity({ emitEvent: false });
-      this.resellers = this.datastore
-        .findAll(
-          ResellerModel,
-          { active: true },
-          new HttpHeaders({ Authorization: 'none' })
-        )
-        .map((query: JsonApiQueryData<ResellerModel>) => {
-          return query.getModels();
-        });
+      /*
+    this.resellers = this.datastore
+      .findAll(
+        ResellerModel,
+        { active: true },
+        new HttpHeaders({ Authorization: 'none' })
+      )
+      .map((query: JsonApiQueryData<ResellerModel>) => {
+        return query.getModels();
+      });
+    */
     }
   }
 
@@ -161,6 +203,10 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
     if (this.condoSub) {
       this.condoSub.unsubscribe();
       this.condoSub = null;
+    }
+    if (this.resellerSub) {
+      this.resellerSub.unsubscribe();
+      this.resellerSub = null;
     }
   }
 }

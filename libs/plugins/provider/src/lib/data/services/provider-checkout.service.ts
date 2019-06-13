@@ -189,7 +189,9 @@ export class ProviderCheckoutService {
       condoNumber: ['', null],
       typeOfAccess: ['', [Validators.required]],
       typeOfCustomer: ['', [Validators.required]],
+      resellerTaxvat: ['', []],
       reseller: ['', []]
+
     });
     // We always have the cart create but sometimes does not have ID
     if (this.cartService.cart) {

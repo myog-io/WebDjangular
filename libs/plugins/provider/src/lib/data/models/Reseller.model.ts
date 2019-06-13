@@ -34,6 +34,15 @@ export class ResellerModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
+    validators: [Validators.required],
+    type: 'text',
+    inputType: 'phone',
+    label: 'CPF/CNPJ (apenas numeros)'
+  })
+  taxvat: string;
+
+  @Attribute()
+  @ExtraOptions({
     type: 'switch',
     label: "Is Activate?",
     value: true,
@@ -51,6 +60,10 @@ export class ResellerModel extends AbstractModel {
       },
       email: {
         title: 'Email',
+        type: 'text'
+      },
+      taxvat: {
+        title: 'CPF/CNPJ',
         type: 'text'
       },
       active: {

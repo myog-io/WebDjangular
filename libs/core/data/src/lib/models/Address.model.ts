@@ -54,12 +54,12 @@ export class AddressModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   get label_line_one(): string {
     return `${this.street_address_1}, ${this.number} - ${
       this.street_address_3
-    }`;
+      }`;
   }
 
   get label_line_two(): string {

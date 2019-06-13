@@ -6,6 +6,8 @@ from webdjango.models.AbstractModels import BaseModel
 
 class Reseller(BaseModel):
     name = models.CharField(max_length=255)
+    taxvat = models.CharField(
+        max_length=15, unique=True, blank=True, null=True)
     email = models.EmailField(unique=True)
     active = models.BooleanField(default=True)
     orders = models.ManyToManyField(
