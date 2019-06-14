@@ -27,10 +27,12 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
   plan_types: Observable<PlanTypeModel[]>;
   plan_types_list: PlanTypeModel[];
   public reseller_mask: string = '000.000.000-009';
+  public reseller_error = false;
   private is_company = false;
-  private reseller: ResellerModel;
+  public reseller: ResellerModel;
   public reseller_loading = false;
   public cep_error: string | boolean = false;
+
   constructor(
     providerCheckout: ProviderCheckoutService,
     private datastore: WebAngularDataStore
@@ -90,23 +92,30 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
     if (this.providerCheckout.has_reseller) {
       this.resellerSub = this.providerCheckout.formBeforeCheckout.get('resellerTaxvat').valueChanges.subscribe(
         (value) => {
+          console.log(value, value.length)
           // Change Mask Between CNPJ and CPF
-          if (value.length > 11) {
+          if (value.length > 14) {
             if (this.is_company === false) {
               this.is_company = true;
               this.reseller_mask = '00.000.000/0000-00';
-            } else {
+            }
+          } else {
+            if (this.is_company) {
               this.is_company = false;
               this.reseller_mask = '000.000.000-009';
             }
           }
-          if (value.length === 11 || value.length === 13) {
+          if (value.length === 14 || value.length === 18) {
+            this.reseller_error = false;
             this.reseller_loading = true;
+            if (this.searchResellerSub) {
+              this.searchResellerSub.unsubscribe();
+            }
             this.searchResellerSub = this.datastore
               .findRecord(
-                ResellerModel, value,
+                ResellerModel, value.replace(/\D/g, ''),
                 null, null,
-                `/api/v1/provider/reseller/${value}/by_taxvat/`
+                `/api/v1/provider/reseller/${value.replace(/\D/g, '')}/by_taxvat/`
               ).subscribe(
                 (reseller: ResellerModel) => {
                   this.reseller = reseller;
@@ -115,6 +124,7 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
                   this.reseller_loading = false;
                 },
                 (error) => {
+                  this.reseller_error = true;
                   this.reseller_loading = false;
                 }
               )
