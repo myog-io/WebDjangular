@@ -325,7 +325,8 @@ export class ProviderCheckoutService {
           condoNumber: cart.extra_data.condo_number || '',
           typeOfAccess: cart.extra_data.plan_type_id || '',
           typeOfCustomer: cart.extra_data.customer_type || '',
-          reseller: cart.extra_data.reseller_id || ''
+          reseller: cart.extra_data.reseller_id || '',
+          resellerTaxvat: '', // Not sure if it's necessary to type the CPF here
         });
       }
       // Looks like we should't be calling this function twice

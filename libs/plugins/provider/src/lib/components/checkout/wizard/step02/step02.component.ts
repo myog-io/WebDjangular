@@ -17,7 +17,8 @@ export class PluginProviderCheckoutWizardStep02Component
   public formWizardStep02: FormGroup;
   public formWizardStep02Submitted: boolean = false;
   public cart: CartModel;
-  public showMigration: boolean = false;
+  public showMigration = false;
+  public showDueDate = false;
   public ptSub: Subscription;
   public ctSub: Subscription;
   public mgSub: Subscription;
@@ -40,7 +41,10 @@ export class PluginProviderCheckoutWizardStep02Component
   ngOnInit() {
     this.formWizardStep02Submitted = false;
     this.possibleDueDates = this.providerCheckout.providerConfig.due_date ? this.providerCheckout.providerConfig.due_date.split(',') : null;
-
+    if (this.possibleDueDates.length > 0 && this.providerCheckout.cartService.cart.extra_data.customer_type === 'new') {
+      // Only show if it's new customer, not migrations
+      this.showDueDate = true;
+    }
     this.cart = this.providerCheckout.cartService.cart;
     let paymentType: string = '';
     let dueDay: string = '';
@@ -78,10 +82,10 @@ export class PluginProviderCheckoutWizardStep02Component
     }
 
     this.formWizardStep02 = this.formBuilder.group({
-      dueDay: [dueDay, this.possibleDueDates ? [Validators.required] : []],
       paymentType: [paymentType, [Validators.required]],
       contractTime: [contractTime, []],
       isUpgrade: [this.providerCheckout.migration_type, this.showMigration ? [Validators.required] : []],
+      dueDay: [dueDay, this.showDueDate ? [Validators.required] : []],
     });
     //this.config.forEach(control => group.addControl(control.name, this.fb.control()));
     // group;

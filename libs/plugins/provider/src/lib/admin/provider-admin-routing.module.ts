@@ -84,6 +84,10 @@ const routes: Routes = [
         }
       },
       {
+        path: 'reseller',
+        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+      },
+      {
         path: 'channel',
         loadChildren:
           '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
@@ -101,4 +105,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PluginProviderAdminRoutingModule {}
+export class PluginProviderAdminRoutingModule { }
