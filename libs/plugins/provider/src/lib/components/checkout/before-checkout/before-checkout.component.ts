@@ -92,7 +92,6 @@ export class PluginProviderCheckoutBeforeCheckoutComponent
     if (this.providerCheckout.has_reseller) {
       this.resellerSub = this.providerCheckout.formBeforeCheckout.get('resellerTaxvat').valueChanges.subscribe(
         (value) => {
-          console.log(value, value.length)
           // Change Mask Between CNPJ and CPF
           if (value.length > 14) {
             if (this.is_company === false) {
