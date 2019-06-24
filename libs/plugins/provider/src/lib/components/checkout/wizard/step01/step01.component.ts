@@ -12,6 +12,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import * as moment from 'moment';
 import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
+import { MediaService } from '@core/media/src/lib/core-media.service';
 
 @Component({
   selector: 'plugin-provider-checkout-wizard-step01',
@@ -26,7 +27,8 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
   constructor(
     public datastore: WebAngularDataStore,
     public providerCheckout: ProviderCheckoutService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private mediaService: MediaService
   ) { }
 
   ngOnInit() {
@@ -114,7 +116,8 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
       street_address_1: [street_address_1, [Validators.required]],
       street_address_2: [street_address_2, []],
       street_address_3: [street_address_3, [Validators.required]],
-      message: [message, []]
+      message: [message, []],
+      file_userPhotoId: []
     });
 
     if (this.providerCheckout.plan_type.is_business) {
@@ -217,6 +220,26 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     });
     return 'ERRORS?';
   }
+
+  onfile_userPhotoIdChange(event) {
+    const reader = new FileReader();
+ 
+    if(event.target.files && event.target.files.length) {
+      var file = event.target.files[0];
+      
+      let fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        //fileReader.result
+        console.log(fileReader.result);
+
+
+      }
+      fileReader.readAsText(file);
+    
+    };
+    
+  }
+
 
   onSubmit() {
 

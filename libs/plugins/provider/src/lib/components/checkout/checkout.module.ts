@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PluginProviderCheckoutComponent } from './checkout.component';
 
+import { MediaService } from '@core/media/src/lib/core-media.service';
+
 import { PluginProviderCheckoutPlansComponent } from './plans/plans.component';
 import { PluginProviderCheckoutSummaryComponent } from './summary/summary.component';
 import { PluginProviderCheckoutPlanInternetComponent } from './plans/internet/internet.component';
@@ -15,6 +17,8 @@ import { PluginProviderCheckoutWizardComponent } from './wizard/wizard.component
 import { PluginProviderCheckoutWizardStep01Component } from './wizard/step01/step01.component';
 import { PluginProviderCheckoutWizardStep02Component } from './wizard/step02/step02.component';
 import { PluginProviderCheckoutWizardStep03Component } from './wizard/step03/step03.component';
+import { WdaUploaderComponent } from '@core/media/src/lib/wda-uploader/wda-uploader.component';
+
 import {
   NbCardModule,
   NbTooltipDirective,
@@ -27,6 +31,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { PluginProviderCheckoutErrorComponent } from './checkout-form-error.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+
 
 
 const COMPONENTS = [
@@ -45,7 +50,7 @@ const COMPONENTS = [
   PluginProviderCheckoutWizardStep02Component,
   PluginProviderCheckoutWizardStep03Component,
   PluginProviderCheckoutErrorComponent,
-
+  WdaUploaderComponent
 ];
 
 @NgModule({
@@ -60,6 +65,7 @@ const COMPONENTS = [
     NgxMaskModule.forRoot(),
     NgbModalModule
   ],
+  providers: [MediaService],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],
   entryComponents: [...COMPONENTS]
