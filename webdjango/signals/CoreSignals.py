@@ -11,7 +11,8 @@ config_group_register = Signal()
 @receiver(post_save, sender=Plugin)
 @receiver(post_save, sender=Theme)
 def installPluginTheme(sender, instance, created, *args, **kwargs):
-    cache.delete_pattern("*core_init*")
+    if hasattr(cache, 'delete_pattern'):
+        cache.delete_pattern("*core_init*")
 
     if 'active' in instance.get_dirty_fields():
         if instance.active:
@@ -22,4 +23,5 @@ def installPluginTheme(sender, instance, created, *args, **kwargs):
 
 @receiver(post_save, sender=CoreConfig)
 def coreconfig_saved(sender, instance, created, *args, **kwargs):
-    cache.delete_pattern("*core_init*")
+    if hasattr(cache, 'delete_pattern'):
+        cache.delete_pattern("*core_init*")

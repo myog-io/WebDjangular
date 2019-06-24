@@ -158,3 +158,5 @@ venv.bak/
 *.pyc
 
 package-lock.json
+
+WebDjangular\.code-workspace

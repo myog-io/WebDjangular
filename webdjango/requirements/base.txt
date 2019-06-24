@@ -46,6 +46,7 @@ requests==2.21.0
 django-redis==4.10.0
 
 # For the CDNS
+google-cloud-storage==1.16.1
 
 # Deployment
 gunicorn==19.9.0

@@ -23,6 +23,7 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
 
             user = request.user
             queryset = view.get_queryset()
+            print(queryset)
             model = queryset.model
             model_name = str(model.__name__).lower()
             app_label = model._meta.app_label

@@ -21,7 +21,7 @@ class ChunkableFieldFile(models.fields.files.FieldFile):
     def save(self, name, content, save=True):
 
         if self.instance.pk == None or (self.instance.pk != None and self.instance.bytes != None):
-
+            
             # File update, bytes get updated just after the file has finished it upload
             # so, if it is not null and we are saving that is an update
             if self.instance.pk != None and self.instance.bytes != None:
