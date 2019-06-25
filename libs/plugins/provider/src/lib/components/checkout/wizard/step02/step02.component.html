@@ -141,10 +141,10 @@
               <p>
                 Envie um documento de identidade e agilize o processo de instalação!
               </p>
-              <wda-uploader 
-              buttonClass="btn btn-primary btn-block btn-large"
+              <wda-uploader buttonClass="btn btn-primary btn-block btn-large"
                 (onErrorEvent)="logoUploadError($event)" (onLoadEndedEvent)="logoUpdateFinished($event)"
-                label="Tirar Foto/Escolher Arquivo" [service]="mediaService" accept=".png, .jpg, .jpeg, .pdf">
+                label="Tirar Foto/Escolher Arquivo" [service]="mediaService"
+                [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg, .pdf">
               </wda-uploader>
           </div>
         </div><!-- Upload Document -->

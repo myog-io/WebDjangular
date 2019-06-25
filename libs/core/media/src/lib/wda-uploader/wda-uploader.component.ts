@@ -18,6 +18,8 @@ export class WdaUploaderComponent implements OnInit {
     @Input() buttonClass = 'btn btn-info';
     @Input() allowedFileType: string = null;
     @Input() service: any = null;
+    @Input() additionalParameter: any = null;
+
     // events dispatched, we may listen for then in the place where we implement the component
     @Output() progressEvent = new EventEmitter();
     // tslint:disable-next-line:no-output-on-prefix
@@ -57,6 +59,7 @@ export class WdaUploaderComponent implements OnInit {
             // maxFileSize:
             queueLimit: 1,
             // allowedFileType: [this.allowedFileType],
+            additionalParameter: this.additionalParameter
         });
         this.setupCallbacks();
         this.labelToShow = this.label

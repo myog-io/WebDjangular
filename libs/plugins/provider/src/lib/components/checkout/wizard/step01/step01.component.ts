@@ -221,26 +221,6 @@ export class PluginProviderCheckoutWizardStep01Component implements OnInit {
     return 'ERRORS?';
   }
 
-  onfile_userPhotoIdChange(event) {
-    const reader = new FileReader();
- 
-    if(event.target.files && event.target.files.length) {
-      var file = event.target.files[0];
-      
-      let fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        //fileReader.result
-        console.log(fileReader.result);
-
-
-      }
-      fileReader.readAsText(file);
-    
-    };
-    
-  }
-
-
   onSubmit() {
 
     if (this.formWizardStep01.valid) {

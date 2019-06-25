@@ -9,7 +9,7 @@ import { PermissionModel } from '@core/users/src/lib/models';
 import { SafeUrl } from '@angular/platform-browser';
 
 @JsonApiModelConfig({
-  type: 'media'
+  type: 'Media'
 })
 export class MediaModel extends AbstractModel {
   constructor(_datastore, data?: any) {
@@ -39,6 +39,9 @@ export class MediaModel extends AbstractModel {
 
   @Attribute()
   total_chunks: number;
+
+  @Attribute()
+  is_secure: boolean;
 
   @Attribute()
   created: Date;
