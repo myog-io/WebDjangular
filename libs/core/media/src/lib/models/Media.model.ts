@@ -60,5 +60,8 @@ export class MediaModel extends AbstractModel {
     return this.file.replace('http://localhost:4201', '');
     //return this._sanitizer.bypassSecurityTrustUrl(this.file);
   }
+  get absoluteUrl(): SafeUrl {
+    return document.location.origin + this.file;
+  }
   set pk(value) {}
 }
