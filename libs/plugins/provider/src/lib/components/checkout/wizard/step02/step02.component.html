@@ -133,6 +133,22 @@
       </div>
 
       <div class="col-12 col-md-6">
+        <div class="row mt-1">
+          <div class="col-12">
+            <h5 class="text-primary mb-3">CONFIRMAÇÃO DE IDENTIDADE</h5>
+          </div>
+          <div class="col-12 mb-2">
+              <p>
+                Envie um documento de identidade e agilize o processo de instalação!
+              </p>
+              <wda-uploader 
+              buttonClass="btn btn-primary btn-block btn-large"
+                (onErrorEvent)="logoUploadError($event)" (onLoadEndedEvent)="logoUpdateFinished($event)"
+                label="Tirar Foto/Escolher Arquivo" [service]="mediaService" accept=".png, .jpg, .jpeg, .pdf">
+              </wda-uploader>
+          </div>
+        </div><!-- Upload Document -->
+
         <div class="row">
           <div class="col-12">
             <h5 class="text-primary mb-3">TERMOS DE USO</h5>
@@ -213,6 +229,11 @@
           </div>
         </div>
       </div>
+
+
+
+
+
     </div>
   </form>
 </div>

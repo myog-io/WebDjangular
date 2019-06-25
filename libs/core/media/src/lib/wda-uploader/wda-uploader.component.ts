@@ -1,11 +1,9 @@
-import { HttpProgressEvent } from '@angular/common/http/src/response';
+import { Component, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 
-import { Component, Inject, HostListener, Input, Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
-import { NbAuthService, NbAuthJWTToken } from '@nebular/auth';
+import { NbAuthService } from '@nebular/auth';
 import { FileUploader } from '@core/chunk-file-upload/src/lib/file-uploader.class';
 import { FileItem } from '@core/chunk-file-upload/src/lib/file-item.class';
+import { InputTypes } from '@core/cms/src/lib/models/FormField.model';
 @Component({
     selector: 'wda-uploader',
     templateUrl: './wda-uploader.component.html',
@@ -16,6 +14,7 @@ export class WdaUploaderComponent implements OnInit {
 
     // inputs comming from the user when initializing the component
     @Input() label = 'Choose a file';
+    @Input() accept = '.png, .jpg, .jpeg, .pdf';
     @Input() buttonClass = 'btn btn-info';
     @Input() allowedFileType: string = null;
     @Input() service: any = null;
@@ -60,6 +59,7 @@ export class WdaUploaderComponent implements OnInit {
             // allowedFileType: [this.allowedFileType],
         });
         this.setupCallbacks();
+        this.labelToShow = this.label
     }
 
     onFileSelected(event) {

@@ -17,7 +17,7 @@ import { PluginProviderCheckoutWizardComponent } from './wizard/wizard.component
 import { PluginProviderCheckoutWizardStep01Component } from './wizard/step01/step01.component';
 import { PluginProviderCheckoutWizardStep02Component } from './wizard/step02/step02.component';
 import { PluginProviderCheckoutWizardStep03Component } from './wizard/step03/step03.component';
-import { WdaUploaderComponent } from '@core/media/src/lib/wda-uploader/wda-uploader.component';
+
 
 import {
   NbCardModule,
@@ -31,6 +31,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { PluginProviderCheckoutErrorComponent } from './checkout-form-error.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
+import { WdaUploaderComponent } from '@core/media/src/lib/wda-uploader/wda-uploader.component';
+import { ChunkFileUploadModule } from '@core/chunk-file-upload/src/lib/chunk-file-upload.module';
 
 
 
@@ -63,7 +65,8 @@ const COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
-    NgbModalModule
+    NgbModalModule,
+    ChunkFileUploadModule
   ],
   providers: [MediaService],
   exports: [...COMPONENTS],

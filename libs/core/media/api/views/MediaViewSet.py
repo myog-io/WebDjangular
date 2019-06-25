@@ -39,6 +39,7 @@ class MediaViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = MediaFilter
     search_fields = ('id', 'alt', 'created')
+    public_views = ('create', )
 
     def create(self, request, *args, **kwargs):
         data = request.data

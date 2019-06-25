@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import { Subscription } from 'rxjs';
 import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
+import { MediaService } from '@core/media/src/lib/core-media.service';
 
 @Component({
   selector: 'plugin-provider-checkout-wizard-step02',
@@ -33,7 +34,8 @@ export class PluginProviderCheckoutWizardStep02Component
   public yearString = "Anos";
   constructor(
     public providerCheckout: ProviderCheckoutService,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public mediaService: MediaService
   ) {
     this.generatingContractTime();
   }
@@ -228,5 +230,15 @@ export class PluginProviderCheckoutWizardStep02Component
         control.markAsTouched({ onlySelf: true });
       });
     }
+  }
+  logoUpdateFinished(event) {
+    // TODO: Save on the cart Extra Data
+    // TODO: If already exitis on the cart Extra Data we need to remove the older one
+    // TODO: Give if feedback if the file has already previusly updated
+    // TODO: Make it Required when it's reseller 
+  }
+
+  logoUploadError(event) {
+    // TODO: Feedback when error of upload
   }
 }
