@@ -9,7 +9,8 @@ import { PermissionModel } from '@core/users/src/lib/models';
 import { SafeUrl } from '@angular/platform-browser';
 
 @JsonApiModelConfig({
-  type: 'Media'
+  type: 'Media',
+  modelEndpointUrl: 'media'
 })
 export class MediaModel extends AbstractModel {
   constructor(_datastore, data?: any) {

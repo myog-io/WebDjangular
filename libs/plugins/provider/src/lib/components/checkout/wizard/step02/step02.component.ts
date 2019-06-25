@@ -5,7 +5,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import { Subscription } from 'rxjs';
 import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
+import { MediaModel } from '@core/media/src/lib/models/Media.model';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+
 import { MediaService } from '@core/media/src/lib/core-media.service';
+import { ErrorResponse } from 'angular2-jsonapi';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'plugin-provider-checkout-wizard-step02',
@@ -31,19 +37,23 @@ export class PluginProviderCheckoutWizardStep02Component
     '1 Ano',
     '2 Anos',
   ];
+  public file_photo_identity: MediaModel = null;
+
   public yearString = "Anos";
   constructor(
     public providerCheckout: ProviderCheckoutService,
     public formBuilder: FormBuilder,
-    public mediaService: MediaService
+    public mediaService: MediaService,
+    private datastore: WebAngularDataStore,
   ) {
     this.generatingContractTime();
+    //mediaService.options.additionalParameter.is_secure = true;
   }
 
   ngOnInit() {
     this.formWizardStep02Submitted = false;
     this.possibleDueDates = this.providerCheckout.providerConfig.due_date ? this.providerCheckout.providerConfig.due_date.split(',') : null;
-    if (this.possibleDueDates.length > 0 && this.providerCheckout.cartService.cart.extra_data.customer_type === 'new') {
+    if (this.possibleDueDates && this.possibleDueDates.length > 0 && this.providerCheckout.cartService.cart.extra_data.customer_type === 'new') {
       // Only show if it's new customer, not migrations
       this.showDueDate = true;
     }
@@ -58,6 +68,14 @@ export class PluginProviderCheckoutWizardStep02Component
     if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
     if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime.value = this.cart.extra_data['contractTime'];
     if (this.cart.extra_data.hasOwnProperty('dueDay')) dueDay = this.cart.extra_data['dueDay'];
+    if (this.cart.extra_data.hasOwnProperty('photo_identity_id')){
+      console.log();
+      this.datastore
+        .findRecord(MediaModel, this.cart.extra_data['photo_identity_id'], {}, new HttpHeaders({ Authorization: 'none' }))
+        .subscribe(media => {
+          this.file_photo_identity = media;
+        });
+    } 
 
     if (!this.providerCheckout.selected_internet_plan) {
       // Forcing Contract Time with 1 year
@@ -184,6 +202,12 @@ export class PluginProviderCheckoutWizardStep02Component
 
   onSubmit() {
     this.error = null;
+    if(this.providerCheckout.has_reseller) {
+      if(this.file_photo_identity == null) {
+        this.error = `Por favor, coloque um documento de identidade.`
+        return;
+      }
+    }
     if (!this.providerCheckout.address.first_name.trim() || !this.providerCheckout.address.last_name.trim()) {
       this.error = `Por favor, volte ao passo "Dados de Assinatura" e preencha seu <b>Nome Completo</b>, caso o erro persista copie o link do carrinho e envie para nosso email de suporte`
       return;
@@ -231,15 +255,38 @@ export class PluginProviderCheckoutWizardStep02Component
       });
     }
   }
-  logoUpdateFinished(event) {
-    // TODO: SAVE as Secure is_secure = true
-    // TODO: Save on the cart Extra Data
-    // TODO: If already exitis on the cart Extra Data we need to remove the older one
-    // TODO: Give if feedback if the file has already previusly updated
-    // TODO: Make it Required when it's reseller 
+  onPhotoIdentityUpdateFinished(event) {
+    this.file_photo_identity = new MediaModel(this.datastore, event['response']['data']);
+    this.onAddedPhotoIdentity();
   }
 
-  logoUploadError(event) {
+  onPhotoIdentityUploadError(event) {
     // TODO: Feedback when error of upload
   }
+
+  removePhotoIdentity(event) {
+    let promise = new Promise((resolve_delete, reject_delete) => {
+      this.datastore.deleteRecord(MediaModel, this.file_photo_identity.id, new HttpHeaders({ Authorization: 'none' }))
+        .subscribe(
+          response => {
+            this.onRemovedPhotoIdentity();
+            resolve_delete(response);
+          },
+          error => {
+            // TODO: show some error
+            reject_delete(error);
+          }
+        );
+    });
+  }
+
+  private onAddedPhotoIdentity(){
+    this.updateCartExtraData('photo_identity_id', this.file_photo_identity.id);
+  }
+
+  private onRemovedPhotoIdentity() {
+    this.file_photo_identity = null;
+    this.updateCartExtraData('photo_identity_id', null);
+  }
+
 }

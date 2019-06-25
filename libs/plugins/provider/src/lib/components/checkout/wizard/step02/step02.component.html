@@ -138,14 +138,23 @@
             <h5 class="text-primary mb-3">CONFIRMAÇÃO DE IDENTIDADE</h5>
           </div>
           <div class="col-12 mb-2">
+            <div *ngIf="file_photo_identity === null">
               <p>
                 Envie um documento de identidade e agilize o processo de instalação!
-              </p>
+              </p>    
               <wda-uploader buttonClass="btn btn-primary btn-block btn-large"
-                (onErrorEvent)="logoUploadError($event)" (onLoadEndedEvent)="logoUpdateFinished($event)"
+                (onErrorEvent)="onPhotoUploadError($event)" (onLoadEndedEvent)="onPhotoUpdateFinished($event)"
                 label="Tirar Foto/Escolher Arquivo" [service]="mediaService"
                 [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg, .pdf">
               </wda-uploader>
+            </div>
+            <div *ngIf="file_photo_identity">
+              <p >
+                <img [src]="file_photo_identity.safeFileUrl" class="mx-auto d-block" height="200" />
+                <button type="button" (click)="removePhotoIdentity($event)" 
+                  class="btn btn-danger my-1 mx-auto d-block btn-sm">Deletar</button>
+              </p>
+            </div> 
           </div>
         </div><!-- Upload Document -->
 
