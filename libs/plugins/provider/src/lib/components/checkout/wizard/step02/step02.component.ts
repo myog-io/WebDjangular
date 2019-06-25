@@ -232,6 +232,7 @@ export class PluginProviderCheckoutWizardStep02Component
     }
   }
   logoUpdateFinished(event) {
+    // TODO: SAVE as Secure is_secure = true
     // TODO: Save on the cart Extra Data
     // TODO: If already exitis on the cart Extra Data we need to remove the older one
     // TODO: Give if feedback if the file has already previusly updated
