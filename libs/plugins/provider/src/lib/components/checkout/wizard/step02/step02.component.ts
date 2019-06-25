@@ -69,12 +69,16 @@ export class PluginProviderCheckoutWizardStep02Component
     if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime.value = this.cart.extra_data['contractTime'];
     if (this.cart.extra_data.hasOwnProperty('dueDay')) dueDay = this.cart.extra_data['dueDay'];
     if (this.cart.extra_data.hasOwnProperty('photo_identity_id')){
-      console.log();
       this.datastore
         .findRecord(MediaModel, this.cart.extra_data['photo_identity_id'], {}, new HttpHeaders({ Authorization: 'none' }))
-        .subscribe(media => {
-          this.file_photo_identity = media;
-        });
+        .subscribe(
+          (media: MediaModel) => {
+            this.file_photo_identity = media;
+          },
+          (error: ErrorResponse) => {
+            this.onRemovedPhotoIdentity();
+          }
+        );
     } 
 
     if (!this.providerCheckout.selected_internet_plan) {
@@ -281,12 +285,16 @@ export class PluginProviderCheckoutWizardStep02Component
   }
 
   private onAddedPhotoIdentity(){
-    this.updateCartExtraData('photo_identity_id', this.file_photo_identity.id);
+    this.providerCheckout.updateCartExtraData('photo_identity_id', this.file_photo_identity.id).then(() => {
+      this.providerCheckout.updateCartExtraData('photo_identity_url', this.file_photo_identity.absoluteUrl);
+    });    
   }
 
   private onRemovedPhotoIdentity() {
     this.file_photo_identity = null;
-    this.updateCartExtraData('photo_identity_id', null);
+    this.providerCheckout.updateCartExtraData('photo_identity_id', null).then(() => {
+      this.providerCheckout.updateCartExtraData('photo_identity_url', null);
+    }); 
   }
 
 }

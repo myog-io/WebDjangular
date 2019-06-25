@@ -143,7 +143,7 @@
                 Envie um documento de identidade e agilize o processo de instalação!
               </p>    
               <wda-uploader buttonClass="btn btn-primary btn-block btn-large"
-                (onErrorEvent)="onPhotoUploadError($event)" (onLoadEndedEvent)="onPhotoUpdateFinished($event)"
+                (onErrorEvent)="onPhotoIdentityUploadError($event)" (onLoadEndedEvent)="onPhotoIdentityUpdateFinished($event)"
                 label="Tirar Foto/Escolher Arquivo" [service]="mediaService"
                 [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg, .pdf">
               </wda-uploader>
