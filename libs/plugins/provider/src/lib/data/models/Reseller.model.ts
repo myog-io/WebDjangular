@@ -25,7 +25,7 @@ export class ResellerModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.email],
+    validators: [Validators.email],
     type: 'text',
     inputType: 'email',
     label: 'Email'
@@ -47,7 +47,15 @@ export class ResellerModel extends AbstractModel {
     label: "Is Activate?",
     value: true,
   })
-  active: string;
+  active: boolean;
+
+  @Attribute()
+  @ExtraOptions({
+    type: 'switch',
+    label: "Is Employee?",
+    value: false,
+  })
+  is_employee: boolean;
 
   @Attribute()
   order_count: number
@@ -68,6 +76,10 @@ export class ResellerModel extends AbstractModel {
       },
       active: {
         title: "Is Active?",
+        type: 'text'
+      },
+      is_employee: {
+        title: "Is Employee?",
         type: 'text'
       },
       order_count: {

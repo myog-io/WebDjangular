@@ -153,10 +153,22 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Resellers',
-        link: '/provider/reseller',
-        data: {
-          permission: [{ label: 'provider', action: 'view_reseller' }]
-        }
+        children: [
+          {
+            title: 'List',
+            link: '/provider/reseller',
+            data: {
+              permission: [{ label: 'provider', action: 'view_reseller' }]
+            }
+          },
+          {
+            title: 'Import',
+            link: '/provider/reseller-import',
+            data: {
+              permission: [{ label: 'provider', action: 'view_reseller' }]
+            }
+          }
+        ]
       },
       {
         title: 'Plan Types',

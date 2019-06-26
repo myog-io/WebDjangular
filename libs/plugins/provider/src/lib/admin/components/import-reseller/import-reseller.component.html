@@ -1,0 +1,43 @@
+<nb-card accent="warning">
+    <nb-card-header> Import Resellers, CSV </nb-card-header>
+</nb-card>
+
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit($event)">
+    <nb-card size="large">
+        <nb-card-body>
+            <p>To import use a .CSV File With the following example <small>* is required</small></p>
+            <table class="table">
+              <tr>
+                <th>Name *</th>
+                <th>CPF/CNPJ *</th>
+                <th>Email</th>
+                <th>Is Active</th>
+                <th>Is Employee</th>
+              </tr>
+              <tr>
+                  <td>João da siva</td>
+                  <td>111111111111</td>
+                  <td>joao@empresa.com</td>
+                  <td>1</td>
+                  <td>0</td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <label>Select File to Import</label>
+                <input type="file" (change)="onFileChange($event)" class="form-control" />
+            </div>
+
+            <nb-progress-bar size="xlg" *ngIf="loading_text" [value]="loading_percentage" status="primary">
+                {{ loading_text }}</nb-progress-bar>
+        </nb-card-body>
+        <nb-card-footer>
+            <div class="form-group">
+                <button nbButton status="success" [disabled]="loading || formGroup.invalid" size="medium"
+                    [nbSpinner]="loading" nbSpinnerStatus="success" nbSpinnerSize="medium"
+                    nbSpinnerMessage="Loading...">
+                    Start Import
+                </button>
+            </div>
+        </nb-card-footer>
+    </nb-card>
+</form>

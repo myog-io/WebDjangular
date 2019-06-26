@@ -8,7 +8,8 @@ class Reseller(BaseModel):
     name = models.CharField(max_length=255)
     taxvat = models.CharField(
         max_length=15, unique=True, blank=True, null=True)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    is_employee = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     orders = models.ManyToManyField(
         Order,

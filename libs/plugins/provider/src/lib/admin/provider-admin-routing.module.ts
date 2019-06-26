@@ -8,8 +8,9 @@ import { ChannelModel } from '../data/models/Channel.model';
 import { ScaffoldModule } from '@core/builder/src/lib/scaffold/scaffold.module';
 import { PlanTypeModel } from '../data/models/PlanType.model';
 import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
-import { PluginProviderAdminOrdersComponent } from '@plugins/provider/src/lib/admin/components/orders.component';
+import { PluginProviderAdminOrdersComponent } from '@plugins/provider/src/lib/admin/components/orders/orders.component';
 import { ScaffoldComponent } from '@core/builder/src/lib/scaffold/scaffold.component';
+import { PluginProviderAdminImportResellerComponent } from './components/import-reseller/import-reseller.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,10 @@ const routes: Routes = [
           title: 'Resellers',
           path: 'provider/reseller'
         }
+      },
+      {
+        path: 'reseller-import',
+        component: PluginProviderAdminImportResellerComponent,
       },
       {
         path: 'reseller',

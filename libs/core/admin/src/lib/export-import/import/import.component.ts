@@ -41,7 +41,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private datastore: WebAngularDataStore,
     private toaster: NbToastrService
-  ) {}
+  ) { }
 
   onFileChange(event) {
     const reader = new FileReader();
@@ -72,7 +72,7 @@ export class AdminImportComponent implements OnInit, OnDestroy {
     this.loadRecursive();
     //this.toaster.success(`Changes have been saved`, `Success!`);
   }
-  onChange(event) {}
+  onChange(event) { }
   ngOnInit() {
     this.models = Reflect.getMetadata(
       'JsonApiDatastoreConfig',

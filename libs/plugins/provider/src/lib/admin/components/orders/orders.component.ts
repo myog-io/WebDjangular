@@ -4,8 +4,8 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 import { NbDialogService } from '@nebular/theme';
 import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
 import { ErrorResponse } from 'angular2-jsonapi';
-import { PlanTypeModel } from '../../data/models/PlanType.model';
-import { ResellerModel } from '../../data';
+import { PlanTypeModel } from '../../../data/models/PlanType.model';
+import { ResellerModel } from '../../../data';
 
 @Component({
   selector: 'plugin-provider-admin-orders',
