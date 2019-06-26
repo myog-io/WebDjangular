@@ -58,6 +58,7 @@ export class WdaUploaderComponent implements OnInit {
             isHTML5: true,
             // maxFileSize:
             queueLimit: 1,
+            maxFileSize: (1024 * 1024) * 20,
             // allowedFileType: [this.allowedFileType],
             additionalParameter: this.additionalParameter
         });
@@ -79,6 +80,11 @@ export class WdaUploaderComponent implements OnInit {
         this.uploader.onProgress = (e: any, item: FileItem) => {
             this.labelToShow = this.uploader.progress + '%';
             this.progressEvent.emit({ event: e, item: item });
+        };
+        this.uploader.onCompleteChunk = (item: FileItem, response: any, status, headers) => {
+            if (response.data.id) {
+                item.setId(response.data.id);
+            }
         };
         this.uploader.onStart = (e: any, item: FileItem) => {
             this.onLoadEvent.emit({ event: e, item: item });
