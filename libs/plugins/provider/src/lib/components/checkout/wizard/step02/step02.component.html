@@ -138,22 +138,29 @@
             <h5 class="text-primary mb-3">CONFIRMAÇÃO DE IDENTIDADE</h5>
           </div>
           <div class="col-12 mb-2">
-            <div *ngIf="file_photo_identity === null">
+            <div>
               <p>
                 Envie um documento de identidade e agilize o processo de instalação!
               </p>    
               <wda-uploader buttonClass="btn btn-primary btn-block btn-large"
                 (onErrorEvent)="onPhotoIdentityUploadError($event)" (onLoadEndedEvent)="onPhotoIdentityUpdateFinished($event)"
                 label="Tirar Foto/Escolher Arquivo" [service]="mediaService"
-                [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg">
+                [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg, .pdf" >
               </wda-uploader>
             </div>
-            <div *ngIf="file_photo_identity">
-              <p >
-                <img [src]="file_photo_identity.safeFileUrl" class="mx-auto d-block img-fluid " style="max-height:200px;" />
-                <button type="button" (click)="removePhotoIdentity($event)" 
+            <div *ngIf="photo_identity_array.length > 0" class="row my-2 align-items-end">
+              <span *ngFor="let photo_identity of photo_identity_array" class="col col-12 col-md-auto">
+                
+                <span *ngIf="photo_identity.media_extension != 'pdf'">
+                  <img [src]="photo_identity.media_url" class="mx-auto d-block img-fluid " style="max-height:200px;" />
+                </span>
+                <span *ngIf="photo_identity.media_extension == 'pdf'">
+                  <i class="far fa-8x fa-file-pdf "></i>
+                </span>
+                {{photo_identity.extension}}
+                <button type="button" (click)="removePhotoIdentity($event, photo_identity.media_id)" 
                   class="btn btn-danger my-1 mx-auto d-block btn-sm">Deletar</button>
-              </p>
+              </span>
             </div> 
           </div>
         </div><!-- Upload Document -->

@@ -11,6 +11,7 @@ import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.
 import { MediaService } from '@core/media/src/lib/core-media.service';
 import { ErrorResponse } from 'angular2-jsonapi';
 import { HttpHeaders } from '@angular/common/http';
+import { file } from '@babel/types';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class PluginProviderCheckoutWizardStep02Component
     '1 Ano',
     '2 Anos',
   ];
-  public file_photo_identity: MediaModel = null;
+  public photo_identity_array = [];
 
   public yearString = "Anos";
   constructor(
@@ -68,17 +69,27 @@ export class PluginProviderCheckoutWizardStep02Component
     if (this.cart.extra_data.hasOwnProperty('paymentType')) paymentType = this.cart.extra_data['paymentType'];
     if (this.cart.extra_data.hasOwnProperty('contractTime')) contractTime.value = this.cart.extra_data['contractTime'];
     if (this.cart.extra_data.hasOwnProperty('dueDay')) dueDay = this.cart.extra_data['dueDay'];
-    if (this.cart.extra_data.hasOwnProperty('photo_identity_id')){
-      this.datastore
-        .findRecord(MediaModel, this.cart.extra_data['photo_identity_id'], {}, new HttpHeaders({ Authorization: 'none' }))
-        .subscribe(
-          (media: MediaModel) => {
-            this.file_photo_identity = media;
-          },
-          (error: ErrorResponse) => {
-            this.onRemovedPhotoIdentity();
-          }
-        );
+    if (this.cart.extra_data.hasOwnProperty('photo_identity_array')){
+      console.log(this.cart.extra_data['photo_identity_array']);
+      this.cart.extra_data['photo_identity_array'].forEach(photo_identity => {
+        if(photo_identity.media_id){
+          this.datastore
+            .findRecord(MediaModel, photo_identity.media_id, {}, new HttpHeaders({ Authorization: 'none' }))
+            .subscribe(
+              (media: MediaModel) => {
+                console.log(media);
+                this.onAddedPhotoIdentity(media, false)
+              },
+              (error: ErrorResponse) => {
+                this.onRemovedPhotoIdentity(photo_identity.media_id, false);
+              }
+            );
+        }
+       
+      });
+
+      /*
+        */
     } 
 
     if (!this.providerCheckout.selected_internet_plan) {
@@ -207,7 +218,7 @@ export class PluginProviderCheckoutWizardStep02Component
   onSubmit() {
     this.error = null;
     if(this.providerCheckout.has_reseller) {
-      if(this.file_photo_identity == null) {
+      if(this.photo_identity_array.length == 0) {
         this.error = `Por favor, coloque um documento de identidade.`
         return;
       }
@@ -260,41 +271,47 @@ export class PluginProviderCheckoutWizardStep02Component
     }
   }
   onPhotoIdentityUpdateFinished(event) {
-    this.file_photo_identity = new MediaModel(this.datastore, event['response']['data']);
-    this.onAddedPhotoIdentity();
+    let file_photo_identity: MediaModel = new MediaModel(this.datastore, event['response']['data']);
+    this.onAddedPhotoIdentity(file_photo_identity);
   }
 
   onPhotoIdentityUploadError(event) {
     // TODO: Feedback when error of upload
   }
 
-  removePhotoIdentity(event) {
-    let promise = new Promise((resolve_delete, reject_delete) => {
-      this.datastore.deleteRecord(MediaModel, this.file_photo_identity.id, new HttpHeaders({ Authorization: 'none' }))
-        .subscribe(
-          response => {
-            this.onRemovedPhotoIdentity();
-            resolve_delete(response);
-          },
-          error => {
-            // TODO: show some error
-            reject_delete(error);
-          }
-        );
+  removePhotoIdentity(event, media_id) {
+    console.log(media_id);
+    this.datastore.deleteRecord(MediaModel, media_id, new HttpHeaders({ Authorization: 'none' }))
+      .subscribe(
+        response => {
+          this.onRemovedPhotoIdentity(media_id);
+        },
+        error => {
+          // TODO: show some error
+        }
+      );
+    
+  }
+
+  private onAddedPhotoIdentity(file_photo_identity: MediaModel, updateCartExtraData: boolean = true){
+    this.photo_identity_array.push({
+      'media_id': file_photo_identity.id,
+      'media_extension': file_photo_identity.file.split('.').pop(), //file_photo_identity.extension,
+      'media_url': file_photo_identity.absoluteUrl
     });
+    console.log(this.photo_identity_array);
+    if(updateCartExtraData){
+      this.providerCheckout.updateCartExtraData('photo_identity_array', this.photo_identity_array);
+    }
   }
 
-  private onAddedPhotoIdentity(){
-    this.providerCheckout.updateCartExtraData('photo_identity_id', this.file_photo_identity.id).then(() => {
-      this.providerCheckout.updateCartExtraData('photo_identity_url', this.file_photo_identity.absoluteUrl);
-    });    
-  }
-
-  private onRemovedPhotoIdentity() {
-    this.file_photo_identity = null;
-    this.providerCheckout.updateCartExtraData('photo_identity_id', null).then(() => {
-      this.providerCheckout.updateCartExtraData('photo_identity_url', null);
-    }); 
+  private onRemovedPhotoIdentity(media_id, updateCartExtraData: boolean = true) {
+    this.photo_identity_array =  this.photo_identity_array.filter(obj => {
+      return obj.media_id !== media_id; 
+    });
+    if(updateCartExtraData){
+      this.providerCheckout.updateCartExtraData('photo_identity_array', this.photo_identity_array);
+    }
   }
 
 }
