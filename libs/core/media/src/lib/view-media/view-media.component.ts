@@ -28,7 +28,7 @@ export class ViewMediaComponent implements OnInit {
     private datastore: WebAngularDataStore,
     private router: Router,
     private mediaService: MediaService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.uploader = new FileUploader({
@@ -49,12 +49,7 @@ export class ViewMediaComponent implements OnInit {
       item.withCredentials = false;
     };
 
-    this.uploader.onCompleteChunk = (
-      item: FileItem,
-      response: any,
-      status,
-      headers
-    ) => {
+    this.uploader.onCompleteChunk = (item: FileItem, response: any, status, headers) => {
       if (response.data.id) {
         item.setId(response.data.id);
       }
@@ -65,7 +60,7 @@ export class ViewMediaComponent implements OnInit {
       response: any,
       status,
       headers
-    ) => {};
+    ) => { };
 
     this.uploader.onCompleteAll = () => {
       this.getMedias();
@@ -76,13 +71,13 @@ export class ViewMediaComponent implements OnInit {
       response: any,
       status,
       headers
-    ) => {};
+    ) => { };
 
     this.uploader.onRemoveItem = (item: FileItem) => {
       if (item.getId()) {
         this.datastore
           .deleteRecord(MediaModel, item.getId())
-          .subscribe(r => {});
+          .subscribe(r => { });
       }
     };
   }
