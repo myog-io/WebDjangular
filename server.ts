@@ -47,8 +47,10 @@ global['localStorage'] = localStorage;
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 
+app.enable("trust proxy");
+
 // Our Universal express-engine For the APP(found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-app.engine('html', (_, options, callback) => {
+app.engine('html', (_, options:any, callback:any) => {
   let serverUrl = options.req.protocol + '://' + options.req.get('host');
   let current_template = template
   renderModuleFactory(AppServerModuleNgFactory, {

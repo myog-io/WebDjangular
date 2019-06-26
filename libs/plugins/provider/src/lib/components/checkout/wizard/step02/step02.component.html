@@ -145,12 +145,12 @@
               <wda-uploader buttonClass="btn btn-primary btn-block btn-large"
                 (onErrorEvent)="onPhotoIdentityUploadError($event)" (onLoadEndedEvent)="onPhotoIdentityUpdateFinished($event)"
                 label="Tirar Foto/Escolher Arquivo" [service]="mediaService"
-                [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg, .pdf">
+                [additionalParameter]="{is_secure:true}" accept=".png, .jpg, .jpeg">
               </wda-uploader>
             </div>
             <div *ngIf="file_photo_identity">
               <p >
-                <img [src]="file_photo_identity.safeFileUrl" class="mx-auto d-block" height="200" />
+                <img [src]="file_photo_identity.safeFileUrl" class="mx-auto d-block img-fluid " style="max-height:200px;" />
                 <button type="button" (click)="removePhotoIdentity($event)" 
                   class="btn btn-danger my-1 mx-auto d-block btn-sm">Deletar</button>
               </p>

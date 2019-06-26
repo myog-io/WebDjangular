@@ -7,7 +7,7 @@ import { ThemeModule } from '@core/admin/src/lib/@theme';
 import { ChunkFileUploadModule } from '@core/chunk-file-upload/src/lib/chunk-file-upload.module';
 import { CoreSharedSafePipe } from '@core/shared/src/lib/pipes/safe/safe.module';
 import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
-import { WdaUploaderComponent } from './wda-uploader/wda-uploader.component';
+import { WdaUploaderModule } from './wda-uploader/wda-uploader.module';
 @NgModule({
   imports: [
     ThemeModule,
@@ -17,10 +17,11 @@ import { WdaUploaderComponent } from './wda-uploader/wda-uploader.component';
       { path: '', pathMatch: 'full', component: ViewMediaComponent }
     ]),
     CoreSharedSafePipe,
-    BuilderFormModule
+    BuilderFormModule,
+    WdaUploaderModule
   ],
-  exports: [ WdaUploaderComponent],
+  exports: [ ],
   providers: [MediaService],
-  declarations: [ViewMediaComponent, WdaUploaderComponent]
+  declarations: [ViewMediaComponent]
 })
 export class CoreMediaModule { }

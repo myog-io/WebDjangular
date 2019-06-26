@@ -42,7 +42,7 @@ class RemoteFileField(models.FileField):
 
 
     def pre_save(self, model_instance, add):
-        if not model_instance.pk and CONFIG_STORAGE_CLASS is not None and self.storage_config[CONFIG_STORAGE_CLASS]:
+        if not model_instance.pk and CONFIG_STORAGE_CLASS and self.storage_config and self.storage_config[CONFIG_STORAGE_CLASS]:
             model_instance.storage_name = self.storage_config[CONFIG_STORAGE_CLASS]
         file = super().pre_save(model_instance, add)
         return file

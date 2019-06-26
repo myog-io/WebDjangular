@@ -31,8 +31,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { PluginProviderCheckoutErrorComponent } from './checkout-form-error.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-import { WdaUploaderComponent } from '@core/media/src/lib/wda-uploader/wda-uploader.component';
 import { ChunkFileUploadModule } from '@core/chunk-file-upload/src/lib/chunk-file-upload.module';
+import { WdaUploaderModule } from '@core/media/src/lib/wda-uploader/wda-uploader.module';
 
 
 
@@ -51,8 +51,7 @@ const COMPONENTS = [
   PluginProviderCheckoutWizardStep01Component,
   PluginProviderCheckoutWizardStep02Component,
   PluginProviderCheckoutWizardStep03Component,
-  PluginProviderCheckoutErrorComponent,
-  WdaUploaderComponent
+  PluginProviderCheckoutErrorComponent
 ];
 
 @NgModule({
@@ -66,7 +65,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     NgxMaskModule.forRoot(),
     NgbModalModule,
-    ChunkFileUploadModule
+    ChunkFileUploadModule,
+    WdaUploaderModule
   ],
   providers: [MediaService],
   exports: [...COMPONENTS],

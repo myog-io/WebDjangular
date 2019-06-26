@@ -1,2 +1,2 @@
-<input ng2FileSelect type="file" id="file" class="inputfile" [uploader]="uploader" (onFileSelected)="onFileSelected($event)" #file_upload />
+<input ng2FileSelect type="file" id="file" class="inputfile" [accept]="accept" [uploader]="uploader" (onFileSelected)="onFileSelected($event)" #file_upload />
 <span role="button" (click)="file_upload.click()" for="file" class="{{ buttonClass }} " #buttonInput >{{ labelToShow }} <i class="fas fa-upload"></i></span>
