@@ -26,10 +26,10 @@
     "core-cms": {
       "tags": []
     },
-    "themes-cleanog": {
+    "core-forms": {
       "tags": []
     },
-    "plugins-wda-forms": {
+    "themes-cleanog": {
       "tags": []
     },
     "core-shared": {
@@ -68,7 +68,7 @@
     "provider": {
       "tags": []
     },
-    "plugins-provider": {
+    "plugin-provider": {
       "tags": []
     },
     "theme-providerfy": {
