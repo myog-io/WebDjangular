@@ -888,6 +888,34 @@
         }
       }
     },
+    "theme-ispwebby": {
+      "root": "libs/themes/ispwebby",
+      "sourceRoot": "libs/themes/ispwebby/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/themes/ispwebby/src/test.ts",
+            "tsConfig": "libs/themes/ispwebby/tsconfig.spec.json",
+            "karmaConfig": "libs/themes/ispwebby/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/themes/ispwebby/tsconfig.lib.json",
+              "libs/themes/ispwebby/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
     "core-media": {
       "root": "libs/core/media",
       "sourceRoot": "libs/core/media/src",

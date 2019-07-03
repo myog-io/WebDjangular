@@ -1,0 +1,14 @@
+{
+  "theme": {
+    "slug": "ispwebby",
+    "name": "ISP Webby Theme by MyOG 2019",
+    "angular_module": "ThemeIspwebbyModule",
+    "version": "0.0.1",
+    "parent_theme": false
+  },
+  "author": {
+    "name": "MyOG",
+    "email": "team@myog.io",
+    "website": "http://myog.io"
+  }
+}

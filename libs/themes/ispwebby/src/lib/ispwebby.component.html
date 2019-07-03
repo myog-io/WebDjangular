@@ -1,0 +1,16 @@
+<wda-content-viewer
+  *ngIf="header"
+  class="header"
+  [content]="header"
+></wda-content-viewer>
+<wda-content-viewer
+  *ngIf="content"
+  class="body"
+  [content]="content"
+  (docRendered)="renderComplete()"
+></wda-content-viewer>
+<wda-content-viewer
+  *ngIf="footer"
+  class="footer"
+  [content]="footer"
+></wda-content-viewer>

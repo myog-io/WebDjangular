@@ -1,0 +1,18 @@
+:host {
+  background-image: url('../../../assets/images/modal_playboytv_bg.png');
+  background-position: right top;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  height: inherit;
+}
+
+.tv-channel-logo {
+  background-image: url('../../../assets/images/modal_playboytv_logo.png');
+  width: 317px;
+  height: 44px;
+  margin-bottom: 40px;
+}
+p {
+  max-width: 300px;
+}

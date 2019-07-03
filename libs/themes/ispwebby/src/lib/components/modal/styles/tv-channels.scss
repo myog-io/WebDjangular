@@ -1,0 +1,17 @@
+@import '~rfs/sass/_rfs';
+
+.modal-header {
+  border: unset;
+}
+
+.modal-body {
+  padding-left: 60px;
+}
+
+p {
+  color: #999999;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  @include responsive-font-size(16px);
+  line-height: 20px;
+  margin-left: 5px;
+}

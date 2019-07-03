@@ -1,0 +1,263 @@
+/*
+
+  -bg = background
+  -c = color
+
+  -fs = font-size
+  -ff = font-family
+  -fw = font-weight
+  -lh = line-height
+
+  -w = width
+  -maxw = max-width
+  -minw = min-width
+
+  -h = height
+  -maxh = max-height
+  -minh = min-height
+
+  -bd = border
+  -bdc = border-color
+  -bdw = border-width
+  -bds = border-style
+
+  -bd-t = border-top
+  -bd-r = border-right
+  -bd-l = border-left
+  -bd-b = border-bottom
+
+
+  breaking points
+
+  -xs = extra small screen
+  -sm = small screen
+  -md = medium screen
+  -lg = large screen
+  -xl = extra large screen
+
+
+ */
+
+/**************************************
+  GRID - breakpoints
+**************************************/
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+);
+/* *************************************
+  Z-INDEX
+************************************* */
+$zindex-dropdown: 1000 !default;
+$zindex-sticky: 1020 !default;
+$zindex-fixed: 1030 !default;
+$zindex-modal-backdrop: 1040 !default;
+$zindex-modal: 1050 !default;
+$zindex-popover: 1060 !default;
+$zindex-tooltip: 1070 !default;
+/* *************************************
+  FONT-WEIGHT
+************************************* */
+$fw-thin: 100; /* aka hairline */
+$thin-xlight: 200; /* aka ultra-light */
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600; /* aka demi-bold */
+$fw-bold: 700;
+$fw-xbold: 800; /* aka ultra-bold */
+$fw-black: 900; /* aka heavy */
+$blue: rgb(10, 113, 226);
+$blue: rgb(10, 113, 226);
+$indigo: rgb(68, 4, 173);
+$purple: rgb(146, 110, 219);
+$pink: rgb(247, 115, 176);
+$orange: rgb(250, 133, 22);
+$yellow: rgb(250, 211, 11);
+$green: rgb(33, 182, 68);
+$teal: rgb(33, 218, 164);
+$cyan: rgb(31, 197, 241);
+$red: rgb(243, 52, 12);
+$spacer: 2rem !default;
+$spacers: () !default;
+$spacers: map-merge(
+  (
+    0: 0,
+    1: (
+      $spacer * 0.25
+    ),
+    2: (
+      $spacer * 0.5
+    ),
+    3: $spacer,
+    4: (
+      $spacer * 1.5
+    ),
+    5: (
+      $spacer * 3
+    )
+  ),
+  $spacers
+);
+$primary: #90c028;
+$primary-light-100: lighten($primary, 10%);
+$primary-light-200: lighten($primary, 20%);
+$primary-ff: 'Open Sans', Helvetica, sans-serif;
+$primary-fw: 400;
+$primary-fs: 14px;
+$secondary-ff: 'Boston', Helvetica, sans-serif;
+$white: #fff;
+$black: #000;
+
+$facebook-c: #3b5998;
+$instagram-gradient-c: radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%),
+                       radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
+                        // left top
+                       radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%),
+                       radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%),
+                        //  right top
+                       radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%),
+                       radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%),
+                        // right bottom
+                       radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
+
+                       /////// create a base coat to smooth
+                       /////// corner gradients
+                       linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
+                        //radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+$linkedin-c: #0077B5;
+$youtube-c: #c4302b;
+$twitter-c: #1da1f2;
+
+
+
+$gray-100: #fafafa;
+$gray-200: #dee1e3;
+$gray-300: #d9e2e5;
+$gray-400: #b8bec3;
+
+$gray-500: #999999;
+$gray-600: #707b85;
+$gray-700: #616c74;
+$gray-800: #5f6a73;
+$gray-900: #7c868e;
+$h1-fs: 56px;
+$h2-fs: 50px;
+$h3-fs: 40px;
+$h4-fs: 32px;
+$h5-fs: 24px;
+$h6-fs: 16px;
+$fs-subtitle: 18px;
+$input-cc: $gray-900;
+$input-ff: $primary-ff;
+$input-fw: $fw-regular;
+$input-fs: 16px;
+$input-lh: 18px;
+$card-border-radius: 15px;
+$grid-gutter-width: 32px;
+$font-family-sans-serif: Roboto, BlinkMacSystemFont, Segoe UI, Roboto,
+  Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+  Segoe UI Symbol;
+$font-size-base: 1rem;
+$small-font-size: 75%;
+$mark-bg: rgb(255, 248, 219);
+$input-btn-padding-y: 0.5rem;
+$btn-disabled-opacity: 0.8;
+$black: #000;
+$btn-active-box-shadow: inset 0 3px 5px rgba($black, 0.3);
+
+$header-h: 130px;
+$header-menu-fs: 15px;
+$header-menu-ff: $secondary-ff;
+$header-menu-fw: $fw-semibold;
+$header-menu-c: $black;
+$header-menu-featured-c: $white;
+$header-menu-featured-bg: $primary;
+$header-menu-featured-rounded: 30px;
+$btn-primary-rounded: 30px;
+
+
+/* ***********************************************************
+
+  MAIN FOOTER
+
+************************************************************ */
+
+$footer-bg: #8dc53e;
+
+$footer-text-c: $gray-400;
+$footer-link-c: $gray-400;
+$footer-link-hover-c: $gray-200;
+$footer-header-c: $white;
+$myog-primary-c: #096fa1;
+$myog-secondary-c: #ff8801;
+$footer-signature-bg: $myog-primary-c;
+$footer-signature-c: $white;
+$footer-signature-link: $myog-secondary-c;
+$footer-signature-link-hover: lighten($myog-secondary-c, 10%);
+/* ***********************************************************
+
+  PLANS
+
+************************************************************ */
+$plan-title-c: $gray-700;
+$plan-title-fs: $h3-fs;
+$plan-title-fw: $fw-black;
+$plan-title-ff: $secondary-ff;
+$plan-headline-c: #8f989f;
+$plan-headline-fs: 16px;
+$plan-headline-ff: $secondary-ff;
+$plan-headline-fw: $fw-xbold;
+/* ***********************************************************
+
+  PRICING
+
+************************************************************ */
+$plan-card-round: 10px;
+$pricing-plan-amount-fs: 63px;
+
+$pricing-plan-amount-fw: $fw-xbold;
+$pricing-plan-amount-ff: $secondary-ff;
+$pricing-plan-amount-c: $white;
+$pricing-plan-amount-unit-fs: 40px;
+$pricing-plan-amount-unit-fw: $fw-regular;
+$pricing-plan-amount-unit-ff: $secondary-ff;
+$pricing-plan-amount-unit-c: $white;
+$pricing-plan-currency-unit-fs: 20px;
+$pricing-plan-currency-unit-fw: $fw-semibold;
+$pricing-plan-currency-unit-ff: $secondary-ff;
+$pricing-plan-currency-unit-c: #656d73;
+$pricing-plan-price-fs: 34px;
+$pricing-plan-price-fw: $fw-semibold;
+$pricing-plan-price-ff: $secondary-ff;
+$pricing-plan-price-c: #656d73;
+$pricing-plan-price-d: #000000;
+$pricing-plan-more-info-fs: 11px;
+$pricing-plan-more-info-fw: $fw-semibold;
+$pricing-plan-more-info-ff: $secondary-ff;
+$pricing-plan-more-info-c: #8a939a;
+$pricing-plan-features-fs: 16px;
+$pricing-plan-features-lh: 18px;
+$pricing-plan-features-fw: $fw-regular;
+$pricing-plan-features-ff: $primary-ff;
+$pricing-plan-features-c: #8a939a;
+$btn-subscribe-fs: 16px;
+$btn-subscribe-fw: $fw-semibold;
+$btn-subscribe-ff: $secondary-ff;
+$btn-subscribe-c: $white;
+$pricing-plan-internet-horizontal-left-side-bg: $gray-100;
+$pricing-plan-internet-horizontal-right-side-bg: $white;
