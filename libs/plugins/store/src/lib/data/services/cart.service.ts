@@ -302,33 +302,27 @@ export class CartService {
   }
 
   public clearCartItems(): Promise<any> {
+    this.cart.items = [];
+    this.updateCookie();
+
     return new Promise((resolve, reject) => {
-      let promises = [];
-      this.cart.items.forEach(item => {
-        this.cart.items = this.cart.items.filter(ele => {
-          return ele != item;
-        });
-        let promise = new Promise((resolve, reject) => {
-          this.datastore.deleteRecord(CartItemModel, item.id).subscribe(
-            response => {
-              resolve(response);
-            },
-            error => {
-              reject(error);
-            }
-          );
-        });
-        promises.push(promise);
-      });
-      Promise.all(promises).then(
-        values => {
-          this.getCartInfo().then(() => {
-            resolve(values);
-          });
-        },
-        error => {
-          reject(error);
-        }
+      this.datastore
+        .findRecord(
+          CartModel,
+          null,
+          null,
+          null,
+          `api/store/cart/${this.cart.id}/clear_items/`
+        )
+        .subscribe(
+          (cart: CartModel) => {
+            this.cart = cart;
+            this.updateCookie();
+            resolve(cart);
+          },
+          (error: ErrorResponse) => {
+            reject(error);
+          }
       );
     });
   }

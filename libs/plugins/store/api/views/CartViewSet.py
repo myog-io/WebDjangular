@@ -83,13 +83,29 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     # TODO: Improve Security we should have some way to know who's the Cart Owner
     # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
-    public_views = ('list', 'retrieve', 'complete_order', 'by_token',
+    public_views = ('list', 'retrieve', 'complete_order', 'clear_items', 'by_token',
                     'create', 'update', 'partial_update', 'destroy')
 
     def apply_rules(self, instance):
         apply_all_cart_rules(instance)
         # Removing Cart From Here, shold be added on Signals
         # apply_cart_terms(instance)
+
+    @action(methods=['GET'], detail=True, url_path='clear_items')
+    def clear_items(self, request, *args, **kwargs):
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        from django.db.models import Q
+        CartItem.objects.filter(Q(cart=self.get_object()) | Q(cart=None)).delete()
+
+        serializer = self.get_serializer(self.get_object())
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
+
 
     @action(methods=['GET'], detail=True, url_path='complete_order')
     def complete_order(self, request, *args, **kwargs):
