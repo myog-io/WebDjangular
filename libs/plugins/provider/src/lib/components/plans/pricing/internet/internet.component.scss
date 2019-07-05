@@ -35,7 +35,7 @@
       font-family: $pricing-plan-amount-ff;
       color: $pricing-plan-amount-c;
 
-      background: $primary;
+      background: var(--primary);
       line-height: $pricing-plan-amount-fs * 0.6;
 
       border-top-left-radius: $plan-card-round;
@@ -131,7 +131,7 @@
         display: inline-block;
 
         .icon {
-          //color: $primary;
+          color: var(--primary);
           //float: left;
           //display: block;
           margin-right: 5px;
@@ -168,7 +168,7 @@
       font-family: $pricing-plan-amount-ff;
       color: $pricing-plan-amount-c;
 
-      background: $primary;
+      background: var(--primary);
       line-height: $pricing-plan-amount-fs / 2;
 
       border-top-left-radius: $plan-card-round;
@@ -203,7 +203,7 @@
         display: block;
 
         .icon {
-          color: $primary;
+          color: var(--primary);
           float: left;
           display: block;
         }

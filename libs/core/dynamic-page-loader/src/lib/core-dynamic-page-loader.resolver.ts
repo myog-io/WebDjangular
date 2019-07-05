@@ -17,6 +17,7 @@ import { ErrorResponse } from 'angular2-jsonapi';
 export class CoreDynamicPageLoaderResolver
   implements Resolve<PageModel | ErrorResponse> {
   constructor(public router: Router, public wdaConfig: WDAConfig) {
+    this.wdaConfig.applyThemeStyleVars();
     this.wdaConfig.applyCustomStyle();
     this.wdaConfig.applyCustomScript();
   }

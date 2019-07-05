@@ -3,6 +3,7 @@ DEFAULT_HEADER = 'default_header'
 DEFAULT_FOOTER = 'default_footer'
 DEFAULT_I18N = 'default_i18n'
 
+THEME_STYLE_VARS = 'theme_style_vars'
 CUSTOM_STYLE = 'custom_style'
 CUSTOM_SCRIPT = 'custom_script'
 

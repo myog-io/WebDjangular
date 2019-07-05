@@ -24,8 +24,12 @@ import { PluginProviderPlansComponent } from '@plugins/provider/src/lib/componen
 import { PluginProviderCityListComponent } from '@plugins/provider/src/lib/components/city-list/city-list.component';
 import { PluginProviderError500Component } from '@plugins/provider/src/lib/components/errors/500/500.component';
 import { PluginProviderError404Component } from '@plugins/provider/src/lib/components/errors/404/404.component';
+
+// THEMES HARDCODED HERE //
+
 import { ThemeProviderfyTopHeaderComponent } from '@themes/providerfy/src/lib/components/header/top-header/top-header.component';
 import { ThemeProviderfyHeaderMenuComponent } from '@themes/providerfy/src/lib/components/header/menu/menu.component';
+
 import { CoreCmsLinkComponent } from '@core/cms/src/lib/components/link.component';
 import { CoreCmsFormComponent } from '@core/cms/src/lib/components/form/form.component';
 import { PluginProviderGenerateLinkFormComponent } from '@plugins/provider/src/lib/components/terms/generate-link/generate-link.component';
@@ -36,6 +40,8 @@ export const embeddedComponents = [
   CoreCmsGalleryComponent,
   CoreCmsLinkComponent,
   CoreCmsFormComponent,
+
+  // PLUGINS HARDCODED HERE //
   PluginProviderPricingInternetHorizontalComponent,
   PluginProviderPricingInternetComponent,
   PluginProviderPricingTelephoneVerticalComponent,
@@ -49,8 +55,10 @@ export const embeddedComponents = [
   PluginProviderError500Component,
   PluginProviderSendEmailFormComponent,
   PluginProviderGenerateLinkFormComponent,
+
+  // THEMES HARDCODED HERE //
   ThemeProviderfyTopHeaderComponent,
-  ThemeProviderfyHeaderMenuComponent
+  ThemeProviderfyHeaderMenuComponent,
 ];
 
 export class EmbeddedComponents {

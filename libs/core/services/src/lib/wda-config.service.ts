@@ -133,6 +133,24 @@ export class WDAConfig {
     //return "../../../themes/" + this.theme.slug + "/" + this.theme.slug + ".module#" + this.theme.angular_module;
   }
 
+  public applyThemeStyleVars() {
+    let theme_style_vars: any = '';
+    if (this.core_config && document) {
+      if (this.core_config.hasOwnProperty('cms_core')) {
+        if (this.core_config['cms_core']['theme_style_vars']) {
+          theme_style_vars = this.core_config['cms_core']['theme_style_vars'];
+        }
+      }
+      if (theme_style_vars) {
+        let style: HTMLStyleElement = document.createElement('style');
+        style.innerHTML = theme_style_vars; // TODO: minify .replace(/\t?\n?\s?/gi, '');
+        console.log(style);
+        //document.head.appendChild(style);
+        document.head.appendChild(style);
+      }
+    }
+  }
+
   public applyCustomStyle() {
     let custom_style: string = '';
     if (this.core_config && document) {

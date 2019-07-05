@@ -23,7 +23,7 @@
       font-family: $pricing-plan-amount-ff;
       color: $pricing-plan-amount-c;
 
-      background: $primary;
+      background: var(--primary);
       line-height: $pricing-plan-amount-fs / 1.7;
       margin-bottom: 0;
       text-transform: uppercase;
@@ -120,7 +120,7 @@
         display: inline-block;
 
         .icon {
-          color: $primary;
+          color: var(--primary);;
           float: left;
           display: block;
         }
