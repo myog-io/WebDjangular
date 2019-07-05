@@ -162,6 +162,8 @@ export class ProviderCheckoutService {
   private city_has_tv = false;
   private city_has_phone = false;
 
+  public isLoadedCart: boolean = false;
+
   constructor(
     private datastore: WebAngularDataStore,
     public cartService: CartService,
@@ -194,16 +196,16 @@ export class ProviderCheckoutService {
 
     });
     // We always have the cart create but sometimes does not have ID
-    if (this.cartService.cart) {
-      this.loadedCart();
-    } else {
-      this.listener_cart_changes = this.cartService.cart_changes.subscribe(
-        () => {
-          this.checkDisabledByCategories(this.cartService.cart);
-          this.loadedCart();
-        }
-      );
-    }
+    //if (this.cartService.cart) {
+    //  this.loadedCart();
+    //} else {
+    //  this.listener_cart_changes = this.cartService.cart_changes.subscribe(
+    //    () => {
+    //      this.checkDisabledByCategories(this.cartService.cart);
+    //      this.loadedCart();
+    //    }
+    //  );
+    //}
 
     this.activatedRoute.queryParams.subscribe(params => {
       if (params.hasOwnProperty('reseller')) {
@@ -256,7 +258,7 @@ export class ProviderCheckoutService {
         this.city = this.clientUserService.clientUser.data['city'];
         this.loading_cart = true;
         this.loadedCart();
-      })
+      });
     }
     if (params.hasOwnProperty('net')) {
       this.pre_select_plans.internet = params['net'];
@@ -290,7 +292,11 @@ export class ProviderCheckoutService {
     return arr.filter(ele => ele !== value);
   }
 
+
   loadedCart() {
+    if(this.isLoadedCart) return false;
+    this.isLoadedCart = true;
+
     if (this.loading_cart) {
       if (this.cartSub) {
         this.cartSub.unsubscribe();
@@ -307,7 +313,7 @@ export class ProviderCheckoutService {
       }
 
       // Set City Information
-      let cart = this.cartService.cart;
+      const cart = this.cartService.cart;
       if (!cart.id) {
         this.loading_cart = false;
         return;
