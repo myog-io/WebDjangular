@@ -59,8 +59,8 @@ export class PluginProviderAdminImportResellerComponent implements OnInit, OnDes
                             'name': col[0],
                             'taxvat': col[1].replace(/\D/g,''),
                             'email': col[2] ? col[2] : null,
-                            'active': col[3] ? col[3] : true,
-                            'is_employee': col[4] ? col[4] : false
+                            'active': col[3] ? Boolean(col[3]) : true,
+                            'is_employee': col[4] ? Boolean(col[4]) : false
                         });
                     }
                 }
