@@ -52,7 +52,8 @@ h3.title {
 }
 
 h5.amount {
-  color: $primary;
+  color: var(--primary);
+
   @include responsive-font-size(18px);
   font-family: $secondary-ff;
   font-weight: $fw-semibold;

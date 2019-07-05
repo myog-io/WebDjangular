@@ -1,2 +1,25 @@
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 @import 'variables';
-@import '~bootstrap/scss/bootstrap';
+// @import "~bootstrap/scss/mixins";
+
+// Utilities
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~bootstrap/scss/mixins/hover";
+@import "~bootstrap/scss/mixins/image";
+@import "~bootstrap/scss/mixins/badge";
+@import "~bootstrap/scss/mixins/resize";
+@import "~bootstrap/scss/mixins/screen-reader";
+@import "~bootstrap/scss/mixins/size";
+@import "~bootstrap/scss/mixins/reset-text";
+@import "~bootstrap/scss/mixins/text-emphasis";
+@import "~bootstrap/scss/mixins/text-hide";
+@import "~bootstrap/scss/mixins/text-truncate";
+@import "~bootstrap/scss/mixins/visibility";
+
+
+
+
+// @import '~bootstrap/scss/bootstrap';
+

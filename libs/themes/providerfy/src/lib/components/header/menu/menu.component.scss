@@ -16,11 +16,12 @@
   }
   .nav-item.active {
     .nav-link {
-      color: $primary !important;
+      color: var(--primary) !important;
     }
   }
 
   .nav-item.featured {
+
     background: $header-menu-featured-bg;
     border-radius: $header-menu-featured-rounded;
 

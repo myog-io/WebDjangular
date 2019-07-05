@@ -11,6 +11,30 @@
   border-radius: $radius;
 }
 
+$colors: (
+
+  // Theme Colors
+  "primary", "primary-lighter-1", "primary-lighter-2", "primary-darker-1", "primary-darker-2",
+  "secondary", "secondary-lighter-1", "secondary-lighter-2", "secondary-darker-1", "secondary-darker-2",
+
+  // Basic
+  "black", "white"
+
+  // Feedback
+  "success", "success-lighter-1", "success-lighter-2", "success-darker-1", "success-darker-2",
+  "danger", "danger-lighter-1", "danger-lighter-2", "danger-darker-1", "danger-darker-2",
+  "warning",  "warning-lighter-1", "warning-lighter-2", "warning-darker-1", "warning-darker-2",
+  "info",  "info-lighter-1", "info-lighter-2", "info-darker-1", "info-darker-2",
+);
+
+
+@each $color in $colors {
+  .c-#{$color} { color: var(--c-#{$color}) !important;}
+  .bg-#{$color} { background: var(--c-#{$color}) !important;}
+  .bg-c-#{$color} { background-color: var(--c-#{$color}) !important;}
+}
+
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -169,7 +193,9 @@ select {
   border: none;
   border-bottom: 1px solid $input-cc;
   background: transparent;
-  outline-color: $primary;
+
+
+  //outline-color: $primary;
 }
 
 input.form-control,
@@ -1018,7 +1044,9 @@ input:focus ~ .highlight {
   right: 100%;
   width: 100%;
   height: 5px;
-  background: $primary-light-200;
+
+
+  //background: $primary-light-200;
   box-shadow: 0 6px 20px 0 $secondary;
   pointer-events: none;
 }
@@ -1114,7 +1142,7 @@ input:focus ~ .highlight {
     }
 
     a.more-info:hover {
-      color: darken($pricing-plan-more-info-c, 15%);
+      // color: darken($pricing-plan-more-info-c, 15%);
     }
   }
 }
