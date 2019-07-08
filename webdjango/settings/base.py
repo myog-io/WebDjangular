@@ -205,31 +205,36 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
+        'file_error': {
+            'level': 'ERROR',
+            #'filters': ['require_debug_false'],
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'error.log'),
+        },
         'file': {
             'level': 'DEBUG',
             'filters': ['require_debug_false'],
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
-            'filters': ['require_debug_false'],
         },
     },
     'loggers': {
         '': {
-            'handlers': ['console', 'mail_admins', 'file'],
+            'handlers': ['console', 'mail_admins', 'file', 'file_error'],
             'level': 'INFO',
             'propagate': False,
         },
         'django': {
-            'handlers': ['console', 'mail_admins', 'file'],
+            'handlers': ['console', 'mail_admins', 'file', 'file_error'],
             'level': 'INFO',
         },
         'django.server': {
-            'handlers': ['django.server'],
+            'handlers': ['django.server', 'file_error'],
             'level': 'INFO',
             'propagate': False,
         },
         'root': {
-            'handlers': ['console', 'mail_admins', 'file'],
+            'handlers': ['console', 'mail_admins', 'file', 'file_error'],
             'level': 'DEBUG',
             'propagate': False,
         }

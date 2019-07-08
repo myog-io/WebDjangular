@@ -72,9 +72,9 @@ def form_send_email(sender, instance, form_submitted, *args, **kwargs):
 
         if "to" not in instance.data:
             raise BadRequest("Missing 'to' parameter on the action data")
-
+       
         send_options['recipients'] = instance.data['to']
-
+        
         if "template" in instance.data:
             send_options['template_code'] = instance.data['template']
         elif "template_code" in instance.data:

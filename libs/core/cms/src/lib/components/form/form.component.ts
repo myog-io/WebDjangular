@@ -30,6 +30,8 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
   public showError = false;
   public showErrorValidation = false;
   public success_message = 'Mensagem Enviada com sucesso!';
+  public default_error_message =
+  'Ocorreu um erro ao enviar sua mensagem, por favor tente novamente!';
   public error_message =
     'Ocorreu um erro ao enviar sua mensagem, por favor tente novamente!';
   public error_validation =
@@ -185,6 +187,16 @@ export class CoreCmsFormComponent implements OnInit, OnDestroy {
           },
           (error: ErrorResponse) => {
             reject(error);
+            console.log(error)
+            this.error_message = this.default_error_message;
+            if(error.errors){
+              for (let i = 0; i < error.errors.length; i++) {
+                const err = error.errors[i];
+                if(err.detail){
+                  this.error_message = err.detail    
+                }
+              }
+            }
           }
         );
     });
