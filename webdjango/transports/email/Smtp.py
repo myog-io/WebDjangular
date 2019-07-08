@@ -8,8 +8,9 @@ from rest_framework.exceptions import ValidationError
 
 from webdjango.transports.AbstractTransport import AbstractTransport
 from webdjango.transports.EmailConfig import EmailCoreConfig
-
-
+import logging
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 class Smtp(AbstractTransport):
 
     def __init__(self, *args, **kwargs):
@@ -54,12 +55,16 @@ class Smtp(AbstractTransport):
             email.send()
             return True
         except SMTPRecipientsRefused as error:
+            
+            logger.exception(error)
             raise ValidationError(
                 "O Email {0} é invalido ou não existe, por favor tentar outro".format(to))
         except SMTPException as error:
+            logger.exception(error)
             raise ValidationError(
                 "Error no envio do email de confiramção, por favor tente novamente")
         except:
+            logger.exception("As credenciais de SMTP estão erradas, por favor configurar novas credenciais SMTP")
             raise ValidationError(
                 "As credenciais de SMTP estão erradas, por favor configurar novas credenciais SMTP")
 
