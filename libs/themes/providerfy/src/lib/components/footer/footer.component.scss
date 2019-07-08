@@ -1,14 +1,16 @@
 //@import "~webdjangular/themes/providerfy/angular/styles/_variables.scss";
 @import '../../styles/_variables.scss';
 
+
+
 footer {
-  background: $footer-bg;
-  color: $footer-text-c;
+  background: var(--bg-footer); //$footer-bg;
+  color: var(--c-footer); // $footer-text-c;
 
   .footer-title {
-    color: $footer-header-c;
+    //color: $footer-header-c;
     text-transform: uppercase;
-    font-weight: $fw-semibold;
+    //font-weight: $fw-semibold;
   }
 
   .footer-logo {
@@ -21,11 +23,13 @@ footer {
   }
 
   a {
-    color: $footer-link-c;
+  //  color: $footer-link-c;
   }
 
   a:hover {
-    color: $footer-link-hover-c;
+  //  color: $footer-link-hover-c;
     text-decoration: none;
   }
 }
+
+

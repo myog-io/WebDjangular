@@ -34,8 +34,10 @@ header {
 }
 
 footer {
-  background: $footer-bg;
-  color: $footer-text-c;
+  background: var(--bg-footer); //$footer-bg;
+  color: var(--c-footer); // $footer-text-c;
+
+
 
   .footer-title {
     color: $footer-header-c;
