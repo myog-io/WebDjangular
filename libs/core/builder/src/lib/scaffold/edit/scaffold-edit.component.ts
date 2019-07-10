@@ -5,18 +5,23 @@ import { AbstractModel } from '@core/data/src/lib/models';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 
-
 @Component({
   selector: 'wda-scaffold-edit',
   styleUrls: ['./scaffold-edit.component.scss'],
   template: `
-
-      <wda-form-builder [displayGroups]="form.displayGroups"
-        (onSubmit)="onSubmit($event)" (relationshipUpdated)="relationshipUpdated($event)"
-        [group]="form" [loading]="loading" [save_continue]="saveAndContinue"
-        [before_title]="before_title" [title]="title" [formLoading]="formLoading" >
-      </wda-form-builder>
-`,
+    <wda-form-builder
+      [displayGroups]="form.displayGroups"
+      (onSubmit)="onSubmit($event)"
+      (relationshipUpdated)="relationshipUpdated($event)"
+      [group]="form"
+      [loading]="loading"
+      [save_continue]="saveAndContinue"
+      [before_title]="before_title"
+      [title]="title"
+      [formLoading]="formLoading"
+    >
+    </wda-form-builder>
+  `
 })
 export class ScaffoldEditComponent implements OnInit {
   /**
@@ -38,11 +43,11 @@ export class ScaffoldEditComponent implements OnInit {
   /**
    * Title  of scaffold edit component
    */
-  title: string = ";D";
+  title: string = ';D';
   /**
    * Before title of scaffold edit component
    */
-  before_title: string = "Editing";
+  before_title: string = 'Editing';
   /**
    * Check if we are sending or not a entry, to disable/enable button
    */
@@ -62,17 +67,15 @@ export class ScaffoldEditComponent implements OnInit {
     private datastore: WebAngularDataStore,
     private router: Router,
     private toaster: NbToastrService
-  ) {
-
-  }
+  ) { }
 
   /**
    * on init
    */
   ngOnInit(): void {
     this.route.url.subscribe(segments => {
-      if (segments[0].path === "new") {
-        this.before_title = "Creating a new"
+      if (segments[0].path === 'new') {
+        this.before_title = 'Creating a new';
       }
     });
     this.route.data.subscribe(data => {
@@ -81,30 +84,32 @@ export class ScaffoldEditComponent implements OnInit {
       this.title = data.title;
       this.base_path = data.path;
       this.form = this.entry.getForm();
-      
-      if (this.entry.include) {
-        this.inlcude_args = { include: this.entry.include };
+
+      if (this.current_model.include) {
+        this.inlcude_args = { include: this.current_model.include };
       }
       this.form.generateForm();
       this.getEntry();
-    })
+    });
   }
-
   /**
    * Gets model Entry, Finding the Record
    */
   getEntry() {
     this.formLoading = true;
     if (this.route.params['value'].id != null) {
-      this.datastore.findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args).subscribe(
-        (data: AbstractModel) => {
+      this.datastore
+        .findRecord(this.current_model, this.route.params['value'].id, this.inlcude_args)
+        .subscribe((data: AbstractModel) => {
           this.entry = data;
           this.form.populateForm(this.entry);
           this.formLoading = false;
-        }
-      );
+        });
     } else {
-      this.entry = this.datastore.createRecord(this.current_model, this.form.value);
+      this.entry = this.datastore.createRecord(
+        this.current_model,
+        this.form.value
+      );
       this.form.entity = this.entry;
       this.formLoading = false;
     }
@@ -124,8 +129,9 @@ export class ScaffoldEditComponent implements OnInit {
     this.loading = true;
     this.form.updateModel(this.entry);
 
-    this.entry.saveAll(this.inlcude_args).then(
-      (result) => {
+    this.entry
+      .saveAll(this.inlcude_args)
+      .then(result => {
         this.toaster.success(`Changes have been saved`, `Success!`);
         this.loading = false;
 
@@ -133,23 +139,27 @@ export class ScaffoldEditComponent implements OnInit {
           this.router.navigate([`/${this.base_path}`]);
         } else {
           this.entry = result;
+          this.form.reset();
           this.form.populateForm(this.entry);
         }
-      }
-    ).catch((error) => {
-      console.log(error)
-      this.loading = false;
-      if (error.errors && error.errors.length > 0) {
-        for (let i = 0; i < error.errors.length; i++) {
-          // TODO: Check pointer to see if is for an specific field and set an error inside the field
-          const element = error.errors[i];
-          this.toaster.danger(`Error saving the Changes, Details: ${element.detail}`, `Error!`, { duration: 5000 });
+      })
+      .catch(error => {
+        console.log(error);
+        this.loading = false;
+        if (error.errors && error.errors.length > 0) {
+          for (let i = 0; i < error.errors.length; i++) {
+            // TODO: Check pointer to see if is for an specific field and set an error inside the field
+            const element = error.errors[i];
+            this.toaster.danger(
+              `Error saving the Changes, Details: ${element.detail}`,
+              `Error!`,
+              { duration: 5000 }
+            );
+          }
+        } else {
+          this.toaster.danger(`Error saving the Changes`, `Error!`);
         }
-      } else {
-        this.toaster.danger(`Error saving the Changes`, `Error!`);
-      }
-    })
-
+      });
   }
 
   relationshipUpdated(data) {

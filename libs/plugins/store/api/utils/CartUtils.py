@@ -6,6 +6,7 @@ import traceback
 from uuid import UUID
 
 from django.db import transaction
+from django.db.models import Q
 from rest_framework.exceptions import ValidationError
 
 from libs.plugins.store.api import defaults
@@ -13,12 +14,14 @@ from libs.plugins.store.api.serializers.CartSerializer import \
     CartItemSerializer
 from libs.plugins.store.api.serializers.ProductSerializer import \
     ProductSerializer
-from webdjango.models.Address import Address, AddressType
+from webdjango.exceptions import BadRequest
+from webdjango.models.Address import AddressType
 from webdjango.models.Core import Website
 from webdjango.serializers.AddressSerializer import AddressSerializer
+from webdjango.utils import get_client_ip
 from webdjango.utils.JsonLogic import jsonLogic
 
-from ..models.Cart import Cart, CartStatus, CartTerm
+from ..models.Cart import Cart, CartItem, CartStatus
 from ..models.Discount import CartRule, RuleValueType
 from ..models.Order import Order
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
@@ -28,6 +31,7 @@ from ..serializers.ProductSerializer import (ProductCategorySerializer,
                                              ProductSerializer,
                                              ProductTypeSerializer)
 from .DiscountUtils import increase_voucher_usage
+from django.core.cache import cache
 
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES,
@@ -95,7 +99,7 @@ def apply_cart_rule(cart, rule):
     else:
         value = get_rule_ammount(cart.total, rule)
 
-        item = cart_has_product(cart, rule.voucher)
+        item = cart_has_product(cart_id=cart.id, product_sku=rule.voucher)
         if not item:
             parsed_value = money_serializer.to_representation(value)
             item = cart.items.create(quantity=1, data={
@@ -106,73 +110,74 @@ def apply_cart_rule(cart, rule):
             })
 
 
-def clean_cart_rule(cart, rule):
+def clean_cart_rules(cart, rules):
+
     for item in cart.items.all():
-        if 'discount_rules' in item.data:
-            if rule.voucher in item.data['discount_rules']:
-                # This case the line has the rule, so we can only remove the rule
-                del item.data['discount_rules'][rule.voucher]
-                item.save()
-        else:
-            item = cart_has_product(cart, rule.voucher)
-            if item:
-                # This case the line is the rule, so we can remove it
+        for rule in rules:
+            if item.sku == rule.voucher:
                 item.delete()
+            elif 'discount_rules' in item.data:
+                if rule.voucher in item.data['discount_rules']:
+                    # This case the line has the rule, so we can only remove the rule
+                    del item.data['discount_rules'][rule.voucher]
+                    item.save()
 
 
 def apply_all_cart_rules(cart):
-    rules = CartRule.objects.active().all()
-    for rule in rules:
-        if rule.conditions and len(rule.conditions) > 0:
-            data = {}
-            data['product'] = []
-            products = []
-            for product in cart.items.all():
-                serializer = CartItemSerializer(product)
-                product_data = serializer.data
-                if product.product:
-                    product_data['product_type'] = ProductTypeSerializer(
-                        product.product.product_type
-                    ).data
-                product_data['product'] = None
-                product_data['cart'] = None
-                products.append(product_data)
-            data['product'] = products
-            data['cart'] = CartSerializer(cart).data
-            data['cart']['items'] = products
-            data['cart']['billing_address'] = None
-            data['cart']['shipping_address'] = None
-            data['cart']['terms'] = None
-            data['billing_address'] = AddressSerializer(
-                cart.billing_address).data
-            data['shipping_address'] = AddressSerializer(
-                cart.shipping_address).data
+   
+    rules_count = cache.get('active-cart-rules-count')
+    if rules_count is None:
+            rules_count = CartRule.objects.active().count()
+            cache.set('active-cart-rules-count', rules_count, 86400)
 
-            try:
-                json_logic_response = jsonLogic(rule.conditions, data)
-                if json_logic_response:
-                    base_price = apply_cart_rule(cart, rule)
-                else:
-                    clean_cart_rule(cart, rule)
-            except:
-                traceback.print_tb(sys.exc_info()[2])
-                raise
-            # apply Rule
-        else:
-            apply_cart_rule(cart, rule)
-            # apply rule
+    if rules_count > 0:
+        data = {}
+        data['product'] = []
+        products = []
+        for product in cart.items.all():
+            serializer = CartItemSerializer(product)
+            product_data = serializer.data
+            if product.product:
+                product_data['product_type'] = ProductTypeSerializer(
+                    product.product.product_type
+                ).data
+            product_data['product'] = None
+            product_data['cart'] = None
+            products.append(product_data)
+        data['product'] = products
+        data['cart'] = CartSerializer(cart).data
+        data['cart']['items'] = products
+        data['cart']['billing_address'] = None
+        data['cart']['shipping_address'] = None
+        data['cart']['terms'] = None
+        data['billing_address'] = AddressSerializer(
+            cart.billing_address).data
+        data['shipping_address'] = AddressSerializer(
+            cart.shipping_address).data
+        
+        rules = cache.get('active-cart-rules')
+        if rules is None:
+            rules = CartRule.objects.active().all()
+            cache.set('active-cart-rules', rules, 86400)
+        
+        rules_to_clear = []
+        for rule in rules:
+            if rule.conditions and len(rule.conditions) > 0:
 
-    return cart
-
-
-def apply_cart_terms(cart):
-    # Search for Terms that Should be applied to all carts
-    terms_list = [o.id for o in cart.terms.all()]
-    terms = CartTerm.objects.filter(enabled=True, products__in=[item.product for item in cart.items.all()]).exclude(
-        id__in=terms_list) | CartTerm.objects.filter(all_carts=True, enabled=True).exclude(id__in=terms_list)
-    if terms:
-        cart.terms.add(*terms.all())
-
+                try:
+                    json_logic_response = jsonLogic(rule.conditions, data)
+                    if json_logic_response:
+                        base_price = apply_cart_rule(cart, rule)
+                    else:
+                        rules_to_clear.append(rule)
+                except:
+                    traceback.print_tb(sys.exc_info()[2])
+                    raise
+                # apply Rule
+            else:
+                apply_cart_rule(cart, rule)
+                # apply rule
+        clean_cart_rules(cart, rules_to_clear)
     return cart
 
 
@@ -189,14 +194,16 @@ def token_is_valid(token):
     return True
 
 
-def cart_has_product(cart, id_or_sku):
-    if cart.items.count() > 0 and id_or_sku is not None:
-        for item in cart.items.all():
-            if item.product:
-                if item.product.id is id_or_sku or item.product.sku is id_or_sku:
-                    return item
-            if 'voucher' in item.data and item.data['voucher'] == id_or_sku:
-                return item
+def cart_has_product(cart_id, **kwargs):
+    if 'product_id' in kwargs:
+        return CartItem.objects.filter(cart__id=cart_id).filter(
+            product__id=kwargs['product_id']).first()
+
+    elif 'product_sku' in kwargs:
+        query = CartItem.objects.filter(cart__id=cart_id).filter(
+            product__sku=kwargs['product_sku']) | CartItem.objects.filter(cart__id=cart_id).filter(data__voucher=kwargs['product_sku'])
+        return query.first()
+
     return None
 
 
@@ -245,7 +252,6 @@ def get_guest_cart_from_token(token):
     :param token:
     :return: return the cart if exists, False otherwise
     """
-
     return Cart.objects.filter(token=token, status=CartStatus.ACTIVE).first()
 
 
@@ -342,16 +348,20 @@ def _process_user_data_for_order(cart, request):
 
     if cart.user:
         store_user_address(cart.user, billing_address, AddressType.BILLING)
-
+    email = cart.user.email if cart.user and cart.user.email else cart.email
+    if not email:
+        raise BadRequest('Missing Email')
+    if not billing_address.first_name or not billing_address.last_name:
+        raise BadRequest('Missing Name')
     return {
         'user': cart.user,
-        'user_email': cart.user.email if cart.user else cart.email,
+        'user_email': cart.user.email if cart.user and cart.user.email else cart.email,
         'customer_note': cart.note,
         'billing_address': AddressSerializer(billing_address).data,
         'extra_data': cart.extra_data,
         'security_data': {
             'HTTP_USER_AGENT': request.META.get('HTTP_USER_AGENT'),
-            'REMOTE_ADDR': request.META.get('REMOTE_ADDR')
+            'REMOTE_ADDR': get_client_ip(request)
         }
     }
 
@@ -414,6 +424,7 @@ def create_order(cart, request):
         order_data.update(_process_user_data_for_order(cart, request))
         order_data.update(_process_terms_data_for_order(cart))
         order_data.update({
+            'token': cart.token,
             'total': cart.total,
             'subtotal': cart.subtotal,
             'taxes': cart.taxes,

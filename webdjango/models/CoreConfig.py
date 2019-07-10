@@ -2,14 +2,15 @@ from django.db import models
 from django_mysql.models import JSONField
 
 from webdjango.models.Core import CoreConfig
-from webdjango.signals.CoreSignals import config_group_register, config_register
-
+from webdjango.signals.CoreSignals import (config_group_register,
+                                           config_register)
 
 # TODO: Implement Permissions based on Groups
 
+
 class AbstractCoreConfigModel(models.Model):
     id = models.SlugField(null=False, primary_key=True)
-    
+
     class Meta:
         abstract = True
 
@@ -22,6 +23,7 @@ class CoreConfigGroup(AbstractCoreConfigModel):
     This is the Agroupment inside the Admin Panel that will devide the Groups of Each Core Configuration
     If anything is changed inside this Model, is also necessary to change inside the CoreConfigGroupSerializer as well
     """
+    secure = models.BooleanField(default=False)
     order = models.IntegerField(default=0)
     title = models.CharField(default=None)
 
@@ -63,14 +65,21 @@ class CoreConfigInput(AbstractCoreConfigModel):
     FIELD_TYPE_TEXT = 'text'
     FIELD_TYPE_TEXT_AREA = 'textArea'
     FIELD_TYPE_SELECT = 'select'
+    FIELD_TYPE_NGSELECT = 'ngSelect'
     FIELD_TYPE_CODE_EDITOR = 'codeEditor'
-
+    FIELD_TYPE_LABEL = 'label'
+    FIELD_TYPE_SWITCH = 'switch'
+    FIELD_TYPE_CHECKBOX = 'checkbox'
     CONFIG_FIELD_TYPES = [
         (FIELD_TYPE_BUTTON, 'Button'),
         (FIELD_TYPE_TEXT, 'Text'),
         (FIELD_TYPE_TEXT_AREA, 'Text Area'),
         (FIELD_TYPE_SELECT, 'Select'),
+        (FIELD_TYPE_NGSELECT, 'NG Select'),
         (FIELD_TYPE_CODE_EDITOR, 'CodeEditor'),
+        (FIELD_TYPE_LABEL, 'Label'),
+        (FIELD_TYPE_SWITCH, 'Switch (ON/OFF)'),
+        (FIELD_TYPE_CHECKBOX, 'Checkbox')
     ]
     field_type = models.CharField(default=None, choices=CONFIG_FIELD_TYPES)
     input_type = models.CharField(default=None)

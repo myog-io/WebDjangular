@@ -8,16 +8,19 @@ class City(BaseModel):
     name = models.CharField(max_length=255)
     short_name = models.CharField(max_length=255, null=True, default=None)
     code = models.SlugField(null=True, default=None, unique=True)
-    lat = models.DecimalField(max_digits=9, decimal_places=7, blank=True, null=True)
-    long = models.DecimalField(max_digits=9, decimal_places=7, blank=True, null=True)
+    lat = models.DecimalField(
+        max_digits=9, decimal_places=7, blank=True, null=True)
+    long = models.DecimalField(
+        max_digits=9, decimal_places=7, blank=True, null=True)
     products = models.ManyToManyField(Product)
+    redirect_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
         db_table = 'provider_city'
-        ordering = ['-created']
+        ordering = ['name']
 
 
 class PostalCodeRange(BaseModel):
@@ -52,7 +55,8 @@ class Street(BaseModel):
 class NumberRange(BaseModel):
     start = models.IntegerField(null=True, default=None)
     end = models.IntegerField(null=True, default=None)
-    street = models.ForeignKey(Street, related_name='numbers', on_delete=models.CASCADE)
+    street = models.ForeignKey(
+        Street, related_name='numbers', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'provider_city_street_numbers'

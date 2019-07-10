@@ -1,18 +1,17 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
 import { BlockModel } from './Block.model';
-import {Validators, FormGroup} from "@angular/forms";
+import { Validators, FormGroup } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
-
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'PageTag',
-  modelEndpointUrl: 'cms/page-tag',
+  modelEndpointUrl: 'cms/page-tag'
 })
 export class PageTagModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -22,13 +21,13 @@ export class PageTagModel extends AbstractModel {
     type: 'text',
     label: 'Name',
     wrapper_class: 'col-12',
-    placeholder: '',
+    placeholder: ''
   })
   name: string;
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Slug',
     wrapper_class: 'col-12',
@@ -42,7 +41,7 @@ export class PageTagModel extends AbstractModel {
     type: 'text',
     label: 'Description',
     wrapper_class: 'col-12',
-    placeholder: '',
+    placeholder: ''
   })
   description: string;
 
@@ -58,9 +57,7 @@ export class PageTagModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) { }
 
   public toString = (): string => {
     return `${this.title} (ID: ${this.id})`;
@@ -70,22 +67,20 @@ export class PageTagModel extends AbstractModel {
     columns: {
       id: {
         title: 'ID',
-        type: 'text',
+        type: 'text'
       },
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       slug: {
         title: 'slug',
-        type: 'text',
+        type: 'text'
       },
       count: {
         title: 'Count',
-        type: 'text',
-      },
-    },
+        type: 'text'
+      }
+    }
   };
-
 }
-

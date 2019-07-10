@@ -1,5 +1,4 @@
 @import '~@nebular/theme/styles/prebuilt/corporate';
-@import '~@ng-select/ng-select/themes/default.theme.css';
 @import '~@nebular/bootstrap/styles/hero-buttons';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
@@ -28,7 +27,7 @@
     }
 
     & > span {
-      @include responsive-font-size( 1.125rem);
+      @include responsive-font-size(1.125rem);
       font-weight: nb-theme(font-weight-bold);
       transition: opacity 0.3s ease;
       color: nb-theme(color-fg);

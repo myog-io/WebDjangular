@@ -1,25 +1,38 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { BuilderFormFieldConfig, BuilderFormConfig, BuilderFormGroupConfig, BuilderFormDisplayGroups } from './interfaces/form-config.interface';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+  HostListener
+} from '@angular/core';
+import {
+  BuilderFormFieldConfig,
+  BuilderFormConfig,
+  BuilderFormGroupConfig,
+  BuilderFormDisplayGroups
+} from './interfaces/form-config.interface';
 import { FormGroup } from '@angular/forms';
 import { JsonLogic } from './builder-jsonlogic';
 import { Subscription } from 'rxjs';
-
 
 @Component({
   selector: 'wda-form-builder',
   styleUrls: ['builder-form.component.scss'],
   templateUrl: 'builder-form.component.html'
 })
-export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestroy {
+export class BuilderFormComponent
+  implements BuilderFormConfig, OnInit, OnDestroy {
   @Input() before_title: string;
   @Input() title: string;
   @Input() displayGroups: BuilderFormDisplayGroups[];
-  @Input() submit_label = "Save";
-  @Input() submit_size = "medium";
-  @Input() submit_status = "success";
-  @Input() submit_continue_label = "Save & Continue";
-  @Input() submit_continue_size = "medium";
-  @Input() submit_continue_status = "info";
+  @Input() submit_label = 'Save';
+  @Input() submit_size = 'medium';
+  @Input() submit_status = 'success';
+  @Input() submit_continue_label = 'Save & Continue';
+  @Input() submit_continue_size = 'medium';
+  @Input() submit_continue_status = 'info';
   @Input() loading = false;
   @Input() formLoading = false;
   @Input() group: FormGroup;
@@ -29,36 +42,37 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
   @Input() show_breadcrumb: boolean = true;
   @Input() inceptionForm: boolean = false;
   @Input() remove = false;
-  @Input() remove_label = "Remove";
-  @Input() remove_status = "danger";
+  @Input() remove_label = 'Remove';
+  @Input() remove_status = 'danger';
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
   @Output() relationshipUpdated: EventEmitter<any> = new EventEmitter();
   private jsonLogic: JsonLogic = new JsonLogic();
   private subscription: Subscription;
   progress = 0;
-  constructor() {
-
-  }
+  constructor() {}
 
   /**
    * On Init of Class
    */
   ngOnInit() {
     this.conditionalFields(this.group.value);
-    this.subscription = this.group.valueChanges.subscribe((data) => {
+    this.subscription = this.group.valueChanges.subscribe(data => {
       this.conditionalFields(data);
-    })
-
+    });
   }
   private applyLogic(obj: any, data: any) {
     if (obj.conditional) {
-      obj.display = this.jsonLogic.apply(obj.conditional, data)
-    } else if (typeof obj.display === "undefined") {
+      obj.display = this.jsonLogic.apply(obj.conditional, data);
+    } else if (typeof obj.display === 'undefined') {
       obj.display = true;
     }
     if (obj.conditionalValue) {
-      this.group.get(obj.name).setValue(this.jsonLogic.apply(obj.conditionalValue, data), { emitEvent: false });
+      this.group
+        .get(obj.name)
+        .setValue(this.jsonLogic.apply(obj.conditionalValue, data), {
+          emitEvent: false
+        });
     }
   }
   /**
@@ -72,7 +86,11 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
         for (let j = 0; j < this.displayGroups[i].groups.length; j++) {
           this.applyLogic(this.displayGroups[i].groups[j], data);
           if (this.displayGroups[i].groups[j].fields) {
-            for (let k = 0; k < this.displayGroups[i].groups[j].fields.length; k++) {
+            for (
+              let k = 0;
+              k < this.displayGroups[i].groups[j].fields.length;
+              k++
+            ) {
               this.applyLogic(this.displayGroups[i].groups[j].fields[k], data);
             }
           }
@@ -107,8 +125,8 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
     if (this.progress === 100) {
       const event = {
         redirect: redirect,
-        data: this.group.value,
-      }
+        data: this.group.value
+      };
       this.onRemove.emit(event);
     }
   }
@@ -125,17 +143,16 @@ export class BuilderFormComponent implements BuilderFormConfig, OnInit, OnDestro
    */
   public ngOnDestroy() {
     if (this.subscription) {
-      this.subscription.unsubscribe()
+      this.subscription.unsubscribe();
       this.subscription = null;
     }
   }
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if ((event.ctrlKey || event.metaKey) && event.code == "KeyS") {
-      event.preventDefault()
-      this.submitForm(event, false)
+    if ((event.ctrlKey || event.metaKey) && event.code == 'KeyS') {
+      event.preventDefault();
+      this.submitForm(event, false);
     }
   }
-
 }

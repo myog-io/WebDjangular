@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 
-
 class CoreConfigInputSerializer(serializers.Serializer):
     """
     Serializer to CoreConfigInput to tranform into JSON data
@@ -22,6 +21,7 @@ class CoreConfigInputSerializer(serializers.Serializer):
     conditional = serializers.JSONField(read_only=True)
     add_tags = serializers.BooleanField(read_only=True)
 
+
 class CoreConfigGroupSerializer(serializers.Serializer):
     """
     Serializer to CoreConfigGroup to transfor into JSON data
@@ -29,5 +29,7 @@ class CoreConfigGroupSerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)
     order = serializers.IntegerField(read_only=True)
     title = serializers.CharField(read_only=True)
+    secure = serializers.BooleanField(default=False)
     value = serializers.JSONField()
+
     # inputs = CoreConfigInputSerializer(many=True, read_only=True)

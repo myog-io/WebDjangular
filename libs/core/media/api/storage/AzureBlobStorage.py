@@ -16,6 +16,7 @@ from azure.storage.blob.baseblobservice import BaseBlobService
 
 from django.utils.deconstruct import deconstructible
 from datetime import datetime, timedelta
+from libs.core.media.api.configs import CONFIG_STORAGE_KEY, CONFIG_STORAGE_NAME, CONFIG_STORAGE_CONTAINER_NAME, CONFIG_STORAGE_EXTERNAL_URL
 
 
 @deconstructible
@@ -24,7 +25,12 @@ class AzureBlobStorage(Storage):
     AZURE_CHUNK_SIZE_LIMIT = 1024 * 1024
     container_name = None
     public_url = None
-    def __init__(self, account_name=None, account_key=None, container_name=None,public_url=None):
+    def __init__(self, **storage_config):
+
+        account_key = storage_config[CONFIG_STORAGE_KEY]
+        account_name = storage_config[CONFIG_STORAGE_NAME]
+        container_name = storage_config[CONFIG_STORAGE_CONTAINER_NAME]
+        public_url = storage_config[CONFIG_STORAGE_EXTERNAL_URL]
         self.services = {
             'base_blob': BaseBlobService(account_name=account_name, account_key=account_key),
             'block_blob': BlockBlobService(account_name=account_name, account_key=account_key),
@@ -41,7 +47,6 @@ class AzureBlobStorage(Storage):
                 "You must set public container url")
 
         self.public_url = public_url
-
 
     def delete(self, name):
         try:
@@ -96,7 +101,6 @@ class AzureBlobStorage(Storage):
         """
         return '{0}{1}/{2}'.format(self.public_url, self.container_name, name)
 
-
     def urlWithSasAuth(self, name, ip=None, nameToGive=None):
         """
         SAS URl's are secure URL's
@@ -121,7 +125,7 @@ class AzureBlobStorage(Storage):
             container_name=self.container_name,
             blob_name=name,
             permission=ContainerPermissions.READ,
-            #expiry=datetime.utcnow() + timedelta(hours=1), There's no need for expiuration now
+            # expiry=datetime.utcnow() + timedelta(hours=1), There's no need for expiuration now
             #start=datetime.utcnow() - timedelta(hours=1),
             protocol='https',
             ip=ip,

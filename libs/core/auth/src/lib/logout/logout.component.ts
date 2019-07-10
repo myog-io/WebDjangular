@@ -10,7 +10,6 @@ import { NB_AUTH_OPTIONS, NbTokenService } from '@nebular/auth';
 import { getDeepFromObject } from '../helpers';
 import { NbAuthService } from '@nebular/auth';
 
-
 @Component({
   selector: 'webdjangular-logout',
   templateUrl: './logout.component.html'

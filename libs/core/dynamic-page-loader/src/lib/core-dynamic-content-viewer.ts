@@ -1,7 +1,18 @@
-import { Component, ComponentFactoryResolver, Injector, ElementRef, Output, Input, EventEmitter, ComponentFactory, ComponentRef, ViewEncapsulation } from '@angular/core'
+import {
+  Component,
+  ComponentFactoryResolver,
+  Injector,
+  ElementRef,
+  Output,
+  Input,
+  EventEmitter,
+  ComponentFactory,
+  ComponentRef,
+  ViewEncapsulation
+} from '@angular/core';
 
 import { PluginProviderPricingInternetHorizontalComponent } from '@plugins/provider/src/lib/components/plans/pricing/internet-horizontal/internet-horizontal.component';
-import { PluginProviderPricingInternetVerticalComponent } from '@plugins/provider/src/lib/components/plans/pricing/internet-vertical/internet-vertical.component';
+import { PluginProviderPricingInternetComponent } from '@plugins/provider/src/lib/components/plans/pricing/internet/internet.component';
 import { PluginProviderPricingTelephoneVerticalComponent } from '@plugins/provider/src/lib/components/plans/pricing/telephone-vertical/telephone-vertical.component';
 import { PluginProviderPricingTvVerticalComponent } from '@plugins/provider/src/lib/components/plans/pricing/tv-vertical/tv-vertical.component';
 import { CoreCmsGalleryComponent } from '@core/cms/src/lib/components/gallery/gallery.component';
@@ -11,21 +22,28 @@ import { PluginProviderCheckoutComponent } from '@plugins/provider/src/lib/compo
 import { PluginProviderCityCoverageComponent } from '@plugins/provider/src/lib/components/city-coverage/city-coverage.component';
 import { PluginProviderPlansComponent } from '@plugins/provider/src/lib/components/plans/plans.component';
 import { PluginProviderCityListComponent } from '@plugins/provider/src/lib/components/city-list/city-list.component';
-import { PluginProviderError500Component } from "@plugins/provider/src/lib/components/errors/500/500.component";
-import { PluginProviderError404Component } from "@plugins/provider/src/lib/components/errors/404/404.component";
+import { PluginProviderError500Component } from '@plugins/provider/src/lib/components/errors/500/500.component';
+import { PluginProviderError404Component } from '@plugins/provider/src/lib/components/errors/404/404.component';
+
+// THEMES HARDCODED HERE //
+
 import { ThemeProviderfyTopHeaderComponent } from '@themes/providerfy/src/lib/components/header/top-header/top-header.component';
 import { ThemeProviderfyHeaderMenuComponent } from '@themes/providerfy/src/lib/components/header/menu/menu.component';
+
 import { CoreCmsLinkComponent } from '@core/cms/src/lib/components/link.component';
 import { CoreCmsFormComponent } from '@core/cms/src/lib/components/form/form.component';
-
+import { PluginProviderGenerateLinkFormComponent } from '@plugins/provider/src/lib/components/terms/generate-link/generate-link.component';
+import { PluginProviderSendEmailFormComponent } from '@plugins/provider/src/lib/components/terms/send-email/send-email.component';
 
 export const embeddedComponents = [
   CoreCmsMapsComponent,
   CoreCmsGalleryComponent,
   CoreCmsLinkComponent,
   CoreCmsFormComponent,
+
+  // PLUGINS HARDCODED HERE //
   PluginProviderPricingInternetHorizontalComponent,
-  PluginProviderPricingInternetVerticalComponent,
+  PluginProviderPricingInternetComponent,
   PluginProviderPricingTelephoneVerticalComponent,
   PluginProviderPricingTvVerticalComponent,
   PluginPricingComboVerticalComponent,
@@ -35,10 +53,12 @@ export const embeddedComponents = [
   PluginProviderCityListComponent,
   PluginProviderError404Component,
   PluginProviderError500Component,
+  PluginProviderSendEmailFormComponent,
+  PluginProviderGenerateLinkFormComponent,
+
+  // THEMES HARDCODED HERE //
   ThemeProviderfyTopHeaderComponent,
   ThemeProviderfyHeaderMenuComponent,
-  
-  
 ];
 
 export class EmbeddedComponents {
@@ -52,9 +72,12 @@ export class EmbeddedComponents {
 })
 export class ContentViewer {
   private hostElement: HTMLElement;
-  private embeddedComponentFactories: Map<string, ComponentFactory<any>> = new Map();
+  private embeddedComponentFactories: Map<
+    string,
+    ComponentFactory<any>
+  > = new Map();
   private embeddedComponents: ComponentRef<any>[] = [];
- 
+
   @Output()
   docRendered = new EventEmitter();
 
@@ -62,14 +85,15 @@ export class ContentViewer {
     componentFactoryResolver: ComponentFactoryResolver,
     elementRef: ElementRef,
     embeddedComponents: EmbeddedComponents,
-    private injector: Injector,
-    
+    private injector: Injector
   ) {
     this.hostElement = elementRef.nativeElement;
     embeddedComponents.components.forEach((component: any) => {
-      const factory = componentFactoryResolver.resolveComponentFactory(component);
+      const factory = componentFactoryResolver.resolveComponentFactory(
+        component
+      );
       this.embeddedComponentFactories.set(factory.selector, factory);
-    })
+    });
   }
 
   @Input()
@@ -80,20 +104,30 @@ export class ContentViewer {
       this.docRendered.emit();
     }
   }
-  
+
   private build(content) {
     this.hostElement.innerHTML = content || '';
 
-    if (!content) { return; }
+    if (!content) {
+      return;
+    }
 
     this.embeddedComponentFactories.forEach((factory, selector) => {
-      const embeddedComponentElements = this.hostElement.querySelectorAll(selector);
-      embeddedComponentElements.forEach((element) => {
+      const embeddedComponentElements = this.hostElement.querySelectorAll(
+        selector
+      );
+      embeddedComponentElements.forEach(element => {
         //convert NodeList into an array, since Angular dosen't like having a NodeList passed
         //for projectableNodes
-        const projectableNodes = [Array.prototype.slice.call(element.childNodes)]
+        const projectableNodes = [
+          Array.prototype.slice.call(element.childNodes)
+        ];
 
-        const embeddedComponent = factory.create(this.injector, projectableNodes, element)
+        const embeddedComponent = factory.create(
+          this.injector,
+          projectableNodes,
+          element
+        );
 
         //apply inputs into the dynamic component
         //only static ones work here since this is the only time they're set
@@ -101,14 +135,14 @@ export class ContentViewer {
           embeddedComponent.instance[attr.nodeName] = attr.nodeValue;
         }
         this.embeddedComponents.push(embeddedComponent);
-      })
+      });
     });
-    
-    
   }
 
   ngDoCheck() {
-    this.embeddedComponents.forEach(comp => comp.changeDetectorRef.detectChanges());
+    this.embeddedComponents.forEach(comp =>
+      comp.changeDetectorRef.detectChanges()
+    );
   }
 
   ngOnDestroy() {

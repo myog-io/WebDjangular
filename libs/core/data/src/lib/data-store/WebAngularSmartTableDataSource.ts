@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {LocalDataSource} from 'ng2-smart-table';
-import {WebAngularSmartTableDataSourceOptions} from './WebAngularSmartTableDataSourceOptions';
-import {map} from 'rxjs/operators';
-import {WebAngularDataStore} from '@core/services/src/lib/WebAngularDataStore.service';
-import {AbstractModel} from '../models';
+import { Injectable } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
+import { WebAngularSmartTableDataSourceOptions } from './WebAngularSmartTableDataSourceOptions';
+import { map } from 'rxjs/operators';
+import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { AbstractModel } from '../models';
 
 @Injectable()
 export class WebAngularSmartTableDataSource extends LocalDataSource {
@@ -12,9 +12,7 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
   public model: any = null;
   protected meta: any = null;
 
-  constructor(
-    private datastore: WebAngularDataStore,
-  ) {
+  constructor(private datastore: WebAngularDataStore) {
     super();
   }
 
@@ -28,17 +26,17 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     const model = this.model as AbstractModel;
     findOptions.include = this.model.include;
     if (this.sortConf.length > 0) {
-      findOptions.ordering = this.buildSortOptions()
+      findOptions.ordering = this.buildSortOptions();
     }
 
     let fields = Object.keys(this.smartTableSettings.columns);
     findOptions['fields'] = fields.join(',');
 
     if ('filters' in this.smartTableSettings) {
-       let filters = this.smartTableSettings['filters'];
-       Object.keys(filters).forEach((key) => {
-         findOptions[key] = filters[key];
-       });
+      let filters = this.smartTableSettings['filters'];
+      Object.keys(filters).forEach(key => {
+        findOptions[key] = filters[key];
+      });
     }
 
     return this.datastore
@@ -69,11 +67,11 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
 
   protected buildSortOptions(): string {
     let sorting = [];
-    this.sortConf.forEach((fieldConf) => {
-      if (fieldConf.direction.toUpperCase() == "DESC") {
-        sorting.push("-" + fieldConf.field);
+    this.sortConf.forEach(fieldConf => {
+      if (fieldConf.direction.toUpperCase() == 'DESC') {
+        sorting.push('-' + fieldConf.field);
       } else {
-        sorting.push(fieldConf.field)
+        sorting.push(fieldConf.field);
       }
     });
     return sorting.join(',');
@@ -84,9 +82,10 @@ export class WebAngularSmartTableDataSource extends LocalDataSource {
     for (let i = 0; i < this.filterConf.filters.length; i++) {
       //filters[this.filterConf.filters[i].field + '__contains'] = this.filterConf.filters[i].search;
       if (this.filterConf.filters[i].search) {
-        filters[this.filterConf.filters[i].field] = this.filterConf.filters[
-          i
-          ].search;
+        filters[this.filterConf.filters[i].field] = this.filterConf.filters[i].search;
+        //filters[this.filterConf.filters[i].field] = this.filterConf.filters[
+        //  i
+        //].search;
       }
     }
 

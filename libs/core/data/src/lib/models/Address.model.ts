@@ -1,15 +1,13 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
+import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
 
-import {AbstractModel} from './Abstract.model';
+import { AbstractModel } from './Abstract.model';
 import { PropertyConverter } from 'angular2-jsonapi';
-
 
 @JsonApiModelConfig({
   type: 'Address',
-  modelEndpointUrl: 'address',
+  modelEndpointUrl: 'address'
 })
 export class AddressModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -56,29 +54,29 @@ export class AddressModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
+  set pk(value) { }
+
+  get label_line_one(): string {
+    return `${this.street_address_1}, ${this.number} - ${
+      this.street_address_3
+      }`;
   }
 
-  get label_line_one():string{
-    return `${this.street_address_1}, ${this.number} - ${this.street_address_3}`;
-  }
-
-  get label_line_two():string{
+  get label_line_two(): string {
     return `${this.street_address_2}`;
   }
 
-  get label_line_three():string {
+  get label_line_three(): string {
     return `${this.city}, ${this.state} ${this.postal_code}`;
   }
-  get full_label():string{
-    let label = `${this.label_line_one}` ;
+  get full_label(): string {
+    let label = `${this.label_line_one}`;
     if (this.street_address_2) {
       label += `<br>${this.label_line_two}`;
     }
     label += `<br>${this.label_line_three}`;
     return label;
   }
-
 }
 
 export class AddressConverter implements PropertyConverter {

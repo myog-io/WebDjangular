@@ -1,4 +1,10 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo, JsonApiMetaModel } from 'angular2-jsonapi';
+import {
+  JsonApiModelConfig,
+  Attribute,
+  HasMany,
+  BelongsTo,
+  JsonApiMetaModel
+} from 'angular2-jsonapi';
 import { CityModel } from '../models/City.model';
 import { FormGroup, Validators, FormArray } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
@@ -9,7 +15,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'PageRedirect',
-  modelEndpointUrl: 'provider/page-redirect',
+  modelEndpointUrl: 'provider/page-redirect'
 })
 export class PageRedirectModel extends AbstractModel {
   public static include = 'default_page,redirect_page,cities';
@@ -22,9 +28,9 @@ export class PageRedirectModel extends AbstractModel {
     formType: FormGroup,
     model: PageModel,
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Redirect from Page:',
-    wrapper_class: 'col-6',
+    wrapper_class: 'col-6'
   })
   default_page: PageModel;
 
@@ -33,9 +39,9 @@ export class PageRedirectModel extends AbstractModel {
     formType: FormGroup,
     model: PageModel,
     validators: [Validators.required],
-    type: 'select',
+    type: 'ngSelect',
     label: 'Redirect to Page:',
-    wrapper_class: 'col-6',
+    wrapper_class: 'col-6'
   })
   redirect_page: PageModel;
 
@@ -44,9 +50,9 @@ export class PageRedirectModel extends AbstractModel {
     formType: FormArray,
     model: CityModel,
     validators: [Validators.required],
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Cities',
-    name: 'cities',
+    name: 'cities'
   })
   cities: CityModel;
 
@@ -56,14 +62,13 @@ export class PageRedirectModel extends AbstractModel {
   @Attribute()
   updated: Date;
 
-  permissions: PermissionModel[]
+  permissions: PermissionModel[];
 
   public static preparePageRow(cell: any, row: any) {
-
     return cell.toString();
   }
   public static prepareCityRow(cell: any, row: any) {
-    let str = "";
+    let str = '';
     for (let i = 0; i < cell.length; i++) {
       const element = cell[i];
       str += `${element.toString()}<br>`;
@@ -88,8 +93,6 @@ export class PageRedirectModel extends AbstractModel {
         type: 'html',
         valuePrepareFunction: PageRedirectModel.prepareCityRow
       }
-    },
+    }
   };
-
 }
-

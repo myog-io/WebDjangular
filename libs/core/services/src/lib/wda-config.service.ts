@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Inject, Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import 'rxjs/add/operator/map';
@@ -12,10 +12,9 @@ import { BlockHeaderModel } from '@core/cms/src/lib/models/BlockHeader.model';
 import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class WDAConfig {
-
   private locale_list: any;
   private locale_active: string;
   private plugins: any;
@@ -29,17 +28,16 @@ export class WDAConfig {
   public get_home_url = '/api/cms/page/get_home/';
   public get_page_url = '/api/cms/page/#path#/get_page';
   public include = 'header,footer,layout';
-  public current_page:PageModel;
-  public current_header:BlockHeaderModel;
-  public current_footer:BlockFooterModel;
+  public current_page: PageModel;
+  public current_header: BlockHeaderModel;
+  public current_footer: BlockFooterModel;
 
   constructor(
     private http: HttpClient,
     private datastore: WebAngularDataStore,
     private clientUser: ClientUserService,
-    @Optional() @Inject('APP_BASE_HREF') baseHref: string,
+    @Optional() @Inject('APP_BASE_HREF') baseHref: string
   ) {
-
     if (baseHref) {
       this.init_url = `${baseHref}${this.init_url}`;
       this.get_home_url = `${baseHref}${this.get_home_url}`;
@@ -50,30 +48,33 @@ export class WDAConfig {
   public WDAInit(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.data) {
-        resolve(this.data)
+        resolve(this.data);
       } else if (this.loading) {
         this.compleLoading = () => {
           resolve(this.data);
-        }
+        };
       } else {
         this.loading = true;
         // Ading Authorization None to Header to skip JWT AUTH on Public Requests
-        this.http.get(this.init_url, { headers: { Authorization: 'none' } }).subscribe(
-          (data: any) => {
-            this.populateWDAConfig(data.data);
-            this.data = data.data;
-            this.loading = false;
-            if (this.compleLoading) {
-              this.compleLoading();
-              this.compleLoading = null;
+        this.http
+          .get(this.init_url, { headers: { Authorization: 'none' } })
+          .subscribe(
+            (data: any) => {
+              this.populateWDAConfig(data.data);
+              this.data = data.data;
+              this.loading = false;
+              if (this.compleLoading) {
+                this.compleLoading();
+                this.compleLoading = null;
+              }
+              resolve(data.data);
+            },
+            (error: any) => {
+              /* TODO: error o WDA Init */
+              this.loading = false;
+              reject(error);
             }
-            resolve(data.data);
-          },
-          (error: any) => {
-            /* TODO: error o WDA Init */
-            this.loading = false;
-            reject(error);
-          });
+          );
       }
     });
   }
@@ -105,15 +106,15 @@ export class WDAConfig {
       if (this.core_config) {
         resolve(this.core_config[name] ? this.core_config[name] : null);
       } else {
-        this.WDAInit().then((data) => {
+        this.WDAInit().then(data => {
           resolve(this.core_config[name] ? this.core_config[name] : null);
-        })
+        });
       }
     });
   }
 
   private setCoreConfig(data) {
-    this.core_config = data
+    this.core_config = data;
   }
 
   private setWebsiteConfig(data) {
@@ -132,6 +133,24 @@ export class WDAConfig {
     //return "../../../themes/" + this.theme.slug + "/" + this.theme.slug + ".module#" + this.theme.angular_module;
   }
 
+  public applyThemeStyleVars() {
+    let theme_style_vars: any = '';
+    if (this.core_config && document) {
+      if (this.core_config.hasOwnProperty('cms_core')) {
+        if (this.core_config['cms_core']['theme_style_vars']) {
+          theme_style_vars = this.core_config['cms_core']['theme_style_vars'];
+        }
+      }
+      if (theme_style_vars) {
+        let style: HTMLStyleElement = document.createElement('style');
+        style.innerHTML = theme_style_vars; // TODO: minify .replace(/\t?\n?\s?/gi, '');
+        console.log(style);
+        //document.head.appendChild(style);
+        document.head.appendChild(style);
+      }
+    }
+  }
+
   public applyCustomStyle() {
     let custom_style: string = '';
     if (this.core_config && document) {
@@ -142,7 +161,7 @@ export class WDAConfig {
       }
       if (custom_style) {
         let style: HTMLStyleElement = document.createElement('style');
-        style.innerHTML = custom_style;  // TODO: minify .replace(/\t?\n?\s?/gi, '');
+        style.innerHTML = custom_style; // TODO: minify .replace(/\t?\n?\s?/gi, '');
         document.head.appendChild(style);
       }
     }
@@ -172,9 +191,7 @@ export class WDAConfig {
     return this.plugins;
   }
 
-  private addPlugin(plugin: any) {
-
-  }
+  private addPlugin(plugin: any) { }
 
   public getLocaleList() {
     return this.locale_list;
@@ -197,8 +214,15 @@ export class WDAConfig {
   /* DOING HERE FOR NOW, NOT SURE WHERE SHOULD BE THE CORRECT PLACE */
   public getHome(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel, null, { include: this.include }, new HttpHeaders({ Authorization: 'none' }),
-        this.get_home_url).subscribe(
+      this.datastore
+        .findRecord(
+          PageModel,
+          null,
+          { include: this.include },
+          new HttpHeaders({ Authorization: 'none' }),
+          this.get_home_url
+        )
+        .subscribe(
           (page: PageModel) => {
             page.setHome();
             this.current_page = page;
@@ -209,15 +233,21 @@ export class WDAConfig {
           (error: any) => {
             reject(error);
           }
-        )
+        );
     });
   }
 
   public getPage(path: UrlSegment[]): Promise<PageModel | any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findRecord(PageModel,
-        null, { include: this.include }, new HttpHeaders({ Authorization: 'none' }),
-        this.get_page_url.replace('#path#', path.join('|'))).subscribe(
+      this.datastore
+        .findRecord(
+          PageModel,
+          null,
+          { include: this.include },
+          new HttpHeaders({ Authorization: 'none' }),
+          this.get_page_url.replace('#path#', path.join('|'))
+        )
+        .subscribe(
           (page: PageModel) => {
             this.current_page = page;
             this.current_footer = page.footer;
@@ -227,30 +257,34 @@ export class WDAConfig {
           (error: any) => {
             reject(error);
           }
-        )
+        );
     });
   }
 
   public getErrorPage(errorCode): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.datastore.findAll(PageModel, {
-        slug: errorCode,
-        include: this.include
-      }, new HttpHeaders({ Authorization: 'none' })).subscribe(
-        (response: JsonApiQueryData<PageModel>) => {
-          let models = response.getModels();
-          let page: PageModel = models[0];
-          this.current_page = page;
-          this.current_footer = page.footer;
-          this.current_header = page.header;
-          resolve(page);
-        },
-        (error: any) => {
-          reject(error);
-        }
-      )
+      this.datastore
+        .findAll(
+          PageModel,
+          {
+            slug: errorCode,
+            include: this.include
+          },
+          new HttpHeaders({ Authorization: 'none' })
+        )
+        .subscribe(
+          (response: JsonApiQueryData<PageModel>) => {
+            let models = response.getModels();
+            let page: PageModel = models[0];
+            this.current_page = page;
+            this.current_footer = page.footer;
+            this.current_header = page.header;
+            resolve(page);
+          },
+          (error: any) => {
+            reject(error);
+          }
+        );
     });
   }
-
-
 }

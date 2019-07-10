@@ -1,14 +1,15 @@
 <div class="row" *ngIf="!providerCheckout.loading_plans; else loading_holder">
-  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.tv;">
+  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.tv"
+    [ngClass]="{'d-none': !plan.isVisible()}">
     <div class="card">
       <div class="card-header">
         <div class="title-wrapper">
           <span class="prefix">HD</span>
-          <span class="title">{{plan?.name.split(" ")[1]}}</span>
+          <span class="title">{{ plan?.name.split(' ')[1] }}</span>
         </div>
         <div class="price-wrapper">
           <span class="currency-unit">R$</span>
-          <span class="price">{{plan?.pricing_list}}</span>
+          <span class="price">{{ plan?.pricing_list }}</span>
           <span class="periodicity">/MÊS</span>
         </div>
       </div>
@@ -16,32 +17,33 @@
         <ul class="features-wrapper text-center text-uppercase">
           <li>
             <span class=""> canais <strong>TOTAL:</strong></span>
-            <span class="text-primary"> <strong> {{plan?.channel_count}}</strong> </span>
+            <span class="text-primary">
+              <strong> {{ plan?.channel_count }}</strong>
+            </span>
           </li>
           <li>
             <span class=""> canais <strong>HD:</strong></span>
-            <span class="text-primary"> <strong> {{plan?.channel_hd_count}}</strong> </span>
+            <span class="text-primary">
+              <strong> {{ plan?.channel_hd_count }}</strong>
+            </span>
           </li>
         </ul>
         <div class="select-wrapper">
           <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
-            (click)="providerCheckout.selectTVPlan(plan)" [disabled]="providerCheckout.selectingTVPlan">
+            (click)="providerCheckout.selectTVPlan(plan)"
+            [disabled]="providerCheckout.selectingTVPlan || !providerCheckout.canSelectTvPlan">
             <span *ngIf="providerCheckout.selectingTVPlan">
-              <i class="fa fa-spinner fa-pulse"></i>
-              Carregando
+              <i class="fa fa-spinner fa-pulse"></i> Carregando
             </span>
-            <span *ngIf="!providerCheckout.selectingTVPlan">
-              Escolher
-            </span>
+            <span *ngIf="!providerCheckout.selectingTVPlan"> Escolher </span>
           </button>
         </div>
         <div class="more-info-wrapper">
-          <!--<a href="#">detalhes do pacote</a>-->
-          <a href="#">grade de canais</a>
+          <!--<a href="#">detalhes do pacote</a>
+          <a href="#">grade de canais</a>-->
         </div>
       </div>
     </div>
-
   </div>
 </div>
 

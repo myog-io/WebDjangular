@@ -1,11 +1,10 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
 import { BlockModel } from './Block.model';
-import {Validators, FormGroup} from "@angular/forms";
+import { Validators, FormGroup } from '@angular/forms';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
-import { PageModel } from "@core/cms/src/lib/models/Page.model";
-
+import { PageModel } from '@core/cms/src/lib/models/Page.model';
 
 enum pageDG {
   general = 'general',
@@ -15,7 +14,7 @@ enum pageDG {
 
 @JsonApiModelConfig({
   type: 'Page',
-  modelEndpointUrl: 'cms/page',
+  modelEndpointUrl: 'cms/page'
 })
 export class PageStaticModel extends PageModel {
   public static include = 'header,layout,footer';
@@ -30,7 +29,7 @@ export class PageStaticModel extends PageModel {
       groups: [
         {
           name: pageDG.general,
-          title: '',
+          title: ''
         }
       ]
     },
@@ -39,7 +38,7 @@ export class PageStaticModel extends PageModel {
       groups: [
         {
           name: pageDG.seo,
-          title: 'SEO',
+          title: 'SEO'
         }
       ]
     },
@@ -48,33 +47,29 @@ export class PageStaticModel extends PageModel {
       groups: [
         {
           name: pageDG.options,
-          title: 'Page Options',
+          title: 'Page Options'
         }
       ]
     }
   ];
 
-
-
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       id: {
         title: 'ID',
-        type: 'text',
+        type: 'text'
       },
       title: {
         title: 'Title',
-        type: 'text',
+        type: 'text'
       },
       slug: {
         title: 'Url Path',
-        type: 'text',
+        type: 'text'
       }
     },
-    filters:{
+    filters: {
       page_class: 'static'
     }
   };
-
 }
-

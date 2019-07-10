@@ -1,13 +1,23 @@
-import {JsonApiModelConfig, Attribute, HasMany, BelongsTo, NestedAttribute} from 'angular2-jsonapi';
+import {
+  JsonApiModelConfig,
+  Attribute,
+  HasMany,
+  BelongsTo,
+  NestedAttribute
+} from 'angular2-jsonapi';
 import { AbstractModel } from '@core/data/src/lib/models';
-import {PermissionModel, UserModel} from '@core/users/src/lib/models';
-import {SmartTableColumnSettings, SmartTableSettings, SmartTableSettingsAttr} from '@core/data/src/lib/data-store';
-import { OrderEventTypes } from '../interfaces/Order.interface'
-import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
+import { PermissionModel, UserModel } from '@core/users/src/lib/models';
+import {
+  SmartTableColumnSettings,
+  SmartTableSettings,
+  SmartTableSettingsAttr
+} from '@core/data/src/lib/data-store';
+import { OrderEventTypes } from '../interfaces/Order.interface';
+import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
 
 @JsonApiModelConfig({
   type: 'OrderEvent',
-  modelEndpointUrl: 'store/order',
+  modelEndpointUrl: 'store/order'
 })
 export class OrderEventModel extends AbstractModel {
   public static include = null;
@@ -39,7 +49,5 @@ export class OrderEventModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 }

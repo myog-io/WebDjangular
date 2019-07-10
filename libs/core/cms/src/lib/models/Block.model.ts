@@ -1,16 +1,20 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {
+  JsonApiModelConfig,
+  Attribute,
+  HasMany,
+  BelongsTo
+} from 'angular2-jsonapi';
 import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
-
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'Block',
-  modelEndpointUrl: 'cms/block',
+  modelEndpointUrl: 'cms/block'
 })
 export class BlockModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -20,17 +24,17 @@ export class BlockModel extends AbstractModel {
     type: 'text',
     label: 'Block Title',
     wrapper_class: 'col-6',
-    placeholder: 'Enter the Block Title',
+    placeholder: 'Enter the Block Title'
   })
   title: string;
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Block Code',
     wrapper_class: 'col-6',
-    placeholder: 'Enter the Block Code',
+    placeholder: 'Enter the Block Code'
   })
   slug: string;
 
@@ -53,14 +57,11 @@ export class BlockModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) { }
   public toString = (): string => {
     return `${this.title} (#${this.id})`;
-  }
-  getContent():string {
+  };
+  getContent(): string {
     return this.content;
   }
 }
-

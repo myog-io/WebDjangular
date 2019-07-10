@@ -1,6 +1,6 @@
-@import "../../../styles/_variables.scss";
+@import '../../../styles/_variables.scss';
 
-.footer-signature{
+.footer-signature {
   background: $footer-signature-bg;
   color: $footer-signature-c;
 
@@ -12,6 +12,4 @@
     color: $footer-signature-link-hover;
     text-decoration: none;
   }
-
 }
-

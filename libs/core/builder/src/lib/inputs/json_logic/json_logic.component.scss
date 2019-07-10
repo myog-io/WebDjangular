@@ -6,7 +6,7 @@
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
 @include nb-install-component() {
-  .alert-group{
+  .alert-group {
     border: 1px solid #000;
   }
 }

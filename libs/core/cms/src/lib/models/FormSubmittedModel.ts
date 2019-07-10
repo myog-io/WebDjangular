@@ -1,13 +1,18 @@
-import { JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import {
+  JsonApiModelConfig,
+  Attribute,
+  HasMany,
+  BelongsTo
+} from 'angular2-jsonapi';
 import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { FormModel } from './Form.model';
-
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 
 @JsonApiModelConfig({
   type: 'FormSubmitted',
-  modelEndpointUrl: 'cms/form-submit',
+  modelEndpointUrl: 'cms/form-submit'
 })
 export class FormSubmittedModel extends AbstractModel {
   @Attribute()
@@ -17,6 +22,14 @@ export class FormSubmittedModel extends AbstractModel {
   form: FormModel;
 
   @Attribute()
+  @ExtraOptions({
+    type: 'codeEditor',
+    label: 'Sent Data',
+    element_class: 'small',
+    options: {
+      language: 'json'
+    }
+  })
   data: any;
 
   @Attribute()
@@ -24,7 +37,6 @@ export class FormSubmittedModel extends AbstractModel {
 
   @Attribute()
   updated: Date;
-
 
   public toString = (): string => {
     return `${this.id}(${this.form})`;
@@ -34,17 +46,16 @@ export class FormSubmittedModel extends AbstractModel {
     columns: {
       id: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       form: {
         title: 'Code',
-        type: 'text',
+        type: 'text'
       },
       created: {
         title: 'Created',
-        type: 'text',
-      },
-      
-    },
+        type: 'text'
+      }
+    }
   };
 }

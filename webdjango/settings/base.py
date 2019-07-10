@@ -5,8 +5,6 @@ Django settings for webdjangular project.
 import datetime
 import os
 
-# sys.path.insert(0, os.path.join(os.path.dirname(__file__), os.path.join("libs","core")))
-
 SECRET_KEY = '__CHANGE_ME__'  # overwrite the SECRET KEY on live.py and development.py
 
 BASE_DIR = os.path.dirname(os.path.dirname(
@@ -16,11 +14,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files')  # 'data' is my media folder
 
 MEDIA_URL = '/files/'
 
-THEME_DIR = os.path.join(BASE_DIR, 'libs/themes')
+THEME_DIR = os.path.join(BASE_DIR, 'libs', 'themes')
 
-PLUGIN_DIR = os.path.join(BASE_DIR, 'libs/plugins')
+PLUGIN_DIR = os.path.join(BASE_DIR, 'libs', 'plugins')
 
-ANGULAR_APP_DIR = os.path.join(os.path.join(BASE_DIR, 'dist'), 'apps')
+ANGULAR_APP_DIR = os.path.join(BASE_DIR, 'dist', 'apps')
 
 DEBUG = False
 
@@ -76,13 +74,12 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'webdjango.utils.middleware.CurrentWebsiteMiddleware'
-
-
+    'webdjango.utils.middleware.CurrentWebsiteMiddleware',
+    'webdjango.utils.middleware.DisableClientSideCachingMiddleware',
 ]
 
 ROOT_URLCONF = 'webdjango.urls'
@@ -168,6 +165,81 @@ JWT_AUTH = {
     'JWT_AUTH_COOKIE': None,
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d  (Duration %(relativeCreated)dms)  %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] {message}',
+            'style': '{',
+        }
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'file_error': {
+            'level': 'ERROR',
+            #'filters': ['require_debug_false'],
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'error.log'),
+        },
+        'file': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_false'],
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'mail_admins', 'file', 'file_error'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'django': {
+            'handlers': ['console', 'mail_admins', 'file', 'file_error'],
+            'level': 'INFO',
+        },
+        'django.server': {
+            'handlers': ['django.server', 'file_error'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'root': {
+            'handlers': ['console', 'mail_admins', 'file', 'file_error'],
+            'level': 'DEBUG',
+            'propagate': False,
+        }
+    }
+}
 
 LANGUAGE_CODE = 'en-us'
 

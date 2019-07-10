@@ -9,16 +9,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: MenuBuilderComponent,
-      },      
-    ],
-  },
+        component: MenuBuilderComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class MenuBuilderRoutingModule {
-    
-}
+export class MenuBuilderRoutingModule {}

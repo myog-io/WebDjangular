@@ -7,9 +7,7 @@ import { CoreConfigRoutingModule } from './core-config-group-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
 
-const COMPONENTS = [
-    CoreConfigGroupComponent,
-];
+const COMPONENTS = [CoreConfigGroupComponent];
 
 @NgModule({
   imports: [
@@ -19,11 +17,6 @@ const COMPONENTS = [
     BuilderFormModule,
     ReactiveFormsModule
   ],
-  declarations: [
-    ...COMPONENTS,
-  ]
+  declarations: [...COMPONENTS]
 })
-export class CoreConfigGroupModule {
-
-}
-
+export class CoreConfigGroupModule {}

@@ -1,14 +1,13 @@
-import {Attribute, HasMany, JsonApiModelConfig} from "angular2-jsonapi";
-import {FormArray, Validators} from "@angular/forms";
-import { AbstractModel } from "@core/data/src/lib/models";
-import { ExtraOptions } from "@core/decorator/src/lib/ExtraOptions.decorator";
-import { ProductModel } from "@plugins/store/src/lib/data/models/Product.model";
-import { SmartTableSettings } from "@core/data/src/lib/data-store";
-
+import { Attribute, HasMany, JsonApiModelConfig } from 'angular2-jsonapi';
+import { FormArray, Validators } from '@angular/forms';
+import { AbstractModel } from '@core/data/src/lib/models';
+import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
+import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
+import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'PlanType',
-  modelEndpointUrl: 'provider/plan-type',
+  modelEndpointUrl: 'provider/plan-type'
 })
 export class PlanTypeModel extends AbstractModel {
   public static include = 'products';
@@ -20,7 +19,7 @@ export class PlanTypeModel extends AbstractModel {
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
-    label: 'Name',
+    label: 'Name'
   })
   name: string;
 
@@ -30,9 +29,9 @@ export class PlanTypeModel extends AbstractModel {
     label: 'Is for Condos?',
     wrapper_class: 'col-4',
     value: true,
-    placeholder: '',
+    placeholder: ''
   })
-  is_condo: boolean
+  is_condo: boolean;
 
   @Attribute()
   @ExtraOptions({
@@ -40,9 +39,9 @@ export class PlanTypeModel extends AbstractModel {
     label: 'Is for Companies?',
     wrapper_class: 'col-4',
     value: true,
-    placeholder: '',
+    placeholder: ''
   })
-  is_business: boolean
+  is_business: boolean;
 
   @Attribute()
   @ExtraOptions({
@@ -50,17 +49,17 @@ export class PlanTypeModel extends AbstractModel {
     label: 'Position',
     wrapper_class: 'col-4',
     value: 0,
-    placeholder: '',
+    placeholder: ''
   })
-  position: number
-  
+  position: number;
+
   @HasMany()
   @ExtraOptions({
     formType: FormArray,
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Products',
-    options: {product_class_neq:'addon'},
-    model: ProductModel,
+    options: { product_class_neq: 'addon' },
+    model: ProductModel
   })
   products: ProductModel;
 
@@ -68,11 +67,11 @@ export class PlanTypeModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       is_condo: {
         title: 'Is Condo?',
-        type: 'text',
+        type: 'text'
       },
       is_business: {
         title: 'Is Business',
@@ -81,10 +80,8 @@ export class PlanTypeModel extends AbstractModel {
       },
       position: {
         title: 'Position',
-        type: 'text',
+        type: 'text'
       }
-
-    },
+    }
   };
-
 }

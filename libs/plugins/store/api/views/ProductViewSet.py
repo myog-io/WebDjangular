@@ -10,6 +10,7 @@ from ..serializers.ProductSerializer import (ProductAttributeSerializer,
                                              ProductSerializer,
                                              ProductTypeSerializer)
 
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class ProductAttributeFilter(WebDjangoFilterSet):
     class Meta:
@@ -120,7 +121,7 @@ class ProductFilter(WebDjangoFilterSet):
         }
 
 
-class ProductViewSet(ModelViewSet):
+class ProductViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Product

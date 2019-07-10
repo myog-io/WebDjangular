@@ -1,0 +1,13 @@
+<!--form-group-->
+<div class="form-group" [formGroup]="form">
+    <legend class="col-form-label" id="{{config.name}}">{{ config.label }}</legend>
+    <div class="form-check form-check-inline {{config?.element_class}}" *ngFor="let option of options; let i = index">
+        <label formArrayName="options">
+            <input type="checkbox" [formControlName]="i">
+            <span [innerHtml]="options[i].name"></span>
+        </label>
+
+    </div>
+    <wda-form-validators [config]="config" [input]="group.get(this.config.name)">
+    </wda-form-validators>
+</div>

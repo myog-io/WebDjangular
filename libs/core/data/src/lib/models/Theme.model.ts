@@ -2,16 +2,16 @@ import { JsonApiModelConfig, Attribute, BelongsTo } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
 import { AuthorModel } from './Author.model';
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 import { SmartTableSettings } from '../data-store/SmartTable.interfaces';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'core_theme'
 })
 export class ThemeModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -26,7 +26,7 @@ export class ThemeModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Slug',
     placeholder: 'Enter the Slug'
@@ -53,7 +53,7 @@ export class ThemeModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Author',
     wrapper_class: 'col-6',
     model: AuthorModel,
@@ -63,7 +63,7 @@ export class ThemeModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Page',
     wrapper_class: 'col-6',
     model: ThemeModel,

@@ -1,4 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpRequest } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEventType,
+  HttpHeaders,
+  HttpRequest
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
@@ -6,10 +12,10 @@ import { FileItem } from './file-item.class';
 import { FileUploader, FileUploaderOptions } from './file-uploader.class';
 
 export interface UploaderLinksOptions {
-  downloadEntry: string,
-  updateEntry: string,
-  createEntry: string,
-  deleteEntry: string,
+  downloadEntry: string;
+  updateEntry: string;
+  createEntry: string;
+  deleteEntry: string;
 }
 
 export interface UploaderServiceOptions {
@@ -32,13 +38,13 @@ export class FileUploaderService {
     downloadEntry: '',
     updateEntry: '',
     createEntry: '',
-    deleteEntry: '',
+    deleteEntry: ''
   };
 
   public defaultOptions: UploaderServiceOptions = {
     createMethod: 'POST',
     updateMethod: 'POST',
-    authorizationHeaderName: "Authorization",
+    authorizationHeaderName: 'Authorization',
     tokenPattern: null,
     token: null,
     chunkSize: 0,
@@ -46,19 +52,17 @@ export class FileUploaderService {
     currentChunkParamName: 'current_chunk',
     contentTypeParamName: 'content_type',
     fileParamName: 'file',
-    idAttribute: 'id',
+    idAttribute: 'id'
   };
 
   public additionalHeaders = {};
-  protected cancelError = "UPLOAD CANCELED";
+  protected cancelError = 'UPLOAD CANCELED';
   protected uploadSubscription: any = null;
   public links: UploaderLinksOptions;
   public options: UploaderServiceOptions;
   private _uploader: FileUploader = null;
 
-  constructor(
-    protected http: HttpClient
-  ) {
+  constructor(protected http: HttpClient) {
     this.links = Object.assign({}, this.defaultLinks, this.links);
     this.options = Object.assign({}, this.defaultOptions, this.options);
   }
@@ -68,18 +72,19 @@ export class FileUploaderService {
   set uploader(theUploader: FileUploader) {
     this._uploader = theUploader;
   }
-  public onBeforeUpload(item: FileItem, options: FileUploaderOptions): Promise<any> {
+  public onBeforeUpload(
+    item: FileItem,
+    options: FileUploaderOptions
+  ): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       resolve(true);
     });
     return promise;
   }
   public uploadFile(item: FileItem, options: FileUploaderOptions): void {
-    this.onBeforeUpload(item, options).then(
-      () => {
-        this._uploadFile(item, options);
-      }
-    )
+    this.onBeforeUpload(item, options).then(() => {
+      this._uploadFile(item, options);
+    });
   }
   public onBeforeGetDefaultHeaders(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
@@ -90,10 +95,15 @@ export class FileUploaderService {
   protected _getDefaultHeaders(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.onBeforeGetDefaultHeaders().then(
-        (result) => {
-          const h: any = {}
+        result => {
+          const h: any = {};
           if (this.options.tokenPattern && this.options.token) {
-            h[this.options.authorizationHeaderName] = this.options.tokenPattern.replace("#token#", this.options.token);
+            h[
+              this.options.authorizationHeaderName
+            ] = this.options.tokenPattern.replace(
+              '#token#',
+              this.options.token
+            );
           }
           for (const key in this.additionalHeaders) {
             if (this.additionalHeaders.hasOwnProperty(key)) {
@@ -102,16 +112,19 @@ export class FileUploaderService {
           }
           resolve(h);
         },
-        (error) => {
+        error => {
           reject(error);
         }
-      )
-    })
+      );
+    });
   }
-  protected _getRequestHeaders(item: FileItem, options: FileUploaderOptions): Promise<any> {
+  protected _getRequestHeaders(
+    item: FileItem,
+    options: FileUploaderOptions
+  ): Promise<any> {
     return new Promise((resolve, reject) => {
       this._getDefaultHeaders().then(
-        (h) => {
+        h => {
           if (options.headers) {
             for (let header of options.headers) {
               h[header.name] = header.value;
@@ -124,11 +137,11 @@ export class FileUploaderService {
           }
           resolve(h);
         },
-        (error) => {
-          reject(error)
+        error => {
+          reject(error);
         }
-      )
-    })
+      );
+    });
   }
 
   public buildPackageToSend(item: FileItem, options: FileUploaderOptions) {
@@ -140,7 +153,8 @@ export class FileUploaderService {
     } else {
       file = item._file;
     }
-    const appendFile = () => sendable.append(this.options.fileParamName, file, item.file.name);
+    const appendFile = () =>
+      sendable.append(this.options.fileParamName, file, item.file.name);
     if (!options.parametersBeforeFiles) {
       appendFile();
     }
@@ -150,7 +164,10 @@ export class FileUploaderService {
       Object.keys(options.additionalParameter).forEach((key: string) => {
         let paramVal = options.additionalParameter[key];
         // Allow an additional parameter to include the filename
-        if (typeof paramVal === 'string' && paramVal.indexOf('{{file_name}}') >= 0) {
+        if (
+          typeof paramVal === 'string' &&
+          paramVal.indexOf('{{file_name}}') >= 0
+        ) {
           paramVal = paramVal.replace('{{file_name}}', item.file.name);
         }
         sendable.append(key, paramVal);
@@ -158,10 +175,16 @@ export class FileUploaderService {
     }
 
     if (this.options.chunkSize > 0 && this.options.totalChunkParamName) {
-      sendable.append(this.options.totalChunkParamName, item.getTotalChunks().toString());
+      sendable.append(
+        this.options.totalChunkParamName,
+        item.getTotalChunks().toString()
+      );
     }
     if (this.options.chunkSize > 0 && this.options.currentChunkParamName) {
-      sendable.append(this.options.currentChunkParamName, (item.getCurrentChunk() + 1).toString());
+      sendable.append(
+        this.options.currentChunkParamName,
+        (item.getCurrentChunk() + 1).toString()
+      );
     }
 
     sendable.append(this.options.contentTypeParamName, item.getContentType());
@@ -175,50 +198,53 @@ export class FileUploaderService {
 
   protected _uploadFile(item: FileItem, options: FileUploaderOptions): void {
     this._getRequestHeaders(item, options).then(
-      (headers) => {
+      headers => {
         let request_method = this.options.createMethod;
         let link = this.links.createEntry;
         item.setIsUploading(true);
         if (this.options.chunkSize > 0) {
           try {
-            item.getCurrentChunk()
+            item.getCurrentChunk();
           } catch (err) {
             item.createFileChunk(this.options.chunkSize);
           }
-          request_method = item.getCurrentChunk() > 0 ? this.options.updateMethod : this.options.createMethod;
-          link = item.getCurrentChunk() > 0 ? this.links.updateEntry : this.links.createEntry;
+          request_method =
+            item.getCurrentChunk() > 0
+              ? this.options.updateMethod
+              : this.options.createMethod;
+          link =
+            item.getCurrentChunk() > 0
+              ? this.links.updateEntry
+              : this.links.createEntry;
         }
         if (item.getId()) {
-          link = link.replace("#id#", item.getId());
+          link = link.replace('#id#', item.getId());
         }
         const data = this.buildPackageToSend(item, options);
         let request = new HttpRequest(request_method, link, data, {
           headers: new HttpHeaders(headers),
           reportProgress: true,
-          withCredentials: item.withCredentials,
+          withCredentials: item.withCredentials
         });
         this.uploadSubscription = this.http.request(request).subscribe(
-          (event) => {
+          event => {
             this.getEventMessage(event, item);
           },
-          (error) => {
+          error => {
             if (this.cancelError === error) {
               this.uploader.onAbort(error, item);
             } else {
               this.uploader.onError(error, item);
             }
-
-          },
-        )
+          }
+        );
       },
-      (error) => {
-
-      }
-    )
+      error => {}
+    );
   }
   public stopUpload() {
     if (this.uploadSubscription && this.uploadSubscription.unsubscribe) {
-      this.uploadSubscription.error(this.cancelError)
+      this.uploadSubscription.error(this.cancelError);
     }
   }
   private getEventMessage(event: any, item: FileItem) {
@@ -244,7 +270,7 @@ export class FileUploaderService {
           if (item.getCurrentChunk() === 0) {
             const response = event.body;
             if (response[this.options.idAttribute]) {
-              item.setId(response[this.options.idAttribute])
+              item.setId(response[this.options.idAttribute]);
             }
           }
         }
@@ -260,28 +286,32 @@ export class FileUploaderService {
     return (error: HttpErrorResponse) => {
       this.uploader.onError(error, item);
 
-      const message = (error.error instanceof Error) ?
-        error.error.message :
-        `server returned code ${error.status} with body "${error.error}"`;
+      const message =
+        error.error instanceof Error
+          ? error.error.message
+          : `server returned code ${error.status} with body "${error.error}"`;
 
       return of(userMessage);
     };
   }
 
-  public deleteEntry(item: FileItem, options = {}, skipConfirmation = false): Observable<any> {
+  public deleteEntry(
+    item: FileItem,
+    options = {},
+    skipConfirmation = false
+  ): Observable<any> {
     if (item.getId() && this.links['deleteEntry']) {
       let link = this.links['deleteEntry'].replace(/#id#/g, item.getId());
       let confirmation = false;
       if (skipConfirmation) {
         confirmation = true;
       } else {
-        confirmation = confirm("Are you sure you want to delete this entry?")
+        confirmation = confirm('Are you sure you want to delete this entry?');
       }
 
       if (confirmation) {
         return this.delete(link, options);
-      }
-      else {
+      } else {
         return of(false);
       }
     } else {
@@ -290,57 +320,59 @@ export class FileUploaderService {
   }
 
   protected delete(url: string, options = {}): Observable<any> {
-    return new Observable(
-      (observe) => {
-        this._getDefaultHeaders().then(
-          function (headers) {
-            return this.http.delete(url, { headers: new HttpHeaders(headers) }).subscribe(
+    return new Observable(observe => {
+      this._getDefaultHeaders().then(
+        function(headers) {
+          return this.http
+            .delete(url, { headers: new HttpHeaders(headers) })
+            .subscribe(
               (response: Response) => {
                 observe.next(response);
               },
-              (error) => {
+              error => {
                 observe.error(error);
               }
             );
-          }.bind(this),
-          (error) => {
-            observe.error(error);
-          });
-      }
-    )
+        }.bind(this),
+        error => {
+          observe.error(error);
+        }
+      );
+    });
   }
 
   /*
       HTTP General methos only bellow
   */
   protected get(url: string): Observable<any> {
-    return new Observable(
-      (observe) => {
-        this._getDefaultHeaders().then(
-          function (headers) {
-            return this.http.get(url, { headers: new HttpHeaders(headers) }).subscribe(
+    return new Observable(observe => {
+      this._getDefaultHeaders().then(
+        function(headers) {
+          return this.http
+            .get(url, { headers: new HttpHeaders(headers) })
+            .subscribe(
               (response: Response) => {
                 observe.next(response);
               },
-              (error) => {
+              error => {
                 observe.error(error);
               }
             );
-          }.bind(this),
-          (error) => {
-            observe.error(error);
-          });
-      }
-    )
+        }.bind(this),
+        error => {
+          observe.error(error);
+        }
+      );
+    });
   }
 
   public addHeader(name = null, value = null) {
-    this.additionalHeaders[name] = value
+    this.additionalHeaders[name] = value;
   }
 
   public removeHeader(name = null) {
     if (this.additionalHeaders.hasOwnProperty(name)) {
-      delete (this.additionalHeaders[name])
+      delete this.additionalHeaders[name];
     }
   }
 }

@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "importHelpers": true,
     "sourceMap": false,
     "declaration": false,
     "module": "es2015",
@@ -18,6 +19,12 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@wda-admin/*": [
+        "apps/admin/src/*"
+      ],
+      "@wda-client/*": [
+        "apps/client/src/*"
+      ],
       "@core/*": [
         "libs/core/*"
       ],

@@ -5,13 +5,19 @@
         <!-- SELECT MENU -->
         <button nbButton type="button" status="danger" [disabled]="formLoading" nbSpinnerStatus="danger"
           nbSpinnerSize="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
-          (click)="openDialog()"><i class="fas fa-trash"></i></button>
+          (click)="openDialog()">
+          <i class="fas fa-trash"></i>
+        </button>
         <button nbButton type="button" status="success" [disabled]="formLoading" nbSpinnerStatus="success"
           nbSpinnerSize="large" [nbSpinner]="formLoading" class="btn btn-success btn-hero float-right"
-          (click)="saveMenu()">Save</button>
+          (click)="saveMenu()">
+          Save
+        </button>
         <button nbButton type="button" status="info" [disabled]="formLoading" nbSpinnerStatus="info"
           nbSpinnerSize="large" [nbSpinner]="formLoading" type="button" class="btn btn-info btn-hero float-right"
-          (click)="createNewMenu()">New Menu</button>
+          (click)="createNewMenu()">
+          New Menu
+        </button>
 
         <div class="ghost-dropdown dropdown btn-hero float-right" ngbDropdown>
           <button nbButton type="button" status="primary" [disabled]="formLoading" nbSpinnerStatus="primary"
@@ -19,7 +25,9 @@
             {{ current_menu }}
           </button>
           <ul class="dropdown-menu" ngbDropdownMenu>
-            <li class="dropdown-item" *ngFor="let t of menus" (click)="changeMenu(t)">{{ t }}</li>
+            <li class="dropdown-item" *ngFor="let t of menus" (click)="changeMenu(t)">
+              {{ t }}
+            </li>
           </ul>
         </div>
 
@@ -35,19 +43,20 @@
   <div class="col-12" *ngIf="current_menu && menuForm">
     <nb-card>
       <nb-accordion>
-        <nb-accordion-item>
+        <nb-accordion-item [expanded]="!current_menu?.id">
           <nb-accordion-item-header>
             Edit {{ current_menu }}
           </nb-accordion-item-header>
           <nb-accordion-item-body>
             <wda-form-builder [displayGroups]="menuForm.displayGroups" [inceptionForm]="true" [group]="menuForm"
-              [formLoading]="formLoading" (onSubmit)="saveMenuConfig($event,row.item.id)" [submit]="false">
+              [formLoading]="formLoading" (onSubmit)="saveMenuConfig($event, row.item.id)" [submit]="false">
             </wda-form-builder>
           </nb-accordion-item-body>
         </nb-accordion-item>
       </nb-accordion>
     </nb-card>
-  </div><!-- EDIT MENU AREA-->
+  </div>
+  <!-- EDIT MENU AREA-->
   <div class="col-6">
     <nb-card>
       <nb-accordion>
@@ -65,10 +74,8 @@
         -->
 
         <nb-accordion-item>
-          <nb-accordion-item-header>
-            Custom
-          </nb-accordion-item-header>
-          <nb-accordion-item-body>
+          <nb-accordion-item-header> Custom </nb-accordion-item-header>
+          <nb-accordion-item-body *ngIf="current_menu?.id; else saveMenuFirst">
             <wda-form-builder [displayGroups]="menuItemForm.displayGroups" [inceptionForm]="true" [group]="menuItemForm"
               [formLoading]="formLoading" (onSubmit)="createMenuItem($event)">
             </wda-form-builder>
@@ -84,6 +91,9 @@
       [list]="list" [options]="options" [template]="itemTemplate">
     </ngx-nestable>
   </div>
+  <ng-template #saveMenuFirst>
+    <p class="text-center">Please save the Menu First</p>
+  </ng-template>
 
   <ng-template #itemTemplate let-row>
     <nb-accordion>
@@ -91,39 +101,33 @@
         <nb-accordion-item-header>
           <div>
             <i class="fas fa-bars" [ngxNestableDragHandle]="row" style="position:relative; margin-left: 0.5rem;"></i>
-            {{ row.item.name }} ({{row.item.url}} #{{row.item.id}})
+            {{ row.item.name }} (#{{ row.item.id }})
           </div>
         </nb-accordion-item-header>
         <nb-accordion-item-body *ngIf="menu_item_forms[row.item.id]">
           <wda-form-builder [displayGroups]="menu_item_forms[row.item.id].displayGroups" [inceptionForm]="true"
             [group]="menu_item_forms[row.item.id]" [formLoading]="formLoading" [remove]="true"
-            (onSubmit)="updateMenuItem($event,row.item.id)" (onRemove)="removeItem($event,row.item.id)">
+            (onSubmit)="updateMenuItem($event, row.item.id)" (onRemove)="removeItem($event, row.item.id)">
           </wda-form-builder>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>
-
   </ng-template>
 
-  <ng-template #empty_item>
-    <span style="width: 40px"></span>
-  </ng-template>
-
-
+  <ng-template #empty_item> <span style="width: 40px"></span> </ng-template>
 </div>
 <!--row-->
 <ng-template #dialog let-data>
-
   <nb-card>
     <nb-card-header> {{ data.title }}</nb-card-header>
-    <nb-card-body>
-      {{data.body}}
-    </nb-card-body>
+    <nb-card-body> {{ data.body }} </nb-card-body>
     <nb-card-footer class="text-right">
       <button nbButton [nbSpinner]="loading" status="warning" class="mr-1" (click)="deleteCurrentMenu()">
-        <i class="fa fa-trash"></i> Confirm</button>
-      <button nbButton [nbSpinner]="loading" status="info" class="ml-1" (click)="dialogRef.close()">Cancel</button>
-
+        <i class="fa fa-trash"></i> Confirm
+      </button>
+      <button nbButton [nbSpinner]="loading" status="info" class="ml-1" (click)="dialogRef.close()">
+        Cancel
+      </button>
     </nb-card-footer>
   </nb-card>
 </ng-template>

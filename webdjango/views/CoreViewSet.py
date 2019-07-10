@@ -2,12 +2,33 @@ from webdjango.filters import WebDjangoFilterSet
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework.viewsets import GenericViewSet
+from rest_framework_json_api.views import ModelViewSet, RelationshipView
 from webdjango.models.Core import Author, CoreConfig, Plugin, Theme, Website
 from webdjango.serializers.CoreSerializer import AuthorSerializer, \
     CoreConfigSerializer, PluginSerializer, ThemeSerializer, \
     WebsiteSerializer
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
+class CachedModelViewSet(ModelViewSet):
+    
+    def list(self, request, *args, **kwargs):
+        @method_decorator(cache_page(86400, key_prefix=self.basename))
+        def list_in(self, request, *args, **kwargs):
+            return super(CachedModelViewSet, self).list(self, request, *args, **kwargs)
+            
+        return list_in(self, request, *args, **kwargs)
+
+    def retrieve(self, request, *args, **kwargs):
+        
+        @method_decorator(cache_page(86400, key_prefix=self.basename))
+        def retrieve_in(self, request, *args, **kwargs):
+            return super(CachedModelViewSet, self).retrieve(self, request, *args, **kwargs)
+        
+        return retrieve_in(self, request, *args, **kwargs)
 
 class WebsiteFilter(WebDjangoFilterSet):
     class Meta:

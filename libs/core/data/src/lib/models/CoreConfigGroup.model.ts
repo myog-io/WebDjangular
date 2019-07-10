@@ -2,8 +2,7 @@ import {
   JsonApiModelConfig,
   Attribute,
   HasMany,
-  NestedAttribute,
-
+  NestedAttribute
 } from 'angular2-jsonapi';
 
 import { AbstractModel } from './Abstract.model';
@@ -14,14 +13,15 @@ import { PermissionModel } from '@core/users/src/lib/models';
 import { JsonLogic } from '@core/builder/src/lib/builder-jsonlogic';
 import { BuilderFormFieldConfig } from '@core/builder/src/lib/interfaces/form-config.interface';
 
-
-
 @JsonApiModelConfig({
   type: 'core_config_group'
 })
 export class CoreConfigGroupModel extends AbstractModel {
   @Attribute()
   id: string;
+
+  @Attribute()
+  secure: boolean;
 
   @Attribute()
   order: number;
@@ -34,7 +34,7 @@ export class CoreConfigGroupModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Core Config Input',
     wrapper_class: 'col-6',
     model: CoreConfigInputModel,
@@ -45,9 +45,9 @@ export class CoreConfigGroupModel extends AbstractModel {
   permissions: PermissionModel[];
   private jsonLogic: JsonLogic = new JsonLogic();
 
-  updateValues():any {
-    this.value = {}
-    let vals = {}
+  updateValues(): any {
+    this.value = {};
+    let vals = {};
     for (let i = 0; i < this.inputs.length; i++) {
       const input: CoreConfigInputModel = this.inputs[i];
       vals[input.id] = input.value;
@@ -56,34 +56,32 @@ export class CoreConfigGroupModel extends AbstractModel {
     return this.value;
   }
 
-
   get pk() {
     return this.id;
   }
 
-  get formFields(): any{
-    let fields = {}
+  get formFields(): any {
+    let fields = {};
     for (let i = 0; i < this.inputs.length; i++) {
       const input: CoreConfigInputModel = this.inputs[i];
       fields[input.id] = {
         type: FormControl,
-        validators: input.validation,
+        validators: input.validation
         //value: input.value,
-      }
+      };
     }
     return fields;
   }
-  get formFieldsConfigs(): BuilderFormFieldConfig[]{
+  get formFieldsConfigs(): BuilderFormFieldConfig[] {
     let fields = [];
     for (let i = 0; i < this.inputs.length; i++) {
-      const config:BuilderFormFieldConfig = this.inputs[i].fieldConfig;
-      if(config.conditional){
+      const config: BuilderFormFieldConfig = this.inputs[i].fieldConfig;
+      if (config.conditional) {
         config.display = this.jsonLogic.apply(config.conditional, this.value);
-      }else if(typeof config.display === 'undefined'){
+      } else if (typeof config.display === 'undefined') {
         config.display = true;
       }
       fields.push(config);
-
     }
 
     return fields;

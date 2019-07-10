@@ -6,8 +6,7 @@
           <div class="row">
             <div class="col-8">
               <h3>
-                <span class="small"> </span>
-                View Order: # {{order.order_num}}
+                <span class="small"> </span> View Order: # {{ order.order_num }}
               </h3>
             </div>
           </div>
@@ -17,20 +16,52 @@
   </div>
 
   <div class="row">
-
     <div class="col-12 col-md-6 d-flex align-items-stretch">
       <nb-card class="w-100">
-        <nb-card-header>
-          Endereço
-        </nb-card-header>
+        <nb-card-header> Dados da Assinature</nb-card-header>
         <nb-card-body>
+          Assinatura de: <strong>{{customer_type}}</strong><br>
+          Tipo do acesso: <strong>{{tipo_de_acesso}}</strong><br>
+          Fidelidade: <strong>{{fidelidade}}</strong><br>
 
-          {{ order.billing_address.first_name }} {{ order.billing_address.last_name }} <br>
-          {{ order.billing_address.street_address_1 }}, {{ order.billing_address.number }}
-          <span *ngIf="order.billing_address.street_address_2">
-              - {{ order.billing_address.street_address_2 }}
-            </span>
+          <span *ngIf="revendedor">
+            Revendedor:<strong>{{ revendedor }}</strong>
+          </span>
           <br>
+
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-12 col-md-6 d-flex align-items-stretch">
+      <nb-card class="w-100">
+        <nb-card-header> Cliente</nb-card-header>
+        <nb-card-body>
+          Nome completo:<strong> {{ order.billing_address.first_name }}
+            {{ order.billing_address.last_name }}</strong><br>
+          RG: <strong>{{ order.extra_data.rg }}</strong><br>
+          CPF: <strong>{{ order.extra_data.cpf }}</strong><br>
+          Nascimento:<strong> {{ order.extra_data.dob }}</strong><br>
+          Celular: <strong>{{ order.extra_data.mobile }}</strong><br>
+          Celular Extra: <strong>{{ order.extra_data.mobile_extra }}</strong><br>
+          Telefone: <strong>{{ order.extra_data.telephone }}</strong><br>
+          Email: <strong>{{ order.user_email }}</strong><br>
+          Observação: <br>
+          <pre>{{ order.extra_data.message }}</pre>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-12 col-md-6 d-flex align-items-stretch">
+      <nb-card class="w-100">
+        <nb-card-header> Endereço </nb-card-header>
+        <nb-card-body>
+          {{ order.billing_address.first_name }}
+          {{ order.billing_address.last_name }} <br />
+          {{ order.billing_address.street_address_1 }},
+          {{ order.billing_address.number }}
+          <span *ngIf="order.billing_address.street_address_2">
+            - {{ order.billing_address.street_address_2 }}
+          </span>
+          <br />
           {{ order.billing_address.city }}, {{ order.billing_address.state }}
           {{ order.billing_address.postal_code }}
         </nb-card-body>
@@ -39,71 +70,69 @@
 
     <div class="col-12 col-md-6 d-flex align-items-stretch">
       <nb-card class="w-100">
-        <nb-card-header>
-          Pagamento
-        </nb-card-header>
+        <nb-card-header> Pagamento </nb-card-header>
         <nb-card-body>
-
-         <span *ngIf="order.extra_data['paymentType'] == 'email'">
-           <h5>Por email:</h5>
-           <b>{{ order.user_email }}</b>
-         </span>
+          <span *ngIf="order.extra_data['paymentType'] == 'email'">
+            <h5>Por email:</h5>
+            <b>{{ order.user_email }}</b>
+          </span>
 
           <span *ngIf="order.extra_data['paymentType'] == 'mail'">
             <h5>Por correios:</h5>
-            {{ order.billing_address.first_name }} {{ order.billing_address.last_name }} <br>
-            {{ order.billing_address.street_address_1 }}, {{ order.billing_address.number }}
+            {{ order.billing_address.first_name }}
+            {{ order.billing_address.last_name }} <br />
+            {{ order.billing_address.street_address_1 }},
+            {{ order.billing_address.number }}
             <span *ngIf="order.billing_address.street_address_2">
-                - {{ order.billing_address.street_address_2 }}
-              </span>
-            <br>
+              - {{ order.billing_address.street_address_2 }}
+            </span>
+            <br />
             {{ order.billing_address.city }}, {{ order.billing_address.state }}
             {{ order.billing_address.postal_code }}
-         </span>
-
-
+          </span>
         </nb-card-body>
       </nb-card>
     </div>
 
     <div class="col-12">
       <nb-card>
-        <nb-card-header>
-          Pedido
-        </nb-card-header>
+        <nb-card-header> Pedido </nb-card-header>
         <nb-card-body>
           <div class="row">
             <div class="col table-responsive">
-
               <table class="table">
                 <thead>
-                <tr class="">
-                  <th scope="col">Planos Escolhido</th>
-                  <th scope="col" class="text-center">Quantidade</th>
-                  <th scope="col">Preço base</th>
-                  <th scope="col">Subtotal</th>
-                </tr>
+                  <tr class="">
+                    <th scope="col">Planos Escolhido</th>
+                    <th scope="col" class="text-center">Quantidade</th>
+                    <th scope="col">Preço base</th>
+                    <th scope="col">Subtotal</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let order_line of order.lines">
-                  <td>{{ order_line.product_name}} </td>
-                  <td class="text-center">{{ order_line.quantity }}</td>
-                  <td>
-                    R$ <b>{{  order_line.unit_price | currency:symbol:''}}</b>
-                    <span *ngIf="order_line.product">/mês</span>
-                  </td>
-                  <td>
-                    R$ <b>{{  order_line.getTotal() | currency:symbol:''}}</b>
-                    <span *ngIf="order_line.product">/mês</span>
-                  </td>
-                </tr>
+                  <tr *ngFor="let order_line of order.lines">
+                    <td>{{ order_line.product_name }}</td>
+                    <td class="text-center">{{ order_line.quantity }}</td>
+                    <td>
+                      R$
+                      <b>{{ order_line.unit_price | currency: symbol:'' }}</b>
+                      <span *ngIf="order_line.product">/mês</span>
+                    </td>
+                    <td>
+                      R$
+                      <b>{{ order_line.getTotal() | currency: symbol:'' }}</b>
+                      <span *ngIf="order_line.product">/mês</span>
+                    </td>
+                  </tr>
                 </tbody>
                 <tfoot>
-                <tr>
-                  <th scope="col" colspan="3">TOTAL</th>
-                  <th>R$ <b>{{ order.subtotal }}</b>/mês</th>
-                </tr>
-                <!--
+                  <tr>
+                    <th scope="col" colspan="3">TOTAL</th>
+                    <th>
+                      R$ <b>{{ order.subtotal }}</b>/mês
+                    </th>
+                  </tr>
+                  <!--
                   <tr *ngFor="let fee of providerCheckout.getFees()">
                     <th scope="row">{{ fee?.name }}</th>
                     <td></td>
@@ -224,28 +253,23 @@
                 </tfoot>
                 -->
               </table>
-
             </div>
           </div>
-
-
         </nb-card-body>
       </nb-card>
     </div>
 
     <div class="col-12">
       <nb-card>
-        <nb-card-header>
-          Terms
-        </nb-card-header>
+        <nb-card-header> Terms </nb-card-header>
         <nb-card-body>
           <div class="row">
             <div class="col table-responsive">
               <table class="table">
                 <tbody>
-                <tr *ngFor="let term of order.terms">
-                  <td>{{ term.content}} </td>
-                </tr>
+                  <tr *ngFor="let term of order.terms">
+                    <td [innerHtml]="term.content"></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -253,8 +277,5 @@
         </nb-card-body>
       </nb-card>
     </div>
-
-
   </div>
-
 </div>

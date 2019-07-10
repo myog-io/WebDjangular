@@ -7,16 +7,16 @@ import {
 
 import { AbstractModel } from './Abstract.model';
 import { AuthorModel } from './Author.model';
-import {Validators} from "@angular/forms";
+import { Validators } from '@angular/forms';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '../data-store';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 @JsonApiModelConfig({
   type: 'core_plugin'
 })
 export class PluginModel extends AbstractModel {
-
   @Attribute()
   id: string;
 
@@ -31,7 +31,7 @@ export class PluginModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Slug',
     placeholder: 'Enter the Plugin slug'
@@ -55,7 +55,7 @@ export class PluginModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Author',
     wrapper_class: 'col-6',
     model: AuthorModel,
@@ -69,7 +69,7 @@ export class PluginModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {

@@ -34,12 +34,12 @@ class MediaViewSet(ModelViewSet):
     Update Pages
     Deleting Pages
     """
-    resource_name = 'media'
     serializer_class = MediaSerializer
     queryset = Media.objects.all()
     ordering_fields = '__all__'
     filter_class = MediaFilter
     search_fields = ('id', 'alt', 'created')
+    public_views = ('retrieve', 'create', 'update', 'partial_update', 'destroy')
 
     def create(self, request, *args, **kwargs):
         data = request.data

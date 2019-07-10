@@ -1,7 +1,6 @@
-import {JsonApiModel, JsonApiQueryData} from 'angular2-jsonapi';
+import { JsonApiModel, JsonApiQueryData } from 'angular2-jsonapi';
 
 export class ModelPaginatorControls {
-
   currentPage: number = 1;
   totalPages: number = 1;
   totalEntries: number = 0;
@@ -23,37 +22,46 @@ export class ModelPaginatorControls {
   makeQuery() {
     let query_options: any = {};
     if (this.options.options) {
-      query_options = this.options.options
+      query_options = this.options.options;
     }
     query_options.page = {
       size: this.pageSize,
-      number: this.currentPage,
+      number: this.currentPage
     };
 
-    if (typeof this.options['useDatastore'] !== 'undefined') {
+    if (typeof this.options['useDatastore'] !== 'undefined' && this.options['useDatastore']) {
       if (typeof this.options['useDatastore']['findAll'] !== 'undefined') {
-        this.options['useDatastore'].findAll(this.options['modelToPaginate'], query_options).subscribe(
-          (r: JsonApiQueryData<JsonApiModel>) => {
+        this.options['useDatastore']
+          .findAll(this.options['modelToPaginate'], query_options)
+          .subscribe((r: JsonApiQueryData<JsonApiModel>) => {
             this.updatePaginationControls(r.getMeta(), r.getModels());
-          }
-        );
+          });
       }
+    } else {
+      console.log("Should be here")
+      this.updatePaginationControls(null, this.options.options)
     }
   }
 
   updatePaginationControls(returnMeta, returnEntries) {
     this.unparsedPaginatorMeta = returnMeta;
     this.entries = returnEntries;
-
-    if (typeof this.unparsedPaginatorMeta['meta'] !== 'undefined') {
-      if (typeof this.unparsedPaginatorMeta['meta']['pagination'] !== 'undefined') {
-        this.totalPages = this.unparsedPaginatorMeta['meta']['pagination']['pages'];
-        this.totalEntries = this.unparsedPaginatorMeta['meta']['pagination']['count'];
-        this.currentPage = this.unparsedPaginatorMeta['meta']['pagination']['page'];
+    if (returnMeta) {
+      if (typeof this.unparsedPaginatorMeta['meta'] !== 'undefined') {
+        if (typeof this.unparsedPaginatorMeta['meta']['pagination'] !== 'undefined') {
+          const pagination = this.unparsedPaginatorMeta['meta']['pagination'];
+          this.totalPages = pagination['pages'];
+          this.totalEntries = pagination['count'];
+          this.currentPage = pagination['page'];
+        }
       }
+    } else {
+      this.totalPages = 0;
+      this.totalEntries = this.entries.length;
+      this.currentPage = 0;
     }
-  }
 
+  }
 
   getCount() {
     return this.totalEntries;

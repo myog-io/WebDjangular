@@ -7,8 +7,6 @@ import { ModelPaginatorControls } from '@core/builder/src/lib/model-paginator/mo
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { FileItem } from '@core/chunk-file-upload/src/lib/file-item.class';
 
-
-
 @Component({
   selector: 'webdjangular-view-media',
   templateUrl: './view-media.component.html',
@@ -22,21 +20,20 @@ export class ViewMediaComponent implements OnInit {
     modelToPaginate: MediaModel,
     useDatastore: this.datastore,
     pageSize: 8
-  }
+  };
 
   modelPaginatorControls: ModelPaginatorControls;
-
 
   constructor(
     private datastore: WebAngularDataStore,
     private router: Router,
-    private mediaService: MediaService) { }
+    private mediaService: MediaService
+  ) { }
 
   ngOnInit() {
-
     this.uploader = new FileUploader({
       uploaderService: this.mediaService,
-      authToken: "pre_token",
+      authToken: 'pre_token',
       //url: this.media_url,
       disableMultipart: false,
       //additionalParameter: {
@@ -54,26 +51,33 @@ export class ViewMediaComponent implements OnInit {
 
     this.uploader.onCompleteChunk = (item: FileItem, response: any, status, headers) => {
       if (response.data.id) {
-        item.setId(response.data.id)
+        item.setId(response.data.id);
       }
     };
 
-    this.uploader.onSuccessItem = (item: FileItem, response: any, status, headers) => {
-
-    };
+    this.uploader.onSuccessItem = (
+      item: FileItem,
+      response: any,
+      status,
+      headers
+    ) => { };
 
     this.uploader.onCompleteAll = () => {
-      this.getMedias()
+      this.getMedias();
     };
 
-    this.uploader.onErrorItem = (item: FileItem, response: any, status, headers) => {
-
-    };
+    this.uploader.onErrorItem = (
+      item: FileItem,
+      response: any,
+      status,
+      headers
+    ) => { };
 
     this.uploader.onRemoveItem = (item: FileItem) => {
       if (item.getId()) {
-        this.datastore.deleteRecord(MediaModel, item.getId()).subscribe(r => {
-        });
+        this.datastore
+          .deleteRecord(MediaModel, item.getId())
+          .subscribe(r => { });
       }
     };
   }
@@ -91,9 +95,9 @@ export class ViewMediaComponent implements OnInit {
   }
 
   delete(event, media) {
-    event.preventDefault()
+    event.preventDefault();
     this.datastore.deleteRecord(MediaModel, media.id).subscribe(r => {
-      this.getMedias()
+      this.getMedias();
     });
   }
 
@@ -110,8 +114,7 @@ export class ViewMediaComponent implements OnInit {
   onFileOver(e): void {
     if (e == false) {
       this.hideOverlay();
-    }
-    else {
+    } else {
       this.showOverlay();
     }
   }

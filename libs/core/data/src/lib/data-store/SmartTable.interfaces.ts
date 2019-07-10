@@ -1,4 +1,4 @@
-import { DefaultEditor } from "ng2-smart-table";
+import { DefaultEditor } from 'ng2-smart-table';
 
 export interface SmartTableEditorConfigCompleter {
   data?: [];
@@ -44,24 +44,24 @@ export interface SmartTableActions {
   edit?: boolean;
   delete?: boolean;
   position?: 'left' | 'right';
-  custom?: any
+  custom?: any;
 }
 export interface SmartTableSettings {
   editable?: boolean;
   columns?: {
-    [key: string]:SmartTableColumnSettings
+    [key: string]: SmartTableColumnSettings;
   };
-  mode?: 'external' | 'inline',
-  hideHeader?: boolean,
-  hideSubHeader?: boolean,
-  noDataMessage?: string,
-  attr?: SmartTableSettingsAttr,
-  actions?: SmartTableActions,
+  mode?: 'external' | 'inline';
+  hideHeader?: boolean;
+  hideSubHeader?: boolean;
+  noDataMessage?: string;
+  attr?: SmartTableSettingsAttr;
+  actions?: SmartTableActions;
   add?: any;
   view?: any;
   edit?: any;
   delete?: any;
   pager?: any;
-  rowClassFunction?: Function
-  filters?: Object
+  rowClassFunction?: Function;
+  filters?: Object;
 }

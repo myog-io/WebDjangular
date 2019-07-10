@@ -1,4 +1,4 @@
-@import "../checkout_variables";
+@import '../checkout_variables';
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~rfs/sass/_rfs';
@@ -6,13 +6,11 @@
 // TODO get variables config based on database.
 
 .plan-select-wrapper {
-
   background: unset;
   border: unset;
 
   .plan-panel {
-
-    background-color: #FFF;
+    background-color: #fff;
     border: unset;
 
     min-height: 70px;
@@ -22,7 +20,6 @@
     border-radius: 0;
 
     cursor: pointer;
-
 
     @include media-breakpoint-up(md) {
       height: 100px;
@@ -51,8 +48,8 @@
       flex-direction: column;
 
       width: 100%;
-      font-family: "Boston", Arial, Helvetica, sans-serif;
-      @include responsive-font-size( 22px);
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
+      @include responsive-font-size(22px);
       line-height: 24px;
       font-weight: 700;
       color: #899299;
@@ -60,9 +57,8 @@
       vertical-align: top;
 
       @include media-breakpoint-up(md) {
-        @include responsive-font-size( 26px);
+        @include responsive-font-size(26px);
       }
-
     }
   }
 
@@ -79,7 +75,6 @@
     background: #fff;
     padding: 0;
 
-
     .select-plans-wrapper {
       background-color: #fff;
       margin-top: 2px;
@@ -90,8 +85,8 @@
       }
 
       .plan-caption {
-        font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 13px);
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
+        @include responsive-font-size(13px);
         font-weight: 700;
         color: #899299;
         text-transform: uppercase;
@@ -103,7 +98,6 @@
       padding: map-get($spacers, 2);
       margin: 0;
 
-
       text-align: center;
 
       @include media-breakpoint-up(lg) {
@@ -113,8 +107,8 @@
       }
 
       h2 {
-        font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 36px);
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
+        @include responsive-font-size(36px);
         font-weight: 900;
         color: #fff;
         text-transform: uppercase;
@@ -131,28 +125,25 @@
         color: #fff;
 
         .row {
-
           justify-content: center;
 
           @include media-breakpoint-up(lg) {
             justify-content: flex-end;
           }
 
-
           .currency-unit {
-            @include responsive-font-size( 19px);
+            @include responsive-font-size(19px);
             font-weight: 600;
             padding-right: 2px;
-
           }
 
           .price {
-            @include responsive-font-size( 32px);
+            @include responsive-font-size(32px);
             font-weight: 600;
           }
 
           .periodicity {
-            @include responsive-font-size( 19px);
+            @include responsive-font-size(19px);
             font-weight: 400;
           }
         }
@@ -161,17 +152,14 @@
       .actions-wrapper {
         text-align: center;
 
-
-
         .btn-deselect-plan {
           width: 140px;
-          font-family: "Boston", Arial, Helvetica, sans-serif;
+          font-family: 'Boston', Arial, Helvetica, sans-serif;
           font-weight: 700;
-          @include responsive-font-size( 14px);
+          @include responsive-font-size(14px);
         }
       }
     }
-
 
     .extra-tv-decoder {
       padding: 15px;
@@ -188,12 +176,11 @@
 
       h4 {
         color: #00b9bd;
-        @include responsive-font-size( 20px);
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        @include responsive-font-size(20px);
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         margin-bottom: 5px;
 
         .icon {
-
         }
 
         .title {
@@ -204,8 +191,8 @@
       }
 
       .form-group {
-        font-family: "Open Sans", Helvetica, sans-serif;
-        @include responsive-font-size( 16px);
+        font-family: 'Open Sans', Helvetica, sans-serif;
+        @include responsive-font-size(16px);
         line-height: 17px;
         font-weight: 400;
         color: #5f6a73;
@@ -219,8 +206,8 @@
       }
 
       .price-wrapper {
-        font-family: "Boston", Arial, Helvetica, sans-serif;
-        @include responsive-font-size( 22px);
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
+        @include responsive-font-size(22px);
         color: #697075;
         font-weight: 700;
         text-align: center;
@@ -245,22 +232,19 @@
           }
         }
       }
-
     }
-
   }
 
   &.telephone {
     .card-body {
       .selected-plan-wrapper {
         h2 {
-          @include responsive-font-size( 26px);
+          @include responsive-font-size(26px);
           line-height: 28px;
         }
       }
     }
   }
-
 }
 
 .plan-select-wrapper {
@@ -290,13 +274,10 @@
         }
       }
     }
-
   }
 }
 
-
 .select-television-optional-plan-wrapper {
-
   padding: 15px;
 
   @include media-breakpoint-up(md) {
@@ -309,12 +290,11 @@
 
   h4 {
     color: #00b9bd;
-    @include responsive-font-size( 20px);
-    font-family: "Boston", Arial, Helvetica, sans-serif;
+    @include responsive-font-size(20px);
+    font-family: 'Boston', Arial, Helvetica, sans-serif;
     margin-bottom: 25px;
 
     .icon {
-
     }
 
     .title {
@@ -325,10 +305,7 @@
   }
 
   .row {
-
     @include media-breakpoint-up(md) {
-
     }
-
   }
 }

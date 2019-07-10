@@ -1,18 +1,17 @@
-
-p{
-  margin-bottom:0;
-  line-height:26px;
+p {
+  margin-bottom: 0;
+  line-height: 26px;
 }
 
-.table thead th{
-  border:0;
+.table thead th {
+  border: 0;
 }
 
-.bg-primary{
-  .table{
-    th, td {
-      border-top:0;
+.bg-primary {
+  .table {
+    th,
+    td {
+      border-top: 0;
     }
   }
 }
-

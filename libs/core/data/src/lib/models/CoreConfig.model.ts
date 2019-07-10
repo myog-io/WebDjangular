@@ -14,9 +14,11 @@ import { PermissionModel } from '@core/users/src/lib/models';
   type: 'core_config'
 })
 export class CoreConfigModel extends AbstractModel {
-
   @Attribute()
   slug: string;
+
+  @Attribute()
+  secure: boolean;
 
   @NestedAttribute()
   value: any;
@@ -29,7 +31,7 @@ export class CoreConfigModel extends AbstractModel {
 
   @BelongsTo()
   @ExtraOptions({
-    type: 'select',
+    type: 'ngSelect',
     label: 'Core Website',
     wrapper_class: 'col-6',
     model: CoreWebsiteModel,
@@ -43,5 +45,5 @@ export class CoreConfigModel extends AbstractModel {
     return this.slug;
   }
 
-  set pk(value) {}
+  set pk(value) { }
 }

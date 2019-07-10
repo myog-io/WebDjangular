@@ -2,15 +2,17 @@ from uuid import uuid4
 
 from django.db import models
 from django_mysql.models import JSONField
+from prices import Money
 
 from libs.core.users.api.models.User import User
+from libs.plugins.store.api import defaults
 from libs.plugins.store.api.models.Product import Product
 from webdjango.models.AbstractModels import BaseModel
 from webdjango.models.Address import Address
+
 from ..serializers.MoneySerializer import MoneyField
-from libs.plugins.store.api import defaults
 from ..utils.Taxes import ZERO_MONEY, ZERO_TAXED_MONEY
-from prices import Money
+
 money_serializer = MoneyField(max_digits=defaults.DEFAULT_MAX_DIGITS,
                               decimal_places=defaults.DEFAULT_DECIMAL_PLACES, read_only=True)
 
@@ -44,8 +46,8 @@ class Cart(BaseModel):
                              blank=True, null=True, related_name='user')
     # When user is null, the email means it is a guest (not logged in user)
     email = models.CharField(max_length=64, null=True, default=None)
-
-    token = models.UUIDField(default=uuid4, editable=False)
+    
+    token = models.CharField(max_length=40, default=uuid4, editable=False, unique=True)
     total_quantity = models.PositiveIntegerField(default=0)
     status = models.CharField(
         max_length=16, choices=CartStatus.CHOICES, default=CartStatus.ACTIVE)
@@ -134,7 +136,7 @@ class Cart(BaseModel):
 
 class CartItem(BaseModel):
     cart = models.ForeignKey(
-        'Cart', related_name='items', on_delete=models.CASCADE)
+        'Cart', related_name='items', on_delete=models.SET_NULL, blank=True, null=True)
     product = models.ForeignKey(
         Product, on_delete=None, related_name='product', null=True)
     quantity = models.PositiveIntegerField(default=1)

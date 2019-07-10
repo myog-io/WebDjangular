@@ -2,17 +2,18 @@ from decimal import Decimal
 
 from django.db import models
 from django_measurement.models import MeasurementField
+from django_mysql.models import JSONField
 from django_prices.models import MoneyField
 from measurement.measures import Weight
-from django_mysql.models import JSONField
 
 from libs.core.media.api.models.Media import Media
 from libs.plugins.store.api import defaults
-from webdjango.models.AbstractModels import ActiveModel, BaseModel, \
-    PermalinkModel
+from webdjango.models.AbstractModels import (ActiveModel, BaseModel,
+                                             PermalinkModel)
 from webdjango.models.CoreConfig import CoreConfigInput
 from webdjango.models.TranslationModel import TranslationModel
 from webdjango.utils.weight import WeightUnits, zero_weight
+
 from ..exceptions import InsufficientStock
 from ..utils.CatalogUtils import calculate_discounted_price
 
@@ -28,6 +29,19 @@ class ProductClasses:
         (VARIANT, 'variant'),
         (ADDON, 'addon'),
         (BUNDLE, 'bundle')
+    ]
+
+
+class ProductVisibility:
+    NOT_VISIBLE = 'not_visible'
+    CATALOG = 'catalog'
+    SEARCH = 'search'
+    ALL = 'all'
+    CHOICES = [
+        (NOT_VISIBLE, NOT_VISIBLE),
+        (CATALOG, CATALOG),
+        (SEARCH, SEARCH),
+        (ALL, ALL)
     ]
 
 
@@ -66,10 +80,10 @@ class ProductAttribute(TranslationModel):
     is_variant = models.BooleanField(default=False)
     required = models.BooleanField(default=False)
     class_type = models.CharField(
-                    max_length=32,
-                    choices=CoreConfigInput.CONFIG_FIELD_TYPES,
-                    default=CoreConfigInput.FIELD_TYPE_TEXT
-                )
+        max_length=32,
+        choices=CoreConfigInput.CONFIG_FIELD_TYPES,
+        default=CoreConfigInput.FIELD_TYPE_TEXT
+    )
 
     class Meta:
         ordering = ['-created']
@@ -77,10 +91,10 @@ class ProductAttribute(TranslationModel):
 
 class ProductType(BaseModel):
     product_class = models.CharField(
-                        max_length=32,
-                        choices=ProductClasses.CHOICES,
-                        default=ProductClasses.SIMPLE
-                    )
+        max_length=32,
+        choices=ProductClasses.CHOICES,
+        default=ProductClasses.SIMPLE
+    )
     name = models.CharField(max_length=128)
     code = models.SlugField(max_length=64, unique=True)
     has_variants = models.BooleanField(default=True)
@@ -97,13 +111,18 @@ class ProductType(BaseModel):
 
 
 class BaseProduct(ActiveModel, TranslationModel):
+
     sku = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
 
     available_on = models.DateTimeField(blank=True, null=True)
     images = models.ManyToManyField(Media)
-
+    visibility = models.CharField(
+        max_length=32,
+        choices=ProductVisibility.CHOICES,
+        default=ProductVisibility.ALL
+    )
     track_inventory = models.BooleanField(default=True)
     quantity = models.IntegerField(default=Decimal(1), blank=True, null=True)
     quantity_allocated = models.IntegerField(
@@ -117,7 +136,6 @@ class BaseProduct(ActiveModel, TranslationModel):
     pricing_sale = MoneyField(
         'sale', currency=defaults.DEFAULT_CURRENCY, max_digits=defaults.DEFAULT_MAX_DIGITS,
         decimal_places=defaults.DEFAULT_DECIMAL_PLACES, blank=True, null=True)
-    
     weight = MeasurementField(measurement=Weight,
                               unit_choices=WeightUnits.CHOICES,
                               default=zero_weight, blank=True, null=True)
@@ -163,10 +181,12 @@ class BaseProduct(ActiveModel, TranslationModel):
         # TODO: Return the correct Frontend order link
         return "ORDER_LINK"
         # return reverse('order:details', kwargs={'token': self.token})
+
     def get_first_image(self):
         if self.images.count() > 0:
             return self.images.first().get_absolute_url()
         return None
+
 
 class Product(BaseProduct):
     product_class = models.CharField(

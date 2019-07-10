@@ -15,6 +15,7 @@ class CondoFilter(WebDjangoFilterSet):
             'name': ['contains', 'exact'],
             'city__name': ['contains', 'exact'],
             'city__id': ['in', 'exact'],
+            'city': ['in', 'exact'],
         }
 
 

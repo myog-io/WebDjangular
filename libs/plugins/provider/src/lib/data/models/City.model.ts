@@ -1,7 +1,7 @@
-import {Attribute, HasMany, JsonApiModelConfig} from 'angular2-jsonapi';
-import {StreetModel} from './Street.model';
-import {FormArray, Validators} from '@angular/forms';
-import {PostalCodeRangeModel} from "./PostalCodeRangeModel";
+import { Attribute, HasMany, JsonApiModelConfig } from 'angular2-jsonapi';
+import { StreetModel } from './Street.model';
+import { FormArray, Validators } from '@angular/forms';
+import { PostalCodeRangeModel } from './PostalCodeRangeModel';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
@@ -9,17 +9,16 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 import { ProductClasses } from '@plugins/store/src/lib/data/interfaces/Product.interface';
 
-
 enum DiplayGroups {
   city = 'City',
   postal_codes = 'Postal Codes',
   streets = 'Streets',
-  products = 'Products',
+  products = 'Products'
 }
 
 @JsonApiModelConfig({
   type: 'City',
-  modelEndpointUrl: 'provider/city',
+  modelEndpointUrl: 'provider/city'
 })
 export class CityModel extends AbstractModel {
   public static include = 'postal_codes,streets,products';
@@ -79,6 +78,16 @@ export class CityModel extends AbstractModel {
   })
   long: number;
 
+  @Attribute()
+  @ExtraOptions({
+    validators: [],
+    type: 'text',
+    label: 'Redirect URL',
+    wrapper_class: 'col-6',
+    displayGroup: DiplayGroups.city
+  })
+  redirect_url: string;
+
   @HasMany()
   @ExtraOptions({
     type: 'formArray',
@@ -89,7 +98,6 @@ export class CityModel extends AbstractModel {
     displayGroup: DiplayGroups.postal_codes
   })
   postal_codes: PostalCodeRangeModel[];
-
 
   @HasMany()
   @ExtraOptions({
@@ -116,11 +124,11 @@ export class CityModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     formType: FormArray,
     label: 'Products',
     model: ProductModel,
-    options: {product_class: ProductClasses.simple},
+    options: { product_class: ProductClasses.simple },
     displayGroup: DiplayGroups.products
   })
   products: ProductModel;
@@ -137,12 +145,10 @@ export class CityModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) { }
 
   public toString = (): string => {
-    return `${this.name} (ID: ${this.id})`;
+    return this.name;
   };
 
   public displayGroups = [
@@ -151,7 +157,7 @@ export class CityModel extends AbstractModel {
       groups: [
         {
           name: DiplayGroups.city,
-          title: 'City',
+          title: 'City'
         }
       ]
     },
@@ -191,21 +197,20 @@ export class CityModel extends AbstractModel {
     columns: {
       id: {
         title: '#',
-        type: 'text',
+        type: 'text'
       },
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       lat: {
         title: 'Latitude',
-        type: 'text',
+        type: 'text'
       },
       long: {
         title: 'Longitude',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
 }
-

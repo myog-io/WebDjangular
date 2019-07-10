@@ -16,6 +16,9 @@ from ..serializers.CitySerializer import (CitySerializer,
                                           PostalCodeRangeSerializer,
                                           StreetSerializer)
 from ..utils import getClientUserCookie
+from webdjango.views.CoreViewSet import CachedModelViewSet
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 class CityFilter(WebDjangoFilterSet):
@@ -32,7 +35,7 @@ class CityFilter(WebDjangoFilterSet):
         }
 
 
-class CityViewSet(ModelViewSet):
+class CityViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Cities
@@ -46,9 +49,10 @@ class CityViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CityFilter
     search_fields = ('name',)
-    public_views = ('list', 'postal_code')
+    public_views = ('retrieve', 'list', 'postal_code')
 
     @action(methods=['GET'], detail=True, url_path='postal_code', lookup_field='postal_code', lookup_url_kwarg='postal_code')
+    @method_decorator(cache_page(86400, key_prefix='postal_code'))
     def postal_code(self, request, *args, **kwargs):
         assert 'pk' in self.kwargs, (
             'Expected view %s to be called with a URL keyword argument '
@@ -64,12 +68,13 @@ class CityViewSet(ModelViewSet):
             'http://viacep.com.br/ws/{0}/json/'.format(postal_code))
 
         city_data = json.loads(r.text)
+
         if 'erro' in city_data:
             raise exceptions.NotFound("Cep Não encontrado ou invalido")
         city = None
         if city_data['localidade']:
             # Distrito de Potunduva (Potunduva)
-            if city_data['bairro'] and city_data['bairro'].lower().find('Distrito') is not -1:
+            if city_data['bairro'] and city_data['bairro'].lower().find('distrito') is not -1:
                 city = City.objects.filter(name=city_data['bairro']).first()
 
             if not city:
@@ -86,7 +91,9 @@ class CityViewSet(ModelViewSet):
 
         if not city:
             raise exceptions.NotFound(
-                "Não temos cobertura na cidade relacionada aesse cep")
+                "Desculpe, infelizmente não temos cobertura na cidade {1} CEP:{0}".format(
+                    city_data['cep'], city_data['localidade'])
+            )
 
         serializer = self.get_serializer(city)
         data = serializer.data

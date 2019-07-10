@@ -1,15 +1,13 @@
 import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
-import {Validators} from "@angular/forms";
+import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
-
-
 @JsonApiModelConfig({
   type: 'ProductAttributeOption',
-  modelEndpointUrl: 'store/product-attribute',
+  modelEndpointUrl: 'store/product-attribute'
 })
 export class ProductAttributeOptionModel extends AbstractModel {
   public static include = null;
@@ -40,9 +38,7 @@ export class ProductAttributeOptionModel extends AbstractModel {
     return null;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public toString = (): string => {
     return `${this.label}`;
@@ -52,13 +48,12 @@ export class ProductAttributeOptionModel extends AbstractModel {
     columns: {
       label: {
         title: 'Label',
-        type: 'text',
+        type: 'text'
       },
       value: {
         title: 'Value',
-        type: 'text',
+        type: 'text'
       }
     }
   };
-
 }

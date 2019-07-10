@@ -6,7 +6,6 @@ import { takeUntil, tap, filter } from 'rxjs/operators';
   selector: '[holdable]'
 })
 export class HoldableDirective {
-
   @Output() holdTime: EventEmitter<number> = new EventEmitter();
 
   state: Subject<string> = new Subject();
@@ -14,11 +13,10 @@ export class HoldableDirective {
   cancel: Observable<string>;
 
   constructor() {
-
     this.cancel = this.state.pipe(
       filter(v => v === 'cancel'),
       tap(v => {
-        this.holdTime.emit(0)
+        this.holdTime.emit(0);
       })
     );
   }
@@ -26,22 +24,22 @@ export class HoldableDirective {
   @HostListener('mouseup', ['$event'])
   @HostListener('mouseleave', ['$event'])
   onExit() {
-    this.state.next('cancel')
+    this.state.next('cancel');
   }
 
   @HostListener('mousedown', ['$event'])
   onHold() {
-    this.state.next('start')
+    this.state.next('start');
 
     const n = 100;
 
-    interval(n).pipe(
-      takeUntil(this.cancel),
-      tap(v => {
-        this.holdTime.emit(v * n)
-      }),
-    ).subscribe();
-
+    interval(n)
+      .pipe(
+        takeUntil(this.cancel),
+        tap(v => {
+          this.holdTime.emit(v * n);
+        })
+      )
+      .subscribe();
   }
-
 }

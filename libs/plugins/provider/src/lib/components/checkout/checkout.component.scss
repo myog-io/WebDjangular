@@ -1,7 +1,6 @@
-@import "checkout_variables";
+@import 'checkout_variables';
 @import '../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
-
 
 :host {
   display: block;
@@ -25,9 +24,3 @@ section {
   display: flex;
   align-items: center;
 }
-
-
-
-
-
-

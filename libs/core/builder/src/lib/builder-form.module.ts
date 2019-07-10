@@ -10,12 +10,18 @@ import {
   NbSpinnerModule,
   NbButtonModule,
   NbListModule,
-  NbCheckboxModule, NbCardModule, NbAccordionModule, NbDatepickerModule, NbSelectModule, NbAlertModule
+  NbCheckboxModule,
+  NbCardModule,
+  NbAccordionModule,
+  NbDatepickerModule,
+  NbSelectModule,
+  NbAlertModule
 } from '@nebular/theme';
 
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
 import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
+import { BuilderFormNgSelectComponent } from './inputs/ngselect/ngselect.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
@@ -23,36 +29,48 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { BuilderFormComponent } from './builder-form.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
-import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+
 import { ModelPaginatorComponent } from './model-paginator/model-paginator.component';
 import { BuilderFormValidatorComponent } from './inputs/validators/validators.components';
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
 import { HoldableDirective } from './holdable/holdable.directive';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { BuilderFormLabelComponent } from './inputs/label/label.component';
+import { BuilderFormCheckboxComponent } from './inputs/checkbox/checkbox.component';
+import { BuilderFormRelationshipCheckboxOptionsComponent } from './inputs/relationship_checkbox/checkbox.component';
 
 const ENTRY_COMPONENTS = [
   BuilderFormButtonComponent,
   BuilderFormInputComponent,
   BuilderFormTextAreaComponent,
   BuilderFormSelectComponent,
+  BuilderFormNgSelectComponent,
   BuilderFormCodeComponent,
   BuilderFormBuilderComponent,
   BuilderFormArrayComponent,
   BuilderFormSwitcherComponent,
   BuilderFormGroupComponent,
-  BuilderFormCheckboxOptionsComponent,
+  BuilderFormCheckboxComponent,
+  BuilderFormRelationshipCheckboxOptionsComponent,
   BuilderFormDatepickerComponent,
   BuilderFormJsonLogicComponent,
   ModelPaginatorComponent,
-  BuilderFormValidatorComponent
+  BuilderFormValidatorComponent,
+  BuilderFormLabelComponent,
 ];
 
 @NgModule({
-  declarations: [ScaffoldFieldDirective, HoldableDirective, BuilderFormComponent, ...ENTRY_COMPONENTS],
+  declarations: [
+    ScaffoldFieldDirective,
+    HoldableDirective,
+    BuilderFormComponent,
+    ...ENTRY_COMPONENTS
+  ],
   imports: [
     CommonModule,
-    MonacoEditorModule.forRoot({ baseUrl: "./assets" }),
+    MonacoEditorModule.forRoot({ baseUrl: './assets' }),
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
@@ -68,10 +86,14 @@ const ENTRY_COMPONENTS = [
     NbCheckboxModule,
     NbCardModule,
     NbAccordionModule,
-
-
+    NgxMaskModule.forRoot(),
   ],
-  exports: [ScaffoldFieldDirective, HoldableDirective, BuilderFormComponent, ModelPaginatorComponent],
+  exports: [
+    ScaffoldFieldDirective,
+    HoldableDirective,
+    BuilderFormComponent,
+    ModelPaginatorComponent
+  ],
   entryComponents: [...ENTRY_COMPONENTS]
 })
 export class BuilderFormModule { }

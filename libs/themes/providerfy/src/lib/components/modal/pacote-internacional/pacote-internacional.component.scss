@@ -1,25 +1,23 @@
-
-:host{
-  background-image:url("../../../assets/images/modal_internacional_bg.png");
+:host {
+  background-image: url('../../../assets/images/modal_internacional_bg.png');
   background-position: right top;
-  background-size:cover;
+  background-size: cover;
   background-repeat: no-repeat;
 
   height: inherit;
 }
 
-
-.tv-channel-logo{
-  background-image:url("../../../assets/images/modal_internacional_logo.png");
-  width:308px;
-  height:75px;
-  margin-bottom:10px;
+.tv-channel-logo {
+  background-image: url('../../../assets/images/modal_internacional_logo.png');
+  width: 308px;
+  height: 75px;
+  margin-bottom: 10px;
 }
-p{
-  max-width:300px;
+p {
+  max-width: 300px;
 }
-.tv-channel-channel-list{
-  background-image:url("../../../assets/images/modal_internacional_channels.png");
-  width:388px;
-  height:217px;
+.tv-channel-channel-list {
+  background-image: url('../../../assets/images/modal_internacional_channels.png');
+  width: 388px;
+  height: 217px;
 }

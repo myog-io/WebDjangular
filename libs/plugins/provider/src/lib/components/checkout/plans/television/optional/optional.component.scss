@@ -1,4 +1,4 @@
-@import "../../../checkout_variables";
+@import '../../../checkout_variables';
 @import '../../../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~rfs/sass/_rfs';
@@ -10,8 +10,6 @@
 }
 
 .card {
-
-
   .channel-cover {
     width: 100%;
     height: 80px;
@@ -19,14 +17,22 @@
     background-size: initial;
     background-repeat: no-repeat;
     background-position: left 20px center;
+    .title{
+      height: 100%;
+      line-height: 1;
+      margin-top: 0.5rem;
+      text-align: center;
+      @include responsive-font-size(30px);
+      color: #00b9bd;
+    }
   }
 
   .card-body {
     .channels-wrapper {
       a {
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         font-weight: 600;
-        @include responsive-font-size( 12px);
+        @include responsive-font-size(12px);
         color: #00b9bd;
         text-decoration: underline;
         text-transform: uppercase;
@@ -34,14 +40,12 @@
     }
 
     .price-wrapper {
-
-      @include responsive-font-size( 18px);
-      font-family: "Boston", Arial, Helvetica, sans-serif;
+      @include responsive-font-size(18px);
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
       font-weight: 700;
       color: #697075;
 
       .currency-unit {
-
       }
 
       .price {
@@ -64,6 +68,4 @@
       }
     }
   }
-
-
 }

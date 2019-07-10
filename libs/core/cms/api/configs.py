@@ -1,7 +1,10 @@
 from django.conf.global_settings import LANGUAGES
 
-from webdjango.configs import CONFIG_HOME_PAGE, DEFAULT_FOOTER, DEFAULT_HEADER, DEFAULT_I18N, DEFAULT_SITE_TITLE, \
-    DEFAULT_TITLE_SEPARATOR, DEFAULT_TITLE_PLACEHOLDER, FAVICON, GOOGLE_MAPS_API_KEY, CUSTOM_STYLE, CUSTOM_SCRIPT
+from webdjango.configs import (CONFIG_HOME_PAGE, CUSTOM_SCRIPT, CUSTOM_STYLE,
+                               DEFAULT_FOOTER, DEFAULT_HEADER, DEFAULT_I18N,
+                               DEFAULT_SITE_TITLE, DEFAULT_TITLE_PLACEHOLDER,
+                               DEFAULT_TITLE_SEPARATOR, FAVICON,
+                               GOOGLE_MAPS_API_KEY, THEME_STYLE_VARS)
 from webdjango.models.CoreConfig import CoreConfigGroup, CoreConfigInput
 
 
@@ -16,7 +19,7 @@ class CMSCoreConfig:
     INPUTS = [
         CoreConfigInput(
             id=CONFIG_HOME_PAGE,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="text",
             order=0,
             disabled=False,
@@ -29,7 +32,7 @@ class CMSCoreConfig:
         ),
         CoreConfigInput(
             id=DEFAULT_HEADER,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="text",
             order=0,
             disabled=False,
@@ -43,7 +46,7 @@ class CMSCoreConfig:
         ),
         CoreConfigInput(
             id=DEFAULT_FOOTER,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="text",
             order=0,
             disabled=False,
@@ -57,7 +60,7 @@ class CMSCoreConfig:
         ),
         CoreConfigInput(
             id=DEFAULT_I18N,
-            field_type=CoreConfigInput.FIELD_TYPE_SELECT,
+            field_type=CoreConfigInput.FIELD_TYPE_NGSELECT,
             input_type="text",
             order=0,
             disabled=False,
@@ -125,11 +128,23 @@ class CMSCoreConfig:
             group=GROUP_SLUG,
         ),
         CoreConfigInput(
+            id=THEME_STYLE_VARS,
+            field_type=CoreConfigInput.FIELD_TYPE_CODE_EDITOR,
+            options={'language': 'css'},
+            input_type="text",
+            order=20,
+            disabled=False,
+            label="Theme Style Vars",
+            validation=None,
+            wrapper_class="col-12",
+            group=GROUP_SLUG,
+        ),
+        CoreConfigInput(
             id=CUSTOM_STYLE,
             field_type=CoreConfigInput.FIELD_TYPE_CODE_EDITOR,
             options={'language': 'css'},
             input_type="text",
-            order=16,
+            order=25,
             disabled=False,
             label="Custom Style",
             validation=None,
@@ -141,7 +156,7 @@ class CMSCoreConfig:
             field_type=CoreConfigInput.FIELD_TYPE_CODE_EDITOR,
             options={'language': 'javascript'},
             input_type="text",
-            order=17,
+            order=28,
             disabled=False,
             label="Custom Script",
             validation=None,

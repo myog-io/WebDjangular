@@ -23,7 +23,10 @@ export class AppHttpInterceptor implements HttpInterceptor {
         const suffix = request.url;
         let url = '/';
 
-        if (suffix.search('http://') === -1 && suffix.search('https://') === -1) {
+        if (
+          suffix.search('http://') === -1 &&
+          suffix.search('https://') === -1
+        ) {
           let parts = suffix.split('');
           if (parts[0] === '/') {
             parts.shift();
@@ -58,6 +61,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
         if (request.headers.get('Content-Type') == null) {
           newHeaders['Content-Type'] = 'application/vnd.api+json';
         }
+
         if (token.isValid() && request.headers.get('Authorization') !== 'none') {
           newHeaders['Authorization'] = 'Bearer ' + token.getValue();
           var req = request.clone({

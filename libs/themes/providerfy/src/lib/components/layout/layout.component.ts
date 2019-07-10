@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'layout',
@@ -10,11 +9,7 @@ export class LayoutComponent implements OnInit {
   @Input() type: string = 'boxed';
   @Input() layout_slug: string;
 
-  constructor() {
+  constructor() {}
 
-  }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

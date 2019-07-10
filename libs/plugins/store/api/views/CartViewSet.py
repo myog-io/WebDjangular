@@ -1,3 +1,6 @@
+import re
+
+from django.http import Http404
 from django_filters.filters import ModelChoiceFilter
 from rest_framework import status
 from rest_framework.decorators import action
@@ -7,14 +10,14 @@ from rest_framework_json_api.views import ModelViewSet, RelationshipView
 
 from webdjango.filters import WebDjangoFilterSet
 
-from ..emails import send_order_confirmation
+from ..emails import send_admin_order_confirmation, send_order_confirmation
 from ..models.Cart import Cart, CartItem, CartTerm
 from ..models.Order import OrderEventTypes
 from ..serializers.CartSerializer import (CartItemSerializer, CartSerializer,
                                           CartTermSerializer)
 from ..serializers.OrderSerializer import OrderSerializer
-from ..utils.CartUtils import (apply_all_cart_rules, apply_cart_terms,
-                               cart_has_product, create_order)
+from ..utils.CartUtils import (apply_all_cart_rules, cart_has_product,
+                               create_order)
 
 
 class CartTermFilter(WebDjangoFilterSet):
@@ -45,6 +48,7 @@ class CartTermViewSet(ModelViewSet):
     ordering_fields = '__all__'
     filter_class = CartTermFilter
     search_fields = ('content',)
+    public_views = ('list', 'retrieve')
 
 
 class CartTermRelationshipView(RelationshipView):
@@ -79,12 +83,29 @@ class CartViewSet(ModelViewSet):
     search_fields = ('name',)
     # TODO: Improve Security we should have some way to know who's the Cart Owner
     # TODO: If there's a User associeted with the instance we need to check if the user is the same as the user requesting
-    public_views = ('list', 'retrieve', 'complete_order',
+    public_views = ('list', 'retrieve', 'complete_order', 'clear_items', 'by_token',
                     'create', 'update', 'partial_update', 'destroy')
 
     def apply_rules(self, instance):
         apply_all_cart_rules(instance)
-        apply_cart_terms(instance)
+        # Removing Cart From Here, shold be added on Signals
+        # apply_cart_terms(instance)
+
+    @action(methods=['GET'], detail=True, url_path='clear_items')
+    def clear_items(self, request, *args, **kwargs):
+        assert 'pk' in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, 'pk')
+        )
+        from django.db.models import Q
+        CartItem.objects.filter(Q(cart=self.get_object()) | Q(cart=None)).delete()
+
+        serializer = self.get_serializer(self.get_object())
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
+
 
     @action(methods=['GET'], detail=True, url_path='complete_order')
     def complete_order(self, request, *args, **kwargs):
@@ -101,8 +122,11 @@ class CartViewSet(ModelViewSet):
         if not order:
             raise ValidationError('Please Review your Cart')
         cart.delete()
-        order.events.create(event_type=OrderEventTypes.PLACED)
+        # First we send the email to the Admin that we are sure we won't have problems
+        send_admin_order_confirmation(order.pk)
+        # Then we send the email to the client that could faild but the front end will continue with the order
         send_order_confirmation(order.pk)
+        order.events.create(event_type=OrderEventTypes.PLACED)
         order.events.create(
             event_type=OrderEventTypes.EMAIL_SENT,
             data={
@@ -120,7 +144,6 @@ class CartViewSet(ModelViewSet):
         headers = self.get_success_headers(serializer.data)
 
         instance = serializer.instance
-        self.apply_rules(instance)
         serializer = self.get_serializer(instance)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -129,6 +152,27 @@ class CartViewSet(ModelViewSet):
         instance = self.get_object()
         self.apply_rules(instance)
         instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        return Response(serializer.data)
+
+    @action(methods=['GET'], detail=True, url_path='by_token')
+    def by_token(self, request, *args, **kwargs):
+        '''
+        Get the Details of an order by order token
+        '''
+        self.lookup_url_kwarg = 'pk'
+        self.lookup_field = 'token'
+        try:
+            instance = self.get_object()
+        except Http404 as err404:
+            # If not found we have to remove all the "-" from the string to try to find
+            # Backwards compatability
+            lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+            self.kwargs[lookup_url_kwarg] = re.sub(
+                '-', '', self.kwargs[lookup_url_kwarg])
+            instance = self.get_object()
+
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
@@ -140,14 +184,15 @@ class CartViewSet(ModelViewSet):
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-
+        # Run Rules After the Update Perform
+        self.apply_rules(instance)
+        # Get Instance again
+        instance = self.get_object()
         if getattr(instance, '_prefetched_objects_cache', None):
             # If 'prefetch_related' has been applied to a queryset, we need to
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
-        # Run Rules
-        self.apply_rules(instance)
-        # Get Instance again
+
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
@@ -177,7 +222,8 @@ class CartItemViewSet(ModelViewSet):
         # Checking if not adding Duplicated to the Cart
         if validated_data['cart']:
             cart = validated_data['cart']
-            item = cart_has_product(cart, validated_data['product'].id)
+            item = cart_has_product(
+                cart_id=cart.id, product_id=validated_data['product'].id)
             if item:
                 serializer.instance = item
                 serializer.validated_data['quantity'] = serializer.validated_data['quantity'] + item.quantity
@@ -185,12 +231,11 @@ class CartItemViewSet(ModelViewSet):
                 return
         serializer.save()
 
+    def perform_update(self, serializer):
+        serializer.save()
+
     def perform_destroy(self, item):
         # Let's Check if theres any terms in the cart that need to be removed
-        if item.cart and item.product:
-            term = item.cart.terms.filter(products=item.product).first()
-            if term:
-                item.cart.terms.remove(term)
         item.delete()
 
 

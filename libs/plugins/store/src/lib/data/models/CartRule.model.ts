@@ -1,5 +1,9 @@
-import { Attribute, JsonApiModelConfig, NestedAttribute } from 'angular2-jsonapi';
-import { Validators } from "@angular/forms";
+import {
+  Attribute,
+  JsonApiModelConfig,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { Validators } from '@angular/forms';
 import { DiscountTypeOptions } from '../interfaces/Discount.interface';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
@@ -8,7 +12,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'CartRule',
-  modelEndpointUrl: 'store/discount/cart-rule',
+  modelEndpointUrl: 'store/discount/cart-rule'
 })
 export class CartRuleModel extends AbstractModel {
   public static include = null;
@@ -22,11 +26,9 @@ export class CartRuleModel extends AbstractModel {
     type: 'text',
     label: 'Name',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   name: string;
-
-
 
   @Attribute()
   @ExtraOptions({
@@ -45,7 +47,7 @@ export class CartRuleModel extends AbstractModel {
     type: 'text',
     label: 'Code(Voucher)',
     wrapper_class: 'col-4',
-    placeholder: '',
+    placeholder: ''
   })
   voucher: string;
 
@@ -54,10 +56,9 @@ export class CartRuleModel extends AbstractModel {
     validators: [],
     type: 'switch',
     label: 'Require Code(Voucher)?',
-    wrapper_class: 'col-2',
+    wrapper_class: 'col-2'
   })
   require_voucher: boolean;
-  
 
   @Attribute()
   @ExtraOptions({
@@ -65,7 +66,7 @@ export class CartRuleModel extends AbstractModel {
     inputType: 'number',
     label: 'Usage limit (0 for empty)',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   usage_limit: string;
 
@@ -78,7 +79,7 @@ export class CartRuleModel extends AbstractModel {
     inputType: 'datetime-local',
     label: 'Start Date/Time',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   start: Date;
 
@@ -88,7 +89,7 @@ export class CartRuleModel extends AbstractModel {
     inputType: 'datetime-local',
     label: 'End Date/Time',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   end: Date;
 
@@ -98,7 +99,7 @@ export class CartRuleModel extends AbstractModel {
     label: 'Apply once per order',
     wrapper_class: 'col-6',
     placeholder: '',
-    value: false,
+    value: false
   })
   apply_once_per_order: string;
 
@@ -107,32 +108,35 @@ export class CartRuleModel extends AbstractModel {
     type: 'switch',
     label: 'Is active',
     wrapper_class: 'col-3',
-    value: true,
+    value: true
   })
   is_active: boolean;
-  
+
   @Attribute()
   @ExtraOptions({
     type: 'text',
     label: 'Value',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   value: string;
 
-  @NestedAttribute()
+  @Attribute()
   @ExtraOptions({
     type: 'jsonLogic',
-    label: 'Apply the rule only if the following conditions are met (leave blank for all products)',
+    label:
+      'Apply the rule only if the following conditions are met (leave blank for all products)',
     json_logic_options_url: '/api/store/discount/cart-rule/discount_options/'
   })
   conditions: any;
 
-  @NestedAttribute()
+  @Attribute()
   @ExtraOptions({
     type: 'jsonLogic',
-    label: 'Apply the rule only to cart items that meet the following conditions (leave blank for all items)',
-    json_logic_options_url: '/api/store/discount/cart-rule/discount_options_items/'
+    label:
+      'Apply the rule only to cart items that meet the following conditions (leave blank for all items)',
+    json_logic_options_url:
+      '/api/store/discount/cart-rule/discount_options_items/'
   })
   item_conditions: any;
 
@@ -148,37 +152,34 @@ export class CartRuleModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) { }
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       rule_type: {
         title: 'Type',
-        type: 'text',
+        type: 'text'
       },
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       voucher: {
         title: 'Code',
-        type: 'text',
+        type: 'text'
       },
       is_active: {
         title: 'Active',
-        type: 'text',
+        type: 'text'
       },
       start: {
         title: 'Start Date/Time:',
-        type: 'text',
+        type: 'text'
       },
       end: {
         title: 'End Date/Time',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
-
 }

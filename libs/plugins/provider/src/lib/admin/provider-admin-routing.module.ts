@@ -1,15 +1,16 @@
-import { RouterModule, Routes } from "@angular/router";
-import { NgModule } from "@angular/core";
-import { CityModel } from "../data";
-import { PageRedirectModel } from "../data/models/PageRedirect.model";
-import { CondoModel } from "../data/models/Condo.model";
-import { ResellerModel } from "../data/models/Reseller.model";
-import { ChannelModel } from "../data/models/Channel.model";
-import { ScaffoldModule } from "@core/builder/src/lib/scaffold/scaffold.module";
-import { PlanTypeModel } from "../data/models/PlanType.model";
-import {OrderModel} from "@plugins/store/src/lib/data/models/Order.model";
-import {PluginProviderAdminOrdersComponent} from "@plugins/provider/src/lib/admin/components/orders.component";
-import {ScaffoldComponent} from "@core/builder/src/lib/scaffold/scaffold.component";
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CityModel } from '../data';
+import { PageRedirectModel } from '../data/models/PageRedirect.model';
+import { CondoModel } from '../data/models/Condo.model';
+import { ResellerModel } from '../data/models/Reseller.model';
+import { ChannelModel } from '../data/models/Channel.model';
+import { ScaffoldModule } from '@core/builder/src/lib/scaffold/scaffold.module';
+import { PlanTypeModel } from '../data/models/PlanType.model';
+import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
+import { PluginProviderAdminOrdersComponent } from '@plugins/provider/src/lib/admin/components/orders/orders.component';
+import { ScaffoldComponent } from '@core/builder/src/lib/scaffold/scaffold.component';
+import { PluginProviderAdminImportResellerComponent } from './components/import-reseller/import-reseller.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
     children: [
       {
         path: 'cities',
-        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+        loadChildren:
+          '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: CityModel,
           title: 'Cities',
@@ -26,7 +28,8 @@ const routes: Routes = [
       },
       {
         path: 'page-redirect',
-        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+        loadChildren:
+          '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PageRedirectModel,
           title: 'Redirects',
@@ -35,7 +38,8 @@ const routes: Routes = [
       },
       {
         path: 'condo',
-        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+        loadChildren:
+          '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: CondoModel,
           title: 'Condos',
@@ -44,7 +48,8 @@ const routes: Routes = [
       },
       {
         path: 'plan-type',
-        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+        loadChildren:
+          '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: PlanTypeModel,
           title: 'Plan Types',
@@ -56,7 +61,7 @@ const routes: Routes = [
         component: ScaffoldComponent,
         data: {
           model: OrderModel,
-          title: "Orders",
+          title: 'Orders',
           path: 'provider/order'
         }
       },
@@ -71,7 +76,8 @@ const routes: Routes = [
       },
       {
         path: 'reseller',
-        loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+        loadChildren:
+          '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: ResellerModel,
           title: 'Resellers',
@@ -79,8 +85,17 @@ const routes: Routes = [
         }
       },
       {
-        path: 'channel',
+        path: 'reseller-import',
+        component: PluginProviderAdminImportResellerComponent,
+      },
+      {
+        path: 'reseller',
         loadChildren: '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
+      },
+      {
+        path: 'channel',
+        loadChildren:
+          '@core/builder/src/lib/scaffold/scaffold.module#ScaffoldModule',
         data: {
           model: ChannelModel,
           title: 'Channels',
@@ -88,13 +103,11 @@ const routes: Routes = [
         }
       }
     ]
-  },
-
-]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class PluginProviderAdminRoutingModule {
-}
+export class PluginProviderAdminRoutingModule { }

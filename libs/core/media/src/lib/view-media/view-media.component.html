@@ -1,18 +1,22 @@
 <nb-card>
-  <nb-card-header>
-    Media Files
-  </nb-card-header>
+  <nb-card-header> Media Files </nb-card-header>
   <nb-card-body>
     <div class="form-group">
-      <input style="display:none" type="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)"
-        #file_upload multiple />
+      <input
+        style="display:none"
+        type="file"
+        ng2FileSelect
+        [uploader]="uploader"
+        (onFileSelected)="onFileSelected($event)"
+        #file_upload
+        multiple
+      />
       <br />
       <div (click)="file_upload.click()" class="my-drop-zone">
-        <i class="fa fa-upload" aria-hidden="true"></i>
-        <br /> Click, or Drag &amp; Drop Files
+        <i class="fa fa-upload" aria-hidden="true"></i> <br />
+        Click, or Drag &amp; Drop Files
       </div>
     </div>
-
 
     <div class="form-group columns">
       <div class="row columns alert alert-success">
@@ -22,17 +26,23 @@
         <div class="col-xxl-2 col-md-2 text-center font-w-bold">Status</div>
         <div class="col-xxl-2 col-md-2 text-center font-w-bold">Actions</div>
       </div>
-
     </div>
-
 
     <div class="form-group col container">
       <div class="row file_row" *ngFor="let item of uploader?.queue">
-        <div class="col-sm-4" style="word-wrap: break-word;">{{ item?.file?.name }}</div>
-        <div class="col-sm-2 text-center">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</div>
+        <div class="col-sm-4" style="word-wrap: break-word;">
+          {{ item?.file?.name }}
+        </div>
+        <div class="col-sm-2 text-center">
+          {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+        </div>
         <div class="col-sm-2 text-center">
           <div class="progress" style="margin-bottom: 0;">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [ngStyle]="{ width: item.progress + '%' }"
+            ></div>
           </div>
         </div>
         <div class="col-sm-2 text-center">
@@ -49,17 +59,32 @@
             <i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>
           </span>
           <span class="text-primary" *ngIf="item.isRemoving">
-            <i class="fa fa-circle-o-notch fa-spin m-auto" aria-hidden="true"></i>
+            <i
+              class="fa fa-circle-o-notch fa-spin m-auto"
+              aria-hidden="true"
+            ></i>
           </span>
         </div>
         <div class="col-sm-2 text-center">
-          <a class="text-warning" (click)="item.cancel()" *ngIf="item.isUploading">
+          <a
+            class="text-warning"
+            (click)="item.cancel()"
+            *ngIf="item.isUploading"
+          >
             <i class="fa fa-ban" aria-hidden="true"></i>
           </a>
-          <a class="text-danger" (click)="item.removeOnline()" *ngIf="!item.isRemoving">
+          <a
+            class="text-danger"
+            (click)="item.removeOnline()"
+            *ngIf="!item.isRemoving"
+          >
             <i class="fa fa-trash" aria-hidden="true"></i>
           </a>
-          <a class="text-sucess" (click)="item.upload()" *ngIf="item.isError || item.isCancel">
+          <a
+            class="text-sucess"
+            (click)="item.upload()"
+            *ngIf="item.isError || item.isCancel"
+          >
             <i class="fa fa-sync" aria-hidden="true"></i>
           </a>
         </div>
@@ -67,39 +92,50 @@
     </div>
   </nb-card-body>
 </nb-card>
-<wda-model-paginator [options]="modelPaginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
+<wda-model-paginator
+  [options]="modelPaginatorConfig"
+  (controls)="modelPaginatorControlsGetter($event)"
+>
   <div class="row container media-list">
-
-    <nb-card size="medium" *ngFor="let media of modelPaginatorControls.getEntries(); let i=index;" class="col-md-3">
+    <nb-card
+      size="medium"
+      *ngFor="let media of modelPaginatorControls.getEntries(); let i = index"
+      class="col-md-3"
+    >
       <nb-card-body>
-        <div class="picture" [style.background]="media?.file | safe: 'style'"></div>
+        <div
+          class="picture"
+          [style.background]="media?.file | safe: 'style'"
+        ></div>
         <div class="details">
-          <div class="title">
-            {{media?.alt}}
-          </div>
-          <div class="description">
-            {{media?.file}}
-          </div>
+          <div class="title">{{ media?.alt }}</div>
+          <div class="description">{{ media?.file }}</div>
         </div>
       </nb-card-body>
       <nb-card-footer>
-
-        <a href="#" (click)="delete($event,media)" [ngbTooltip]="deleteTip">
+        <a href="#" (click)="delete($event, media)" [ngbTooltip]="deleteTip">
           <i class="fa fa-trash"></i>
         </a>
 
-        <a href="#" (click)="copyLink($event,media.file)" [ngbTooltip]="tipContent">
+        <a
+          href="#"
+          (click)="copyLink($event, media.file)"
+          [ngbTooltip]="tipContent"
+        >
           <i class="fa fa-copy"></i>
         </a>
       </nb-card-footer>
     </nb-card>
-
   </div>
 </wda-model-paginator>
-<div ng2FileDrop [uploader]="uploader" (onFileDrop)="onFileSelected($event)" (fileOver)="onFileOver($event)"
-  id="dragDropOverlayBackdrop" class="drag-drop-overlay-backdrop ">
-
-</div>
+<div
+  ng2FileDrop
+  [uploader]="uploader"
+  (onFileDrop)="onFileSelected($event)"
+  (fileOver)="onFileOver($event)"
+  id="dragDropOverlayBackdrop"
+  class="drag-drop-overlay-backdrop "
+></div>
 <ng-template #deleteTip>Delete File</ng-template>
 <ng-template #tipContent>Copy Link</ng-template>
 <!--drag-drop-overlay-backdrop-->

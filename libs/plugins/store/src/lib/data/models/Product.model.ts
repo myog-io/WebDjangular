@@ -1,7 +1,14 @@
-import {Attribute, BelongsTo, HasMany, JsonApiModelConfig, JsonApiQueryData, NestedAttribute} from 'angular2-jsonapi';
-import {ProductClasses} from '../interfaces/Product.interface';
-import {ProductTypeModel} from './ProductType.model';
-import {FormArray, FormGroup, Validators} from '@angular/forms';
+import {
+  Attribute,
+  BelongsTo,
+  HasMany,
+  JsonApiModelConfig,
+  JsonApiQueryData,
+  NestedAttribute
+} from 'angular2-jsonapi';
+import { ProductClasses } from '../interfaces/Product.interface';
+import { ProductTypeModel } from './ProductType.model';
+import { FormArray, FormGroup, Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
@@ -24,10 +31,15 @@ enum productDG {
 
 @JsonApiModelConfig({
   type: 'Product',
-  modelEndpointUrl: 'store/product',
+  modelEndpointUrl: 'store/product'
 })
 export class ProductModel extends AbstractModel {
   public static include = 'product_type,addons,addon_parent,categories';
+  public static VISIBILITY_NOT_VISIBLE = 'not_visible';
+  public static VISIBILITY_CATALOG = 'catalog';
+  public static VISIBILITY_SEARCH = 'search';
+  public static VISIBILITY_ALL = 'all';
+
 
   @Attribute()
   id: string;
@@ -38,7 +50,7 @@ export class ProductModel extends AbstractModel {
     type: 'text',
     label: 'select',
     display: false,
-    conditionalValue: {var: 'product_type.product_class'},
+    conditionalValue: { var: 'product_type.product_class' },
     displayGroup: productDG.general
   })
   product_class: ProductClasses;
@@ -48,31 +60,43 @@ export class ProductModel extends AbstractModel {
     validators: [Validators.required],
     model: ProductTypeModel,
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Type',
     wrapper_class: 'col-12',
     placeholder: 'Select the Product Type',
     //value: null,
     options_include: 'data',
     displayGroup: productDG.type
-
   })
   product_type: ProductTypeModel;
-
 
   @Attribute()
   @ExtraOptions({
     validators: [Validators.required],
     type: 'text',
     label: 'SKU',
-    wrapper_class: 'col-12',
+    wrapper_class: 'col-6',
     placeholder: '',
     displayGroup: productDG.general,
-    conditionalValue: {"slugfy": [{"var": "sku"}]},
-
+    conditionalValue: { slugfy: [{ var: 'sku' }] }
   })
   sku: string;
 
+  @Attribute()
+  @ExtraOptions({
+    validators: [Validators.required],
+    type: 'select',
+    label: 'Visiblity',
+    wrapper_class: 'col-6',
+    options: [
+      { id: ProductModel.VISIBILITY_NOT_VISIBLE, name: "Not Visible" },
+      { id: ProductModel.VISIBILITY_CATALOG, name: "Catalog Only" },
+      { id: ProductModel.VISIBILITY_SEARCH, name: "Search Only" },
+      { id: ProductModel.VISIBILITY_ALL, name: "Visible in all" },
+    ],
+    displayGroup: productDG.general,
+  })
+  visibility: string;
 
   @Attribute()
   @ExtraOptions({
@@ -85,21 +109,21 @@ export class ProductModel extends AbstractModel {
   })
   name: string;
 
-
   @Attribute()
   @ExtraOptions({
     type: 'text',
     label: 'List',
     wrapper_class: 'col-6',
+    mask: 'comma_separator.2',
     displayGroup: productDG.pricing
   })
   pricing_list: string;
-
 
   @Attribute()
   @ExtraOptions({
     type: 'text',
     label: 'Sale',
+    mask: 'comma_separator.2',
     wrapper_class: 'col-6',
     displayGroup: productDG.pricing
   })
@@ -111,6 +135,7 @@ export class ProductModel extends AbstractModel {
     label: 'Description',
     wrapper_class: 'col-12',
     placeholder: '',
+    element_class: 'small',
     displayGroup: productDG.general
   })
   description: string;
@@ -126,7 +151,6 @@ export class ProductModel extends AbstractModel {
   })
   track_inventory: string;
 
-
   @NestedAttribute()
   @ExtraOptions({
     formType: FormGroup,
@@ -135,7 +159,7 @@ export class ProductModel extends AbstractModel {
     model: ProductTypeModel,
     copyOptions: {
       name: 'product_type',
-      field: 'data',
+      field: 'data'
     }
   })
   data: any;
@@ -147,10 +171,7 @@ export class ProductModel extends AbstractModel {
     inputType: 'number',
     wrapper_class: 'col-12',
     conditional: {
-      '==': [
-        {var: 'track_inventory'},
-        true
-      ]
+      '==': [{ var: 'track_inventory' }, true]
     },
     displayGroup: productDG.inventory
   })
@@ -174,10 +195,7 @@ export class ProductModel extends AbstractModel {
     inputType: 'text',
     wrapper_class: 'col-3',
     conditional: {
-      '==': [
-        {var: 'shippable'},
-        true
-      ]
+      '==': [{ var: 'shippable' }, true]
     },
     displayGroup: productDG.shipping
   })
@@ -190,10 +208,7 @@ export class ProductModel extends AbstractModel {
     inputType: 'text',
     wrapper_class: 'col-3',
     conditional: {
-      '==': [
-        {var: 'shippable'},
-        true
-      ]
+      '==': [{ var: 'shippable' }, true]
     },
     displayGroup: productDG.shipping
   })
@@ -206,10 +221,7 @@ export class ProductModel extends AbstractModel {
     inputType: 'text',
     wrapper_class: 'col-3',
     conditional: {
-      '==': [
-        {var: 'shippable'},
-        true
-      ]
+      '==': [{ var: 'shippable' }, true]
     },
     displayGroup: productDG.shipping
   })
@@ -222,15 +234,11 @@ export class ProductModel extends AbstractModel {
     inputType: 'text',
     wrapper_class: 'col-3',
     conditional: {
-      '==': [
-        {var: 'shippable'},
-        true
-      ]
+      '==': [{ var: 'shippable' }, true]
     },
     displayGroup: productDG.shipping
   })
   shipping_depth: string;
-
 
   @Attribute()
   quantity_allocated: string;
@@ -246,25 +254,24 @@ export class ProductModel extends AbstractModel {
   })
   cost: number;
 
-
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     formType: FormArray,
     label: 'Product Addons',
     model: ProductModel,
-    options: {product_class: ProductClasses.addon},
+    options: { product_class: ProductClasses.addon },
     displayGroup: productDG.addons
   })
   addons: ProductModel[];
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     formType: FormArray,
     label: 'Product Parent',
     model: ProductModel,
-    options: {product_class: ProductClasses.simple},
+    options: { product_class: ProductClasses.simple },
     displayGroup: productDG.addon_parent
   })
   addon_parent: ProductModel[];
@@ -293,9 +300,7 @@ export class ProductModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) { }
 
   public displayGroups = [
     {
@@ -303,141 +308,113 @@ export class ProductModel extends AbstractModel {
       groups: [
         {
           name: productDG.type,
-          title: 'Product Type',
+          title: 'Product Type'
         }
       ],
       conditional: {
-        '==': [
-          {var: 'product_type.id'},
-          null
-        ]
-      },
+        '==': [{ var: 'product_type.id' }, null]
+      }
     },
     {
       wrapper_class: 'col-8',
       groups: [
         {
           name: productDG.general,
-          title: 'General information',
+          title: 'General information'
         },
         {
           name: productDG.pricing,
-          title: 'Pricing',
+          title: 'Pricing'
         },
         {
           name: productDG.media,
-          title: 'Images / Videos',
+          title: 'Images / Videos'
         }
       ],
       conditional: {
-        '!=': [
-          {var: 'product_type.id'},
-          null
-        ]
-      },
+        '!=': [{ var: 'product_type.id' }, null]
+      }
     },
     {
       wrapper_class: 'col-4',
       groups: [
         {
           name: productDG.shipping,
-          title: 'Shipping',
+          title: 'Shipping'
         },
         {
           name: productDG.inventory,
-          title: 'Inventory',
+          title: 'Inventory'
         },
         {
           name: productDG.attributes,
-          title: 'Attributes',
-        },
+          title: 'Attributes'
+        }
       ],
       conditional: {
-        '!=': [
-          {var: 'product_type.id'},
-          null
-        ]
-      },
+        '!=': [{ var: 'product_type.id' }, null]
+      }
     },
     {
       wrapper_class: 'col-12',
       groups: [
         {
           name: productDG.addons,
-          title: 'Add-ons',
-        },
+          title: 'Add-ons'
+        }
       ],
       conditional: {
         // show only after the Product Type is selected and it is NOT an Product Addon
-        "and": [
+        and: [
           {
-            '!=': [
-              {var: 'product_type.id'},
-              null
-            ]
+            '!=': [{ var: 'product_type.id' }, null]
           },
           {
-            '!=': [
-              {var: 'product_class'},
-              ProductClasses.addon
-            ]
+            '!=': [{ var: 'product_class' }, ProductClasses.addon]
           }
         ]
-      },
+      }
     },
     {
       wrapper_class: 'col-12',
       groups: [
         {
           name: productDG.addon_parent,
-          title: 'Add-ons Parent Link',
-        },
+          title: 'Add-ons Parent Link'
+        }
       ],
       conditional: {
         // show only after the Product Type is selected and it is NOT an Product Addon
-        "and": [
+        and: [
           {
-            '!=': [
-              {var: 'product_type.id'},
-              null
-            ]
+            '!=': [{ var: 'product_type.id' }, null]
           },
           {
-            '==': [
-              {var: 'product_class'},
-              ProductClasses.addon
-            ]
+            '==': [{ var: 'product_class' }, ProductClasses.addon]
           }
         ]
-      },
+      }
     },
     {
       wrapper_class: 'col-12',
       groups: [
         {
           name: productDG.variants,
-          title: 'Variants',
-        },
+          title: 'Variants'
+        }
       ],
       conditional: {
         // show only after the Product Type is selected and it is the Parent Product Variant
-        "and": [
+        and: [
           {
-            '!=': [
-              {var: 'product_type.id'},
-              null
-            ]
+            '!=': [{ var: 'product_type.id' }, null]
           },
           {
-            '==': [
-              {var: 'product_class'},
-              ProductClasses.variant
-            ]
+            '==': [{ var: 'product_class' }, ProductClasses.variant]
           }
         ]
-      },
+      }
     }
-
   ];
 
   public toString = (): string => {
@@ -448,27 +425,44 @@ export class ProductModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       sku: {
         title: 'SKU',
-        type: 'text',
+        type: 'text'
+      },
+      price: {
+        title: 'Price',
+        type: 'text'
       },
       product_type: {
         title: 'Type',
-        type: 'text',
+        type: 'text'
       },
       product_class: {
         title: 'Class',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
 
-  public load_addons(dataStore:WebAngularDataStore,options = null, header = null): Observable<JsonApiQueryData<ProductModel>> {
+  public load_addons(
+    dataStore: WebAngularDataStore,
+    options = null,
+    header = null
+  ): Observable<JsonApiQueryData<ProductModel>> {
     const url = `/api/store/product/${this.id}/addons/`;
-   
-    return dataStore.findAll(ProductModel,options,header,url);
+
+    return dataStore.findAll(ProductModel, options, header, url);
   }
 
+  isVisibleInCatalog() {
+    return this.visibility === ProductModel.VISIBILITY_CATALOG || this.visibility === ProductModel.VISIBILITY_ALL
+  }
+  isVisibileInSearch() {
+    return this.visibility === ProductModel.VISIBILITY_SEARCH || this.visibility === ProductModel.VISIBILITY_ALL
+  }
+  isVisible() {
+    return this.visibility !== ProductModel.VISIBILITY_NOT_VISIBLE
+  }
 }

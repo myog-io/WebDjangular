@@ -4,6 +4,6 @@ import { SafePipe } from './safe.pipe';
 @NgModule({
   imports: [CommonModule],
   declarations: [SafePipe],
-  exports: [SafePipe],
+  exports: [SafePipe]
 })
-export class CoreSharedSafePipe { }
+export class CoreSharedSafePipe {}

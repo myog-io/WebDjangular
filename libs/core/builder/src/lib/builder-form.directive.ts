@@ -8,39 +8,47 @@ import {
   Type,
   ViewContainerRef,
   Output,
-  EventEmitter, SimpleChanges
+  EventEmitter,
+  SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BuilderFormButtonComponent } from './inputs/button/button.component';
 import { BuilderFormInputComponent } from './inputs/input/input.component';
 import { BuilderFormSelectComponent } from './inputs/select/select.component';
+import { BuilderFormNgSelectComponent } from './inputs/ngselect/ngselect.component';
 import { BuilderFormCodeComponent } from './inputs/code/code.component';
 import { BuilderFormBuilderComponent } from './inputs/form_builder/form_builder.component';
 import { BuilderFormArrayComponent } from './inputs/form_array/form-array.component';
 import { BuilderFormSwitcherComponent } from './inputs/switch/switch.component';
 import { BuilderFormGroupComponent } from './inputs/form_group/form_group.component';
-import { BuilderFormCheckboxOptionsComponent } from './inputs/checkbox/checkbox.component';
+import { BuilderFormCheckboxComponent } from './inputs/checkbox/checkbox.component';
 import { BuilderFormDatepickerComponent } from './inputs/datepicker/datepicker.component';
 import { BuilderFormJsonLogicComponent } from './inputs/json_logic/json_logic.component';
-import { BuilderFormField, BuilderFormFieldConfig } from './interfaces/form-config.interface';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from './interfaces/form-config.interface';
 import { BuilderFormTextAreaComponent } from './inputs/textarea/textarea.component';
-
+import { BuilderFormLabelComponent } from './inputs/label/label.component';
+import { BuilderFormRelationshipCheckboxOptionsComponent } from './inputs/relationship_checkbox/checkbox.component';
 
 const components: { [type: string]: Type<BuilderFormField> } = {
   button: BuilderFormButtonComponent,
   text: BuilderFormInputComponent,
   textArea: BuilderFormTextAreaComponent,
   select: BuilderFormSelectComponent,
+  ngSelect: BuilderFormNgSelectComponent,
   codeEditor: BuilderFormCodeComponent,
   formBuilder: BuilderFormBuilderComponent,
   formArray: BuilderFormArrayComponent,
   formGroup: BuilderFormGroupComponent,
   switch: BuilderFormSwitcherComponent,
-  checkbox: BuilderFormCheckboxOptionsComponent,
+  relationship_checkbox: BuilderFormRelationshipCheckboxOptionsComponent,
+  checkbox: BuilderFormCheckboxComponent,
   datepicker: BuilderFormDatepickerComponent,
   jsonLogic: BuilderFormJsonLogicComponent,
+  label: BuilderFormLabelComponent,
 };
-
 
 @Directive({
   selector: '[wdaBuilderFormFields]'
@@ -55,8 +63,7 @@ export class ScaffoldFieldDirective implements BuilderFormField, OnChanges, OnIn
   constructor(
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
-  ) {
-  }
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.config.isFirstChange()) {

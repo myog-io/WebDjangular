@@ -1,79 +1,93 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from "@angular/common/http";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { ClientUserService } from '@core/services/src/lib/client-user.service';
 import { CityModel } from '@plugins/provider/src/lib/data';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 
 
 @Component({
   selector: 'webdjangular-choosecity',
   templateUrl: './choosecity.component.html',
-  styleUrls: ['./choosecity.component.scss']
+  styleUrls: ['./choosecity.component.scss'],
 })
-export class ThemeProviderfyModalChoosecityComponent {
-
-  form: FormGroup;
-  city_list: CityModel[];
-  cities: Observable<CityModel[]>;
+export class ThemeProviderfyModalChoosecityComponent implements OnInit, OnDestroy {
+  form: FormGroup = new FormGroup({
+    city: new FormControl("", [Validators.required])
+  });
+  cities: CityModel[];
   loading = true;
-  placeholder = "Onde você está?"
+  sub: Subscription;
+  cookieSub: Subscription;
 
-  constructor(public activeModal: NgbActiveModal, private http: HttpClient, private datastore: WebAngularDataStore,
-    private formBuilder: FormBuilder, private clientUserService: ClientUserService) {
-
-    this.form = this.formBuilder.group({
-      city: ['', Validators.required]
-    });
-
-    this.getCities();
+  constructor(
+    public activeModal: NgbActiveModal,
+    private http: HttpClient,
+    private datastore: WebAngularDataStore,
+    private clientUserService: ClientUserService,
+    private location: Location,
+  ) {
 
   }
+  ngOnInit() {
 
-  getCities(): void {
+    this.cookieSub = this.clientUserService.clientCookieChange.subscribe((data) => {
+      // Closing the Modal,because cookie has already being set
+      this.activeModal.close();
+    })
 
-    this.cities = this.datastore.findAll(CityModel, { ordering: 'name', fields: "id,name", page: { size: 100 } }).map(
-      (query, index) => {
-        this.loading = false;
-        this.city_list = query.getModels();
-        return this.city_list;
-      }
-    )
   }
-
-  selectChange($event) {
-    if ($event) {
-      this.placeholder = '';
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+      this.sub = null;
     }
+  }
+  ngAfterViewInit() {
+    this.getCities();
+    if (this.clientUserService.clientUser.data.hasOwnProperty('city')) {
+      this.form.get('city').setValue(this.clientUserService.clientUser.data['city'].id);
+    }
+  }
+  getCities(): void {
+    this.sub = this.datastore
+      .findAll(CityModel, {
+        ordering: 'name',
+        fields: 'id,name,redirect_url',
+        page: { size: 100 }
+      }).subscribe((query) => {
+        this.loading = false;
+        this.cities = query.getModels();
+      });
+
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    let elmnt = document.getElementById("chooseCitySubmit");
+    let elmnt = document.getElementById('chooseCitySubmit');
     elmnt.scrollIntoView();
   }
 
   onFocus() {
     //document.getElementById("chooseCitySubmit").focus({preventScroll:false});
-
   }
 
   onSubmit() {
-    //this.activeModal.close();
-    const city_id = this.form.get('city').value[0];
-    const cityModel = this.city_list.find(city => city.id === city_id);
-    this.clientUserService.clientUser.data['city'] = {
-      id: cityModel.id,
-      name: cityModel.name
-    };
-    this.clientUserService.updateCookie();
-    // TODO: remake it with a better way
-    if (typeof window !== 'undefined') {
-      window.location.reload(); // Error window on server need to do a IF?
+
+    const city_id = this.form.get('city').value;
+    const cityModel = this.cities.find(city => city.id === city_id);
+    if (cityModel.redirect_url) {
+      window.open(cityModel.redirect_url, '_self');
+    } else {
+      this.clientUserService.clientUser.data['city'] = {
+        id: cityModel.id,
+        name: cityModel.name
+      };
+      this.clientUserService.updateCookie();
+      this.activeModal.close();
     }
   }
-
-
 }

@@ -1,4 +1,4 @@
-@import "../checkout_variables";
+@import '../checkout_variables';
 @import '../../../../../../../themes/providerfy/src/lib/styles/variables';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~rfs/sass/_rfs';
@@ -12,7 +12,6 @@ ul.wizard {
   padding: 0;
 
   li.step-tab {
-
     display: flex;
     flex: 1;
     align-items: unset;
@@ -23,7 +22,7 @@ ul.wizard {
 
     a {
       color: #d9e2e5;
-      font-family: "Boston", Arial, Helvetica, sans-serif;
+      font-family: 'Boston', Arial, Helvetica, sans-serif;
       @include responsive-font-size(14px);
       font-weight: 700;
       text-transform: uppercase;
@@ -47,12 +46,10 @@ ul.wizard {
           line-height: 30px;
         }
 
-        margin-right: .5rem;
-
+        margin-right: 0.5rem;
       }
 
       .label {
-
         line-height: 14px;
         display: inline-flex;
         cursor: pointer;
@@ -84,7 +81,6 @@ ul.wizard {
       .icon {
         float: right;
       }
-
     }
 
     &.active {
@@ -109,7 +105,6 @@ ul.wizard {
         padding-right: 0;
 
         .icon {
-
         }
       }
     }
@@ -117,7 +112,7 @@ ul.wizard {
     @include media-breakpoint-up(lg) {
       &:not(:first-child)::before,
       &:not(:last-child)::after {
-        content: "";
+        content: '';
         position: relative;
         flex: 1;
         height: 1px;
@@ -125,13 +120,10 @@ ul.wizard {
         margin-top: 2px;
       }
     }
-
   }
-
 }
 
 .mini-summary-wrapper {
-
   background: #8ea5b0;
 
   .card-body {
@@ -151,7 +143,7 @@ ul.wizard {
 
       .item {
         color: #fff;
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         @include responsive-font-size(18px);
         line-height: 22px;
         font-weight: 700;
@@ -160,7 +152,7 @@ ul.wizard {
 
       .subitem {
         color: #fff;
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         @include responsive-font-size(14px);
         line-height: 16px;
         font-weight: 400;
@@ -179,7 +171,7 @@ ul.wizard {
 
       a {
         cursor: pointer;
-        font-family: "Boston", Arial, Helvetica, sans-serif;
+        font-family: 'Boston', Arial, Helvetica, sans-serif;
         @include responsive-font-size(11px);
         font-weight: 600;
         color: #fff;
@@ -197,7 +189,6 @@ ul.wizard {
   }
 
   .info-wrapper {
-
     margin-top: map-get($spacers, 2);
 
     @include media-breakpoint-up(md) {
@@ -215,8 +206,6 @@ ul.wizard {
     }
 
     table {
-
-
       margin: 0;
 
       color: #fff;
@@ -246,7 +235,7 @@ ul.wizard {
       thead {
         td {
           border: 0;
-          font-family: "Boston", Arial, Helvetica, sans-serif;
+          font-family: 'Boston', Arial, Helvetica, sans-serif;
           @include responsive-font-size(17px);
           font-weight: 700;
           padding-top: 10px;
@@ -257,7 +246,7 @@ ul.wizard {
       tbody {
         td {
           border: 0;
-          font-family: "Open Sans", Helvetica, sans-serif;
+          font-family: 'Open Sans', Helvetica, sans-serif;
           @include responsive-font-size(13px);
           font-weight: 400;
         }
@@ -267,7 +256,6 @@ ul.wizard {
             padding-bottom: 15px;
           }
         }
-
       }
     }
   }
@@ -283,8 +271,8 @@ ul.wizard {
   display: flex;
   align-items: center;
 
-  span{
-    color:#fff;
+  span {
+    color: #fff;
     font-size: 26px;
     display: block;
     margin: auto;

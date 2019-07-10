@@ -1,12 +1,16 @@
+from smtplib import SMTPException, SMTPRecipientsRefused
+
 import requests
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 from rest_framework.exceptions import ValidationError
+
 from webdjango.transports.AbstractTransport import AbstractTransport
 from webdjango.transports.EmailConfig import EmailCoreConfig
-
-
+import logging
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 class Smtp(AbstractTransport):
 
     def __init__(self, *args, **kwargs):
@@ -16,7 +20,8 @@ class Smtp(AbstractTransport):
         self.password = kwargs[EmailCoreConfig.CONFIG_PWD.id]
         self.sender = kwargs[EmailCoreConfig.CONFIG_SENDER.id]
         self.host = kwargs[EmailCoreConfig.CONFIG_HOST.id]
-        self.port = kwargs[EmailCoreConfig.CONFIG_PORT.id]
+        self.port = (kwargs[EmailCoreConfig.CONFIG_PORT.id]
+                     if EmailCoreConfig.CONFIG_PORT.id in kwargs else 25)
         self.security = kwargs[EmailCoreConfig.CONFIG_SECURITY.id]
 
     @property
@@ -39,16 +44,29 @@ class Smtp(AbstractTransport):
     def getSendArgs(self):
         return ['to', 'subject', 'body']
 
-    def send(self, to='', subject='', body='', content_subtype='html'):
-        email = EmailMessage(subject=subject, body=body, from_email=self.sender, to=
-                             to, connection=self.smtp_backend)
-        email.content_subtype = "html"  # to encode as HTML instead of text/plain
+    def send(self, to='', subject='', body='', content_subtype='html', sender=None, *args, **kwargs):
+        if not sender:
+            sender = self.sender
+        email = EmailMessage(subject=subject, body=body,
+                             from_email="{0}<{1}>".format(sender, self.username), to=to, connection=self.smtp_backend)
+        email.content_subtype = content_subtype
 
-        if email.send():
+        try:
+            email.send()
             return True
-        else:
+        except SMTPRecipientsRefused as error:
+            
+            logger.exception(error)
             raise ValidationError(
-                "Email could not be sent due to SMTP credentials haven't worked it")
+                "O Email {0} é invalido ou não existe, por favor tentar outro".format(to))
+        except SMTPException as error:
+            logger.exception(error)
+            raise ValidationError(
+                "Error no envio do email de confiramção, por favor tente novamente")
+        except:
+            logger.exception("As credenciais de SMTP estão erradas, por favor configurar novas credenciais SMTP")
+            raise ValidationError(
+                "As credenciais de SMTP estão erradas, por favor configurar novas credenciais SMTP")
 
     def getInfo(self):
         return {}

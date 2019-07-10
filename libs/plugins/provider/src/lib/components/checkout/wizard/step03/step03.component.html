@@ -1,182 +1,172 @@
 <div class="step-item">
   <div class="row mt-4">
     <div class="col-12 col-md-8 offset-md-2">
-      <h4 class="text-primary text-uppercase mb-4">Obrigado por escolher a LPNet!</h4>
+      <h4 class="text-primary text-uppercase mb-4">
+        Obrigado por escolher a LPNet!
+      </h4>
 
       <h5 class="text-primary">INFORMAÇÕES SOBRE SUA ASSINATURA</h5>
 
-      <!--
-
-      <p *ngIf="providerCheckout.selected_internet_plan">
-        Internet - <b>{{ providerCheckout.selected_internet_plan.product.name }}</b>
-      </p>
-      <p *ngIf="providerCheckout.selected_tv_plan">
-        TV - <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
-      </p>
-      <p *ngIf="providerCheckout.selected_telephone_plan">
-        TELEFONE - <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
-        <b> {{ plan_optional.name }}</b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
-        <b> {{ plan_optional.name }}</b>
-      </p>
-
-      <p class="subitem" *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
-        <b> {{ providerCheckout.selected_extra_tv_decoder.qty }}x
-          {{ providerCheckout.selected_extra_tv_decoder.plan.name }}
-        </b>
-      </p>
-
-      <p class="subitem" *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
-        <b> {{ plan_optional.name }}</b>
-      </p>
-
-
-      <p *ngFor="let fee of providerCheckout.getFees()">
-        {{ fee?.name }}:
-        <b *ngIf="fee?.price != 0">
-          R${{ fee?.price }}
-        </b>
-        <b *ngIf="fee?.price == 0">
-          GRÁTIS
-        </b>
-      </p>
-
-
-      -->
       <div class="row">
         <div class="col table-responsive">
-
           <table class="table">
             <thead>
-            <tr class="bg-secondary text-white">
-              <th scope="col" colspan="3">Planos Escolhidos</th>
-            </tr>
+              <tr class="bg-secondary text-white">
+                <th scope="col" colspan="3">Planos Escolhidos</th>
+              </tr>
             </thead>
             <tbody>
-            <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_internet_plan">
-              <th scope="row">Internet</th>
-              <td><b>{{ providerCheckout.selected_internet_plan.product.name }}</b></td>
-              <td></td>
-            </tr>
-            <tr *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
-              <th scope="row"></th>
-              <td>{{ plan_optional.name }}</td>
-              <td>R$ <b>{{ plan_optional.product.price }}</b>/mês</td>
-            </tr>
+              <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_internet_plan">
+                <th scope="row">Internet</th>
+                <td>
+                  <b>{{providerCheckout.selected_internet_plan.product.name}}</b>
+                </td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let plan_optional of providerCheckout.selected_internet_optionals">
+                <th scope="row"></th>
+                <td>{{ plan_optional.name }}</td>
+                <td>
+                  R$ <b>{{ plan_optional.product.price }}</b>/mês
+                </td>
+              </tr>
 
-            <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_tv_plan">
-              <th scope="row">TV</th>
-              <td><b>{{ providerCheckout.selected_tv_plan.product.name }}</b></td>
-              <td></td>
-            </tr>
-            <tr *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
-              <td></td>
-              <td>
-                {{ providerCheckout.selected_extra_tv_decoder.plan.name }}
-                x{{ providerCheckout.selected_extra_tv_decoder.qty }}
-              </td>
-              <td>
+              <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_tv_plan">
+                <th scope="row">TV</th>
+                <td>
+                  <b>{{ providerCheckout.selected_tv_plan.product.name }}</b>
+                </td>
+                <td></td>
+              </tr>
+              <tr *ngIf="providerCheckout.selected_extra_tv_decoder.cartItem">
+                <td></td>
+                <td>
+                  {{ providerCheckout.selected_extra_tv_decoder.plan.name }} x
+                  {{providerCheckout.selected_extra_tv_decoder.qty}}
+                </td>
+                <td></td>
+              </tr>
+              <tr *ngFor="
+                  let plan_optional of providerCheckout.selected_tv_optionals
+                ">
+                <th scope="row"></th>
+                <td>{{ plan_optional.name }}</td>
+                <td></td>
+              </tr>
 
-              </td>
-            </tr>
-            <tr *ngFor="let plan_optional of providerCheckout.selected_tv_optionals">
-              <th scope="row"></th>
-              <td>{{ plan_optional.name }}</td>
-              <td></td>
-            </tr>
+              <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_telephone_plan">
+                <th scope="row">Telefone</th>
+                <td>
+                  <b>{{ providerCheckout.selected_telephone_plan.product.name }}</b>
+                </td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
+                <th scope="row"></th>
+                <td>{{ plan_optional.name }}</td>
+                <td></td>
+              </tr>
 
-            <tr class="bg-primary text-white" *ngIf="providerCheckout.selected_telephone_plan">
-              <th scope="row">Telefone</th>
-              <td><b>{{ providerCheckout.selected_tv_plan.product.name }}</b></td>
-              <td></td>
-            </tr>
-            <tr *ngFor="let plan_optional of providerCheckout.selected_telephone_optionals">
-              <th scope="row"></th>
-              <td>{{ plan_optional.name }}</td>
-              <td></td>
-            </tr>
-
-            <tr *ngIf="scm_price">
-              <th scope="row" colspan="2">Serviço de comunicação multimídia (SCM)</th>
-              <td>R$ <b>{{ scm_price | currency:symbol:''}}</b>/mês</td>
-            </tr>
-            <tr *ngIf="sva_price">
-              <th scope="row" colspan="2">Provedor de Serviço de Conexão a Internet - PSCI (SVA)</th>
-              <td>R$ <b>{{ sva_price | currency:symbol:''}}</b>/mês</td>
-            </tr>
-            <tr *ngIf="seac_price">
-              <th scope="row" colspan="2">Serviços de HDTV (SEAC)</th>
-              <td>R$ <b>{{ seac_price | currency:symbol:''}}</b>/mês</td>
-            </tr>
-            <tr *ngIf="stfc_price">
-              <th scope="row" colspan="2">Serviço Telefônico Fixo Comutado (STFC)</th>
-              <td>R$ <b>{{ stfc_price | currency:symbol:''}}</b>/mês</td>
-            </tr>
-
+              <tr *ngIf="scm_price">
+                <th scope="row" colspan="2">
+                  Serviço de comunicação multimídia (SCM)
+                </th>
+                <td>
+                  R$ <b>{{ scm_price | currency: symbol:'' }}</b>/mês
+                </td>
+              </tr>
+              <tr *ngIf="sva_price">
+                <th scope="row" colspan="2">
+                  Provedor de Serviço de Conexão a Internet - PSCI (SVA)
+                </th>
+                <td>
+                  R$ <b>{{ sva_price | currency: symbol:'' }}</b>/mês
+                </td>
+              </tr>
+              <tr *ngIf="seac_price">
+                <th scope="row" colspan="2">Serviços de HDTV (SEAC)</th>
+                <td>
+                  R$ <b>{{ seac_price | currency: symbol:'' }}</b>/mês
+                </td>
+              </tr>
+              <tr *ngIf="stfc_price">
+                <th scope="row" colspan="2">
+                  Serviço Telefônico Fixo Comutado (STFC)
+                </th>
+                <td>
+                  R$ <b>{{ stfc_price | currency: symbol:'' }}</b>/mês
+                </td>
+              </tr>
             </tbody>
             <tfoot>
-            <tr class="bg-secondary text-white">
-              <th scope="col" colspan="2">TOTAL</th>
-              <th>R$ <b>{{ providerCheckout.cartService.cart.subtotal }}</b>/mês</th>
-            </tr>
+              <tr class="bg-secondary text-white">
+                <th scope="col" colspan="2">TOTAL</th>
+                <th>
+                  R$ <b>{{ providerCheckout.cartService.cart.subtotal }}</b>/mês
+                </th>
+              </tr>
 
-            <tr *ngFor="let fee of providerCheckout.getFees()">
-              <th scope="row">{{ fee?.name }}</th>
-              <td></td>
-              <td>
-                  <span *ngIf="fee?.price != 0">
-                    R$ <b>{{ fee?.price }} </b>
-                  </span>
-                <span *ngIf="fee?.price == 0">
-                    <b>GRÁTIS</b>
-                  </span>
-              </td>
-            </tr>
+              <tr *ngFor="let fee of providerCheckout.getFees()">
+                <th scope="row" colspan="2">{{ fee?.name }}</th>
+                <td [innerHtml]="fee?.display_fee_price"></td>
 
-            <tr>
-              <td>Pagamento:
-                <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"><b>Por Email</b></span>
-                <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"><b>Por Correios</b></span>
-              </td>
-              <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'email'">
-                <b>{{ providerCheckout.cartService.cart.email }} </b></td>
+              </tr>
 
-              <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'mail'">
-                <b>
-                  {{ providerCheckout.address.first_name }} {{ providerCheckout.address.last_name }} <br>
-                  {{ providerCheckout.address.street_address_1 }}, {{ providerCheckout.address.number }}
-                  <span *ngIf="providerCheckout.address.street_address_2">
-                  - {{ providerCheckout.address.street_address_2 }}
-                </span> <br>
-                  {{ providerCheckout.address.city }}, {{ providerCheckout.address.state }}
-                  {{ providerCheckout.address.postal_code }}
-                </b>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  Pagamento:
+                  <span *ngIf="this.cart.extra_data['paymentType'] == 'email'"><strong>Por Email</strong></span>
+                  <span *ngIf="this.cart.extra_data['paymentType'] == 'mail'"><strong>Por Correios</strong></span>
+                  <span *ngIf="this.cart.extra_data['dueDay']"><br>Vencimento da Fatura:
+                    <strong>Dia {{this.cart.extra_data.dueDay}}</strong></span>
+                </td>
+                <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'email'">
+                  <b>{{ providerCheckout.cartService.cart.email }} </b>
+                </td>
+
+                <td colspan="2" *ngIf="this.cart.extra_data['paymentType'] == 'mail'">
+                  <b>
+                    {{ providerCheckout.address.first_name }}
+                    {{ providerCheckout.address.last_name }} <br />
+                    {{ providerCheckout.address.street_address_1 }},
+                    {{ providerCheckout.address.number }}
+                    <span *ngIf="providerCheckout.address.street_address_2">
+                      - {{ providerCheckout.address.street_address_2 }}
+                    </span>
+                    <span *ngIf="providerCheckout.address.street_address_3">
+                      <br>{{ providerCheckout.address.street_address_3 }}
+                    </span>
+                    <br />
+                    {{ providerCheckout.address.city }},
+                    {{ providerCheckout.address.state }}
+                    {{ providerCheckout.address.postal_code }}
+                  </b>
+                </td>
+              </tr>
             </tfoot>
           </table>
-
         </div>
       </div>
 
       <h5 class="text-primary mt-3">AGENDAMENTO DA INSTALAÇÃO</h5>
 
-      <p class="mb-2">Nossa Central de Atendimento entrará em contato para agendar a instalação.</p>
+      <p class="mb-2">
+        Nossa Central de Atendimento entrará em contato para agendar a
+        instalação.
+      </p>
 
-      <p class="mb-2">Para conhecer outras solicitações que você pode fazer em nosso site, acesse a Central do
-        Assinante:
-        <a href="http://central.lpnet.com.br">central.lpnet.com.br</a></p>
+      <p class="mb-2">
+        Para conhecer outras solicitações que você pode fazer em nosso site,
+        acesse a Central do Assinante:
+        <a href="http://central.lpnet.com.br">central.lpnet.com.br</a>
+      </p>
 
-      <p class="mb-2">Qualquer dúvida, estamos a disposição: <a routerLink="/contato"> lpnet.com.br/contato</a></p>
+      <p class="mb-2">
+        Qualquer dúvida, estamos a disposição:
+        <a routerLink="/contato"> lpnet.com.br/contato</a>
+      </p>
 
       <h6 class="text-primary">Equipe LPNet</h6>
-
     </div>
   </div>
 </div>
-

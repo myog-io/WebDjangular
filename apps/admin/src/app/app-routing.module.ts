@@ -4,14 +4,19 @@ import { NgModule } from '@angular/core';
 import { NbResetPasswordComponent } from '@nebular/auth';
 import { AuthGuard } from '@core/services/src/lib/auth-guard.service';
 import { AdminModule } from '@core/admin/src/lib/admin.module';
-import { NbAuthComponent, NbLoginComponent, NbRegisterComponent, NbLogoutComponent, NbRequestPasswordComponent } from '@core/auth/src/lib';
-
+import {
+  NbAuthComponent,
+  NbLoginComponent,
+  NbRegisterComponent,
+  NbLogoutComponent,
+  NbRequestPasswordComponent
+} from '@core/auth/src/lib';
 
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadChildren: "@core/admin/src/lib/admin.module.ts#AdminModule",
+    loadChildren: '@core/admin/src/lib/admin.module.ts#AdminModule'
   },
   {
     path: 'auth',
@@ -19,39 +24,37 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: NbLoginComponent,
+        component: NbLoginComponent
       },
       {
         path: 'login',
-        component: NbLoginComponent,
+        component: NbLoginComponent
       },
       {
         path: 'register',
-        component: NbRegisterComponent,
+        component: NbRegisterComponent
       },
       {
         path: 'logout',
-        component: NbLogoutComponent,
+        component: NbLogoutComponent
       },
       {
         path: 'request-password',
-        component: NbRequestPasswordComponent,
+        component: NbRequestPasswordComponent
       },
       {
         path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ],
-  },
+        component: NbResetPasswordComponent
+      }
+    ]
+  }
 ];
 const config: ExtraOptions = {
-  useHash: true,
-
+  useHash: true
 };
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

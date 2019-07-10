@@ -12,7 +12,6 @@ import { AbstractModel } from './Abstract.model';
   type: 'content_type'
 })
 export class ContentTypeModel extends AbstractModel {
-
   @Attribute()
   id: string;
 

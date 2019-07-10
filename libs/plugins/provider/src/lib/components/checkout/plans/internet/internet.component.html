@@ -1,9 +1,10 @@
 <div class="row" *ngIf="!providerCheckout.loading_plans; else loading_holder">
-  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.internet;">
+  <div class="col-12 col-lg-6 mb-2" *ngFor="let plan of providerCheckout.plans.internet"
+    [ngClass]="{'d-none': !plan.isVisible()}">
     <div class="card">
       <div class="card-header">
         <div class="title-wrapper">
-          <span class="amount-number">{{ plan?.data?.download}}</span>
+          <span class="amount-number">{{ plan?.data?.download }}</span>
           <span class="amount-unit">MEGA</span>
         </div>
         <div class="price-wrapper">
@@ -13,7 +14,6 @@
         </div>
       </div>
       <div class="card-body">
-
         <div class="features-wrapper">
           <div class="d-flex flex-row">
             <div class="list-group-item col p-0 pl-3">
@@ -21,7 +21,7 @@
               <span class="title pl-1"> {{ plan?.data?.download }}Mbps </span>
             </div>
             <div class="list-group-item col p-0 pr-3">
-              <span [class]="plan?.data?.addon_icon_1 "></span>
+              <span [class]="plan?.data?.addon_icon_1"></span>
               <!--<p [innerHtml]="plan?.data?.addon_text_1" class="pl-1 mb-0"></p>-->
               <p class="title pl-1">Instalação</p>
             </div>
@@ -40,10 +40,10 @@
         </div>
         <div class="select-wrapper">
           <button type="button" class="btn btn-outline-primary pl-3 pr-3 btn-round text-uppercase"
-            (click)="providerCheckout.selectInternetPlan(plan)" [disabled]="providerCheckout.selectingInternetPlan">
+            (click)="providerCheckout.selectInternetPlan(plan)"
+            [disabled]="providerCheckout.selectingInternetPlan || ((!providerCheckout.canSelectRadioPlan && plan?.product_type?.code === 'radio') || (!providerCheckout.canSelectFiberPlan && plan?.product_type?.code === 'fiber'))">
             <span *ngIf="providerCheckout.selectingInternetPlan">
-              <i class="fa fa-spinner fa-pulse"></i>
-              Carregando
+              <i class="fa fa-spinner fa-pulse"></i> Carregando
             </span>
             <span *ngIf="!providerCheckout.selectingInternetPlan">
               Escolher
@@ -51,7 +51,7 @@
           </button>
         </div>
         <div class="more-info-wrapper">
-          <a href="#">Mais detalhes</a>
+          <!--<a href="#">Mais detalhes</a>-->
         </div>
       </div>
     </div>

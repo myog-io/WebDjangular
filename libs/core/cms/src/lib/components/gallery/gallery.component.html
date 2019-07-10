@@ -1,14 +1,14 @@
-<ngb-carousel *ngIf="image_array" [showNavigationArrows]="arrows" [showNavigationIndicators]="indicators" [pauseOnHover]="pauseOnHover"
-  [interval]="interval">
-  <ng-template ngbSlide *ngFor="let image of image_array" draggable="true" [id]="image?.id" >
+<ngb-carousel *ngIf="image_array" [showNavigationArrows]="arrows" [showNavigationIndicators]="indicators"
+  [pauseOnHover]="pauseOnHover" [interval]="interval">
+  <ng-template ngbSlide *ngFor="let image of image_array" draggable="true" [id]="image?.id">
     <div class="slide-container" *ngIf="image?.template" [class.cursor-pointer]="image?.url" (click)="action(image)">
       <ng-container [ngTemplateOutlet]="image?.template"></ng-container>
     </div>
     <picture [class.cursor-pointer]="image?.url" (click)="action(image)">
-      <source *ngIf="image.small" [srcset]="image.small" media="(max-width: {{ widthS }})">
-      <source *ngIf="image.medium" [srcset]="image.medium" media="(max-width: {{ widthM }})">
-      <source *ngIf="image.big" [srcset]="image.big" media="(min-width: {{ widthL }})">
-      <img [src]="image?.big" [alt]="image?.alt" [style.width]="'100%'">
+      <source *ngIf="image.small" [srcset]="image.small" media="(max-width: {{ widthS }})" />
+      <source *ngIf="image.medium" [srcset]="image.medium" media="(max-width: {{ widthM }})" />
+      <source *ngIf="image.big" [srcset]="image.big" media="(min-width: {{ widthL }})" />
+      <img [src]="image?.big" [alt]="image?.alt" [style.width]="'100%'" />
     </picture>
     <div class="carousel-caption" *ngIf="image.title || image.description">
       <h3>{{ image.title }}</h3>
@@ -16,4 +16,3 @@
     </div>
   </ng-template>
 </ngb-carousel>
-

@@ -1,14 +1,14 @@
-import {Attribute, BelongsTo, JsonApiModelConfig} from 'angular2-jsonapi';
+import { Attribute, BelongsTo, JsonApiModelConfig } from 'angular2-jsonapi';
 import { BlockModel } from './Block.model';
-import {Validators, FormGroup} from "@angular/forms";
+import { Validators, FormGroup } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
 import { SmartTableSettings } from '@core/data/src/lib/data-store';
-import {BlockHeaderModel} from "@core/cms/src/lib/models/BlockHeader.model";
-import {BlockFooterModel} from "@core/cms/src/lib/models/BlockFooter.model";
-import {BlockLayoutModel} from "@core/cms/src/lib/models/BlockLayout.model";
-
+import { BlockHeaderModel } from '@core/cms/src/lib/models/BlockHeader.model';
+import { BlockFooterModel } from '@core/cms/src/lib/models/BlockFooter.model';
+import { BlockLayoutModel } from '@core/cms/src/lib/models/BlockLayout.model';
+import { WDAValidators } from '@core/builder/src/lib/inputs/validators/custom.validators';
 
 enum pageDG {
   general = 'general',
@@ -18,10 +18,10 @@ enum pageDG {
 
 @JsonApiModelConfig({
   type: 'Page',
-  modelEndpointUrl: 'cms/page',
+  modelEndpointUrl: 'cms/page'
 })
 export class PageModel extends AbstractModel {
-  public include = 'header,footer,layout';
+  public static include = 'header,footer,layout';
 
   @Attribute()
   id: string;
@@ -39,7 +39,7 @@ export class PageModel extends AbstractModel {
 
   @Attribute()
   @ExtraOptions({
-    validators: [Validators.required, Validators.pattern('^[a-z0-9-_]+$')],
+    validators: [Validators.required, WDAValidators.slug],
     type: 'text',
     label: 'Page URL',
     wrapper_class: 'col-12',
@@ -54,6 +54,7 @@ export class PageModel extends AbstractModel {
     type: 'codeEditor',
     label: 'Page Content',
     wrapper_class: 'col-12',
+    element_class: 'medium',
     displayGroup: pageDG.general
   })
   content: string;
@@ -61,11 +62,11 @@ export class PageModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Header',
     wrapper_class: 'col-12',
     model: BlockHeaderModel,
-    options:{ block_class: 'header'},
+    options: { block_class: 'header' },
     displayGroup: pageDG.options
   })
   header: BlockHeaderModel;
@@ -73,11 +74,11 @@ export class PageModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Layout',
     wrapper_class: 'col-12',
     model: BlockLayoutModel,
-    options:{ block_class: 'layout'},
+    options: { block_class: 'layout' },
     displayGroup: pageDG.options
   })
   layout: BlockLayoutModel;
@@ -85,11 +86,11 @@ export class PageModel extends AbstractModel {
   @BelongsTo()
   @ExtraOptions({
     formType: FormGroup,
-    type: 'select',
+    type: 'ngSelect',
     label: 'Footer',
     wrapper_class: 'col-12',
     model: BlockFooterModel,
-    options:{ block_class: 'footer'},
+    options: { block_class: 'footer' },
     displayGroup: pageDG.options
   })
   footer: BlockFooterModel;
@@ -104,7 +105,6 @@ export class PageModel extends AbstractModel {
     displayGroup: pageDG.seo
   })
   is_searchable: boolean;
-
 
   @Attribute()
   @ExtraOptions({
@@ -142,11 +142,9 @@ export class PageModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
+  set pk(value) { }
 
-  }
-
-  getContent():string {
+  getContent(): string {
     return this.content;
   }
 
@@ -162,18 +160,16 @@ export class PageModel extends AbstractModel {
     columns: {
       id: {
         title: 'ID',
-        type: 'text',
+        type: 'text'
       },
       title: {
         title: 'Title',
-        type: 'text',
+        type: 'text'
       },
       slug: {
         title: 'Url Path',
-        type: 'text',
-      },
-    },
+        type: 'text'
+      }
+    }
   };
-
 }
-

@@ -41,7 +41,7 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/angular-tree-component/dist/angular-tree-component.css",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
-              "node_modules/leaflet/dist/leaflet.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
@@ -880,6 +880,34 @@
             "tsConfig": [
               "libs/themes/providerfy/tsconfig.lib.json",
               "libs/themes/providerfy/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "theme-ispwebby": {
+      "root": "libs/themes/ispwebby",
+      "sourceRoot": "libs/themes/ispwebby/src",
+      "projectType": "library",
+      "prefix": "webdjangular",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/themes/ispwebby/src/test.ts",
+            "tsConfig": "libs/themes/ispwebby/tsconfig.spec.json",
+            "karmaConfig": "libs/themes/ispwebby/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/themes/ispwebby/tsconfig.lib.json",
+              "libs/themes/ispwebby/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -1,7 +1,9 @@
-from webdjango.models.AbstractModels import BaseModel
 from django.db import models
-from .City import City
+
 from libs.plugins.store.api.models.Product import Product
+from webdjango.models.AbstractModels import BaseModel
+
+from .City import City
 
 
 class Condo(BaseModel):
@@ -11,4 +13,4 @@ class Condo(BaseModel):
 
     class Meta:
         db_table = 'provider_condo'
-        ordering = ['-created']
+        ordering = ['-name']

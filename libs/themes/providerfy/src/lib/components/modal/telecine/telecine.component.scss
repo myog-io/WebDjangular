@@ -1,26 +1,24 @@
-
-:host{
-  background-image:url("../../../assets/images/modal_telecine_bg.png");
+:host {
+  background-image: url('../../../assets/images/modal_telecine_bg.png');
   background-position: right top;
-  background-size:cover;
+  background-size: cover;
   background-repeat: no-repeat;
 
   height: inherit;
 }
 
-
-.tv-channel-logo{
-  background-image:url("../../../assets/images/modal_telecine_logo.png");
-  width:155px;
-  height:96px;
-  margin-bottom:20px;
+.tv-channel-logo {
+  background-image: url('../../../assets/images/modal_telecine_logo.png');
+  width: 155px;
+  height: 96px;
+  margin-bottom: 20px;
 }
-p{
-  max-width:370px;
+p {
+  max-width: 370px;
 }
-.tv-channel-channel-list{
-  background-image:url("../../../assets/images/modal_telecine_channels.png");
-  width:313px;
-  height:77px;
-  margin-top:30px;
+.tv-channel-channel-list {
+  background-image: url('../../../assets/images/modal_telecine_channels.png');
+  width: 313px;
+  height: 77px;
+  margin-top: 30px;
 }

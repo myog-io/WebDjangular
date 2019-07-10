@@ -11,9 +11,8 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if hasattr(view, 'public_views'):
-            if view.action in view.public_views or hasattr(view.public_views, view.action):
+            if view.action and (view.action in view.public_views or hasattr(view.public_views, view.action)):
                 # This is a Public View, we should add more security
-                #print("This is a Public View, we should add more security")
                 # TODO: Improve security for public routes/ NONCE?
                 return True
         # print("ACTION!!!!", view.action)
@@ -24,6 +23,7 @@ class AuthenticatedViewsetPermission(permissions.BasePermission):
 
             user = request.user
             queryset = view.get_queryset()
+            print(queryset)
             model = queryset.model
             model_name = str(model.__name__).lower()
             app_label = model._meta.app_label

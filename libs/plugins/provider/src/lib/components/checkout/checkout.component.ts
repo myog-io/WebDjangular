@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProviderCheckoutService, ProviderCheckoutSteps } from "../../data/services/provider-checkout.service";
-import { ActivatedRoute } from "@angular/router";
+import {
+  ProviderCheckoutService,
+  ProviderCheckoutSteps
+} from '../../data/services/provider-checkout.service';
+import { ActivatedRoute } from '@angular/router';
 import { BlockModel } from '@core/cms/src/lib/models';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
 import { HttpHeaders } from '@angular/common/http';
@@ -11,30 +14,31 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrls: ['./checkout.component.scss']
 })
 export class PluginProviderCheckoutComponent implements OnInit {
-
   @Input() cutom_block_id: string;
   @Input() reseller: boolean;
+  @Input() migration: boolean = false;
   public custom_block: BlockModel;
   public providerCheckoutSteps = ProviderCheckoutSteps;
 
   constructor(
     public providerCheckout: ProviderCheckoutService,
-    private datastore: WebAngularDataStore,
-  ) {
-    
-  }
+    private datastore: WebAngularDataStore
+  ) { }
 
   ngOnInit() {
     this.providerCheckout.has_reseller = this.reseller;
+    this.providerCheckout.is_migration = this.migration;
     if (this.cutom_block_id) {
-      this.datastore.findRecord(BlockModel, 
-        this.cutom_block_id, { fields: 'content,id' }, 
-        new HttpHeaders({ 'Authentication': 'none' })).subscribe(
-          (block) => {
-            this.custom_block = block;
-          }
-      );
+      this.datastore
+        .findRecord(
+          BlockModel,
+          this.cutom_block_id,
+          { fields: 'content,id' },
+          new HttpHeaders({ Authentication: 'none' })
+        )
+        .subscribe(block => {
+          this.custom_block = block;
+        });
     }
   }
-
 }

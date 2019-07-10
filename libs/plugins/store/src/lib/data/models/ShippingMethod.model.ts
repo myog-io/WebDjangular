@@ -1,5 +1,5 @@
-import {Attribute, JsonApiModelConfig} from 'angular2-jsonapi';
-import {Validators} from "@angular/forms";
+import { Attribute, JsonApiModelConfig } from 'angular2-jsonapi';
+import { Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
@@ -7,7 +7,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'ShippingMethod',
-  modelEndpointUrl: 'store/shipping-method',
+  modelEndpointUrl: 'store/shipping-method'
 })
 export class ShippingMethodModel extends AbstractModel {
   public static include = null;
@@ -21,7 +21,7 @@ export class ShippingMethodModel extends AbstractModel {
     type: 'text',
     label: 'Type',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   type: string;
 
@@ -31,7 +31,7 @@ export class ShippingMethodModel extends AbstractModel {
     type: 'text',
     label: 'Price',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   price: string;
 
@@ -41,7 +41,7 @@ export class ShippingMethodModel extends AbstractModel {
     type: 'text',
     label: 'Minimum order price',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   minimum_order_price: string;
 
@@ -51,7 +51,7 @@ export class ShippingMethodModel extends AbstractModel {
     type: 'text',
     label: 'Maximum order price',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   maximum_order_price: string;
 
@@ -61,7 +61,7 @@ export class ShippingMethodModel extends AbstractModel {
     type: 'text',
     label: 'Minimum order weight',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   minimum_order_weight: number;
 
@@ -71,7 +71,7 @@ export class ShippingMethodModel extends AbstractModel {
     type: 'text',
     label: 'Maximum order weight',
     wrapper_class: 'col-6',
-    placeholder: '',
+    placeholder: ''
   })
   maximum_order_weight: string;
 
@@ -87,40 +87,38 @@ export class ShippingMethodModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) {}
 
   public static smartTableOptions: SmartTableSettings = {
     columns: {
       type: {
         title: 'Type',
-        type: 'text',
+        type: 'text'
       },
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       price: {
         title: 'Price',
-        type: 'text',
+        type: 'text'
       },
       minimum_order_price: {
         title: 'Minimum order price',
-        type: 'text',
+        type: 'text'
       },
       maximum_order_price: {
         title: 'Maximum order price',
-        type: 'text',
+        type: 'text'
       },
 
       minimum_order_weight: {
         title: 'Minimum order weight',
-        type: 'text',
+        type: 'text'
       },
       maximum_order_weight: {
         title: 'Maximum order weight',
-        type: 'text',
+        type: 'text'
       }
     }
   };

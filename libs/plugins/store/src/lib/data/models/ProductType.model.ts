@@ -1,7 +1,7 @@
-import {Attribute, JsonApiModelConfig, HasMany} from 'angular2-jsonapi';
-import {ProductClasses} from '../interfaces/Product.interface';
-import {ProductAttributeModel} from "./ProductAttribute.model";
-import {FormArray, Validators} from "@angular/forms";
+import { Attribute, JsonApiModelConfig, HasMany } from 'angular2-jsonapi';
+import { ProductClasses } from '../interfaces/Product.interface';
+import { ProductAttributeModel } from './ProductAttribute.model';
+import { FormArray, Validators } from '@angular/forms';
 import { AbstractModel } from '@core/data/src/lib/models';
 import { ExtraOptions } from '@core/decorator/src/lib/ExtraOptions.decorator';
 import { PermissionModel } from '@core/users/src/lib/models';
@@ -9,7 +9,7 @@ import { SmartTableSettings } from '@core/data/src/lib/data-store';
 
 @JsonApiModelConfig({
   type: 'ProductType',
-  modelEndpointUrl: 'store/product-type',
+  modelEndpointUrl: 'store/product-type'
 })
 export class ProductTypeModel extends AbstractModel {
   public static include = 'data';
@@ -24,7 +24,7 @@ export class ProductTypeModel extends AbstractModel {
     label: 'Name',
     wrapper_class: 'col-6',
     placeholder: 'Enter the Product Type name',
-    sort: 0,
+    sort: 0
   })
   name: string;
 
@@ -35,7 +35,7 @@ export class ProductTypeModel extends AbstractModel {
     label: 'Code',
     wrapper_class: 'col-6',
     placeholder: 'Enter the Product Type code',
-    sort: 0,
+    sort: 0
   })
   code: string;
 
@@ -47,10 +47,10 @@ export class ProductTypeModel extends AbstractModel {
     wrapper_class: 'col-6',
     value: ProductClasses.simple,
     options: [
-      {label: "Simple Product", value: ProductClasses.simple},
-      {label: "Variant Product", value: ProductClasses.variant},
-      {label: "AddOn Product", value: ProductClasses.addon},
-      {label: "Bundle Product", value: ProductClasses.bundle},
+      { name: 'Simple Product', id: ProductClasses.simple },
+      { name: 'Variant Product', id: ProductClasses.variant },
+      { name: 'AddOn Product', id: ProductClasses.addon },
+      { name: 'Bundle Product', id: ProductClasses.bundle }
     ],
     sort: 1
   })
@@ -58,17 +58,15 @@ export class ProductTypeModel extends AbstractModel {
 
   @HasMany()
   @ExtraOptions({
-    type: 'checkbox',
+    type: 'relationship_checkbox',
     label: 'Attributes',
     wrapper_class: 'col-12',
     formType: FormArray,
     model: ProductAttributeModel,
     sort: 2,
-    name: 'data',
+    name: 'data'
   })
   data: ProductAttributeModel[];
-
-
 
   @Attribute()
   created: Date;
@@ -82,9 +80,7 @@ export class ProductTypeModel extends AbstractModel {
     return this.id;
   }
 
-  set pk(value) {
-
-  }
+  set pk(value) { }
 
   public toString = (): string => {
     return `${this.name}`;
@@ -94,16 +90,16 @@ export class ProductTypeModel extends AbstractModel {
     columns: {
       name: {
         title: 'Name',
-        type: 'text',
+        type: 'text'
       },
       product_class: {
         title: 'Product Class',
-        type: 'text',
+        type: 'text'
       },
       updated: {
         title: 'Updated',
-        type: 'text',
+        type: 'text'
       }
-    },
+    }
   };
 }

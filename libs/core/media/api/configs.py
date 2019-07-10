@@ -5,9 +5,14 @@ CONFIG_STORAGE_KEY = 'media_storage_account_key'
 CONFIG_STORAGE_NAME = 'media_storage_account_name'
 CONFIG_STORAGE_CONTAINER_NAME = 'media_storage_container'
 CONFIG_STORAGE_EXTERNAL_URL = 'media_storage_external_url'
+CONFIG_STORAGE_JSON_CREDENTIALS = 'media_storage_json_credentials'
 
+STORAGE_OPTION_AZURE = 'AzureBlobStorage'
+STORAGE_OPTION_GOOGLE = 'GoogleStorage'
 STORAGE_OPTIONS = [
-    {'value': 'AzureBlobStorage', 'label': 'Azure Blob Storage'}
+    {'id': '', 'name': 'File Storage'},
+    {'id': STORAGE_OPTION_AZURE, 'name': 'Azure Blob Storage'},
+    {'id': STORAGE_OPTION_GOOGLE, 'name': 'Goole Storage'}
 ]
 
 MEDIA_CONFIG_GROUP_SLUG = 'media_config'
@@ -33,6 +38,21 @@ MEDIA_CONFIGS = [
 
     ),
     CoreConfigInput(
+        id=CONFIG_STORAGE_JSON_CREDENTIALS,
+        field_type=CoreConfigInput.FIELD_TYPE_CODE_EDITOR,
+        order=99,
+        disabled=False,
+        label="Google Storage Config Json",
+        options={'language': 'json'},
+        placeholder="Google Storage Config Json",
+        validation=None,
+        wrapper_class=None,
+        group=MEDIA_CONFIG_GROUP_SLUG,
+        conditional={
+            "==" : [{"var":CONFIG_STORAGE_CLASS},STORAGE_OPTION_GOOGLE]
+        }
+    ),
+    CoreConfigInput(
         id=CONFIG_STORAGE_KEY,
         field_type=CoreConfigInput.FIELD_TYPE_TEXT,
         input_type="password",
@@ -45,7 +65,7 @@ MEDIA_CONFIGS = [
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
         conditional={
-            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+            "==" : [{"var":CONFIG_STORAGE_CLASS},STORAGE_OPTION_AZURE]
         }
     ),
     CoreConfigInput(
@@ -61,7 +81,7 @@ MEDIA_CONFIGS = [
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
         conditional={
-            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+            "==" : [{"var":CONFIG_STORAGE_CLASS},STORAGE_OPTION_AZURE]
         }
 
     ),
@@ -71,14 +91,14 @@ MEDIA_CONFIGS = [
         input_type="text",
         order=0,
         disabled=False,
-        label="Config Container Name",
+        label="Config Bucket/Container Name",
         options=None,
         placeholder="Storage Container Name",
         validation=None,
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
         conditional={
-            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+            "!=" : [{"var":CONFIG_STORAGE_CLASS},'']
         }
     ),
     CoreConfigInput(
@@ -94,7 +114,7 @@ MEDIA_CONFIGS = [
         wrapper_class=None,
         group=MEDIA_CONFIG_GROUP_SLUG,
         conditional={
-            "!=" : [{"var":CONFIG_STORAGE_CLASS},""]
+            "==" : [{"var":CONFIG_STORAGE_CLASS},STORAGE_OPTION_AZURE]
         }
     ),
 ]

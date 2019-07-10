@@ -94,4 +94,5 @@ C:/Ruby23-x64/bin/scss:22:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Invalid CSS after \"...lor}: #{$value}\": expected \"{\", was \";\"\A         on line 4 of ../../../../../node_modules/bootstrap/scss/_root.scss\A         from line 11 of ../../../../../node_modules/bootstrap/scss/bootstrap.scss\A         from line 4 of styles.scss\A \A 1: :root {\A 2:   // Custom variable values only support SassScript inside `#{}`.\A 3:   @each $color, $value in $colors {\A 4:     --#{$color}: #{$value};\A 5:   }\A 6: \A 7:   @each $color, $value in $theme-colors {\A 8:     --#{$color}: #{$value};\A 9:   }"; }
+  content: 'Error: Invalid CSS after "...lor}: #{$value}": expected "{", was ";"\A         on line 4 of ../../../../../node_modules/bootstrap/scss/_root.scss\A         from line 11 of ../../../../../node_modules/bootstrap/scss/bootstrap.scss\A         from line 4 of styles.scss\A \A 1: :root {\A 2:   // Custom variable values only support SassScript inside `#{}`.\A 3:   @each $color, $value in $colors {\A 4:     --#{$color}: #{$value};\A 5:   }\A 6: \A 7:   @each $color, $value in $theme-colors {\A 8:     --#{$color}: #{$value};\A 9:   }';
+}

@@ -1,63 +1,101 @@
-import { Component, OnInit } from '@angular/core';
-import { ModelPaginatorControls } from '../../model-paginator/model-paginator.controls';
-import { BuilderFormField, BuilderFormFieldConfig } from '../../interfaces/form-config.interface';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  BuilderFormField,
+  BuilderFormFieldConfig
+} from '../../interfaces/form-config.interface';
 import { AbstractForm } from '@core/data/src/lib/forms';
 import { WebAngularDataStore } from '@core/services/src/lib/WebAngularDataStore.service';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'wda-form-checkbox',
-  styleUrls: ['checkbox.component.scss'],
-  template: `
-  <div class="form-group" [formGroup]="group" >
-    <label>{{ config.label }}</label>
-
-    <wda-model-paginator [options]="paginatorConfig" (controls)="modelPaginatorControlsGetter($event)">
-      <div class="row" *ngIf="paginatorControls">
-        <div class="col-4" *ngFor="let entry of paginatorControls.getEntries(); let i=index;">
-          <nb-checkbox status="success"
-          class="col-sm-4" [value]="group.doesEntityHasRelationship(config.name, entry)"
-          (change)="group.checkboxRelationListener($event, config.name, entry)">
-            {{ entry.toString() }}
-          </nb-checkbox>
-        </div>
-      </div>
-    </wda-model-paginator>
-
-  </div><!--form-group-->
-`
+  templateUrl: 'checkbox.component.html',
+  styleUrls: ['checkbox.component.scss']
 })
-export class BuilderFormCheckboxOptionsComponent implements BuilderFormField, OnInit {
+export class BuilderFormCheckboxComponent implements BuilderFormField, OnInit, OnDestroy {
   config: BuilderFormFieldConfig;
   group: AbstractForm;
-  public paginatorControls: ModelPaginatorControls;
-
-  public paginatorConfig: any ={
-    pageSize: 12,
-    modelToPaginate: null,
-    useDatastore: null,
+  loading = true;
+  options = [];
+  results = [];
+  models = [];
+  form: FormGroup;
+  listener: Subscription;
+  constructor(
+    private datastore: WebAngularDataStore,
+    private formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      options: new FormArray([])
+    });
   }
 
-  constructor(private datastore: WebAngularDataStore,) {
-
-  }
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+  ngOnInit() {
+    this.options = this.config.options || [];
     if (this.config.model) {
-      this.paginatorConfig.modelToPaginate = this.config.model;
-      this.paginatorConfig.useDatastore = this.datastore;
-    }
-    if (this.config.options) {
-      this.paginatorConfig.options = this.config.options;
+      if (typeof this.config.model === 'string') {
+        const models = Reflect.getMetadata(
+          'JsonApiDatastoreConfig',
+          this.datastore.constructor
+        ).models;
+        if (models[this.config.model]) {
+          this.config.model = models[this.config.model];
+        }
+      }
+      let query_options: any = {};
+      if (this.config.options) {
+        query_options = this.config.options;
+      }
+      query_options.page = { size: 50 };
+      query_options.include = this.config.options_include;
+      this.datastore
+        .findAll(this.config.model, query_options)
+        .subscribe(data => {
+          this.models = data.getModels();
+          this.options = [];
+          for (let i = 0; i < this.models.length; i++) {
+            const entry = this.models[i];
+
+            this.options.push({
+              id: entry.id,
+              name: entry.toString()
+            });
+            this.loading = false;
+          }
+          this.addCheckboxes();
+        });
+    } else {
+      this.addCheckboxes();
     }
   }
-
-  /**
-   * Models paginator controls getter
-   * @param $event
-   */
-  modelPaginatorControlsGetter($event) {
-    this.paginatorControls = $event;
+  ngOnDestroy() {
+    if (this.listener) {
+      this.listener.unsubscribe();
+      this.listener = null;
+    }
+  }
+  private addCheckboxes() {
+    this.options.map((o, i) => {
+      const control = new FormControl(); // if first item set to true, else false
+      (this.form.controls.options as FormArray).push(control);
+    });
+    this.listener = this.form.get('options').valueChanges.subscribe((value) => {
+      this.results = [];
+      this.options.map((val, index) => {
+        if (value[index] === true) {
+          this.results.push(val.id);
+        }
+      })
+      if (this.options.length > 1) {
+        // Options are more than one, so it's expected a List
+        this.group.get(this.config.name).setValue(this.results)
+      } else {
+        this.group.get(this.config.name).setValue(this.results.length > 0 ? this.results[0] : false);
+      }
+    })
+  }
+  get isFormGroup(): boolean {
+    return this.config.model && this.config.formType == FormGroup;
   }
 }

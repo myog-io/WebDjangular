@@ -1,5 +1,8 @@
 from django.template import Context, Template
 from django.template.base import Lexer
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_json_api.views import ModelViewSet, RelationshipView
@@ -15,6 +18,7 @@ from ..serializers.PageSerializer import (PageCategorySerializer,
                                           PageSerializer, PageTagSerializer)
 from ..signals import post_get_page, pre_get_page
 
+from webdjango.views.CoreViewSet import CachedModelViewSet
 
 class PageTagFilter(WebDjangoFilterSet):
     class Meta:
@@ -80,7 +84,7 @@ class PageFilter(WebDjangoFilterSet):
         }
 
 
-class PageViewSet(ModelViewSet):
+class PageViewSet(CachedModelViewSet):
     """
     Handles:
     Creating Pages
@@ -151,6 +155,8 @@ class PageViewSet(ModelViewSet):
         return content
 
     @action(methods=['GET'], detail=True, url_path='get_page', lookup_field='slug', lookup_url_kwarg='slug')
+    @method_decorator(cache_page(86400, key_prefix='get_page'))
+    @method_decorator(vary_on_cookie)
     def get_page(self, request, *args, **kwargs):
         assert 'pk' in self.kwargs, (
             'Expected view %s to be called with a URL keyword argument '
@@ -173,6 +179,8 @@ class PageViewSet(ModelViewSet):
         return Response(serializer.data)
 
     @action(methods=['GET'], detail=False, url_path='get_home')
+    @method_decorator(cache_page(86400, key_prefix='get_home'))
+    @method_decorator(vary_on_cookie)
     def get_home(self, request, format=None, *args, **kwargs):
         """
         Return the Home Page

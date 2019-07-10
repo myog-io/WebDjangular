@@ -1,30 +1,61 @@
 import { Injectable, Optional, Inject } from '@angular/core';
-import { DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig, JsonApiModel, ModelType, ModelConfig, } from 'angular2-jsonapi';
+import {
+  DatastoreConfig,
+  JsonApiDatastore,
+  JsonApiDatastoreConfig,
+  JsonApiModel,
+  ModelType,
+  ModelConfig
+} from 'angular2-jsonapi';
 import { Observable } from 'rxjs';
-import { UserModel, GroupModel, PermissionModel } from '@core/users/src/lib/models';
-import { PageModel, BlockModel, MenuItemModel, MenuModel } from '@core/cms/src/lib/models';
-import { ContentTypeModel, CoreConfigGroupModel, CoreConfigInputModel, CoreConfigModel, AbstractModel, AddressModel } from '@core/data/src/lib/models';
-import { CityModel, StreetModel, ResellerModel, CondoModel, ChannelModel } from '@plugins/provider/src/lib/data';
+import {
+  UserModel,
+  GroupModel,
+  PermissionModel
+} from '@core/users/src/lib/models';
+import {
+  PageModel,
+  BlockModel,
+  MenuItemModel,
+  MenuModel
+} from '@core/cms/src/lib/models';
+import {
+  ContentTypeModel,
+  CoreConfigGroupModel,
+  CoreConfigInputModel,
+  CoreConfigModel,
+  AbstractModel,
+  AddressModel
+} from '@core/data/src/lib/models';
+import {
+  CityModel,
+  StreetModel,
+  ResellerModel,
+  CondoModel,
+  ChannelModel
+} from '@plugins/provider/src/lib/data';
 import { PostalCodeRangeModel } from '@plugins/provider/src/lib/data/models/PostalCodeRangeModel';
 import { ProductModel } from '@plugins/store/src/lib/data/models/Product.model';
 import { ProductTypeModel } from '@plugins/store/src/lib/data/models/ProductType.model';
 import { ProductAttributeModel } from '@plugins/store/src/lib/data/models/ProductAttribute.model';
 import { ProductAttributeOptionModel } from '@plugins/store/src/lib/data/models/ProductAttributeOption.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CategoryModel } from '@plugins/store/src/lib/data/models/Category.model';
 import { CartItemModel } from '@plugins/store/src/lib/data/models/CartItem.model';
 import { CartModel } from '@plugins/store/src/lib/data/models/Cart.model';
 import { EmailModel } from '@core/data/src/lib/models/Email.model';
-import { OrderLineModel } from "@plugins/store/src/lib/data/models/OrderLine.model";
-import { OrderModel } from "@plugins/store/src/lib/data/models/Order.model";
+import { OrderLineModel } from '@plugins/store/src/lib/data/models/OrderLine.model';
+import { OrderModel } from '@plugins/store/src/lib/data/models/Order.model';
 import { FormModel } from '@core/cms/src/lib/models/Form.model';
 import { FormActionModel } from '@core/cms/src/lib/models/FormAction.model';
 import { FormFieldModel } from '@core/cms/src/lib/models/FormField.model';
 import { FormSubmittedModel } from '@core/cms/src/lib/models/FormSubmittedModel';
-
-
+import { CartRuleModel } from '@plugins/store/src/lib/data/models/CartRule.model';
+import { CartTermModel } from '@plugins/store/src/lib/data/models/CartTerm.model';
+import { CatalogRuleModel } from '@plugins/store/src/lib/data/models/CatalogRule.model';
 
 // tslint:disable-next-line:variable-name
+/*
 function cleanEmptyRecursive(attribute) {
   if (attribute === '') {
     attribute = null;
@@ -32,19 +63,18 @@ function cleanEmptyRecursive(attribute) {
     const index = Object.getOwnPropertySymbols(attribute)[0] as any;
     const attributesMetadata: any = attribute[index];
     attribute = getDirtyAttributes(attributesMetadata);
-  } else if (attribute instanceof Array || typeof (attribute) == 'object') {
+  } else if (attribute instanceof Array || typeof attribute == 'object') {
     for (const i in attribute) {
       if (attribute.hasOwnProperty(i)) {
         attribute[i] = cleanEmptyRecursive(attribute[i]);
       }
     }
   }
-  return attribute
+  return attribute;
 }
 
 function getDirtyAttributes(attributesMetadata: any): { string: any } {
   const dirtyData: any = {};
-
   for (const propertyName in attributesMetadata) {
     if (attributesMetadata.hasOwnProperty(propertyName)) {
       const metadata: any = attributesMetadata[propertyName];
@@ -54,11 +84,11 @@ function getDirtyAttributes(attributesMetadata: any): { string: any } {
         dirtyData[attributeName] = metadata.serialisationValue ? metadata.serialisationValue : metadata.newValue;
         dirtyData[attributeName] = cleanEmptyRecursive(dirtyData[attributeName]);
       }
-
     }
   }
   return dirtyData;
 }
+*/
 
 const config: DatastoreConfig = {
   baseUrl: '/api',
@@ -98,9 +128,12 @@ const config: DatastoreConfig = {
     ProductAttributeOption: ProductAttributeOptionModel, // Store
     CartItem: CartItemModel, // Store
     Cart: CartModel, // Store
+    CartRules: CartRuleModel, // Store
+    CartTerms: CartTermModel, // Store
+    CatalogRules: CatalogRuleModel, // Store
     Order: OrderModel, // Store
     OrderLine: OrderLineModel // Store
-  },
+  }
   //overrides: {
   //  getDirtyAttributes: getDirtyAttributes
   //}
@@ -109,14 +142,15 @@ const config: DatastoreConfig = {
 @Injectable()
 @JsonApiDatastoreConfig(config)
 export class WebAngularDataStore extends JsonApiDatastore {
-
   constructor(
     protected http: HttpClient,
-    @Optional() @Inject('APP_BASE_HREF') baseHref: string,
+    @Optional() @Inject('APP_BASE_HREF') baseHref: string
   ) {
     super(http);
     if (baseHref && this.datastoreConfig.baseUrl.search(baseHref) === -1) {
-      this.datastoreConfig.baseUrl = `${baseHref}${this.datastoreConfig.baseUrl}`;
+      this.datastoreConfig.baseUrl = `${baseHref}${
+        this.datastoreConfig.baseUrl
+        }`;
     }
   }
 
@@ -125,7 +159,6 @@ export class WebAngularDataStore extends JsonApiDatastore {
     for (const key in data) {
       if (data.hasOwnProperty(key)) {
         if (data[key] instanceof AbstractModel) {
-
           relationships = relationships || {};
 
           if (data[key].id) {
@@ -133,13 +166,18 @@ export class WebAngularDataStore extends JsonApiDatastore {
               data: this.buildSingleRelationshipData(data[key])
             };
           }
-        } else if (data[key] instanceof Array && data[key].length > 0 && this.isValidToManyRelation(data[key])) {
-
+        } else if (
+          data[key] instanceof Array &&
+          data[key].length > 0 &&
+          this.isValidToManyRelation(data[key])
+        ) {
           relationships = relationships || {};
 
           const relationshipData = data[key]
             .filter((model: AbstractModel) => model.id)
-            .map((model: AbstractModel) => this.buildSingleRelationshipData(model));
+            .map((model: AbstractModel) =>
+              this.buildSingleRelationshipData(model)
+            );
 
           relationships[key] = {
             data: relationshipData
@@ -166,10 +204,17 @@ export class WebAngularDataStore extends JsonApiDatastore {
    * @param model
    */
 
-  saveHasManyRelationship<T extends JsonApiModel>(hasManyFields = [], modelConfig = {}, extraOptions = {}, model: JsonApiModel): Observable<any> {
+  saveHasManyRelationship<T extends JsonApiModel>(
+    hasManyFields = [],
+    modelConfig = {},
+    extraOptions = {},
+    model: JsonApiModel
+  ): Observable<any> {
     return new Observable(observe => {
       for (let i = 0; i < hasManyFields.length; i++) {
-        let url = `${modelConfig['type']}/${model.pk}/relationships/${hasManyFields[i].relationship}/`;
+        let url = `${modelConfig['type']}/${model.pk}/relationships/${
+          hasManyFields[i].relationship
+          }/`;
         let pointer = [];
         let typeToSend = modelConfig['type'];
 
@@ -198,8 +243,9 @@ export class WebAngularDataStore extends JsonApiDatastore {
         let body: any = {
           data: null // TODO: Improve this
         };
-        this.http.patch(url, body, { headers: this.buildHttpHeaders() }).subscribe(
-          (r) => {
+        this.http
+          .patch(url, body, { headers: this.buildHttpHeaders() })
+          .subscribe(r => {
             if (i + 1 == hasManyFields.length) {
               observe.complete();
             } else {
@@ -233,5 +279,20 @@ export class WebAngularDataStore extends JsonApiDatastore {
   //
   //  return queryParams ? `${url}?${queryParams}` : url;
   //}
+
+  httget(url: string, options?: {
+    headers?: HttpHeaders | {
+      [header: string]: string | string[];
+    };
+    observe?: 'body';
+    params?: HttpParams | {
+      [param: string]: string | string[];
+    };
+    reportProgress?: boolean;
+    responseType: 'arraybuffer';
+    withCredentials?: boolean;
+  }) {
+    return this.http.get(url, options)
+  }
 
 }

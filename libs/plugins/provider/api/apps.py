@@ -10,3 +10,4 @@ class ProviderConfig(AppConfig):
         import libs.plugins.provider.api.signals.FieldsToProductSignals
         import libs.plugins.provider.api.signals.RegisterConfigsSignals
         import libs.plugins.provider.api.signals.ProviderOderSignals
+        import libs.plugins.provider.api.signals.CleanCache

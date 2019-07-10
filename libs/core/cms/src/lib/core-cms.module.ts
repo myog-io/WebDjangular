@@ -8,8 +8,8 @@ import { CoreCmsLinkComponent } from './components/link.component';
 import { RouterModule } from '@angular/router';
 import { CoreCmsFormComponent } from './components/form/form.component';
 import { BuilderFormModule } from '@core/builder/src/lib/builder-form.module';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NbCheckboxModule } from '@nebular/theme';
 
 const MODULES = [
   CommonModule,
@@ -18,27 +18,22 @@ const MODULES = [
   RouterModule,
   BuilderFormModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  NbCheckboxModule
 ];
-
 
 const COMPONENTS = [
   CoreCmsGalleryComponent,
   CoreCmsMapsComponent,
   CoreCmsLinkComponent,
-  CoreCmsFormComponent,
+  CoreCmsFormComponent
 ];
 
-
 @NgModule({
-  imports: [
-    ...MODULES
-  ],
-  exports: [
-    ...COMPONENTS
-  ],
-  
+  imports: [...MODULES],
+  exports: [...COMPONENTS],
+
   declarations: [...COMPONENTS],
-  entryComponents: [...COMPONENTS],
+  entryComponents: [...COMPONENTS]
 })
 export class CoreCmsModule { }
