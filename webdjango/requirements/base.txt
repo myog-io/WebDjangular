@@ -1,7 +1,7 @@
 # Base will provide the common requirements among all environments (development, live, staging, etc).
 
 # Django
-django==2.1.7
+django==2.2.10
 
 #MySQL
 mysqlclient==1.3.14
