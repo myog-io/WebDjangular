@@ -14,7 +14,7 @@ django-environ==0.4.5
 django-ipware==2.1.0
 
 # Django REST Framework
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 
 # Django REST Framework JWT token
 djangorestframework-jwt==1.11.0
